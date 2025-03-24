@@ -21,9 +21,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override bool IsBoostable => true;
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IPvPBarrelWrapper>();
             Assert.IsNotNull(_barrelWrapper);

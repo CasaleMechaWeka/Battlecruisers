@@ -19,16 +19,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         Vector2 Position { get; }
         IList<SpriteRenderer> Renderers { get; }
 
-		void StaticInitialise();
+        void StaticInitialise();
         void Initialise(
             IBuildable parent,
-            IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            FactoryProvider factoryProvider,
+            CruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);
         void ApplyVariantStats(IBuilding building);
         void ApplyVariantStats(IUnit unit);
-	}
+    }
 }

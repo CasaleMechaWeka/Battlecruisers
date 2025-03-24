@@ -1,7 +1,4 @@
-
-
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
 using UnityEngine.Assertions;
 
@@ -34,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 IsVisible = newVal;
         }
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
             Buildable = GetComponentInChildren<TPvPBuildable>(includeInactive: true);
             Assert.IsNotNull(Buildable);
@@ -42,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPHealthBarController healthBar = GetComponentInChildren<PvPHealthBarController>();
             Assert.IsNotNull(healthBar);
 
-            Buildable.StaticInitialise(gameObject, healthBar, commonStrings);
+            Buildable.StaticInitialise(gameObject, healthBar);
         }
 
         public override void OnNetworkSpawn()
@@ -56,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 PvPHealthBarController healthBar = GetComponentInChildren<PvPHealthBarController>();
                 Assert.IsNotNull(healthBar);
 
-                Buildable.StaticInitialise(gameObject, healthBar, PvPBattleSceneGodClient.Instance.commonStrings);
+                Buildable.StaticInitialise(gameObject, healthBar);
                 Buildable.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider, PvPBattleSceneGodClient.Instance.uiManager);
 
                 PvP_IsVisible.OnValueChanged += OnVisibleChanged;

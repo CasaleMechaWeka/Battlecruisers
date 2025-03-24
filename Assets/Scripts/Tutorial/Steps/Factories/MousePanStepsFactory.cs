@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -11,14 +10,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public MousePanStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
             IPermitter scrollWheelPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
+            IExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(
                   argsFactory,
-                  tutorialStrings,
                   featurePermitterStepFactory,
                   swipePermitter,
                   explanationDismissableStepFactory,

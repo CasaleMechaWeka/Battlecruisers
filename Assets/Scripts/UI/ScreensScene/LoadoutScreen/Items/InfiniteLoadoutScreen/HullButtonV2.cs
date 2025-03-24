@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private string lootType;
         private string lootName;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
@@ -108,7 +108,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 case "Flea":
                     return HullType.Flea;
                 case "Goatherd":
-                    return HullType.Goatherd;  
+                    return HullType.Goatherd;
                 case "Hammerhead":
                     return HullType.Hammerhead;
                 case "Longbow":

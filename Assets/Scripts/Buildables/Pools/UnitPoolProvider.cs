@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Pools
     public class UnitPoolProvider : IUnitPoolProvider
     {
         private readonly IUIManager _uiManager;
-        private readonly IFactoryProvider _factoryProvider;
+        private readonly FactoryProvider _factoryProvider;
         private readonly IList<IPool<Unit, BuildableActivationArgs>> _pools;
 
         // Don't want more than 1 because unit may never be built.  Want at least 1
@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Pools
         public IPool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
         public IPool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
 
-        public UnitPoolProvider(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public UnitPoolProvider(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             Helper.AssertIsNotNull(uiManager, factoryProvider);
 

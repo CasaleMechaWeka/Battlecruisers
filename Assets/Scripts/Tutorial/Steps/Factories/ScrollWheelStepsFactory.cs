@@ -13,11 +13,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public ScrollWheelStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter scrollWheelPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory, tutorialStrings)
+            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, scrollWheelPermitter, explanationDismissableStepFactory);
 
@@ -37,7 +36,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/ScrollWheel"))));
+                        LocTableCache.TutorialTable.GetString("Steps/ScrollWheel"))));
 
             // Disable scroll wheel
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));

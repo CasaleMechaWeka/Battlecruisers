@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected IPvPCruiser _enemyCruiser;
 
-        protected IAudioClipWrapper _impactSound;
+        protected AudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
         private ISoundKey _firingSound;

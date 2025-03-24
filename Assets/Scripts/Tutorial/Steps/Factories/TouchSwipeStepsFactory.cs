@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.UI.Filters;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
@@ -7,18 +6,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         public TouchSwipeStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
+            IExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(
                   argsFactory,
-                  tutorialStrings,
                   featurePermitterStepFactory,
                   swipePermitter,
                   explanationDismissableStepFactory,
                   "Steps/TouchSwipe")
         {
         }
-   }
+    }
 }

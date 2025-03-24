@@ -44,6 +44,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -58,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private IClickHandler _clickHandler;
         private IDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
-        private IAudioClipWrapper _selectedSound;
+        private AudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
@@ -204,8 +205,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                 // should update Name and Description for Bodykit
-                Name = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-                Description = _commonStrings.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+                Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
+                Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
             }
         }
 
@@ -221,7 +222,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
             ISoundKey selectedSoundKey = IsPlayerCruiser ? SoundKeys.UI.Selected.FriendlyCruiser : SoundKeys.UI.Selected.EnemyCruiser;
-            _selectedSound = await FactoryProvider.Sound.SoundFetcher.GetSoundAsync(selectedSoundKey);
+            _selectedSound = await SoundFetcher.GetSoundAsync(selectedSoundKey);
             if (IsClient && IsOwner)
             {
                 BuildingMonitor = new PvPCruiserBuildingMonitor(this);
@@ -251,9 +252,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
 
             Assert.IsNotNull(deathPrefab);
 
@@ -275,8 +276,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(clickHandlerWrapper);
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
-            Name = _commonStrings.GetString($"Cruisers/{stringKeyBase}Name");
-            Description = _commonStrings.GetString($"Cruisers/{stringKeyBase}Description");
+            Name = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
 
 
 

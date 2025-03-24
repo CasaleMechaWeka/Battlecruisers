@@ -10,7 +10,7 @@ using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class PoolProviders : IPoolProviders
+    public class PoolProviders
     {
         private ExplosionPoolProvider _explosionPoolProvider;
         public IExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;
@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils.Factories
         private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
         public PoolProviders(
-            IFactoryProvider factoryProvider,
+            FactoryProvider factoryProvider,
             IUIManager uiManager,
             IDroneFactory droneFactory)
         {

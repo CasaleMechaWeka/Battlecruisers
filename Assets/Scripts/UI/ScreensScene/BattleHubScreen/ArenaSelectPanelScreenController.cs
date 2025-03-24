@@ -46,8 +46,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IScreensSceneGod _screenSceneGod;
         private IDataProvider _dataProvider;
 
-        public ILocTable screensSceneTable;
-
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
 
@@ -75,7 +73,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             navLeftButton.Initialise(soundPlayer, _previousSetCommand);
 
             DOTween.Init();
-            screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
             isClickedBattleButton = false;
             isTransitioning = false;
 
@@ -205,9 +202,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     else
                     {
                         if (_dataProvider.GameModel.Coins < _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcoins)
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"));
                         if (_dataProvider.GameModel.Credits < _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcredits)
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCredits"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"));
                         loadingSpinner.SetActive(false);
                         battleButton.gameObject.SetActive(true);
                         isClickedBattleButton = false;

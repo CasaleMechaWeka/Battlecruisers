@@ -3,7 +3,6 @@ using BattleCruisers.Scenes.Test.Utilities.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -38,19 +37,14 @@ namespace BattleCruisers.Scenes.Test.Sounds
             windButtonsPanelController.Initialise(_camera, _cameraCalculatorSettings);
         }
 
-        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource, IPoolProviders poolProviders)
+        private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource, PoolProviders poolProviders)
         {
-            SoundFetcher soundFetcher = new SoundFetcher();
 
             ISoundPlayer soundPlayer
-                = new SoundPlayer(
-                    soundFetcher,
-                    poolProviders.AudioSourcePool);
+                = new SoundPlayer(poolProviders.AudioSourcePool);
 
             ISingleSoundPlayer singleSoundPlayer
-                = new SingleSoundPlayer(
-                    soundFetcher,
-                    new AudioSourceBC(singleSoundPlayerSource));
+                = new SingleSoundPlayer(new AudioSourceBC(singleSoundPlayerSource));
 
             SoundGroupController[] soundGroups = FindObjectsOfType<SoundGroupController>();
 

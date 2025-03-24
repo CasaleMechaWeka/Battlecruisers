@@ -4,7 +4,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.PlatformAbstractions.Audio
 {
-    public class AudioClipWrapper : IAudioClipWrapper
+    public class AudioClipWrapper
     {
         public AudioClip AudioClip { get; }
         public float Length => AudioClip.length;

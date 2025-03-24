@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables
@@ -9,13 +8,13 @@ namespace BattleCruisers.Buildables
         public TBuildable Buildable { get; private set; }
         public BuildableWrapper<TBuildable> UnityObject => this;
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
             Buildable = GetComponentInChildren<TBuildable>();
             Assert.IsNotNull(Buildable);
             HealthBarController healthBar = GetComponentInChildren<HealthBarController>();
             Assert.IsNotNull(healthBar);
-            Buildable.StaticInitialise(gameObject, healthBar, commonStrings);
+            Buildable.StaticInitialise(gameObject, healthBar);
         }
     }
 }

@@ -24,10 +24,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(tacticalsBuildRateBoost > 0);
             Assert.IsTrue(droneBuildingBuildRateBoost > 0);
 
-            IBoostProvider tacticalsBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(tacticalsBuildRateBoost);
+            IBoostProvider tacticalsBoostProvider = new BoostProvider(tacticalsBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.TacticalsProviders.Add(tacticalsBoostProvider);
 
-            IBoostProvider boostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(droneBuildingBuildRateBoost);
+            IBoostProvider boostProvider = new BoostProvider(droneBuildingBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders.Add(boostProvider);
         }
     }

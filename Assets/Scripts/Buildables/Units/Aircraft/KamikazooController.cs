@@ -16,7 +16,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,9 +59,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         [SerializeField]
         private List<AircraftBarrelWrapper> barrelWrappers;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 
@@ -76,7 +75,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 
@@ -120,13 +119,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
                 barrelWrapper.ApplyVariantStats(this);
             }
-            List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+            List<Sprite> allSpriteWrappers = new List<Sprite>();
             foreach (Sprite sprite in allSprites)
             {
-                allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                allSpriteWrappers.Add(sprite);
             }
             //create Sprite Chooser
-            _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
+            _spriteChooser = new SpriteChooser(allSpriteWrappers, this);
         }
 
         private void SetupTargetDetection()
@@ -150,8 +149,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     Transform,
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(EnemyCruiser.Faction, AttackCapabilities);
+            _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
         }

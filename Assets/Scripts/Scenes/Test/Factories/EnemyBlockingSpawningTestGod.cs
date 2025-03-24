@@ -8,10 +8,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Factories
 {
-    public class EnemyBlockingSpawningTestGod : TestGodBase 
-	{
-		public Factory leftFactory, rightFactory;
-		public UnitWrapper archonPrefab, attackBoatPrefab;
+    public class EnemyBlockingSpawningTestGod : TestGodBase
+    {
+        public Factory leftFactory, rightFactory;
+        public UnitWrapper archonPrefab, attackBoatPrefab;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -24,21 +24,21 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override void Setup(Helper helper)
         {
-			archonPrefab.StaticInitialise(helper.CommonStrings);
-            attackBoatPrefab.StaticInitialise(helper.CommonStrings);
+            archonPrefab.StaticInitialise();
+            attackBoatPrefab.StaticInitialise();
 
             // Factory building archon
             helper.InitialiseBuilding(leftFactory, Faction.Reds, parentCruiserDirection: Direction.Right);
-			leftFactory.CompletedBuildable += LeftFactory_CompletedBuildable;
-			leftFactory.StartConstruction();
+            leftFactory.CompletedBuildable += LeftFactory_CompletedBuildable;
+            leftFactory.StartConstruction();
 
             // Factory building attack boats
             helper.InitialiseBuilding(rightFactory, Faction.Blues, parentCruiserDirection: Direction.Left);
-			rightFactory.CompletedBuildable += RightFactory_CompletedBuildable;
-			rightFactory.StartConstruction();
-		}
+            rightFactory.CompletedBuildable += RightFactory_CompletedBuildable;
+            rightFactory.StartConstruction();
+        }
 
-		private void LeftFactory_CompletedBuildable(object sender, EventArgs e)
+        private void LeftFactory_CompletedBuildable(object sender, EventArgs e)
         {
             Invoke("StartBuildingArchon", 3);
         }
@@ -48,9 +48,9 @@ namespace BattleCruisers.Scenes.Test.Factories
             leftFactory.StartBuildingUnit(archonPrefab);
         }
 
-		private void RightFactory_CompletedBuildable(object sender, EventArgs e)
+        private void RightFactory_CompletedBuildable(object sender, EventArgs e)
         {
             rightFactory.StartBuildingUnit(attackBoatPrefab);
-		}
-	}
+        }
+    }
 }

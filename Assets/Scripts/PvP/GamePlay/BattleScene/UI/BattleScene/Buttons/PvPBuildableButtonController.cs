@@ -11,7 +11,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -143,7 +142,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
 
-            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
@@ -175,7 +173,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
-            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {

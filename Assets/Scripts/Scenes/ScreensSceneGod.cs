@@ -19,7 +19,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
@@ -45,7 +44,7 @@ namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        public IPrefabFactory _prefabFactory;
+        public PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
@@ -114,7 +113,7 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
-        IPrefabCache _prefabCache;
+        PrefabCache _prefabCache;
         [SerializeField]
         private Sprite[] difficultyIndicators;
 
@@ -135,16 +134,12 @@ namespace BattleCruisers.Scenes
             _gameModel = _dataProvider.GameModel;
             //components = GetComponent<ScreensSceneGodCompoments>();
 
-            Task<bool> checkInternetConnection = LandingSceneGod.CheckForInternetConnection();
-            ILocTable commonStrings = LandingSceneGod.Instance.commonStrings;
-            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-            Task<ILocTable> loadStoryStrings = LocTableFactory.Instance.LoadStoryTableAsync();
+            _ = LocTableCache.LoadTableAsync(TableName.STORY);
 
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, _dataProvider);
-            IPrefabFetcher prefabFetcher = new PrefabFetcher(); // Must be added before the Initialize call
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            Task<IPrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            Task<PrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             premiumEditionButton.gameObject.SetActive(false);
@@ -157,7 +152,7 @@ namespace BattleCruisers.Scenes
             }
             else
             {
-                IsInternetAccessable = await checkInternetConnection;
+                IsInternetAccessable = await LandingSceneGod.CheckForInternetConnection();
             }
 
             if (IsInternetAccessable && AuthenticationService.Instance.IsSignedIn)
@@ -284,20 +279,16 @@ namespace BattleCruisers.Scenes
             _uiAudioSource = GetComponent<AudioSource>();
             _soundPlayer
                 = new SingleSoundPlayer(
-                    new SoundFetcher(),
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
 
 
-            ILocTable storyStrings = await loadStoryStrings;
-            levelTrashDataList.Initialise(storyStrings);
-            sideQuestTrashDataList.Initialise(storyStrings);
-
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
+            levelTrashDataList.Initialise();
+            sideQuestTrashDataList.Initialise();
 
             homeScreen.Initialise(this, _soundPlayer, _dataProvider);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
 
             // TEMP  For when not coming from LandingScene :)
@@ -326,14 +317,14 @@ namespace BattleCruisers.Scenes
             characterOfBlackmarket.SetActive(false);
             processingPanel.SetActive(false);
 
-            processingPanel.GetComponentInChildren<Text>().text = screensSceneStrings.GetString("Processing");
+            processingPanel.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("Processing");
             Debug.Log(_applicationModel.Mode);
 
             _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
 
             _prefabCache = await loadPrefabCache;
 
-            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager, commonStrings);
+            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager);
             _isPlaying = false;
 
             // TEMP  For showing PostBattleScreen :)
@@ -348,14 +339,14 @@ namespace BattleCruisers.Scenes
             ShowCharlieOnMainMenu();
 
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
             Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
             if (captainsCamera != null)
             {
                 trashScreen.SetCamera(captainsCamera);
             }
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider);
             captainSelectorPanel.Initialize(_soundPlayer, _prefabFactory, _dataProvider);
@@ -366,7 +357,7 @@ namespace BattleCruisers.Scenes
             {
                 _applicationModel.ShowPostBattleScreen = false;
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
-                await GoToPostBattleScreenAsync(screensSceneStrings);
+                await GoToPostBattleScreenAsync();
 #if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
@@ -403,9 +394,9 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer, commonStrings);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer);
             loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
 
             // TEMP  Go to specific screen :)
@@ -476,10 +467,10 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
         }
-        private async Task GoToPostBattleScreenAsync(ILocTable screensSceneStrings)
+        private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
             //--->CODE CHANGED BY ANUJ
             if (_applicationModel.Mode == GameMode.PvP_1VS1)
             {
@@ -860,9 +851,7 @@ namespace BattleCruisers.Scenes
 
         public void ShowNewsPanel()
         {
-            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-
-            messageBoxBig.ShowMessage(screensSceneStrings.GetString("UpdateTitle"), screensSceneStrings.GetString("UpdateDescription"));
+            messageBoxBig.ShowMessage(LocTableCache.ScreensSceneTable.GetString("UpdateTitle"), LocTableCache.ScreensSceneTable.GetString("UpdateDescription"));
         }
 
         public void PlayAdvertisementMusic()

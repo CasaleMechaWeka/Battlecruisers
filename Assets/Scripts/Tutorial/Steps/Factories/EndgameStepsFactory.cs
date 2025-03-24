@@ -19,18 +19,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
         public EndgameStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
+            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             IAutoNavigationStepFactory autoNavigationStepFactory,
-            ITutorialProvider tutorialProvider, 
-            ICruiser playerCruiser, 
+            ITutorialProvider tutorialProvider,
+            ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IPrefabFactory prefabFactory)
-            : base(argsFactory, tutorialStrings)
+            PrefabFactory prefabFactory)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser, prefabFactory);
 
@@ -57,7 +56,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             // Wait for artillery to complete
             string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
-            string waitForArtilleryBase = _tutorialStrings.GetString("Steps/Endgame/WaitForArtillery");
+            string waitForArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForArtillery");
             steps.Add(
                 new BuildableCompletedWaitStep(
                     _argsFactory.CreateTutorialStepArgs(
@@ -71,7 +70,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.Overview));
 
             // Wait for enemy cruiser to be destroyed
-            string waitForVictoryBase = _tutorialStrings.GetString("Steps/Endgame/WaitForVictory");
+            string waitForVictoryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForVictory");
             steps.Add(
                 new TargetDestroyedWaitStep(
                     _argsFactory.CreateTutorialStepArgs(

@@ -8,11 +8,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageController : MonoBehaviour
     {
-        private IPrefabContainer<BackgroundImageStats> _statsContainer;
+        private PrefabContainer<BackgroundImageStats> _statsContainer;
 
         public SpriteRenderer background;
 
-        public void Initialise(IPrefabContainer<BackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
+        public void Initialise(PrefabContainer<BackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
         {
             Helper.AssertIsNotNull(statsContainer, calculator);
             Assert.IsNotNull(background);

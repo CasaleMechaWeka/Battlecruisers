@@ -6,7 +6,6 @@ using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -135,7 +134,6 @@ namespace BattleCruisers.Scenes
 
                 _soundPlayer
                     = new SingleSoundPlayer(
-                        new SoundFetcher(),
                         new EffectVolumeAudioSource(
                             new AudioSourceBC(_uiAudioSource),
                             applicationModel.DataProvider.SettingsManager, 1));

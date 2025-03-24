@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
 {
-    public class UntypedMultiCache<TBase> : IUntypedMultiCache<TBase> where TBase : class
+    public class UntypedMultiCache<TBase> where TBase : class
     {
         private IDictionary<IPrefabKey, TBase> _prefabs;
 

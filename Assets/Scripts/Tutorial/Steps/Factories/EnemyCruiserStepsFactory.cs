@@ -13,11 +13,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public EnemyCruiserStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             ICruiser aiCruiser,
             IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory) 
-            : base(argsFactory, tutorialStrings)
+            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, autoNavigationStepFactory, explanationDismissableStepFactory);
 
@@ -34,7 +33,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             ITutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
-                    _tutorialStrings.GetString("Steps/EnemyCruiser"),
+                    LocTableCache.TutorialTable.GetString("Steps/EnemyCruiser"),
                     _aiCruiser);
 
             steps.Add(_explanationDismissableStepFactory.CreateStep(args));

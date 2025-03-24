@@ -13,14 +13,14 @@ namespace BattleCruisers.Tests.Effects.Explosions
     public class ExplosionFactoryTests
     {
         private IPoolableFactory<IPoolable<Vector3>, Vector3> _factory;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ExplosionKey _explosionKey;
         private IPoolable<Vector3> _explosion;
 
         [SetUp]
         public void TestSetup()
         {
-            _prefabFactory = Substitute.For<IPrefabFactory>();
+            _prefabFactory = Substitute.For<PrefabFactory>();
             _explosionKey = StaticPrefabKeys.Explosions.Explosion150;
 
             _factory = new ExplosionFactory(_prefabFactory, _explosionKey);

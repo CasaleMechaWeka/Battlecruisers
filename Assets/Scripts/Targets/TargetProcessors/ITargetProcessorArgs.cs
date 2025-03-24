@@ -7,8 +7,8 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public interface ITargetProcessorArgs
     {
-        ICruiserSpecificFactories CruiserSpecificFactories { get; }
-        ITargetFactoriesProvider TargetFactories { get; }
+        CruiserSpecificFactories CruiserSpecificFactories { get; }
+        TargetFactoriesProvider TargetFactories { get; }
         Faction EnemyFaction { get; }
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }

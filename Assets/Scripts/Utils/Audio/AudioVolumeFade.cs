@@ -9,11 +9,11 @@ namespace BattleCruisers.Utils.Audio
 {
     public class AudioVolumeFade : IAudioVolumeFade
     {
-        private readonly ICoroutineStarter _coroutineStarter;
+        private readonly CoroutineStarter _coroutineStarter;
         private readonly ITime _time;
         private bool _shouldFade;
 
-        public AudioVolumeFade(ICoroutineStarter coroutineStarter, ITime time)
+        public AudioVolumeFade(CoroutineStarter coroutineStarter, ITime time)
         {
             Helper.AssertIsNotNull(coroutineStarter, time);
 

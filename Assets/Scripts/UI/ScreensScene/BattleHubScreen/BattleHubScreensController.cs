@@ -12,13 +12,14 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using System.Linq;
 using Unity.Services.Authentication;
+using BattleCruisers.Utils.Localisation;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class BattleHubScreensController : ScreenController
     {
         private BattleResult _lastBattleResult;
         private ScreenController _currentScreen;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         private IApplicationModel _applicationModel;
@@ -53,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider,
             IApplicationModel applicationModel)
         {
@@ -90,12 +91,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             coinBattleController.Initialise(screensSceneGod, _applicationModel);
             playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
 
-            continueTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaign");
-            continueSubtitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ContinueCampaignDescription");
-            levelsTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("LevelSelect");
-            skirmishTitle.text = LandingSceneGod.Instance.screenSceneStrings.GetString("SkirmishMode");
-            offlineOnlyText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("OfflineOnlySubtitle");
-            openingSoonText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("ArenasOpenDecemberMessage");
+            continueTitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaign");
+            continueSubtitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaignDescription");
+            levelsTitle.text = LocTableCache.ScreensSceneTable.GetString("LevelSelect");
+            skirmishTitle.text = LocTableCache.ScreensSceneTable.GetString("SkirmishMode");
+            offlineOnlyText.text = LocTableCache.ScreensSceneTable.GetString("OfflineOnlySubtitle");
+            openingSoonText.text = LocTableCache.ScreensSceneTable.GetString("ArenasOpenDecemberMessage");
         }
 
         private void GoHome()

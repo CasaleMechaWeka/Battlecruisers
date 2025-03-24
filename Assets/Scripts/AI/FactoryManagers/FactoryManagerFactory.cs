@@ -16,7 +16,7 @@ namespace BattleCruisers.AI.FactoryManagers
     public class FactoryManagerFactory : IFactoryManagerFactory
     {
         private readonly IGameModel _gameModel;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         private readonly static UnitKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
@@ -26,7 +26,7 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly static UnitKey BROADSWROD_GUNSHIP_KEY = StaticPrefabKeys.Units.Broadsword;
         private readonly static UnitKey STRATBOMBER_KEY = StaticPrefabKeys.Units.StratBomber;
 
-        public FactoryManagerFactory(IGameModel gameModel, IPrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
+        public FactoryManagerFactory(IGameModel gameModel, PrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
         {
             Helper.AssertIsNotNull(gameModel, prefabFactory, threatMonitorFactory);
 

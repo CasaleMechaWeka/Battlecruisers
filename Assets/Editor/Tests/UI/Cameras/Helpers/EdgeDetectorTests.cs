@@ -10,19 +10,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
     {
         private IEdgeDetector _detector;
         private IInput _input;
-        private IScreen _screen;
         private int _edgeRegionWithInPixels;
 
         [SetUp]
         public void TestSetup()
         {
             _input = Substitute.For<IInput>();
-            _screen = Substitute.For<IScreen>();
             _edgeRegionWithInPixels = 5;
 
-            _detector = new EdgeDetector(_input, _screen, _edgeRegionWithInPixels);
-
-            _screen.WidthInPixels.Returns(1920);
+            _detector = new EdgeDetector(_input, _edgeRegionWithInPixels);
         }
 
         [Test]
@@ -42,7 +38,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         [Test]
         public void IsCursorAtRightEdge_True()
         {
-            Vector3 mousePosition = new Vector3(_screen.WidthInPixels - _edgeRegionWithInPixels + 1, 0, 0);
+            Vector3 mousePosition = new Vector3(Screen.width - _edgeRegionWithInPixels + 1, 0, 0);
             _input.MousePosition.Returns(mousePosition);
             Assert.IsTrue(_detector.IsCursorAtRightEdge());
         }
@@ -50,7 +46,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         [Test]
         public void IsCursorAtRightEdge_False()
         {
-            Vector3 mousePosition = new Vector3(_screen.WidthInPixels - _edgeRegionWithInPixels, 0, 0);
+            Vector3 mousePosition = new Vector3(Screen.width - _edgeRegionWithInPixels, 0, 0);
             _input.MousePosition.Returns(mousePosition);
             Assert.IsFalse(_detector.IsCursorAtRightEdge());
         }

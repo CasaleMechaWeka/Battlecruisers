@@ -20,11 +20,9 @@ namespace BattleCruisers.Buildables.Boost
 
         public event EventHandler BoostChanged;
 
-        public BoostableGroup(IBoostFactory boostFactory)
+        public BoostableGroup()
         {
-            Assert.IsNotNull(boostFactory);
-
-            _boostConsumer = boostFactory.CreateBoostConsumer();
+            _boostConsumer = new BoostConsumer();
             _boostables = new List<IBoostable>();
             _boostProviders = new List<ObservableCollection<IBoostProvider>>();
             _isCleanedUp = false;

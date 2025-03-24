@@ -9,14 +9,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPTurretStatsFactory : ITurretStatsFactory
     {
-        private readonly IBoostFactory _boostFactory;
         private readonly IGlobalBoostProviders _globalBoostProviders;
 
-        public PvPTurretStatsFactory(IBoostFactory boostFactory, IGlobalBoostProviders globalBoostProviders)
+        public PvPTurretStatsFactory(IGlobalBoostProviders globalBoostProviders)
         {
-            PvPHelper.AssertIsNotNull(boostFactory, globalBoostProviders);
+            PvPHelper.AssertIsNotNull(globalBoostProviders);
 
-            _boostFactory = boostFactory;
             _globalBoostProviders = globalBoostProviders;
         }
 
@@ -25,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
-            return new PvPBoostedTurretStats(baseTurretStats, _boostFactory, localBoostProviders, globalFireRateBoostProviders, _globalBoostProviders);
+            return new PvPBoostedTurretStats(baseTurretStats, localBoostProviders, globalFireRateBoostProviders, _globalBoostProviders);
         }
     }
 }

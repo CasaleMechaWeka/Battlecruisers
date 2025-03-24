@@ -37,16 +37,16 @@ namespace BattleCruisers.Cruisers
             Assert.IsTrue(airFactoryBuildRateBoost > 0);
             Assert.IsTrue(aircraftBuildRateBoost > 0);
 
-            IBoostProvider navalFactoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(navalFactoryBuildRateBoost);
+            IBoostProvider navalFactoryBoostProvider = new BoostProvider(navalFactoryBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.NavalFactoryProviders.Add(navalFactoryBoostProvider);
 
-            IBoostProvider shipBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(shipBuildRateBoost);
+            IBoostProvider shipBoostProvider = new BoostProvider(shipBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.ShipProviders.Add(shipBoostProvider);
 
-            IBoostProvider aircraftFactoryBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(airFactoryBuildRateBoost);
+            IBoostProvider aircraftFactoryBoostProvider = new BoostProvider(airFactoryBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders.Add(aircraftFactoryBoostProvider);
 
-            IBoostProvider aircraftBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(aircraftBuildRateBoost);
+            IBoostProvider aircraftBoostProvider = new BoostProvider(aircraftBuildRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.UnitBuildRate.AircraftProviders.Add(aircraftBoostProvider);
         }
     }

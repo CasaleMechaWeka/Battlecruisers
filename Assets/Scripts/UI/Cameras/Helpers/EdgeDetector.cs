@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
@@ -7,16 +8,14 @@ namespace BattleCruisers.UI.Cameras.Helpers
     public class EdgeDetector : IEdgeDetector
     {
         private readonly IInput _input;
-        private readonly IScreen _screen;
         private readonly int _edgeRegionWithInPixels;
 
-        public EdgeDetector(IInput input, IScreen screen, int edgeRegionWithInPixels)
+        public EdgeDetector(IInput input, int edgeRegionWithInPixels)
         {
-            Helper.AssertIsNotNull(input, screen);
+            Helper.AssertIsNotNull(input);
             Assert.IsTrue(edgeRegionWithInPixels >= 0);
 
             _input = input;
-            _screen = screen;
             _edgeRegionWithInPixels = edgeRegionWithInPixels;
         }
 
@@ -27,7 +26,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         public bool IsCursorAtRightEdge()
         {
-            return _input.MousePosition.x > _screen.WidthInPixels - _edgeRegionWithInPixels;
+            return _input.MousePosition.x > Screen.width - _edgeRegionWithInPixels;
         }
     }
 }

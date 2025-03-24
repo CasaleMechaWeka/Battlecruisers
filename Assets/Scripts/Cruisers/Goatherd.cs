@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
 
             Assert.IsTrue(MastStructureBuildRate > 0);
 
-            IBoostProvider buildRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(MastStructureBuildRate);
+            IBoostProvider buildRateBoostProvider = new BoostProvider(MastStructureBuildRate);
             CruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders.Add(buildRateBoostProvider);
         }
     }

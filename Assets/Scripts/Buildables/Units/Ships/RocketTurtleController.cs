@@ -29,12 +29,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             return turrets;
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             _shieldController = GetComponentInChildren<SectorShieldController>(includeInactive: true);
             _shieldController.gameObject.SetActive(false);
-            base.StaticInitialise(parent, healthBar, commonStrings);
-            _shieldController.StaticInitialise(commonStrings);
+            base.StaticInitialise(parent, healthBar);
+            _shieldController.StaticInitialise();
         }
 
         protected override void InitialiseTurrets()

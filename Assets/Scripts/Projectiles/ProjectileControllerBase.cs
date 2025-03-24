@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -10,7 +9,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -29,11 +27,11 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier _damageApplier;
         private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
-        private IAudioClipWrapper _impactSound;
+        private AudioClipWrapper _impactSound;
         private IPool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         private bool _isActiveAndAlive;
-        protected IFactoryProvider _factoryProvider;
+        protected FactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -72,12 +70,11 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public virtual void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public virtual void Initialise(FactoryProvider factoryProvider)
         {
             Logging.LogMethod(Tags.SHELLS);
-            Helper.AssertIsNotNull(commonStrings, factoryProvider);
+            Helper.AssertIsNotNull(factoryProvider);
 
-            _commonStrings = commonStrings;
             _factoryProvider = factoryProvider;
 
             _rigidBody = GetComponent<Rigidbody2D>();

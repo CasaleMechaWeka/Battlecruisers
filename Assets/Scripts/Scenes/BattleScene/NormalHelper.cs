@@ -16,7 +16,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
@@ -26,7 +25,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class NormalHelper : BattleSceneHelper
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
@@ -39,11 +38,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public NormalHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
-            ILocTable storyStrings,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings)
+            : base(appModel)
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 

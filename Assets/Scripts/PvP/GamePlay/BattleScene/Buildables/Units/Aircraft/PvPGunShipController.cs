@@ -17,7 +17,6 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,9 +59,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 
@@ -119,13 +118,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 SetupTargetDetection();
 
                 _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-                List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+                List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {
-                    allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                    allSpriteWrappers.Add(sprite);
                 }
                 //create Sprite Chooser
-                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+                _spriteChooser = new PvPSpriteChooser(allSpriteWrappers, this);
                 _barrelWrapper.ApplyVariantStats(this);
 
                 OnBuildableCompletedClientRpc();
@@ -133,13 +132,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
             {
                 OnBuildableCompleted_PvPClient();
-                List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+                List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {
-                    allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                    allSpriteWrappers.Add(sprite);
                 }
                 //create Sprite Chooser
-                _spriteChooser = new PvPSpriteChooser(new PvPAssignerFactory(), allSpriteWrappers, this);
+                _spriteChooser = new PvPSpriteChooser(allSpriteWrappers, this);
                 _barrelWrapper.ApplyVariantStats(this);
             }
 
@@ -167,7 +166,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
+            _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
         }

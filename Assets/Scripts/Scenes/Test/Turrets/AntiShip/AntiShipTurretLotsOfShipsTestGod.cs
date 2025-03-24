@@ -11,8 +11,8 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 {
-    public class AntiShipTurretLotsOfShipsTestGod : TestGodBase 
-	{
+    public class AntiShipTurretLotsOfShipsTestGod : TestGodBase
+    {
         private Factory _factory;
         private TurretController[] _turrets;
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
 
         protected override void Setup(Helper helper)
         {
-            unitPrefab.StaticInitialise(helper.CommonStrings);
+            unitPrefab.StaticInitialise();
 
             // Factory
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
@@ -46,9 +46,9 @@ namespace BattleCruisers.Scenes.Test.Turrets.AntiShip
             foreach (TurretController turret in _turrets)
             {
                 helper.InitialiseBuilding(turret, Faction.Reds);
-			    turret.StartConstruction();
+                turret.StartConstruction();
             }
-		}
+        }
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
         {

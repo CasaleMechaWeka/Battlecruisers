@@ -5,7 +5,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -29,9 +28,9 @@ namespace BattleCruisers.Projectiles
 
         protected virtual float TrailLifetimeInS { get => 10; }
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(FactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             _deferrer = factoryProvider.DeferrerProvider.Deferrer;
 

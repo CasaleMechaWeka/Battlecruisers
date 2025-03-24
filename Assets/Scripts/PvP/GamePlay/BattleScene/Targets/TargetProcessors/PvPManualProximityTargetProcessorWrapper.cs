@@ -1,3 +1,4 @@
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                     args.MaxRangeInM,
                     args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-            return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
+            return new RangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
         }
 
         public override void DisposeManagedState()

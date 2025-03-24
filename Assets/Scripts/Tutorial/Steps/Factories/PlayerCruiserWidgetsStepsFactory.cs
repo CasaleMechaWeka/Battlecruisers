@@ -10,25 +10,22 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IHighlightable _playerCruiserHealthBar, _numOfDrones;
         private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly ILocTable _commonStrings;
 
         public PlayerCruiserWidgetsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IHighlightable playerCruiserHealthBar,
             IHighlightable numOfDrones,
             IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            ILocTable commonStrings) 
-            : base(argsFactory, tutorialStrings)
+            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+
+            : base(argsFactory)
         {
-            Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory, commonStrings);
+            Helper.AssertIsNotNull(playerCruiserHealthBar, numOfDrones, autoNavigationStepFactory, explanationDismissableStepFactory);
 
             _playerCruiserHealthBar = playerCruiserHealthBar;
             _numOfDrones = numOfDrones;
             _autNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
-            _commonStrings = commonStrings;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -38,8 +35,8 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_autNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
             // Health dial
-            string healthBase = _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/PlayerHealthBar");
-            string protagonistName = _commonStrings.GetString("Names/Protagonist");
+            string healthBase = LocTableCache.TutorialTable.GetString("Steps/PlayerCruiserWidgets/PlayerHealthBar");
+            string protagonistName = LocTableCache.CommonTable.GetString("Names/Protagonist");
             ITutorialStepArgs healthDialArgs
                 = _argsFactory.CreateTutorialStepArgs(
                     string.Format(healthBase, protagonistName),
@@ -49,14 +46,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Drone number
             ITutorialStepArgs droneNumberArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/Builders"),
+                    LocTableCache.TutorialTable.GetString("Steps/PlayerCruiserWidgets/Builders"),
                     _numOfDrones);
             steps.Add(_explanationDismissableStepFactory.CreateStep(droneNumberArgs));
 
             // More drones is better
             ITutorialStepArgs moreDronesArgs
                 = _argsFactory.CreateTutorialStepArgs(
-                    _tutorialStrings.GetString("Steps/PlayerCruiserWidgets/MoreBuilders"),
+                    LocTableCache.TutorialTable.GetString("Steps/PlayerCruiserWidgets/MoreBuilders"),
                     _numOfDrones);
             steps.Add(_explanationDismissableStepFactory.CreateStep(moreDronesArgs));
 

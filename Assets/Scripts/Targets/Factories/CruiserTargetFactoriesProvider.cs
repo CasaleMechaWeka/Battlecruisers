@@ -5,16 +5,16 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class CruiserTargetFactoriesProvider : ICruiserTargetFactoriesProvider
+    public class CruiserTargetFactoriesProvider
     {
         public ITargetProcessorFactory ProcessorFactory { get; }
-        public ITargetTrackerFactory TrackerFactory { get; }
-        public ITargetDetectorFactory DetectorFactory { get; }
-        public ITargetProviderFactory ProviderFactory { get; }
+        public TargetTrackerFactory TrackerFactory { get; }
+        public TargetDetectorFactory DetectorFactory { get; }
+        public TargetProviderFactory ProviderFactory { get; }
 
         public CruiserTargetFactoriesProvider(
-            IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            FactoryProvider factoryProvider,
+            CruiserSpecificFactories cruiserSpecificFactories,
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker)

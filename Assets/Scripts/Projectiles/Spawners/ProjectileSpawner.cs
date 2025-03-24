@@ -26,11 +26,11 @@ namespace BattleCruisers.Projectiles.Spawners
 
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
-        protected IFactoryProvider _factoryProvider;
-        protected ICruiserSpecificFactories _cruiserSpecificFactories;
+        protected FactoryProvider _factoryProvider;
+        protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected ICruiser _enemyCruiser;
 
-        protected IAudioClipWrapper _impactSound;
+        protected AudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
         public List<TargetType> AttackCapabilities { get; set; }

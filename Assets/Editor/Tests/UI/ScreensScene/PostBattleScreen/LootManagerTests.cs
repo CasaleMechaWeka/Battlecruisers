@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         private ILootManager _lootManager;
 
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         private ILoot _unlockedLoot;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void SetuUp()
         {
             _dataProvider = Substitute.For<IDataProvider>();
-            _prefabFactory = Substitute.For<IPrefabFactory>();
+            _prefabFactory = Substitute.For<PrefabFactory>();
             _middleDetailsGroup = Substitute.For<IItemDetailsGroup>();
             _leftDetailsGroup = Substitute.For<IItemDetailsGroup>();
             _rightDetailsGroup = Substitute.For<IItemDetailsGroup>();

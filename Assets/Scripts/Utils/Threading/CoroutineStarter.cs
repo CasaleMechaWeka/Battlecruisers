@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace BattleCruisers.Utils.Threading
 {
-    public class CoroutineStarter : MonoBehaviour, ICoroutineStarter
+    public class CoroutineStarter : MonoBehaviour
     {
         public void StartRoutine(IEnumerator routine)
         {

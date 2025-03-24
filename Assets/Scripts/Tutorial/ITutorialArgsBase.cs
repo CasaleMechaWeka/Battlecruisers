@@ -15,7 +15,7 @@ namespace BattleCruisers.Tutorial
         ICruiser PlayerCruiser { get; }
         ICruiser AICruiser { get; }
         ITutorialProvider TutorialProvider { get; }
-        IPrefabFactory PrefabFactory { get; }
+        PrefabFactory PrefabFactory { get; }
         IBattleSceneGodComponents Components { get; }
         ICameraComponents CameraComponents { get; }
         TopPanelComponents TopPanelComponents { get; }

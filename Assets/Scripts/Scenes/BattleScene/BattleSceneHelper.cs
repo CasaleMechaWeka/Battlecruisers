@@ -15,7 +15,6 @@ using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -24,8 +23,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
-        private readonly IPrefabFetcher _prefabFetcher;
-        private readonly ILocTable _storyStrings;
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
         protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
         private ITrashTalkProvider _trashTalkProvider;
@@ -37,18 +34,16 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
 
-        protected BattleSceneHelper(IApplicationModel appModel, IPrefabFetcher prefabFetcher, ILocTable storyStrings)
+        protected BattleSceneHelper(IApplicationModel appModel)
         {
-            Helper.AssertIsNotNull(appModel, prefabFetcher, storyStrings);
+            Helper.AssertIsNotNull(appModel);
 
             _appModel = appModel;
-            _prefabFetcher = prefabFetcher;
-            _storyStrings = storyStrings;
-            _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
+            _backgroundStatsProvider = new BackgroundStatsProvider();
             _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
-            _trashTalkProvider = new TrashTalkProvider(_prefabFetcher, _storyStrings);
+            _trashTalkProvider = new TrashTalkProvider();
         }
 
         public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
@@ -77,39 +72,39 @@ namespace BattleCruisers.Scenes.BattleScene
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
             ITrashTalkData levelTrashTalkData;
-            
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {_appModel.Mode}");
-            #endif
+#endif
 
             if (_appModel.Mode == GameMode.SideQuest)
             {
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting side quest trash talk for level {levelNum}");
-                #endif
+#endif
                 levelTrashTalkData = await _trashTalkProvider.GetTrashTalkAsync(levelNum, true);
             }
             else
             {
-                #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting campaign trash talk for level {levelNum}");
-                #endif
+#endif
                 levelTrashTalkData = await _trashTalkProvider.GetTrashTalkAsync(levelNum);
             }
 
-            #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[BattleSceneHelper] Full trash talk data for {(_appModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
                      $"  Enemy Name: {levelTrashTalkData.EnemyName}\n" +
                      $"  Player Text: {levelTrashTalkData.PlayerText}\n" +
                      $"  Enemy Text: {levelTrashTalkData.EnemyText}\n" +
                      $"  Player Talks First: {levelTrashTalkData.PlayerTalksFirst}\n" +
                      $"  String Key Base: {levelTrashTalkData.StringKeyBase}");
-            #endif
-            
+#endif
+
             return levelTrashTalkData.EnemyName;
         }
 
-        public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }

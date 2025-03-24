@@ -8,7 +8,6 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
@@ -17,17 +16,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
     {
         private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiser _aiCruiser;
 
         public CreateProducingFactoryStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ITutorialProvider tutorialProvider,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             ICruiser aiCruiser)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, prefabFactory, aiCruiser);
 

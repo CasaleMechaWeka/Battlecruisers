@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Pools
         public BuildingActivationArgs(
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            CruiserSpecificFactories cruiserSpecificFactories,
             ISlot parentSlot,
             IDoubleClickHandler<IBuilding> doubleClickHandler)
             : base(parentCruiser, enemyCruiser, cruiserSpecificFactories)

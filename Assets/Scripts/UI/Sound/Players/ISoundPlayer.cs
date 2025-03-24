@@ -7,6 +7,6 @@ namespace BattleCruisers.UI.Sound.Players
     public interface ISoundPlayer
     {
         Task PlaySoundAsync(ISoundKey soundKey, Vector2 position);
-        void PlaySound(IAudioClipWrapper sound, Vector2 position);
+        void PlaySound(AudioClipWrapper sound, Vector2 position);
     }
 }

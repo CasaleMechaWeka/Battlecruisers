@@ -16,9 +16,9 @@ namespace BattleCruisers.Tests.AI.Tasks
     {
         private ITask _task;
 
-		private IPrefabKey _key;
-		private IPrefabFactory _prefabFactory;
-		private ICruiserController _cruiser;
+        private IPrefabKey _key;
+        private PrefabFactory _prefabFactory;
+        private ICruiserController _cruiser;
         private ISlotAccessor _slotAccessor;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
@@ -30,8 +30,8 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void SetuUp()
         {
             _key = Substitute.For<IPrefabKey>();
-            _prefabFactory = Substitute.For<IPrefabFactory>();
-			_slotAccessor = Substitute.For<ISlotAccessor>();
+            _prefabFactory = Substitute.For<PrefabFactory>();
+            _slotAccessor = Substitute.For<ISlotAccessor>();
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.IsAlive.Returns(true);
             _cruiser.SlotAccessor.Returns(_slotAccessor);
@@ -40,14 +40,14 @@ namespace BattleCruisers.Tests.AI.Tasks
 
             _task.Completed += _task_Completed;
 
-			_building = Substitute.For<IBuilding>();
+            _building = Substitute.For<IBuilding>();
             SlotSpecification slotSpecification = new SlotSpecification(SlotType.Platform, default, default);
             _building.SlotSpecification.Returns(slotSpecification);
             _prefab = Substitute.For<IBuildableWrapper<IBuilding>>();
-			_prefab.Buildable.Returns(_building);
+            _prefab.Buildable.Returns(_building);
             _slot = Substitute.For<ISlot>();
 
-			_numOfCompletedEvents = 0;
+            _numOfCompletedEvents = 0;
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void Start_CannotAffordBuilding_ReturnsFalse()
         {
             _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
-			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _building.NumOfDronesRequired.Returns(4);
             IDroneManager droneManager = Substitute.For<IDroneManager>();
             droneManager.NumOfDrones = 2;
@@ -95,17 +95,17 @@ namespace BattleCruisers.Tests.AI.Tasks
         }
 
         [Test]
-		public void Start_NoAvailabeSlots_ReturnsFalse()
-		{
-			_prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
-			_cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(false);
+        public void Start_NoAvailabeSlots_ReturnsFalse()
+        {
+            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(false);
 
             bool haveStarted = _task.Start();
 
             Assert.IsFalse(haveStarted);
             _cruiser.DidNotReceiveWithAnyArgs().ConstructBuilding(null, null);
-			Assert.AreEqual(0, _numOfCompletedEvents);
-		}
+            Assert.AreEqual(0, _numOfCompletedEvents);
+        }
 
         [Test]
         public void BuildableCompletedEvent_CausesTaskCompletedEvent()
@@ -113,8 +113,8 @@ namespace BattleCruisers.Tests.AI.Tasks
             Start_StartsConstructingBuilding_ReturnsTrue();
 
             _building.CompletedBuildable += Raise.Event();
-			Assert.AreEqual(1, _numOfCompletedEvents);
-		}
+            Assert.AreEqual(1, _numOfCompletedEvents);
+        }
 
         [Test]
         public void BuildableDestroyedEvent_CausesTaskCompletedEvent()
@@ -122,7 +122,7 @@ namespace BattleCruisers.Tests.AI.Tasks
             Start_StartsConstructingBuilding_ReturnsTrue();
 
             _building.Destroyed += Raise.EventWith(new DestroyedEventArgs(_building));
-			Assert.AreEqual(1, _numOfCompletedEvents);
+            Assert.AreEqual(1, _numOfCompletedEvents);
         }
 
         private void _task_Completed(object sender, EventArgs e)

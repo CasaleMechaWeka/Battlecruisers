@@ -7,8 +7,8 @@ using BattleCruisers.Utils.Threading;
 namespace BattleCruisers.AI.Tasks
 {
     public class TaskFactory : ITaskFactory
-	{
-        private readonly IPrefabFactory _prefabFactory;
+    {
+        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
         private readonly IDeferrer _deferrer;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.AI.Tasks
         public const float DEFAULT_DELAY_IN_S = 1.5f;
         public const float MIN_DELAY_IN_S = 0.1f;
 
-        public TaskFactory(IPrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
+        public TaskFactory(PrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer);
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.AI.Tasks
             delayProvider = new DelayProvider(DEFAULT_DELAY_IN_S);
         }
 
-		public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
+        public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
         {
             ITask constructBuildingTask = new ConstructBuildingTask(buildingKey, _prefabFactory, _cruiser);
             return CreatePrioritisedTask(constructBuildingTask, priority);

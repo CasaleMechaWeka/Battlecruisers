@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public abstract class PvPBarrelController : NetworkBehaviour, IBarrelController
     {
-        private IBarrelAdjustmentHelper _adjustmentHelper;
+        private BarrelAdjustmentHelper _adjustmentHelper;
         private IBarrelFiringHelper _firingHelper;
         private IUpdater _updater;
         protected IParticleSystemGroup _muzzleFlash;
@@ -161,7 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.GlobalFireRateBoostProviders);
 
             _adjustmentHelper
-                = new PvPBarrelAdjustmentHelper(
+                = new BarrelAdjustmentHelper(
                     this,
                     args.TargetPositionPredictor,
                     args.TargetPositionValidator,

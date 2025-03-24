@@ -24,10 +24,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
 		}
 
-		public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+		public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
 		{
 			base.Initialise(uiManager, factoryProvider);
-			_boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
+			_boostProvider = new BoostProvider(boostMultiplier);
 		}
 
 		protected override void OnBuildableCompleted()

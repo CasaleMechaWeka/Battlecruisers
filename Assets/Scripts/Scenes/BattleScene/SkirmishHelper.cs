@@ -11,7 +11,6 @@ using BattleCruisers.Utils.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -25,11 +24,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SkirmishHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
-            ILocTable storyStrings,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
+            : base(appModel, prefabFactory, deferrer)
         {
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);
@@ -60,7 +57,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return Task.FromResult("SIMULATRON");
         }
 
-        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncLevel(_skirmish.BackgroundLevelNum);
         }

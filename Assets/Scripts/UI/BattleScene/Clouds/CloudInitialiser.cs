@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             string skyMaterialName,
             IUpdater updater,
             float cameraAspectRatio,
-            IPrefabContainer<BackgroundImageStats> backgroundStats)
+            PrefabContainer<BackgroundImageStats> backgroundStats)
         {
             Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, background);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist, backgroundStats);
@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             fog.Initialise(skyStats.FogColour);
 
 
-             if (skyStats is SkyStatsController skyStatsController)
+            if (skyStats is SkyStatsController skyStatsController)
             {
                 ApplyColoursToElements(skyStatsController.WaterColour, skyStatsController.UnderwaterGlowColour);
             }

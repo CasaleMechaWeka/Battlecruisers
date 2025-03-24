@@ -6,7 +6,6 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -32,9 +31,9 @@ namespace BattleCruisers.Projectiles
 
         private TargetProviderActivationArgs<IProjectileStats> _activationArgs;
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(FactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -65,7 +64,7 @@ namespace BattleCruisers.Projectiles
             missile.enabled = true;
 
             _rocketTarget.GameObject.SetActive(true);
-            _rocketTarget.Initialise(_commonStrings, _activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(_activationArgs.Parent.Faction, _rigidBody, this);
 
             _activationArgs.Target.Destroyed += Target_Destroyed;
         }

@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IGameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer, prefabFactory, itemsPanel);
             _itemsPanel = itemsPanel;
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IGameModel gameModel);
 
         private void ItemButton_Clicked(object sender, EventArgs e)

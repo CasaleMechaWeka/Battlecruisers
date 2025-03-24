@@ -13,13 +13,13 @@ namespace BattleCruisers.Targets.TargetProcessors
         {
             Assert.IsNull(_manualDetectorProvider, "Should only be called once.");
 
-            _manualDetectorProvider 
+            _manualDetectorProvider
                 = args.CruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     args.ParentTarget.Transform,
                     args.MaxRangeInM,
                     args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-            return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(args.EnemyFaction, args.AttackCapabilities);
+            return new RangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
         }
 
         public override void DisposeManagedState()

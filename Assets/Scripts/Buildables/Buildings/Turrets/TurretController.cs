@@ -21,9 +21,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
         public override bool IsBoostable => true;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
             Assert.IsNotNull(_barrelWrapper);

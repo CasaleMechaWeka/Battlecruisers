@@ -1,15 +1,12 @@
 using System;
-using UnityEngine.Assertions;
 using System.Threading.Tasks;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-
+using UnityEngine;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
     public class PvPArenaBackgroundSpriteProvider : IPvPArenaBackgroundSpriteProvider
     {
-        private readonly ISpriteFetcher _spriteFetcher;
         private const string SPRITES_PATH = "Assets/Resources_moved/Sprites/Skies/Backgrounds/";
         private const string PRACTICEWRECKYARDS_SPRITE = "PvPBackgroundWreckyards.png";
         private const string OZPENITENTIARY_SPRITE = "PvPBackgroundOz.png";
@@ -21,20 +18,11 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
         private const string UACULTIMATE_SPRITE = "PvPBackgroundUACUltimate.png";
         private const string MERCENARY_SPRITE = "PvPBackgroundMercenaryOne.png";
 
-
-        public PvPArenaBackgroundSpriteProvider(ISpriteFetcher spriteFetcher)
-        {
-            Assert.IsNotNull(spriteFetcher);
-            _spriteFetcher = spriteFetcher;
-        }
-
-
-        public async Task<ISpriteWrapper> GetSpriteAsync(Map map)
+        public async Task<Sprite> GetSpriteAsync(Map map)
         {
             string spritePath = GetSpritePath(map);
-            return await _spriteFetcher.GetSpriteAsync(spritePath);
+            return await SpriteFetcher.GetSpriteAsync(spritePath);
         }
-
 
         private string GetSpritePath(Map map)
         {

@@ -11,7 +11,7 @@ namespace BattleCruisers.Projectiles.ActivationArgs
 {
     public class SmartMissileActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : IProjectileStats
     {
-        public ICruiserTargetFactoriesProvider TargetFactories { get; }
+        public CruiserTargetFactoriesProvider TargetFactories { get; }
         public ICruiser EnemyCruiser { get; }
 
         public SmartMissileActivationArgs(
@@ -20,8 +20,8 @@ namespace BattleCruisers.Projectiles.ActivationArgs
             Vector2 initialVelocityInMPerS,
             ITargetFilter targetFilter,
             ITarget parent,
-            IAudioClipWrapper impactSound,
-            ICruiserTargetFactoriesProvider targetFactories,
+            AudioClipWrapper impactSound,
+            CruiserTargetFactoriesProvider targetFactories,
             ICruiser enemyCruiser)
             : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)
         {

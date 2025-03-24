@@ -9,14 +9,14 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public interface IFactory : IBuilding
     {
-		UnitCategory UnitCategory { get; }
+        UnitCategory UnitCategory { get; }
         int NumOfDrones { get; }
         IBuildableWrapper<IUnit> UnitWrapper { get; }
         IUnit UnitUnderConstruction { get; }
         IObservableValue<bool> IsUnitPaused { get; }
         LayerMask UnitLayerMask { get; }
-        IAudioClipWrapper SelectedSound { get; }
-        IAudioClipWrapper UnitSelectedSound { get; }
+        AudioClipWrapper SelectedSound { get; }
+        AudioClipWrapper UnitSelectedSound { get; }
 
         void StartBuildingUnit(IBuildableWrapper<IUnit> unit);
         void StopBuildingUnit();
@@ -24,8 +24,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         void ResumeBuildingUnit();
 
         event EventHandler<UnitStartedEventArgs> UnitStarted;
-		event EventHandler<UnitCompletedEventArgs> UnitCompleted;
+        event EventHandler<UnitCompletedEventArgs> UnitCompleted;
         event EventHandler NewUnitChosen;
         event EventHandler UnitUnderConstructionDestroyed;
-	}
+    }
 }

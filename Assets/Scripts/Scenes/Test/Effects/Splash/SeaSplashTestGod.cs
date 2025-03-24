@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
             _aircraft.StartConstruction();
             _aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
 
-            IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
+            FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
             IProjectileStats projectileStats = Substitute.For<IProjectileStats>();
             projectileStats.GravityScale.Returns(1);
             ITarget parent = Substitute.For<ITarget>();
@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
 
             foreach (ProjectileController projectile in _projectiles)
             {
-                projectile.Initialise(helper.CommonStrings, factoryProvider);
+                projectile.Initialise(factoryProvider);
                 projectile.Activate(
                     new ProjectileActivationArgs<IProjectileStats>(
                         projectile.Position,

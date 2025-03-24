@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
     public class BuildingNameFilter : IBroadcastingFilter<IBuildable>, IBuildingPermitter
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
         private IBuilding _permittedBuilding;
         public IPrefabKey PermittedBuilding
@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 
         public event EventHandler PotentialMatchChange;
 
-        public BuildingNameFilter(IPrefabFactory prefabFactory)
+        public BuildingNameFilter(PrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
             _prefabFactory = prefabFactory;

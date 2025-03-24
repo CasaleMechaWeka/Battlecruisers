@@ -4,6 +4,6 @@ namespace BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers
 {
     public interface ITargetRankerWrapper
     {
-        ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory);
+        ITargetRanker CreateTargetRanker(TargetRankerFactory rankerFactory);
     }
 }

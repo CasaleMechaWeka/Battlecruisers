@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Utils.PlatformAbstractions.Audio
 {
-    public class AudioListenerBC : IAudioListener
+    public class AudioListenerBC
     {
         public void Pause()
         {

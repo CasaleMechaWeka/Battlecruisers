@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         protected override void Setup(Helper helper)
         {
-            shipPrefab.StaticInitialise(helper.CommonStrings);
+            shipPrefab.StaticInitialise();
 
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);

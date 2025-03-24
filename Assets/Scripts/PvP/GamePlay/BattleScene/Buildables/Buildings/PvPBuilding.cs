@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
         protected IPvPSlot _parentSlot;
 
-        private IAudioClipWrapper _placementSound;
+        private AudioClipWrapper _placementSound;
         public AudioClip placementSound;
 
         [Header("Slots")]
@@ -62,9 +62,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
@@ -77,8 +77,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(placementSound);
             _placementSound = new AudioClipWrapper(placementSound);
 
-            Name = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Name");
-            Description = _commonStrings.GetString($"Buildables/Buildings/{stringKeyName}Description");
+            Name = LocTableCache.CommonTable.GetString($"Buildables/Buildings/{stringKeyName}Name");
+            Description = LocTableCache.CommonTable.GetString($"Buildables/Buildings/{stringKeyName}Description");
 
             if (!IsHost)
             {
@@ -128,13 +128,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
-        {
-            base.StaticInitialise(parent, healthBar);
-            _placementSound = new AudioClipWrapper(placementSound);
-        }
-
         public override void Activate(PvPBuildingActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
@@ -179,8 +172,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
-                    Name = _commonStrings.GetString(dataProvider.StaticData.Variants[variant_index].VariantNameStringKeyBase);
-                    Description = _commonStrings.GetString(dataProvider.StaticData.Variants[variant_index].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
                 }
                 else

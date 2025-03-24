@@ -3,7 +3,6 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
@@ -36,9 +35,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation
 
 
-        public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -89,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             isVisible = true;
             timeStamp = Time.time;
             SetRocketVisibleClientRpc(true);
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
 
             if (rocketSprite != null)
             {

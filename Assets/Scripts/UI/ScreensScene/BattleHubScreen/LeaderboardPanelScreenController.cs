@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject noData;
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
             noData.SetActive(false);

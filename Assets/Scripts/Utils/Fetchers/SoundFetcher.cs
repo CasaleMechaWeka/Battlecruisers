@@ -8,12 +8,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class SoundFetcher : ISoundFetcher
+    public static class SoundFetcher
     {
         private const string SOUND_ROOT_DIR = "Assets/Resources_moved/Sounds";
         private const char PATH_SEPARATOR = '/';
 
-        public async Task<IAudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
+        public static async Task<AudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
@@ -51,7 +51,7 @@ namespace BattleCruisers.Utils.Fetchers
             return new AudioClipWrapper(handle.Result, handle);
         }
 
-        private string CreateSoundPath(ISoundKey soundKey)
+        private static string CreateSoundPath(ISoundKey soundKey)
         {
             return SOUND_ROOT_DIR + PATH_SEPARATOR + soundKey.Type.ToString() + PATH_SEPARATOR + soundKey.Name;
         }

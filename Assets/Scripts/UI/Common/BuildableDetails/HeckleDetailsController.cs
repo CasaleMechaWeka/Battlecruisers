@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils.Properties;
 using BattleCruisers.Data;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void ShowHeckle(IHeckleData heckleData)
         {
             _selectedItem.Value = heckleData;
-            heckleText.text = LandingSceneGod.Instance.hecklesStrings.GetString(heckleData.StringKeyBase);
+            heckleText.text = LocTableCache.HecklesTable.GetString(heckleData.StringKeyBase);
             heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);
             gameObject.SetActive(true);

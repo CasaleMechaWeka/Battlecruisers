@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class RangeCalculatorProvider : IRangeCalculatorProvider
+    public class RangeCalculatorProvider
     {
         public RangeCalculatorProvider()
         {

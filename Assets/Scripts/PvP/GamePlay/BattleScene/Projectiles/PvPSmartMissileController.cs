@@ -14,7 +14,6 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -87,9 +86,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             //---> CODE BY ANUJ
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
@@ -125,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             //---> CODE BY ANUJ
             _rocketTarget.GameObject.SetActive(true);
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
             //<---
 
             missile.enabled = true;
@@ -144,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            _targetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
+            _targetFinder = new RangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);

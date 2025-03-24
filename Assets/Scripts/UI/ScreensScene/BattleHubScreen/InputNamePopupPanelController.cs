@@ -10,6 +10,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Services.Authentication;
 using System;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -23,14 +24,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private IScreensSceneGod _screenSceneGod;
         private ISingleSoundPlayer _soundPlayer;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private IDataProvider _dataProvider;
         private CaptainExoKey loadedCaptain;
 
         public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        IPrefabFactory prefabFactory,
+        PrefabFactory prefabFactory,
         IDataProvider dataProvider)
         {
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
@@ -47,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             inputField.text = _dataProvider.GameModel.PlayerName;
             spinner.SetActive(false);
             btnLabel.SetActive(true);
-            btnLabel.GetComponent<Text>().text = LandingSceneGod.Instance.commonStrings.GetString("UI/Buttons/SaveButton");
+            btnLabel.GetComponent<Text>().text = LocTableCache.CommonTable.GetString("UI/Buttons/SaveButton");
         }
 
         public void Update()

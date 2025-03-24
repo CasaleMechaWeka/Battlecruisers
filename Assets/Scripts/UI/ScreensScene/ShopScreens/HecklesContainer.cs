@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.ScreensScene
 {
     public class HecklesContainer : MonoBehaviour
     {
-        private ILocTable hecklesStrings;
         public EventHandler<HeckleDataEventArgs> heckleDataChanged;
         public EventHandler<HeckleDataEventArgs> onHeckleItemClick;
 
@@ -29,18 +28,15 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
-        private ILocTable screensSceneTable;
+        private PrefabFactory _prefabFactory;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
-            hecklesStrings = LandingSceneGod.Instance.hecklesStrings;
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
-            screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
             priceLabel = hecklePrice.transform.parent.gameObject;
         }
 
@@ -68,14 +64,14 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                            if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {
                                 // For heckles with 10 or less characters!
-                                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase));
                             }
                             else
                             {
-                                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                             }
                             ScreensSceneGod.Instance.loadoutScreen.AddHeckle(currentHeckleData);
                             priceLabel.SetActive(false);
@@ -90,13 +86,13 @@ namespace BattleCruisers.UI.ScreensScene
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                         }
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -112,14 +108,14 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        if (hecklesStrings.GetString(currentHeckleData.StringKeyBase).Length <= 10)
+                        if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                         {
                             // For heckles with 10 or less characters!
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase));
                         }
                         else
                         {
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("HecklePurchased") + " \"" + hecklesStrings.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HecklePurchased") + " \"" + LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Substring(0, 10) + "...\"");
                         }
                         priceLabel.SetActive(false);
 
@@ -140,7 +136,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -152,10 +148,10 @@ namespace BattleCruisers.UI.ScreensScene
                 // Check for Windows platform
 #if UNITY_STANDALONE_WIN
                 // Execute this line if it's a Windows build
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), null, null);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"), null, null);
 #else
                 // Execute the original line for non-Windows builds
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, screensSceneTable.GetString("GetCoins"));
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableFactory.ScreensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, LocTableFactory.ScreensSceneTable.GetString("GetCoins"));
 #endif
             }
             Debug.Log(_dataProvider.GameModel.Coins);
@@ -181,7 +177,7 @@ namespace BattleCruisers.UI.ScreensScene
                 ownFeedback.SetActive(false);
             }
 
-            t_heckleMessage.text = hecklesStrings.GetString(e.heckleData.StringKeyBase);
+            t_heckleMessage.text = LocTableCache.HecklesTable.GetString(e.heckleData.StringKeyBase);
             hecklePrice.text = e.heckleData.HeckleCost.ToString();
             obj_heckleMessage.GetComponent<RectTransform>().localScale = Vector3.zero;
             obj_heckleMessage.GetComponent<RectTransform>().DOScale(Vector3.one, 0.2f);

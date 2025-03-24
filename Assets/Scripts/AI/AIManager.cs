@@ -18,7 +18,7 @@ namespace BattleCruisers.AI
 {
     public class AIManager : IAIManager
     {
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IDataProvider _dataProvider;
         private readonly IDeferrer _deferrer;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
@@ -28,7 +28,7 @@ namespace BattleCruisers.AI
         private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
         public AIManager(
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider,
             IDeferrer deferrer,
             ICruiserController playerCruiser,

@@ -1,20 +1,19 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
     public class DummySpriteChooser : ISpriteChooser
     {
-        private ISpriteWrapper _sprite;
+        private Sprite _sprite;
 
         public DummySpriteChooser(Sprite sprite)
         {
             Assert.IsNotNull(sprite);
-            _sprite = new SpriteWrapper(sprite);
+            _sprite = sprite;
         }
 
-        public ISpriteWrapper ChooseSprite(Vector2 velocity)
+        public Sprite ChooseSprite(Vector2 velocity)
         {
             return _sprite;
         }

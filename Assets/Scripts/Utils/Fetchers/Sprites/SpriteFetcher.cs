@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Utils.PlatformAbstractions.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +8,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Fetchers.Sprites
 {
-    public class SpriteFetcher : ISpriteFetcher
-	{
-        public async Task<ISpriteWrapper> GetSpriteAsync(string spritePath)
+    public static class SpriteFetcher
+    {
+        public static async Task<Sprite> GetSpriteAsync(string spritePath)
         {
             AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(spritePath);
             await handle.Task;
@@ -22,11 +21,11 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
                 throw new ArgumentException("Failed to retrieve sprite for path: " + spritePath);
             }
 
-            return new SpriteWrapper(handle.Result);
+            return handle.Result;
         }
 
-        public async Task<IList<ISpriteWrapper>> GetMultiSpritesAsync(string spritePath)
-		{
+        public static async Task<IList<Sprite>> GetMultiSpritesAsync(string spritePath)
+        {
             AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(spritePath);
             await handle.Task;
 
@@ -38,8 +37,8 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
 
             return
                 handle.Result
-                    .Select(sprite => (ISpriteWrapper)new SpriteWrapper(sprite))
+                    .Select(sprite => sprite)
                     .ToList();
-		}
+        }
     }
 }

@@ -9,7 +9,6 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UnityEngine.Purchasing;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using BattleCruisers.Scenes;
 using Unity.Services.Authentication;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
@@ -24,13 +23,12 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
 
     public CanvasGroupButton buyBtn, noBtn;
     private IDataProvider _dataProvider;
-    private IPrefabFactory _prefabFactory;
+    private PrefabFactory _prefabFactory;
     private ISingleSoundPlayer _soundPlayer;
 
     private IIAPData _currentIAPData;
 
-    private ILocTable screensSceneStrings;
-    public void Initiaize(IDataProvider dataProvider, IPrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+    public void Initiaize(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
     {
         Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
         _dataProvider = dataProvider;
@@ -43,7 +41,6 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
         description.text = "";
         price.text = "";
         coinPack.sprite = null;
-        screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
     }
 
     private async void Purchase()
@@ -92,26 +89,26 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
             case "Coins100Name":
                 product = IAPManager.instance.storeController.products.WithID(IAPManager.small_coin_pack);
                 spritePath += "Coins100Pack.png";
-                description.text = screensSceneStrings.GetString("Coins100Description");
-                title.text = screensSceneStrings.GetString("Coins100Name");
+                description.text = LocTableCache.ScreensSceneTable.GetString("Coins100Description");
+                title.text = LocTableCache.ScreensSceneTable.GetString("Coins100Name");
                 break;
             case "Coins500Name":
                 product = IAPManager.instance.storeController.products.WithID(IAPManager.medium_coin_pack);
                 spritePath += "Coins500Pack.png";
-                description.text = screensSceneStrings.GetString("Coins500Description");
-                title.text = screensSceneStrings.GetString("Coins500Name");
+                description.text = LocTableCache.ScreensSceneTable.GetString("Coins500Description");
+                title.text = LocTableCache.ScreensSceneTable.GetString("Coins500Name");
                 break;
             case "Coins1000Name":
                 product = IAPManager.instance.storeController.products.WithID(IAPManager.large_coin_pack);
                 spritePath += "Coins1000Pack.png";
-                description.text = screensSceneStrings.GetString("Coins1000Description");
-                title.text = screensSceneStrings.GetString("Coins1000Name");
+                description.text = LocTableCache.ScreensSceneTable.GetString("Coins1000Description");
+                title.text = LocTableCache.ScreensSceneTable.GetString("Coins1000Name");
                 break;
             case "Coins5000Name":
                 product = IAPManager.instance.storeController.products.WithID(IAPManager.extralarge_coin_pack);
                 spritePath += "Coins5000Pack.png";
-                description.text = screensSceneStrings.GetString("Coins5000Description");
-                title.text = screensSceneStrings.GetString("Coins5000Name");
+                description.text = LocTableCache.ScreensSceneTable.GetString("Coins5000Description");
+                title.text = LocTableCache.ScreensSceneTable.GetString("Coins5000Name");
                 break;
         }
 
@@ -130,9 +127,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
             }
 #endif
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
-            ISpriteWrapper spriteWrapper = await spriteFetcher.GetSpriteAsync(spritePath);
-            coinPack.sprite = spriteWrapper.Sprite;
+            coinPack.sprite = await SpriteFetcher.GetSpriteAsync(spritePath);
         }
     }
 

@@ -12,15 +12,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
 
         public ConstructDroneStationStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IConstructBuildingStepsFactory constructBuildingStepsFactory,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            IPrefabFactory prefabFactory)
-            : base(argsFactory, tutorialStrings)
+            PrefabFactory prefabFactory)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory, prefabFactory);
 
@@ -34,7 +33,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
             string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
-            string promptBase = _tutorialStrings.GetString("Steps/ConstructDroneStation/Prompt");
+            string promptBase = LocTableCache.TutorialTable.GetString("Steps/ConstructDroneStation/Prompt");
 
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
@@ -46,7 +45,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/ConstructDroneStation/CompletionMessage"))));
+                        LocTableCache.TutorialTable.GetString("Steps/ConstructDroneStation/CompletionMessage"))));
 
             return steps;
         }

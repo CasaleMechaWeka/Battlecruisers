@@ -14,16 +14,16 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
     public class StartConstructingBuildingStep : TutorialStep, IItemProvider<IBuildable>
     {
         private readonly IPrefabKey _buildingToConstruct;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiserController _parentCruiser;
 
         private IBuilding _building;
 
         public StartConstructingBuildingStep(
-            ITutorialStepArgs args, 
-            IPrefabKey buildingToConstruct, 
-            IPrefabFactory prefabFactory, 
-            ICruiserController parentCruiser) 
+            ITutorialStepArgs args,
+            IPrefabKey buildingToConstruct,
+            PrefabFactory prefabFactory,
+            ICruiserController parentCruiser)
             : base(args)
         {
             Helper.AssertIsNotNull(buildingToConstruct, prefabFactory, parentCruiser);
@@ -39,7 +39,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         }
 
         public override void Start(Action completionCallback)
-		{
+        {
             base.Start(completionCallback);
 
             IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
@@ -50,6 +50,6 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
             _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);
 
             OnCompleted();
-		}
-	}
+        }
+    }
 }

@@ -64,9 +64,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
             Assert.IsNotNull(_bombSpawner);
@@ -83,7 +83,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));*/
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
@@ -97,7 +97,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();

@@ -12,9 +12,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IMovementEffect _movementEffects;
         public PvPMovementEffectInitialiser movementEffectInitialiser;
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             Assert.IsNotNull(movementEffectInitialiser);
             _movementEffects = movementEffectInitialiser.CreateMovementEffects();

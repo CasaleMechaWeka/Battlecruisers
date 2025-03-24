@@ -18,9 +18,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private const float OPTIMAL_RANGE_BUFFER_IN_M = 1;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
             _optimalArmamentRangeInM = FindOptimalArmamentRangeInM();
         }
 

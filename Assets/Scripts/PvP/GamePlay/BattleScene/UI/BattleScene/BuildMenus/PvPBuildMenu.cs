@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly IPvPBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IPvPBuildableMenus<UnitCategory> _unitMenus;
         private readonly ISingleSoundPlayer _uiSoundPlayer;
-        private readonly IAudioClipWrapper _selectorOpeningSound;
+        private readonly AudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
         public ISlidingPanel SelectorPanel { get; }
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPBuildableMenus<BuildingCategory> buildingMenus,
             IPvPBuildableMenus<UnitCategory> unitMenus,
             ISingleSoundPlayer uiSoundPlayer,
-            IAudioClipWrapper selectorOpeningSound)
+            AudioClipWrapper selectorOpeningSound)
         {
             PvPHelper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus, uiSoundPlayer, selectorOpeningSound);
 

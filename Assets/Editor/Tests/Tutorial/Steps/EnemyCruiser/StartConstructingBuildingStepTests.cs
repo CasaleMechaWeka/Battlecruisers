@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
     {
         private StartConstructingBuildingStep _tutorialStep;
         private IPrefabKey _buildingToConstruct;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ICruiserController _parentCruiser;
 
         [SetUp]
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
             base.SetuUp();
 
             _buildingToConstruct = Substitute.For<IPrefabKey>();
-            _prefabFactory = Substitute.For<IPrefabFactory>();
+            _prefabFactory = Substitute.For<PrefabFactory>();
             _parentCruiser = Substitute.For<ICruiserController>();
 
             _tutorialStep = new StartConstructingBuildingStep(_args, _buildingToConstruct, _prefabFactory, _parentCruiser);

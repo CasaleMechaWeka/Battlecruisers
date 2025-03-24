@@ -6,8 +6,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +14,9 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     public class TrashScreenController : ScreenController
     {
         private IApplicationModel _appModel;
-        private IPrefabFactory _prefabFactory;
-        private ISpriteFetcher _spriteFetcher;
+        private PrefabFactory _prefabFactory;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
-        private ILocTable _commonStrings;
-        private ILocTable _storyStrings;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
@@ -47,27 +42,21 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             IApplicationModel appModel,
-            IPrefabFactory prefabFactory,
-            ISpriteFetcher spriteFetcher,
+            PrefabFactory prefabFactory,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
-            IMusicPlayer musicPlayer,
-            ILocTable commonStrings,
-            ILocTable storyStrings)
+            IMusicPlayer musicPlayer)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
-            Helper.AssertIsNotNull(appModel, prefabFactory, spriteFetcher, levelTrashDataList, musicPlayer, commonStrings);
+            Helper.AssertIsNotNull(appModel, prefabFactory, levelTrashDataList, musicPlayer);
 
             _appModel = appModel;
             _prefabFactory = prefabFactory;
-            _spriteFetcher = spriteFetcher;
             _levelTrashDataList = levelTrashDataList;
             _sideQuestTrashDataList = sideQuestTrashDataList;
             _musicPlayer = musicPlayer;
-            _commonStrings = commonStrings;
-            _storyStrings = storyStrings;
 
             startBattleButton.Initialise(soundPlayer, StartBattle);
             homeButton.Initialise(soundPlayer, Cancel);
@@ -145,7 +134,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
                 trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
             }
 
-            trashTalkBubbles.Initialise(trashTalkData, _commonStrings, _storyStrings);
+            trashTalkBubbles.Initialise(trashTalkData);
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
@@ -153,11 +142,10 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
-            ISpriteWrapper skySprite = await _spriteFetcher.GetSpriteAsync(skyPath);
-            sky.sprite = skySprite.Sprite;
+            sky.sprite = await SpriteFetcher.GetSpriteAsync(skyPath);
 
             _musicPlayer.PlayTrashMusic();
-            
+
             // Play taunt animation on captains
             PlayTauntAnimationOnCaptains();
         }

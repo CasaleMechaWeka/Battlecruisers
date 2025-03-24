@@ -1,6 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
@@ -29,8 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
 
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
-        private readonly IPrefabFetcher _prefabFetcher;
-        private readonly ILocTable _storyStrings;
         public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerAPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
         public virtual IPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerBPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
@@ -71,15 +68,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         };
 
         protected PvPBattleSceneHelper(
-            IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
-            ILocTable storyString
-            )
+            IApplicationModel appModel)
         {
             _appModel = appModel;
-            _prefabFetcher = prefabFetcher;
-            _storyStrings = storyString;
-            _backgroundStatsProvider = new BackgroundStatsProvider(_prefabFetcher);
+            _backgroundStatsProvider = new BackgroundStatsProvider();
             // _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabPat
             // PlayerACruiser = new PvPHullKey("PvPYeti");
             // PlayerBCruiser = new PvPHullKey("PvPRaptor");
@@ -98,7 +90,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // return _appModel.DataProvider.GetPvPLevel();
         }
 
-        public virtual async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
         }

@@ -12,10 +12,10 @@ namespace BattleCruisers.Projectiles.Pools
         where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
         where TStats : IProjectileStats
     {
-        private readonly IFactoryProvider _factoryProvider;
+        private readonly FactoryProvider _factoryProvider;
         private readonly ProjectileKey _projectileKey;
 
-        public ProjectileFactory(IFactoryProvider factoryProvider, ProjectileKey projectileKey)
+        public ProjectileFactory(FactoryProvider factoryProvider, ProjectileKey projectileKey)
         {
             Helper.AssertIsNotNull(factoryProvider, projectileKey);
 

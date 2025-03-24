@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -21,7 +20,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine.Assertions;
@@ -32,13 +30,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
     public class BuildableInitialisationArgs
     {
         // Singleton.  Want only one pool provider, especially for performance test scenes.
-        private static IPoolProviders _poolProviders;
+        private static PoolProviders _poolProviders;
 
         public IUIManager UiManager { get; }
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
-        public IFactoryProvider FactoryProvider { get; }
-        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        public FactoryProvider FactoryProvider { get; }
+        public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction ParentCruiserFacingDirection { get; }
 
         public BuildableInitialisationArgs(
@@ -51,12 +49,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            IBoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
-            ISoundFetcher soundFetcher = null,
-            ISpriteChooserFactory spriteChooserFactory = null,
+            SpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
             IDeferrer realTimeDeferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
@@ -72,28 +68,20 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UiManager = uiManager ?? Substitute.For<IUIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
-            ITargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
-            soundFetcher = soundFetcher ?? new SoundFetcher();
+            TargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();
             deferrer = deferrer ?? Substitute.For<IDeferrer>();
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
-            boostFactory = boostFactory ?? new BoostFactory();
 
             FactoryProvider
                 = CreateFactoryProvider(
                     helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
-                    aircraftProvider ?? helper.CreateAircraftProvider(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
-                    boostFactory,
-                    damageApplierFactory ?? new DamageApplierFactory(targetFactoriesProvider.FilterFactory),
-                    soundFetcher,
+                    damageApplierFactory ?? new DamageApplierFactory(),
                     spriteChooserFactory ??
-                        new SpriteChooserFactory(
-                            new AssignerFactory(),
-                            new SpriteProvider(new SpriteFetcher())),
-                    new SoundPlayerFactory(soundFetcher, deferrer),
-                    new TurretStatsFactory(boostFactory, globalBoostProviders),
+                    new SpriteChooserFactory(),
+                    new SoundPlayerFactory(deferrer),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
                     new SpawnDeciderFactory(),
@@ -110,12 +98,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
                         faction);
             }
 
-            CruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            CruiserSpecificFactories = Substitute.For<CruiserSpecificFactories>();
             SetupCruiserSpecificFactories(
                 CruiserSpecificFactories,
                 aircraftProvider ?? helper.CreateAircraftProvider(),
                 globalBoostProviders,
-                turretStatsFactory ?? new TurretStatsFactory(boostFactory, globalBoostProviders),
+                turretStatsFactory ?? new TurretStatsFactory(globalBoostProviders),
                 targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
                 targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
                 targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider),
@@ -123,26 +111,21 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 droneFeedbackFactory);
         }
 
-        private IFactoryProvider CreateFactoryProvider(
-            IPrefabFactory prefabFactory,
+        private FactoryProvider CreateFactoryProvider(
+            PrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
-            IAircraftProvider aircraftProvider,
             IFlightPointsProviderFactory flightPointsProviderFactory,
-            IBoostFactory boostFactory,
             IDamageApplierFactory damageApplierFactory,
-            ISoundFetcher soundFetcher,
-            ISpriteChooserFactory spriteChooserFactory,
+            SpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
-            ITurretStatsFactory turretStatsFactory,
-            IDeferrerProvider deferrerProvider,
-            ITargetFactoriesProvider targetFactories,
+            DeferrerProvider deferrerProvider,
+            TargetFactoriesProvider targetFactories,
             ISpawnDeciderFactory spawnDeciderFactory,
             IUpdaterProvider updaterProvider,
             IUIManager uiManager)
         {
-            IFactoryProvider factoryProvider = Substitute.For<IFactoryProvider>();
+            FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
 
-            factoryProvider.BoostFactory.Returns(boostFactory);
             factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
@@ -155,13 +138,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
 
             // Pools
-            IPoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);
+            PoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);
             factoryProvider.PoolProviders.Returns(poolProviders);
 
             // Sound
             ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
-            soundFactoryProvider.SoundFetcher.Returns(soundFetcher);
-            ISoundPlayer soundPlayer = new SoundPlayer(soundFetcher, poolProviders.AudioSourcePool);
+            ISoundPlayer soundPlayer = new SoundPlayer(poolProviders.AudioSourcePool);
             soundFactoryProvider.SoundPlayer.Returns(soundPlayer);
             soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
             factoryProvider.Sound.Returns(soundFactoryProvider);
@@ -170,14 +152,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         private void SetupCruiserSpecificFactories(
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            CruiserSpecificFactories cruiserSpecificFactories,
             IAircraftProvider aircraftProvider,
             IGlobalBoostProviders globalBoostProviders,
             ITurretStatsFactory turretStatsFactory,
             ITargetProcessorFactory targetProcessorFactory,
-            ITargetTrackerFactory targetTrackerFactory,
-            ITargetDetectorFactory targetDetectorFactory,
-            ITargetProviderFactory targetProviderFactory,
+            TargetTrackerFactory targetTrackerFactory,
+            TargetDetectorFactory targetDetectorFactory,
+            TargetProviderFactory targetProviderFactory,
             IDroneFeedbackFactory droneFeedbackFactory)
         {
             cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);
@@ -190,7 +172,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.DroneFeedbackFactory.Returns(droneFeedbackFactory);
         }
 
-        private static IPoolProviders GetPoolProviders(IFactoryProvider factoryProvider, IUIManager uiManager)
+        private static PoolProviders GetPoolProviders(FactoryProvider factoryProvider, IUIManager uiManager)
         {
             if (_poolProviders == null)
             {

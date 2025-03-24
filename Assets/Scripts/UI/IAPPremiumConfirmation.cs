@@ -2,7 +2,6 @@ using BattleCruisers.Data;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Purchasing;
@@ -22,7 +21,6 @@ public class IAPPremiumConfirmation : MonoBehaviour
     {
         _soundPlayer
         = new SingleSoundPlayer(
-            new SoundFetcher(),
             new EffectVolumeAudioSource(
                 new AudioSourceBC(_uiAudioSource),
                 ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));

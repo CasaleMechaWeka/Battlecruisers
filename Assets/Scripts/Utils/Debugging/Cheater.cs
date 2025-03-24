@@ -10,17 +10,17 @@ namespace BattleCruisers.Utils.Debugging
 {
     public class Cheater : CheaterBase, ICheater
     {
-        private IFactoryProvider _factoryProvider;
+        private FactoryProvider _factoryProvider;
         private ICruiser _playerCruiser, _aiCruiser;
         private float _lastGameSpeed;
 
         [SerializeField] private BattleSceneGod _battleSceneGod;
 
-        public static bool isEnemyGodMode {  get; private set; }
+        public static bool isEnemyGodMode { get; private set; }
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
-        public void Initialise(IFactoryProvider factoryProvider, ICruiser playerCruiser, ICruiser aiCruiser)
+        public void Initialise(FactoryProvider factoryProvider, ICruiser playerCruiser, ICruiser aiCruiser)
         {
             Assert.IsNotNull(hudCanvas);
             Helper.AssertIsNotNull(hudCanvas, playerCruiser, aiCruiser);

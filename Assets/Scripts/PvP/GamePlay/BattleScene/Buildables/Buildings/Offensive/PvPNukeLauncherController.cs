@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPSiloHalfController leftSiloHalf, rightSiloHalf;
         public PvPNukeController nukeMissilePrefab;
 
-        private IAudioClipWrapper _nukeImpactSound;
+        private AudioClipWrapper _nukeImpactSound;
         public AudioClip nukeImpactSound;
 
         private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
@@ -55,9 +55,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             PvPHelper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
@@ -131,7 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _launchedNuke = Instantiate(nukeMissilePrefab);
             _launchedNuke.gameObject.GetComponent<NetworkObject>().Spawn();
             ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
-            _launchedNuke.Initialise(_commonStrings, _factoryProvider);
+            _launchedNuke.Initialise(_factoryProvider);
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,

@@ -12,25 +12,25 @@ using System.Collections.ObjectModel;
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildMenu : IBuildMenu
-	{
+    {
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IBuildableMenus<UnitCategory> _unitMenus;
         private readonly ISingleSoundPlayer _uiSoundPlayer;
-        private readonly IAudioClipWrapper _selectorOpeningSound;
+        private readonly AudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
         public ISlidingPanel SelectorPanel { get; }
         public IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
 
         public BuildMenu(
-			ISlidingPanel selectorPanel,
+            ISlidingPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IBuildableMenus<BuildingCategory> buildingMenus,
             IBuildableMenus<UnitCategory> unitMenus,
             ISingleSoundPlayer uiSoundPlayer,
-            IAudioClipWrapper selectorOpeningSound)
-		{
+            AudioClipWrapper selectorOpeningSound)
+        {
             Helper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus, uiSoundPlayer, selectorOpeningSound);
 
             SelectorPanel = selectorPanel;
@@ -63,10 +63,10 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             return buttons;
         }
 
-		public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
-		{
+        public void ShowBuildingGroupMenu(BuildingCategory buildingCategory)
+        {
             IBuildablesMenu menuToShow = _buildingMenus.GetBuildablesMenu(buildingCategory);
-            
+
             if (ReferenceEquals(_currentMenu, menuToShow))
             {
                 HideCurrentlyShownMenu();
@@ -78,7 +78,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         public void ShowUnitsMenu(IFactory factory)
-		{
+        {
             IBuildablesMenu unitMenu = _unitMenus.GetBuildablesMenu(factory.UnitCategory);
             ShowMenu(unitMenu, factory);
         }
@@ -89,7 +89,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         /// switching from the aircraft units menu for one factory to another factory.
         /// </summary>
 		private void ShowMenu(IMenu menu, object activationParameter = null)
-		{
+        {
             if (_currentMenu == null)
             {
                 _uiSoundPlayer.PlaySound(_selectorOpeningSound);
@@ -112,14 +112,14 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public void HideCurrentlyShownMenu()
         {
-			if (_currentMenu != null)
-			{
+            if (_currentMenu != null)
+            {
                 _lastShownMenu = _currentMenu;
-				_currentMenu.OnDismissing();
+                _currentMenu.OnDismissing();
                 _currentMenu = null;
 
                 SelectorPanel.Hide();
-			}
+            }
         }
 
         public IBuildingCategoryButton GetBuildingCategoryButton(BuildingCategory category)

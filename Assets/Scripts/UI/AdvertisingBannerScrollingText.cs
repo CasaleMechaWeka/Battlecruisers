@@ -2,7 +2,6 @@ using BattleCruisers.Data;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -19,7 +18,6 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     private BoxCollider2D boxCollider;
     private TMP_Text _TextBox;
     private float _xPos;
-    private ILocTable _advertisingTable;
     private int _scrollAdjustment;
     private int[] _randomiserArray = new int[16];
     private int _numberOfRandomAttempts = 0;
@@ -36,11 +34,10 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         HideIAPButton();
 
-        _advertisingTable = await LocTableFactory.Instance.LoadAdvertisingTableAsync();
+        _ = LocTableCache.LoadTableAsync(TableName.ADVERTISING);
 
         _soundPlayer
                 = new SingleSoundPlayer(
-                    new SoundFetcher(),
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
@@ -101,7 +98,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 #if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
         gameObject.SetActive(false);
 
-/*#elif UNITY_ANDROID && FREE_EDITION*/
+        /*#elif UNITY_ANDROID && FREE_EDITION*/
 #elif UNITY_ANDROID
         if (!applicationModel.DataProvider.GameModel.PremiumEdition)
         {
@@ -128,7 +125,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     void Update()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-       
+
 
         if (IAPManager.instance != null)
         {
@@ -206,7 +203,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
             _numberOfRandomAttempts = 0;
         }
 
-        _TextBox.text = _advertisingTable.GetString("ScrollingAd/" + randomnumber);
+        _TextBox.text = LocTableCache.AdvertisingTable.GetString("ScrollingAd/" + randomnumber);
         _scrollAdjustment = (int)(_TextBox.text.Length * 13);
 
     }

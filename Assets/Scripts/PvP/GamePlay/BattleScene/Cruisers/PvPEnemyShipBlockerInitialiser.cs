@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         public ITargetTracker Initialise(
             IPvPTargetFactoriesProvider targetFactoriesProvider,
-            ITargetTrackerFactory targetTrackerFactory,
+            TargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {
             Helper.AssertIsNotNull(targetFactoriesProvider, targetTrackerFactory);
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             };
 
             ITargetFinder targetFinder
-                = targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(
+                = new RangedTargetFinder(
                     targetDetectorController,
                     targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
 

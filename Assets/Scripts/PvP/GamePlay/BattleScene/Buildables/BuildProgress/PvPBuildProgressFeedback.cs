@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBuildProgressFeedback : IPvPBuildProgressFeedback
     {
-        private readonly IFillableImage _buildProgressImage;
+        private readonly Image _buildProgressImage;
         private readonly IGameObject _pausedFeedback;
         private Image _unitImage;
 
@@ -68,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public PvPBuildProgressFeedback(IFillableImage buildProgressImage, IGameObject pausedFeedback, Image unitImage)
+        public PvPBuildProgressFeedback(Image buildProgressImage, IGameObject pausedFeedback, Image unitImage)
         {
             PvPHelper.AssertIsNotNull(buildProgressImage, pausedFeedback);
 
@@ -85,17 +84,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void ShowBuildProgress(float buildProgress)
         {
-            _buildProgressImage.FillAmount = buildProgress;
+            _buildProgressImage.fillAmount = buildProgress;
         }
 
         private void _currentBuildable_CompletedBuildable(object sender, System.EventArgs e)
         {
-            _buildProgressImage.FillAmount = 0;
+            _buildProgressImage.fillAmount = 0;
         }
 
         private void _currentBuildable_Destroyed(object sender, DestroyedEventArgs e)
         {
-            _buildProgressImage.FillAmount = 0;
+            _buildProgressImage.fillAmount = 0;
         }
 
         private void _currentFactory_IsUnitPausedChanged(object sender, System.EventArgs e)
@@ -120,7 +119,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             //      {
             CurrentBuildable = buildable;
             CurrentFactory = buildableFactory;
-            _buildProgressImage.IsVisible = true;
+            _buildProgressImage.gameObject.SetActive(true);
             //      }
         }
 
@@ -129,7 +128,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             CurrentBuildable = null;
             CurrentFactory = null;
 
-            _buildProgressImage.IsVisible = false;
+            _buildProgressImage.gameObject.SetActive(false);
             _pausedFeedback.IsVisible = false;
             _unitImage.color = Color.black;
         }

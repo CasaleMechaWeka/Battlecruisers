@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -12,31 +11,29 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
     public class SpriteChooserTests
     {
         private ISpriteChooser _chooser;
-        private IAssignerFactory _assignerFactory;
-        private IAssigner _assigner;
-        private IList<ISpriteWrapper> _sprites;
-        private ISpriteWrapper _sprite;
+        private LinearProportionAssigner _assigner;
+        private IList<Sprite> _sprites;
+        private Sprite _sprite;
         private IVelocityProvider _maxVelocityProvider;
 
         [SetUp]
         public void SetuUp()
         {
-            _assigner = Substitute.For<IAssigner>();
-            _assignerFactory = Substitute.For<IAssignerFactory>();
+            _assigner = Substitute.For<LinearProportionAssigner>();
 
-			_sprite = Substitute.For<ISpriteWrapper>();
-            _sprites = new List<ISpriteWrapper>()
-			{
-				_sprite
-			};
-   
-            _assignerFactory.CreateAssigner(_sprites.Count).Returns(_assigner);
+            _sprite = Substitute.For<Sprite>();
+            _sprites = new List<Sprite>()
+            {
+                _sprite
+            };
+
+            new LinearProportionAssigner(_sprites.Count).Returns(_assigner);
 
             _maxVelocityProvider = Substitute.For<IVelocityProvider>();
             _maxVelocityProvider.VelocityInMPerS.Returns(5);
 
-            _chooser = new SpriteChooser(_assignerFactory, _sprites, _maxVelocityProvider);
-            _assignerFactory.Received().CreateAssigner(_sprites.Count);
+            _chooser = new SpriteChooser(_sprites, _maxVelocityProvider);
+            new LinearProportionAssigner(_sprites.Count);
         }
 
         [Test]
@@ -62,7 +59,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 
             _assigner.Assign(proportion).Returns(validIndex);
 
-            ISpriteWrapper spriteReturned = _chooser.ChooseSprite(velocity);
+            Sprite spriteReturned = _chooser.ChooseSprite(velocity);
             Assert.AreSame(_sprite, spriteReturned);
         }
 
@@ -76,7 +73,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 
             _assigner.Assign(proportion).Returns(validIndex);
 
-            ISpriteWrapper spriteReturned = _chooser.ChooseSprite(velocity);
+            Sprite spriteReturned = _chooser.ChooseSprite(velocity);
             Assert.AreSame(_sprite, spriteReturned);
         }
     }

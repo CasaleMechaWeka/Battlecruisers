@@ -38,9 +38,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
 
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private ILocTable _commonStrings;
         private Dictionary<IBuilding, List<int>> _unlockedVariants;
         private int _index;
 
@@ -50,14 +49,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public Text variantParentName;
         public StatsController<IBuilding> variantStats;
 
-        public void Initialize(IDataProvider dataProvider, IPrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer, ILocTable commonString)
+        public void Initialize(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNav, rightNav);
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
-            _commonStrings = commonString;
 
             leftNav.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNav.Initialise(_soundPlayer, RightNavButton_OnClicked);
@@ -139,10 +137,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantIcon.gameObject.SetActive(true);
             variantName.gameObject.SetActive(true);
             VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-            variantName.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
+            variantName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-            variantDescription.text = _commonStrings.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
+            variantDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
             variantStats.ShowStatsOfVariant(_selectedBuilding, variant);
         }
 

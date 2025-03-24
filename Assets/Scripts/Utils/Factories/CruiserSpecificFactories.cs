@@ -11,21 +11,21 @@ using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class CruiserSpecificFactories : ICruiserSpecificFactories
+    public class CruiserSpecificFactories
     {
         public IAircraftProvider AircraftProvider { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IDroneFeedbackFactory DroneFeedbackFactory { get; }
         public IGlobalBoostProviders GlobalBoostProviders { get; }
         public ITurretStatsFactory TurretStatsFactory { get; }
-        public ICruiserTargetFactoriesProvider Targets { get; }
+        public CruiserTargetFactoriesProvider Targets { get; }
 
         public CruiserSpecificFactories(
-            IFactoryProvider factoryProvider,
-            ICruiser parentCruiser, 
-            ICruiser enemyCruiser, 
-            IRankedTargetTracker userChosenTargetTracker, 
-            IUpdaterProvider updaterProvider, 
+            FactoryProvider factoryProvider,
+            ICruiser parentCruiser,
+            ICruiser enemyCruiser,
+            IRankedTargetTracker userChosenTargetTracker,
+            IUpdaterProvider updaterProvider,
             Faction faction,
             bool isTutorial)
         {
@@ -33,7 +33,7 @@ namespace BattleCruisers.Utils.Factories
 
             AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
-            TurretStatsFactory = new TurretStatsFactory(factoryProvider.BoostFactory, GlobalBoostProviders);
+            TurretStatsFactory = new TurretStatsFactory(GlobalBoostProviders);
             BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             Targets = new CruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 

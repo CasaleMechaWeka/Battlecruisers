@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
@@ -25,8 +24,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         IRotationMovementController RotationMovementController { get; }
         FacingMinRangePositionValidator TargetPositionValidator { get; }
         AngleLimiter AngleLimiter { get; }
-        IFactoryProvider FactoryProvider { get; }
-        ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        FactoryProvider FactoryProvider { get; }
+        CruiserSpecificFactories CruiserSpecificFactories { get; }
         ITarget Parent { get; }
         ISoundKey SpawnerSoundKey { get; }
         ObservableCollection<IBoostProvider> LocalBoostProviders { get; }

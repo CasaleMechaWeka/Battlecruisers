@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected override ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter();
+            return new ExactMatchTargetFilter();
         }
 
         protected override AngleLimiter CreateAngleLimiter()

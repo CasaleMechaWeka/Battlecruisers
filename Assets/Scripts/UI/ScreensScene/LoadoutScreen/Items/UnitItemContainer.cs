@@ -30,11 +30,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
 
         protected override ItemButton InitialiseItemButton(
-            IItemDetailsManager itemDetailsManager, 
-            IComparingItemFamilyTracker comparingFamilyTracker, 
+            IItemDetailsManager itemDetailsManager,
+            IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer, 
-            IPrefabFactory prefabFactory, IGameModel gameModel)
+            ISingleSoundPlayer soundPlayer,
+            PrefabFactory prefabFactory, IGameModel gameModel)
         {
             IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(Key);
             UnitButton unitButton = GetComponentInChildren<UnitButton>(includeInactive: true);

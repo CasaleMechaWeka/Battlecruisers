@@ -9,13 +9,13 @@ namespace BattleCruisers.Tests.UI.Sound.ProjectileSpawners
     {
         protected IProjectileSpawnerSoundPlayer _soundPlayer;
 
-        protected IAudioClipWrapper _audioClip;
+        protected AudioClipWrapper _audioClip;
         protected IAudioSource _audioSource;
 
         [SetUp]
         public virtual void TestSetup()
         {
-            _audioClip = Substitute.For<IAudioClipWrapper>();
+            _audioClip = Substitute.For<AudioClipWrapper>();
             _audioSource = Substitute.For<IAudioSource>();
         }
     }

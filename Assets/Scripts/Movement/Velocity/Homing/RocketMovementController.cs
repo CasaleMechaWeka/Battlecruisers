@@ -51,13 +51,11 @@ namespace BattleCruisers.Movement.Velocity.Homing
         {
             Assert.IsNotNull(_flightPoints, "FindTargetPosition() called before OnTargetSet() :(");
 
-            float distanceFromCurrentTargetPoint = Vector2.Distance(_rigidBody.position, _currentTargetPoint);
-            if (distanceFromCurrentTargetPoint <= _cruisingAltitidueMarginInM
+            if (Vector2.SqrMagnitude(_rigidBody.position - _currentTargetPoint) <= _cruisingAltitidueMarginInM * _cruisingAltitidueMarginInM
                 && _flightPoints.Count != 0)
             {
                 _currentTargetPoint = _flightPoints.Dequeue();
             }
-
             return _currentTargetPoint;
         }
 

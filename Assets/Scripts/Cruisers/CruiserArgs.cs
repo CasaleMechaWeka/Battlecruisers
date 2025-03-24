@@ -24,8 +24,8 @@ namespace BattleCruisers.Cruisers
         public IDroneManager DroneManager { get; }
         public IDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
-        public IFactoryProvider FactoryProvider { get; }
-        public ICruiserSpecificFactories CruiserSpecificFactories { get; }
+        public FactoryProvider FactoryProvider { get; }
+        public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
         public FogStrength FogStrength { get; }
@@ -38,16 +38,16 @@ namespace BattleCruisers.Cruisers
         public IBroadcastingProperty<bool> HasActiveDrones { get; }
 
         public CruiserArgs(
-            Faction faction, 
-            ICruiser enemyCruiser, 
-            IUIManager uiManager, 
+            Faction faction,
+            ICruiser enemyCruiser,
+            IUIManager uiManager,
             IDroneManager droneManager,
             IDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
-            Direction facingDirection, 
-            IRepairManager repairManager, 
+            FactoryProvider factoryProvider,
+            CruiserSpecificFactories cruiserSpecificFactories,
+            Direction facingDirection,
+            IRepairManager repairManager,
             FogStrength fogStrength,
             ICruiserHelper helper,
             ISlotFilter highlightableFilter,
@@ -58,16 +58,16 @@ namespace BattleCruisers.Cruisers
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
             BCUtils.Helper.AssertIsNotNull(
-                enemyCruiser, 
-                uiManager, 
-                droneManager, 
+                enemyCruiser,
+                uiManager,
+                droneManager,
                 droneFocuser,
-                droneConsumerProvider, 
-                factoryProvider, 
+                droneConsumerProvider,
+                factoryProvider,
                 cruiserSpecificFactories,
-                repairManager, 
-                helper, 
-                highlightableFilter, 
+                repairManager,
+                helper,
+                highlightableFilter,
                 buildProgressCalculator,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,

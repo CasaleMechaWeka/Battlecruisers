@@ -12,7 +12,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +30,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
             IPvPBuildableSorterFactory sorterFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            ISpriteProvider spriteProvider,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
@@ -44,7 +42,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 units,
                 sorterFactory,
                 buttonVisibilityFilters,
-                spriteProvider,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
                 uiSoundPlayer,
@@ -74,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     uiSoundPlayer,
                     playerCruiserFocusHelper,
                     new AudioClipWrapper(buildingButtonSelectedSound));
-            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, spriteProvider, uiSoundPlayer, buildingClickHandler, flipClickAndDragIcon);
+            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, uiSoundPlayer, buildingClickHandler, flipClickAndDragIcon);
 
             // Unit menus
             IPvPUnitClickHandler unitClickHandler

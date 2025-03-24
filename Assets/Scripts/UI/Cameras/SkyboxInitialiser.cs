@@ -11,8 +11,7 @@ namespace BattleCruisers.UI.Cameras
         {
             Helper.AssertIsNotNull(skybox, skyMaterialName);
 
-            IMaterialFetcher materialFetcher = new MaterialFetcher();
-            skybox.material = await materialFetcher.GetMaterialAsync(skyMaterialName);
+            skybox.material = await MaterialFetcher.GetMaterialAsync(skyMaterialName);
         }
     }
 }

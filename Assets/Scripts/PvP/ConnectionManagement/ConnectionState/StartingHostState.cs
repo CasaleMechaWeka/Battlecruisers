@@ -6,6 +6,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Scenes;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -97,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 Debug.Log("Error ---> connecting client, see following exception");
                 Debug.Log(e.Message);
-                LandingSceneGod.Instance.messagebox.ShowMessage(LandingSceneGod.Instance.commonStrings.GetString("NetworkError"));
+                LandingSceneGod.Instance.messagebox.ShowMessage(LocTableCache.CommonTable.GetString("NetworkError"));
                 StartHostFailed();
             }
         }

@@ -4,8 +4,6 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BattleCruisers.Tutorial
@@ -20,14 +18,13 @@ namespace BattleCruisers.Tutorial
         public HighlighterInitialiser highlighterInitialiser;
         public MainMenuButtonController modalMainMenuButton;
 
-        public async Task InitialiseAsync(
-            ITutorialArgsBase baseArgs, 
-            bool showInGameHints, 
-            ICruiserDamageMonitor playerCruiserDamageMonitor,
-            ILocTable commonStrings)
+        public void Initialise(
+            ITutorialArgsBase baseArgs,
+            bool showInGameHints,
+            ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
             Helper.AssertIsNotNull(tutorialManager, explanationPanel, highlighterInitialiser, modalMainMenuButton);
-            Helper.AssertIsNotNull(baseArgs, playerCruiserDamageMonitor, commonStrings);
+            Helper.AssertIsNotNull(baseArgs, playerCruiserDamageMonitor);
 
             if (!baseArgs.AppModel.IsTutorial
                 && !showInGameHints)
@@ -47,9 +44,7 @@ namespace BattleCruisers.Tutorial
                 baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
                 baseArgs.AppModel.DataProvider.SaveGame();
 
-                ILocTable tutorialStrings = await LocTableFactory.Instance.LoadTutorialTableAsync();
-
-                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton, tutorialStrings, commonStrings);
+                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);
                 tutorialManager.StartTutorial();
             }

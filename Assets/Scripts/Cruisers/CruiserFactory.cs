@@ -26,7 +26,7 @@ namespace BattleCruisers.Cruisers
 {
     public class CruiserFactory : ICruiserFactory
     {
-        private readonly IFactoryProvider _factoryProvider;
+        private readonly FactoryProvider _factoryProvider;
         private readonly IBattleSceneHelper _helper;
         private readonly IApplicationModel _applicationModel;
         private readonly ISlotFilter _highlightableSlotFilter;
@@ -36,7 +36,7 @@ namespace BattleCruisers.Cruisers
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public CruiserFactory(
-            IFactoryProvider factoryProvider,
+            FactoryProvider factoryProvider,
             IBattleSceneHelper helper,
             IApplicationModel applicationModel,
             IUIManager uiManager)
@@ -157,7 +157,7 @@ namespace BattleCruisers.Cruisers
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
             bool isPlayerCruiser)
         {
-            ICruiserSpecificFactories cruiserSpecificFactories
+            CruiserSpecificFactories cruiserSpecificFactories
                 = new CruiserSpecificFactories(
                     _factoryProvider,
                     cruiser,

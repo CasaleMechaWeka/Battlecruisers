@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 {
-    public class BarrelAdjustmentHelper : IBarrelAdjustmentHelper
+    public class BarrelAdjustmentHelper
     {
         private readonly IBarrelController _barrelController;
         private readonly ITargetPositionPredictor _targetPositionPredictor;

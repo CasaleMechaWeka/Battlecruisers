@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
     {
         private BuildingNameFilter _filter;
 
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private IBuildable _buildableToFilter;
         private IPrefabKey _permittedBuildingKey;
         private IBuildableWrapper<IBuilding> _permittedBuildingWrapper;
@@ -22,20 +22,20 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
         [SetUp]
         public void SetuUp()
         {
-            _prefabFactory = Substitute.For<IPrefabFactory>();
+            _prefabFactory = Substitute.For<PrefabFactory>();
             _filter = new BuildingNameFilter(_prefabFactory);
 
             _eventCounter = 0;
-			_filter.PotentialMatchChange += (sender, e) => _eventCounter++;
-            
+            _filter.PotentialMatchChange += (sender, e) => _eventCounter++;
+
             _buildableToFilter = Substitute.For<IBuildable>();
             _buildableToFilter.Name.Returns("Zeit");
             _permittedBuildingKey = Substitute.For<IPrefabKey>();
             _permittedBuilding = Substitute.For<IBuilding>();
-			
+
             _permittedBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _permittedBuildingWrapper.Buildable.Returns(_permittedBuilding);
-			_prefabFactory.GetBuildingWrapperPrefab(_permittedBuildingKey).Returns(_permittedBuildingWrapper);
+            _prefabFactory.GetBuildingWrapperPrefab(_permittedBuildingKey).Returns(_permittedBuildingWrapper);
         }
 
         [Test]

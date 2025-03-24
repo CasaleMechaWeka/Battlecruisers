@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public static ProfilePanelScreenController Instance { get; private set; }
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
 
         public CanvasGroupButton captainEditButton;
         public CanvasGroupButton playerNameEditButton;
@@ -51,12 +51,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text notorietyScore;
         private string playerID;
 
-        private ILocTable commonStrings;
-
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
@@ -67,11 +65,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
-            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            million = commonStrings.GetString("Million");
-            billion = commonStrings.GetString("Billion");
-            trillion = commonStrings.GetString("Trillion");
-            quadrillion = commonStrings.GetString("Quadrillion");
+            million = LocTableCache.CommonTable.GetString("Million");
+            billion = LocTableCache.CommonTable.GetString("Billion");
+            trillion = LocTableCache.CommonTable.GetString("Trillion");
+            quadrillion = LocTableCache.CommonTable.GetString("Quadrillion");
 
             captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
@@ -85,9 +82,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             playerName.text = _dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(_dataProvider.GameModel.LifetimeDestructionScore);
-            rankTitle.text = commonStrings.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
-            SpriteFetcher fetcher = new SpriteFetcher();
-            rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+            rankTitle.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
+            rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
 
             int nextLevelXP;
             int currentXP;

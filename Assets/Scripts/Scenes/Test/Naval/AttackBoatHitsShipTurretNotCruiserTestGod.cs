@@ -55,7 +55,7 @@ namespace BattleCruisers.Scenes.Test.Naval
 
             // Setup fake cruiser
             TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
-            fakeCruiser.Initialise(helper.CommonStrings, Faction.Reds);
+            fakeCruiser.Initialise(Faction.Reds);
         }
     }
 }

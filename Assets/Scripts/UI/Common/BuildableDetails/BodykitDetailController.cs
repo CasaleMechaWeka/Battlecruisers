@@ -88,21 +88,19 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
 
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private ILocTable _commonStrings;
         private Dictionary<HullType, List<int>> _unlockedBodykits = new Dictionary<HullType, List<int>>();
         private int _index;
         public CanvasGroupButton leftNavButton, rightNavButton;
 
-        public void Initialise(IDataProvider dataProvider, IPrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer, ILocTable commonStrings)
+        public void Initialise(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNavButton, rightNavButton);
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
-            _commonStrings = commonStrings;
 
             leftNavButton.Initialise(_soundPlayer, LeftNavButton_OnClicked);
             rightNavButton.Initialise(_soundPlayer, RightNavButton_OnClicked);
@@ -183,8 +181,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             if (index < 0)
                 return;
             Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
-            GetComponent<ComparableCruiserDetailsController>().itemName.text = _commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = _commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+            GetComponent<ComparableCruiserDetailsController>().itemName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].NameStringKeyBase);
+            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemImage.sprite = bodykit.BodykitImage;
         }
 

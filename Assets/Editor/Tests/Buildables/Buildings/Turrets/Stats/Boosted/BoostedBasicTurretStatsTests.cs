@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted;
 using NSubstitute;
 using NUnit.Framework;
@@ -13,8 +14,8 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
         {
             CreateTurretStats();
 
-            _boostFactory.Received().CreateBoostable();
-            _boostFactory.Received().CreateBoostableGroup();
+            new Boostable(1);
+            new BoostableGroup();
             _boostableGroup.Received().AddBoostable(_boostable);
             _boostableGroup.Received().AddBoostProvidersList(_localBoostProviders);
             _boostableGroup.Received().AddBoostProvidersList(_globalBoostProviders.DefenseFireRateBoostProviders);
@@ -50,7 +51,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 
         private IBasicTurretStats CreateTurretStats()
         {
-            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _boostFactory, _localBoostProviders, _globalBoostProviders.DefenseFireRateBoostProviders);
+            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _localBoostProviders, _globalBoostProviders.DefenseFireRateBoostProviders);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IDataProvider dataProvider,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory)
+            PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, dataProvider, selectedHull, soundPlayer, prefabFactory);
 

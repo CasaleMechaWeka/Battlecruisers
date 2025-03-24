@@ -19,11 +19,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
         public float boostMultiplier;
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _boostProvider = _factoryProvider.BoostFactory.CreateBoostProvider(boostMultiplier);
+            _boostProvider = new BoostProvider(boostMultiplier);
 
             _boosterGlow = transform.FindNamedComponent<ParticleSystem>("LocalBoosterMasterGlow");
             _boosterGlow.gameObject.SetActive(false);

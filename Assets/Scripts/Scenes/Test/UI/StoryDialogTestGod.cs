@@ -3,7 +3,6 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using NSubstitute;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.UI
         {
             Helper.AssertIsNotNull(trashScreen, trashDataList, levelButtonsPanel);
 
-            trashDataList.Initialise(helper.StoryStrings);
+            trashDataList.Initialise();
 
             trashScreen
                 .Initialise(
@@ -31,12 +30,9 @@ namespace BattleCruisers.Scenes.Test.UI
                     Substitute.For<ISingleSoundPlayer>(),
                     ApplicationModelProvider.ApplicationModel,
                     helper.PrefabFactory,
-                    new SpriteFetcher(),
                     trashDataList,
                     trashDataList,
-                    Substitute.For<IMusicPlayer>(),
-                    helper.CommonStrings,
-                    helper.StoryStrings);
+                    Substitute.For<IMusicPlayer>());
 
             levelButtonsPanel
                 .Initialise(

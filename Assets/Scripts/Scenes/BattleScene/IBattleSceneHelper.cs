@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IPrioritisedSoundPlayer soundPlayer,
             ITargetIndicator targetIndicator);
         Task<string> GetEnemyNameAsync(int levelNum);
-        Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
+        Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
         IPrefabKey GetAiCruiserKey();
     }
 }

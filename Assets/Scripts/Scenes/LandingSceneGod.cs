@@ -5,7 +5,6 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -80,9 +79,6 @@ namespace BattleCruisers.Scenes
         public GameObject labelRetry;
 
         public const string AuthProfileCommandLineArg = "-AuthProfile";
-        public ILocTable commonStrings;
-        public ILocTable hecklesStrings;
-        public ILocTable screenSceneStrings;
 
         public static LandingSceneGod Instance;
         public LoginType loginType = LoginType.None;
@@ -149,9 +145,9 @@ namespace BattleCruisers.Scenes
 
             //loading loc tables in parallel is about 40-100% faster
             //Starting these tasks here saves ~100 ms avg
-            Task<ILocTable> loadCommonStrings = LocTableFactory.Instance.LoadCommonTableAsync();
-            Task<ILocTable> loadHeckesStrings = LocTableFactory.Instance.LoadHecklesTableAsync();
-            Task<ILocTable> loadScreensSceneStrings = LocTableFactory.Instance.LoadScreensSceneTableAsync();
+            _ = LocTableCache.LoadTableAsync(TableName.COMMON);
+            _ = LocTableCache.LoadTableAsync(TableName.HECKLES);
+            _ = LocTableCache.LoadTableAsync(TableName.SCREENS_SCENE);
 
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
@@ -163,7 +159,6 @@ namespace BattleCruisers.Scenes
                 CurrentInternetConnectivity = DisconnectedState;
             InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
 
-            ISoundFetcher soundFetcher = new SoundFetcher();
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource
@@ -171,10 +166,7 @@ namespace BattleCruisers.Scenes
                     new AudioSourceBC(platformAudioSource),
                     applicationModel.DataProvider.SettingsManager);
 
-            soundPlayer = new SingleSoundPlayer(
-                new SoundFetcher(),
-                audioSource
-                );
+            soundPlayer = new SingleSoundPlayer(audioSource);
 
             try
             {
@@ -222,13 +214,7 @@ namespace BattleCruisers.Scenes
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
-            await Task.WhenAll(loadCommonStrings, loadHeckesStrings, loadScreensSceneStrings);
-
-            commonStrings = loadCommonStrings.Result;
-            hecklesStrings = loadHeckesStrings.Result;
-            screenSceneStrings = loadScreensSceneStrings.Result;
-
-            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance, commonStrings);
+            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
             _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
 
             try
@@ -322,7 +308,7 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
-            guestBtn.GetComponentInChildren<TMP_Text>().text = screenSceneStrings.GetString("UI/HomeScreen/PlayButton");
+            guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
 
             if (CurrentInternetConnectivity.IsConnected)
             {
@@ -747,9 +733,7 @@ namespace BattleCruisers.Scenes
 
             return
                 new MusicPlayer(
-                    new SingleSoundPlayer(
-                        new SoundFetcher(),
-                        audioSource));
+                    new SingleSoundPlayer(audioSource));
         }
 
         public void GoToScene(string sceneName, bool stopMusic)

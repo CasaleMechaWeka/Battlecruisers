@@ -24,19 +24,17 @@ using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class PrefabFactory : IPrefabFactory
+    public class PrefabFactory
     {
-        private readonly IPrefabCache _prefabCache;
+        private readonly PrefabCache _prefabCache;
         private readonly ISettingsManager _settingsManager;
-        private readonly ILocTable _commonStrings;
 
-        public PrefabFactory(IPrefabCache prefabCache, ISettingsManager settingsManager, ILocTable commonStrings)
+        public PrefabFactory(PrefabCache prefabCache, ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(prefabCache, settingsManager, commonStrings);
+            Helper.AssertIsNotNull(prefabCache, settingsManager);
 
             _prefabCache = prefabCache;
             _settingsManager = settingsManager;
-            _commonStrings = commonStrings;
         }
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
@@ -47,7 +45,7 @@ namespace BattleCruisers.Utils.Fetchers
         public IBuilding CreateBuilding(
             IBuildableWrapper<IBuilding> buildingWrapperPrefab,
             IUIManager uiManager,
-            IFactoryProvider factoryProvider)
+            FactoryProvider factoryProvider)
         {
             return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager, factoryProvider);
         }
@@ -60,7 +58,7 @@ namespace BattleCruisers.Utils.Fetchers
         public IUnit CreateUnit(
             IBuildableWrapper<IUnit> unitWrapperPrefab,
             IUIManager uiManager,
-            IFactoryProvider factoryProvider)
+            FactoryProvider factoryProvider)
         {
             return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
         }
@@ -68,13 +66,13 @@ namespace BattleCruisers.Utils.Fetchers
         private TBuildable CreateBuildable<TBuildable>(
             BuildableWrapper<TBuildable> buildableWrapperPrefab,
             IUIManager uiManager,
-            IFactoryProvider factoryProvider) where TBuildable : class, IBuildable
+            FactoryProvider factoryProvider) where TBuildable : class, IBuildable
         {
             Helper.AssertIsNotNull(buildableWrapperPrefab, uiManager, factoryProvider);
 
             BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
-            buildableWrapper.StaticInitialise(_commonStrings);
+            buildableWrapper.StaticInitialise();
             buildableWrapper.Buildable.Initialise(uiManager, factoryProvider);
 
             Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
@@ -89,7 +87,7 @@ namespace BattleCruisers.Utils.Fetchers
         public Cruiser CreateCruiser(Cruiser cruiserPrefab)
         {
             Cruiser cruiser = Object.Instantiate(cruiserPrefab);
-            cruiser.StaticInitialise(_commonStrings);
+            cruiser.StaticInitialise();
             return cruiser;
         }
 
@@ -107,7 +105,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newShipDeath.CreateShipDeath();
         }
 
-        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, IFactoryProvider factoryProvider)
+        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, FactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
@@ -116,14 +114,14 @@ namespace BattleCruisers.Utils.Fetchers
 
             TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
             TProjectile projectile = Object.Instantiate(prefab);
-            projectile.Initialise(_commonStrings, factoryProvider);
+            projectile.Initialise(factoryProvider);
             return projectile;
         }
 
         public IDroneController CreateDrone()
         {
             DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
-            newDrone.StaticInitialise(_commonStrings);
+            newDrone.StaticInitialise();
             return newDrone;
         }
 

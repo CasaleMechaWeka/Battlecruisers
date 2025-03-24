@@ -12,13 +12,13 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
     public class StartConstructingUnitStep : TutorialStep
     {
         private readonly IPrefabKey _unitToConstruct;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IItemProvider<IFactory> _factoryProvider;
 
         public StartConstructingUnitStep(
             ITutorialStepArgs args,
             IPrefabKey unitToConstruct,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IItemProvider<IFactory> factoryProvider)
             : base(args)
         {

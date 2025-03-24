@@ -6,7 +6,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class PlayerInfoPanelController : MonoBehaviour
@@ -19,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             Instance = this;
         }
-        public async void UpdateInfo(IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public async void UpdateInfo(IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
             CaptainExo captain = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
@@ -30,8 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _playerName.text = dataProvider.GameModel.PlayerName;
 
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
-            SpriteFetcher fetcher = new SpriteFetcher();
-            _rankImage.sprite = (await fetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png")).Sprite;
+            _rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
         }
 
         private int CalculateRank(long score)

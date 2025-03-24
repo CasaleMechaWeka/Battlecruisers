@@ -11,7 +11,6 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -37,9 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override float TrailLifetimeInS => 3;
         public ITarget Target { get; private set; }
 
-        public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             //---> CODE BY ANUJ
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
@@ -87,7 +86,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             //<---
             SetMissileVisibleClientRpc(true);
             //---> CODE BY ANUJ
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
             //<---
             activationArgs.Target.Destroyed += Target_Destroyed;
         }

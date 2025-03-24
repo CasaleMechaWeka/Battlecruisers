@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         public SiloHalfController leftSiloHalf, rightSiloHalf;
         public NukeController nukeMissilePrefab;
 
-        private IAudioClipWrapper _nukeImpactSound;
+        private AudioClipWrapper _nukeImpactSound;
         public AudioClip nukeImpactSound;
 
         private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
@@ -48,9 +48,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             Helper.AssertIsNotNull(leftSiloHalf, rightSiloHalf, nukeMissilePrefab);
 
@@ -70,7 +70,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             _nukeImpactSound = new AudioClipWrapper(nukeImpactSound);
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 
@@ -100,8 +100,8 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         {
             _launchedNuke = Instantiate(nukeMissilePrefab);
 
-            ITargetFilter targetFilter = _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
-            _launchedNuke.Initialise(_commonStrings, _factoryProvider);
+            ITargetFilter targetFilter = new ExactMatchTargetFilter { Target = EnemyCruiser };
+            _launchedNuke.Initialise(_factoryProvider);
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,

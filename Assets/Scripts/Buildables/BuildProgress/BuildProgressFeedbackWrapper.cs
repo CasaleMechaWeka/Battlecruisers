@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -18,9 +17,9 @@ namespace BattleCruisers.Buildables.BuildProgress
 
             Image pausedFeedback = transform.FindNamedComponent<Image>("PausedFeedback");
 
-            return 
+            return
                 new BuildProgressFeedback(
-                    new FillableImage(fillableImage),
+                    fillableImage,
                     new GameObjectBC(pausedFeedback.gameObject),
                     unitImage);
         }

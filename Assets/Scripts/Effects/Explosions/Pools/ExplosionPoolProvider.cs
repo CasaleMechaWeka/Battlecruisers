@@ -25,7 +25,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public IPool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
 
 
-        public ExplosionPoolProvider(IPrefabFactory prefabFactory)
+        public ExplosionPoolProvider(PrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
 
@@ -45,7 +45,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.ExplosionFiveShellCluster);
         }
 
-        private IPool<IPoolable<Vector3>, Vector3> CreateExplosionPool(IPrefabFactory prefabFactory, ExplosionKey explosionKey)
+        private IPool<IPoolable<Vector3>, Vector3> CreateExplosionPool(PrefabFactory prefabFactory, ExplosionKey explosionKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(

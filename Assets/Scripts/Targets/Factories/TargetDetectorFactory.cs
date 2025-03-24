@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetDetectorFactory : ITargetDetectorFactory
+    public class TargetDetectorFactory
     {
         private readonly IUnitTargets _enemyTargets, _friendlyTargets;
         private readonly IUpdaterProvider _updaterProvider;

@@ -51,9 +51,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IDamageApplier _areaDamageApplier;
         public override bool KeepDistanceFromEnemyCruiser => false;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             //Helper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 
@@ -71,7 +71,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
             AudioSourceBC[] sources = new AudioSourceBC[audioSources.Length];
@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     sources);
         }
 
-        public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, ICruiserSpecificFactories cruiserSpecificFactories)
+        public override void Activate(ICruiser parentCruiser, ICruiser enemyCruiser, CruiserSpecificFactories cruiserSpecificFactories)
         {
             base.Activate(parentCruiser, enemyCruiser, cruiserSpecificFactories);
         }

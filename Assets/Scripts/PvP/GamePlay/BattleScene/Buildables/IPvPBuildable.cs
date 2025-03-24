@@ -9,7 +9,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.UI;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -57,7 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         event EventHandler<PvPBuildProgressEventArgs> BuildableProgress;
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
-        void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings);
         void StaticInitialise(GameObject parent, PvPHealthBarController healthBar);
         void Initialise(IPvPFactoryProvider factoryProvider);
         void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager);

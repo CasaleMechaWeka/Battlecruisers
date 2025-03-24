@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             // Setup target 1
             Vector2 target1Position = new Vector2(-3, 0);
             ConstructBuilding(target1Position);
-            
+
             // Setup target 2
             Vector2 target2Position = new Vector2(3, 0);
             ConstructBuilding(target2Position);
@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         {
             BuildableWrapper<IBuilding> buildingWrapper = Instantiate(targetPrefab);
             buildingWrapper.gameObject.SetActive(true);
-            buildingWrapper.StaticInitialise(_helper.CommonStrings);
+            buildingWrapper.StaticInitialise();
 
             IBuilding building = buildingWrapper.Buildable;
             building.Position = position;

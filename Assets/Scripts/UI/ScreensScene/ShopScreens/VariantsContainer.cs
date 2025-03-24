@@ -30,8 +30,6 @@ namespace BattleCruisers.UI.ScreensScene
 
         public EventHandler<VariantDataEventArgs> variantDataChanged;
         public EventHandler<VariantDataEventArgs> onVariantItemClick;
-        public ILocTable commonStrings;
-        private ILocTable screensSceneTable;
         public VariantItemController currentItem;
         public IVariantData currentVariantData;
         public GameObject btnBuy, ownFeedback;
@@ -39,17 +37,15 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private VariantPrefab currentVariant;
         public GameObject content;
         public GameObject variantMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_variantsMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IPrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
         {
-            commonStrings = LandingSceneGod.Instance.commonStrings;
-            screensSceneTable = LandingSceneGod.Instance.screenSceneStrings;
             variantDataChanged += VariantDataChanged;
             onVariantItemClick += OnVariantItemClick;
             _soundPlayer = soundPlayer;
@@ -85,20 +81,20 @@ namespace BattleCruisers.UI.ScreensScene
                             _dataProvider.SaveGame();
                             await _dataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableCache.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
                             priceLabel.SetActive(false);
                         }
                         else
                         {
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                            ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                         }
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                     }
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                 }
                 else
@@ -115,7 +111,7 @@ namespace BattleCruisers.UI.ScreensScene
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                         _dataProvider.GameModel.AddVariant(currentVariantData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("PurchasedVariant") + " " + commonStrings.GetString(currentVariantData.VariantNameStringKeyBase));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableCache.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
@@ -135,7 +131,7 @@ namespace BattleCruisers.UI.ScreensScene
                     catch
                     {
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                        ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("TryAgain"));
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                     }
                     ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 }
@@ -143,7 +139,7 @@ namespace BattleCruisers.UI.ScreensScene
             else
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
-                ScreensSceneGod.Instance.messageBox.ShowMessage(screensSceneTable.GetString("InsufficientCredits"), null, null);
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"), null, null);
                 return;
             }
         }
@@ -196,8 +192,8 @@ namespace BattleCruisers.UI.ScreensScene
             VariantPrice.text = e.variantData.VariantCredits.ToString();
             ParentImage.sprite = e.parentSprite;
             variantIcon.sprite = e.variantSprite;
-            VariantName.text = commonStrings.GetString(e.variantData.VariantNameStringKeyBase);
-            variantDescription.text = commonStrings.GetString(e.variantData.VariantDescriptionStringKeyBase);
+            VariantName.text = LocTableCache.CommonTable.GetString(e.variantData.VariantNameStringKeyBase);
+            variantDescription.text = LocTableCache.CommonTable.GetString(e.variantData.VariantDescriptionStringKeyBase);
             ParentName.text = e.parentName;
         }
 

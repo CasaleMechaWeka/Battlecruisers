@@ -22,16 +22,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
 
         public BoostedBasicTurretStats(
             TStats baseStats,
-            IBoostFactory boostFactory,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
         {
-            Helper.AssertIsNotNull(baseStats, boostFactory, localBoostProviders, globalFireRateBoostProviders);
+            Helper.AssertIsNotNull(baseStats, localBoostProviders, globalFireRateBoostProviders);
 
             _baseStats = baseStats;
 
-            _fireRateBoostable = boostFactory.CreateBoostable();
-            _fireRateBoostabelGroup = boostFactory.CreateBoostableGroup();
+            _fireRateBoostable = new Boostable(1);
+            _fireRateBoostabelGroup = new BoostableGroup();
             _fireRateBoostabelGroup.AddBoostable(_fireRateBoostable);
             _fireRateBoostabelGroup.AddBoostProvidersList(globalFireRateBoostProviders);
             _fireRateBoostabelGroup.AddBoostProvidersList(localBoostProviders);

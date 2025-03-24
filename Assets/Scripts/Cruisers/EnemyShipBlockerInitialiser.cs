@@ -2,6 +2,7 @@
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ namespace BattleCruisers.Cruisers
     public class EnemyShipBlockerInitialiser : MonoBehaviour
     {
         public ITargetTracker Initialise(
-            ITargetFactoriesProvider targetFactoriesProvider, 
-            ITargetTrackerFactory targetTrackerFactory,
+            TargetFactoriesProvider targetFactoriesProvider,
+            TargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {
             Helper.AssertIsNotNull(targetFactoriesProvider, targetTrackerFactory);
@@ -28,9 +29,9 @@ namespace BattleCruisers.Cruisers
             };
 
             ITargetFinder targetFinder
-                = targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(
+                = new RangedTargetFinder(
                     targetDetectorController,
-                    targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
+                    new FactionAndTargetTypeFilter(enemyFaction, targetTypesToFind));
 
             return targetTrackerFactory.CreateTargetTracker(targetFinder);
         }

@@ -11,9 +11,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Unity.Services.Core;
-using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections;
-using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -28,11 +26,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public BodykitsContainer bodykitsContainer;
         public VariantsContainer variantsContainer;
         public GameObject hecklesMessage;
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private IDataProvider _dataProvider;
         public Transform captainCamContainer;
-        private ILocTable commonStrings;
         public Text blackMarketText;
         private bool InternetConnection;
         private List<int> variantList;
@@ -47,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDataProvider dataProvider,
             bool hasInternetonnection = false)
         {
@@ -75,7 +72,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
             // this keeps the details panels from popping in for a frame on changing shop tabs
-            commonStrings = LandingSceneGod.Instance.commonStrings;
             HighlightCaptainsNavButton();
 
             InternetConnection = hasInternetonnection;
@@ -84,7 +80,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 // Only make cash shop available if there's an internet connection
                 // Without one, we can't process transactions.
                 blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
-                blackMarketText.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BlackMarketOpen");
+                blackMarketText.text = LocTableCache.ScreensSceneTable.GetString("BlackMarketOpen");
             }
             else
                 blackMarketButton.gameObject.SetActive(false);
@@ -134,8 +130,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void InfoButton_OnClick()
         {
-            ILocTable screensSceneStrings = LandingSceneGod.Instance.screenSceneStrings;
-            ScreensSceneGod.Instance.messageBoxBig.ShowMessage(screensSceneStrings.GetString("ShopInfoTitle"), screensSceneStrings.GetString("ShopInfoText"));
+            ScreensSceneGod.Instance.messageBoxBig.ShowMessage(LocTableCache.ScreensSceneTable.GetString("ShopInfoTitle"), LocTableCache.ScreensSceneTable.GetString("ShopInfoText"));
         }
 
         public void GotoBlackMarket()
@@ -286,7 +281,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.itemDetailsPanel.SetActive(false);
 
             // Set the variants help message
-            variantsContainer.t_variantsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("VariantsShopHelp");
+            variantsContainer.t_variantsMessage.text = LocTableCache.ScreensSceneTable.GetString("VariantsShopHelp");
         }
 
         private IEnumerator InitialiseVariantsItemPanel()
@@ -331,8 +326,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         variantsContainer.ParentImage.sprite = parentSprite;
                         variantsContainer.VariantPrice.text = variantPrice.ToString();
                         variantsContainer.variantIcon.sprite = variant.variantSprite;
-                        variantsContainer.VariantName.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantNameStringKeyBase);
-                        variantsContainer.variantDescription.text = commonStrings.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantDescriptionStringKeyBase);
+                        variantsContainer.VariantName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantNameStringKeyBase);
+                        variantsContainer.variantDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantDescriptionStringKeyBase);
                         variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
                         variantsContainer.currentVariantData = _dataProvider.StaticData.Variants[variant.variantIndex];
 
@@ -401,8 +396,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
                     bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
                     bodykitsContainer.bodykitPrice.text = _dataProvider.StaticData.Bodykits[index].bodykitCost.ToString();
-                    bodykitsContainer.bodykitName.text = commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].nameStringKeyBase);
-                    bodykitsContainer.bodykitDescription.text = commonStrings.GetString(_dataProvider.StaticData.Bodykits[index].descriptionKeyBase);
+                    bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].nameStringKeyBase);
+                    bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].descriptionKeyBase);
                     bodykitsContainer.currentBodykitData = _dataProvider.StaticData.Bodykits[index];
                     if (_dataProvider.GameModel.PurchasedBodykits.Contains(index))
                     {
@@ -429,7 +424,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             captainsContainer.itemDetailsPanel.SetActive(false);
             // this keeps the details panels from popping in for a frame on changing shop tabs
 
-            bodykitsContainer.t_bodykitsMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("BodykitsShopHelp");
+            bodykitsContainer.t_bodykitsMessage.text = LocTableCache.ScreensSceneTable.GetString("BodykitsShopHelp");
         }
         public void InitialiseHeckles()
         {
@@ -496,7 +491,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
 
             // special heckle-specific infotext handling here
-            hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("HecklesShopHelp");
+            hecklesContainer.t_heckleMessage.text = LocTableCache.ScreensSceneTable.GetString("HecklesShopHelp");
         }
 
         public override void OnDismissing()
@@ -547,8 +542,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (index == 0)
                     {
                         captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
-                        captainsContainer.captainName.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].NameStringKeyBase);
-                        captainsContainer.captainDescription.text = commonStrings.GetString(_dataProvider.StaticData.Captains[0].DescriptionKeyBase);
+                        captainsContainer.captainName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Captains[0].NameStringKeyBase);
+                        captainsContainer.captainDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Captains[0].DescriptionKeyBase);
                     }
                     captainExo.gameObject.SetActive(true);
                     if (_dataProvider.GameModel.PurchasedExos.Contains(index))
@@ -572,7 +567,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
             // this keeps the details panels from popping in for a frame on changing shop tabs
-            captainsContainer.t_captainMessage.text = LandingSceneGod.Instance.screenSceneStrings.GetString("CaptainsShopHelp");
+            captainsContainer.t_captainMessage.text = LocTableCache.ScreensSceneTable.GetString("CaptainsShopHelp");
         }
 
         List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)  //elements = number of elements in output list

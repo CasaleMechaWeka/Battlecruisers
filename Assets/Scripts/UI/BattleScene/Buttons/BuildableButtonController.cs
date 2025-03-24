@@ -151,11 +151,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
                         originalButtonSprite = buildableButton.sprite;*/
         }
 
-        public async void ApplyVariantIfExist(IBuilding building)
+        public void ApplyVariantIfExist(IBuilding building)
         {
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
-            IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             int index = dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
@@ -182,11 +181,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             }
         }
 
-        public async void ApplyVariantIfExist(IUnit unit)
+        public void ApplyVariantIfExist(IUnit unit)
         {
             IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
-            IPrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            ILocTable commonString = await LocTableFactory.Instance.LoadCommonTableAsync();
+            PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             int index = dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {

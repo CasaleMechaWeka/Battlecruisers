@@ -7,12 +7,12 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class TargetProviderFactory : ITargetProviderFactory
+    public class TargetProviderFactory
     {
-        private readonly ITargetFactoriesProvider _targetFactoriesProvider;
-        private readonly ICruiserSpecificFactories _cruiserSpecificFactories;
+        private readonly TargetFactoriesProvider _targetFactoriesProvider;
+        private readonly CruiserSpecificFactories _cruiserSpecificFactories;
 
-        public TargetProviderFactory(ICruiserSpecificFactories cruiserSpecificFactories, ITargetFactoriesProvider targetFactoriesProvider)
+        public TargetProviderFactory(CruiserSpecificFactories cruiserSpecificFactories, TargetFactoriesProvider targetFactoriesProvider)
         {
             Helper.AssertIsNotNull(cruiserSpecificFactories, targetFactoriesProvider);
 
@@ -21,9 +21,9 @@ namespace BattleCruisers.Targets.Factories
         }
 
         public ITargetProvider CreateStaticTargetProvider(ITarget target)
-		{
+        {
             return new StaticTargetProvider(target);
-		}
+        }
 
         public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {

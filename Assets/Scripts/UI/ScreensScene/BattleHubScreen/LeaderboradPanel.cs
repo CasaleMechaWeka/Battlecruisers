@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject PlaceNumber;
 
         public void Initialise(
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             string playerName,
             double eol,
             int placenumber,

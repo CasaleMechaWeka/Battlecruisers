@@ -13,7 +13,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
         /// </summary>
         void UnlockItem(IGameModel gameModel);
 
-        void ShowItemDetails(IPrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers);
+        void ShowItemDetails(PrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers);
         bool IsUnlocked(IGameModel gameModel);
     }
 }

@@ -24,23 +24,21 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
-        private readonly IPrefabFactory _prefabFactory;
-        private readonly ILocTable _commonStrings;
+        private readonly PrefabFactory _prefabFactory;
 
         public DroneFocusStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
-            IAutoNavigationStepFactory autoNavigationStepFactory, 
-            IExplanationDismissableStepFactory explanationDismissableStepFactory, 
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory, 
-            IConstructBuildingStepsFactory constructBuildingStepsFactory, 
-            ITutorialProvider tutorialProvider, 
-            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider, 
+            IAutoNavigationStepFactory autoNavigationStepFactory,
+            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
+            IConstructBuildingStepsFactory constructBuildingStepsFactory,
+            ITutorialProvider tutorialProvider,
+            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             RightPanelComponents rightPanelComponents,
             ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory,
-            IPrefabFactory prefabFactory,
-            ILocTable commonStrings)
-            : base(argsFactory, tutorialStrings)
+            PrefabFactory prefabFactory)
+
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(
                 autoNavigationStepFactory,
@@ -51,8 +49,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 lastPlayerIncompleteBuildingStartedProvider,
                 rightPanelComponents,
                 slidingPanelWaitStepFactory,
-                prefabFactory,
-                commonStrings);
+                prefabFactory);
 
             _autoNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
@@ -63,7 +60,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _rightPanelComponents = rightPanelComponents;
             _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
             _prefabFactory = prefabFactory;
-            _commonStrings = commonStrings;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -77,17 +73,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/DroneFocus/IntroMessage"))));
+                        LocTableCache.TutorialTable.GetString("Steps/DroneFocus/IntroMessage"))));
 
             // Infinitely slow build speed
             steps.Add(
                 _changeCruiserBuildSpeedStepFactory.CreateStep(
-                    _tutorialProvider.PlayerCruiserBuildSpeedController, 
+                    _tutorialProvider.PlayerCruiserBuildSpeedController,
                     BuildSpeed.InfinitelySlow));
 
             // Start 2 buildings
             string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
-            string constructBuilderBayBase = _tutorialStrings.GetString("Steps/DroneFocus/ConstructBuilderBay");
+            string constructBuilderBayBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ConstructBuilderBay");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Factory,
@@ -99,7 +95,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(_slidingPanelWaitStepFactory.CreateSelectorHiddenWaitStep());
 
             string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
-            string constructArtilleryBase = _tutorialStrings.GetString("Steps/DroneFocus/ConstructArtillery");
+            string constructArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ConstructArtillery");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Offence,
@@ -112,7 +108,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/DroneFocus/BuildSpeedExplanation"))));
+                        LocTableCache.TutorialTable.GetString("Steps/DroneFocus/BuildSpeedExplanation"))));
 
             // Show informator
             steps.Add(
@@ -124,7 +120,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.Add(
                 new ExplanationClickStep(
-                    _argsFactory.CreateTutorialStepArgs(_tutorialStrings.GetString("Steps/DroneFocus/ClickBuilding"), _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
+                    _argsFactory.CreateTutorialStepArgs(LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ClickBuilding"), _lastPlayerIncompleteBuildingStartedProvider, shouldUnhighlight: false),
                     _lastPlayerIncompleteBuildingStartedProvider));
 
             steps.Add(_slidingPanelWaitStepFactory.CreateInformatorShownWaitStep());
@@ -135,7 +131,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             var entry = battleSceneTable.GetEntry("ToggleDronesButton");
             string buttonText = entry.GetLocalizedString();
 
-            string clickBuildersButtonBase = _tutorialStrings.GetString("Steps/DroneFocus/ClickBuildersButton");
+            string clickBuildersButtonBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ClickBuildersButton");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
@@ -143,7 +139,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                         _rightPanelComponents.InformatorPanel.Buttons.ToggleDronesButton)));
 
             // Encourage user to experiment
-            string switchBuildFocusBase = _tutorialStrings.GetString("Steps/DroneFocus/SwitchBuilderFocus");
+            string switchBuildFocusBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/SwitchBuilderFocus");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(

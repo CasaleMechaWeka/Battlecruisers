@@ -4,10 +4,10 @@ namespace BattleCruisers.Scenes.Test.Utilities
 {
     public interface ITargetFactories
     {
-        ITargetFactoriesProvider TargetFactoriesProvider { get; }
+        TargetFactoriesProvider TargetFactoriesProvider { get; }
         ITargetProcessorFactory TargetProcessorFactory { get; }
-        ITargetTrackerFactory TargetTrackerFactory { get; }
-        ITargetDetectorFactory TargetDetectorFactory { get; }
-        ITargetProviderFactory TargetProviderFactory { get; }
+        TargetTrackerFactory TargetTrackerFactory { get; }
+        TargetDetectorFactory TargetDetectorFactory { get; }
+        TargetProviderFactory TargetProviderFactory { get; }
     }
 }

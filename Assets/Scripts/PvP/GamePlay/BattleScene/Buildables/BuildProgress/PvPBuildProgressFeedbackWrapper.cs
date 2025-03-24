@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
 {
@@ -20,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             return
                 new PvPBuildProgressFeedback(
-                    new FillableImage(fillableImage),
+                    fillableImage,
                     new GameObjectBC(pausedFeedback.gameObject),
                     unitImage);
         }

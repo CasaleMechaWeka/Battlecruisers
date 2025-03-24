@@ -16,19 +16,18 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             PostBattleScreenController postBattleScreen,
             IApplicationModel appModel,
             IMusicPlayer musicPlayer,
-            ILocTable screensSceneStrings,
             ISingleSoundPlayer soundPlayer)
-            : base(postBattleScreen, appModel, musicPlayer, screensSceneStrings)
+            : base(postBattleScreen, appModel, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);
 
             appModel.Mode = GameMode.Campaign;
-            postBattleScreen.title.text = _screensSceneStrings.GetString(TUTORIAL_TITLE_KEY);
+            postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(TUTORIAL_TITLE_KEY);
 
             postBattleScreen.title.color = Color.black;
             postBattleScreen.levelName.levelName.color = Color.black;
 
-            string droneText = _screensSceneStrings.GetString(TUTORIAL_APPRAISAL_DRONE_TEXT);
+            string droneText = LocTableCache.ScreensSceneTable.GetString(TUTORIAL_APPRAISAL_DRONE_TEXT);
             postBattleScreen.appraisalSection.Initialise(droneText, soundPlayer);
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);

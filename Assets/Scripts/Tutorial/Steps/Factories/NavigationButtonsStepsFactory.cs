@@ -16,13 +16,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public NavigationButtonsStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationButtonsPermitter,
             IPermitter hotkeysPermitter,
             IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            ICameraComponents cameraComponents) 
-            : base(argsFactory, tutorialStrings)
+            ICameraComponents cameraComponents)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, navigationButtonsPermitter, hotkeysPermitter, explanationDismissableStepFactory, cameraComponents);
 
@@ -45,14 +44,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/NavigationButtons/Buttons"),
+                        LocTableCache.TutorialTable.GetString("Steps/NavigationButtons/Buttons"),
                         _cameraComponents.NavigationButtonsPanel)));
 
             // Encourage user to experiment
             string text
                 = SystemInfoBC.Instance.IsHandheld ?
-                    _tutorialStrings.GetString("Steps/NavigationButtons/TouchInstructions") :
-                    _tutorialStrings.GetString("Steps/NavigationButtons/MouseInstructions");
+                    LocTableCache.TutorialTable.GetString("Steps/NavigationButtons/TouchInstructions") :
+                    LocTableCache.TutorialTable.GetString("Steps/NavigationButtons/MouseInstructions");
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(text)));

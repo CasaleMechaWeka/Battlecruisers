@@ -2,7 +2,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Tr
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
@@ -28,9 +27,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected virtual float timeToActiveTrail { get => 0.05f; }
         protected virtual float TrailLifetimeInS { get => 10; }
 
-        public override void Initialise(ILocTable commonStrings, IPvPFactoryProvider factoryProvider)
+        public override void Initialise(IPvPFactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
             _deferrer = factoryProvider.DeferrerProvider.Deferrer;
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);

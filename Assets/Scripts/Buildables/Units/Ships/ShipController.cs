@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.Helpers;
@@ -69,9 +68,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         public bool IsMoving => rigidBody.velocity.x != 0;
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _turrets = GetTurrets();
 
@@ -114,7 +113,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     .ToList();
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 
@@ -198,7 +197,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     EnemyCruiser.BlockedShipsTracker,
-                    _targetFactories.HelperFactory.CreateShipRangeHelper(this));
+                    new ShipRangeHelper(this));
         }
 
         public void StartMoving()

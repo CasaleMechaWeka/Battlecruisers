@@ -40,7 +40,6 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -65,7 +64,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private IApplicationModel applicationModel;
         private NavigationPermitters navigationPermitters;
-        private ISpriteProvider spriteProvider;
         private IPvPCameraComponents cameraComponents;
 
         public PvPCameraInitialiser cameraInitialiser;
@@ -85,7 +83,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
         public IPvPUIManager uiManager;
-        public ILocTable commonStrings;
         public IDataProvider dataProvider;
         public IPvPPrefabFactory prefabFactory;
         public PvPFactoryProvider factoryProvider;
@@ -201,7 +198,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 1;
-                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -213,7 +210,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 1;
-                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -224,7 +221,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 1;
                         IsBattleCompleted = true;
-                        //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                        //    messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                         MatchmakingScreenController.Instance.isProcessing = false;
                     }
@@ -244,7 +241,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 2;
-                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false, 1000), 5);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -257,7 +254,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                             cameraComponents.CruiserDeathCameraFocuser.FocusOnDisconnectedCruiser(NetworkManager.Singleton.IsHost);
                             _cruiserDeathManager.ShowDisconnectedCruiserExplosion();
                             PvPBattleSceneGodTunnel.isDisconnected = 2;
-                            messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                            messageBox.ShowMessage(LocTableCache.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                             IsBattleCompleted = true;
                             components.Deferrer.Defer(() => battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false, 1000), 5f);
                             MatchmakingScreenController.Instance.isProcessing = false;
@@ -268,7 +265,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                         HandleClientDisconnected();
                         PvPBattleSceneGodTunnel.isDisconnected = 2;
                         IsBattleCompleted = true;
-                        //    messageBox.ShowMessage(commonStrings.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
+                        //    messageBox.ShowMessage(LocTableFactory.CommonTable.GetString("EnemyLeft"), () => { messageBox.HideMessage(); });
                         battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
                         MatchmakingScreenController.Instance.isProcessing = false;
                     }
@@ -309,14 +306,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
         }
-        public async Task StaticInitialiseAsync_Host()
+        public void StaticInitialiseAsync_Host()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
-            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -330,11 +324,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
             prefabFactory = PvPBattleSceneGodServer.Instance.prefabFactory;
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             navigationPermitters = new NavigationPermitters();
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, null);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
@@ -345,9 +338,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             applicationModel = ApplicationModelProvider.ApplicationModel;
             dataProvider = applicationModel.DataProvider;
             PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
-            commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabFetcher prefabFetcher = new PvPPrefabFetcher();
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -361,16 +351,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(applicationModel.DataProvider.SettingsManager);
 
-            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory(commonStrings);
-            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
+            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
+            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
+            prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager);
 
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
             navigationPermitters = new NavigationPermitters();
 
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFetcher, prefabFactory, null, navigationPermitters, storyStrings);
+            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, null);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
@@ -389,8 +378,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             MatchmakingScreenController.Instance.isProcessing = false;
             MatchmakingScreenController.Instance.isLoaded = true;
             MatchmakingScreenController.Instance.AddProgress(1000);
-            playerCruiser.StaticInitialise(commonStrings);
-            enemyCruiser.StaticInitialise(commonStrings);
+            playerCruiser.StaticInitialise();
+            enemyCruiser.StaticInitialise();
             cameraComponents = cameraInitialiser.Initialise(
                 dataProvider.SettingsManager,
                 playerCruiser,
@@ -404,7 +393,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
             enemyCruiser.Initialise_Client_PvP(factoryProvider, uiManager, helper);
             currentLevel = pvpBattleHelper.GetPvPLevel();
-            IPrefabContainer<BackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
+            PrefabContainer<BackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
 
@@ -417,7 +406,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     uiManager,
                     pvpBattleHelper.GetPlayerLoadout(),
                     prefabFactory,
-                    spriteProvider,
                     buttonVisibilityFilters,
                     new PvPPlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
                     factoryProvider.Sound.PrioritisedSoundPlayer,
@@ -455,7 +443,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     navigationPermitterManager
                 );
 
-            IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel, dataProvider, prefabFactory, commonStrings);
+            IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel, dataProvider, prefabFactory);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
             PvPManagerArgs args
@@ -471,7 +459,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             // Audio
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);
@@ -548,10 +535,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 return;
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
 
-                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-                resultA.Prefab.StaticInitialise(commonStrings);
+                PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                resultA.Prefab.StaticInitialise();
                 if (leftCaptain == null)
                 {
                     leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
@@ -561,8 +547,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
                 if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
                 {
-                    IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
-                    resultB.Prefab.StaticInitialise(commonStrings);
+                    PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
+                    resultB.Prefab.StaticInitialise();
                     if (rightCaptain == null)
                     {
                         rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
@@ -571,8 +557,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 else
                 {
-                    IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
-                    resultB.Prefab.StaticInitialise(commonStrings);
+                    PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                    resultB.Prefab.StaticInitialise();
                     if (rightCaptain == null)
                     {
                         rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
@@ -582,10 +568,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
             else
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
-
-                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-                resultB.Prefab.StaticInitialise(commonStrings);
+                PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                resultB.Prefab.StaticInitialise();
                 if (rightCaptain == null)
                 {
                     rightCaptain = Instantiate(resultB.Prefab, rightContainer) as CaptainExo;
@@ -596,8 +580,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 {
                     if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
                     {
-                        IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
-                        resultA.Prefab.StaticInitialise(commonStrings);
+                        PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                        resultA.Prefab.StaticInitialise();
                         if (leftCaptain == null)
                         {
                             leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
@@ -606,8 +590,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     }
                     else
                     {
-                        IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
-                        resultA.Prefab.StaticInitialise(commonStrings);
+                        PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                        resultA.Prefab.StaticInitialise();
                         if (leftCaptain == null)
                         {
                             leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
@@ -618,8 +602,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 catch (Exception e)
                 {
                     Debug.LogError(e.Message);
-                    IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
-                    resultA.Prefab.StaticInitialise(commonStrings);
+                    PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
+                    resultA.Prefab.StaticInitialise();
                     if (leftCaptain == null)
                     {
                         leftCaptain = Instantiate(resultA.Prefab, leftContainer) as CaptainExo;
@@ -633,10 +617,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (newVal.ToString() != string.Empty)
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
-
-                IPrefabContainer<Prefab> resultA = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
-                resultA.Prefab.StaticInitialise(commonStrings);
+                PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                resultA.Prefab.StaticInitialise();
 
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                 {
@@ -655,10 +637,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (newVal.ToString() != string.Empty)
             {
-                IPrefabFetcher prefabFetcher = new PrefabFetcher();
-
-                IPrefabContainer<Prefab> resultB = await prefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
-                resultB.Prefab.StaticInitialise(commonStrings);
+                PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                resultB.Prefab.StaticInitialise();
 
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                 {
@@ -915,14 +895,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
             IApplicationModel applicationModel,
-            IPrefabFetcher prefabFetcher,
             IPvPPrefabFactory prefabFactory,
-            IDeferrer deferrer,
-            NavigationPermitters navigationPermitters,
-            ILocTable storyStrings
-        )
+            IDeferrer deferrer)
         {
-            return new PvPBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+            return new PvPBattleHelper(applicationModel, prefabFactory, deferrer);
         }
         private void PlayCountDownAnimation()
         {

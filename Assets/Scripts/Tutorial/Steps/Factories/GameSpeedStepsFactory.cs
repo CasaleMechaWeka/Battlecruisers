@@ -17,21 +17,20 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public GameSpeedStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory, 
+            IExplanationDismissableStepFactory explanationDismissableStepFactory,
             IFeaturePermitterStepFactory featurePermitterStepFactory,
-            IPermitter gameSpeedPermitter, 
-            IPermitter navigationPermitter, 
+            IPermitter gameSpeedPermitter,
+            IPermitter navigationPermitter,
             RightPanelComponents rightPanelComponents,
             IUIManager uiManager)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(
-                explanationDismissableStepFactory, 
-                featurePermitterStepFactory, 
-                gameSpeedPermitter, 
-                navigationPermitter, 
-                rightPanelComponents, 
+                explanationDismissableStepFactory,
+                featurePermitterStepFactory,
+                gameSpeedPermitter,
+                navigationPermitter,
+                rightPanelComponents,
                 uiManager);
 
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
@@ -61,14 +60,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.Add(
                 _explanationDismissableStepFactory.CreateStep(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/GameSpeed/Buttons"),
+                        LocTableCache.TutorialTable.GetString("Steps/GameSpeed/Buttons"),
                         _rightPanelComponents.SpeedComponents.SpeedButtonPanel))); ;
 
             // Encourage user to experiment
             steps.Add(
                 _explanationDismissableStepFactory.CreateStepWithSecondaryButton(
                     _argsFactory.CreateTutorialStepArgs(
-                        _tutorialStrings.GetString("Steps/GameSpeed/TryButtons"))));
+                        LocTableCache.TutorialTable.GetString("Steps/GameSpeed/TryButtons"))));
 
             return steps;
         }

@@ -14,7 +14,7 @@ namespace BattleCruisers.Projectiles.ActivationArgs
         public Vector2 InitialVelocityInMPerS { get; }
         public ITargetFilter TargetFilter { get; }
         public ITarget Parent { get; }
-        public IAudioClipWrapper ImpactSound { get; }
+        public AudioClipWrapper ImpactSound { get; }
 
         public ProjectileActivationArgs(
             Vector3 position,
@@ -22,7 +22,7 @@ namespace BattleCruisers.Projectiles.ActivationArgs
             Vector2 initialVelocityInMPerS,
             ITargetFilter targetFilter,
             ITarget parent,
-            IAudioClipWrapper impactSound)
+            AudioClipWrapper impactSound)
         {
             Helper.AssertIsNotNull(projectileStats, targetFilter, parent, impactSound);
 

@@ -27,8 +27,6 @@ using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -155,16 +153,12 @@ namespace BattleCruisers.Scenes.BattleScene
             waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, dataProvider);
-            IPrefabFetcher prefabFetcher = new PrefabFetcher();
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(prefabFetcher);
-            IPrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager, commonStrings);
-            ISpriteProvider spriteProvider = new SpriteProvider(new SpriteFetcher());
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
+            PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFetcher, prefabFactory, components.Deferrer, navigationPermitters, storyStrings);
+            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -173,7 +167,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, prefabFactory, spriteProvider, dataProvider.SettingsManager);
+            factoryProvider = new FactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
@@ -275,9 +269,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 Debug.Log($"Displayed AI Captain name: {AIName.text}");
             }
 
-
-
-
             LeftPanelComponents leftPanelComponents
                 = leftPanelInitialiser.Initialise(
                     playerCruiser.DroneManager,
@@ -285,14 +276,12 @@ namespace BattleCruisers.Scenes.BattleScene
                     uiManager,
                     helper.GetPlayerLoadout(),
                     prefabFactory,
-                    spriteProvider,
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor,
-                    dataProvider.StaticData,
-                    commonStrings);
+                    dataProvider.StaticData);
 
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             RightPanelComponents rightPanelComponents
@@ -308,7 +297,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
-            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel, dataProvider, prefabFactory, commonStrings);
+            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel, dataProvider, prefabFactory);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new BuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
 
@@ -329,12 +318,10 @@ namespace BattleCruisers.Scenes.BattleScene
             ILayeredMusicPlayer layeredMusicPlayer;
             if (applicationModel.Mode == GameMode.SideQuest)
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
                     currentSideQuest.MusicBackgroundKey,
                     dataProvider.SettingsManager);
             else
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
-                    factoryProvider.Sound.SoundFetcher,
                     currentLevel.MusicKeys,
                     dataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);
@@ -365,7 +352,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
-            IPrefabContainer<BackgroundImageStats> backgroundStats;
+            PrefabContainer<BackgroundImageStats> backgroundStats;
             IArtificialIntelligence ai;
             if (applicationModel.Mode != GameMode.SideQuest)
             {
@@ -428,7 +415,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     rightPanelComponents,
                     uiManager,
                     _gameEndMonitor);
-            await tutorialInitialiser.InitialiseAsync(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor, commonStrings);
+            tutorialInitialiser.Initialise(tutorialArgs, helper.ShowInGameHints, playerCruiserDamageMonitor);
             if (helper.ShowInGameHints)
             {
                 uiManager.SetExplanationPanel(tutorialInitialiser.explanationPanel);
@@ -512,30 +499,28 @@ namespace BattleCruisers.Scenes.BattleScene
 
         private IBattleSceneHelper CreateHelper(
             IApplicationModel applicationModel,
-            IPrefabFetcher prefabFetcher,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer,
-            NavigationPermitters navigationPermitters,
-            ILocTable storyStrings)
+            NavigationPermitters navigationPermitters)
         {
             switch (applicationModel.Mode)
             {
                 case GameMode.Tutorial:
-                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
+                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFactory, navigationPermitters);
                     _tutorialProvider = helper;
                     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new NormalHelper(applicationModel, prefabFactory, deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new SkirmishHelper(applicationModel, prefabFactory, deferrer);
 
                 case GameMode.CoinBattle:
-                    return new CoinBattleHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new CoinBattleHelper(applicationModel, prefabFactory, deferrer);
 
                 case GameMode.SideQuest:
-                    return new SideQuestHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, deferrer);
+                    return new SideQuestHelper(applicationModel, prefabFactory, deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");

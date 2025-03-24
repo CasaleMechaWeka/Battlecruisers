@@ -3,10 +3,9 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
@@ -50,7 +49,6 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -59,15 +57,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private readonly int _numOfDrones;
         private readonly float _buildSpeedMultiplier;
 
-        public ILocTable CommonStrings { get; }
-        public ILocTable StoryStrings { get; }
         public IDeferrer Deferrer { get; }
         public IDeferrer RealTimeDeferrer { get; }
 
         public IUpdaterProvider UpdaterProvider { get; }
 
-        private IPrefabFactory _prefabFactory;
-        public IPrefabFactory PrefabFactory
+        private PrefabFactory _prefabFactory;
+        public PrefabFactory PrefabFactory
         {
             get
             {
@@ -82,9 +78,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer deferrer,
             IDeferrer realTimeDeferrer,
             IUpdaterProvider updaterProvider,
-            IPrefabFactory prefabFactory,
-            ILocTable commonStrings,
-            ILocTable storyStrings)
+            PrefabFactory prefabFactory)
         {
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
@@ -92,8 +86,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             RealTimeDeferrer = realTimeDeferrer;
             UpdaterProvider = updaterProvider;
             _prefabFactory = prefabFactory;
-            CommonStrings = commonStrings;
-            StoryStrings = storyStrings;
         }
 
         public Helper(
@@ -102,15 +94,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             float? buildSpeedMultiplier = null,
             IDeferrer deferrer = null,
             IUpdaterProvider updaterProvider = null,
-            IPrefabFactory prefabFactory = null)
+            PrefabFactory prefabFactory = null)
         {
             _numOfDrones = numOfDrones ?? helper._numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier ?? helper._buildSpeedMultiplier;
             Deferrer = deferrer ?? helper.Deferrer;
             UpdaterProvider = updaterProvider ?? helper.UpdaterProvider;
             _prefabFactory = prefabFactory ?? helper._prefabFactory;
-            CommonStrings = helper.CommonStrings;
-            StoryStrings = helper.StoryStrings;
         }
 
         public void InitialiseBuilding(
@@ -123,7 +113,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            IBoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -141,7 +130,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetFactories,
                     movementControllerFactory,
                     flightPointsProviderFactory,
-                    boostFactory,
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
@@ -159,7 +147,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             BuildingWrapper buildingWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
             HealthBarController healthBar = buildingWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            building.StaticInitialise(buildingWrapper.gameObject, healthBar, CommonStrings);
+            building.StaticInitialise(buildingWrapper.gameObject, healthBar);
             building.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             building.Activate(
                 new BuildingActivationArgs(
@@ -180,7 +168,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
-            IBoostFactory boostFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -198,7 +185,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     targetFactories,
                     movementControllerFactory,
                     flightPointsProviderFactory,
-                    boostFactory,
                     globalBoostProviders,
                     damageApplierFactory,
                     parentCruiserDirection,
@@ -216,7 +202,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             UnitWrapper unitWrapper = unit.GameObject.GetComponentInInactiveParent<UnitWrapper>();
             HealthBarController healthBar = unitWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
-            unit.StaticInitialise(unitWrapper.gameObject, healthBar, CommonStrings);
+            unit.StaticInitialise(unitWrapper.gameObject, healthBar);
             unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
             unit.Activate(
                 new BuildableActivationArgs(
@@ -275,7 +261,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IRankedTargetTracker targetTracker = new RankedTargetTracker(targetFinder, new EqualTargetRanker());
             ITargetProcessor targetProcessor = new TargetProcessor(targetTracker);
             ITargetFactories targetFactories = Substitute.For<ITargetFactories>();
-            ITargetFactoriesProvider targetFactoriesProvider = Substitute.For<ITargetFactoriesProvider>();
+            TargetFactoriesProvider targetFactoriesProvider = Substitute.For<TargetFactoriesProvider>();
             targetFactories.TargetFactoriesProvider.Returns(targetFactoriesProvider);
             targetFinder.EmitCruiserAsGlobalTarget();
             ITargetProcessor staticTargetProcessor = new StaticTargetProcessor(dummyEnemyCruiser);
@@ -291,42 +277,19 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactories.TargetProcessorFactory.StaticTargetProcessor.Returns(staticTargetProcessor);
             targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
 
-            // Finders
-            targetFactoriesProvider.FinderFactory.CreateRangedTargetFinder(null, null).ReturnsForAnyArgs(targetFinder);
-
             // Trackers
             targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);
 
             // Detector
             if (updaterProvider != null)
             {
-                ITargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
+                TargetDetectorFactory targetDetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, updaterProvider);
                 targetFactories.TargetDetectorFactory.Returns(targetDetectorFactory);
             }
 
-            // Filters
-            targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter().Returns(exactMatchTargetFilter);
-            targetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(null).ReturnsForAnyArgs(exactMatchTargetFilter);
-            targetFactoriesProvider.FilterFactory.CreateDummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
-
-            if (targetFilter != null)
-            {
-                targetFactoriesProvider.FilterFactory.CreateTargetFilter(default, null).ReturnsForAnyArgs(targetFilter);
-            }
-            else
-            {
-                SetupCreateTargetFilter(targetFactoriesProvider.FilterFactory);
-            }
+            new DummyTargetFilter(true).ReturnsForAnyArgs(new DummyTargetFilter(isMatchResult: true));
 
             return targetFactories;
-        }
-
-        // Copy real filter factory behaviour
-        private void SetupCreateTargetFilter(ITargetFilterFactory filterFactory)
-        {
-            filterFactory
-                .CreateTargetFilter(default, null)
-                .ReturnsForAnyArgs(arg => new FactionAndTargetTypeFilter((Faction)arg.Args()[0], (IList<TargetType>)arg.Args()[1]));
         }
 
         public IAircraftProvider CreateAircraftProvider(
@@ -439,8 +402,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IRotationMovementController rotationMovementController = null,
             FacingMinRangePositionValidator targetPositionValidator = null,
             AngleLimiter angleLimiter = null,
-            IFactoryProvider factoryProvider = null,
-            ICruiserSpecificFactories cruiserSpecificFactories = null,
+            FactoryProvider factoryProvider = null,
+            CruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ICruiser enemyCruiser = null,
             ISoundKey firingSound = null,
@@ -518,12 +481,11 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public void SetupCruiser(Cruiser cruiser)
         {
-            ICruiserSpecificFactories cruiserSpecificFactories = Substitute.For<ICruiserSpecificFactories>();
+            CruiserSpecificFactories cruiserSpecificFactories = Substitute.For<CruiserSpecificFactories>();
             GlobalBoostProviders globalBoostProviders = new GlobalBoostProviders();
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);
             TurretStatsFactory turretStatsFactory
                 = new TurretStatsFactory(
-                    new BoostFactory(),
                     globalBoostProviders);
             cruiserSpecificFactories.TurretStatsFactory.Returns(turretStatsFactory);
 
@@ -550,7 +512,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     fogOfWarManager: Substitute.For<IManagedDisposable>(),
                     parentCruiserHasActiveDrones: Substitute.For<IBroadcastingProperty<bool>>());
 
-            cruiser.StaticInitialise(CommonStrings);
+            cruiser.StaticInitialise();
             cruiser.Initialise(cruiserArgs);
         }
 

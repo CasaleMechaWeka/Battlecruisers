@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
@@ -14,7 +13,6 @@ using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -25,9 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         // private readonly IPvPBattleSceneGodComponentsServer _components;
         private readonly IPvPBattleSceneGodComponents _components;
 
-        public IBoostFactory BoostFactory { get; }
         public IDamageApplierFactory DamageApplierFactory { get; }
-        public IDeferrerProvider DeferrerProvider { get; }
+        public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IPvPMovementControllerFactory MovementControllerFactory { get; }
@@ -47,11 +44,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
-            ISpriteProvider spriteProvider,
             ISettingsManager settingsManager
             )
         {
-            PvPHelper.AssertIsNotNull(components, prefabFactory, spriteProvider, settingsManager);
+            PvPHelper.AssertIsNotNull(components, prefabFactory, settingsManager);
 
             _components = components;
             PrefabFactory = prefabFactory;
@@ -59,12 +55,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Targets = new PvPTargetFactoriesProvider();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            BoostFactory = new BoostFactory();
             DamageApplierFactory = new PvPDamageApplierFactory(Targets.FilterFactory);
             SpriteChooserFactory
-                = new PvPSpriteChooserFactory(
-                    new PvPAssignerFactory(),
-                    spriteProvider);
+                = new PvPSpriteChooserFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;

@@ -1,28 +1,28 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using NSubstitute;
 using NUnit.Framework;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
 {
     public class HealthDialTests
     {
         private IHealthDial<IDamagable> _healthDial;
-        private IFillableImage _fillableImage;
+        private Image _fillableImage;
         private IFilter<IDamagable> _visibilityFilter;
         private IDamagable _damagable1, _damagable2;
 
         [SetUp]
         public void TestSetup()
         {
-            _fillableImage = Substitute.For<IFillableImage>();
+            _fillableImage = Substitute.For<Image>();
             _visibilityFilter = Substitute.For<IFilter<IDamagable>>();
 
             _healthDial = new HealthDial<IDamagable>(_fillableImage, _visibilityFilter);
 
-            _fillableImage.Received().IsVisible = false;
+            _fillableImage.Received().gameObject.SetActive(false);
 
             _damagable1 = Substitute.For<IDamagable>();
             _damagable1.MaxHealth.Returns(10);
@@ -38,7 +38,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
         {
             _visibilityFilter.IsMatch(_damagable1).Returns(false);
             _healthDial.Damagable = _damagable1;
-            Assert.IsFalse(_fillableImage.IsVisible);
+            Assert.IsFalse(_fillableImage.IsActive());
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
             SetDamagable_DoesNotMatchVisibilityFilter_DoesNothing();
 
             _damagable1.HealthChanged += Raise.Event();
-            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default;
+            _fillableImage.DidNotReceiveWithAnyArgs().fillAmount = default;
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
 
             _healthDial.Damagable = _damagable1;
 
-            Assert.IsTrue(_fillableImage.IsVisible);
+            Assert.IsTrue(_fillableImage.IsActive());
             CheckFillAmount(_damagable1);
         }
 
@@ -86,7 +86,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
 
             // Old damagable health changes are ignored
             _damagable1.HealthChanged += Raise.Event();
-            _fillableImage.DidNotReceiveWithAnyArgs().FillAmount = default;
+            _fillableImage.DidNotReceiveWithAnyArgs().fillAmount = default;
 
             // New damagable health changes are processed
             _damagable2.Health.Returns(12);
@@ -101,13 +101,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
             SetDamagable_MatchesVisibilityFilter_ShowsHealth();
 
             _healthDial.Damagable = null;
-            Assert.IsFalse(_fillableImage.IsVisible);
+            Assert.IsFalse(_fillableImage.IsActive());
         }
 
         private void CheckFillAmount(IDamagable damagable)
         {
             float expectedProportion = damagable.Health / damagable.MaxHealth;
-            Assert.AreEqual(expectedProportion, _fillableImage.FillAmount);
+            Assert.AreEqual(expectedProportion, _fillableImage.fillAmount);
         }
     }
 }

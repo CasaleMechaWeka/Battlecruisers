@@ -18,7 +18,6 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -67,9 +66,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
         #endregion Properties
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _bombSpawner = gameObject.GetComponentInChildren<BombSpawner>();
             Assert.IsNotNull(_bombSpawner);
@@ -86,7 +85,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));*/
         }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
             _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
@@ -100,7 +99,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();
@@ -126,7 +125,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));
         }
 
-        protected async override void OnBuildableCompleted()
+        protected override void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 
@@ -135,13 +134,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
             _targetProcessor.AddTargetConsumer(this);
 
-            List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+            List<Sprite> allSpriteWrappers = new List<Sprite>();
             foreach (Sprite sprite in allSprites)
             {
-                allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                allSpriteWrappers.Add(sprite);
             }
             //create Sprite Chooser
-            _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
+            _spriteChooser = new SpriteChooser(allSpriteWrappers, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

@@ -15,7 +15,6 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Utils.PlatformAbstractions.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,28 +23,28 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
     public class SteamCopterController : AircraftController, ITargetConsumer
-	{
+    {
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
         private IBarrelWrapper _barrelWrapper;
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private ITargetTracker _inRangeTargetTracker;
-		private bool _isAtCruisingHeight;
+        private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
         public List<Sprite> allSprites = new List<Sprite>();
-      
+
         public ManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
 
         private const float WITHTIN_RANGE_VELOCITY_MULTIPLIER = 0.5f;
 
         public float enemyHoverRangeInM, enemyFollowRangeInM;
 
-		private ITarget _target;
-		public ITarget Target
-		{
-			get { return _target; }
-			set
-			{
+        private ITarget _target;
+        public ITarget Target
+        {
+            get { return _target; }
+            set
+            {
                 Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {_target?.ToString()} > {value?.ToString()}");
 
                 _target = value;
@@ -53,22 +52,22 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _inRangeMovementController.Target = _target;
 
                 UpdateMovementController();
-			}
-		}
+            }
+        }
 
-        public override void StaticInitialise(GameObject parent, HealthBarController healthBar, ILocTable commonStrings)
-		{
-            base.StaticInitialise(parent, healthBar, commonStrings);
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 
             _barrelWrapper = gameObject.GetComponentInChildren<IBarrelWrapper>();
-			Assert.IsNotNull(_barrelWrapper);
-			_barrelWrapper.StaticInitialise();
+            Assert.IsNotNull(_barrelWrapper);
+            _barrelWrapper.StaticInitialise();
             AddDamageStats(_barrelWrapper.DamageCapability);
-		}
+        }
 
-        public override void Initialise(IUIManager uiManager, IFactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
 
@@ -79,7 +78,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     providerToWrap: this,
                     multiplier: WITHTIN_RANGE_VELOCITY_MULTIPLIER);
             _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
-		}
+        }
 
         public override void Activate(BuildableActivationArgs activationArgs)
         {
@@ -95,13 +94,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.PneumaticSlug);
 
-            List<ISpriteWrapper> allSpriteWrappers = new List<ISpriteWrapper>();
+            List<Sprite> allSpriteWrappers = new List<Sprite>();
             foreach (Sprite sprite in allSprites)
             {
-                allSpriteWrappers.Add(new SpriteWrapper(sprite));
+                allSpriteWrappers.Add(sprite);
             }
             //create Sprite Chooser
-            _spriteChooser = new SpriteChooser(new AssignerFactory(), allSpriteWrappers, this);
+            _spriteChooser = new SpriteChooser(allSpriteWrappers, this);
             _barrelWrapper.ApplyVariantStats(this);
         }
 
@@ -126,8 +125,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     Transform,
                     enemyHoverRangeInM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
-            _inRangeTargetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(EnemyCruiser.Faction, AttackCapabilities);
+            _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;
         }
@@ -138,35 +137,35 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             UpdateMovementController();
         }
 
-		protected override IList<IPatrolPoint> GetPatrolPoints()
-		{
-			IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
+        protected override IList<IPatrolPoint> GetPatrolPoints()
+        {
+            IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 
             IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(1)
             {
-                
+
                 new PatrolPoint(patrolPositions[1], removeOnceReached: true)
             };
 
             for (int i = 2; i < patrolPositions.Count; ++i)
             {
-				patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
+                patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
             }
 
-			return patrolPoints;
-		}
+            return patrolPoints;
+        }
 
-		private void OnClearingLaunchStation()
-		{
+        private void OnClearingLaunchStation()
+        {
             // Stop moving
             //ActiveMovementController = DummyMovementController;
-		}
+        }
 
-		private void OnFirstPatrolPointReached()
-		{
-			_isAtCruisingHeight = true;
+        private void OnFirstPatrolPointReached()
+        {
+            _isAtCruisingHeight = true;
             UpdateMovementController();
-		}
+        }
 
         private void UpdateMovementController()
         {
@@ -176,7 +175,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IMovementController ChooseMovementController()
         {
             if (_isAtCruisingHeight && Target != null)
-			{
+            {
                 if (_inRangeTargetTracker.ContainsTarget(Target))
                 {
                     Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  In range movement controller");
@@ -187,15 +186,15 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  Outside of range movement controller");
                     return _outsideRangeMovementController;
                 }
-			}
+            }
             else
             {
                 return PatrollingMovementController;
             }
         }
 
-		protected override void CleanUp()
-		{
+        protected override void CleanUp()
+        {
             base.CleanUp();
 
             followingTargetProcessorWrapper.DisposeManagedState();
@@ -212,7 +211,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _hoverTargetDetectorProvider = null;
 
             _barrelWrapper.DisposeManagedState();
-		}
+        }
 
         protected override List<SpriteRenderer> GetInGameRenderers()
         {

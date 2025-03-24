@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(_targetTracker);
         }
 
-        protected ITargetRanker CreateTargetRanker(ITargetRankerFactory rankerFactory)
+        protected ITargetRanker CreateTargetRanker(TargetRankerFactory rankerFactory)
         {
             ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
             Assert.IsNotNull(targetRankerWrapper);
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
             // Create target finder
             ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
-            return args.TargetFactories.FinderFactory.CreateRangedTargetFinder(enemyDetector, enemyDetectionFilter);
+            return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
 
         public override void DisposeManagedState()

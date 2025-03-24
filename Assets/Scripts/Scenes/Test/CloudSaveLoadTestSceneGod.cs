@@ -5,7 +5,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.UI.Sound.AudioSources;
@@ -28,7 +27,6 @@ namespace BattleCruisers.Scenes
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
 
-            ISoundFetcher soundFetcher = new SoundFetcher();
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource
@@ -37,7 +35,6 @@ namespace BattleCruisers.Scenes
                     applicationModel.DataProvider.SettingsManager);
 
             ISingleSoundPlayer soundPlayer = new SingleSoundPlayer(
-                new SoundFetcher(),
                 audioSource
                 );
 

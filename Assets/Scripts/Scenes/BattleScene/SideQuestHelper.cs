@@ -17,7 +17,6 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
@@ -29,7 +28,7 @@ namespace BattleCruisers.Scenes.BattleScene
     public class SideQuestHelper : BattleSceneHelper
     {
         private readonly ISideQuestData _sideQuest;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
@@ -42,11 +41,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public SideQuestHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
-            ILocTable storyStrings,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings)
+            : base(appModel)
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 
@@ -67,7 +64,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return DataProvider.GameModel.PlayerLoadout;
         }
 
-        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsyncSideQuest(_appModel.SelectedSideQuestID);
         }
@@ -145,7 +142,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         /*
-        public override async Task<IPrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
+        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await _backgroundStatsProvider.GetStatsAsync(_skirmish.BackgroundLevelNum);
         }

@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.UI;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Tutorial
 {
@@ -9,23 +8,17 @@ namespace BattleCruisers.Tutorial
     {
         public ExplanationPanel ExplanationPanel { get; }
         public IButton ModalMainMenuButton { get; }
-        public ILocTable TutorialStrings { get; }
-        public ILocTable CommonStrings { get; }
 
         public TutorialArgs(
-            ITutorialArgsBase baseArgs, 
+            ITutorialArgsBase baseArgs,
             ExplanationPanel explanationPanel,
-            IButton modalMainMenuButton,
-            ILocTable tutorialStrings,
-            ILocTable commonStrings)
+            IButton modalMainMenuButton)
             : base(baseArgs)
         {
-            Helper.AssertIsNotNull(explanationPanel, modalMainMenuButton, tutorialStrings, commonStrings);
+            Helper.AssertIsNotNull(explanationPanel, modalMainMenuButton);
 
             ExplanationPanel = explanationPanel;
             ModalMainMenuButton = modalMainMenuButton;
-            TutorialStrings = tutorialStrings;
-            CommonStrings = commonStrings;
         }
     }
 }

@@ -85,9 +85,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _kamikazeController = GetComponentInChildren<PvPKamikazeController>(includeInactive: true);
             Assert.IsNotNull(_kamikazeController);
@@ -106,7 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise( /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
         {
             base.Initialise( /* uiManager, */ factoryProvider);
-            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
@@ -114,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _velocityBoostable = _factoryProvider.BoostFactory.CreateBoostable();
+            _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
@@ -178,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         private void OnSpriteChanged(int oldSprite, int newSprite)
         {
-            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite).Sprite;
+            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite);
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -211,7 +211,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (_spriteChooser != null)
             {
                 var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
-                _spriteRenderer.sprite = spriteOfAircraft.Item1.Sprite;
+                _spriteRenderer.sprite = spriteOfAircraft.Item1;
                 pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;
             }
         }

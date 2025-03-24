@@ -18,7 +18,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
@@ -38,7 +37,7 @@ namespace BattleCruisers.Scenes
 {
     public class TempScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        private IPrefabFactory _prefabFactory;
+        private PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
         private IDataProvider _dataProvider;
@@ -101,13 +100,10 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            ILocTable commonStrings = await LocTableFactory.Instance.LoadCommonTableAsync();
-            ILocTable storyStrings = await LocTableFactory.Instance.LoadStoryTableAsync();
-            ILocTable screensSceneStrings = await LocTableFactory.Instance.LoadScreensSceneTableAsync();
-            IPrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory(commonStrings, ApplicationModelProvider.ApplicationModel.DataProvider);
+            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            IPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync(new PrefabFetcher());
+            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -117,14 +113,13 @@ namespace BattleCruisers.Scenes
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
                 = new SingleSoundPlayer(
-                    new SoundFetcher(),
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
 
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager, commonStrings);
-            levelTrashDataList.Initialise(storyStrings);
-            sideQuestTrashDataList.Initialise(storyStrings);
+            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
+            levelTrashDataList.Initialise();
+            sideQuestTrashDataList.Initialise();
 
             // TEMP  For showing PostBattleScreen :)
             if (goToPostBattleScreen)
@@ -142,13 +137,12 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            SpriteFetcher spriteFetcher = new SpriteFetcher();
             homeScreen.Initialise(this, _soundPlayer, _dataProvider);
             hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys, commonStrings, screensSceneStrings);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, spriteFetcher, levelTrashDataList, sideQuestTrashDataList, _musicPlayer, commonStrings, storyStrings);
+            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
+            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, commonStrings, screensSceneStrings, _prefabFactory);
+            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider);
 
             if (_applicationModel.ShowPostBattleScreen)
@@ -156,7 +150,7 @@ namespace BattleCruisers.Scenes
                 _applicationModel.ShowPostBattleScreen = false;
 
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
-                await GoToPostBattleScreenAsync(screensSceneStrings);
+                await GoToPostBattleScreenAsync();
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen adds after player win a battle
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
@@ -225,10 +219,10 @@ namespace BattleCruisers.Scenes
         {
             //LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
         }
-        private async Task GoToPostBattleScreenAsync(ILocTable screensSceneStrings)
+        private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList, screensSceneStrings);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }

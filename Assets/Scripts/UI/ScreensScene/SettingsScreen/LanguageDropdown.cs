@@ -1,4 +1,3 @@
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,10 +17,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public event EventHandler LanguageChanged;
 
-        public void Initialise(string selectedLanguage, ILocTable loc)
+        public void Initialise(string selectedLanguage)
         {
-            Assert.IsNotNull(loc);
-
             _languageDropdown = GetComponent<Dropdown>();
             Assert.IsNotNull(_languageDropdown);
 

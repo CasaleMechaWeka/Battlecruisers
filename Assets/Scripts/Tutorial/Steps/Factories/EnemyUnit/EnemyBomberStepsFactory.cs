@@ -10,7 +10,6 @@ using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
@@ -37,13 +36,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
         public EnemyBomberStepsFactory(
             ITutorialStepArgsFactory argsFactory,
-            ILocTable tutorialStrings,
             EnemyUnitArgs enemyUnitArgs,
             ICruiser aiCruiser,
             IDeferrer deferrer,
             ISingleBuildableProvider unitBuiltProvider,
-            IPrefabFactory prefabFactory)
-            : base(argsFactory, tutorialStrings , enemyUnitArgs)
+            PrefabFactory prefabFactory)
+            : base(argsFactory, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider, prefabFactory);
 
@@ -56,7 +54,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 
             string airTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiAirTurret).Buildable.Name;
             _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, airTurretName);
-            
+
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);
         }
 

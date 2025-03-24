@@ -3,7 +3,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -13,11 +12,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public CoinBattleHelper(
             IApplicationModel appModel,
-            IPrefabFetcher prefabFetcher,
-            ILocTable storyStrings,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFetcher, storyStrings, prefabFactory, deferrer)
+            : base(appModel, prefabFactory, deferrer)
         {
             _coinBattle = DataProvider.GameModel.CoinBattle;
             Assert.IsNotNull(_coinBattle);

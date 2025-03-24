@@ -15,8 +15,8 @@ using TestUtils = BattleCruisers.Scenes.Test.Utilities;
 namespace BattleCruisers.Scenes.Test.Performance
 {
     public class AntiAirTurretsPerformanceTestGod : MultiCameraTestGod<CameraScenario>
-	{
-		public UnitWrapper unitPrefab;
+    {
+        public UnitWrapper unitPrefab;
         public List<Vector2> patrolPoints;
 
         protected override void Setup(TestUtils.Helper baseHelper)
@@ -27,9 +27,9 @@ namespace BattleCruisers.Scenes.Test.Performance
             Assert.IsNotNull(timeScaleDeferrer);
 
             TestUtils.Helper helper = new TestUtils.Helper(baseHelper, deferrer: timeScaleDeferrer);
-   
+
             // Initialise prefab
-			unitPrefab.StaticInitialise(helper.CommonStrings);
+            unitPrefab.StaticInitialise();
 
             // Initialise air factory
             IAircraftProvider aircraftProvider = Substitute.For<IAircraftProvider>();
@@ -48,12 +48,12 @@ namespace BattleCruisers.Scenes.Test.Performance
                 helper.InitialiseBuilding(turret, Faction.Reds);
                 turret.StartConstruction();
             }
-		}
+        }
 
         private void Factory_CompletedBuildable(object sender, EventArgs e)
-		{
+        {
             ((Factory)sender).StartBuildingUnit(unitPrefab);
-		}
+        }
 
         protected override void InitialiseScenario(CameraScenario scenario)
         {

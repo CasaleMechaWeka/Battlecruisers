@@ -24,7 +24,7 @@ namespace BattleCruisers.Cruisers
 
             Assert.IsTrue(buildingFireRateBoost > 0);
 
-            IBoostProvider fireRateBoostProvider = FactoryProvider.BoostFactory.CreateBoostProvider(buildingFireRateBoost);
+            IBoostProvider fireRateBoostProvider = new BoostProvider(buildingFireRateBoost);
             CruiserSpecificFactories.GlobalBoostProviders.OffenseFireRateBoostProviders.Add(fireRateBoostProvider);
             CruiserSpecificFactories.GlobalBoostProviders.RocketBuildingsFireRateBoostProviders.Add(fireRateBoostProvider);
             CruiserSpecificFactories.GlobalBoostProviders.DefenseFireRateBoostProviders.Add(fireRateBoostProvider);

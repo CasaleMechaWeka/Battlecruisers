@@ -2,7 +2,6 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.BattleScene.Update;
@@ -57,7 +56,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
             TestTarget fakeCruiser = FindObjectOfType<TestTarget>();
             if (fakeCruiser != null)
             {
-                fakeCruiser.Initialise(helper.CommonStrings, Faction.Blues);
+                fakeCruiser.Initialise(Faction.Blues);
             }
 
             // Setup turret

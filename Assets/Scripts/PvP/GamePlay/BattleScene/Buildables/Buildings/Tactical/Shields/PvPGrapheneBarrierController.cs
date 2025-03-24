@@ -34,13 +34,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
         }
 
-        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar, ILocTable commonStrings)
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
-            base.StaticInitialise(parent, healthBar, commonStrings);
+            base.StaticInitialise(parent, healthBar);
 
             _shieldController = GetComponentInChildren<PvPGrapheneSectorShieldController>(includeInactive: true);
             Assert.IsNotNull(_shieldController);
-            _shieldController.StaticInitialise(commonStrings);
+            _shieldController.StaticInitialise();
 
             animator = GetComponent<Animator>();
             Assert.IsNotNull(animator, "Animator component could not be found.");

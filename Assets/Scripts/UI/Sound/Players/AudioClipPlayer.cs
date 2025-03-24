@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.Sound.Players
 {
     public class AudioClipPlayer : IAudioClipPlayer
     {
-        public void PlaySound(IAudioClipWrapper soundClip, Vector3 position)
+        public void PlaySound(AudioClipWrapper soundClip, Vector3 position)
         {
             Logging.Log(Tags.SOUND, $"Sound: {soundClip.AudioClip}  Position: {position}  Camera position: {Camera.main.transform.position}");
             AudioSource.PlayClipAtPoint(soundClip.AudioClip, position);

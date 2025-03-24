@@ -14,12 +14,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     public class LootManager : ILootManager
     {
         private readonly IDataProvider _dataProvider;
-        private readonly IPrefabFactory _prefabFactory;
+        private readonly PrefabFactory _prefabFactory;
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
             IDataProvider dataProvider,
-            IPrefabFactory prefabFactory,
+            PrefabFactory prefabFactory,
             IItemDetailsGroup middleDetailsGroup,
             IItemDetailsGroup leftDetailsGroup,
             IItemDetailsGroup rightDetailsGroup)
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public bool ShouldShowSideQuestLoot(int sideQuestID)
         {
             ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
-            
+
             bool containsNewLoot = unlockedLoot.Items.Any(item => !item.IsUnlocked(_dataProvider.GameModel));
 
             // If there are no completed sidequests recorded, simply return based on new loot found.

@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     /// </summary>
     public class ShortSoundPlayer : ProjectileSpawnerSoundPlayer
     {
-        public ShortSoundPlayer(IAudioClipWrapper audioClip, IAudioSource audioSource)
+        public ShortSoundPlayer(AudioClipWrapper audioClip, IAudioSource audioSource)
             : base(audioClip, audioSource)
         {
             Helper.AssertIsNotNull(audioClip, audioSource);

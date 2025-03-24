@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
@@ -19,9 +18,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public interface IPvPFactoryProvider
     {
-        IBoostFactory BoostFactory { get; }
         IDamageApplierFactory DamageApplierFactory { get; }
-        IDeferrerProvider DeferrerProvider { get; }
+        DeferrerProvider DeferrerProvider { get; }
         IDroneMonitor DroneMonitor { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         IPvPMovementControllerFactory MovementControllerFactory { get; }

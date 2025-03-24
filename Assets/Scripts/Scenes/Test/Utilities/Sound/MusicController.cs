@@ -18,7 +18,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private Text _title;
         private LayeredMusicPlayerInitialiser _musicInitialiser;
         private ILayeredMusicPlayer _musicPlayer;
-        private ISoundFetcher _soundFetcher;
         private ICircularList<SoundKeyPair> _songs;
 
         [Tooltip("0-5")]
@@ -44,7 +43,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             _title = transform.FindNamedComponent<Text>("Title");
 
-            _soundFetcher = new SoundFetcher();
             _musicInitialiser = GetComponentInChildren<LayeredMusicPlayerInitialiser>();
             Assert.IsNotNull(_musicInitialiser);
             _musicPlayer = await CreateMusicPlayer();
@@ -56,7 +54,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             return
                 await _musicInitialiser.CreatePlayerAsync(
-                    _soundFetcher,
                     _songs.Current(),
                     ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
         }

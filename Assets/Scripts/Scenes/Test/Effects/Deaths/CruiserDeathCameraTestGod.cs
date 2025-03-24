@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
     public class CruiserDeathCameraTestGod : TestGodBase
     {
         private ICameraFocuser _cameraFocuser;
-        private IFactoryProvider _factoryProvider;
+        private FactoryProvider _factoryProvider;
 
         public Cruiser playerCruiser, aiCruiser;
 

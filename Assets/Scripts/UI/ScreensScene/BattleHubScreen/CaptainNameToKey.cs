@@ -10,14 +10,14 @@ namespace BattleCruisers.Data.Models.PrefabKeys
     {
         private readonly IDictionary<string, CaptainExoKey> _captainKey;
 
-        public CaptainNameToKey(IList<IPrefabKey> keys, IPrefabFactory prefabFactory)
+        public CaptainNameToKey(IList<IPrefabKey> keys, PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(keys, prefabFactory);
             _captainKey = new Dictionary<string, CaptainExoKey>();
             GenerateNameKey(keys, prefabFactory);
         }
 
-        private void GenerateNameKey(IList<IPrefabKey> keys, IPrefabFactory prefabFactory)
+        private void GenerateNameKey(IList<IPrefabKey> keys, PrefabFactory prefabFactory)
         {
             foreach (CaptainExoKey key in keys)
             {

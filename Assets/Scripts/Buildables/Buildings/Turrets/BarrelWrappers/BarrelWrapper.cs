@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Buildings.Turrets.AccuracyAdjusters;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
@@ -30,8 +29,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected BarrelController[] _barrels;
         private TargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
-        protected IFactoryProvider _factoryProvider;
-        protected ICruiserSpecificFactories _cruiserSpecificFactories;
+        protected FactoryProvider _factoryProvider;
+        protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
         private IBuildable _parent;
@@ -120,8 +119,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void Initialise(
             IBuildable parent,
-            IFactoryProvider factoryProvider,
-            ICruiserSpecificFactories cruiserSpecificFactories,
+            FactoryProvider factoryProvider,
+            CruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
@@ -207,7 +206,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.Targets.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
+            return new FactionAndTargetTypeFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()

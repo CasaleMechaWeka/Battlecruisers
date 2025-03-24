@@ -10,8 +10,8 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Offensive
 {
-    public class IonCannonTestGod : TestGodBase 
-	{
+    public class IonCannonTestGod : TestGodBase
+    {
         public TurretController ionCannon;
         public ShipController enemyShip;
         public NavalFactory enemyNavalFactory;
@@ -39,12 +39,12 @@ namespace BattleCruisers.Scenes.Test.Offensive
             helper.InitialiseBuilding(enemyNavalFactory, Faction.Reds);
             enemyNavalFactory.StartConstruction();
 
-            enemyCruiser.Initialise(helper.CommonStrings, Faction.Reds);
+            enemyCruiser.Initialise(Faction.Reds);
 
-			// Setup ion cannon
+            // Setup ion cannon
             ITargetFactories targetFactories = helper.CreateTargetFactories(enemyCruiser.GameObject);
-			helper.InitialiseBuilding(ionCannon, Faction.Blues, targetFactories: targetFactories);
-			ionCannon.StartConstruction();
-		}
-	}
+            helper.InitialiseBuilding(ionCannon, Faction.Blues, targetFactories: targetFactories);
+            ionCannon.StartConstruction();
+        }
+    }
 }

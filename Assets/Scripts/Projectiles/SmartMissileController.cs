@@ -13,7 +13,6 @@ using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
@@ -83,9 +82,9 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-        public override void Initialise(ILocTable commonStrings, IFactoryProvider factoryProvider)
+        public override void Initialise(FactoryProvider factoryProvider)
         {
-            base.Initialise(commonStrings, factoryProvider);
+            base.Initialise(factoryProvider);
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -118,7 +117,7 @@ namespace BattleCruisers.Projectiles
             SetupTargetProcessor(activationArgs);
 
             _rocketTarget.GameObject.SetActive(true);
-            _rocketTarget.Initialise(_commonStrings, activationArgs.Parent.Faction, _rigidBody, this);
+            _rocketTarget.Initialise(activationArgs.Parent.Faction, _rigidBody, this);
 
             missile.enabled = true;
 
@@ -128,7 +127,7 @@ namespace BattleCruisers.Projectiles
         private void SetupTargetProcessor(SmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             ITargetFilter targetFilter
-                = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
+                = new FactionAndTargetTypeFilter(
                     activationArgs.EnemyCruiser.Faction,
                     activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider
@@ -136,7 +135,7 @@ namespace BattleCruisers.Projectiles
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
                     _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            _targetFinder = _factoryProvider.Targets.FinderFactory.CreateRangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
+            _targetFinder = new RangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);

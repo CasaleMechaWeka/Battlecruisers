@@ -15,29 +15,27 @@ namespace BattleCruisers.UI.Sound.Players
     /// </summary>
     public class SingleSoundPlayer : ISingleSoundPlayer
     {
-        private readonly ISoundFetcher _soundFetcher;
         private readonly IAudioSource _audioSource;
 
         public bool IsPlayingSound => _audioSource.IsPlaying;
 
-        public SingleSoundPlayer(ISoundFetcher soundFetcher, IAudioSource audioSource)
+        public SingleSoundPlayer(IAudioSource audioSource)
         {
-            Helper.AssertIsNotNull(soundFetcher, audioSource);
+            Helper.AssertIsNotNull(audioSource);
 
-            _soundFetcher = soundFetcher;
             _audioSource = audioSource;
         }
 
         public async Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false)
         {
-            Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");       
+            Logging.Log(Tags.SOUND, $"{soundKey.Name}  loop: {loop}");
 
-            IAudioClipWrapper soundToPlay = await _soundFetcher.GetSoundAsync(soundKey);
+            AudioClipWrapper soundToPlay = await SoundFetcher.GetSoundAsync(soundKey);
             PlaySound(soundToPlay, loop);
             return soundToPlay.Handle;
         }
 
-        public void PlaySound(IAudioClipWrapper sound, bool loop = false)
+        public void PlaySound(AudioClipWrapper sound, bool loop = false)
         {
             Logging.Log(Tags.SOUND, $"{sound}  loop: {loop}");
 

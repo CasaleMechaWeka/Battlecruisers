@@ -1,5 +1,4 @@
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 
@@ -39,9 +38,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        public override void StaticInitialise(ILocTable commonStrings)
+        public override void StaticInitialise()
         {
-            base.StaticInitialise(commonStrings);
+            base.StaticInitialise();
         }
     }
 }

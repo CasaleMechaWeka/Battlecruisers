@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
@@ -11,11 +10,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ICameraComponents _cameraComponents;
 
         public AutoNavigationStepFactory(
-            ITutorialStepArgsFactory argsFactory, 
-            ILocTable tutorialStrings,
+            ITutorialStepArgsFactory argsFactory,
             ITutorialStepFactory cameraAdjustmentWaitStepFactory,
             ICameraComponents cameraComponents)
-            : base(argsFactory, tutorialStrings)
+            : base(argsFactory)
         {
             Helper.AssertIsNotNull(cameraAdjustmentWaitStepFactory, cameraComponents);
 

@@ -13,12 +13,12 @@ namespace BattleCruisers.Projectiles.ActivationArgs
 
         public TargetProviderActivationArgs(
             Vector3 position,
-            TStats projectileStats, 
-            Vector2 initialVelocityInMPerS, 
-            ITargetFilter targetFilter, 
+            TStats projectileStats,
+            Vector2 initialVelocityInMPerS,
+            ITargetFilter targetFilter,
             ITarget parent,
-            IAudioClipWrapper impactSound,
-            ITarget target) 
+            AudioClipWrapper impactSound,
+            ITarget target)
             : base(position, projectileStats, initialVelocityInMPerS, targetFilter, parent, impactSound)
         {
             Assert.IsNotNull(target);

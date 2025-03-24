@@ -11,9 +11,9 @@ using BCUtils = BattleCruisers.Utils;
 namespace BattleCruisers.Scenes.Test.Factories
 {
     public class SingleFactoryTestGod : TestGodBase
-	{
-		public Factory factory;
-		public UnitWrapper unitPrefab;
+    {
+        public Factory factory;
+        public UnitWrapper unitPrefab;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -27,24 +27,24 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override void Setup(Helper helper)
         {
-			unitPrefab.StaticInitialise(helper.CommonStrings);
+            unitPrefab.StaticInitialise();
 
             ICruiser leftCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
             helper.InitialiseBuilding(
-                factory, 
-                parentCruiserDirection: leftCruiser.Direction, 
+                factory,
+                parentCruiserDirection: leftCruiser.Direction,
                 parentCruiser: leftCruiser);
 
-			factory.CompletedBuildable += Factory_CompletedBuildable;
-			factory.StartConstruction();
+            factory.CompletedBuildable += Factory_CompletedBuildable;
+            factory.StartConstruction();
 
             Helper.SetupFactoryForUnitMonitor(factory, leftCruiser);
-		}
+        }
 
-		private void Factory_CompletedBuildable(object sender, EventArgs e)
-		{
+        private void Factory_CompletedBuildable(object sender, EventArgs e)
+        {
             ((Factory)sender).StartBuildingUnit(unitPrefab);
-		}
-	}
+        }
+    }
 }

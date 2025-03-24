@@ -13,14 +13,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     public class BuildingClickHandler : BuildableClickHandler, IBuildingClickHandler
     {
         private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
-        private readonly IAudioClipWrapper _buildingSelectedSound;
+        private readonly AudioClipWrapper _buildingSelectedSound;
 
         public BuildingClickHandler(
             IUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
-            IAudioClipWrapper buildingSelectedSound)
+            AudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
             Helper.AssertIsNotNull(playerCruiserFocusHelper, buildingSelectedSound);
