@@ -15,7 +15,7 @@ namespace BattleCruisers.Data.Settings
 
     public class SettingsManager
     {
-        private readonly ISettingsModel _settings;
+        private readonly SettingsModel _settings;
         private readonly DataProvider _dataProvider;
 
         public event EventHandler SettingsSaved;

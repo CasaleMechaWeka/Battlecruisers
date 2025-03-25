@@ -10,7 +10,7 @@ namespace BattleCruisers.Data.Models
     // Serialise settings instead of using UnityEngine.PlayerPrefs, so that
     // settings can be cloud synced via steam.
     [Serializable]
-    public class SettingsModel : ISettingsModel
+    public class SettingsModel
     {
         private const int DEFAULT_ZOOM_SPEED_LEVEL = 7;
         public const int MIN_ZOOM_SPEED_LEVEL = 2;
