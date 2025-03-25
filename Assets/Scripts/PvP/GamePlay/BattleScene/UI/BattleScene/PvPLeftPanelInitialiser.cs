@@ -149,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPopulationLimitMonitor populationLimitMonitor,
             bool flipClickAndDragIcon)
         {
-            IPvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
+            PvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
             IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
             IList<IPvPBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units = prefabOrganiser.GetUnits();
