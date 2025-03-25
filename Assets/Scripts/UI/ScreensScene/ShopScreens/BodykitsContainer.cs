@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         public CanvasGroupButton premiumButton;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         public GameObject content;
         public GameObject bodykitMessagePanel;
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene
         public Animator seaAnimator;
         public GameObject previewCanvas;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             bodykitDataChanged += BodykitDataChanged;
             onBodykitItemClick += OnBodykitItemClick;

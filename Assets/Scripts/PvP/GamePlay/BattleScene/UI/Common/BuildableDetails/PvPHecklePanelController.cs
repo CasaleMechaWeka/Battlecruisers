@@ -20,11 +20,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public ISlidingPanel HecklePanel => hecklePanel;
 
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private ISingleSoundPlayer _soundPlayer;
         private IPvPUIManager _puUIManager;
         private bool isOpened;
-        public async void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
+        public async void Initialise(DataProvider dataProvider, ISingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer, closed, opened, hecklesButton);
             _dataProvider = dataProvider;

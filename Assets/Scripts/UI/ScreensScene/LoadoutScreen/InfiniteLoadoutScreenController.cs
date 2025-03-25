@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class InfiniteLoadoutScreenController : ScreenController, ILoadoutScreenController, IManagedDisposable
     {
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private LoadoutScreen.ItemDetails.IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             PrefabFactory prefabFactory)
         {
             _soundPlayer = soundPlayer;

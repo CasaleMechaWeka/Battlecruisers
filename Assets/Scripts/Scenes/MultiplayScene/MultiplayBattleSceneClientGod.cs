@@ -70,7 +70,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
         // public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
         public GameObject enemyCharacterImages;
-        private IDataProvider dataProvider;
+        private DataProvider dataProvider;
         private Cruiser playerCruiser;
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;

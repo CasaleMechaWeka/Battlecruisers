@@ -37,10 +37,10 @@ namespace BattleCruisers.Data
         public bool ShowPostBattleScreen { get; set; }
         public GameMode Mode { get; set; }
         public bool IsTutorial => Mode == GameMode.Tutorial;
-        public IDataProvider DataProvider { get; }
+        public DataProvider DataProvider { get; }
         public bool UserWonSkirmish { get; set; }
 
-        public ApplicationModel(IDataProvider dataProvider)
+        public ApplicationModel(DataProvider dataProvider)
         {
             Assert.IsNotNull(dataProvider);
 

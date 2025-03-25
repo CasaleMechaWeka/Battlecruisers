@@ -14,10 +14,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public float hideTime = 5f;
         private RectTransform messageFrame;
 
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private ISingleSoundPlayer _soundPlayer;
 
-        public void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer)
+        public void Initialise(DataProvider dataProvider, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, soundPlayer);
             _dataProvider = dataProvider;

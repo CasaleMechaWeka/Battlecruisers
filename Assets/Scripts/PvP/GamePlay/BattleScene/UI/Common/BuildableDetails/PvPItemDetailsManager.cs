@@ -20,12 +20,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IPvPComparableItemDetails<IPvPCruiser> _cruiserDetails;
 
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly IDataProvider _dataProvider;
+        private readonly DataProvider _dataProvider;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public PvPItemDetailsManager(IPvPInformatorPanel informator, IDataProvider dataProvider, IPvPPrefabFactory prefabFactory)
+        public PvPItemDetailsManager(IPvPInformatorPanel informator, DataProvider dataProvider, IPvPPrefabFactory prefabFactory)
         {
             PvPHelper.AssertIsNotNull(informator, dataProvider, prefabFactory);
 

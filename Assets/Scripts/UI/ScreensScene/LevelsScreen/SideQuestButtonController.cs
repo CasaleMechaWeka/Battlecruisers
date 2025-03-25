@@ -27,7 +27,7 @@ public class SideQuestButtonController : ElementWithClickSound
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        IDataProvider dataProvider,
+        DataProvider dataProvider,
         int numOfLevelsUnlocked,
         bool completed)
     {

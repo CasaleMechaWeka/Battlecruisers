@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
         private IComparisonStateTracker _comparisonStateTracker;
         private IHullNameToKey _hullNameToKey;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
 
         protected override bool ToggleVisibility => true;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IItemDetailsDisplayer<ICruiser> cruiserDetails,
             IComparisonStateTracker comparisonStateTracker,
             IHullNameToKey hullNameToKey,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             base.Initialise(soundPlayer);
             Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, dataProvider);

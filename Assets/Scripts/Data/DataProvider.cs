@@ -24,7 +24,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 namespace BattleCruisers.Data
 {
-    public class DataProvider : IDataProvider
+    public class DataProvider
     {
         private readonly ISerializer _serializer;       // functions for local read/write on disk and JSON serialization/deserialization
         private readonly ISaveClient _cloudSaveService; // cloud save serialized JSON

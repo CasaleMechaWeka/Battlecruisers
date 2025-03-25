@@ -139,7 +139,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public async void ApplyVariantIfExist(IPvPBuilding building)
         {
-            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
 
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
@@ -171,7 +171,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public async void ApplyVariantIfExist(IPvPUnit unit)
         {
-            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             IPvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
             int index = await dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)

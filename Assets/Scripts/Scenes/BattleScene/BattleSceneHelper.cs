@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private ITrashTalkProvider _trashTalkProvider;
 
         protected readonly IApplicationModel _appModel;
-        protected IDataProvider DataProvider => _appModel.DataProvider;
+        protected DataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }

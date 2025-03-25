@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ScreenController _currentScreen;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IApplicationModel _applicationModel;
 
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             IApplicationModel applicationModel)
         {
             base.Initialise(screensSceneGod);

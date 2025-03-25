@@ -76,7 +76,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         private void ApplyVariantIfExist(IUnit unit)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             VariantPrefab variant = dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
             if (variant != null)
             {

@@ -27,10 +27,10 @@ namespace BattleCruisers.UI.ScreensScene
         public Text hecklePrice;
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;

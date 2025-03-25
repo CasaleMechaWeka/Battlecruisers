@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private VariantPrefab currentVariant;
         public GameObject content;
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject itemDetailsPanel;
         public Text t_variantsMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             variantDataChanged += VariantDataChanged;
             onVariantItemClick += OnVariantItemClick;

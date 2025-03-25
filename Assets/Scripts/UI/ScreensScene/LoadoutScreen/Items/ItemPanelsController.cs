@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory)

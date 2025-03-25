@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ButtonController navLeftButton;
         public GameObject loadingSpinner;
         private IScreensSceneGod _screenSceneGod;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
 
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             loadingSpinner.SetActive(false);
             base.Initialise(screensSceneGod);

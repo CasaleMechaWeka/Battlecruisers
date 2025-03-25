@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IList<IItemButton> buttons = new List<IItemButton>();
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamiltyTracker;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private ISingleSoundPlayer _soundPlayer;
         private PrefabFactory _prefabFactory;
@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory)

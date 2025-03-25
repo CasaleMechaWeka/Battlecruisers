@@ -152,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private async void ApplyVariantPvP(IPvPUnit unit, int varint_index)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (varint_index != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(varint_index));

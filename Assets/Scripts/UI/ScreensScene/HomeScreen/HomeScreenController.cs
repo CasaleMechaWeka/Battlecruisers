@@ -11,12 +11,12 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
     public class HomeScreenController : ScreenController, IHomeScreen
     {
         private BattleResult _lastBattleResult;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
 

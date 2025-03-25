@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class LimitDisplayer : MonoBehaviour
     {
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IItemDetailsDisplayer<IBuilding> _displayer;
         private IItemDetailsDisplayer<IUnit> _unit;
         private HeckleDetailsController _heckle;
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private TextMeshPro _displayText;
         public int BuildableLimit = 5, HeckleLimit = 3;
 
-        public void Initialise(IDataProvider dataProvider,
+        public void Initialise(DataProvider dataProvider,
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IItemDetailsDisplayer<IUnit> unitDetails,
             HeckleDetailsController heckleDetails,

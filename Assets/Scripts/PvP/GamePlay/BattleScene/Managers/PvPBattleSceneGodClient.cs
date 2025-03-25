@@ -83,7 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
         public IPvPUIManager uiManager;
-        public IDataProvider dataProvider;
+        public DataProvider dataProvider;
         public IPvPPrefabFactory prefabFactory;
         public PvPFactoryProvider factoryProvider;
         public PvPCruiser playerCruiser;

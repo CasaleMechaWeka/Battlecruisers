@@ -87,14 +87,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private Dictionary<HullType, List<int>> _unlockedBodykits = new Dictionary<HullType, List<int>>();
         private int _index;
         public CanvasGroupButton leftNavButton, rightNavButton;
 
-        public void Initialise(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+        public void Initialise(DataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNavButton, rightNavButton);

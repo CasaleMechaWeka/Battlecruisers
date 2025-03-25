@@ -19,12 +19,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly IComparableItemDetails<IUnit> _unitDetails;
         private readonly IComparableItemDetails<ICruiser> _cruiserDetails;
         private readonly PrefabFactory _prefabFactory;
-        private readonly IDataProvider _dataProvider;
+        private readonly DataProvider _dataProvider;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public ItemDetailsManager(IInformatorPanel informator, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public ItemDetailsManager(IInformatorPanel informator, DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(informator, dataProvider, prefabFactory);
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void ShowItemDetailsV2(IBuilding building)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (building.Faction == Faction.Blues)
             {
                 int index = dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
@@ -119,7 +119,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void ShowItemDetailsV2(IUnit unit)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (unit.Faction == Faction.Blues)
             {
                 int index = dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);

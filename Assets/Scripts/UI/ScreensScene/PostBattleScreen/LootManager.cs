@@ -13,12 +13,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class LootManager : ILootManager
     {
-        private readonly IDataProvider _dataProvider;
+        private readonly DataProvider _dataProvider;
         private readonly PrefabFactory _prefabFactory;
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             PrefabFactory prefabFactory,
             IItemDetailsGroup middleDetailsGroup,
             IItemDetailsGroup leftDetailsGroup,

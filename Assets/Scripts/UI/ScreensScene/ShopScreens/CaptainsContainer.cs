@@ -32,14 +32,14 @@ namespace BattleCruisers.UI.ScreensScene
         private string firstDescrtiptionString;
 
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         public GameObject content;
         public GameObject captainMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_captainMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             captainDataChanged += CaptainDataChanged;
             onCaptainItemClick += OnCaptainItemClick;

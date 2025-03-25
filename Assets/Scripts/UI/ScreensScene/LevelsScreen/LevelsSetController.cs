@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IList<LevelInfo> allLevels,
             int numOfLevelsUnlocked,
             ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider trashDataList,
             int setIndex)

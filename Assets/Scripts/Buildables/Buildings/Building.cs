@@ -123,7 +123,7 @@ namespace BattleCruisers.Buildables.Buildings
                 VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
                 if (variant != null)
                 {
-                    IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+                    DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
                     // apply icon, name and description
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
@@ -145,7 +145,7 @@ namespace BattleCruisers.Buildables.Buildings
         private int GetRandomVariantForAI(IBuilding building)
         {
             int variant_ID = -1;
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             List<int> ids = new List<int>();
             for (int i = 0; i < dataProvider.StaticData.Variants.Count; i++)
             {

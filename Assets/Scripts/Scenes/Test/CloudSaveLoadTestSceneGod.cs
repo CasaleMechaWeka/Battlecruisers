@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes
     public class CloudSaveLoadTestSceneGod : MonoBehaviour
     {
         private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IGameModel _gameModel;
 
         public InputField userIdInputField;

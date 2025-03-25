@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         private ISceneNavigator _sceneNavigator;
         private PrefabFactory _prefabFactory;
         private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IGameModel _gameModel;
         private ITrashTalkData _trashTalkData;
         public Animator animator;
@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public GameObject LoadingBarParent;
 
         // private ILocTable commonStrings;
-        private IDataProvider dataProvider;
+        private DataProvider dataProvider;
 
         public Sprite BlackRig;
         public Sprite Bullshark;
@@ -144,7 +144,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         public void Initialise(IScreensSceneGod matchmakingLoadingSceneGod,
                            ISingleSoundPlayer soundPlayer,
-                           IDataProvider dataProvider)
+                           DataProvider dataProvider)
         {
             base.Initialise(matchmakingLoadingSceneGod);
             Helper.AssertIsNotNull(dataProvider);

@@ -11,10 +11,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class VariantOrganizer
     {
-        private readonly IDataProvider _dataProvider;
+        private readonly DataProvider _dataProvider;
         private readonly PrefabFactory _prefabFactory;
 
-        public VariantOrganizer(IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public VariantOrganizer(DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;

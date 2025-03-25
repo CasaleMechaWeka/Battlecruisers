@@ -22,13 +22,13 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
     public Text price;
 
     public CanvasGroupButton buyBtn, noBtn;
-    private IDataProvider _dataProvider;
+    private DataProvider _dataProvider;
     private PrefabFactory _prefabFactory;
     private ISingleSoundPlayer _soundPlayer;
 
     private IIAPData _currentIAPData;
 
-    public void Initiaize(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+    public void Initiaize(DataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
     {
         Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
         _dataProvider = dataProvider;

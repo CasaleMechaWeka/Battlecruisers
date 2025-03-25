@@ -11,14 +11,14 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     public class SelectCaptainButton : CanvasGroupButton
     {
         private IComparisonStateTracker _comparisonStateTracker;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
 
         private ISettableBroadcastingProperty<CaptainExoKey> _selectedCaptain;
         public IBroadcastingProperty<CaptainExoKey> SelectedCaptain { get; private set; }
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IComparisonStateTracker comparisonStateTracker,
-            IDataProvider dataProvider
+            DataProvider dataProvider
             )
         {
             base.Initialise(soundPlayer);

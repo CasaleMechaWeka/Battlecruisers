@@ -16,7 +16,7 @@ namespace BattleCruisers.Data.Settings
     public class SettingsManager
     {
         private readonly ISettingsModel _settings;
-        private readonly IDataProvider _dataProvider;
+        private readonly DataProvider _dataProvider;
 
         public event EventHandler SettingsSaved;
 
@@ -139,7 +139,7 @@ namespace BattleCruisers.Data.Settings
             set => _settings.Resolution = value;
         }
 
-        public SettingsManager(IDataProvider dataProvider)
+        public SettingsManager(DataProvider dataProvider)
         {
             Assert.IsNotNull(dataProvider);
 

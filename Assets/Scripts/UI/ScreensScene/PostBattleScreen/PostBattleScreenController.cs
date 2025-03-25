@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
     {
         private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private ILootManager _lootManager;
 
         public Text title;

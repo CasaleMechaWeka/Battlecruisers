@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject hecklesMessage;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         public Transform captainCamContainer;
         public Text blackMarketText;
         private bool InternetConnection;
@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             bool hasInternetonnection = false)
         {
             base.Initialise(screensSceneGod);

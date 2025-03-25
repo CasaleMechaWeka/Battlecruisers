@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public GameObject deselectText;
         public int heckleLimit;
         public GameObject checkBox;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private HeckleDetailsController _heckleDetails;
 
         private bool flag;
@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
         public void Initialise(ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             HeckleDetailsController heckleDetails,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
             IComparingItemFamilyTracker comparingItemFamily)

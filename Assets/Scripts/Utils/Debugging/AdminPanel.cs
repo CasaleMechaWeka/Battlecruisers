@@ -45,9 +45,9 @@ namespace BattleCruisers.Utils.Debugging
             buttons.SetActive(false);
         }
 
-         public void UnlockEverything()
+        public void UnlockEverything()
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
 
             // Levels
             foreach (ILevel level in dataProvider.Levels)
@@ -107,7 +107,7 @@ namespace BattleCruisers.Utils.Debugging
         {
             List<int> levelsToUnlock = Enumerable.Range(1, levelToUnlock).ToList();
 
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
 
             // Mark tutorial as complete
             dataProvider.GameModel.HasAttemptedTutorial = true;
@@ -150,7 +150,7 @@ namespace BattleCruisers.Utils.Debugging
 
         public void DvorakHotkeys()
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             IHotkeysModel hotkeys = dataProvider.GameModel.Hotkeys;
 
             // Navigation
@@ -212,14 +212,14 @@ namespace BattleCruisers.Utils.Debugging
 
         public void AddMoney()
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             dataProvider.GameModel.Coins += 1000;
             dataProvider.SaveGame();
         }
 
         public void RemoveMoney()
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             dataProvider.GameModel.Coins -= 1000;
             if (dataProvider.GameModel.Coins < 0)
             {

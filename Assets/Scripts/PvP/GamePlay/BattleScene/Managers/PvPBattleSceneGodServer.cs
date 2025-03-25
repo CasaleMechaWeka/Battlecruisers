@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public IPvPPrefabFactory prefabFactory;
         private IApplicationModel applicationModel;
-        public IDataProvider dataProvider;
+        public DataProvider dataProvider;
         private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;

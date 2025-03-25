@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     // - Orders variants within groups by their type (QuickBuild, RapidFire, etc.)
     public class VariantSorter
     {
-        private readonly IDataProvider _dataProvider;
+        private readonly DataProvider _dataProvider;
         private readonly PrefabFactory _prefabFactory;
         private readonly Dictionary<int, string> _variantParentCache;
         private readonly object _cacheLock = new object();
@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {"Refined", 8}
         };
 
-        public VariantSorter(IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public VariantSorter(DataProvider dataProvider, PrefabFactory prefabFactory)
         {
             _dataProvider = dataProvider ?? throw new System.ArgumentNullException(nameof(dataProvider));
             _prefabFactory = prefabFactory ?? throw new System.ArgumentNullException(nameof(prefabFactory));

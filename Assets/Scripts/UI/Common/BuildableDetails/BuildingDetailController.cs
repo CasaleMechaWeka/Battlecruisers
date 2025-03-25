@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             set { _currentButton = value; }
         }
 
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private Dictionary<IBuilding, List<int>> _unlockedVariants;
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public Text variantParentName;
         public StatsController<IBuilding> variantStats;
 
-        public void Initialize(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+        public void Initialize(DataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNav, rightNav);

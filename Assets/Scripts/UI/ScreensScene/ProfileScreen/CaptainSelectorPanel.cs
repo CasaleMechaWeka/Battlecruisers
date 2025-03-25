@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         [SerializeField]
         private GameObject captainItemPrefab; // assign this from the editor
 
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public void Initialize(
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;

@@ -73,7 +73,7 @@ public class PlayerSaveGameEditor : EditorWindow
 
     private void LoadGameModel()
     {
-        IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
+        DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
 
         if (dataProvider == null || dataProvider.GameModel == null)
         {

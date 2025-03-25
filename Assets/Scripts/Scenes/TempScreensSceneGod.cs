@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes
         private PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes
         private readonly IBattleSceneHelper _battleSceneHelper;
         private ITutorialProvider _tutorialProvider;
         private IApplicationModel applicationModel;
-        private IDataProvider dataProvider;
+        private DataProvider dataProvider;
         private BattleSceneGodComponents components;
         private NavigationPermitters navigationPermitters;
         private IBattleSceneHelper helper;

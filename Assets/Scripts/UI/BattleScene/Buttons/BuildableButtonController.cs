@@ -153,7 +153,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void ApplyVariantIfExist(IBuilding building)
         {
-            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             int index = dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
@@ -183,7 +183,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void ApplyVariantIfExist(IUnit unit)
         {
-            IDataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
+            DataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
             int index = dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene
             Sprite spriteBodykit,
             IBodykitData bodykitData,
             BodykitsContainer bodykitContainer,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             PrefabFactory prefabFactory,
             int index,
             bool isOwned)

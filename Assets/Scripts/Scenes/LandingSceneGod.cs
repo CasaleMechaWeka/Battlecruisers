@@ -208,7 +208,7 @@ namespace BattleCruisers.Scenes
                 // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
-            IDataProvider dataProvider = applicationModel.DataProvider;
+            DataProvider dataProvider = applicationModel.DataProvider;
             messagebox.Initialize(dataProvider, soundPlayer);
             MusicPlayer = CreateMusicPlayer(dataProvider);
             DontDestroyOnLoad(gameObject);
@@ -722,7 +722,7 @@ namespace BattleCruisers.Scenes
             Debug.Log("===> You're Expired from UGS!!!");
         }
 
-        private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
+        private IMusicPlayer CreateMusicPlayer(DataProvider dataProvider)
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);

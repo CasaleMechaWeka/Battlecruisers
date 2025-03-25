@@ -417,7 +417,7 @@ namespace BattleCruisers.Data.Serialization
             await CloudSaveService.Instance.Data.ForceDeleteAsync("GameModel");
         }
 
-        public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCoinsToCloud(DataProvider dataProvider)
         {
             try
             {
@@ -437,7 +437,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncCurrencyFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCurrencyFromCloud(DataProvider dataProvider)
         {
             GetBalancesResult balanceResult = null;
             try
@@ -485,7 +485,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncInventoryFromCloud(DataProvider dataProvider)
         {
             GetInventoryResult inventoryResult = null;
             try
@@ -548,7 +548,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncCreditsToCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCreditsToCloud(DataProvider dataProvider)
         {
             try
             {

@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private IList<LevelsSetController> _levelSets;
         private ICommand _nextSetCommand, _previousSetCommand;
         private int _numOfLevelsUnlocked;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
 
         public ButtonController nextSetButton, previousSetButton;
         public CanvasGroupButton cancelButton;
@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int numOfLevelsUnlocked,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashDataList,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
 
@@ -77,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         private async Task InitialiseLevelSetsAsync(
             ISingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
             Sprite[] difficultyIndicators,

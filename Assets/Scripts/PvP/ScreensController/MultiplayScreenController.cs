@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         public void Initialise(IMultiplayScreensSceneGod multiplayScreensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             base.Initialise(multiplayScreensSceneGod);
 

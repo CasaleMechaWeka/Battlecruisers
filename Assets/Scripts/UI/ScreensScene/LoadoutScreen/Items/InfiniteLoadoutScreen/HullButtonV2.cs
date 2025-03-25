@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private const char SEPARATOR = '_';
         private string lootType;
         private string lootName;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,

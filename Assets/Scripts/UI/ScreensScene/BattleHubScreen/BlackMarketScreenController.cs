@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton backButton, buyButton;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         public Transform iapContainer;
         public EventHandler<IAPDataEventArgs> iapDataChanged;
         public GameObject itemPrefab;
@@ -78,7 +78,7 @@ namespace BattleCruisers.UI.ScreensScene
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IDataProvider dataProvider)
+            DataProvider dataProvider)
         {
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, dataProvider, iapContainer);

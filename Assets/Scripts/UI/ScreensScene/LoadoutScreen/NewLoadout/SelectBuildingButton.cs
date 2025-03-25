@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private IItemDetailsDisplayer<IBuilding> _buildingDetails;
         private IBuildingNameToKey _buildingNameToKey;
-        private IDataProvider _dataProvider;
+        private DataProvider _dataProvider;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
         private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override bool ToggleVisibility => true;
 
         public void Initialise(ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider,
+            DataProvider dataProvider,
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IBuildingNameToKey buildingName,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
