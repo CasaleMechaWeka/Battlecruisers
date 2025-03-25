@@ -87,8 +87,7 @@ namespace BattleCruisers.UI.BattleScene
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
-            BuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
-            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
+            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
 

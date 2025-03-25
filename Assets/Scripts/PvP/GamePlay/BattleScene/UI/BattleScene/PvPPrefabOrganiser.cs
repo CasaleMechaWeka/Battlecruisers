@@ -17,26 +17,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private readonly ILoadout _playerLoadout;
         private readonly IPvPPrefabFactory _prefabFactory;
-        private readonly PvPBuildingGroupFactory _buildingGroupFactory;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PvPPrefabOrganiser(ILoadout playerLoadout, IPvPPrefabFactory prefabFactory, PvPBuildingGroupFactory buildingGroupFactory)
+        public PvPPrefabOrganiser(ILoadout playerLoadout, IPvPPrefabFactory prefabFactory)
         {
-            PvPHelper.AssertIsNotNull(playerLoadout, prefabFactory, buildingGroupFactory);
+            PvPHelper.AssertIsNotNull(playerLoadout, prefabFactory);
 
             _playerLoadout = playerLoadout;
             _prefabFactory = prefabFactory;
-            _buildingGroupFactory = buildingGroupFactory;
         }
 
         public IList<IPvPBuildingGroup> GetBuildingGroups()
         {
             IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
-            return CreateBuildingGroups(buildings, _buildingGroupFactory);
+            return CreateBuildingGroups(buildings);
         }
 
         private PvPBuildingKey ConvertToPvP(BuildingKey bKey)
@@ -105,14 +103,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         private IList<IPvPBuildingGroup> CreateBuildingGroups(
-            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildingCategoryToGroups,
-            PvPBuildingGroupFactory buildingGroupFactory)
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildingCategoryToGroups)
         {
             IList<IPvPBuildingGroup> buildingGroups = new List<IPvPBuildingGroup>();
 
             foreach (KeyValuePair<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings in buildingCategoryToGroups)
             {
-                IPvPBuildingGroup group = buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
+                IPvPBuildingGroup group = new PvPBuildingGroup(categoryToBuildings.Key,
+                                                                categoryToBuildings.Value,
+                                                                GetGroupName(categoryToBuildings.Key),
+                                                                GetGroupDescription(categoryToBuildings.Key));
                 buildingGroups.Add(group);
             }
 
@@ -191,6 +191,32 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
 
             return unitWrappers;
+        }
+
+        private string GetGroupName(BuildingCategory category)
+        {
+            return category switch
+            {
+                BuildingCategory.Factory => "Factories",
+                BuildingCategory.Tactical => "Tactical",
+                BuildingCategory.Defence => "Defence",
+                BuildingCategory.Offence => "Offence",
+                BuildingCategory.Ultra => "Ultras",
+                _ => throw new ArgumentException(),
+            };
+        }
+
+        private string GetGroupDescription(BuildingCategory category)
+        {
+            return category switch
+            {
+                BuildingCategory.Factory => "Buildings that produce units",
+                BuildingCategory.Tactical => "Specialised buildings",
+                BuildingCategory.Defence => "Defensive buildings to protect your cruiser",
+                BuildingCategory.Offence => "Offensive buildings to destroy the enemy cruiser",
+                BuildingCategory.Ultra => "Ridiculously awesome creations meant to end to game",
+                _ => throw new ArgumentException(),
+            };
         }
     }
 }
