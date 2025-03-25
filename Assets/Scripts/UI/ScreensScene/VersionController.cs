@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             string value = "v" + Application.version;
 
-            IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
+            StaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
 
 #if IS_DEMO
                 value += " - DEMO";

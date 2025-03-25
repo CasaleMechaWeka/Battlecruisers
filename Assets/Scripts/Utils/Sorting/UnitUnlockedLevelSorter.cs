@@ -9,7 +9,7 @@ namespace BattleCruisers.Utils.Sorting
 {
     public class UnitUnlockedLevelSorter : BuildableUnlockedLevelSorter, IBuildableSorter<IUnit>
     {
-        public UnitUnlockedLevelSorter(IStaticData staticData, IBuildableKeyFactory keyFactory)
+        public UnitUnlockedLevelSorter(StaticData staticData, IBuildableKeyFactory keyFactory)
             : base(staticData, keyFactory) { }
 
         public IList<IBuildableWrapper<IUnit>> Sort(IList<IBuildableWrapper<IUnit>> units)

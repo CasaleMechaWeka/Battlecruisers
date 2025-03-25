@@ -11,7 +11,7 @@ public class SideQuestButtonController : ElementWithClickSound
 {
     private bool isButtonEnabled;
     private IScreensSceneGod _screensSceneGod;
-    private IStaticData _staticData;
+    private StaticData _staticData;
     public int sideQuestID;
     protected override ISoundKey ClickSound => SoundKeys.UI.Click;
     private GameObject checkmark;

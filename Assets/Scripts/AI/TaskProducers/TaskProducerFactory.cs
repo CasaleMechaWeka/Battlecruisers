@@ -16,7 +16,7 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly PrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
-        private readonly IStaticData _staticData;
+        private readonly StaticData _staticData;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         // For spy satellite launcher and shields.  All cruisers have at least 6
@@ -31,7 +31,7 @@ namespace BattleCruisers.AI.TaskProducers
             PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             ISlotNumCalculatorFactory slotNumCalculatorFactory,
-            IStaticData staticData,
+            StaticData staticData,
             IThreatMonitorFactory threatMonitorFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory);

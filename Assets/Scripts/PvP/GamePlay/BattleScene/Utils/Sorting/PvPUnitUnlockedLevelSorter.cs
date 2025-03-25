@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPUnitUnlockedLevelSorter : PvPBuildableUnlockedLevelSorter, IPvPBuildableSorter<IPvPUnit>
     {
-        public PvPUnitUnlockedLevelSorter(IStaticData staticData, IPvPBuildableKeyFactory keyFactory)
+        public PvPUnitUnlockedLevelSorter(StaticData staticData, IPvPBuildableKeyFactory keyFactory)
             : base(staticData, keyFactory) { }
 
         public IList<IPvPBuildableWrapper<IPvPUnit>> Sort(IList<IPvPBuildableWrapper<IPvPUnit>> units)

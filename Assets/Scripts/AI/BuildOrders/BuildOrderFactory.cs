@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.BuildOrders
     public class BuildOrderFactory : IBuildOrderFactory
     {
         private readonly ISlotAssigner _slotAssigner;
-        private readonly IStaticData _staticData;
+        private readonly StaticData _staticData;
         private readonly IGameModel _gameModel;
         private readonly IStrategyFactory _strategyFactory;
 
@@ -26,7 +26,7 @@ namespace BattleCruisers.AI.BuildOrders
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-        public BuildOrderFactory(ISlotAssigner slotAssigner, IStaticData staticData, IGameModel gameModel, IStrategyFactory strategyFactory)
+        public BuildOrderFactory(ISlotAssigner slotAssigner, StaticData staticData, IGameModel gameModel, IStrategyFactory strategyFactory)
         {
             Helper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyFactory);
 

@@ -20,7 +20,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 namespace BattleCruisers.Data.Static
 {
-    public class StaticData : IStaticData
+    public class StaticData
     {
         private ReadOnlyDictionary<BuildingKey, int> _buildingToUnlockedLevel
         = new ReadOnlyDictionary<BuildingKey, int>(new Dictionary<BuildingKey, int>()

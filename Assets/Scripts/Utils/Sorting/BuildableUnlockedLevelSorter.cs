@@ -5,10 +5,10 @@ namespace BattleCruisers.Utils.Sorting
 {
     public abstract class BuildableUnlockedLevelSorter
     {
-        protected readonly IStaticData _staticData;
+        protected readonly StaticData _staticData;
         protected readonly IBuildableKeyFactory _keyFactory;
 
-        protected BuildableUnlockedLevelSorter(IStaticData staticData, IBuildableKeyFactory keyFactory)
+        protected BuildableUnlockedLevelSorter(StaticData staticData, IBuildableKeyFactory keyFactory)
         {
             Helper.AssertIsNotNull(staticData, keyFactory);
 

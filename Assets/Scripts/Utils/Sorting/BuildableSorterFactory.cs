@@ -7,10 +7,10 @@ namespace BattleCruisers.Utils.Sorting
 {
     public class BuildableSorterFactory : IBuildableSorterFactory
     {
-        protected readonly IStaticData _staticData;
+        protected readonly StaticData _staticData;
         protected readonly IBuildableKeyFactory _keyFactory;
 
-        public BuildableSorterFactory(IStaticData staticData, IBuildableKeyFactory keyFactory)
+        public BuildableSorterFactory(StaticData staticData, IBuildableKeyFactory keyFactory)
         {
             Helper.AssertIsNotNull(staticData, keyFactory);
 

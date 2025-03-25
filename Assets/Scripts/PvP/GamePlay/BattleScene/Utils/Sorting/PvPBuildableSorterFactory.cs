@@ -7,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPBuildableSorterFactory : IPvPBuildableSorterFactory
     {
-        protected readonly IStaticData _staticData;
+        protected readonly StaticData _staticData;
         protected readonly IPvPBuildableKeyFactory _keyFactory;
 
-        public PvPBuildableSorterFactory(IStaticData staticData, IPvPBuildableKeyFactory keyFactory)
+        public PvPBuildableSorterFactory(StaticData staticData, IPvPBuildableKeyFactory keyFactory)
         {
             PvPHelper.AssertIsNotNull(staticData, keyFactory);
 

@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
+            StaticData staticData)
         {
             Helper.AssertIsNotNull(
                 droneManager,
@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.BattleScene
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData)
+            StaticData staticData)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);

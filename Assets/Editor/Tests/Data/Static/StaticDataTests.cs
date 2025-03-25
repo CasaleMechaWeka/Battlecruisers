@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Data.Static
 {
     public class StaticDataTests
     {
-        private IStaticData _staticData;
+        private StaticData _staticData;
 
         [SetUp]
         public void SetuUp()
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Shield
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 1);
-            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.ShieldGenerator});
+            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.ShieldGenerator });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -89,7 +89,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Stealth generator, spy satellite launcher
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 15);
-            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher});
+            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -99,7 +99,7 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Bullshark
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 3);
-            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor});
+            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -109,10 +109,10 @@ namespace BattleCruisers.Tests.Data.Static
         {
             // Mortar, frigate
             ILoot actualLoot = _staticData.GetLevelLoot(levelCompleted: 2);
-            ILoot expectedLoot 
+            ILoot expectedLoot
                 = CreateLoot(
                     unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Frigate },
-                    buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.Mortar});
+                    buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.Mortar });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }

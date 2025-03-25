@@ -5,10 +5,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public abstract class PvPBuildableUnlockedLevelSorter
     {
-        protected readonly IStaticData _staticData;
+        protected readonly StaticData _staticData;
         protected readonly IPvPBuildableKeyFactory _keyFactory;
 
-        protected PvPBuildableUnlockedLevelSorter(IStaticData staticData, IPvPBuildableKeyFactory keyFactory)
+        protected PvPBuildableUnlockedLevelSorter(StaticData staticData, IPvPBuildableKeyFactory keyFactory)
         {
             PvPHelper.AssertIsNotNull(staticData, keyFactory);
 

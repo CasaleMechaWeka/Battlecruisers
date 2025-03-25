@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     IPrioritisedSoundPlayer eventSoundPlayer,
                     IPvPSingleSoundPlayer uiSoundPlayer,
                     IPopulationLimitMonitor populationLimitMonitor,
-                    IStaticData staticData)
+                    StaticData staticData)
                 {
                     PvPHelper.AssertIsNotNull(
                         droneManager,
@@ -97,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData,
+            StaticData staticData,
             bool flipClickAndDragIcon)
         {
             PvPHelper.AssertIsNotNull(
@@ -153,7 +153,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData,
+            StaticData staticData,
             bool flipClickAndDragIcon)
         {
             IPvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
