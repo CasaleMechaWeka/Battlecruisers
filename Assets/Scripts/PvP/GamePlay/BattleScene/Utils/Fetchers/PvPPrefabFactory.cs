@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             Assert.IsNotNull(realTimeDeferrer);
             PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+            return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
 
         public PvPPrefab GetPrefab(string prefabPath)

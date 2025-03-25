@@ -13,7 +13,6 @@ using System.Collections;
 using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Data;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Buildables.Boost;
@@ -116,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, 2);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)

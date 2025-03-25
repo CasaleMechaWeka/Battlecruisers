@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
@@ -18,8 +17,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUpdaterProvider updaterProvider = null)
         {
             PrefabFactory prefabFactory
-                = new PrefabFactory(
-                    DataProvider.SettingsManager);
+                = new PrefabFactory();
 
             return
                 new Helper(

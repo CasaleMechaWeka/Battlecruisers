@@ -169,7 +169,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             DontDestroyOnLoad(gameObject);
             _gameModel = DataProvider.GameModel;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            _prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory();
             //    leftCruiserName.text = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = DataProvider.GameModel.PlayerName;
             int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);

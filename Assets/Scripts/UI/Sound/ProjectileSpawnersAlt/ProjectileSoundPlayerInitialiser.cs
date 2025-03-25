@@ -23,8 +23,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
 
             IAudioSource audioSourceWrapper
                 = new EffectVolumeAudioSource(
-                    new AudioSourceBC(audioSource),
-                    settingsManager);
+                    new AudioSourceBC(audioSource));
 
             return await CreateSoundPlayerAsync(soundPlayerFactory, firingSound, burstSize, audioSourceWrapper);
         }

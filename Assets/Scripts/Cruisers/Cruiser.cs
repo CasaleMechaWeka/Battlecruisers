@@ -185,7 +185,7 @@ namespace BattleCruisers.Cruisers
 
             DroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<DroneSoundFeedbackInitialiser>();
             Assert.IsNotNull(droneSoundFeedbackInitialiser);
-            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
+            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones);
 
             ISoundKey selectedSoundKey = IsPlayerCruiser ? SoundKeys.UI.Selected.FriendlyCruiser : SoundKeys.UI.Selected.EnemyCruiser;
             _selectedSound = await SoundFetcher.GetSoundAsync(selectedSoundKey);

@@ -15,16 +15,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
         private AudioSource _audioSource;
         public int type = -1;
 
-        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, SettingsManager settingsManager)
+        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(_audioSource);
-            PvPHelper.AssertIsNotNull(realTimeDeferrer, settingsManager);
+            PvPHelper.AssertIsNotNull(realTimeDeferrer);
 
             return
                 new AudioSourcePoolable(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_audioSource),
-                        settingsManager, type),
+                        new AudioSourceBC(_audioSource), type),
                     realTimeDeferrer);
         }
     }

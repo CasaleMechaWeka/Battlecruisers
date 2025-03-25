@@ -148,7 +148,7 @@ namespace BattleCruisers.Scenes.BattleScene
             waterSplashVolumeController.Initialise(DataProvider.SettingsManager);
 
             // Common setup
-            PrefabFactory prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
+            PrefabFactory prefabFactory = new PrefabFactory();
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(prefabFactory, components.Deferrer, navigationPermitters);

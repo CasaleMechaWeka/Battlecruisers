@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
@@ -16,15 +17,15 @@ namespace BattleCruisers.UI.Sound.AudioSources
         public Vector2 Position { get => _audioSource.Position; set => _audioSource.Position = value; }
         public bool IsActive { get => _audioSource.IsActive; set => _audioSource.IsActive = value; }
 
-        protected VolumeAwareAudioSource(IAudioSource audioSource, SettingsManager settingsManager)
+        protected VolumeAwareAudioSource(IAudioSource audioSource)
         {
-            Helper.AssertIsNotNull(audioSource, settingsManager);
+            Helper.AssertIsNotNull(audioSource);
 
             _audioSource = audioSource;
 
-            if (settingsManager != null)
+            if (DataProvider.SettingsManager != null)
             {
-                _settingsManager = settingsManager;
+                _settingsManager = DataProvider.SettingsManager;
                 _settingsManager.SettingsSaved += _settingsManager_SettingsSaved;
             }
 

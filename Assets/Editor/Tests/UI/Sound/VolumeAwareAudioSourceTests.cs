@@ -10,8 +10,8 @@ namespace BattleCruisers.Tests.UI.Sound
     {
         public float StaticVolume = 0.33f;
 
-        public DummyAudioSource(IAudioSource audioSource, SettingsManager settingsManager)
-            : base(audioSource, settingsManager)
+        public DummyAudioSource(IAudioSource audioSource)
+            : base(audioSource)
         {
         }
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.UI.Sound
             _audioSource = Substitute.For<IAudioSource>();
             _settingsManager = Substitute.For<SettingsManager>();
 
-            _volumeAwareAudioSource = new DummyAudioSource(_audioSource, _settingsManager);
+            _volumeAwareAudioSource = new DummyAudioSource(_audioSource);
 
             _audioSource.Received().Volume = _volumeAwareAudioSource.StaticVolume;
         }

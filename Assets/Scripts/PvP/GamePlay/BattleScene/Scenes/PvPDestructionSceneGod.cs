@@ -157,8 +157,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 _soundPlayer
                     = new SingleSoundPlayer(
                         new EffectVolumeAudioSource(
-                            new AudioSourceBC(_uiAudioSource),
-                            DataProvider.SettingsManager, 1));
+                            new AudioSourceBC(_uiAudioSource), 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
                 skipButton.Initialise(_soundPlayer, SkipAnim);

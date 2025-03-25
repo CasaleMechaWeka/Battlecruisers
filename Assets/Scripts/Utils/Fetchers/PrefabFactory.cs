@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
@@ -25,15 +24,6 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFactory
     {
-        private readonly SettingsManager _settingsManager;
-
-        public PrefabFactory(SettingsManager settingsManager)
-        {
-            Helper.AssertIsNotNull(settingsManager);
-
-            _settingsManager = settingsManager;
-        }
-
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return PrefabCache.GetBuilding(buildingKey);
@@ -127,7 +117,7 @@ namespace BattleCruisers.Utils.Fetchers
             Assert.IsNotNull(realTimeDeferrer);
 
             AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PrefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
+            return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
 
         public CaptainExo GetCaptainExo(IPrefabKey captainExoKey)

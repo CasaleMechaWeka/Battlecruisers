@@ -39,8 +39,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _soundPlayer
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_uiAudioSource),
-                        DataProvider.SettingsManager, 1));
+                        new AudioSourceBC(_uiAudioSource), 1));
 
         RemoveAdvertsButton.Initialise(_soundPlayer, ShowPurchaseConfirmationScreenDelayed);
         MerchShoppeButton.Initialise(_soundPlayer, RedirectToMerchShoppe);

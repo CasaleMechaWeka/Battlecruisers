@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -87,7 +86,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
                 helper.InitialiseBuilding(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
-                await SetupLaserAsync(test.LaserStats.Laser, helper.Deferrer);
+                SetupLaser(test.LaserStats.Laser, helper.Deferrer);
             }
 
             // Moving targets
@@ -98,7 +97,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
                 helper.InitialiseUnit(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
-                await SetupLaserAsync(test.LaserStats.Laser, helper.Deferrer);
+                SetupLaser(test.LaserStats.Laser, helper.Deferrer);
             }
 
             // Blocking targets
@@ -137,17 +136,16 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             return movingTargets;
         }
 
-        private async Task SetupLaserAsync(LaserEmitter laserEmitter, IDeferrer timeScaleDeferrer)
+        private void SetupLaser(LaserEmitter laserEmitter, IDeferrer timeScaleDeferrer)
         {
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_enemyFaction, targetTypes);
             ITarget parent = Substitute.For<ITarget>();
-            await laserEmitter
-                .InitialiseAsync(
+            laserEmitter
+                .Initialise(
                     targetFilter,
                     damagePerS: 100,
                     parent: parent,
-                    settingsManager: DataProvider.SettingsManager,
                     deltaTimeProvider: _updaterProvider.BarrelControllerUpdater,
                     timeScaleDeferrer: timeScaleDeferrer);
         }

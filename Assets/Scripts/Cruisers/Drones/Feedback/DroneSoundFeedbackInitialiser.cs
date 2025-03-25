@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Sound.AudioSources;
+﻿using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Properties;
@@ -11,10 +10,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneSoundFeedbackInitialiser : MonoBehaviour
     {
         public DroneSoundFeedback Initialise(
-            IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
-            SettingsManager settingsManager)
+            IBroadcastingProperty<bool> parentCruiserHasActiveDrones)
         {
-            Helper.AssertIsNotNull(parentCruiserHasActiveDrones, settingsManager);
+            Helper.AssertIsNotNull(parentCruiserHasActiveDrones);
 
             AudioSource audioSource = GetComponentInChildren<AudioSource>();
             Assert.IsNotNull(audioSource);
@@ -23,8 +21,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 new DroneSoundFeedback(
                     parentCruiserHasActiveDrones,
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(audioSource),
-                        settingsManager, 2));
+                        new AudioSourceBC(audioSource), 2));
         }
     }
 }

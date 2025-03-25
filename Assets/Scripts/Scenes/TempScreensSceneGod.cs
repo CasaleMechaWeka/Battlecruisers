@@ -106,10 +106,9 @@ namespace BattleCruisers.Scenes
             _soundPlayer
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_uiAudioSource),
-                        DataProvider.SettingsManager, 1));
+                        new AudioSourceBC(_uiAudioSource), 1));
 
-            _prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory();
             levelTrashDataList.Initialise();
             sideQuestTrashDataList.Initialise();
 
