@@ -35,7 +35,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         protected override ISlotSpecification SlotSpecification => _slotSpecification;
 
         public EnemyBomberStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             EnemyUnitArgs enemyUnitArgs,
             ICruiser aiCruiser,
             IDeferrer deferrer,

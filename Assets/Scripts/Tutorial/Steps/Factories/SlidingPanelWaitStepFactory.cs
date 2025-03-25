@@ -4,12 +4,12 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class SlidingPanelWaitStepFactory : TutorialFactoryBase, ISlidingPanelWaitStepFactory
+    public class SlidingPanelWaitStepFactory : TutorialFactoryBase
     {
         private readonly ISlidingPanel _selector, _informator;
 
         public SlidingPanelWaitStepFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             ISlidingPanel selector,
             ISlidingPanel informator)
             : base(argsFactory)

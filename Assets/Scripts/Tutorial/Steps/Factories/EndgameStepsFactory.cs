@@ -15,16 +15,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class EndgameStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
-        private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
+        private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
+        private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
         private readonly PrefabFactory _prefabFactory;
 
         public EndgameStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
-            IAutoNavigationStepFactory autoNavigationStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
+            AutoNavigationStepFactory autoNavigationStepFactory,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
             ICruiser aiCruiser,

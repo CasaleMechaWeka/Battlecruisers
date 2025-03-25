@@ -5,10 +5,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class TouchSwipeStepsFactory : SwipeStepsFactoryBase
     {
         public TouchSwipeStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(
                   argsFactory,
                   featurePermitterStepFactory,

@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IModalMenu _mainMenu;
 
         public MainMenuStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             IButton modalMainMenuButton,
             IModalMenu mainMenu)
             : base(argsFactory)

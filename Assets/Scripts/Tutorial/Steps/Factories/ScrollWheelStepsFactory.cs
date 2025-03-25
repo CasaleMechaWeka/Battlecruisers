@@ -7,15 +7,15 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ScrollWheelStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _scrollWheelPermitter;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public ScrollWheelStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter scrollWheelPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, scrollWheelPermitter, explanationDismissableStepFactory);

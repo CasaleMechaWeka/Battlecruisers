@@ -3,9 +3,9 @@ using BattleCruisers.UI.Filters;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class FeaturePermitterStepFactory : TutorialFactoryBase, IFeaturePermitterStepFactory
+    public class FeaturePermitterStepFactory : TutorialFactoryBase
     {
-        public FeaturePermitterStepFactory(ITutorialStepArgsFactory argsFactory)
+        public FeaturePermitterStepFactory(TutorialStepArgsFactory argsFactory)
             : base(argsFactory)
         {
             // empty

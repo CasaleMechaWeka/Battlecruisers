@@ -14,14 +14,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public class CreateProducingFactoryStepsFactory : TutorialFactoryBase, ICreateProducingFactoryStepsFactory
     {
-        private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
+        private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly PrefabFactory _prefabFactory;
         private readonly ICruiser _aiCruiser;
 
         public CreateProducingFactoryStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ITutorialProvider tutorialProvider,
             PrefabFactory prefabFactory,
             ICruiser aiCruiser)

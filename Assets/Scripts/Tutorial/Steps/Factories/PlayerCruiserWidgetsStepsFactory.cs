@@ -8,15 +8,15 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class PlayerCruiserWidgetsStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly IHighlightable _playerCruiserHealthBar, _numOfDrones;
-        private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly AutoNavigationStepFactory _autNavigationStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public PlayerCruiserWidgetsStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             IHighlightable playerCruiserHealthBar,
             IHighlightable numOfDrones,
-            IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            AutoNavigationStepFactory autoNavigationStepFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
 
             : base(argsFactory)
         {

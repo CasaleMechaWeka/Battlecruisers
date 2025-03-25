@@ -9,11 +9,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly IPermitter _scrollWheelPermitter;
 
         public MousePanStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
             IPermitter scrollWheelPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(
                   argsFactory,
                   featurePermitterStepFactory,

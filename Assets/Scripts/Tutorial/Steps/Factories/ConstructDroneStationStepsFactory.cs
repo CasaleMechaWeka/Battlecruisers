@@ -10,14 +10,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ConstructDroneStationStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly PrefabFactory _prefabFactory;
 
         public ConstructDroneStationStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IConstructBuildingStepsFactory constructBuildingStepsFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            ConstructBuildingStepsFactory constructBuildingStepsFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory,
             PrefabFactory prefabFactory)
             : base(argsFactory)
         {

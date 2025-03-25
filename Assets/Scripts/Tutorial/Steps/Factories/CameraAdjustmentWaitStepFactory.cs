@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class CameraAdjustmentWaitStepFactory : TutorialFactoryBase, ITutorialStepFactory
+    public class CameraAdjustmentWaitStepFactory : TutorialFactoryBase
     {
         private readonly ICameraComponents _cameraComponents;
 
         public CameraAdjustmentWaitStepFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             ICameraComponents cameraComponents)
             : base(argsFactory)
         {

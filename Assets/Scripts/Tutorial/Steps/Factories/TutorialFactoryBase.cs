@@ -4,9 +4,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public abstract class TutorialFactoryBase
     {
-        protected readonly ITutorialStepArgsFactory _argsFactory;
+        protected readonly TutorialStepArgsFactory _argsFactory;
 
-        protected TutorialFactoryBase(ITutorialStepArgsFactory argsFactory)
+        protected TutorialFactoryBase(TutorialStepArgsFactory argsFactory)
         {
             Helper.AssertIsNotNull(argsFactory);
 

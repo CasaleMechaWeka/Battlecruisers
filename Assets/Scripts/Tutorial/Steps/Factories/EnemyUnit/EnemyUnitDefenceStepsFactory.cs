@@ -15,10 +15,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
     public abstract class EnemyUnitDefenceStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly ICreateProducingFactoryStepsFactory _createProducingFactoryStepsFactory;
-        private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
-        private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
+        private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
+        private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
 
         protected abstract IPrefabKey FactoryKey { get; }
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         protected abstract CameraFocuserTarget UnitCameraFocusTarget { get; }
 
         public EnemyUnitDefenceStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             EnemyUnitArgs enemyUnitArgs)
             : base(argsFactory)
         {
