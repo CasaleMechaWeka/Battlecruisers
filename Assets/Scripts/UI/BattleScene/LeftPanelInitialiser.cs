@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -15,7 +14,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Utils.Sorting;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -93,15 +91,12 @@ namespace BattleCruisers.UI.BattleScene
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
-            IBuildableSorterFactory sorterFactory
-                = new BuildableSorterFactory();
 
             return
                 buildMenuInitialiser.Initialise(
                     uiManager,
                     buildingGroups,
                     units,
-                    sorterFactory,
                     buttonVisibilityFilters,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,

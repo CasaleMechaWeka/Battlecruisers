@@ -24,7 +24,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IUIManager uiManager,
             IList<IBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
-            IBuildableSorterFactory sorterFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -35,7 +34,6 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                 uiManager,
                 buildingGroups,
                 units,
-                sorterFactory,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
@@ -56,7 +54,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             // Building menus
             BuildingMenus buildingMenus = GetComponentInChildren<BuildingMenus>();
             Assert.IsNotNull(buildingMenus);
-            IBuildableSorter<IBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
+            IBuildableSorter<IBuilding> buildingSorter = new BuildingUnlockedLevelSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
             IBuildingClickHandler buildingClickHandler
                 = new BuildingClickHandler(
@@ -76,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     new PopulationLimitReachedDecider(populationLimitMonitor));
             UnitMenus unitMenus = GetComponentInChildren<UnitMenus>();
             Assert.IsNotNull(unitMenus);
-            IBuildableSorter<IUnit> unitSorter = sorterFactory.CreateUnitSorter();
+            IBuildableSorter<IUnit> unitSorter = new UnitUnlockedLevelSorter();
             unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, uiSoundPlayer, unitClickHandler);
 
             return
