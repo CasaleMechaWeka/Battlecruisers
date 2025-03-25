@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPUnitUnlockedLevelSorter : PvPBuildableUnlockedLevelSorter, IPvPBuildableSorter<IPvPUnit>
     {
-        public PvPUnitUnlockedLevelSorter(IPvPBuildableKeyFactory keyFactory)
-            : base(keyFactory) { }
+        public PvPUnitUnlockedLevelSorter()
+            : base() { }
 
         public IList<IPvPBuildableWrapper<IPvPUnit>> Sort(IList<IPvPBuildableWrapper<IPvPUnit>> units)
         {

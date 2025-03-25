@@ -3,7 +3,6 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
@@ -156,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IList<IPvPBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units = prefabOrganiser.GetUnits();
             IPvPBuildableSorterFactory sorterFactory
-                = new PvPBuildableSorterFactory(new PvPBuildableKeyFactory());
+                = new PvPBuildableSorterFactory();
 
             return
                 buildMenuInitialiser.Initialise(
