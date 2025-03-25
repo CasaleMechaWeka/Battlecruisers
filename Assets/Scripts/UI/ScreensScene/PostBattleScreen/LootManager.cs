@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using UnityEngine;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
@@ -35,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowLevelLoot(int levelCompleted)
         {
-            ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+            ILoot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
             bool containsNewLoot = false;
             if (unlockedLoot.Items.Count != 0)
                 for (int i = 0; i < unlockedLoot.Items.Count; i++)
@@ -44,13 +45,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
             return
                 containsNewLoot || (levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
-                && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot);
+                && levelCompleted <= StaticData.LastLevelWithLoot);
         }
 
         //have to do when SideQuest data is stored in StaticData
         public bool ShouldShowSideQuestLoot(int sideQuestID)
         {
-            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
+            ILoot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
 
             bool containsNewLoot = unlockedLoot.Items.Any(item => !item.IsUnlocked(_dataProvider.GameModel));
 
@@ -71,7 +72,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public ILoot UnlockLevelLoot(int levelCompleted)
         {
             Debug.Log($"UnlockLevelLoot called for level: {levelCompleted}");
-            ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+            ILoot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
             {
@@ -85,7 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public ILoot UnlockSideQuestLoot(int sideQuestID)
         {
             Debug.Log($"UnlockSideQuestLoot called for sideQuestID: {sideQuestID}");
-            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
+            ILoot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
 
             if (unlockedLoot.Items.Count != 0)
             {

@@ -75,9 +75,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
                     visualOfCaptains.Add(captainExo.gameObject);
-                    captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, _dataProvider.StaticData.Captains[i], this, ii);
+                    captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[i], this, ii);
 
-                    if (_dataProvider.StaticData.Captains[i].NameStringKeyBase == _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName)  // the first item should be clicked :)
+                    if (StaticData.Captains[i].NameStringKeyBase == _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName)  // the first item should be clicked :)
                     {
                         captainItem.GetComponent<CaptainSelectionItemController>()._clickedFeedback.SetActive(true);
                         currentItem = captainItem.GetComponent<CaptainSelectionItemController>();

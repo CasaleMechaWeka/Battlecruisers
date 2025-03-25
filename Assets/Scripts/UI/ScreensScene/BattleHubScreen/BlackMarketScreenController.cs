@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -159,7 +160,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             byte ii = 0;
 
-            foreach (IAPData iapData in _dataProvider.StaticData.IAPs)
+            foreach (IAPData iapData in StaticData.IAPs)
             {
                 GameObject iapItem = Instantiate(itemPrefab, iapContainer) as GameObject;
                 iapItem.GetComponent<IAPItemController>().StaticInitialise(_soundPlayer, iapData, this);

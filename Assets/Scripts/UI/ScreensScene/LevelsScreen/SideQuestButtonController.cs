@@ -11,7 +11,6 @@ public class SideQuestButtonController : ElementWithClickSound
 {
     private bool isButtonEnabled;
     private IScreensSceneGod _screensSceneGod;
-    private StaticData _staticData;
     public int sideQuestID;
     protected override ISoundKey ClickSound => SoundKeys.UI.Click;
     private GameObject checkmark;
@@ -33,15 +32,14 @@ public class SideQuestButtonController : ElementWithClickSound
     {
         //Most of side quest scripts will need to be modified once side quest manager is done
         _screensSceneGod = screensSceneGod;
-        _staticData = dataProvider.StaticData;
         levelsSetController = transform.parent.GetComponent<LevelsSetController>();
 
         if (levelsSetController == null)
             Debug.LogError("LevelsSetController component was not found");
 
         base.Initialise(soundPlayer);
-        requiredLevel = _staticData.SideQuests[sideQuestID].UnlockRequirementLevel;
-        requiredSideQuestID = _staticData.SideQuests[sideQuestID].RequiredSideQuestID;
+        requiredLevel = StaticData.SideQuests[sideQuestID].UnlockRequirementLevel;
+        requiredSideQuestID = StaticData.SideQuests[sideQuestID].RequiredSideQuestID;
 
         completed = dataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
 

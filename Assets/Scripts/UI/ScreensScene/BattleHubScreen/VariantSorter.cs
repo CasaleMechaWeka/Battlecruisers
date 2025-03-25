@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             try
             {
-                var allVariants = _dataProvider.StaticData.Variants;
+                var allVariants = StaticData.Variants;
                 if (allVariants == null || allVariants.Count == 0)
                 {
                     Debug.LogWarning("[VariantSorter] No variants found");
@@ -133,7 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 Debug.LogError($"[VariantSorter] Critical error: {e}");
                 // Instead of returning empty, return all valid variant indices we can find
-                return _dataProvider.StaticData.Variants?
+                return StaticData.Variants?
                     .Where(v => v != null)
                     .Select(v => v.Index)
                     .ToList() ?? new List<int>();

@@ -17,7 +17,6 @@ namespace BattleCruisers.AI.BuildOrders
     public class BuildOrderFactory : IBuildOrderFactory
     {
         private readonly ISlotAssigner _slotAssigner;
-        private readonly StaticData _staticData;
         private readonly IGameModel _gameModel;
         private readonly IStrategyFactory _strategyFactory;
 
@@ -26,12 +25,11 @@ namespace BattleCruisers.AI.BuildOrders
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-        public BuildOrderFactory(ISlotAssigner slotAssigner, StaticData staticData, IGameModel gameModel, IStrategyFactory strategyFactory)
+        public BuildOrderFactory(ISlotAssigner slotAssigner, IGameModel gameModel, IStrategyFactory strategyFactory)
         {
-            Helper.AssertIsNotNull(slotAssigner, staticData, gameModel, strategyFactory);
+            Helper.AssertIsNotNull(slotAssigner, gameModel, strategyFactory);
 
             _slotAssigner = slotAssigner;
-            _staticData = staticData;
             _gameModel = gameModel;
             _strategyFactory = strategyFactory;
         }
@@ -166,7 +164,7 @@ namespace BattleCruisers.AI.BuildOrders
                     return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
 
                 case OffensiveType.Ultras:
-                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, _staticData.AIBannedUltrakeys);
+                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, StaticData.AIBannedUltrakeys);
 
                 default:
                     throw new ArgumentException();

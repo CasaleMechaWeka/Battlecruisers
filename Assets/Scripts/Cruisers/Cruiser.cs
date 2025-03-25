@@ -214,8 +214,8 @@ namespace BattleCruisers.Cruisers
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
-                        Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                        Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                        Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                         isUsingBodykit = true;
                     }
                 }
@@ -247,8 +247,8 @@ namespace BattleCruisers.Cruisers
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                            Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                            Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                            Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                            Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                             isUsingBodykit = true;
                         }
                     }

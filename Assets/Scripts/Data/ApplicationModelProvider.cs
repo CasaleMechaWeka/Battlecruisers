@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Serialization;
-using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Data
 {
@@ -13,9 +12,7 @@ namespace BattleCruisers.Data
         static ApplicationModelProvider()
         {
             DataProvider dataProvider
-                = new DataProvider(
-                    new StaticData(),
-                    new Serializer(new ModelFilePathProvider()));
+                = new DataProvider(new Serializer(new ModelFilePathProvider()));
 
             ApplicationModel = new ApplicationModel(dataProvider);
         }

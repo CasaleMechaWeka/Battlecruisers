@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -44,8 +43,7 @@ namespace BattleCruisers.UI.BattleScene
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPopulationLimitMonitor populationLimitMonitor,
-            StaticData staticData)
+            IPopulationLimitMonitor populationLimitMonitor)
         {
             Helper.AssertIsNotNull(
                 droneManager,
@@ -57,8 +55,7 @@ namespace BattleCruisers.UI.BattleScene
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
                 uiSoundPlayer,
-                populationLimitMonitor,
-                staticData);
+                populationLimitMonitor);
             Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
@@ -71,8 +68,7 @@ namespace BattleCruisers.UI.BattleScene
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
                     uiSoundPlayer,
-                    populationLimitMonitor,
-                    staticData);
+                    populationLimitMonitor);
 
 
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
@@ -91,17 +87,14 @@ namespace BattleCruisers.UI.BattleScene
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
-            IPopulationLimitMonitor populationLimitMonitor,
-            StaticData staticData)
+            IPopulationLimitMonitor populationLimitMonitor)
         {
             IBuildingGroupFactory buildingGroupFactory = new BuildingGroupFactory();
             IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory
-                = new BuildableSorterFactory(
-                    staticData,
-                    new BuildableKeyFactory());
+                = new BuildableSorterFactory(new BuildableKeyFactory());
 
             return
                 buildMenuInitialiser.Initialise(

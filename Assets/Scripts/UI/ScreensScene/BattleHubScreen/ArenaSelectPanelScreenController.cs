@@ -175,10 +175,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void UpdateValueStrings(int index)
         {
             // index 0 is a Template with 0s in all fields.
-            costCoinsText.text = _dataProvider.StaticData.Arenas[index + 1].costcoins.ToString();
-            costCreditsText.text = _dataProvider.StaticData.Arenas[index + 1].costcredits.ToString();
-            prizeCoinsText.text = _dataProvider.StaticData.Arenas[index + 1].prizecoins.ToString();
-            prizeCreditsText.text = _dataProvider.StaticData.Arenas[index + 1].prizecredits.ToString();
+            costCoinsText.text = StaticData.Arenas[index + 1].costcoins.ToString();
+            costCreditsText.text = StaticData.Arenas[index + 1].costcredits.ToString();
+            prizeCoinsText.text = StaticData.Arenas[index + 1].prizecoins.ToString();
+            prizeCreditsText.text = StaticData.Arenas[index + 1].prizecredits.ToString();
             isTransitioning = false;
         }
 
@@ -191,8 +191,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 battleButton.gameObject.SetActive(false);
                 if (AuthenticationService.Instance.IsSignedIn)
                 {
-                    if (_dataProvider.GameModel.Coins >= _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcoins
-                        && _dataProvider.GameModel.Credits >= _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcredits)
+                    if (_dataProvider.GameModel.Coins >= StaticData.Arenas[indexCurrentArena + 1].costcoins
+                        && _dataProvider.GameModel.Credits >= StaticData.Arenas[indexCurrentArena + 1].costcredits)
                     {
                         _dataProvider.GameModel.GameMap = IndexCurrentArena;
                         PvPBattleSceneGodTunnel.isCost = false;
@@ -201,9 +201,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     }
                     else
                     {
-                        if (_dataProvider.GameModel.Coins < _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcoins)
+                        if (_dataProvider.GameModel.Coins < StaticData.Arenas[indexCurrentArena + 1].costcoins)
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"));
-                        if (_dataProvider.GameModel.Credits < _dataProvider.StaticData.Arenas[indexCurrentArena + 1].costcredits)
+                        if (_dataProvider.GameModel.Credits < StaticData.Arenas[indexCurrentArena + 1].costcredits)
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"));
                         loadingSpinner.SetActive(false);
                         battleButton.gameObject.SetActive(true);

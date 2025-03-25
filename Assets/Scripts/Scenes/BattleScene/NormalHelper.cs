@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
@@ -86,7 +87,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, DataProvider.StaticData.SideQuestStrategies, currentLevelNum, _appModel.Mode == GameMode.SideQuest);
+            return new DefaultStrategyFactory(StaticData.Strategies, StaticData.SideQuestStrategies, currentLevelNum, _appModel.Mode == GameMode.SideQuest);
         }
 
         public override ISlotFilter CreateHighlightableSlotFilter()

@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -129,7 +130,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CoinsChange -= currentCaptainData.CaptainCost;
-                        CaptainData captain = _dataProvider.StaticData.Captains[currentCaptainData.Index];
+                        CaptainData captain = StaticData.Captains[currentCaptainData.Index];
                         if (_dataProvider.GameModel.OutstandingCaptainTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingCaptainTransactions = new List<CaptainData>();

@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -124,7 +125,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CoinsChange -= currentBodykitData.BodykitCost;
-                        BodykitData bodykit = _dataProvider.StaticData.Bodykits[currentBodykitData.Index];
+                        BodykitData bodykit = StaticData.Bodykits[currentBodykitData.Index];
                         if (_dataProvider.GameModel.OutstandingBodykitTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingBodykitTransactions = new List<BodykitData>();

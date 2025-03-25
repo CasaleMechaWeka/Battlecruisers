@@ -6,7 +6,6 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class VariantOrganizer
@@ -55,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             // Get buildings in this category in their unlock order
             var buildingsInCategory = _dataProvider.GameModel.UnlockedBuildings
                 .Where(b => b.BuildingCategory == category)
-                .OrderBy(b => _dataProvider.StaticData.BuildingUnlockLevel(b));
+                .OrderBy(b => StaticData.BuildingUnlockLevel(b));
 
             // Add variants for each building
             foreach (var building in buildingsInCategory)
@@ -70,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             // Get units in this category in their unlock order
             var unitsInCategory = _dataProvider.GameModel.UnlockedUnits
                 .Where(u => u.UnitCategory == category)
-                .OrderBy(u => _dataProvider.StaticData.UnitUnlockLevel(u));
+                .OrderBy(u => StaticData.UnitUnlockLevel(u));
 
             // Add variants for each unit
             foreach (var unit in unitsInCategory)
@@ -82,7 +81,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private List<int> GetVariantsForBuilding(BuildingKey building)
         {
-            return _dataProvider.StaticData.Variants
+            return StaticData.Variants
                 .Where(v =>
                 {
                     var variant = _prefabFactory.GetVariant(
@@ -95,7 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private List<int> GetVariantsForUnit(UnitKey unit)
         {
-            return _dataProvider.StaticData.Variants
+            return StaticData.Variants
                 .Where(v =>
                 {
                     var variant = _prefabFactory.GetVariant(

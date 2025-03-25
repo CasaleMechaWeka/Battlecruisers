@@ -11,6 +11,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using System;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -86,7 +87,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (itemType == ItemType.Heckle)
             {
                 HasUnlockedItem = true;
-                foreach (IHeckleData heckleData in _dataProvider.StaticData.Heckles)
+                foreach (IHeckleData heckleData in StaticData.Heckles)
                 {
                     AddHeckle(heckleData);
                 }

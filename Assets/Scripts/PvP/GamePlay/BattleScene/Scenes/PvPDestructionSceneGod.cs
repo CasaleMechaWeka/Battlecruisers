@@ -12,6 +12,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Data.Static;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
@@ -167,14 +168,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             }
 
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
-            applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
+            StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+            StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+            StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+            StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+            StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+            StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+            StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+            StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
 
 
             PopulateScreen();
@@ -704,7 +705,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private int CalculateCoins(long score)
         {
             int result = 0;
-            Arena arena = applicationModel.DataProvider.StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+            Arena arena = StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
 
             if (levelTimeInSeconds > 60)
             {
@@ -757,7 +758,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private long CalculateCredits()
         {
             long creditsAward = 0;
-            Arena arena = applicationModel.DataProvider.StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+            Arena arena = StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
 
             if (levelTimeInSeconds > 60)
             {

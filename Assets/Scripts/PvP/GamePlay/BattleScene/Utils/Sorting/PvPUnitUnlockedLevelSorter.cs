@@ -11,21 +11,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPUnitUnlockedLevelSorter : PvPBuildableUnlockedLevelSorter, IPvPBuildableSorter<IPvPUnit>
     {
-        public PvPUnitUnlockedLevelSorter(StaticData staticData, IPvPBuildableKeyFactory keyFactory)
-            : base(staticData, keyFactory) { }
+        public PvPUnitUnlockedLevelSorter(IPvPBuildableKeyFactory keyFactory)
+            : base(keyFactory) { }
 
         public IList<IPvPBuildableWrapper<IPvPUnit>> Sort(IList<IPvPBuildableWrapper<IPvPUnit>> units)
         {
             return
                 units
-                      //   .OrderBy(unit => _staticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))
-                      .OrderBy(unit => _staticData.UnitUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.UnitKey(convertToPvP(unit.Buildable.Category), convertToPvP(unit.Buildable.PrefabName))))
+                      //   .OrderBy(unit => StaticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))
+                      .OrderBy(unit => StaticData.UnitUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.UnitKey(convertToPvP(unit.Buildable.Category), convertToPvP(unit.Buildable.PrefabName))))
                     .ToList();
 
             // return null;
         }
 
-        private BattleCruisers.Buildables.Units.UnitCategory convertToPvP(UnitCategory category)
+        private UnitCategory convertToPvP(UnitCategory category)
         {
             switch (category)
             {

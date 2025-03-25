@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             _ownedItemMark.SetActive(_isOwned);
 
-            IHullNameToKey hullNameToKey = new HullNameToKey(dataProvider.StaticData.HullKeys, prefabFactory);
+            IHullNameToKey hullNameToKey = new HullNameToKey(StaticData.HullKeys, prefabFactory);
 
             isCruiserOwned = dataProvider.GameModel.UnlockedHulls.Contains(hullNameToKey.GetKeyFromHullType(
                 prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index)).cruiserType.ToString()));

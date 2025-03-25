@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
@@ -84,7 +85,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override ILoadout GetPlayerLoadout()
         {
-            return DataProvider.StaticData.InitialGameModel.PlayerLoadout;
+            return StaticData.InitialGameModel.PlayerLoadout;
         }
 
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)

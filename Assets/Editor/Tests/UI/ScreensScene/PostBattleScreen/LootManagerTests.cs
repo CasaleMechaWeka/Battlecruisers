@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
@@ -39,8 +40,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             _unlockedLoot = Substitute.For<ILoot>();
             _unlockedLoot.Items.Returns(readonlyLootItems);
 
-            _dataProvider.StaticData.GetLevelLoot(default).ReturnsForAnyArgs(_unlockedLoot);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(99);
+            StaticData.GetLevelLoot(default).ReturnsForAnyArgs(_unlockedLoot);
+            StaticData.LastLevelWithLoot.Returns(99);
 
             _item1 = Substitute.For<ILootItem>();
             _item2 = Substitute.For<ILootItem>();
@@ -61,7 +62,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         {
             int levelCompleted = 7;
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
+            StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
 
             Assert.IsFalse(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
@@ -71,7 +72,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         {
             int levelCompleted = 7;
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
+            StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
             Assert.IsTrue(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
@@ -128,7 +129,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         {
             int levelCompleted = 7;
             _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
+            StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
             _lootManager.UnlockLevelLoot(levelCompleted);
         }

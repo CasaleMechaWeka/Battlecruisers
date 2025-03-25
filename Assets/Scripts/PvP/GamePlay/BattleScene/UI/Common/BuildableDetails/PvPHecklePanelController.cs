@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
@@ -39,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             foreach (int i in _dataProvider.GameModel.PlayerLoadout.CurrentHeckles)
             {
                 PvPHeckleButton heckleButton = Instantiate(heckleButtonPrefab, hecklesParent);
-                heckleButton.StaticInitialise(soundPlayer, dataProvider, _dataProvider.StaticData.Heckles[i], this);
+                heckleButton.StaticInitialise(soundPlayer, dataProvider, StaticData.Heckles[i], this);
             }
         }
 

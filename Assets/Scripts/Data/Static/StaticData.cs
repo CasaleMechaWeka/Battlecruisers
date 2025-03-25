@@ -20,9 +20,9 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 namespace BattleCruisers.Data.Static
 {
-    public class StaticData
+    public static class StaticData
     {
-        private ReadOnlyDictionary<BuildingKey, int> _buildingToUnlockedLevel
+        private static ReadOnlyDictionary<BuildingKey, int> _buildingToUnlockedLevel
         = new ReadOnlyDictionary<BuildingKey, int>(new Dictionary<BuildingKey, int>()
         {
             // Factories
@@ -74,7 +74,7 @@ namespace BattleCruisers.Data.Static
             { Buildings.GlobeShield, 95 },
             { Buildings.Sledgehammer, 95 } //Set to 95: way past the highest main story level, so that the sidequest unlocks it instead.
         });
-        private ReadOnlyDictionary<UnitKey, int> _unitToUnlockedLevel
+        private static ReadOnlyDictionary<UnitKey, int> _unitToUnlockedLevel
         = new ReadOnlyDictionary<UnitKey, int>(new Dictionary<UnitKey, int>()
         {
             // Aircraft
@@ -99,7 +99,7 @@ namespace BattleCruisers.Data.Static
             { Units.RocketTurtle, 95 },
             { Units.FlakTurtle, 95 }
         });
-        private ReadOnlyDictionary<HullKey, int> _hullToUnlockedLevel
+        private static ReadOnlyDictionary<HullKey, int> _hullToUnlockedLevel
         = new ReadOnlyDictionary<HullKey, int>(new Dictionary<HullKey, int>()
         {
             { Hulls.Trident, 1 },
@@ -117,7 +117,7 @@ namespace BattleCruisers.Data.Static
             { Hulls.Yeti, 40 }
         });
 
-        private ReadOnlyDictionary<BuildingKey, int> _buildingToCompletedSideQuest
+        private static ReadOnlyDictionary<BuildingKey, int> _buildingToCompletedSideQuest
         = new ReadOnlyDictionary<BuildingKey, int>(new Dictionary<BuildingKey, int>()
         {
             //Factories
@@ -144,7 +144,7 @@ namespace BattleCruisers.Data.Static
             { Buildings.UltraCIWS, 18 },
             { Buildings.Sledgehammer, 30 }
         });
-        private ReadOnlyDictionary<UnitKey, int> _unitToCompletedSideQuest
+        private static ReadOnlyDictionary<UnitKey, int> _unitToCompletedSideQuest
         = new ReadOnlyDictionary<UnitKey, int>(new Dictionary<UnitKey, int>()
         {
             // Aircraft
@@ -160,7 +160,7 @@ namespace BattleCruisers.Data.Static
             { Units.GunBoat, 20 },
             { Units.FlakTurtle, 21 }
         });
-        private ReadOnlyDictionary<HullKey, int> _hullToCompletedSideQuest
+        private static ReadOnlyDictionary<HullKey, int> _hullToCompletedSideQuest
         = new ReadOnlyDictionary<HullKey, int>(new Dictionary<HullKey, int>()
         {
             { Hulls.Rickshaw, 1 },
@@ -182,8 +182,8 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
         public const int NUM_OF_SIDEQUESTS = 31;
 
-        public GameModel InitialGameModel { get; }
-        public ReadOnlyCollection<ILevel> Levels { get; } = new ReadOnlyCollection<ILevel>(new List<ILevel>()
+        public static GameModel InitialGameModel { get; } = CreateInitialGameModel();
+        public static ReadOnlyCollection<ILevel> Levels { get; } = new ReadOnlyCollection<ILevel>(new List<ILevel>()
         {
             // Set 1:  Raptor
             new Level(1, Hulls.Raptor, BackgroundMusic.Bobby, SkyMaterials.Morning, Exos.GetCaptainExoKey(1)),
@@ -243,7 +243,7 @@ namespace BattleCruisers.Data.Static
             new Level(39, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(39)),
             new Level(40, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(40)) //TODO: Change to new boss broadsword
         });
-        public ReadOnlyCollection<ISideQuestData> SideQuests { get; } = new ReadOnlyCollection<ISideQuestData>(new List<ISideQuestData>()
+        public static ReadOnlyCollection<ISideQuestData> SideQuests { get; } = new ReadOnlyCollection<ISideQuestData>(new List<ISideQuestData>()
         {
             //Set 1: Original Secret Levels
             new SideQuestData(false, Exos.GetCaptainExoKey(32), 32, -1, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, false, 0),
@@ -282,7 +282,7 @@ namespace BattleCruisers.Data.Static
             new SideQuestData(false, Exos.GetCaptainExoKey(45), 4, 27, Hulls.Megalith, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, false, 29), //SpyPlane
             new SideQuestData(false, Exos.GetCaptainExoKey(11), 11, 29, Hulls.Pistol, BackgroundMusic.Juggernaut, SkyMaterials.Midday, false, 30) //Sledgehammer
         });
-        public ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; } = new ReadOnlyDictionary<Map, IPvPLevel>(new Dictionary<Map, IPvPLevel>()
+        public static ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; } = new ReadOnlyDictionary<Map, IPvPLevel>(new Dictionary<Map, IPvPLevel>()
         {
             // Practice Wreckyards
             {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, BackgroundMusic.Bobby, SkyMaterials.Morning)},
@@ -303,7 +303,7 @@ namespace BattleCruisers.Data.Static
             // Mercenary One
             {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning)},
         });
-        public ReadOnlyCollection<HullKey> HullKeys { get; } = new ReadOnlyCollection<HullKey>(new List<HullKey>()
+        public static ReadOnlyCollection<HullKey> HullKeys { get; } = new ReadOnlyCollection<HullKey>(new List<HullKey>()
         {
             // In order they are available to the user.  Means the loadout
             // screen order is nice :)
@@ -327,7 +327,7 @@ namespace BattleCruisers.Data.Static
             Hulls.Yeti,
             Hulls.FortressPrime
         });
-        public ReadOnlyCollection<UnitKey> UnitKeys { get; } = new ReadOnlyCollection<UnitKey>(new List<UnitKey>()
+        public static ReadOnlyCollection<UnitKey> UnitKeys { get; } = new ReadOnlyCollection<UnitKey>(new List<UnitKey>()
         {
             // Aircraft
             Units.Bomber,
@@ -351,7 +351,7 @@ namespace BattleCruisers.Data.Static
             Units.RocketTurtle,
             Units.FlakTurtle
     });
-        public ReadOnlyCollection<BuildingKey> BuildingKeys { get; } = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
+        public static ReadOnlyCollection<BuildingKey> BuildingKeys { get; } = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
         {
             // Units in a category (eg:  Aircraft) are in the order they 
             // become available to the user.  Means the loadout screen order is nice :)
@@ -404,7 +404,7 @@ namespace BattleCruisers.Data.Static
             Buildings.GlobeShield,
             Buildings.Sledgehammer//new
         });
-        public ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; } = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
+        public static ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; } = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
         {
                 // Don't want AI to try and build a kamikaze signal as an ultra,
                 // as it is only effective if there are a certain number of planes.
@@ -419,7 +419,7 @@ namespace BattleCruisers.Data.Static
                 // are always effective.
                 Buildings.Ultralisk
         });
-        public IReadOnlyList<HeckleData> Heckles { get; } = new ReadOnlyCollection<HeckleData>(new HeckleData[]
+        public static IReadOnlyList<HeckleData> Heckles { get; } = new ReadOnlyCollection<HeckleData>(new HeckleData[]
         {
             new HeckleData(15, 0), new HeckleData(15, 1), new HeckleData(15, 2), new HeckleData(15, 3), new HeckleData(15, 4),
             new HeckleData(15, 5), new HeckleData(15, 6), new HeckleData(15, 7), new HeckleData(15, 8), new HeckleData(15, 9),
@@ -478,7 +478,7 @@ namespace BattleCruisers.Data.Static
             new HeckleData(15, 270), new HeckleData(15, 271), new HeckleData(15, 272), new HeckleData(15, 273), new HeckleData(15, 274),
             new HeckleData(15, 275), new HeckleData(15, 276), new HeckleData(15, 277), new HeckleData(15, 278), new HeckleData(15, 279),
         });
-        public IReadOnlyList<CaptainData> Captains { get; } = new ReadOnlyCollection<CaptainData>(new CaptainData[]
+        public static IReadOnlyList<CaptainData> Captains { get; } = new ReadOnlyCollection<CaptainData>(new CaptainData[]
         {
             new CaptainData(0, 0), new CaptainData(50, 1), new CaptainData(40, 2), new CaptainData(60, 3),
             new CaptainData(120, 4), new CaptainData(340, 5), new CaptainData(60, 6), new CaptainData(80, 7),
@@ -494,7 +494,7 @@ namespace BattleCruisers.Data.Static
             new CaptainData(960, 44), new CaptainData(1400, 45), new CaptainData(777, 46), new CaptainData(777, 47),
             new CaptainData(777, 48), new CaptainData(777, 49), new CaptainData(560, 50)
         });
-        public IReadOnlyList<BodykitData> Bodykits { get; } = new ReadOnlyCollection<BodykitData>(new BodykitData[]
+        public static IReadOnlyList<BodykitData> Bodykits { get; } = new ReadOnlyCollection<BodykitData>(new BodykitData[]
         {
             new BodykitData(nameBase: "Bodykit000", descriptionBase : "BodykitDescription000", cost: 999999, id: 0),
             new BodykitData(nameBase: "Bodykit001", descriptionBase : "BodykitDescription001", cost: 480, id: 1),
@@ -550,7 +550,7 @@ namespace BattleCruisers.Data.Static
             new BodykitData(nameBase: "Bodykit051", descriptionBase : "BodykitDescription051", cost: 1000, id: 51),
             new BodykitData(nameBase: "Bodykit052", descriptionBase : "BodykitDescription052", cost: 1200, id: 52),
         });
-        public IReadOnlyList<VariantData> Variants { get; } = new ReadOnlyCollection<VariantData>(new VariantData[]
+        public static IReadOnlyList<VariantData> Variants { get; } = new ReadOnlyCollection<VariantData>(new VariantData[]
         {
             new VariantData(variantNameBase: "DoubleShot", coins: 0, credits: 662, id: 0), new VariantData(variantNameBase: "TripleShot", coins: 0, credits: 662, id: 1),
             new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 2), new VariantData(variantNameBase: "QuickBuild", coins: 0, credits: 662, id: 3),
@@ -619,14 +619,14 @@ namespace BattleCruisers.Data.Static
             new VariantData(variantNameBase: "Sniper", coins: 0, credits: 662, id: 128), new VariantData(variantNameBase: "Robust", coins: 0, credits: 662, id: 129),
             new VariantData(variantNameBase: "Damaging", coins: 0, credits: 662, id: 130)
         });
-        public IReadOnlyList<IAPData> IAPs { get; } = new ReadOnlyCollection<IAPData>(new IAPData[]
+        public static IReadOnlyList<IAPData> IAPs { get; } = new ReadOnlyCollection<IAPData>(new IAPData[]
         {
             new IAPData(0, 0.99f, 100),
             new IAPData(0, 1.99f, 500),
             new IAPData(0, 2.99f, 1000),
             new IAPData(0, 3.99f, 5000)
         });
-        public List<Arena> Arenas { get; set; } = new List<Arena>
+        public static List<Arena> Arenas { get; set; } = new List<Arena>
         {
                 new Arena(),
                 new Arena("PracticeWreckyards", prizecredits: 100),
@@ -639,7 +639,7 @@ namespace BattleCruisers.Data.Static
                 new Arena("UACUltimate", costcoins: 10000, prizecredits:20000),
                 new Arena("MercenaryOne", costcoins:50, prizecredits:50000, prizenukes: 1)
         };
-        public Dictionary<string, int> GameConfigs { get; set; } = new Dictionary<string, int>
+        public static Dictionary<string, int> GameConfigs { get; set; } = new Dictionary<string, int>
         {
             { "scoredivider", 10 },
             { "creditdivider", 100 },
@@ -650,24 +650,12 @@ namespace BattleCruisers.Data.Static
             { "coin5threshold", 5000 },
             { "creditmax", 1250 }
         };
-        public int MinCPUCores { get; set; }
-        public int MinCPUFrequency { get; set; }
-        public int MaxLatency { get; set; }
-        public int LastLevelWithLoot => 40;
-        public ILevelStrategies Strategies { get; }
-        public ILevelStrategies SideQuestStrategies { get; }
-
-        public StaticData()
-        {
-            Strategies = new LevelStrategies();
-            SideQuestStrategies = new SideQuestStrategies();
-
-            InitialGameModel = CreateInitialGameModel();
-            //Assert.IsTrue(Levels.Count == NUM_OF_LEVELS,
-            //"NUM_OF_LEVELS does not match Levels.Count: " + NUM_OF_LEVELS.ToString() + " | expected: " + Levels.Count);
-            Assert.IsTrue(SideQuests.Count == NUM_OF_SIDEQUESTS,
-            "NUM_OF_SIDEQUESTS does not match SideQuests.Count: " + NUM_OF_SIDEQUESTS.ToString() + " | expected: " + SideQuests.Count);
-        }
+        public static int MinCPUCores { get; set; }
+        public static int MinCPUFrequency { get; set; }
+        public static int MaxLatency { get; set; }
+        public static int LastLevelWithLoot => 40;
+        public static ILevelStrategies Strategies { get; } = new LevelStrategies();
+        public static ILevelStrategies SideQuestStrategies { get; } = new SideQuestStrategies();
 
         /// <summary>
         /// Creates the initial game model.
@@ -676,12 +664,13 @@ namespace BattleCruisers.Data.Static
         /// both will share the same list.  In that case if the Loadout deletes one of its
         /// buildings the building will also be deleted from the GameModel.
         /// </summary>
-        private GameModel CreateInitialGameModel()
+        /// 
+        private static GameModel CreateInitialGameModel()
         {
             // TEMP  For final game, don't add ALL the prefabs :D
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
 
-            Loadout playerLoadout = new Loadout(InitialHull, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
+            Loadout playerLoadout = new Loadout(Hulls.Trident, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
 
             bool hasAttemptedTutorial = false;
             bool HasSyncdShop = false;
@@ -694,7 +683,7 @@ namespace BattleCruisers.Data.Static
                 playerLoadout,
                 lastBattleResult: null,
                 // TEMP  Do not unlock all hulls & buildables at the game start :P
-                unlockedHulls: new List<HullKey>() { InitialHull },
+                unlockedHulls: new List<HullKey>() { Hulls.Trident },
                 unlockedBuildings: GetInitialBuildings(),
                 unlockedUnits: GetInitialUnits()
                 );
@@ -708,7 +697,7 @@ namespace BattleCruisers.Data.Static
             //unlockedUnits: AllUnitKeys());
         }
 
-        private Dictionary<BuildingCategory, List<BuildingKey>> GetInitialbuildingLimit()
+        private static Dictionary<BuildingCategory, List<BuildingKey>> GetInitialbuildingLimit()
         {
             List<BuildingKey> limit = GetInitialBuildings();
             List<BuildingKey> factories = new List<BuildingKey>();
@@ -750,7 +739,7 @@ namespace BattleCruisers.Data.Static
             return buildables;
         }
 
-        private Dictionary<UnitCategory, List<UnitKey>> GetInitialUnitLimit()
+        private static Dictionary<UnitCategory, List<UnitKey>> GetInitialUnitLimit()
         {
             List<UnitKey> units = GetInitialUnits();
             List<UnitKey> ships = new();
@@ -771,14 +760,13 @@ namespace BattleCruisers.Data.Static
             };
             return unitlimit;
         }
-        private readonly HullKey InitialHull = Hulls.Trident;
 
-        private List<BuildingKey> GetInitialBuildings()
+        private static List<BuildingKey> GetInitialBuildings()
         {
             return GetBuildingsUnlockedInLevel(levelFirstAvailableIn: 1).ToList();
         }
 
-        private List<UnitKey> GetInitialUnits()
+        private static List<UnitKey> GetInitialUnits()
         {
             return GetUnitsUnlockedInLevel(levelFirstAvailableIn: 1).ToList();
         }
@@ -791,7 +779,7 @@ namespace BattleCruisers.Data.Static
         /// Availability level number = loot level number + 1
         /// </summary>
 
-        public ILoot GetLevelLoot(int levelCompleted)
+        public static ILoot GetLevelLoot(int levelCompleted)
         {
             int availabilityLevelNum = levelCompleted + 1;
 
@@ -805,7 +793,7 @@ namespace BattleCruisers.Data.Static
                     buildingKeys: GetBuildingsUnlockedInLevel(availabilityLevelNum));
         }
 
-        public ILoot GetSideQuestLoot(int sideQuestID)
+        public static ILoot GetSideQuestLoot(int sideQuestID)
         {
             int availabilitySideQuestNum = sideQuestID;
             //hardcoded values while testing
@@ -819,12 +807,12 @@ namespace BattleCruisers.Data.Static
                     buildingKeys: GetBuildingsUnlockedInSideQuest(availabilitySideQuestNum));
         }
 
-        private IList<UnitKey> GetUnitsUnlockedInLevel(int levelFirstAvailableIn)
+        private static IList<UnitKey> GetUnitsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedInLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
 
-        private IList<BuildingKey> GetBuildingsUnlockedInLevel(int levelFirstAvailableIn)
+        private static IList<BuildingKey> GetBuildingsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedInLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
@@ -833,7 +821,7 @@ namespace BattleCruisers.Data.Static
         /// List should always have 0 or 1 entry, unless levelFirstAvailableIn is 1
         /// (ie, the starting level, where we have multiple buildables available).
         /// </summary>
-        private IList<TKey> GetBuildablesUnlockedInLevel<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+        private static IList<TKey> GetBuildablesUnlockedInLevel<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
             where TKey : IPrefabKey
         {
             return
@@ -843,7 +831,7 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        private IList<HullKey> GetHullsUnlockedInLevel(int levelFirstAvailableIn)
+        private static IList<HullKey> GetHullsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return
                 _hullToUnlockedLevel
@@ -852,29 +840,29 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        public int UnitUnlockLevel(UnitKey unitKey)
+        public static int UnitUnlockLevel(UnitKey unitKey)
         {
             Assert.IsTrue(_unitToUnlockedLevel.ContainsKey(unitKey));
             return _unitToUnlockedLevel[unitKey];
         }
 
-        public int BuildingUnlockLevel(BuildingKey buildingKey)
+        public static int BuildingUnlockLevel(BuildingKey buildingKey)
         {
             //Assert.IsTrue(_buildingToUnlockedLevel.ContainsKey(buildingKey));
             return _buildingToUnlockedLevel[buildingKey];
         }
 
-        private IList<UnitKey> GetUnitsUnlockedInSideQuest(int requiredSideQuestID)
+        private static IList<UnitKey> GetUnitsUnlockedInSideQuest(int requiredSideQuestID)
         {
             return GetBuildablesUnlockedInSideQuest(_unitToCompletedSideQuest, requiredSideQuestID);
         }
 
-        private IList<BuildingKey> GetBuildingsUnlockedInSideQuest(int requiredSideQuestID)
+        private static IList<BuildingKey> GetBuildingsUnlockedInSideQuest(int requiredSideQuestID)
         {
             return GetBuildablesUnlockedInSideQuest(_buildingToCompletedSideQuest, requiredSideQuestID);
         }
 
-        private IList<TKey> GetBuildablesUnlockedInSideQuest<TKey>(IDictionary<TKey, int> buildableToCompletedSideQuest, int requiredSideQuestID)
+        private static IList<TKey> GetBuildablesUnlockedInSideQuest<TKey>(IDictionary<TKey, int> buildableToCompletedSideQuest, int requiredSideQuestID)
             where TKey : IPrefabKey
         {
             return
@@ -884,7 +872,7 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        private IList<HullKey> GetHullsUnlockedInSideQuest(int requiredSideQuestID)
+        private static IList<HullKey> GetHullsUnlockedInSideQuest(int requiredSideQuestID)
         {
             return
                 _hullToCompletedSideQuest
@@ -893,13 +881,13 @@ namespace BattleCruisers.Data.Static
                     .ToList();
         }
 
-        public int UnitUnlockSideQuest(UnitKey unitKey)
+        public static int UnitUnlockSideQuest(UnitKey unitKey)
         {
             Assert.IsTrue(_unitToCompletedSideQuest.ContainsKey(unitKey));
             return _unitToCompletedSideQuest[unitKey];
         }
 
-        public int BuildingSideQuest(BuildingKey buildingKey)
+        public static int BuildingSideQuest(BuildingKey buildingKey)
         {
             Assert.IsTrue(_buildingToCompletedSideQuest.ContainsKey(buildingKey));
             return _buildingToCompletedSideQuest[buildingKey];

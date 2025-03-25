@@ -12,6 +12,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes
 {
@@ -149,14 +150,14 @@ namespace BattleCruisers.Scenes
             {
                 // real values:
 
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
+                StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+                StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+                StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+                StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+                StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+                StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+                StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+                StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
 
                 PopulateScreen();
             }

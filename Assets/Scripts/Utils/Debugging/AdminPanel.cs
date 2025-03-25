@@ -2,6 +2,7 @@
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -61,7 +62,7 @@ namespace BattleCruisers.Utils.Debugging
             }
 
             // Hulls
-            foreach (HullKey hull in dataProvider.StaticData.HullKeys)
+            foreach (HullKey hull in StaticData.HullKeys)
             {
                 if (!dataProvider.GameModel.UnlockedHulls.Contains(hull))
                 {
@@ -70,7 +71,7 @@ namespace BattleCruisers.Utils.Debugging
             }
 
             // Buildings
-            foreach (BuildingKey building in dataProvider.StaticData.BuildingKeys)
+            foreach (BuildingKey building in StaticData.BuildingKeys)
             {
                 if (!dataProvider.GameModel.UnlockedBuildings.Contains(building))
                 {
@@ -80,7 +81,7 @@ namespace BattleCruisers.Utils.Debugging
             }
 
             // Units
-            foreach (UnitKey unit in dataProvider.StaticData.UnitKeys)
+            foreach (UnitKey unit in StaticData.UnitKeys)
             {
                 if (!dataProvider.GameModel.UnlockedUnits.Contains(unit))
                 {

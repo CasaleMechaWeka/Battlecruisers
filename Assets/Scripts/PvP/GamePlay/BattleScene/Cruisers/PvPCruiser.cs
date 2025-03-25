@@ -205,8 +205,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                 // should update Name and Description for Bodykit
-                Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-                Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+                Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
+                Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
             }
         }
 

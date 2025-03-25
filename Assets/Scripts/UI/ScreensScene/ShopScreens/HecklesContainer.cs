@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -125,7 +126,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CoinsChange -= currentHeckleData.HeckleCost;
-                        HeckleData heckle = _dataProvider.StaticData.Heckles[currentHeckleData.Index];
+                        HeckleData heckle = StaticData.Heckles[currentHeckleData.Index];
                         if (_dataProvider.GameModel.OutstandingHeckleTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingHeckleTransactions = new List<HeckleData>();

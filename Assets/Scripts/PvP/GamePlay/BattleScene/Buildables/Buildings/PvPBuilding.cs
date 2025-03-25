@@ -14,10 +14,10 @@ using System.Collections.ObjectModel;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Netcode;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Data;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
+
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
@@ -163,7 +163,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public async void ApplyVariantPvP(IPvPBuilding building, int variant_index)
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (variant_index != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variant_index));
@@ -172,8 +171,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
-                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantNameStringKeyBase);
-                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[variant_index].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(StaticData.Variants[variant_index].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(StaticData.Variants[variant_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
                 }
                 else

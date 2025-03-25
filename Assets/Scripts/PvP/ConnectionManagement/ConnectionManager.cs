@@ -8,7 +8,7 @@ using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.Client;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
-using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -152,14 +152,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
 #if UNITY_EDITOR
             LatencyLimit = 2000;
-            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MaxLatency);
+            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + StaticData.MaxLatency);
 #else
-            LatencyLimit = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MaxLatency;
+            LatencyLimit = StaticData.MaxLatency;
             if(LatencyLimit == 0) // Just in case 
             {
                 LatencyLimit = 300;
             }
-            Debug.Log("Remote Config latency limit set to " + ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MaxLatency);
+            Debug.Log("Remote Config latency limit set to " + StaticData.MaxLatency);
 #endif
 
 

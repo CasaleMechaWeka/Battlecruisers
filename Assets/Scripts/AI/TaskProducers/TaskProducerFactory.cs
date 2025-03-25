@@ -16,7 +16,6 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly PrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
         private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
-        private readonly StaticData _staticData;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         // For spy satellite launcher and shields.  All cruisers have at least 6
@@ -31,16 +30,14 @@ namespace BattleCruisers.AI.TaskProducers
             PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             ISlotNumCalculatorFactory slotNumCalculatorFactory,
-            StaticData staticData,
             IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, staticData, threatMonitorFactory);
+            Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, threatMonitorFactory);
 
             _aiCruiser = aiCruiser;
             _prefabFactory = prefabFactory;
             _taskFactory = taskFactory;
             _slotNumCalculatorFactory = slotNumCalculatorFactory;
-            _staticData = staticData;
             _threatMonitorFactory = threatMonitorFactory;
         }
 
@@ -51,7 +48,7 @@ namespace BattleCruisers.AI.TaskProducers
 
         public ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
         {
-            return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, _staticData.BuildingKeys);
+            return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, StaticData.BuildingKeys);
         }
 
         public ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder)

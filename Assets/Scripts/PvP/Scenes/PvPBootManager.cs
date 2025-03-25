@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using UnityEngine;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using VContainer;
@@ -22,6 +21,7 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Services.Qos;
 using System.Threading;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -251,7 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             else
                             {
                                 int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
-                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Arenas[_iMap + 1].costcredits)
+                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= StaticData.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= StaticData.Arenas[_iMap + 1].costcredits)
                                 {
                                     var regions = new List<string>();
                                     regions.Add(Region);
@@ -468,8 +468,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             //test and figure out CPU core and frequency thresholds
             if (SystemInfo.processorCount > 0 && SystemInfo.processorFrequency > 0)
             {
-                k_minCPUCores = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MinCPUCores;
-                k_minCPUFreq = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.MinCPUFrequency;
+                k_minCPUCores = StaticData.MinCPUCores;
+                k_minCPUFreq = StaticData.MinCPUFrequency;
                 k_meetsCPUReq = SystemInfo.processorCount > k_minCPUCores && SystemInfo.processorFrequency > k_minCPUFreq;
             }
             else

@@ -152,7 +152,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private async void ApplyVariantPvP(IPvPUnit unit, int varint_index)
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (varint_index != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(varint_index));
@@ -161,8 +160,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
-                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantNameStringKeyBase);
-                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(StaticData.Variants[varint_index].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(StaticData.Variants[varint_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
                 }
                 else

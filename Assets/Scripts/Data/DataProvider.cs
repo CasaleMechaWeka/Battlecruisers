@@ -28,7 +28,6 @@ namespace BattleCruisers.Data
     {
         private readonly ISerializer _serializer;       // functions for local read/write on disk and JSON serialization/deserialization
 
-        public StaticData StaticData { get; }
         public IList<ILevel> Levels => StaticData.Levels;
         public IList<ISideQuestData> SideQuests => StaticData.SideQuests;
         public IDictionary<Map, IPvPLevel> PvPLevels => StaticData.PvPLevels;
@@ -43,11 +42,10 @@ namespace BattleCruisers.Data
         public EcoConfig ecoConfig { get; set; }
         /*     public PvPConfig pvpConfig { get; set; }*/
         public bool pvpServerAvailable { get; set; }
-        public DataProvider(StaticData staticData, ISerializer serializer)
+        public DataProvider(ISerializer serializer)
         {
-            Helper.AssertIsNotNull(staticData, serializer);
+            Helper.AssertIsNotNull(serializer);
 
-            StaticData = staticData;
             _serializer = serializer;
 
             if (_serializer.DoesSavedGameExist())
@@ -73,7 +71,7 @@ namespace BattleCruisers.Data
 
             SettingsManager = new SettingsManager(this);
 
-            LockedInfo = new LockedInformation(GameModel, StaticData);
+            LockedInfo = new LockedInformation(GameModel);
         }
 
         public ILevel GetLevel(int levelNum)

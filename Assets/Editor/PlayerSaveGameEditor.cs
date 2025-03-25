@@ -2,12 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Serialization;
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
 using System.Linq;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using UnityEditor;
 
@@ -18,7 +13,6 @@ public class PlayerSaveGameEditor : EditorWindow
     private List<bool> sideQuestCompletion;
     private int mainQuestsUnlocked;
     private string gameModelDataDisplay;
-    private StaticData staticData;
 
     [MenuItem("Tools/Player Save Game Editor")]
     public static void ShowWindow()
@@ -28,9 +22,8 @@ public class PlayerSaveGameEditor : EditorWindow
 
     private void OnEnable()
     {
-        staticData = new StaticData();
         LoadGameModel();
-        sideQuestCompletion = new List<bool>(new bool[staticData.SideQuests.Count]);
+        sideQuestCompletion = new List<bool>(new bool[StaticData.SideQuests.Count]);
         gameModelDataDisplay = "";
     }
 
@@ -90,7 +83,7 @@ public class PlayerSaveGameEditor : EditorWindow
             return;
         }
         mainQuestsUnlocked = gameModel.CompletedLevels.Count;
-        sideQuestCompletion = new List<bool>(new bool[staticData.SideQuests.Count]);
+        sideQuestCompletion = new List<bool>(new bool[StaticData.SideQuests.Count]);
 
         foreach (var completedQuest in gameModel.CompletedSideQuests)
         {

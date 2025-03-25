@@ -11,15 +11,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPBuildingUnlockedLevelSorter : PvPBuildableUnlockedLevelSorter, IPvPBuildableSorter<IPvPBuilding>
     {
-        public PvPBuildingUnlockedLevelSorter(StaticData staticData, IPvPBuildableKeyFactory keyFactory)
-            : base(staticData, keyFactory) { }
+        public PvPBuildingUnlockedLevelSorter(IPvPBuildableKeyFactory keyFactory)
+            : base(keyFactory) { }
 
         public IList<IPvPBuildableWrapper<IPvPBuilding>> Sort(IList<IPvPBuildableWrapper<IPvPBuilding>> buildings)
         {
             return
                 buildings
-                    // .OrderBy(building => _staticData.LevelFirstAvailableIn(_keyFactory.CreateBuildingKey(building.Buildable)))
-                    .OrderBy(building => _staticData.BuildingUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.BuildingKey(convertToPvP(building.Buildable.Category), convertToPvP(building.Buildable.PrefabName))))
+                    // .OrderBy(building => StaticData.LevelFirstAvailableIn(_keyFactory.CreateBuildingKey(building.Buildable)))
+                    .OrderBy(building => StaticData.BuildingUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.BuildingKey(convertToPvP(building.Buildable.Category), convertToPvP(building.Buildable.PrefabName))))
                     // So drone station comes before air and naval factories :P
                     .ThenByDescending(building => building.Buildable.BuildTimeInS)
                     .ToList();
@@ -28,20 +28,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
 
-        private BattleCruisers.Buildables.Buildings.BuildingCategory convertToPvP(BuildingCategory category)
+        private BuildingCategory convertToPvP(BuildingCategory category)
         {
             switch (category)
             {
                 case BuildingCategory.Defence:
-                    return BattleCruisers.Buildables.Buildings.BuildingCategory.Defence;
+                    return BuildingCategory.Defence;
                 case BuildingCategory.Factory:
-                    return BattleCruisers.Buildables.Buildings.BuildingCategory.Factory;
+                    return BuildingCategory.Factory;
                 case BuildingCategory.Offence:
-                    return BattleCruisers.Buildables.Buildings.BuildingCategory.Offence;
+                    return BuildingCategory.Offence;
                 case BuildingCategory.Tactical:
-                    return BattleCruisers.Buildables.Buildings.BuildingCategory.Tactical;
+                    return BuildingCategory.Tactical;
                 case BuildingCategory.Ultra:
-                    return BattleCruisers.Buildables.Buildings.BuildingCategory.Ultra;
+                    return BuildingCategory.Ultra;
                 default:
                     throw new NullReferenceException();
             }

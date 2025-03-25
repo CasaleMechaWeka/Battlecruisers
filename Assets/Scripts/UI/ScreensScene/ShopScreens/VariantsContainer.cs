@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
@@ -120,7 +121,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Keep track of transaction for later:
                         _dataProvider.GameModel.CreditsChange -= currentVariantData.VariantCredits;
-                        VariantData variant = _dataProvider.StaticData.Variants[currentVariantData.Index];
+                        VariantData variant = StaticData.Variants[currentVariantData.Index];
                         if (_dataProvider.GameModel.OutstandingVariantTransactions == null)
                         {
                             _dataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
