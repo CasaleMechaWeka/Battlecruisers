@@ -27,7 +27,6 @@ namespace BattleCruisers.Data
     public class DataProvider
     {
         private readonly ISerializer _serializer;       // functions for local read/write on disk and JSON serialization/deserialization
-        private readonly ISaveClient _cloudSaveService; // cloud save serialized JSON
 
         public IStaticData StaticData { get; }
         public IList<ILevel> Levels => StaticData.Levels;
