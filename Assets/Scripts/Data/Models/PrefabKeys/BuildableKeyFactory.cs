@@ -3,7 +3,7 @@ using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.Data.Models.PrefabKeys
 {
-    public class BuildableKeyFactory : IBuildableKeyFactory
+    public class BuildableKeyFactory
     {
         public UnitKey CreateUnitKey(IUnit unit)
         {

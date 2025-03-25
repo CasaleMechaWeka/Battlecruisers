@@ -6,9 +6,9 @@ namespace BattleCruisers.Utils.Sorting
 {
     public class BuildableSorterFactory : IBuildableSorterFactory
     {
-        protected readonly IBuildableKeyFactory _keyFactory;
+        protected readonly BuildableKeyFactory _keyFactory;
 
-        public BuildableSorterFactory(IBuildableKeyFactory keyFactory)
+        public BuildableSorterFactory(BuildableKeyFactory keyFactory)
         {
             Helper.AssertIsNotNull(keyFactory);
 

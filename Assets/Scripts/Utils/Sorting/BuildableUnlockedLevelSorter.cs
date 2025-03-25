@@ -4,9 +4,9 @@ namespace BattleCruisers.Utils.Sorting
 {
     public abstract class BuildableUnlockedLevelSorter
     {
-        protected readonly IBuildableKeyFactory _keyFactory;
+        protected readonly BuildableKeyFactory _keyFactory;
 
-        protected BuildableUnlockedLevelSorter(IBuildableKeyFactory keyFactory)
+        protected BuildableUnlockedLevelSorter(BuildableKeyFactory keyFactory)
         {
             Helper.AssertIsNotNull(keyFactory);
 
