@@ -11,14 +11,14 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
         private IVolumeCalculator _calculator;
         private IProportionCalculator _proportionCalculator;
         private IRange<float> _validOrthographicSizes;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         [SetUp]
         public void TestSetup()
         {
             _proportionCalculator = Substitute.For<IProportionCalculator>();
             _validOrthographicSizes = new Range<float>(2, 10);
-            _settingsManager = Substitute.For<ISettingsManager>();
+            _settingsManager = Substitute.For<SettingsManager>();
             _calculator = new VolumeCalculator(_proportionCalculator, _validOrthographicSizes, _settingsManager);
         }
 

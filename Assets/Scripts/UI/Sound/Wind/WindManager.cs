@@ -11,13 +11,13 @@ namespace BattleCruisers.UI.Sound.Wind
         private readonly IAudioSource _audioSource;
         private readonly ICamera _camera;
         private readonly IVolumeCalculator _volumeCalculator;
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
 
         public WindManager(
-            IAudioSource audioSource, 
-            ICamera camera, 
+            IAudioSource audioSource,
+            ICamera camera,
             IVolumeCalculator volumeCalculator,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(audioSource, camera, volumeCalculator, settingsManager);
 

@@ -46,7 +46,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             IDeltaTimeProvider deltaTimeProvider,
             IDeferrer timeScaleDeferrer)
         {

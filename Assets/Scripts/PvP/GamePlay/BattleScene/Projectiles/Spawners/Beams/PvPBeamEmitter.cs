@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.OnNetworkSpawn();
         }
 
-        protected void Initialise(ITargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
+        protected void Initialise(ITargetFilter targetFilter, ITarget parent, SettingsManager settingsManager)
         {
             // Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             PvPHelper.AssertIsNotNull(targetFilter, parent, settingsManager);

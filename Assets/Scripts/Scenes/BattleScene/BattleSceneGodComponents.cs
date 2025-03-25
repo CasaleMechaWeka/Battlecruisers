@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public HotkeyInitialiser hotkeyInitialiser;
         public HotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
-        public void Initialise(ISettingsManager settingsManager)
+        public void Initialise(SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(
                 backgroundClickableEmitter,

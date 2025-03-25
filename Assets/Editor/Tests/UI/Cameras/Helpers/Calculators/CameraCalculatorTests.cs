@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _camera = Substitute.For<ICamera>();
             _camera.Aspect.Returns(1.333333f);  // 4/3
 
-            ISettingsManager settingsManager = Substitute.For<ISettingsManager>();
+            SettingsManager settingsManager = Substitute.For<SettingsManager>();
             settingsManager.ScrollSpeedLevel.Returns(3);
 
             _settings = new CameraCalculatorSettings(settingsManager, _camera.Aspect);
@@ -124,12 +124,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             float expectedY = (cameraHeight / 2) + zoomTarget.y - (targetViewportPosition.y * cameraHeight);
             Vector3 expectedCameraPosition = new Vector3(expectedX, expectedY, cameraPositionZ);
 
-            Vector3 actualCameraPosition 
+            Vector3 actualCameraPosition
                 = _calculator.FindZoomingCameraPosition(
-                    zoomTarget, 
-                    targetViewportPosition, 
-                    cameraOrthographicSize, 
-                    cameraAspectRatio, 
+                    zoomTarget,
+                    targetViewportPosition,
+                    cameraOrthographicSize,
+                    cameraAspectRatio,
                     cameraPositionZ);
 
             Debug.Log("expectedCameraPosition: " + expectedCameraPosition + "  actualCameraPosition: " + actualCameraPosition);

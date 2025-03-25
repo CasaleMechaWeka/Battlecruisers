@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
             ISoundPlayerFactory soundPlayerFactory,
             ISoundKey firingSound,
             int burstSize,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(soundPlayerFactory, firingSound, settingsManager);
 

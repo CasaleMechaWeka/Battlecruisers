@@ -13,9 +13,9 @@ namespace BattleCruisers.UI.Sound.Wind
         public AudioSource audioSource;
 
         public IWindManager Initialise(
-            ICamera camera, 
+            ICamera camera,
             ICameraCalculatorSettings cameraCalculatorSettings,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Assert.IsNotNull(audioSource);
             Helper.AssertIsNotNull(camera, cameraCalculatorSettings, settingsManager);

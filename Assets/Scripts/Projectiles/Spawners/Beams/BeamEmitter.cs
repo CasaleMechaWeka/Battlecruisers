@@ -30,7 +30,7 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
             Assert.IsNotNull(_platformAudioSource);
         }
 
-        protected void Initialise(ITargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
+        protected void Initialise(ITargetFilter targetFilter, ITarget parent, SettingsManager settingsManager)
         {
             Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             Helper.AssertIsNotNull(targetFilter, parent, settingsManager);

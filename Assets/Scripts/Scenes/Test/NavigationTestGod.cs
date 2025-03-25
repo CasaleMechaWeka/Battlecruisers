@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.Test
             _camera = new CameraBC(Camera.main);
             _cameraCalculatorSettings
                 = new CameraCalculatorSettings(
-                    Substitute.For<ISettingsManager>(),
+                    Substitute.For<SettingsManager>(),
                     _camera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
 
@@ -48,9 +48,9 @@ namespace BattleCruisers.Scenes.Test
                         _cameraCalculatorSettings.ValidOrthographicSizes));
 
             IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
-            CameraTarget target 
+            CameraTarget target
                 = new CameraTarget(
-                    position: new Vector3(-35, 0, _camera.Position.z), 
+                    position: new Vector3(-35, 0, _camera.Position.z),
                     orthographicSize: _cameraCalculatorSettings.ValidOrthographicSizes.Min);
             defaultCameraTargetProvider.SetTarget(target);
 

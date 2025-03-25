@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Music
     {
         private readonly AudioVolumeFade _audioVolumeFade;
         private readonly IAudioSource _primarySource, _secondarySource;
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private bool _isDisposed, _isPlayingSecondary;
 
         public const float FADE_TIME_IN_S = 2;
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Music
             AudioVolumeFade audioVolumeFade,
             IAudioSource primarySource,
             IAudioSource secondarySource,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(audioVolumeFade, primarySource, secondarySource, settingsManager);
 

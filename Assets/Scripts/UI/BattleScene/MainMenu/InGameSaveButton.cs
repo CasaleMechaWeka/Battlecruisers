@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
     public class InGameSaveButton : ElementWithClickSound
     {
         private IMainMenuManager _mainMenuManager;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<bool> _showToolTips;
@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             IBroadcastingProperty<float> masterVolume,
             IBroadcastingProperty<float> effectVolume,
             IBroadcastingProperty<float> ambientVolume,

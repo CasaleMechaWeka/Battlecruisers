@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
     public class EdgeScrollCalculator : IEdgeScrollCalculator
     {
         private readonly ITime _time;
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
         private readonly ICamera _camera;
         private readonly IRange<float> _validOrthographicSizes;
@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 
         public EdgeScrollCalculator(
             ITime time,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             ILevelToMultiplierConverter scrollLevelConverter,
             ICamera camera,
             IRange<float> validOrthographicSizes,

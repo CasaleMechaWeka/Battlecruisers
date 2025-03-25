@@ -8,7 +8,7 @@ using BattleCruisers.UI.BattleScene.GameSpeed;
 
 namespace BattleCruisers.UI.BattleScene.MainMenu
 {
-    public class ModalMenuController : MonoBehaviour, IModalMenu
+	public class ModalMenuController : MonoBehaviour, IModalMenu
 	{
 		private Canvas _canvas;
 
@@ -21,17 +21,17 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 		private ISettableBroadcastingProperty<bool> _isVisible;
 		public IBroadcastingProperty<bool> IsVisible { get; private set; }
 
-        public void Initialise(
-			ISingleSoundPlayer soundPlayer, 
-			bool isTutorial, 
+		public void Initialise(
+			ISingleSoundPlayer soundPlayer,
+			bool isTutorial,
 			IMainMenuManager menuManager,
-			ISettingsManager settingsManager)
+			SettingsManager settingsManager)
 		{
 			Helper.AssertIsNotNull(buttonsPanel, settingsPanel);
 			Helper.AssertIsNotNull(soundPlayer, menuManager, settingsManager);
 
-            _canvas = GetComponent<Canvas>();
-            Assert.IsNotNull(_canvas);
+			_canvas = GetComponent<Canvas>();
+			Assert.IsNotNull(_canvas);
 
 			buttonsPanel.Initialise(soundPlayer, isTutorial, menuManager);
 			settingsPanel.Initialise(soundPlayer, menuManager, settingsManager);
@@ -71,10 +71,10 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 			menuIsOpen = false;
 		}
 
-        public void ShowSettings()
-        {
+		public void ShowSettings()
+		{
 			buttonsPanel.Hide();
 			settingsPanel.Show();
 		}
-    }
+	}
 }

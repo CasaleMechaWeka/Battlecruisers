@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
-        public ISettingsManager SettingsManager { get; }
+        public SettingsManager SettingsManager { get; }
 
         // Circular dependencies :/
         public IPvPPoolProviders PoolProviders { get; private set; }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
             IPvPPrefabFactory prefabFactory,
-            ISettingsManager settingsManager
+            SettingsManager settingsManager
             )
         {
             PvPHelper.AssertIsNotNull(components, prefabFactory, settingsManager);

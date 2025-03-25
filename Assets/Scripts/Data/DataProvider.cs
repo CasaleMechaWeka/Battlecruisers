@@ -33,7 +33,7 @@ namespace BattleCruisers.Data
         public IList<ILevel> Levels => StaticData.Levels;
         public IList<ISideQuestData> SideQuests => StaticData.SideQuests;
         public IDictionary<Map, IPvPLevel> PvPLevels => StaticData.PvPLevels;
-        public ISettingsManager SettingsManager { get; }
+        public SettingsManager SettingsManager { get; }
         public ILockedInformation LockedInfo { get; }
 
         private readonly GameModel _gameModel;

@@ -25,9 +25,9 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFactory
     {
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
 
-        public PrefabFactory(ISettingsManager settingsManager)
+        public PrefabFactory(SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(settingsManager);
 

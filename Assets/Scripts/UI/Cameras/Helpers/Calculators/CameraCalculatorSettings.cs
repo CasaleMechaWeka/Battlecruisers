@@ -6,12 +6,12 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
     public class CameraCalculatorSettings : ICameraCalculatorSettings
     {
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
 
         private const float DEFAULT_ASPECT_RATIO = 1.333f;  // 4/3
         // Large enough to see both cruisers fully with a bit of space,
         // so can see bombers as they overshoot the cruiser :)
-        private const float DEFAULT_MAX_ORTHOGRAPHIC_SIZE = 38;  
+        private const float DEFAULT_MAX_ORTHOGRAPHIC_SIZE = 38;
 
         public float CruiserWidthMultiplier => 1.2f;
         public float CruiserCameraPositionAdjustmentMultiplier => 0.08f;
@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         public IRange<float> ValidOrthographicSizes { get; }
         public IRange<float> CameraVisibleXRange { get; }
 
-        public CameraCalculatorSettings(ISettingsManager settingsManager, float cameraAspectRatio)
+        public CameraCalculatorSettings(SettingsManager settingsManager, float cameraAspectRatio)
         {
             Assert.IsNotNull(settingsManager);
 

@@ -17,7 +17,7 @@ namespace BattleCruisers.Data
         IGameModel GameModel { get; }
         ILockedInformation LockedInfo { get; }
         IStaticData StaticData { get; }
-        ISettingsManager SettingsManager { get; }
+        SettingsManager SettingsManager { get; }
 
         List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public VirtualShopConfig virtualShopConfig { get; set; }

@@ -9,7 +9,7 @@ public class FullScreenAdverts : MonoBehaviour
 {
     public DefaultAdvertController defaultAd;
     public Button closeButton;
-    private ISettingsManager settingsManager; // For fullscreen ads on premium :)
+    private SettingsManager settingsManager; // For fullscreen ads on premium :)
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +70,7 @@ public class FullScreenAdverts : MonoBehaviour
     //gameObject.SetActive(false);
 #endif
     }
-    
+
     public static float DeviceDiagonalSizeInInches()
     {
         float screenWidth = Screen.width / Screen.dpi;

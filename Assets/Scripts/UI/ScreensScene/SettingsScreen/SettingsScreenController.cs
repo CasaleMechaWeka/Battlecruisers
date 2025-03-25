@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         public DifficultyDropdown difficultyDropdown;
         public LanguageDropdown languageDropdown;
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             IHotkeysModel hotkeysModel)
         {
             base.Initialise(screensSceneGod);

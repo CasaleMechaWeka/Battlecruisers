@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.Cameras
         private CameraTransitionSpeedManager cameraTransitionSpeedManager;
 
         public ICameraComponents Initialise(
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
@@ -142,7 +142,7 @@ namespace BattleCruisers.UI.Cameras
         private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             ICameraCalculator cameraCalculator,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             NavigationPermitters navigationPermitters,
             IStaticCameraTargetProvider trumpCameraTargetProvider,
@@ -170,7 +170,7 @@ namespace BattleCruisers.UI.Cameras
         private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera,
             ICameraCalculator cameraCalculator,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             ICameraCalculatorSettings settings,
             TogglableUpdater updater,
             IStaticCameraTargetProvider trumpCameraTargetProvider)
@@ -282,7 +282,7 @@ namespace BattleCruisers.UI.Cameras
             _cameraAdjuster.AdjustCamera();
         }
 
-        public CameraComponents UpdateCamera(ISettingsManager settingsManager, NavigationPermitters navigationPermitters)
+        public CameraComponents UpdateCamera(SettingsManager settingsManager, NavigationPermitters navigationPermitters)
         {
             ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
             ICameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);

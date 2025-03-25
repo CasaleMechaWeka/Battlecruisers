@@ -56,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
-        //        public void Initialise_Client(ISettingsManager settingsManager)
-        public void Initialise(ISettingsManager settingsManager)
+        //        public void Initialise_Client(SettingsManager settingsManager)
+        public void Initialise(SettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(
                 backgroundClickableEmitter,

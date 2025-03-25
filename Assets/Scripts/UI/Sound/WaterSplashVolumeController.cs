@@ -8,11 +8,11 @@ namespace BattleCruisers.UI.Sound
 {
     public class WaterSplashVolumeController : MonoBehaviour
     {
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         public Game2DWater water;
 
-        public void Initialise(ISettingsManager settingsManager)
+        public void Initialise(SettingsManager settingsManager)
         {
             Assert.IsNotNull(water);
             Assert.IsNotNull(settingsManager);

@@ -12,7 +12,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     {
         public DroneSoundFeedback Initialise(
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(parentCruiserHasActiveDrones, settingsManager);
 

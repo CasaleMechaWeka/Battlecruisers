@@ -14,16 +14,16 @@ namespace BattleCruisers.UI.Sound.Pools
         private AudioSource _audioSource;
         public int type = -1;
 
-        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, ISettingsManager settingsManager)
+        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, SettingsManager settingsManager)
         {
             Assert.IsNotNull(_audioSource);
             Helper.AssertIsNotNull(realTimeDeferrer, settingsManager);
 
-            return 
+            return
                 new AudioSourcePoolable(
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_audioSource),
-                        settingsManager, type), 
+                        settingsManager, type),
                     realTimeDeferrer);
         }
     }

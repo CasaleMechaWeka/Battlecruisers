@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.BuildProgress
     public class LinearCalculator : IBuildProgressCalculator
     {
         private readonly float _buildMultiplier;
-        private ISettingsManager settingsManager;
+        private SettingsManager settingsManager;
 
         public LinearCalculator(float buildSpeedMultiplier = BuildSpeedMultipliers.DEFAULT)
         {
@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.BuildProgress
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             settingsManager = applicationModel.DataProvider.SettingsManager;
 
-            if(settingsManager.TurboMode)
+            if (settingsManager.TurboMode)
             {
                 _buildMultiplier = 10;
             }
@@ -38,10 +38,10 @@ namespace BattleCruisers.Buildables.BuildProgress
             Assert.IsTrue(buildableUnderConstruction.BuildableState == BuildableState.InProgress);
             Logging.Log(Tags.BOOST, $"Boost multiplier: {buildableUnderConstruction.BuildProgressBoostable.BoostMultiplier}");
 
-            return 
-                buildableUnderConstruction.DroneConsumer.NumOfDrones 
-                * buildableUnderConstruction.BuildProgressBoostable.BoostMultiplier 
-                * deltaTime 
+            return
+                buildableUnderConstruction.DroneConsumer.NumOfDrones
+                * buildableUnderConstruction.BuildProgressBoostable.BoostMultiplier
+                * deltaTime
                 * _buildMultiplier;
         }
     }

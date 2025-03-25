@@ -9,7 +9,7 @@ namespace BattleCruisers.Effects.ParticleSystems
     public class ParticleSystemGroupInitialiser : MonoBehaviourWrapper, IParticleSystemGroupInitialiser
     {
         AudioSource audioSource;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
         public IParticleSystemGroup CreateParticleSystemGroup()
         {
             return

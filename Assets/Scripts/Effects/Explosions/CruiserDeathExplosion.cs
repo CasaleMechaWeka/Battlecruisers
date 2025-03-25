@@ -16,7 +16,7 @@ namespace BattleCruisers.Effects.Explosions
         private AudioSourceGroup _audioSources;
         public BodykitWreck[] wrecks;
         public SpriteRenderer[] wreckRenders;
-        public IPoolable<Vector3> Initialise(ISettingsManager settingsManager)
+        public IPoolable<Vector3> Initialise(SettingsManager settingsManager)
         {
             IPoolable<Vector3> explosion = base.Initialise();
 

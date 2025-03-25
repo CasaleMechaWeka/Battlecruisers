@@ -5,7 +5,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Settings
 {
-    public class SettingsManager : ISettingsManager
+    public enum Difficulty
+    {
+        Easy = 0,
+        Normal = 1,
+        Hard = 2,
+        Harder = 3
+    }
+
+    public class SettingsManager
     {
         private readonly ISettingsModel _settings;
         private readonly IDataProvider _dataProvider;

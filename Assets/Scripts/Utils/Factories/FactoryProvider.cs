@@ -29,7 +29,7 @@ namespace BattleCruisers.Utils.Factories
         public SpriteChooserFactory SpriteChooserFactory { get; }
         public TargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
-        public ISettingsManager SettingsManager { get; }
+        public SettingsManager SettingsManager { get; }
 
         // Circular dependencies :/
         public PoolProviders PoolProviders { get; private set; }
@@ -38,7 +38,7 @@ namespace BattleCruisers.Utils.Factories
         public FactoryProvider(
             IBattleSceneGodComponents components,
             PrefabFactory prefabFactory,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(components, prefabFactory, settingsManager);
 

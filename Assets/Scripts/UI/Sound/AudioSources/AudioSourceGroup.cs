@@ -8,15 +8,15 @@ namespace BattleCruisers.UI.Sound.AudioSources
 {
     public class AudioSourceGroup : IManagedDisposable
     {
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private readonly IList<IAudioSource> _audioSources;
 
-        public AudioSourceGroup(ISettingsManager settingsManager, params IAudioSource[] audioSources)
+        public AudioSourceGroup(SettingsManager settingsManager, params IAudioSource[] audioSources)
             : this(settingsManager, audioSources.ToList())
         {
         }
 
-        public AudioSourceGroup(ISettingsManager settingsManager, IList<IAudioSource> audioSources)
+        public AudioSourceGroup(SettingsManager settingsManager, IList<IAudioSource> audioSources)
         {
             Helper.AssertIsNotNull(settingsManager, audioSources);
 

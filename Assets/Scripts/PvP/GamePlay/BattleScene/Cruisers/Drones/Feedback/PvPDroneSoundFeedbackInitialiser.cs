@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         public DroneSoundFeedback Initialise(
             IBroadcastingProperty<bool> parentCruiserHasActiveDrones,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(parentCruiserHasActiveDrones, settingsManager);
 

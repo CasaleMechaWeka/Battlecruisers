@@ -36,9 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPPrefabFactory : IPvPPrefabFactory
     {
         private readonly IPvPPrefabCache _prefabCache;
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
 
-        public PvPPrefabFactory(IPvPPrefabCache prefabCache, ISettingsManager settingsManager)
+        public PvPPrefabFactory(IPvPPrefabCache prefabCache, SettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(prefabCache, settingsManager);
 
