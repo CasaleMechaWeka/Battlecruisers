@@ -197,7 +197,7 @@ namespace BattleCruisers.Cruisers
 
             // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            settingsManager = applicationModel.DataProvider.SettingsManager;
+            settingsManager = DataProvider.SettingsManager;
             if (settingsManager.RichMode)
             {
                 DroneManager.NumOfDrones = numOfDrones * 4;
@@ -206,7 +206,7 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
-                int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
+                int id_bodykit = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
                 if (id_bodykit != -1)
                 {
                     Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
@@ -225,7 +225,7 @@ namespace BattleCruisers.Cruisers
                                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch(ConsentCheckException e)
@@ -239,7 +239,7 @@ namespace BattleCruisers.Cruisers
                 // AI bot
                 if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle)
                 {
-                    int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot;
+                    int id_bodykit = DataProvider.GameModel.ID_Bodykit_AIbot;
                     Debug.Log(id_bodykit);
                     if (id_bodykit != -1)
                     {
@@ -314,7 +314,7 @@ namespace BattleCruisers.Cruisers
                                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch (ConsentCheckException ex)

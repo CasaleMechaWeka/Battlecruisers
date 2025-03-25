@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Scenes;
+﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -26,7 +25,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IList<LevelInfo> allLevels,
             int numOfLevelsUnlocked,
             ISingleSoundPlayer soundPlayer,
-            DataProvider dataProvider,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider trashDataList,
             int setIndex)
@@ -67,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             SideQuestButtonController[] sideQuestButtons = GetComponentsInChildren<SideQuestButtonController>();
             for (int i = 0; i < sideQuestButtons.Count(); i++)
-                sideQuestButtons[i].Initialise(screensSceneGod, soundPlayer, dataProvider, numOfLevelsUnlocked, true);
+                sideQuestButtons[i].Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked, true);
 
             // Set up trails
             TrailController[] trails = GetComponentsInChildren<TrailController>();

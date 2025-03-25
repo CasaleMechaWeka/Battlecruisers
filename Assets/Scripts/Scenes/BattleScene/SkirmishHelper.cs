@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            bool canUseUltras = _appModel.DataProvider.GameModel.UnlockedBuildings.Any(building => building.BuildingCategory == BuildingCategory.Ultra);
+            bool canUseUltras = DataProvider.GameModel.UnlockedBuildings.Any(building => building.BuildingCategory == BuildingCategory.Ultra);
             return new SkirmishStrategyFactory(_skirmish.AIStrategy, canUseUltras);
         }
 

@@ -40,7 +40,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
-                        ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
+                        DataProvider.SettingsManager, 1));
 
         RemoveAdvertsButton.Initialise(_soundPlayer, ShowPurchaseConfirmationScreenDelayed);
         MerchShoppeButton.Initialise(_soundPlayer, RedirectToMerchShoppe);
@@ -100,7 +100,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         /*#elif UNITY_ANDROID && FREE_EDITION*/
 #elif UNITY_ANDROID
-        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        if (!DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
         }
@@ -110,7 +110,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         }
 /*#elif UNITY_EDITOR && FREE_EDITION*/
 #elif UNITY_EDITOR
-        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        if (!DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
         }
@@ -129,7 +129,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
         if (IAPManager.instance != null)
         {
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+            if (!DataProvider.GameModel.PremiumEdition)
             {
                 ShowIAPButton();
                 startAdvert();

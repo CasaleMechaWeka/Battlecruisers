@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
             _lootManager = lootManager;
 
-            BattleResult battleResult = _appModel.DataProvider.GameModel.LastBattleResult;
+            BattleResult battleResult = DataProvider.GameModel.LastBattleResult;
 
             postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_NO_LOOT_KEY);
             postBattleScreen.title.color = Color.black;
@@ -94,19 +94,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         private void SaveVictory(BattleResult battleResult)
         {
-            CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: _appModel.DataProvider.SettingsManager.AIDifficulty);
+            CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: DataProvider.SettingsManager.AIDifficulty);
             if (_appModel.Mode != GameMode.SideQuest)
-                _appModel.DataProvider.GameModel.AddCompletedLevel(level);
+                DataProvider.GameModel.AddCompletedLevel(level);
             else
-                _appModel.DataProvider.GameModel.AddCompletedSideQuest(level);
+                DataProvider.GameModel.AddCompletedSideQuest(level);
 
             int nextLevel = 0;
             if (_appModel.Mode != GameMode.SideQuest)
                 nextLevel = _appModel.SelectedLevel + 1;
-            if (nextLevel <= _appModel.DataProvider.LockedInfo.NumOfLevelsUnlocked)
-                _appModel.DataProvider.GameModel.SelectedLevel = nextLevel;
+            if (nextLevel <= DataProvider.LockedInfo.NumOfLevelsUnlocked)
+                DataProvider.GameModel.SelectedLevel = nextLevel;
 
-            _appModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
 
         public void ShowLoot()

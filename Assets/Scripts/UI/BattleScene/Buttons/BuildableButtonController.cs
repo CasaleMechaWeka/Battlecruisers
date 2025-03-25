@@ -11,7 +11,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -153,16 +152,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void ApplyVariantIfExist(IBuilding building)
         {
-            DataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            int index = dataProvder.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
+            int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
             if (index != -1)
             {
                 VariantPrefab variant = prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;
-                    //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    //buildableName.text = commonString.GetString(DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (building.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;
@@ -183,16 +181,15 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void ApplyVariantIfExist(IUnit unit)
         {
-            DataProvider dataProvder = ApplicationModelProvider.ApplicationModel.DataProvider;
             PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            int index = dataProvder.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
+            int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
             if (index != -1)
             {
                 VariantPrefab variant = prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;
-                    //buildableName.text = commonString.GetString(dataProvder.GameModel.Variants[index].VariantNameStringKeyBase);
+                    //buildableName.text = commonString.GetString(DataProvider.GameModel.Variants[index].VariantNameStringKeyBase);
                     droneLevel.text = (unit.NumOfDronesRequired + variant.statVariant.drone_num).ToString();
                     upgradeIconImage1Object.SetActive(true);
                     upgradeIconImage1.sprite = variant.variantSprite;

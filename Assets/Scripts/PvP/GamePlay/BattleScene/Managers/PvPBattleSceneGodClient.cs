@@ -83,7 +83,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
         public IPvPUIManager uiManager;
-        public DataProvider dataProvider;
         public IPvPPrefabFactory prefabFactory;
         public PvPFactoryProvider factoryProvider;
         public PvPCruiser playerCruiser;
@@ -309,8 +308,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public void StaticInitialiseAsync_Host()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
-            dataProvider = applicationModel.DataProvider;
-            PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
+            PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -322,12 +320,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             messageBox.HideMessage();
 
             Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.Initialise(DataProvider.SettingsManager);
             prefabFactory = PvPBattleSceneGodServer.Instance.prefabFactory;
             navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, null);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
@@ -336,8 +334,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private async Task StaticInitialiseAsync_Client()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
-            dataProvider = applicationModel.DataProvider;
-            PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
+            PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
             components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
@@ -349,17 +346,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             messageBox.HideMessage();
 
             Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.Initialise(DataProvider.SettingsManager);
 
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
-            prefabFactory = new PvPPrefabFactory(prefabCache, dataProvider.SettingsManager);
+            prefabFactory = new PvPPrefabFactory(prefabCache, DataProvider.SettingsManager);
 
             navigationPermitters = new NavigationPermitters();
 
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, null);
             uiManager = pvpBattleHelper.CreateUIManager();
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
@@ -381,7 +378,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerCruiser.StaticInitialise();
             enemyCruiser.StaticInitialise();
             cameraComponents = cameraInitialiser.Initialise(
-                dataProvider.SettingsManager,
+                DataProvider.SettingsManager,
                 playerCruiser,
                 enemyCruiser,
                 navigationPermitters,
@@ -442,7 +439,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     navigationPermitterManager
                 );
 
-            IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel, dataProvider, prefabFactory);
+            IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel, prefabFactory);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
             PvPManagerArgs args
@@ -459,7 +456,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             ILayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     currentLevel.MusicKeys,
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new PvPCruiserDamageMonitor(playerCruiser);
             _audioInitialiser
                 = new PvPAudioInitialiser(
@@ -476,11 +473,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
                     cameraComponents.Settings,
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             windManager.Play();
             _cruiserDeathManager = new PvPCruiserDeathManager(playerCruiser, enemyCruiser);
             components.HotkeyInitialiser.Initialise(
-                    dataProvider.GameModel.Hotkeys,
+                    DataProvider.GameModel.Hotkeys,
                     InputBC.Instance,
                     components.UpdaterProvider.SwitchableUpdater,
                     navigationPermitters.HotkeyFilter,
@@ -510,7 +507,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             isStartedPvP = true;
             if (NetworkManager.Singleton.IsHost)
             {
-                PvPBattleSceneGodServer.Instance.playerASelectedVariants = dataProvider.GameModel.PlayerLoadout.SelectedVariants;
+                PvPBattleSceneGodServer.Instance.playerASelectedVariants = DataProvider.GameModel.PlayerLoadout.SelectedVariants;
                 PvPBattleSceneGodServer.Instance.Initialise_Rest();
             }
         }
@@ -519,12 +516,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (!WasLeftMatch && !wasOpponentDisconnected)
             {
-                dataProvider.GameModel.Coins -= StaticData.Arenas[dataProvider.GameModel.GameMap + 1].costcoins;
-                dataProvider.GameModel.Credits -= StaticData.Arenas[dataProvider.GameModel.GameMap + 1].costcredits;
-                dataProvider.SaveGame();
+                DataProvider.GameModel.Coins -= StaticData.Arenas[DataProvider.GameModel.GameMap + 1].costcoins;
+                DataProvider.GameModel.Credits -= StaticData.Arenas[DataProvider.GameModel.GameMap + 1].costcredits;
+                DataProvider.SaveGame();
                 PvPBattleSceneGodTunnel.isCost = true;
-                await dataProvider.SyncCoinsToCloud();
-                await dataProvider.SyncCreditsToCloud();
+                await DataProvider.SyncCoinsToCloud();
+                await DataProvider.SyncCreditsToCloud();
             }
         }
 
@@ -535,7 +532,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
 
-                PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultA.Prefab.StaticInitialise();
                 if (leftCaptain == null)
                 {
@@ -567,7 +564,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
             else
             {
-                PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 resultB.Prefab.StaticInitialise();
                 if (rightCaptain == null)
                 {
@@ -800,12 +797,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             // Register all unlocked buildables to server
             /*            if (IsAIBotMode)
                         {
-                            foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                            foreach (BuildingKey buildingKey in DataProvider.GameModel.UnlockedBuildings)
                             {
                                 _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey);
                                 yield return null;
                             }
-                            foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                            foreach (UnitKey unitKey in DataProvider.GameModel.UnlockedUnits)
                             {
                                 _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey);
                                 yield return null;
@@ -825,12 +822,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                                     {
                                         if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
                                         {
-                                            foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                                            foreach (BuildingKey buildingKey in DataProvider.GameModel.UnlockedBuildings)
                                             {
                                                 _battleSceneGodTunnel.AddUnlockedBuilding_LeftPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
                                                 yield return null;
                                             }
-                                            foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                                            foreach (UnitKey unitKey in DataProvider.GameModel.UnlockedUnits)
                                             {
                                                 _battleSceneGodTunnel.AddUnlockedUnit_LeftPlayer(unitKey.UnitCategory, unitKey.PrefabName);
                                                 yield return null;
@@ -839,12 +836,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                                         }
                                         else
                                         {
-                                            foreach (BuildingKey buildingKey in dataProvider.GameModel.UnlockedBuildings)
+                                            foreach (BuildingKey buildingKey in DataProvider.GameModel.UnlockedBuildings)
                                             {
                                                 _battleSceneGodTunnel.AddUnlockedBuilding_RightPlayer(buildingKey.BuildingCategory, buildingKey.PrefabName);
                                                 yield return null;
                                             }
-                                            foreach (UnitKey unitKey in dataProvider.GameModel.UnlockedUnits)
+                                            foreach (UnitKey unitKey in DataProvider.GameModel.UnlockedUnits)
                                             {
                                                 _battleSceneGodTunnel.AddUnlockedUnit_RightPlayer(unitKey.UnitCategory, unitKey.PrefabName);
                                                 yield return null;

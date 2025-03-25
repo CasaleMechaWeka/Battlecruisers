@@ -43,7 +43,7 @@ namespace BattleCruisers.Scenes.Test.Effects
             droneSoundFeedbackInitialiser
                 .Initialise(
                     parentCruiserHasActiveDrones,
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             parentCruiserHasActiveDrones.ValueChanged += Raise.Event();
         }
 

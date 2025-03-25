@@ -21,7 +21,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ScreenController _currentScreen;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private DataProvider _dataProvider;
         private IApplicationModel _applicationModel;
 
 
@@ -55,17 +54,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            DataProvider dataProvider,
             IApplicationModel applicationModel)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(dataProvider);
             Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton);
 
-            _lastBattleResult = dataProvider.GameModel.LastBattleResult;
+            _lastBattleResult = DataProvider.GameModel.LastBattleResult;
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _applicationModel = applicationModel;
             _prefabFactory = prefabFactory;
 
@@ -85,11 +81,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             battlePanel.Initialise(screensSceneGod);
             leaderboardPanel.Initialise(screensSceneGod, prefabFactory);
-            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider);
-            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, dataProvider);
+            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory);
+            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer);
 
             coinBattleController.Initialise(screensSceneGod, _applicationModel);
-            playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
+            playerInfoPanelController.UpdateInfo(_prefabFactory);
 
             continueTitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaign");
             continueSubtitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaignDescription");
@@ -197,7 +193,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 Assert.IsNotNull(_lastBattleResult);
                 playerInfoPanelController.gameObject.SetActive(false);
                 _applicationModel.Mode = GameMode.Campaign;
-                int nextLevelToPlay = _dataProvider.GameModel.NumOfLevelsCompleted < 31 ? _dataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
+                int nextLevelToPlay = DataProvider.GameModel.NumOfLevelsCompleted < 31 ? DataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
                 _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
             }
         }

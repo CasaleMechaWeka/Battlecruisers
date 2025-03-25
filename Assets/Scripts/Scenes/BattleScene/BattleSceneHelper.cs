@@ -29,11 +29,10 @@ namespace BattleCruisers.Scenes.BattleScene
         private ITrashTalkProvider _trashTalkProvider;
 
         protected readonly IApplicationModel _appModel;
-        protected DataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
-        public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
+        public virtual IPrefabKey PlayerCruiser => DataProvider.GameModel.PlayerLoadout.Hull;
 
         protected BattleSceneHelper(IApplicationModel appModel)
         {

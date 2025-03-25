@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             ITargetFilter targetFilter = new DummyTargetFilter(isMatchResult: true);
             ITarget parent = Substitute.For<ITarget>();
 
-            lightningEmitter.Initialise(targetFilter, damage: 1, parent, ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+            lightningEmitter.Initialise(targetFilter, damage: 1, parent, DataProvider.SettingsManager);
             InvokeRepeating(nameof(FireLightning), time: 0.5f, repeatRate: 1);
 
             // Setup target

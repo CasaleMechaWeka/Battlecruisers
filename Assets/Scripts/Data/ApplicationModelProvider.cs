@@ -11,10 +11,9 @@ namespace BattleCruisers.Data
 
         static ApplicationModelProvider()
         {
-            DataProvider dataProvider
-                = new DataProvider(new Serializer(new ModelFilePathProvider()));
+            DataProvider.Initialise();
 
-            ApplicationModel = new ApplicationModel(dataProvider);
+            ApplicationModel = new ApplicationModel();
         }
     }
 }

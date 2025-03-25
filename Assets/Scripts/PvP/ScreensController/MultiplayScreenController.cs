@@ -1,4 +1,3 @@
-using BattleCruisers.Data;
 using BattleCruisers.Utils;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Commands;
@@ -32,12 +31,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         }
         public void Initialise(IMultiplayScreensSceneGod multiplayScreensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            DataProvider dataProvider)
+            ISingleSoundPlayer soundPlayer)
         {
             base.Initialise(multiplayScreensSceneGod);
 
-            Helper.AssertIsNotNull(dataProvider);
             Helper.AssertIsNotNull(homeButton, battleButton, nextArenaButton, previousArenaButton);
 
 

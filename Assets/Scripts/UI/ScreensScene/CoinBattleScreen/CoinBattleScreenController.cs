@@ -25,19 +25,19 @@ namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
             _applicationModel.Mode = GameMode.CoinBattle;
             SaveCoinBattleSettings();
 
-            int maxLevel = _applicationModel.DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
+            int maxLevel = DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
             int levelIndex = UnityEngine.Random.Range(1, maxLevel);
             _screensSceneGod.GoToTrashScreen(levelIndex);
         }
 
         private void SaveCoinBattleSettings()
         {
-            _applicationModel.DataProvider.GameModel.CoinBattle
+            DataProvider.GameModel.CoinBattle
                 = new CoinBattleModel(
-                    _applicationModel.DataProvider.SettingsManager.AIDifficulty,
-                    _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull
+                    DataProvider.SettingsManager.AIDifficulty,
+                    DataProvider.GameModel.PlayerLoadout.Hull
                     );
-            _applicationModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
 
         public void Home()

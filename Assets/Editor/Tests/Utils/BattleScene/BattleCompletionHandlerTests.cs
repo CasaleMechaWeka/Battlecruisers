@@ -58,7 +58,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
 
             BattleResult expectedResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory: true);
-            _applicationModel.DataProvider.GameModel.Received().LastBattleResult = expectedResult;
+            DataProvider.GameModel.Received().LastBattleResult = expectedResult;
             CommonChecks();
             _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
         }
@@ -79,7 +79,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         {
             Assert.AreEqual(1, _battleCompletedCount);
             _applicationModel.Received().ShowPostBattleScreen = true;
-            _applicationModel.DataProvider.Received().SaveGame();
+            DataProvider.SaveGame();
         }
 
         [Test]

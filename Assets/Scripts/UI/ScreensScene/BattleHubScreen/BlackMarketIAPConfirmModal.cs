@@ -1,4 +1,3 @@
-using BattleCruisers.Data;
 using BattleCruisers.UI;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -22,16 +21,14 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
     public Text price;
 
     public CanvasGroupButton buyBtn, noBtn;
-    private DataProvider _dataProvider;
     private PrefabFactory _prefabFactory;
     private ISingleSoundPlayer _soundPlayer;
 
     private IIAPData _currentIAPData;
 
-    public void Initiaize(DataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+    public void Initiaize(PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
     {
-        Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
-        _dataProvider = dataProvider;
+        Helper.AssertIsNotNull(prefabFactory, soundPlayer);
         _prefabFactory = prefabFactory;
         _soundPlayer = soundPlayer;
 
@@ -62,7 +59,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
                     IAPManager.instance.storeController.InitiatePurchase(IAPManager.extralarge_coin_pack);
                     break;
             }
-            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
             HideSelf();
         }
         else

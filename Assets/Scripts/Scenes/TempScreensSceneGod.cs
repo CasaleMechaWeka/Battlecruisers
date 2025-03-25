@@ -39,7 +39,6 @@ namespace BattleCruisers.Scenes
         private PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private IApplicationModel _applicationModel;
-        private DataProvider _dataProvider;
         private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
@@ -48,7 +47,6 @@ namespace BattleCruisers.Scenes
         private readonly IBattleSceneHelper _battleSceneHelper;
         private ITutorialProvider _tutorialProvider;
         private IApplicationModel applicationModel;
-        private DataProvider dataProvider;
         private BattleSceneGodComponents components;
         private NavigationPermitters navigationPermitters;
         private IBattleSceneHelper helper;
@@ -105,17 +103,16 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
-            _dataProvider = _applicationModel.DataProvider;
-            _gameModel = _dataProvider.GameModel;
+            _gameModel = DataProvider.GameModel;
             _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource),
-                        _dataProvider.SettingsManager, 1));
+                        DataProvider.SettingsManager, 1));
 
-            _prefabFactory = new PrefabFactory(_dataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
             levelTrashDataList.Initialise();
             sideQuestTrashDataList.Initialise();
 
@@ -135,13 +132,13 @@ namespace BattleCruisers.Scenes
                 _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
-            homeScreen.Initialise(this, _soundPlayer, _dataProvider);
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
+            homeScreen.Initialise(this, _soundPlayer);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _applicationModel);
+            settingsScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager, DataProvider.GameModel.Hotkeys);
             trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
-            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
             skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, _prefabFactory);
-            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory);
 
             if (_applicationModel.ShowPostBattleScreen)
             {
@@ -165,7 +162,7 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
+            loadoutScreen.Initialise(this, _soundPlayer, _prefabFactory);
 
             // TEMP  Go to specific screen :)
             //GoToLoadoutScreen();
@@ -261,16 +258,15 @@ namespace BattleCruisers.Scenes
 
         private async Task InitialiseLevelsScreenAsync()
         {
-            IList<LevelInfo> levels = CreateLevelInfo(StaticData.Levels, _dataProvider.GameModel.CompletedLevels);
+            IList<LevelInfo> levels = CreateLevelInfo(StaticData.Levels, DataProvider.GameModel.CompletedLevels);
 
             await levelsScreen.InitialiseAsync(
                 this,
                 _soundPlayer,
                 levels,
-                testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
+                testLevelsScreen ? numOfLevelsUnlocked : DataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultyIndicators,
-                levelTrashDataList,
-                _dataProvider);
+                levelTrashDataList);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
@@ -310,8 +306,8 @@ namespace BattleCruisers.Scenes
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+                levelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
             _applicationModel.SelectedLevel = levelNum;
 
@@ -344,8 +340,8 @@ namespace BattleCruisers.Scenes
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+                levelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
             _applicationModel.SelectedLevel = levelNum;
 
@@ -486,8 +482,8 @@ namespace BattleCruisers.Scenes
             AdvertisingBanner.stopAdvert();
             Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {sideQuestLevelNum}");
             Assert.IsTrue(
-                sideQuestLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                "levelNum: " + sideQuestLevelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+                sideQuestLevelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + sideQuestLevelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
             _applicationModel.SelectedLevel = sideQuestLevelNum;
 
@@ -496,15 +492,15 @@ namespace BattleCruisers.Scenes
                 if (LevelStages.STAGE_STARTS.Contains(sideQuestLevelNum - 1) && levelToShowCutscene != sideQuestLevelNum)
                 {
                     levelToShowCutscene = sideQuestLevelNum;
-                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-                    _applicationModel.DataProvider.SaveGame();
+                    DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    DataProvider.SaveGame();
                     _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
                 else
                 {
                     levelToShowCutscene = 0;
-                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-                    _applicationModel.DataProvider.SaveGame();
+                    DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    DataProvider.SaveGame();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                 }
             }
@@ -513,8 +509,8 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 ILevel level = StaticData.Levels[sideQuestLevelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
-                _applicationModel.DataProvider.SaveGame();
+                DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }
             else

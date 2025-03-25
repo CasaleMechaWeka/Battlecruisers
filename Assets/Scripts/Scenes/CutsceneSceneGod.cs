@@ -30,17 +30,17 @@ namespace BattleCruisers.Scenes
             }
             soundEffects
                 = new AudioSourceGroup(
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager,
+                    DataProvider.SettingsManager,
                     sources);
 
             LandingSceneGod.MusicPlayer.PlayCutsceneMusic();
             _sceneNavigator.SceneLoaded(SceneNames.CUTSCENE_SCENE);
         }
 
-/*        private void OnEnable()
-        {
-            LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.CUTSCENE_SCENE);
-        }*/
+        /*        private void OnEnable()
+                {
+                    LandingSceneGod.SceneNavigator.SceneLoaded(SceneNames.CUTSCENE_SCENE);
+                }*/
 
         public void OnPointerDown(PointerEventData eventData)
         {

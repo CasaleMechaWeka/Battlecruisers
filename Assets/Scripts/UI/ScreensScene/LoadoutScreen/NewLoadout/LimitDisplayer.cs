@@ -15,7 +15,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class LimitDisplayer : MonoBehaviour
     {
-        private DataProvider _dataProvider;
         private IItemDetailsDisplayer<IBuilding> _displayer;
         private IItemDetailsDisplayer<IUnit> _unit;
         private HeckleDetailsController _heckle;
@@ -28,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private TextMeshPro _displayText;
         public int BuildableLimit = 5, HeckleLimit = 3;
 
-        public void Initialise(DataProvider dataProvider,
+        public void Initialise(
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IItemDetailsDisplayer<IUnit> unitDetails,
             HeckleDetailsController heckleDetails,
@@ -36,7 +35,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         //IBuildingNameToKey buildingNameToKey,
         //IUnitNameToKey unitNameToKey)
         {
-            _dataProvider = dataProvider;
             _displayer = buildingDetails;
             _unit = unitDetails;
             _heckle = heckleDetails;
@@ -52,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             TextMeshProUGUI displayText = allowedLimitText.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI limitText = _limitText.GetComponent<TextMeshProUGUI>();
-            Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
+            Loadout loadout = DataProvider.GameModel.PlayerLoadout;
             if (_familyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
                 this.gameObject.SetActive(true);

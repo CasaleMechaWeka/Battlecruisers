@@ -39,11 +39,11 @@ namespace BattleCruisers.UI.Loading
             string subTitle = String.Empty;
 
             //if player NOT already paid then use Free title
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+            if (!DataProvider.GameModel.PremiumEdition)
             {
                 subTitle = LocTableCache.CommonTable.GetString("GameNameFreeEdition").ToUpper();
             }
-            else if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            else if (DataProvider.GameModel.PremiumEdition)
             {
                 subTitle = LocTableCache.CommonTable.GetString("GameNameSubtitle").ToUpper();
             }
@@ -121,12 +121,12 @@ namespace BattleCruisers.UI.Loading
         {
             try
             {
-                applicationModel.DataProvider.SaveGame();
-                applicationModel.DataProvider.SyncCoinsToCloud();
-                applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

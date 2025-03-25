@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.Bat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
@@ -33,7 +32,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public IPvPPrefabFactory prefabFactory;
         private IApplicationModel applicationModel;
-        public DataProvider dataProvider;
         private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
@@ -156,7 +154,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private async Task _Initialise()
         {
             applicationModel = ApplicationModelProvider.ApplicationModel;
-            dataProvider = applicationModel.DataProvider;
 
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
@@ -165,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.Initialise(DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, components.Deferrer);
 
@@ -177,7 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise();
             GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             _Initialise_Rest();
@@ -221,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             #endif
                         try
                         {
-                            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                             AnalyticsService.Instance.Flush();
                         }
                         catch (Exception ex)
@@ -292,15 +289,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             deadBuildables_right.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
 
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
                 difficultyDestructionScoreMultiplier = 1.0f;
             }
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
             {
                 difficultyDestructionScoreMultiplier = 1.5f;
             }
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
             {
                 difficultyDestructionScoreMultiplier = 2.0f;
             }

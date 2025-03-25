@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
 
             foreach (CruiserDeathExplosion death in cruiserDeaths)
             {
-                IPoolable<Vector3> deathExplosion = death.Initialise(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                IPoolable<Vector3> deathExplosion = death.Initialise(DataProvider.SettingsManager);
                 deathExplosion.Activate(death.Position);
             }
         }

@@ -19,9 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class InfiniteLoadoutScreenController : ScreenController, ILoadoutScreenController, IManagedDisposable
     {
-        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
-        private LoadoutScreen.ItemDetails.IItemDetailsManager _itemDetailsManager;
+        private ItemDetails.IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourControllerV2 _loadoutItemColourController;
 
@@ -51,10 +50,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 
 
-        public async void Initialise(
+        public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            DataProvider dataProvider,
             PrefabFactory prefabFactory)
         {
             _soundPlayer = soundPlayer;
@@ -64,9 +62,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton, heckleButton);
-            Helper.AssertIsNotNull(dataProvider, prefabFactory);
+            Helper.AssertIsNotNull(prefabFactory);
 
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
             itemDetailsPanel.Initialise();
@@ -98,29 +95,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     soundPlayer,
                     cruiserDetails,
                     comparisonStateTracker,
-                    new HullNameToKey(_dataProvider.GameModel.UnlockedHulls, prefabFactory),
-                    _dataProvider);
+                    new HullNameToKey(DataProvider.GameModel.UnlockedHulls, prefabFactory));
 
             selectBuildingButton.Initialise(
                 soundPlayer,
-                dataProvider,
                 buildingDetails,
-                new BuildingNameToKey(_dataProvider.GameModel.UnlockedBuildings, prefabFactory),
+                new BuildingNameToKey(DataProvider.GameModel.UnlockedBuildings, prefabFactory),
                 _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
             selectUnitButton.Initialise(
                 soundPlayer,
-                dataProvider,
                 unitDetails,
-                new UnitNameToKey(_dataProvider.GameModel.UnlockedUnits, prefabFactory),
+                new UnitNameToKey(DataProvider.GameModel.UnlockedUnits, prefabFactory),
                 _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
-            selectHeckleButton.Initialise(soundPlayer, dataProvider, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
+            selectHeckleButton.Initialise(soundPlayer, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
-            limitDisplayer.Initialise(dataProvider,
+            limitDisplayer.Initialise(
                 buildingDetails,
                 unitDetails,
                 _heckleDetails,
@@ -131,7 +125,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,
-                    dataProvider,
                     selectCruiserButton.SelectedHull,
                     soundPlayer,
                     prefabFactory);
@@ -139,7 +132,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemButtons = itemButtons;
             _bodykitDetails.RegisterSelectedHull(selectCruiserButton.SelectedHull);
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
-            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, _dataProvider.GameModel, itemButtons, _comparingFamilyTracker);
+            categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, DataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
             heckleButton.Initialise(soundPlayer, ShowHeckles);
             shopButton.Initialise(soundPlayer, GoToBodykitsShop);
@@ -149,7 +142,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
-        public async void AddHeckle(IHeckleData heckleData)
+        public void AddHeckle(IHeckleData heckleData)
         {
             itemPanels.AddHeckle(heckleData);
             /*IList<IItemButton> itemButtons
@@ -157,7 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     _itemDetailsManager,
                     ItemType.Hull,
                     _comparingFamilyTracker,
-                    _dataProvider.GameModel,
+                    DataProvider.GameModel,
                     selectCruiserButton.SelectedHull,
                     _soundPlayer,
                     _prefabFactory);
@@ -180,16 +173,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void ShowPlayerHull()
         {
-            ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(_dataProvider.GameModel.PlayerLoadout.Hull);
+            ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
             _itemDetailsManager.ShowDetails(playerCruiser);
-            _itemDetailsManager.ShowDetails(GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull));
+            _itemDetailsManager.ShowDetails(GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
             _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
             _comparingFamilyTracker.SetComparingFamily(null);
         }
 
         public void RefreshBodykitsUI()
         {
-            _itemDetailsManager.ShowDetails(GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull));
+            _itemDetailsManager.ShowDetails(GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
         }
 
         private HullType GetHullType(HullKey hullKey)
@@ -237,8 +230,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public override void Cancel()
         {
-            _dataProvider.SaveGame();
-            _dataProvider.CloudSave();
+            DataProvider.SaveGame();
+            DataProvider.CloudSave();
             _comparingFamilyTracker.SetComparingFamily(null);
             _screensSceneGod.GotoHubScreen();
         }

@@ -137,7 +137,7 @@ namespace BattleCruisers.Scenes
                     = new SingleSoundPlayer(
                         new EffectVolumeAudioSource(
                             new AudioSourceBC(_uiAudioSource),
-                            applicationModel.DataProvider.SettingsManager, 1));
+                            DataProvider.SettingsManager, 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
                 skipButton.Initialise(_soundPlayer, SkipAnim);
@@ -193,7 +193,7 @@ namespace BattleCruisers.Scenes
         private void PopulateScreen()
         {
             // Get some values from GameModel and its friends:
-            allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            allTimeVal = DataProvider.GameModel.LifetimeDestructionScore;
             levelTimeInSeconds = BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime();
 
             aircraftVal = BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();
@@ -253,7 +253,7 @@ namespace BattleCruisers.Scenes
             }
 
             // Campaign specific reward handling; only reward on first completion:
-            if (applicationModel.Mode == GameMode.Campaign && applicationModel.DataProvider.GameModel.SelectedLevel == applicationModel.DataProvider.GameModel.NumOfLevelsCompleted + 1)
+            if (applicationModel.Mode == GameMode.Campaign && DataProvider.GameModel.SelectedLevel == DataProvider.GameModel.NumOfLevelsCompleted + 1)
             {
                 CalculateRewards();
             }
@@ -664,28 +664,28 @@ namespace BattleCruisers.Scenes
             if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-                applicationModel.DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;
+                DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;
 
                 // we need XPToNextLevel to populate any XP progress bars:
-                long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-                Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+                long newLifetimeScore = DataProvider.GameModel.LifetimeDestructionScore;
+                Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
 
                 // Give the player their rewards:
-                applicationModel.DataProvider.GameModel.Coins += coinsToAward;
-                applicationModel.DataProvider.GameModel.Credits += creditsToAward;
-                applicationModel.DataProvider.SaveGame();
-                //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
+                DataProvider.GameModel.Coins += coinsToAward;
+                DataProvider.GameModel.Credits += creditsToAward;
+                DataProvider.SaveGame();
+                //DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
 
 
                 if (await LandingSceneGod.CheckForInternetConnection())
                 {
                     try
                     {
-                        await applicationModel.DataProvider.SyncCoinsToCloud();
-                        await applicationModel.DataProvider.SyncCreditsToCloud();
+                        await DataProvider.SyncCoinsToCloud();
+                        await DataProvider.SyncCreditsToCloud();
 
                         // Save changes:
-                        await applicationModel.DataProvider.CloudSave();
+                        await DataProvider.CloudSave();
                     }
                     catch (Exception ex)
                     {
@@ -695,8 +695,8 @@ namespace BattleCruisers.Scenes
                 else
                 {
                     // Can't sync, save for later:
-                    applicationModel.DataProvider.GameModel.CoinsChange += coinsToAward;
-                    applicationModel.DataProvider.GameModel.CreditsChange += (int)creditsToAward;
+                    DataProvider.GameModel.CoinsChange += coinsToAward;
+                    DataProvider.GameModel.CreditsChange += (int)creditsToAward;
                 }
             }
 
@@ -765,16 +765,16 @@ namespace BattleCruisers.Scenes
 
         void OnApplicationQuit()
         {
-            applicationModel.DataProvider.SaveGame();
-            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            DataProvider.SaveGame();
+            Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
             try
             {
-                applicationModel.DataProvider.SaveGame();
-                applicationModel.DataProvider.SyncCoinsToCloud();
-                applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

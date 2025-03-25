@@ -23,7 +23,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
         = new SingleSoundPlayer(
             new EffectVolumeAudioSource(
                 new AudioSourceBC(_uiAudioSource),
-                ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
+                DataProvider.SettingsManager, 1));
         Button_No.Initialise(_soundPlayer, Close);
         Button_Upgrade.Initialise(_soundPlayer, UpgradeToPremium);
     }

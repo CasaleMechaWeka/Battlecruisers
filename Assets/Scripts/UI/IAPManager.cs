@@ -49,9 +49,9 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         if (args.purchasedProduct.definition.id == premium_version_product)//allowing for just the single IAP at this stage
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            applicationModel.DataProvider.GameModel.PremiumEdition = true;
-            applicationModel.DataProvider.GameModel.AddBodykit(0);
-            applicationModel.DataProvider.SaveGame();
+            DataProvider.GameModel.PremiumEdition = true;
+            DataProvider.GameModel.AddBodykit(0);
+            DataProvider.SaveGame();
         }
         else if (args.purchasedProduct.definition.id == small_coin_pack)
         {

@@ -30,7 +30,6 @@ namespace BattleCruisers.UI.ScreensScene
             Sprite spriteBodykit,
             IBodykitData bodykitData,
             BodykitsContainer bodykitContainer,
-            DataProvider dataProvider,
             PrefabFactory prefabFactory,
             int index,
             bool isOwned)
@@ -50,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene
 
             IHullNameToKey hullNameToKey = new HullNameToKey(StaticData.HullKeys, prefabFactory);
 
-            isCruiserOwned = dataProvider.GameModel.UnlockedHulls.Contains(hullNameToKey.GetKeyFromHullType(
+            isCruiserOwned = DataProvider.GameModel.UnlockedHulls.Contains(hullNameToKey.GetKeyFromHullType(
                 prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index)).cruiserType.ToString()));
 
             _lockedItemMark.SetActive(!isCruiserOwned);

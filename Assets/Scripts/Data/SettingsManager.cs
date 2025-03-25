@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Data.Models;
 using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Settings
 {
@@ -16,7 +15,6 @@ namespace BattleCruisers.Data.Settings
     public class SettingsManager
     {
         private readonly SettingsModel _settings;
-        private readonly DataProvider _dataProvider;
 
         public event EventHandler SettingsSaved;
 
@@ -139,17 +137,14 @@ namespace BattleCruisers.Data.Settings
             set => _settings.Resolution = value;
         }
 
-        public SettingsManager(DataProvider dataProvider)
+        public SettingsManager()
         {
-            Assert.IsNotNull(dataProvider);
-
-            _settings = dataProvider.GameModel.Settings;
-            _dataProvider = dataProvider;
+            _settings = DataProvider.GameModel.Settings;
         }
 
         public void Save()
         {
-            _dataProvider.SaveGame();
+            DataProvider.SaveGame();
             SettingsSaved?.Invoke(this, EventArgs.Empty);
         }
     }

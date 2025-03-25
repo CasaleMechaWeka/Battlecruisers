@@ -76,8 +76,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         private void ApplyVariantIfExist(IUnit unit)
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            VariantPrefab variant = dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
             if (variant != null)
             {
                 SetupDroneConsumer(unit.NumOfDronesRequired + variant.statVariant.drone_num, showDroneFeedback: false);
@@ -186,7 +185,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                                 IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch (ConsentCheckException ex)

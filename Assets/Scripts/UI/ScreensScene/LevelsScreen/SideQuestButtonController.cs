@@ -4,8 +4,8 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
-using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.Data;
 
 public class SideQuestButtonController : ElementWithClickSound
 {
@@ -26,7 +26,6 @@ public class SideQuestButtonController : ElementWithClickSound
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        DataProvider dataProvider,
         int numOfLevelsUnlocked,
         bool completed)
     {
@@ -41,10 +40,10 @@ public class SideQuestButtonController : ElementWithClickSound
         requiredLevel = StaticData.SideQuests[sideQuestID].UnlockRequirementLevel;
         requiredSideQuestID = StaticData.SideQuests[sideQuestID].RequiredSideQuestID;
 
-        completed = dataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
+        completed = DataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
 
         if (requiredSideQuestID != -1)
-            isButtonEnabled = (numOfLevelsUnlocked >= requiredLevel) && dataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
+            isButtonEnabled = (numOfLevelsUnlocked >= requiredLevel) && DataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
         else
             isButtonEnabled = numOfLevelsUnlocked >= requiredLevel;
 

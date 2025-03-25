@@ -164,7 +164,7 @@ namespace BattleCruisers.Scenes
             IAudioSource audioSource
                 = new MusicVolumeAudioSource(
                     new AudioSourceBC(platformAudioSource),
-                    applicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
 
             soundPlayer = new SingleSoundPlayer(audioSource);
 
@@ -208,14 +208,13 @@ namespace BattleCruisers.Scenes
                 // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
-            DataProvider dataProvider = applicationModel.DataProvider;
-            messagebox.Initialize(dataProvider, soundPlayer);
-            MusicPlayer = CreateMusicPlayer(dataProvider);
+            messagebox.Initialize(soundPlayer);
+            MusicPlayer = CreateMusicPlayer();
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
             HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
-            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, DataProvider.GameModel, RandomGenerator.Instance);
 
             try
             {
@@ -722,14 +721,14 @@ namespace BattleCruisers.Scenes
             Debug.Log("===> You're Expired from UGS!!!");
         }
 
-        private IMusicPlayer CreateMusicPlayer(DataProvider dataProvider)
+        private IMusicPlayer CreateMusicPlayer()
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource
                 = new MusicVolumeAudioSource(
                     new AudioSourceBC(platformAudioSource),
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
 
             return
                 new MusicPlayer(

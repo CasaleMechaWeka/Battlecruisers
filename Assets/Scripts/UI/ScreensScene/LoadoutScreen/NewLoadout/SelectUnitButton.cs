@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private IItemDetailsDisplayer<IUnit> _unitDetails;
         private IUnitNameToKey _unitNameToKey;
-        private DataProvider _dataProvider;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
         private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
@@ -35,16 +34,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override bool ToggleVisibility => true;
 
         public void Initialise(ISingleSoundPlayer soundPlayer,
-            DataProvider dataProvider,
             IItemDetailsDisplayer<IUnit> unitDetails,
             IUnitNameToKey unitName,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
             IComparingItemFamilyTracker comparingItemFamily)
         {
             base.Initialise(soundPlayer);
-            Helper.AssertIsNotNull(dataProvider, unitDetails, unitName, _itemFamily);
+            Helper.AssertIsNotNull(unitDetails, unitName, _itemFamily);
 
-            _dataProvider = dataProvider;
             _unitDetails = unitDetails;
             _comparingItemFamilyTracker = comparingItemFamily;
             _comparingFamily = _itemFamily;
@@ -66,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(displayUnit);
             UnitKey unitKey = _unitNameToKey.GetKey(displayUnit.Name);
 
-            Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
             List<UnitKey> unitKeys = playerLoadout.GetUnitKeys(displayUnit.Category);
             Assert.IsNotNull(unitKeys);
             if (!unitKeys.Contains(unitKey))
@@ -76,14 +73,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     playerLoadout.AddUnitItem(displayUnit.Category, unitKey);
                     UpdateSelectText(true);
                 }
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
                 limit.text = playerLoadout.GetUnitListSize(displayUnit.Category).ToString();
                 UpdateSelectText(true);
             }
             else
             {
                 playerLoadout.RemoveUnitItem(displayUnit.Category, unitKey);
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
                 limit.text = playerLoadout.GetUnitListSize(displayUnit.Category).ToString();
                 UpdateSelectText(false);
             }
@@ -140,7 +137,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 UnitKey unitKey = _unitNameToKey.GetKey(displayUnit.Name);
 
-                Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+                Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
                 limit.text = playerLoadout.GetUnitListSize(displayUnit.Category).ToString();
                 List<UnitKey> unitKeys = playerLoadout.GetUnitKeys(displayUnit.Category);
                 Assert.IsNotNull(unitKeys);
@@ -153,7 +150,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private bool IsOverLimit()
         {
-            Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
+            Loadout loadout = DataProvider.GameModel.PlayerLoadout;
             if (_unitDetails.SelectedItem.Value != null)
             {
                 if (((loadout.GetUnitListSize(_unitDetails.SelectedItem.Value.Category) == unitLimit) && selectText.activeSelf) ||

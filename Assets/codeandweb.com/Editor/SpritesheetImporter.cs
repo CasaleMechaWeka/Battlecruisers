@@ -9,10 +9,13 @@
 
 using UnityEngine;
 using UnityEditor;
+using BattleCruisers.Data;
+
 
 // Note: TexturePacker Importer with Unity 2021.2 (or newer) requires the "Sprite 2D" package,
 //       please make sure that it is part of your Unity project. You can install it using
 //       Unity's package manager.
+
 
 #if UNITY_2021_2_OR_NEWER
 using UnityEditor.U2D.Sprites;

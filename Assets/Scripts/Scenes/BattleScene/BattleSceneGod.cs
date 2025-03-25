@@ -74,7 +74,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
         public GameObject enemyCharacterImages;
-        private DataProvider dataProvider;
         private Cruiser playerCruiser;
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
@@ -112,7 +111,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
             applicationModel = ApplicationModelProvider.ApplicationModel;
 
-            PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
+            PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
             if (sceneNavigator == null)
             {
@@ -130,7 +129,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.Initialise(DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             // TEMP  Force  tutorial
@@ -148,11 +147,10 @@ namespace BattleCruisers.Scenes.BattleScene
                 }
             }
 
-            dataProvider = applicationModel.DataProvider;
-            waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
+            waterSplashVolumeController.Initialise(DataProvider.SettingsManager);
 
             // Common setup
-            PrefabFactory prefabFactory = new PrefabFactory(dataProvider.SettingsManager);
+            PrefabFactory prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
@@ -164,7 +162,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
+            factoryProvider = new FactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
 
@@ -177,7 +175,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Camera
             cameraComponents
                 = cameraInitialiser.Initialise(
-                    dataProvider.SettingsManager,
+                    DataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,
@@ -232,7 +230,7 @@ namespace BattleCruisers.Scenes.BattleScene
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
             // Setting up Captains
-            CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
 
             CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);
@@ -252,7 +250,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Setting up Captain Names
             Text playerName = PlayerName.gameObject.GetComponent<Text>();
-            playerName.text = dataProvider.GameModel.PlayerName;
+            playerName.text = DataProvider.GameModel.PlayerName;
 
             if (applicationModel.Mode == GameMode.PvP_1VS1)
             {
@@ -315,11 +313,11 @@ namespace BattleCruisers.Scenes.BattleScene
             if (applicationModel.Mode == GameMode.SideQuest)
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     currentSideQuest.MusicBackgroundKey,
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             else
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     currentLevel.MusicKeys,
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);
             _audioInitialiser
                 = new AudioInitialiser(
@@ -337,7 +335,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
                     cameraComponents.Settings,
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             windManager.Play();
 
             _pausableAudioListener
@@ -365,7 +363,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentSideQuest.SkyMaterial);
             }
             components.HotkeyInitialiser.Initialise(
-                dataProvider.GameModel.Hotkeys,
+                DataProvider.GameModel.Hotkeys,
                 InputBC.Instance,
                 components.UpdaterProvider.SwitchableUpdater,
                 navigationPermitters.HotkeyFilter,
@@ -434,7 +432,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             if (!aiCruiser.isCruiser)
             {
-                aiCruiser.AdjustStatsByDifficulty(applicationModel.DataProvider.SettingsManager.AIDifficulty);
+                aiCruiser.AdjustStatsByDifficulty(DataProvider.SettingsManager.AIDifficulty);
                 if (ultraPanel != null)
                 {
                     foreach (Transform button in ultraPanel.transform)
@@ -446,7 +444,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         }
                     }
                 }
-                //Debug.Log(applicationModel.DataProvider.SettingsManager.AIDifficulty);
+                //Debug.Log(DataProvider.SettingsManager.AIDifficulty);
             }
             deadBuildables = new Dictionary<TargetType, DeadBuildableCounter>();
             deadBuildables.Add(TargetType.Aircraft, new DeadBuildableCounter());
@@ -455,15 +453,15 @@ namespace BattleCruisers.Scenes.BattleScene
             deadBuildables.Add(TargetType.Buildings, new DeadBuildableCounter());
             deadBuildables.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
                 difficultyDestructionScoreMultiplier = 1.0f;
             }
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
             {
                 difficultyDestructionScoreMultiplier = 1.5f;
             }
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
             {
                 difficultyDestructionScoreMultiplier = 2.0f;
             }
@@ -478,7 +476,7 @@ namespace BattleCruisers.Scenes.BattleScene
             #endif
                         try
                         {
-                            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                             AnalyticsService.Instance.Flush();
                         }
                         catch (Exception ex)
@@ -530,7 +528,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 return;
             }
             cameraComponents = cameraInitialiser.UpdateCamera(
-                    dataProvider.SettingsManager,
+                    DataProvider.SettingsManager,
                     navigationPermitters);
             Debug.Log("camera changed");
         }
@@ -584,16 +582,16 @@ namespace BattleCruisers.Scenes.BattleScene
 
         void OnApplicationQuit()
         {
-            applicationModel.DataProvider.SaveGame();
-            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            DataProvider.SaveGame();
+            Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
             try
             {
-                applicationModel.DataProvider.SaveGame();
-                applicationModel.DataProvider.SyncCoinsToCloud();
-                applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

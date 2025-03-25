@@ -28,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject hecklesMessage;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private DataProvider _dataProvider;
         public Transform captainCamContainer;
         public Text blackMarketText;
         private bool InternetConnection;
@@ -45,13 +44,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            DataProvider dataProvider,
             bool hasInternetonnection = false)
         {
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer, bodykitsContainer, variantsContainer);
             Helper.AssertIsNotNull(captainsButton, hecklesButton, bodykitButton, variantsButton);
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
@@ -64,10 +61,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
             variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
             infoButton.Initialise(_soundPlayer, InfoButton_OnClick);
-            captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            variantsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            captainsContainer.Initialize(_soundPlayer, _prefabFactory);
+            hecklesContainer.Initialize(_soundPlayer, _prefabFactory);
+            bodykitsContainer.Initialize(_soundPlayer, _prefabFactory);
+            variantsContainer.Initialize(_soundPlayer, _prefabFactory);
             variantsContainer.itemDetailsPanel.SetActive(false);
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
@@ -106,7 +103,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 variants.Add(variant);
             }
 
-            //bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
+            //bodykitList = GeneratePseudoRandomList(6, DataProvider.GameModel.Bodykits.Count - 1, 6, 1);
 
             bodykitList = GenerateFullList(StaticData.Bodykits.Count);
 
@@ -309,7 +306,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         variantsContainer,
                         variant,
                         variant.variantIndex,
-                        _dataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
+                        DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
                     );
 
                     if (ii == 0)
@@ -344,7 +341,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), variant);
                         }
 
-                        if (_dataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex))
+                        if (DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex))
                         {
                             variantsContainer.btnBuy.SetActive(false);
                             variantsContainer.priceLabel.SetActive(false);
@@ -389,7 +386,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer);
                 Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
                 bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(
-                    _soundPlayer, bodykit.bodykitImage, StaticData.Bodykits[index], bodykitsContainer, _dataProvider, _prefabFactory, ii, _dataProvider.GameModel.PurchasedBodykits.Contains(index));
+                    _soundPlayer, bodykit.bodykitImage, StaticData.Bodykits[index], bodykitsContainer, _prefabFactory, ii, DataProvider.GameModel.PurchasedBodykits.Contains(index));
                 if (ii == 0)
                 {
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
@@ -399,7 +396,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].nameStringKeyBase);
                     bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].descriptionKeyBase);
                     bodykitsContainer.currentBodykitData = StaticData.Bodykits[index];
-                    if (_dataProvider.GameModel.PurchasedBodykits.Contains(index))
+                    if (DataProvider.GameModel.PurchasedBodykits.Contains(index))
                     {
                         bodykitsContainer.btnBuy.SetActive(false);
                         bodykitsContainer.priceLabel.SetActive(false);
@@ -443,7 +440,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             hecklesContainer.btnBuy.SetActive(false);
             hecklesContainer.ownFeedback.SetActive(false);
-            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo captainExo = Instantiate(charliePrefab, captainCamContainer);
             captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
@@ -457,7 +454,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
                 heckleItem.GetComponent<HeckleItemController>().StaticInitialise(
-                    _soundPlayer, StaticData.Heckles[index], hecklesContainer, ii, _dataProvider.GameModel.PurchasedHeckles.Contains(index));
+                    _soundPlayer, StaticData.Heckles[index], hecklesContainer, ii, DataProvider.GameModel.PurchasedHeckles.Contains(index));
 
 
 
@@ -471,9 +468,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     heckleItem.GetComponent<HeckleItemController>().OnClicked();
                     hecklesContainer.hecklePrice.text = StaticData.Heckles[index].HeckleCost.ToString();
                     hecklesContainer.currentHeckleData = StaticData.Heckles[index];
-                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
+                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(DataProvider.GameModel.Heckles[index].StringKeyBase);
 
-                    if (_dataProvider.GameModel.PurchasedHeckles.Contains(index))
+                    if (DataProvider.GameModel.PurchasedHeckles.Contains(index))
                     {
                         hecklesContainer.hecklePrice.text = "0";
                         hecklesContainer.btnBuy.SetActive(false);
@@ -519,7 +516,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            /*            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+            /*            exoBaseList = GeneratePseudoRandomList(14, DataProvider.GameModel.Captains.Count - 1, 1, 1);
                         exoBaseList.Insert(0, 0);*/
 
             byte ii = 0;
@@ -532,7 +529,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 captainExo.gameObject.SetActive(false);
                 captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
                 captainItem.GetComponent<CaptainItemController>().StaticInitialise(
-                    _soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[index], captainsContainer, ii, _dataProvider.GameModel.PurchasedExos.Contains(index));
+                    _soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[index], captainsContainer, ii, DataProvider.GameModel.PurchasedExos.Contains(index));
 
                 if (ii == 0)  // the first item should be clicked :)
                 {
@@ -546,7 +543,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         captainsContainer.captainDescription.text = LocTableCache.CommonTable.GetString(StaticData.Captains[0].DescriptionKeyBase);
                     }
                     captainExo.gameObject.SetActive(true);
-                    if (_dataProvider.GameModel.PurchasedExos.Contains(index))
+                    if (DataProvider.GameModel.PurchasedExos.Contains(index))
                     {
                         captainsContainer.btnBuy.SetActive(false);
                         captainsContainer.priceLabel.SetActive(false);
@@ -583,9 +580,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         List<int> VariantsForOwnedItems()
         {
             // Use original implementation, uncomment line below to use VariantOrganizer.
-            // return new VariantOrganizer(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            // return new VariantOrganizer(_prefabFactory).GetOrganizedVariants();
             // For categorized sorting and logging, uncomment line below to use VariantSorter.
-            return new VariantSorter(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            return new VariantSorter(_prefabFactory).GetOrganizedVariants();
         }
 
         List<int> GenerateFullList(int elements)

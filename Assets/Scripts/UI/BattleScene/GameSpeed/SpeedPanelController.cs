@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                 speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, TimeBC.Instance);
             }
 
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition || applicationModel.Mode != GameMode.Skirmish)
+            if (!DataProvider.GameModel.PremiumEdition || applicationModel.Mode != GameMode.Skirmish)
                 pause.gameObject.SetActive(false);
 
             IToggleButtonGroup speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);

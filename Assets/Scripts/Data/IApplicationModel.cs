@@ -22,7 +22,5 @@
         bool UserWonSkirmish { get; set; }
         GameMode Mode { get; set; }
         bool IsTutorial { get; }
-        DataProvider DataProvider { get; }
-
     }
 }

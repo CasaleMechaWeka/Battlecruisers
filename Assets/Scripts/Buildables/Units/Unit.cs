@@ -143,7 +143,6 @@ namespace BattleCruisers.Buildables.Units
         private int GetRandomVariantForAI(IUnit unit)
         {
             int variant_ID = -1;
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             List<int> ids = new List<int>();
             for (int i = 0; i < StaticData.Variants.Count; i++)
             {
@@ -167,13 +166,13 @@ namespace BattleCruisers.Buildables.Units
         private void ApplyVariantToPlayer(IUnit unit)
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            VariantPrefab variant = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
             if (variant != null)
             {
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
-                int index = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
                 variantIndex = index;
                 Name = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
                 Description = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);

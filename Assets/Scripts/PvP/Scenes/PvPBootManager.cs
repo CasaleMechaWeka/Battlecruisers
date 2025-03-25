@@ -96,10 +96,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 #if UNITY_EDITOR
             if (ParrelSync.ClonesManager.IsClone())
             {
-                m_ConnectionManager.StartClientIp(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, ip, portNum);
+                m_ConnectionManager.StartClientIp(DataProvider.GameModel.PlayerName, ip, portNum);
             }
 #endif
-            m_ConnectionManager.StartHostIp(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, ip, portNum);
+            m_ConnectionManager.StartHostIp(DataProvider.GameModel.PlayerName, ip, portNum);
         }
 
         private void JoinWithLobby()
@@ -136,10 +136,10 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 return;
             }
 
-            string wantMap = ConvertToScene((Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap);
+            string wantMap = ConvertToScene((Map)DataProvider.GameModel.GameMap);
 
             m_LocalUser.ID = AuthenticationService.Instance.PlayerId;
-            m_LocalUser.DisplayName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName;
+            m_LocalUser.DisplayName = DataProvider.GameModel.PlayerName;
             m_LocalLobby.AddUser(m_LocalUser);
 
             List<QueryFilter> mFilters = new List<QueryFilter>()
@@ -156,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 /*            new QueryFilter(
                 field: QueryFilter.FieldOptions.N1, // N1 = "Score :  Battle Win"
                 op: QueryFilter.OpOptions.GE,
-                value: ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore.ToString()),*/
+                value: DataProvider.GameModel.BattleWinScore.ToString()),*/
             };
 
             List<QueryOrder> mOrders = new List<QueryOrder>
@@ -229,7 +229,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                     {
                                         UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                                         PlayerPrefs.SetString("JOINCODE", RelayJoinCode);
-                                        m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                        m_ConnectionManager.StartClientLobby(DataProvider.GameModel.PlayerName);
                                         joined = true;
                                         isFound = true;
                                         break;
@@ -251,7 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             else
                             {
                                 int _iMap = ConvertToMap(lobby.Data["GameMap"].Value);
-                                if (ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Coins >= StaticData.Arenas[_iMap + 1].costcoins && ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.Credits >= StaticData.Arenas[_iMap + 1].costcredits)
+                                if (DataProvider.GameModel.Coins >= StaticData.Arenas[_iMap + 1].costcoins && DataProvider.GameModel.Credits >= StaticData.Arenas[_iMap + 1].costcredits)
                                 {
                                     var regions = new List<string>();
                                     regions.Add(Region);
@@ -289,9 +289,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                         if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                         {
                                             UnityEngine.Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
-                                            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
+                                            DataProvider.SaveGame();
                                             PlayerPrefs.SetString("JOINCODE", RelayJoinCode);
-                                            m_ConnectionManager.StartClientLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                            m_ConnectionManager.StartClientLobby(DataProvider.GameModel.PlayerName);
                                             joined = true;
                                             isFound = true;
                                             break;
@@ -328,7 +328,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                         var lobbyData = new Dictionary<string, DataObject>()
                         {
                             ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
-                            ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, Mathf.FloorToInt(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
+                            ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, Mathf.FloorToInt(DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
                         };
                         var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
                         while (true)
@@ -340,7 +340,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                                 if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                                 {
                                     UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                                    m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                    m_ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
                                     isFound = true;
                                     break;
                                 }
@@ -385,7 +385,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     var lobbyData = new Dictionary<string, DataObject>()
                     {
                         ["GameMap"] = new DataObject(DataObject.VisibilityOptions.Public, wantMap, DataObject.IndexOptions.S1),
-                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, Mathf.FloorToInt(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
+                        ["Score"] = new DataObject(DataObject.VisibilityOptions.Public, Mathf.FloorToInt(DataProvider.GameModel.BattleWinScore).ToString(), DataObject.IndexOptions.N1),
                     };
                     MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
                     var lobbyCreationAttemp = await m_LobbyServiceFacade.TryCreateLobbyAsync(m_NameGenerationData.GenerateName(), m_ConnectionManager.MaxConnectedPlayers, isPrivate: false, m_LocalUser.GetDataForUnityServices(), lobbyData);
@@ -398,7 +398,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             if (m_LobbyServiceFacade.CurrentUnityLobby != null)
                             {
                                 UnityEngine.Debug.Log($"Created new Lobby {lobbyCreationAttemp.Lobby.Name} ({lobbyCreationAttemp.Lobby.Id})");
-                                m_ConnectionManager.StartHostLobby(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName);
+                                m_ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
                                 isFound = true;
                                 break;
                             }

@@ -10,6 +10,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Projectiles.Spawners.Beams;
 using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams
 {
@@ -40,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 _audioSource
                     = new EffectVolumeAudioSource(
                         new AudioSourceBC(_platformAudioSource),
-                        PvPBattleSceneGodClient.Instance.dataProvider.SettingsManager);
+                        DataProvider.SettingsManager);
 
             base.OnNetworkSpawn();
         }

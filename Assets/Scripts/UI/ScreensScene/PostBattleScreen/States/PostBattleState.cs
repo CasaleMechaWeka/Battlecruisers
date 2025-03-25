@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         }
 
         public virtual bool ShowDifficultySymbol => false;
-        public virtual Difficulty Difficulty => _appModel.DataProvider.SettingsManager.AIDifficulty;
+        public virtual Difficulty Difficulty => DataProvider.SettingsManager.AIDifficulty;
         public virtual bool ShowVictoryBackground => true;
     }
 }

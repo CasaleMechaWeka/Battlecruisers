@@ -17,8 +17,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
         private IComparisonStateTracker _comparisonStateTracker;
         private IHullNameToKey _hullNameToKey;
-        private DataProvider _dataProvider;
-
         protected override bool ToggleVisibility => true;
 
         private ISettableBroadcastingProperty<HullKey> _selectedHull;
@@ -28,11 +26,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             ISingleSoundPlayer soundPlayer,
             IItemDetailsDisplayer<ICruiser> cruiserDetails,
             IComparisonStateTracker comparisonStateTracker,
-            IHullNameToKey hullNameToKey,
-            DataProvider dataProvider)
+            IHullNameToKey hullNameToKey)
         {
             base.Initialise(soundPlayer);
-            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey, dataProvider);
+            Helper.AssertIsNotNull(cruiserDetails, comparisonStateTracker, hullNameToKey);
 
             _cruiserDetails = cruiserDetails;
             _cruiserDetails.SelectedItem.ValueChanged += SelectedCruiserChanged;
@@ -41,9 +38,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _comparisonStateTracker.State.ValueChanged += ComparisonStateChanged;
 
             _hullNameToKey = hullNameToKey;
-            _dataProvider = dataProvider;
 
-            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: dataProvider.GameModel.PlayerLoadout.Hull);
+            _selectedHull = new SettableBroadcastingProperty<HullKey>(initialValue: DataProvider.GameModel.PlayerLoadout.Hull);
             SelectedHull = new BroadcastingProperty<HullKey>(_selectedHull);
 
             Enabled = ShouldBeEnabled();
@@ -68,11 +64,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
             Assert.IsNotNull(displayedCruiser);
             _selectedHull.Value = _hullNameToKey.GetKey(displayedCruiser.Name);
-            ILoadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            ILoadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
             if (!playerLoadout.Hull.Equals(_selectedHull.Value))
             {
                 playerLoadout.Hull = _selectedHull.Value;
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
             }
             Enabled = ShouldBeEnabled();
         }

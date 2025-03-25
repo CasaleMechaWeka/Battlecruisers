@@ -74,7 +74,7 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyFactory);
+            IAIManager aiManager = new AIManager(_prefabFactory, _deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo, FindDifficulty());
         }
 

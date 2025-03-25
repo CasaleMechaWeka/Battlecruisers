@@ -40,7 +40,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     public class PostBattleScreenController : ScreenController, IPostBattleScreen
     {
         private IApplicationModel _applicationModel;
-        private DataProvider _dataProvider;
         private ILootManager _lootManager;
 
         public Text title;
@@ -61,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public int levelNum = 2;
         public bool showAppraisalButtons = false;
 
-        private BattleResult BattleResult => _dataProvider.GameModel.LastBattleResult;
+        private BattleResult BattleResult => DataProvider.GameModel.LastBattleResult;
         private GameMode _gameMode;
 
         public async Task InitialiseAsync(
@@ -89,7 +88,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 difficultyIndicators);
 
             _applicationModel = applicationModel;
-            _dataProvider = applicationModel.DataProvider;
             _lootManager = CreateLootManager(prefabFactory);
             _gameMode = _applicationModel.Mode;
             Debug.Log(_gameMode);
@@ -112,7 +110,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     try
                     {
                         AnalyticsService.Instance.CustomData("Battle",
-                                                                            _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                            DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
                                                                                                                logName,
                                                                                                                _applicationModel.UserWonSkirmish));
                         AnalyticsService.Instance.Flush();
@@ -143,7 +141,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     try
                     {
                         AnalyticsService.Instance.CustomData("Battle",
-                                                                            _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                            DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
                                                                                                                logName,
                                                                                                                _applicationModel.UserWonSkirmish));
                         AnalyticsService.Instance.Flush();
@@ -174,7 +172,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     try
                     {
                         AnalyticsService.Instance.CustomData("Battle",
-                                                                    _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
+                                                                    DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(),
                                                                                                        logName,
                                                                                                        _applicationModel.UserWonSkirmish));
                         AnalyticsService.Instance.Flush();
@@ -225,7 +223,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
                 ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
-                postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory, _dataProvider);
+                postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
             }
 
             SetupBackground(postBattleState.ShowVictoryBackground);
@@ -238,7 +236,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IItemDetailsGroup leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
             IItemDetailsGroup rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
 
-            return new LootManager(_dataProvider, prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
+            return new LootManager(prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
         }
 
         private IItemDetailsGroup InitialiseGroup(string componentPath)
@@ -253,7 +251,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour == PostBattleScreenBehaviour.Victory_Skirmish
                 || desiredBehaviour == PostBattleScreenBehaviour.Defeat_Skirmish)
             {
-                _applicationModel.DataProvider.GameModel.Skirmish = CreateSkirmish();
+                DataProvider.GameModel.Skirmish = CreateSkirmish();
                 _applicationModel.Mode = GameMode.Skirmish;
                 _applicationModel.UserWonSkirmish = desiredBehaviour == PostBattleScreenBehaviour.Victory_Skirmish;
             }
@@ -262,7 +260,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 bool wasVicotry = desiredBehaviour != PostBattleScreenBehaviour.Defeat;
 
                 if (BattleResult == null)
-                    _dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
+                    DataProvider.GameModel.LastBattleResult = new BattleResult(levelNum, wasVicotry);
 
                 BattleResult.LevelNum = levelNum;
                 BattleResult.WasVictory = wasVicotry;
@@ -331,7 +329,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException ex)
@@ -356,7 +354,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private void NextCommandExecute()
         {
             int nextLevelNum = BattleResult.LevelNum + 1;
-            Assert.IsTrue(nextLevelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+            Assert.IsTrue(nextLevelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked);
             _screensSceneGod.GoToTrashScreen(nextLevelNum);
         }
 
@@ -368,7 +366,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 return false;
             // The rest of the time we do the normal thing:
             else
-                return BattleResult.LevelNum + 1 <= _dataProvider.LockedInfo.NumOfLevelsUnlocked && _gameMode == GameMode.Campaign;
+                return BattleResult.LevelNum + 1 <= DataProvider.LockedInfo.NumOfLevelsUnlocked && _gameMode == GameMode.Campaign;
         }
 
         private void ClockedGameCommandExecute()
@@ -410,7 +408,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle", _applicationModel.DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(_applicationModel.Mode.ToString(), logName, _applicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException ex)

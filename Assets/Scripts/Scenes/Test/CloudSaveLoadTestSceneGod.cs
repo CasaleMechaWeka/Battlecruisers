@@ -14,7 +14,6 @@ namespace BattleCruisers.Scenes
     public class CloudSaveLoadTestSceneGod : MonoBehaviour
     {
         private IApplicationModel _applicationModel;
-        private DataProvider _dataProvider;
         private IGameModel _gameModel;
 
         public InputField userIdInputField;
@@ -32,15 +31,14 @@ namespace BattleCruisers.Scenes
             IAudioSource audioSource
                 = new MusicVolumeAudioSource(
                     new AudioSourceBC(platformAudioSource),
-                    applicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
 
             ISingleSoundPlayer soundPlayer = new SingleSoundPlayer(
                 audioSource
                 );
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
-            _dataProvider = _applicationModel.DataProvider;
-            _gameModel = _dataProvider.GameModel;
+            _gameModel = DataProvider.GameModel;
 
             login();
 
@@ -50,12 +48,12 @@ namespace BattleCruisers.Scenes
 
         public async void Save()
         {
-            await _dataProvider.CloudSave();
+            await DataProvider.CloudSave();
         }
 
         public async void Load()
         {
-            await _dataProvider.CloudLoad();
+            await DataProvider.CloudLoad();
             // Adding logs to verify data load
             Debug.Log($"Loaded Coins: {_gameModel.Coins}, Credits: {_gameModel.Credits}");
             DisplayCurrency();
@@ -71,7 +69,7 @@ namespace BattleCruisers.Scenes
                     idTextBox.text = AuthenticationService.Instance.PlayerId;
                     Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
                     // Load player data after login
-                    await _dataProvider.CloudLoad();
+                    await DataProvider.CloudLoad();
                     DisplayCurrency();
                 }
                 catch

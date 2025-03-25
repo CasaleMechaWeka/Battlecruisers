@@ -10,12 +10,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class VariantOrganizer
     {
-        private readonly DataProvider _dataProvider;
         private readonly PrefabFactory _prefabFactory;
 
-        public VariantOrganizer(DataProvider dataProvider, PrefabFactory prefabFactory)
+        public VariantOrganizer(PrefabFactory prefabFactory)
         {
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
         }
 
@@ -52,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void AddVariantsForBuildingCategory(List<int> variants, BuildingCategory category)
         {
             // Get buildings in this category in their unlock order
-            var buildingsInCategory = _dataProvider.GameModel.UnlockedBuildings
+            var buildingsInCategory = DataProvider.GameModel.UnlockedBuildings
                 .Where(b => b.BuildingCategory == category)
                 .OrderBy(b => StaticData.BuildingUnlockLevel(b));
 
@@ -67,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void AddVariantsForUnitCategory(List<int> variants, UnitCategory category)
         {
             // Get units in this category in their unlock order
-            var unitsInCategory = _dataProvider.GameModel.UnlockedUnits
+            var unitsInCategory = DataProvider.GameModel.UnlockedUnits
                 .Where(u => u.UnitCategory == category)
                 .OrderBy(u => StaticData.UnitUnlockLevel(u));
 

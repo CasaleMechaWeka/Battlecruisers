@@ -34,13 +34,13 @@ public class FullScreenAdverts : MonoBehaviour
     void StartPlatformSpecficAds()
     {
         IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-        settingsManager = applicationModel.DataProvider.SettingsManager;
+        settingsManager = DataProvider.SettingsManager;
 #if THIRD_PARTY_PUBLISHER
         gameObject.SetActive(false);
 #endif
         // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if UNITY_ANDROID || UNITY_IOS
-        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        if (!DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
             LandingSceneGod.MusicPlayer.PlayAdsMusic();
@@ -53,7 +53,7 @@ public class FullScreenAdverts : MonoBehaviour
         }
 // #elif UNITY_EDITOR && FREE_EDITION
 #elif UNITY_EDITOR
-        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        if (!DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
             LandingSceneGod.MusicPlayer.PlayAdsMusic();

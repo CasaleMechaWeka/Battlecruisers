@@ -139,7 +139,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
-            ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_appModel.DataProvider.GameModel.PlayerLoadout.Hull);
+            ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
@@ -173,7 +173,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             if (enemyModel != null)
                 Destroy(enemyModel);
-            if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)
+            if (DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)
             {
                 _screensSceneGod.GotoHubScreen();
             }

@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public class BodykitDetailController : MonoBehaviour
     {
         IBroadcastingProperty<HullKey> _selectedHull;
-        private HullType _selectedHullType => GetHullType(_dataProvider.GameModel.PlayerLoadout.Hull);
+        private HullType _selectedHullType => GetHullType(DataProvider.GameModel.PlayerLoadout.Hull);
         private HullType _hullType;
         public HullType hullType
         {
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 {
                     if (_unlockedBodykits[_hullType].Count > 0)
                     {
-                        if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == 0)
+                        if (_unlockedBodykits[_hullType].IndexOf(DataProvider.GameModel.PlayerLoadout.SelectedBodykit) == 0)
                         {
                             if (_unlockedBodykits[_hullType].Count == 1)
                             {
@@ -41,18 +41,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                                 rightNavButton.gameObject.SetActive(true);
                             }
                             _index = 0;
-                            ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            ShowBodyKitDetail(DataProvider.GameModel.PlayerLoadout.SelectedBodykit);
                             return;
                         }
-                        else if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) == _unlockedBodykits[_hullType].Count - 1)
+                        else if (_unlockedBodykits[_hullType].IndexOf(DataProvider.GameModel.PlayerLoadout.SelectedBodykit) == _unlockedBodykits[_hullType].Count - 1)
                         {
                             leftNavButton.gameObject.SetActive(true);
                             rightNavButton.gameObject.SetActive(false);
                             _index = _unlockedBodykits[_hullType].Count - 1;
-                            ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            ShowBodyKitDetail(DataProvider.GameModel.PlayerLoadout.SelectedBodykit);
                             return;
                         }
-                        else if (_unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit) < 0)
+                        else if (_unlockedBodykits[_hullType].IndexOf(DataProvider.GameModel.PlayerLoadout.SelectedBodykit) < 0)
                         {
                             leftNavButton.gameObject.SetActive(false);
                             rightNavButton.gameObject.SetActive(true);
@@ -64,8 +64,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                         {
                             leftNavButton.gameObject.SetActive(true);
                             rightNavButton.gameObject.SetActive(true);
-                            _index = _unlockedBodykits[_hullType].IndexOf(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
-                            ShowBodyKitDetail(_dataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            _index = _unlockedBodykits[_hullType].IndexOf(DataProvider.GameModel.PlayerLoadout.SelectedBodykit);
+                            ShowBodyKitDetail(DataProvider.GameModel.PlayerLoadout.SelectedBodykit);
                             return;
                         }
                     }
@@ -87,18 +87,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
-        private DataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private Dictionary<HullType, List<int>> _unlockedBodykits = new Dictionary<HullType, List<int>>();
         private int _index;
         public CanvasGroupButton leftNavButton, rightNavButton;
 
-        public void Initialise(DataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+        public void Initialise(PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
+            Helper.AssertIsNotNull(prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNavButton, rightNavButton);
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
@@ -117,13 +115,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (_index == -1)
             {
-                _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
+                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
             }
             else
             {
-                _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
+                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
             }
-            _dataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
         private void LeftNavButton_OnClicked()
         {
@@ -135,8 +133,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 rightNavButton.gameObject.SetActive(true);
                 if (_hullType == _selectedHullType)
                 {
-                    _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
-                    _dataProvider.SaveGame();
+                    DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
+                    DataProvider.SaveGame();
                 }
                 ShowOriginCruiser();
                 return;
@@ -148,8 +146,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
             if (_hullType == _selectedHullType)
             {
-                _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
-                _dataProvider.SaveGame();
+                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
+                DataProvider.SaveGame();
             }
             ShowBodyKitDetail(_unlockedBodykits[_hullType][_index]);
         }
@@ -170,8 +168,8 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
             if (_hullType == _selectedHullType)
             {
-                _dataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
-                _dataProvider.SaveGame();
+                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = _unlockedBodykits[_hullType][_index];
+                DataProvider.SaveGame();
             }
             ShowBodyKitDetail(_unlockedBodykits[_hullType][_index]);
         }
@@ -239,7 +237,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _unlockedBodykits = new Dictionary<HullType, List<int>>();
             for (int i = 0; i < StaticData.Bodykits.Count; i++)
             {
-                if (_dataProvider.GameModel.PurchasedBodykits.Contains(i))
+                if (DataProvider.GameModel.PurchasedBodykits.Contains(i))
                 {
                     Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i));
                     if (_unlockedBodykits.ContainsKey(bodykit.cruiserType))

@@ -21,7 +21,7 @@ namespace BattleCruisers.Buildables.BuildProgress
 
             // TURBO MODE FOR PREMIUM (ONLY FOR PVE!!!)
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            settingsManager = applicationModel.DataProvider.SettingsManager;
+            settingsManager = DataProvider.SettingsManager;
 
             if (settingsManager.TurboMode)
             {

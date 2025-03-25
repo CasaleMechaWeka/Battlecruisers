@@ -18,17 +18,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             Instance = this;
         }
-        public async void UpdateInfo(DataProvider dataProvider, PrefabFactory prefabFactory)
+        public async void UpdateInfo(PrefabFactory prefabFactory)
         {
-            CaptainExo captain = prefabFactory.GetCaptainExo(dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
             _captainImage.sprite = captain.CaptainExoImage;
             _selectedCaptainImage.sprite = captain.CaptainExoImage;
-            _coins.text = dataProvider.GameModel.Coins.ToString();
-            _credits.text = dataProvider.GameModel.Credits.ToString();
-            _playerName.text = dataProvider.GameModel.PlayerName;
+            _coins.text = DataProvider.GameModel.Coins.ToString();
+            _credits.text = DataProvider.GameModel.Credits.ToString();
+            _playerName.text = DataProvider.GameModel.PlayerName;
 
-            int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);
+            int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
             _rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
         }
 

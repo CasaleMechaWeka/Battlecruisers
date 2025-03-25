@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         {
             // Access the application model to get settings manager
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            var settingsManager = applicationModel.DataProvider.SettingsManager;
+            var settingsManager = DataProvider.SettingsManager;
 
             // Enable or disable the GameObject based on the HecklesAllowed setting
             gameObject.SetActive(settingsManager.HecklesAllowed);

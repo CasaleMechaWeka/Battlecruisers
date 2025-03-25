@@ -45,7 +45,7 @@ namespace BattleCruisers.Effects.ParticleSystems
 
         private void Awake()
         {
-            _settingsManager = ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager;
+            _settingsManager = DataProvider.SettingsManager;
             audioSource = GetComponentInChildren<AudioSource>();
             if (audioSource != null)
                 audioSource.volume = _settingsManager.EffectVolume * _settingsManager.MasterVolume;

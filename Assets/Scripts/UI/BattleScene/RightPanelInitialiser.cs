@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.BattleScene
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters, applicationModel);
             IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
-            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
+            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
 
             return

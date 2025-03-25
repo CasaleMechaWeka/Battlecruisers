@@ -135,7 +135,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
-            factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+            factoryProvider.SettingsManager.Returns(DataProvider.SettingsManager);
 
             // Pools
             PoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);

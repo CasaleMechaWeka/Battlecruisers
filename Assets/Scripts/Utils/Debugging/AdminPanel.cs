@@ -48,58 +48,56 @@ namespace BattleCruisers.Utils.Debugging
 
         public void UnlockEverything()
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-
             // Levels
             foreach (ILevel level in StaticData.Levels)
             {
-                dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
+                DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
             }
 
             foreach (ISideQuestData sideQuest in StaticData.SideQuests)
             {
-                dataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
+                DataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
             }
 
             // Hulls
             foreach (HullKey hull in StaticData.HullKeys)
             {
-                if (!dataProvider.GameModel.UnlockedHulls.Contains(hull))
+                if (!DataProvider.GameModel.UnlockedHulls.Contains(hull))
                 {
-                    dataProvider.GameModel.AddUnlockedHull(hull);
+                    DataProvider.GameModel.AddUnlockedHull(hull);
                 }
             }
 
             // Buildings
             foreach (BuildingKey building in StaticData.BuildingKeys)
             {
-                if (!dataProvider.GameModel.UnlockedBuildings.Contains(building))
+                if (!DataProvider.GameModel.UnlockedBuildings.Contains(building))
                 {
-                    dataProvider.GameModel.AddUnlockedBuilding(building);
-                    //    dataProvider.GameModel.PlayerLoadout.AddBuilding(building);
+                    DataProvider.GameModel.AddUnlockedBuilding(building);
+                    //    DataProvider.GameModel.PlayerLoadout.AddBuilding(building);
                 }
             }
 
             // Units
             foreach (UnitKey unit in StaticData.UnitKeys)
             {
-                if (!dataProvider.GameModel.UnlockedUnits.Contains(unit))
+                if (!DataProvider.GameModel.UnlockedUnits.Contains(unit))
                 {
-                    dataProvider.GameModel.AddUnlockedUnit(unit);
-                    //    dataProvider.GameModel.PlayerLoadout.AddUnit(unit);
+                    DataProvider.GameModel.AddUnlockedUnit(unit);
+                    //    DataProvider.GameModel.PlayerLoadout.AddUnit(unit);
                 }
             }
 
-            dataProvider.GameModel.HasAttemptedTutorial = true;
+            DataProvider.GameModel.HasAttemptedTutorial = true;
 
             // If never played a level, need to set last battle result, because levels should
             // not be unlocked without a continue result.
-            if (dataProvider.GameModel.LastBattleResult == null)
+            if (DataProvider.GameModel.LastBattleResult == null)
             {
-                dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
+                DataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
             }
 
-            dataProvider.SaveGame();
+            DataProvider.SaveGame();
 
             Debug.Log("Everything unlocked :D  Restart game.");
         }
@@ -108,10 +106,8 @@ namespace BattleCruisers.Utils.Debugging
         {
             List<int> levelsToUnlock = Enumerable.Range(1, levelToUnlock).ToList();
 
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-
             // Mark tutorial as complete
-            dataProvider.GameModel.HasAttemptedTutorial = true;
+            DataProvider.GameModel.HasAttemptedTutorial = true;
 
             // Unlock specified levels
             foreach (int levelNum in levelsToUnlock)
@@ -119,25 +115,25 @@ namespace BattleCruisers.Utils.Debugging
                 ILevel level = StaticData.Levels.FirstOrDefault(l => l.Num == levelNum);
                 if (level != null)
                 {
-                    dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
+                    DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
                 }
                 else
                 {
                     ISideQuestData sideQuest = StaticData.SideQuests.FirstOrDefault(sq => sq.SideLevelNum == levelNum);
                     if (sideQuest != null)
                     {
-                        dataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
+                        DataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
                     }
                 }
             }
 
             // Ensure last battle result is set
-            if (dataProvider.GameModel.LastBattleResult == null)
+            if (DataProvider.GameModel.LastBattleResult == null)
             {
-                dataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
+                DataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
             }
 
-            dataProvider.SaveGame();
+            DataProvider.SaveGame();
 
             Debug.Log($"Progress reset and levels up to {levelToUnlock} unlocked. Restart game.");
         }
@@ -145,14 +141,13 @@ namespace BattleCruisers.Utils.Debugging
 
         public void Reset()
         {
-            ApplicationModelProvider.ApplicationModel.DataProvider.Reset();
+            DataProvider.Reset();
             Debug.Log("Everything reset :D  Restart game.");
         }
 
         public void DvorakHotkeys()
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            IHotkeysModel hotkeys = dataProvider.GameModel.Hotkeys;
+            IHotkeysModel hotkeys = DataProvider.GameModel.Hotkeys;
 
             // Navigation
             hotkeys.PlayerCruiser = KeyCode.Semicolon;
@@ -208,25 +203,23 @@ namespace BattleCruisers.Utils.Debugging
             hotkeys.Destroyer = KeyCode.Period;
             hotkeys.Archon = KeyCode.P;
 
-            dataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
 
         public void AddMoney()
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            dataProvider.GameModel.Coins += 1000;
-            dataProvider.SaveGame();
+            DataProvider.GameModel.Coins += 1000;
+            DataProvider.SaveGame();
         }
 
         public void RemoveMoney()
         {
-            DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-            dataProvider.GameModel.Coins -= 1000;
-            if (dataProvider.GameModel.Coins < 0)
+            DataProvider.GameModel.Coins -= 1000;
+            if (DataProvider.GameModel.Coins < 0)
             {
-                dataProvider.GameModel.Coins = 0;
+                DataProvider.GameModel.Coins = 0;
             }
-            dataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
     }
 }

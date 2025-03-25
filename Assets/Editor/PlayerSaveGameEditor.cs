@@ -66,15 +66,13 @@ public class PlayerSaveGameEditor : EditorWindow
 
     private void LoadGameModel()
     {
-        DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-
-        if (dataProvider == null || dataProvider.GameModel == null)
+        if (DataProvider.GameModel == null)
         {
             Debug.LogError("DataProvider or GameModel is not initialized.");
             return;
         }
 
-        gameModel = dataProvider.GameModel as GameModel;
+        gameModel = DataProvider.GameModel as GameModel;
         applicationModel = ApplicationModelProvider.ApplicationModel as ApplicationModel;
 
         if (gameModel == null || applicationModel == null)

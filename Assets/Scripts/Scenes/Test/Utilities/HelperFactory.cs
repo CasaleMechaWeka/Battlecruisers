@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             PrefabFactory prefabFactory
                 = new PrefabFactory(
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
 
             return
                 new Helper(

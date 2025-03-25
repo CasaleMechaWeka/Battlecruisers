@@ -147,7 +147,7 @@ namespace BattleCruisers.Scenes.Test.Projectiles
                     targetFilter,
                     damagePerS: 100,
                     parent: parent,
-                    settingsManager: ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager,
+                    settingsManager: DataProvider.SettingsManager,
                     deltaTimeProvider: _updaterProvider.BarrelControllerUpdater,
                     timeScaleDeferrer: timeScaleDeferrer);
         }

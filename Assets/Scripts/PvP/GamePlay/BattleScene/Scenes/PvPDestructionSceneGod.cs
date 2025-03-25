@@ -160,7 +160,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     = new SingleSoundPlayer(
                         new EffectVolumeAudioSource(
                             new AudioSourceBC(_uiAudioSource),
-                            applicationModel.DataProvider.SettingsManager, 1));
+                            DataProvider.SettingsManager, 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
                 skipButton.Initialise(_soundPlayer, SkipAnim);
@@ -191,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private void PopulateScreen()
         {
             // Get some values from GameModel and its friends:
-            allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            allTimeVal = DataProvider.GameModel.LifetimeDestructionScore;
 
             Debug.Log($"POPULATE DESTRUCTION SCREEN isDisconnected: {PvPBattleSceneGodTunnel.isDisconnected}");
             if (PvPBattleSceneGodTunnel.isDisconnected == 0)
@@ -705,7 +705,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private int CalculateCoins(long score)
         {
             int result = 0;
-            Arena arena = StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+            Arena arena = StaticData.Arenas[DataProvider.GameModel.GameMap + 1];
 
             if (levelTimeInSeconds > 60)
             {
@@ -758,7 +758,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private long CalculateCredits()
         {
             long creditsAward = 0;
-            Arena arena = StaticData.Arenas[applicationModel.DataProvider.GameModel.GameMap + 1];
+            Arena arena = StaticData.Arenas[DataProvider.GameModel.GameMap + 1];
 
             if (levelTimeInSeconds > 60)
             {
@@ -807,21 +807,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-                applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
 
                 // we need XPToNextLevel to populate any XP progress bars:
-                long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+                long newLifetimeScore = DataProvider.GameModel.LifetimeDestructionScore;
 
                 // Give the player their rewards:
-                applicationModel.DataProvider.GameModel.Coins += coinsToAward;
-                applicationModel.DataProvider.GameModel.Credits += creditsToAward;
-                applicationModel.DataProvider.SaveGame();
+                DataProvider.GameModel.Coins += coinsToAward;
+                DataProvider.GameModel.Credits += creditsToAward;
+                DataProvider.SaveGame();
 
-                //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
-                await applicationModel.DataProvider.SyncCoinsToCloud();
-                await applicationModel.DataProvider.SyncCreditsToCloud();
+                //DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
+                await DataProvider.SyncCoinsToCloud();
+                await DataProvider.SyncCreditsToCloud();
                 // Save changes:
-                await applicationModel.DataProvider.CloudSave();
+                await DataProvider.CloudSave();
             }
         }
 
@@ -888,16 +888,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         void OnApplicationQuit()
         {
-            ApplicationModelProvider.ApplicationModel.DataProvider.SaveGame();
-            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            DataProvider.SaveGame();
+            Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
             try
             {
-                applicationModel.DataProvider.SaveGame();
-                applicationModel.DataProvider.SyncCoinsToCloud();
-                applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

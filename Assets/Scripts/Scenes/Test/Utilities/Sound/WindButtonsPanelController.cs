@@ -18,11 +18,11 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
             BCUtils.Helper.AssertIsNotNull(camera, cameraCalculatorSettings);
 
             Assert.IsNotNull(windInitialiser);
-            _windManager 
+            _windManager
                 = windInitialiser.Initialise(
-                    camera, 
+                    camera,
                     cameraCalculatorSettings,
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
         }
 
         public void StartWind()

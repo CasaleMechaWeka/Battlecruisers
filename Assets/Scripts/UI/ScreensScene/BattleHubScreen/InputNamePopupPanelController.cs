@@ -25,27 +25,24 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private IScreensSceneGod _screenSceneGod;
         private ISingleSoundPlayer _soundPlayer;
         private PrefabFactory _prefabFactory;
-        private DataProvider _dataProvider;
         private CaptainExoKey loadedCaptain;
 
         public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        PrefabFactory prefabFactory,
-        DataProvider dataProvider)
+        PrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory);
             _screenSceneGod = screensSceneGod;
             _soundPlayer = soundPlayer;
             _prefabFactory = prefabFactory;
-            _dataProvider = dataProvider;
 
             applyBtn.Initialise(_soundPlayer, ApplyName);
-            CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-            loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
+            CaptainExo captain = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            loadedCaptain = DataProvider.GameModel.PlayerLoadout.CurrentCaptain;
             charlieImage.sprite = captain.CaptainExoImage;
 
-            inputField.text = _dataProvider.GameModel.PlayerName;
+            inputField.text = DataProvider.GameModel.PlayerName;
             spinner.SetActive(false);
             btnLabel.SetActive(true);
             btnLabel.GetComponent<Text>().text = LocTableCache.CommonTable.GetString("UI/Buttons/SaveButton");
@@ -53,10 +50,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Update()
         {
-            if (loadedCaptain != _dataProvider.GameModel.PlayerLoadout.CurrentCaptain)
+            if (loadedCaptain != DataProvider.GameModel.PlayerLoadout.CurrentCaptain)
             {
-                CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-                loadedCaptain = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
+                CaptainExo captain = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                loadedCaptain = DataProvider.GameModel.PlayerLoadout.CurrentCaptain;
                 charlieImage.sprite = captain.CaptainExoImage;
             }
         }
@@ -67,35 +64,35 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             spinner.SetActive(true);
             applyBtn.enabled = false;
             string oldPlayerName = string.Empty;
-            CaptainExo captain = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-            if (inputField.text != _dataProvider.GameModel.PlayerName)
+            CaptainExo captain = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            if (inputField.text != DataProvider.GameModel.PlayerName)
             {
                 try
                 {
-                    oldPlayerName = _dataProvider.GameModel.PlayerName;
+                    oldPlayerName = DataProvider.GameModel.PlayerName;
                     string temp = inputField.text;
                     temp.Replace("#", "");
-                    _dataProvider.GameModel.PlayerName = temp;
-                    _dataProvider.SaveGame();
+                    DataProvider.GameModel.PlayerName = temp;
+                    DataProvider.SaveGame();
                     string name = temp + "#" + captain.captainName;
                     Debug.Log(name);
 
                     // online functions
                     if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                     {
-                        await _dataProvider.CloudSave();
+                        await DataProvider.CloudSave();
                         await AuthenticationService.Instance.UpdatePlayerNameAsync(name);
                     }
 
-                    PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
-                    ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
+                    PlayerInfoPanelController.Instance?.UpdateInfo(_prefabFactory);
+                    ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
                 }
                 catch (Exception ex)
                 {
-                    _dataProvider.GameModel.PlayerName = oldPlayerName;
-                    _dataProvider.SaveGame();
-                    PlayerInfoPanelController.Instance?.UpdateInfo(_dataProvider, _prefabFactory);
-                    ProfilePanelScreenController.Instance.playerName.text = _dataProvider.GameModel.PlayerName;
+                    DataProvider.GameModel.PlayerName = oldPlayerName;
+                    DataProvider.SaveGame();
+                    PlayerInfoPanelController.Instance?.UpdateInfo(_prefabFactory);
+                    ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
                     Debug.LogException(ex);
                 }
 

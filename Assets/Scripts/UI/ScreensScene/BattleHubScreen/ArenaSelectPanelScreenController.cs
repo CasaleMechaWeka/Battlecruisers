@@ -44,7 +44,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ButtonController navLeftButton;
         public GameObject loadingSpinner;
         private IScreensSceneGod _screenSceneGod;
-        private DataProvider _dataProvider;
 
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
@@ -54,15 +53,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            DataProvider dataProvider)
+            ISingleSoundPlayer soundPlayer)
         {
             loadingSpinner.SetActive(false);
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(battleButton, navRightButton, navLeftButton);
 
             _screenSceneGod = screensSceneGod;
-            _dataProvider = dataProvider;
 
             battleButton.Initialise(soundPlayer, StartBattle);
 
@@ -80,7 +77,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             customMessageButton.Initialise(soundPlayer, OnCustomMessageButtonClick);
 
             // Initialize MessageBoxBig
-            messageBoxBig.Initialize(dataProvider, soundPlayer);
+            messageBoxBig.Initialize(soundPlayer);
             messageBoxBig.HideMessage();
         }
 
@@ -169,7 +166,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     });
             }
 
-            //   _dataProvider.GameModel.GameMap = IndexCurrentArena;
+            //   DataProvider.GameModel.GameMap = IndexCurrentArena;
         }
 
         private void UpdateValueStrings(int index)
@@ -191,19 +188,19 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 battleButton.gameObject.SetActive(false);
                 if (AuthenticationService.Instance.IsSignedIn)
                 {
-                    if (_dataProvider.GameModel.Coins >= StaticData.Arenas[indexCurrentArena + 1].costcoins
-                        && _dataProvider.GameModel.Credits >= StaticData.Arenas[indexCurrentArena + 1].costcredits)
+                    if (DataProvider.GameModel.Coins >= StaticData.Arenas[indexCurrentArena + 1].costcoins
+                        && DataProvider.GameModel.Credits >= StaticData.Arenas[indexCurrentArena + 1].costcredits)
                     {
-                        _dataProvider.GameModel.GameMap = IndexCurrentArena;
+                        DataProvider.GameModel.GameMap = IndexCurrentArena;
                         PvPBattleSceneGodTunnel.isCost = false;
                         PvPBattleCompletionHandler._isCompleted = false;
                         _screenSceneGod.LoadPvPBattleScene();
                     }
                     else
                     {
-                        if (_dataProvider.GameModel.Coins < StaticData.Arenas[indexCurrentArena + 1].costcoins)
+                        if (DataProvider.GameModel.Coins < StaticData.Arenas[indexCurrentArena + 1].costcoins)
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"));
-                        if (_dataProvider.GameModel.Credits < StaticData.Arenas[indexCurrentArena + 1].costcredits)
+                        if (DataProvider.GameModel.Credits < StaticData.Arenas[indexCurrentArena + 1].costcredits)
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"));
                         loadingSpinner.SetActive(false);
                         battleButton.gameObject.SetActive(true);

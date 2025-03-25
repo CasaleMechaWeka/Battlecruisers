@@ -167,14 +167,14 @@ namespace BattleCruisers.Buildables.Buildings
         public void ApplyVariantToPlayer(IBuilding building)
         {
             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            VariantPrefab variant = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
 
             if (variant != null)
             {
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
-                int index = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
                 variantIndex = index;
                 Name = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
                 Description = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);

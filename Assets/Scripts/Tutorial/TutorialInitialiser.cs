@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Damage;
+using BattleCruisers.Data;
 using BattleCruisers.Tutorial.Explanation;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
@@ -41,8 +42,8 @@ namespace BattleCruisers.Tutorial
 
             if (baseArgs.AppModel.IsTutorial)
             {
-                baseArgs.AppModel.DataProvider.GameModel.HasAttemptedTutorial = true;
-                baseArgs.AppModel.DataProvider.SaveGame();
+                DataProvider.GameModel.HasAttemptedTutorial = true;
+                DataProvider.SaveGame();
 
                 ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);

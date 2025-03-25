@@ -20,19 +20,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             //should be enabled in Production
             _buildMultiplier = buildSpeedMultiplier;
 
-            //if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 4)
+            //if (applicationModel.Mode == GameMode.PvP_1VS1 && DataProvider.GameModel.GameMap == 4)
             //{
             //    _buildMultiplier = 2;
             //}
-            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 6)
+            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && DataProvider.GameModel.GameMap == 6)
             //{
             //    _buildMultiplier = 3;
             //}
-            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 8)
+            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && DataProvider.GameModel.GameMap == 8)
             //{
             //    _buildMultiplier = 4;
             //}
-            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && applicationModel.DataProvider.GameModel.GameMap == 9)
+            //else if (applicationModel.Mode == GameMode.PvP_1VS1 && DataProvider.GameModel.GameMap == 9)
             //{
             //    _buildMultiplier = 5;
             //}

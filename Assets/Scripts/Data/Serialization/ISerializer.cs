@@ -14,10 +14,10 @@ namespace BattleCruisers.Data.Serialization
         Task CloudSave(GameModel game);
         Task<SaveGameModel> CloudLoad(GameModel game);
         void DeleteCloudSave();
-        Task<bool> SyncCoinsToCloud(DataProvider dataProvider);
-        Task<bool> SyncCurrencyFromCloud(DataProvider dataProvider);
-        Task<bool> SyncInventoryFromCloud(DataProvider dataProvider);
+        Task<bool> SyncCoinsToCloud();
+        Task<bool> SyncCurrencyFromCloud();
+        Task<bool> SyncInventoryFromCloud();
 
-        Task<bool> SyncCreditsToCloud(DataProvider dataProvider);
+        Task<bool> SyncCreditsToCloud();
     }
 }

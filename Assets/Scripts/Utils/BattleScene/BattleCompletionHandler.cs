@@ -43,13 +43,13 @@ namespace BattleCruisers.Utils.BattleScene
             {
                 case GameMode.SideQuest:
                     BattleResult sideQuestBattleResult = new BattleResult(_applicationModel.SelectedSideQuestID, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
+                    DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
                     break;
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
                     BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                    DataProvider.GameModel.LastBattleResult = battleResult;
                     break;
 
                 case GameMode.Skirmish:
@@ -63,7 +63,7 @@ namespace BattleCruisers.Utils.BattleScene
             }
 
 
-            _applicationModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
 
             if (_applicationModel.Mode == GameMode.CoinBattle)
             {
@@ -100,14 +100,14 @@ namespace BattleCruisers.Utils.BattleScene
             {
                 case GameMode.SideQuest:
                     BattleResult sideQuestBattleResult = new BattleResult(_applicationModel.SelectedSideQuestID, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
+                    DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
                     break;
 
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
                     BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                    DataProvider.GameModel.LastBattleResult = battleResult;
                     break;
 
                 case GameMode.Skirmish:
@@ -121,7 +121,7 @@ namespace BattleCruisers.Utils.BattleScene
             }
 
 
-            //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            //Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
             if (_applicationModel.Mode == GameMode.CoinBattle)
             {
                 _applicationModel.ShowPostBattleScreen = false;
@@ -139,14 +139,14 @@ namespace BattleCruisers.Utils.BattleScene
             }
             else if (wasVictory)
             {
-                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
-                _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
-                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
-                if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                //Debug.Log(DataProvider.GameModel.LifetimeDestructionScore + " - before");
+                DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                //Debug.Log(DataProvider.GameModel.LifetimeDestructionScore + " - after");
+                if (DataProvider.GameModel.BestDestructionScore < destructionScore)
                 {
-                    _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    DataProvider.GameModel.BestDestructionScore = destructionScore;
                 }
-                _applicationModel.DataProvider.SaveGame();
+                DataProvider.SaveGame();
                 _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
 
             }

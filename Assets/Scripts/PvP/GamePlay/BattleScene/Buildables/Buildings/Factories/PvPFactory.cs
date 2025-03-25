@@ -191,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                             IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                             try
                             {
-                                AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
                                 AnalyticsService.Instance.Flush();
                             }
                             catch (ConsentCheckException ex)

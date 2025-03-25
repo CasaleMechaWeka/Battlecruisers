@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using BattleCruisers.Data;
 using BattleCruisers.UI.Sound.Players;
 using System;
-using BattleCruisers.Scenes;
 using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
@@ -15,13 +13,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text label;
         public Text closeButton;
         public CanvasGroupButton okBtn;
-        private DataProvider _dataProvider;
         private ISingleSoundPlayer _soundPlayer;
         private Action _onClick;
 
-        public void Initialize(DataProvider dataProvider, ISingleSoundPlayer soundPlayer, Action onClick = null)
+        public void Initialize(ISingleSoundPlayer soundPlayer, Action onClick = null)
         {
-            _dataProvider = dataProvider;
             _soundPlayer = soundPlayer;
             _onClick = onClick;
             okBtn.Initialise(_soundPlayer, OnClick);

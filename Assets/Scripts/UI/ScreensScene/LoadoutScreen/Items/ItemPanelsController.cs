@@ -11,7 +11,6 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Data;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -49,12 +48,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
-            DataProvider dataProvider,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, dataProvider, selectedHull, soundPlayer, prefabFactory);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer, prefabFactory);
 
             _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
 
@@ -63,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
             foreach (ItemsPanel panel in panels)
             {
-                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, dataProvider, selectedHull, soundPlayer, prefabFactory);
+                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer, prefabFactory);
                 allItemButtons.AddRange(panelItemButtons);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();

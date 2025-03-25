@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             Assert.IsNotNull(cameraInitialiser);
             ICameraComponents cameraComponents = cameraInitialiser
                 .Initialise(
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager,
+                    DataProvider.SettingsManager,
                     playerCruiser,
                     aiCruiser,
                     navigationPermitters,

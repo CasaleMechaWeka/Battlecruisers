@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton backButton, buyButton;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private DataProvider _dataProvider;
         public Transform iapContainer;
         public EventHandler<IAPDataEventArgs> iapDataChanged;
         public GameObject itemPrefab;
@@ -41,31 +40,31 @@ namespace BattleCruisers.UI.ScreensScene
             switch (e.CoinsPack)
             {
                 case IAPManager.small_coin_pack:
-                    _dataProvider.GameModel.Coins += 275;
+                    DataProvider.GameModel.Coins += 275;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack100Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.medium_coin_pack:
-                    _dataProvider.GameModel.Coins += 900;
+                    DataProvider.GameModel.Coins += 900;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack500Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.large_coin_pack:
-                    _dataProvider.GameModel.Coins += 3750;
+                    DataProvider.GameModel.Coins += 3750;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack1000Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
                 case IAPManager.extralarge_coin_pack:
-                    _dataProvider.GameModel.Coins += 20000;
+                    DataProvider.GameModel.Coins += 20000;
                     ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CoinsPack5000Purchased"));
                     ScreensSceneGod.Instance.characterOfBlackmarket.GetComponent<Animator>().SetTrigger("buy");
                     break;
             }
-            _dataProvider.SaveGame();
-            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+            DataProvider.SaveGame();
+            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
             try
             {
-                bool result = await _dataProvider.SyncCoinsToCloud();
+                bool result = await DataProvider.SyncCoinsToCloud();
                 if (!result)
                     Debug.Log("Sync failed");
             }
@@ -78,18 +77,16 @@ namespace BattleCruisers.UI.ScreensScene
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
-            DataProvider dataProvider)
+            PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
-            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, dataProvider, iapContainer);
+            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, iapContainer);
             Helper.AssertIsNotNull(iapIcon, iapName, iapDescription, iapPrice);
 
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
-            confirmModal.Initiaize(dataProvider, prefabFactory, soundPlayer);
+            confirmModal.Initiaize(prefabFactory, soundPlayer);
             backButton.Initialise(soundPlayer, GoHome, this);
             buyButton.Initialise(soundPlayer, Buy, this);
 
