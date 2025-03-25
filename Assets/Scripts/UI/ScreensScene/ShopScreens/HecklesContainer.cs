@@ -79,7 +79,6 @@ namespace BattleCruisers.UI.ScreensScene
 #if LOG_ANALYTICS
                 Debug.Log("Analytics: " + logName);
 #endif
-                            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                             Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "heckleIndex", currentHeckleData.Index } };
                         }
                         else

@@ -420,7 +420,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void VsAI()
         {
             vsAIButton.SetActive(false);
-            ApplicationModelProvider.ApplicationModel.Mode = Data.GameMode.CoinBattle;
+            ApplicationModel.Mode = Data.GameMode.CoinBattle;
             SaveCoinBattleSettings();
             int maxLevel = DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
             int levelIndex = UnityEngine.Random.Range(1, maxLevel);

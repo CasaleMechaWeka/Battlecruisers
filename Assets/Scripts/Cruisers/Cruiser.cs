@@ -196,7 +196,6 @@ namespace BattleCruisers.Cruisers
 
 
             // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             settingsManager = DataProvider.SettingsManager;
             if (settingsManager.RichMode)
             {
@@ -222,10 +221,10 @@ namespace BattleCruisers.Cruisers
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
                 #endif
-                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                ApplicationModel applicationModel = ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch(ConsentCheckException e)
@@ -237,7 +236,7 @@ namespace BattleCruisers.Cruisers
             else
             {
                 // AI bot
-                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle)
+                if (ApplicationModel.Mode == GameMode.CoinBattle)
                 {
                     int id_bodykit = DataProvider.GameModel.ID_Bodykit_AIbot;
                     Debug.Log(id_bodykit);
@@ -311,10 +310,10 @@ namespace BattleCruisers.Cruisers
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
                 #endif
-                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                ApplicationModel applicationModel = ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));                    
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch (ConsentCheckException ex)

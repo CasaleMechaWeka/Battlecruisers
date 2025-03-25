@@ -31,7 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static IPvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public IPvPPrefabFactory prefabFactory;
-        private IApplicationModel applicationModel;
         private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
@@ -153,8 +152,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async Task _Initialise()
         {
-            applicationModel = ApplicationModelProvider.ApplicationModel;
-
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             prefabFactory = new PvPPrefabFactory(prefabCache, null);
@@ -164,7 +161,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, components.Deferrer);
+            pvpBattleHelper = CreatePvPBattleHelper(prefabFactory, components.Deferrer);
 
             playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
@@ -181,7 +178,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         public void _Initialise_Rest()
         {
-            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper /*, uiManager */);
             //await Task.Delay(500);
             playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             //await Task.Delay(500);
@@ -218,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             #endif
                         try
                         {
-                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                             AnalyticsService.Instance.Flush();
                         }
                         catch (Exception ex)
@@ -398,11 +395,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiser.pvp_DroneNumIncreased.Value = !playerBCruiser.pvp_DroneNumIncreased.Value;
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
-            IApplicationModel applicationModel,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer)
         {
-            return new PvPBattleHelper(applicationModel, prefabFactory, deferrer);
+            return new PvPBattleHelper(prefabFactory, deferrer);
         }
     }
 }

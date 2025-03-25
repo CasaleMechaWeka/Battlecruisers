@@ -9,17 +9,15 @@ namespace BattleCruisers.Scenes.Test.UI
 {
     public class LevelButtonsPanel : MonoBehaviour
     {
-        private IApplicationModel _appModel;
         private TrashScreenController _trashScreen;
 
-        public void Initialise(IApplicationModel appModel, TrashScreenController trashScreen, int startingLevelNum)
+        public void Initialise(TrashScreenController trashScreen, int startingLevelNum)
         {
-            Helper.AssertIsNotNull(appModel, trashScreen);
+            Helper.AssertIsNotNull(trashScreen);
             Assert.IsTrue(startingLevelNum > 0);
             Assert.IsTrue(startingLevelNum <= StaticData.NUM_OF_LEVELS);
 
             _trashScreen = trashScreen;
-            _appModel = appModel;
 
             TrashScreenLevelButtonController[] levelButtons = GetComponentsInChildren<TrashScreenLevelButtonController>();
             Assert.AreEqual(StaticData.NUM_OF_LEVELS, levelButtons.Length);
@@ -40,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.UI
 
         public void ChangeLevel(int levelNum)
         {
-            _appModel.SelectedLevel = levelNum;
+            ApplicationModel.SelectedLevel = levelNum;
             _trashScreen.OnPresenting(activationParameter: null);
         }
     }

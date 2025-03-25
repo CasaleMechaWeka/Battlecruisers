@@ -13,7 +13,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private void UpdateHeckleVisibility()
         {
             // Access the application model to get settings manager
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             var settingsManager = DataProvider.SettingsManager;
 
             // Enable or disable the GameObject based on the HecklesAllowed setting

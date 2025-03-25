@@ -28,7 +28,6 @@ namespace BattleCruisers.Cruisers
     {
         private readonly FactoryProvider _factoryProvider;
         private readonly IBattleSceneHelper _helper;
-        private readonly IApplicationModel _applicationModel;
         private readonly ISlotFilter _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
@@ -38,14 +37,12 @@ namespace BattleCruisers.Cruisers
         public CruiserFactory(
             FactoryProvider factoryProvider,
             IBattleSceneHelper helper,
-            IApplicationModel applicationModel,
             IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(factoryProvider, helper, applicationModel, uiManager);
+            Helper.AssertIsNotNull(factoryProvider, helper, uiManager);
 
             _factoryProvider = factoryProvider;
             _helper = helper;
-            _applicationModel = applicationModel;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
             _fogVisibilityDecider = new FogVisibilityDecider();
@@ -165,7 +162,7 @@ namespace BattleCruisers.Cruisers
                     userChosenTargetTracker,
                     _factoryProvider.UpdaterProvider,
                     faction,
-                    _applicationModel.IsTutorial);
+                    ApplicationModel.IsTutorial);
 
             IDroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, _factoryProvider.Sound.PrioritisedSoundPlayer);
@@ -216,7 +213,7 @@ namespace BattleCruisers.Cruisers
 
         private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            if (_applicationModel.IsTutorial)
+            if (ApplicationModel.IsTutorial)
             {
                 return new TutorialAICruiserHelper(uiManager, cameraFocuser);
             }
@@ -228,7 +225,7 @@ namespace BattleCruisers.Cruisers
 
         private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            if (_applicationModel.IsTutorial)
+            if (ApplicationModel.IsTutorial)
             {
                 return new TutorialPlayerCruiserHelper(uiManager, cameraFocuser);
             }

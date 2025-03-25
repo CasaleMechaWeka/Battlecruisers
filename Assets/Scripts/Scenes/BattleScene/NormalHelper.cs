@@ -38,10 +38,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public NormalHelper(
-            IApplicationModel appModel,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel)
+            : base()
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 
@@ -50,7 +49,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             ShowInGameHints =
                 DataProvider.SettingsManager.ShowInGameHints
-                && _appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
+                && ApplicationModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();
@@ -77,7 +76,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
         {
-            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedLevel, false);
+            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), ApplicationModel.SelectedLevel, false);
         }
 
         protected virtual Difficulty FindDifficulty()
@@ -87,7 +86,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new DefaultStrategyFactory(StaticData.Strategies, StaticData.SideQuestStrategies, currentLevelNum, _appModel.Mode == GameMode.SideQuest);
+            return new DefaultStrategyFactory(StaticData.Strategies, StaticData.SideQuestStrategies, currentLevelNum, ApplicationModel.Mode == GameMode.SideQuest);
         }
 
         public override ISlotFilter CreateHighlightableSlotFilter()

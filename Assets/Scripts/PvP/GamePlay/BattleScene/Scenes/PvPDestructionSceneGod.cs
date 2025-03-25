@@ -22,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         [SerializeField]
         private Text screenTitle;
 
-        private IApplicationModel applicationModel;
         private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
@@ -147,14 +146,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite Trident;
         public Sprite Yeti;
 
-        async void Start()
+        void Start()
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
             if (_sceneNavigator != null)
             {
                 LandingSceneGod.MusicPlayer.PlayVictoryMusic();
-                applicationModel = ApplicationModelProvider.ApplicationModel;
 
                 _soundPlayer
                     = new SingleSoundPlayer(
@@ -341,7 +339,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
 
-            if (applicationModel.Mode != GameMode.Skirmish)
+            if (ApplicationModel.Mode != GameMode.Skirmish)
             {
                 CalculateRewards();
             }
@@ -541,7 +539,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             skipButton.gameObject.SetActive(false);
 
             // Award any rewards:
-            if (applicationModel.Mode != GameMode.Skirmish)
+            if (ApplicationModel.Mode != GameMode.Skirmish)
             {
                 if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
                 {
@@ -804,7 +802,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
-            if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
+            if (ApplicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
                 DataProvider.GameModel.LifetimeDestructionScore += destructionScore;

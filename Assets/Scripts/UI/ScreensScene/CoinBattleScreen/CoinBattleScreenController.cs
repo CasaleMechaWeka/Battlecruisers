@@ -1,28 +1,13 @@
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Scenes;
-using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.CoinBattleScreen
 {
     public class CoinBattleScreenController : ScreenController
     {
-        private IApplicationModel _applicationModel;
-
-        public void Initialise(
-            IScreensSceneGod screensSceneGod,
-            IApplicationModel applicationModel)
-        {
-            base.Initialise(screensSceneGod);
-
-            Helper.AssertIsNotNull(applicationModel);
-
-            _applicationModel = applicationModel;
-        }
-
         public void Battle()
         {
-            _applicationModel.Mode = GameMode.CoinBattle;
+            ApplicationModel.Mode = GameMode.CoinBattle;
             SaveCoinBattleSettings();
 
             int maxLevel = DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?

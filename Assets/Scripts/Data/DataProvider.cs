@@ -36,7 +36,7 @@ namespace BattleCruisers.Data
         public static EcoConfig ecoConfig { get; set; }
         /*     public PvPConfig pvpConfig { get; set; }*/
         public static bool pvpServerAvailable { get; set; }
-        public static void Initialise()
+        static DataProvider()
         {
             if (_serializer.DoesSavedGameExist())
             {

@@ -182,10 +182,10 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
                 #endif
-                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                ApplicationModel applicationModel = ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable_Unit", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch (ConsentCheckException ex)

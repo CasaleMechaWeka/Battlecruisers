@@ -13,7 +13,6 @@ namespace BattleCruisers.Scenes
 {
     public class CloudSaveLoadTestSceneGod : MonoBehaviour
     {
-        private IApplicationModel _applicationModel;
         private IGameModel _gameModel;
 
         public InputField userIdInputField;
@@ -24,8 +23,6 @@ namespace BattleCruisers.Scenes
 
         void Start()
         {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource
@@ -37,7 +34,6 @@ namespace BattleCruisers.Scenes
                 audioSource
                 );
 
-            _applicationModel = ApplicationModelProvider.ApplicationModel;
             _gameModel = DataProvider.GameModel;
 
             login();

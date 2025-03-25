@@ -365,10 +365,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                ApplicationModel applicationModel = ApplicationModel;
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException e)
@@ -446,10 +446,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                ApplicationModel applicationModel = ApplicationModel;
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException ex)

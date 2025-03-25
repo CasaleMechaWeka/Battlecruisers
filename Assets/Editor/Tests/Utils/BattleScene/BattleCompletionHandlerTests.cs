@@ -11,17 +11,15 @@ namespace BattleCruisers.Tests.Utils.BattleScene
     public class BattleCompletionHandlerTests
     {
         private BattleCompletionHandler _battleCompletionHandler;
-        private IApplicationModel _applicationModel;
         private ISceneNavigator _sceneNavigator;
         private int _battleCompletedCount;
 
         [SetUp]
         public void TestSetup()
         {
-            _applicationModel = Substitute.For<IApplicationModel>();
             _sceneNavigator = Substitute.For<ISceneNavigator>();
 
-            _battleCompletionHandler = new BattleCompletionHandler(_applicationModel, _sceneNavigator);
+            _battleCompletionHandler = new BattleCompletionHandler(_sceneNavigator);
 
             _battleCompletedCount = 0;
             _battleCompletionHandler.BattleCompleted += (sender, e) => _battleCompletedCount++;
@@ -30,7 +28,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_IsTutorial_Retry()
         {
-            _applicationModel.Mode = GameMode.Tutorial;
+            ApplicationModel.Mode = GameMode.Tutorial;
 
             _battleCompletionHandler.CompleteBattle(wasVictory: default, retryLevel: true);
 
@@ -41,7 +39,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_IsTutorial_DoNotRetry()
         {
-            _applicationModel.Mode = GameMode.Tutorial;
+            ApplicationModel.Mode = GameMode.Tutorial;
 
             _battleCompletionHandler.CompleteBattle(wasVictory: default, retryLevel: false);
 
@@ -52,12 +50,12 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_Campaign_IsVictory_DoNotRetry()
         {
-            _applicationModel.Mode = GameMode.Campaign;
-            _applicationModel.SelectedLevel = 77;
+            ApplicationModel.Mode = GameMode.Campaign;
+            ApplicationModel.SelectedLevel = 77;
 
             _battleCompletionHandler.CompleteBattle(wasVictory: true, retryLevel: false);
 
-            BattleResult expectedResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory: true);
+            BattleResult expectedResult = new BattleResult(ApplicationModel.SelectedLevel, wasVictory: true);
             DataProvider.GameModel.Received().LastBattleResult = expectedResult;
             CommonChecks();
             _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
@@ -66,11 +64,11 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         [Test]
         public void CompleteBattle_Skirmish_IsDefeat_DoNotRetry()
         {
-            _applicationModel.Mode = GameMode.Skirmish;
+            ApplicationModel.Mode = GameMode.Skirmish;
 
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: false);
 
-            _applicationModel.Received().UserWonSkirmish = false;
+            ApplicationModel.UserWonSkirmish = false;
             CommonChecks();
             _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
         }
@@ -78,7 +76,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private void CommonChecks()
         {
             Assert.AreEqual(1, _battleCompletedCount);
-            _applicationModel.Received().ShowPostBattleScreen = true;
+            ApplicationModel.ShowPostBattleScreen = true;
             DataProvider.SaveGame();
         }
 

@@ -67,10 +67,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            ApplicationModel applicationModel = ApplicationModel;
             try
             {
-                AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
             }
             catch
@@ -92,10 +92,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+            ApplicationModel applicationModel = ApplicationModel;
             try
             {
-                AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
             }
             catch (Exception ex)

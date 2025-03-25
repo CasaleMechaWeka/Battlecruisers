@@ -87,7 +87,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         public GameObject ultraPanel;
-        private IApplicationModel applicationModel;
 
         public GameObject PlayerCaptain;
         public GameObject EnemyCaptain;
@@ -109,7 +108,6 @@ namespace BattleCruisers.Scenes.BattleScene
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-            applicationModel = ApplicationModelProvider.ApplicationModel;
 
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
@@ -117,13 +115,13 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 // TEMP  Force level I'm currently testing :)
                 if (defaultLevel >= 1)
-                    applicationModel.SelectedLevel = defaultLevel;
+                    ApplicationModel.SelectedLevel = defaultLevel;
                 else
                 {
-                    applicationModel.Mode = GameMode.SideQuest;
-                    applicationModel.SelectedSideQuestID = defaultSideQuest;
+                    ApplicationModel.Mode = GameMode.SideQuest;
+                    ApplicationModel.SelectedSideQuestID = defaultSideQuest;
                 }
-                //Debug.Log(applicationModel.SelectedLevel);
+                //Debug.Log(ApplicationModel.SelectedLevel);
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
@@ -135,11 +133,11 @@ namespace BattleCruisers.Scenes.BattleScene
             // TEMP  Force  tutorial
             if (isTutorial)
             {
-                applicationModel.Mode = GameMode.Tutorial;
-                applicationModel.SelectedLevel = 1;
+                ApplicationModel.Mode = GameMode.Tutorial;
+                ApplicationModel.SelectedLevel = 1;
             }
 
-            if (applicationModel.Mode == GameMode.Tutorial)
+            if (ApplicationModel.Mode == GameMode.Tutorial)
             {
                 foreach (GameObject setting in ilegalTutorialSettings)
                 {
@@ -153,7 +151,7 @@ namespace BattleCruisers.Scenes.BattleScene
             PrefabFactory prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
+            IBattleSceneHelper helper = CreateHelper(prefabFactory, components.Deferrer, navigationPermitters);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -164,7 +162,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
             factoryProvider = new FactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
-            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
+            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
@@ -210,7 +208,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Prior to setting up Captain Names
             CaptainExo aiCaptainExoPrefab;
-            if (applicationModel.Mode == GameMode.SideQuest)
+            if (ApplicationModel.Mode == GameMode.SideQuest)
             {
                 currentSideQuest = helper.GetSideQuest();
                 enemyName = await helper.GetEnemyNameAsync(currentSideQuest.SideLevelNum);
@@ -225,7 +223,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Debug.Log($"Enemy name before instantiating: {enemyName}");
 
-            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
@@ -252,7 +250,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Text playerName = PlayerName.gameObject.GetComponent<Text>();
             playerName.text = DataProvider.GameModel.PlayerName;
 
-            if (applicationModel.Mode == GameMode.PvP_1VS1)
+            if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
                 // Enemy player name
             }
@@ -272,7 +270,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     helper.GetPlayerLoadout(),
                     prefabFactory,
                     buttonVisibilityFilters,
-                    new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
+                    new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
@@ -280,7 +278,6 @@ namespace BattleCruisers.Scenes.BattleScene
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             RightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
-                    applicationModel,
                     uiManager,
                     playerCruiser,
                     userChosenTargetHelper,
@@ -310,7 +307,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Audio
             Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
             ILayeredMusicPlayer layeredMusicPlayer;
-            if (applicationModel.Mode == GameMode.SideQuest)
+            if (ApplicationModel.Mode == GameMode.SideQuest)
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     currentSideQuest.MusicBackgroundKey,
                     DataProvider.SettingsManager);
@@ -348,17 +345,17 @@ namespace BattleCruisers.Scenes.BattleScene
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             PrefabContainer<BackgroundImageStats> backgroundStats;
             IArtificialIntelligence ai;
-            if (applicationModel.Mode != GameMode.SideQuest)
+            if (ApplicationModel.Mode != GameMode.SideQuest)
             {
-                ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+                ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedLevel);
                 backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
                 components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
                 await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel.SkyMaterialName);
             }
             else
             {
-                ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedSideQuestID);
-                backgroundStats = await helper.GetBackgroundStatsAsync(applicationModel.SelectedSideQuestID);
+                ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedSideQuestID);
+                backgroundStats = await helper.GetBackgroundStatsAsync(ApplicationModel.SelectedSideQuestID);
                 components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
                 await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentSideQuest.SkyMaterial);
             }
@@ -397,7 +394,6 @@ namespace BattleCruisers.Scenes.BattleScene
             // Tutorial
             ITutorialArgsBase tutorialArgs
                 = new TutorialArgsBase(
-                    applicationModel,
                     playerCruiser,
                     aiCruiser,
                     _tutorialProvider,
@@ -476,7 +472,7 @@ namespace BattleCruisers.Scenes.BattleScene
             #endif
                         try
                         {
-                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                             AnalyticsService.Instance.Flush();
                         }
                         catch (Exception ex)
@@ -492,38 +488,37 @@ namespace BattleCruisers.Scenes.BattleScene
                 }*/
 
         private IBattleSceneHelper CreateHelper(
-            IApplicationModel applicationModel,
             PrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters)
         {
-            switch (applicationModel.Mode)
+            switch (ApplicationModel.Mode)
             {
                 case GameMode.Tutorial:
-                    TutorialHelper helper = new TutorialHelper(applicationModel, prefabFactory, navigationPermitters);
+                    TutorialHelper helper = new TutorialHelper(prefabFactory, navigationPermitters);
                     _tutorialProvider = helper;
                     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(applicationModel, prefabFactory, deferrer);
+                    return new NormalHelper(prefabFactory, deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(applicationModel, prefabFactory, deferrer);
+                    return new SkirmishHelper(prefabFactory, deferrer);
 
                 case GameMode.CoinBattle:
-                    return new CoinBattleHelper(applicationModel, prefabFactory, deferrer);
+                    return new CoinBattleHelper(prefabFactory, deferrer);
 
                 case GameMode.SideQuest:
-                    return new SideQuestHelper(applicationModel, prefabFactory, deferrer);
+                    return new SideQuestHelper(prefabFactory, deferrer);
 
                 default:
-                    throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
+                    throw new InvalidOperationException($"Unknow enum value: {ApplicationModel.Mode}");
             }
         }
 
         public void UpdateCamera()
         {
-            if (applicationModel.Mode == GameMode.Tutorial)
+            if (ApplicationModel.Mode == GameMode.Tutorial)
             {
                 return;
             }

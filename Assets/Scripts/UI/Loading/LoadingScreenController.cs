@@ -24,7 +24,6 @@ namespace BattleCruisers.UI.Loading
         private string _defaultLoadingText;
         private string startingText;
         public static LoadingScreenController Instance { get; private set; }
-        public IApplicationModel applicationModel;
         public GameObject logos;
         public Button idButton;
         public GameObject idHighlight;
@@ -35,7 +34,6 @@ namespace BattleCruisers.UI.Loading
         {
             Helper.AssertIsNotNull(root, loadingText);
 
-            applicationModel = ApplicationModelProvider.ApplicationModel;
             string subTitle = String.Empty;
 
             //if player NOT already paid then use Free title
@@ -147,7 +145,7 @@ namespace BattleCruisers.UI.Loading
             idHighlight.SetActive(false);
         }
 
-        private async void DisplayUserID()
+        private void DisplayUserID()
         {
 #if !UNITY_EDITOR
             await System.Threading.Tasks.Task.Delay(10000);

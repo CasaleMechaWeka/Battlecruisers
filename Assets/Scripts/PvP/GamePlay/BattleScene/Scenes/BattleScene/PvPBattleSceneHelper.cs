@@ -25,7 +25,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
     public abstract class PvPBattleSceneHelper : IPvPBattleSceneHelper
     {
-        protected readonly IApplicationModel _appModel;
         protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
 
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
@@ -68,10 +67,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             "Yeti"
         };
 
-        protected PvPBattleSceneHelper(
-            IApplicationModel appModel)
+        protected PvPBattleSceneHelper()
         {
-            _appModel = appModel;
             _backgroundStatsProvider = new BackgroundStatsProvider();
             // DataProvider.GameModel.PlayerLoadout.Hull.PrefabPat
             // PlayerACruiser = new PvPHullKey("PvPYeti");

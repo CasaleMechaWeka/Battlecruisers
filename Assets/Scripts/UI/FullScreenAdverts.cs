@@ -33,7 +33,6 @@ public class FullScreenAdverts : MonoBehaviour
 
     void StartPlatformSpecficAds()
     {
-        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
         settingsManager = DataProvider.SettingsManager;
 #if THIRD_PARTY_PUBLISHER
         gameObject.SetActive(false);

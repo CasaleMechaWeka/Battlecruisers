@@ -14,14 +14,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
             IMusicPlayer musicPlayer,
             ISingleSoundPlayer soundPlayer)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);
 
-            appModel.Mode = GameMode.Campaign;
+            ApplicationModel.Mode = GameMode.Campaign;
             postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(TUTORIAL_TITLE_KEY);
 
             postBattleScreen.title.color = Color.black;

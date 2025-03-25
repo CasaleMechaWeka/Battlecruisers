@@ -82,7 +82,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         public GameObject nukeButton;
-        private IApplicationModel applicationModel;
 
         [SerializeField]
         NetcodeHooks m_NetcodeHooks;
@@ -129,15 +128,14 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, waterSplashVolumeController);
 
             ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-            applicationModel = ApplicationModelProvider.ApplicationModel;
 
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
             // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
             if (sceneNavigator == null)
             {
                 // TEMP  Force level I'm currently testing :)
-                applicationModel.SelectedLevel = defaultLevel;
-                //Debug.Log(applicationModel.SelectedLevel);
+                ApplicationModel.SelectedLevel = defaultLevel;
+                //Debug.Log(ApplicationModel.SelectedLevel);
                 sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
@@ -147,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
 
-            // if (applicationModel.Mode == GameMode.Tutorial)
+            // if (ApplicationModel.Mode == GameMode.Tutorial)
             // {
             //     foreach (GameObject setting in ilegalTutorialSettings)
             //     {
@@ -161,7 +159,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             PrefabFactory prefabFactory = new PrefabFactory(DataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
+            IBattleSceneHelper helper = CreateHelper(prefabFactory, components.Deferrer);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -172,7 +170,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
             factoryProvider = new FactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
-            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, applicationModel, uiManager);
+            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, uiManager);
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
@@ -213,7 +211,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
             ILevel currentLevel = helper.GetLevel();
             string enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
-            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(applicationModel, sceneNavigator);
+            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(sceneNavigator);
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
             LeftPanelComponents leftPanelComponents
@@ -224,7 +222,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     helper.GetPlayerLoadout(),
                     prefabFactory,
                     buttonVisibilityFilters,
-                    new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, applicationModel.IsTutorial),
+                    new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
                     factoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
@@ -232,7 +230,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
             RightPanelComponents rightPanelComponents
                 = rightPanelInitialiser.Initialise(
-                    applicationModel,
                     uiManager,
                     playerCruiser,
                     userChosenTargetHelper,
@@ -293,7 +290,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
-            IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, applicationModel.SelectedLevel);
+            IArtificialIntelligence ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedLevel);
             PrefabContainer<BackgroundImageStats> backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
             await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel.SkyMaterialName);
@@ -408,7 +405,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 #endif
             try
             {
-                AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                 AnalyticsService.Instance.Flush();
             }
             catch (Exception ex)
@@ -421,35 +418,33 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
 
         private IBattleSceneHelper CreateHelper(
-           IApplicationModel applicationModel,
            PrefabFactory prefabFactory,
-           IDeferrer deferrer,
-           NavigationPermitters navigationPermitters)
+           IDeferrer deferrer)
         {
-            switch (applicationModel.Mode)
+            switch (ApplicationModel.Mode)
             {
                 // case GameMode.Tutorial:
-                //     TutorialHelper helper = new TutorialHelper(applicationModel, prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
+                //     TutorialHelper helper = new TutorialHelper(prefabFetcher, storyStrings, prefabFactory, navigationPermitters);
                 //     _tutorialProvider = helper;
                 //     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(applicationModel, prefabFactory, deferrer);
+                    return new NormalHelper(prefabFactory, deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(applicationModel, prefabFactory, deferrer);
+                    return new SkirmishHelper(prefabFactory, deferrer);
                 // case GameMode.PvP_1VS1:
                 //     return;
 
                 default:
-                    throw new InvalidOperationException($"Unknow enum value: {applicationModel.Mode}");
+                    throw new InvalidOperationException($"Unknow enum value: {ApplicationModel.Mode}");
             }
         }
 
 
         public void UpdateCamera()
         {
-            if (applicationModel.Mode == GameMode.Tutorial)
+            if (ApplicationModel.Mode == GameMode.Tutorial)
             {
                 return;
             }

@@ -16,8 +16,7 @@ namespace BattleCruisers.Cruisers
 
         public override void Initialise(ICruiserArgs args)
         {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            if (applicationModel.SelectedLevel is 33 or 40) //This is where UltraCruiser Level is designated
+            if (ApplicationModel.SelectedLevel is 33 or 40) //This is where UltraCruiser Level is designated
             {
                 SetUltraCruiserHealth(args);
                 shieldRechargeRateBoost = SetUltraCruiserUtility(args, shieldRechargeRateBoost);

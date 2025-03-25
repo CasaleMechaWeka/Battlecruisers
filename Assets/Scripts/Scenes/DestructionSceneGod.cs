@@ -21,7 +21,6 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private Text screenTitle;
 
-        private IApplicationModel applicationModel;
         private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
@@ -131,7 +130,6 @@ namespace BattleCruisers.Scenes
             if (_sceneNavigator != null)
             {
                 LandingSceneGod.MusicPlayer.PlayVictoryMusic();
-                applicationModel = ApplicationModelProvider.ApplicationModel;
 
                 _soundPlayer
                     = new SingleSoundPlayer(
@@ -248,17 +246,17 @@ namespace BattleCruisers.Scenes
 
             if (LandingSceneGod.Instance.coinBattleLevelNum == -2)
             {
-                applicationModel.Mode = GameMode.CoinBattle;
+                ApplicationModel.Mode = GameMode.CoinBattle;
                 LandingSceneGod.Instance.coinBattleLevelNum = -1;
             }
 
             // Campaign specific reward handling; only reward on first completion:
-            if (applicationModel.Mode == GameMode.Campaign && DataProvider.GameModel.SelectedLevel == DataProvider.GameModel.NumOfLevelsCompleted + 1)
+            if (ApplicationModel.Mode == GameMode.Campaign && DataProvider.GameModel.SelectedLevel == DataProvider.GameModel.NumOfLevelsCompleted + 1)
             {
                 CalculateRewards();
             }
             // Everything else:
-            else if (applicationModel.Mode != GameMode.Skirmish && applicationModel.Mode != GameMode.Campaign)
+            else if (ApplicationModel.Mode != GameMode.Skirmish && ApplicationModel.Mode != GameMode.Campaign)
             {
                 CalculateRewards();
             }
@@ -446,7 +444,7 @@ namespace BattleCruisers.Scenes
             skipButton.gameObject.SetActive(false);
 
             // Award any rewards:
-            if (applicationModel != null && applicationModel.Mode != GameMode.Skirmish)
+            if (ApplicationModel.Mode != GameMode.Skirmish)
             {
                 if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
                 {
@@ -661,7 +659,7 @@ namespace BattleCruisers.Scenes
         {
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
-            if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
+            if (ApplicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
                 DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;

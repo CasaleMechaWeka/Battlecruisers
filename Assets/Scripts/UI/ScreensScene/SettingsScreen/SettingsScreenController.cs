@@ -153,8 +153,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             ShowTab(); //Hotkeys tab - only show for keyboard devices
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
             idButton.Initialise(soundPlayer, CopyID, this);
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
             iapRefreshButton.gameObject.SetActive(true);

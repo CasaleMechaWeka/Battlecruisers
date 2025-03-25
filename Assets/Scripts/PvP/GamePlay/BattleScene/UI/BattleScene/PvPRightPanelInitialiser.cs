@@ -36,7 +36,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPHecklePanelController heckleController;
 
         public PvPRightPanelComponents Initialise(
-            IApplicationModel applicationModel,
             IPvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
@@ -50,7 +49,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             PvPHelper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
             PvPHelper.AssertIsNotNull(
-                applicationModel,
                 uiManager,
                 playerCruiser,
                 userChosenTargetHelper,
@@ -66,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             uiManager.SetHecklePanel(heckleController);
             //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = new PvPMainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
-            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, DataProvider.SettingsManager);
+            modalMenu.Initialise(soundPlayer, ApplicationModel.IsTutorial, mainMenuManager, DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
             MakeRightBackgroundPanelFit();
             return

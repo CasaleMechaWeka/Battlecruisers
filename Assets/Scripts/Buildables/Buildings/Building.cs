@@ -107,7 +107,7 @@ namespace BattleCruisers.Buildables.Buildings
             else if (!ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set variant for AI
-                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                if (ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
                 {
                     ApplyRandomeVariantToAI(this);
                     isAppliedVariant = true;
@@ -166,7 +166,6 @@ namespace BattleCruisers.Buildables.Buildings
 
         public void ApplyVariantToPlayer(IBuilding building)
         {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
             VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
 
             if (variant != null)

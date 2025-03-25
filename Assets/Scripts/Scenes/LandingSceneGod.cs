@@ -149,8 +149,6 @@ namespace BattleCruisers.Scenes
             _ = LocTableCache.LoadTableAsync(TableName.HECKLES);
             _ = LocTableCache.LoadTableAsync(TableName.SCREENS_SCENE);
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
             bool startingState = await CheckForInternetConnection();
 
             if (startingState)
@@ -739,11 +737,11 @@ namespace BattleCruisers.Scenes
         {
             string hint = null;
             if (sceneName == SceneNames.BATTLE_SCENE
-                && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+                && !ApplicationModel.IsTutorial)
             {
                 hint = _hintProvider.GetHint();
             }
-            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModel.IsTutorial)
             {
                 // should be replace with PvP
                 hint = _hintProvider.GetHint();

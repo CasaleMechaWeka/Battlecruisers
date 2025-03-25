@@ -27,7 +27,7 @@ namespace BattleCruisers.Tutorial
             Helper.AssertIsNotNull(tutorialManager, explanationPanel, highlighterInitialiser, modalMainMenuButton);
             Helper.AssertIsNotNull(baseArgs, playerCruiserDamageMonitor);
 
-            if (!baseArgs.AppModel.IsTutorial
+            if (!ApplicationModel.IsTutorial
                 && !showInGameHints)
             {
                 Destroy(gameObject);
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tutorial
                     explanationPanel,
                     new HeightDecider());
 
-            if (baseArgs.AppModel.IsTutorial)
+            if (ApplicationModel.IsTutorial)
             {
                 DataProvider.GameModel.HasAttemptedTutorial = true;
                 DataProvider.SaveGame();

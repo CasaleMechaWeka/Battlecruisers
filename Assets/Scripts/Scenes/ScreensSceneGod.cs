@@ -46,7 +46,6 @@ namespace BattleCruisers.Scenes
     {
         public PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
-        private IApplicationModel _applicationModel;
         private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
@@ -127,7 +126,6 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             DestroyAllNetworkObjects();
-            _applicationModel = ApplicationModelProvider.ApplicationModel;
             _gameModel = DataProvider.GameModel;
             //components = GetComponent<ScreensSceneGodCompoments>();
 
@@ -312,7 +310,7 @@ namespace BattleCruisers.Scenes
             processingPanel.SetActive(false);
 
             processingPanel.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("Processing");
-            Debug.Log(_applicationModel.Mode);
+            Debug.Log(ApplicationModel.Mode);
 
             DataProvider.GameModel.ID_Bodykit_AIbot = -1;
 
@@ -326,30 +324,30 @@ namespace BattleCruisers.Scenes
             {
                 _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
                 //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
-                _applicationModel.ShowPostBattleScreen = true;
-                //_applicationModel.IsTutorial = true;
+                ApplicationModel.ShowPostBattleScreen = true;
+                //ApplicationModel.IsTutorial = true;
             }
 
             ShowCharlieOnMainMenu();
 
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _applicationModel);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            trashScreen.Initialise(this, _soundPlayer, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
             Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
             if (captainsCamera != null)
             {
                 trashScreen.SetCamera(captainsCamera);
             }
             chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, _prefabFactory);
+            skirmishScreen.Initialise(this, _soundPlayer, _prefabFactory);
             shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory);
             captainSelectorPanel.Initialize(_soundPlayer, _prefabFactory);
 
             DataProvider.SaveGame();
 
-            if (_applicationModel.ShowPostBattleScreen)
+            if (ApplicationModel.ShowPostBattleScreen)
             {
-                _applicationModel.ShowPostBattleScreen = false;
+                ApplicationModel.ShowPostBattleScreen = false;
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync();
 #if !THIRD_PARTY_PUBLISHER
@@ -357,10 +355,10 @@ namespace BattleCruisers.Scenes
 #endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
-            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            else if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
-                _applicationModel.ShowPostBattleScreen = false;
-                //_applicationModel.Mode = GameMode.Campaign;
+                ApplicationModel.ShowPostBattleScreen = false;
+                //ApplicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
                 //PlayAdvertisementMusic();
                 //fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
@@ -370,10 +368,10 @@ namespace BattleCruisers.Scenes
                 else
                     GoToTrashScreen(LandingSceneGod.Instance.coinBattleLevelNum);
             }
-            else if (_applicationModel.Mode == GameMode.PvP_1VS1)
+            else if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
-                _applicationModel.ShowPostBattleScreen = false;
-                //_applicationModel.Mode = GameMode.Campaign;
+                ApplicationModel.ShowPostBattleScreen = false;
+                //ApplicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
@@ -464,9 +462,9 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
             //--->CODE CHANGED BY ANUJ
-            if (_applicationModel.Mode == GameMode.PvP_1VS1)
+            if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
             }
@@ -623,13 +621,13 @@ namespace BattleCruisers.Scenes
         public void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {ApplicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(levelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-            _applicationModel.SelectedLevel = levelNum;
+            ApplicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign)
+            if (ApplicationModel.Mode == GameMode.Campaign)
             {
                 if (LevelStages.STAGE_STARTS.Contains(levelNum - 1) && levelToShowCutscene != levelNum)
                 {
@@ -649,7 +647,7 @@ namespace BattleCruisers.Scenes
                     //_musicPlayer.PlayTrashMusic();
                 }
             }
-            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            else if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
@@ -733,14 +731,14 @@ namespace BattleCruisers.Scenes
         public void GoStraightToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {ApplicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
                 levelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
                 "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-            _applicationModel.SelectedLevel = levelNum;
+            ApplicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign || _applicationModel.Mode == GameMode.CoinBattle)
+            if (ApplicationModel.Mode == GameMode.Campaign || ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
                 GoToScreen(trashScreen, playDefaultMusic: false);
@@ -757,10 +755,10 @@ namespace BattleCruisers.Scenes
             // Implementation similar to GoToTrashScreen method, but for side quest levels
             AdvertisingBanner.stopAdvert();
             if (firstLevelOfStage > -1)
-                _applicationModel.SelectedLevel = firstLevelOfStage + 1;
-            _applicationModel.Mode = GameMode.SideQuest;
+                ApplicationModel.SelectedLevel = firstLevelOfStage + 1;
+            ApplicationModel.Mode = GameMode.SideQuest;
 
-            _applicationModel.SelectedSideQuestID = sideQuestLevelNum;
+            ApplicationModel.SelectedSideQuestID = sideQuestLevelNum;
             levelToShowCutscene = 0;
             DataProvider.GameModel.ID_Bodykit_AIbot = -1;
             DataProvider.SaveGame();
@@ -804,8 +802,8 @@ namespace BattleCruisers.Scenes
 
         public void LoadBattleSceneSideQuest(int sideQuestID)
         {
-            _applicationModel.SelectedSideQuestID = sideQuestID;
-            _applicationModel.Mode = GameMode.SideQuest;
+            ApplicationModel.SelectedSideQuestID = sideQuestID;
+            ApplicationModel.Mode = GameMode.SideQuest;
             AdvertisingBanner.stopAdvert();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();

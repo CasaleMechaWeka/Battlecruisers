@@ -32,7 +32,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
     public class SkirmishScreenController : ScreenController
     {
-        private IApplicationModel _applicationModel;
         private IList<HullKey> _unlockedHulls;
         private List<HullKey> _playableHulls;   //these also include the boss hulls
         private IRandomGenerator _random;
@@ -48,16 +47,14 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, playerCruiserDropdown, aiCruiserDropdown);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer, prefabFactory);
+            Helper.AssertIsNotNull(soundPlayer, prefabFactory);
 
-            _applicationModel = applicationModel;
             _unlockedHulls = DataProvider.GameModel.UnlockedHulls.ToList();
             _playableHulls = _unlockedHulls.ToList();
 
@@ -160,7 +157,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public void Battle()
         {
-            _applicationModel.Mode = GameMode.Skirmish;
+            ApplicationModel.Mode = GameMode.Skirmish;
             SaveSkirmishSettings();
             Logging.Log(Tags.SKIRMISH_SCREEN, Skirmish);
             _screensSceneGod.LoadBattleScene();

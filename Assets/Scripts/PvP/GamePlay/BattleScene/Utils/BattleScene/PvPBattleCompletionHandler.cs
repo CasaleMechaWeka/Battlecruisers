@@ -20,7 +20,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPBattleCompletionHandler : IPvPBattleCompletionHandler
     {
-        private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
         public static bool _isCompleted = false;
 
@@ -31,11 +30,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public float registeredTime { get; set; }
         private const int POST_GAME_WAIT_TIME_IN_S = 10 * 1000;
         public PvPBattleCompletionHandler(
-            IApplicationModel applicationModel,
             ISceneNavigator sceneNavigator)
         {
-            PvPHelper.AssertIsNotNull(applicationModel, sceneNavigator);
-            _applicationModel = applicationModel;
+            PvPHelper.AssertIsNotNull(sceneNavigator);
             _sceneNavigator = sceneNavigator;
 
             _isCompleted = false;
@@ -91,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DataProvider.SaveGame();
 
             //--->CODE CHANGED BY ANUJ
-            //_applicationModel.ShowPostBattleScreen = true;
+            //ApplicationModel.ShowPostBattleScreen = true;
             //<---
             TimeBC.Instance.TimeScale = 1;
             if (wasVictory)
@@ -220,7 +217,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPBattleSceneGodClient.Instance.OnTunnelBattleCompleted_ValueChanged();
 
             //--->CODE CHANGED BY ANUJ
-            //_applicationModel.ShowPostBattleScreen = true;
+            //ApplicationModel.ShowPostBattleScreen = true;
             //<---
             TimeBC.Instance.TimeScale = 1;
             await Task.Delay(POST_GAME_WAIT_TIME_IN_S);

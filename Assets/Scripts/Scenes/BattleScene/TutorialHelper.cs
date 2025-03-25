@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -52,10 +51,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(
-            IApplicationModel appModel,
             PrefabFactory prefabFactory,
             NavigationPermitters navigationPermitters)
-            : base(appModel)
+            : base()
         {
             Assert.IsNotNull(prefabFactory);
 

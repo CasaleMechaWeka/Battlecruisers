@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.UI.BattleScene.Navigation;
+﻿using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using System;
@@ -59,8 +58,6 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
         }
 
         public void ShowSettings()
