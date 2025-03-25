@@ -18,7 +18,6 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System;
@@ -100,10 +99,9 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
+            await PrefabCache.CreatePrefabCacheAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _applicationModel = ApplicationModelProvider.ApplicationModel;
@@ -117,7 +115,7 @@ namespace BattleCruisers.Scenes
                         new AudioSourceBC(_uiAudioSource),
                         _dataProvider.SettingsManager, 1));
 
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory(_dataProvider.SettingsManager);
             levelTrashDataList.Initialise();
             sideQuestTrashDataList.Initialise();
 

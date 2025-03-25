@@ -25,20 +25,18 @@ namespace BattleCruisers.Utils.Fetchers
 {
     public class PrefabFactory
     {
-        private readonly PrefabCache _prefabCache;
         private readonly ISettingsManager _settingsManager;
 
-        public PrefabFactory(PrefabCache prefabCache, ISettingsManager settingsManager)
+        public PrefabFactory(ISettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(prefabCache, settingsManager);
+            Helper.AssertIsNotNull(settingsManager);
 
-            _prefabCache = prefabCache;
             _settingsManager = settingsManager;
         }
 
         public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
-            return _prefabCache.GetBuilding(buildingKey);
+            return PrefabCache.GetBuilding(buildingKey);
         }
 
         public IBuilding CreateBuilding(
@@ -51,7 +49,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
         {
-            return _prefabCache.GetUnit(unitKey);
+            return PrefabCache.GetUnit(unitKey);
         }
 
         public IUnit CreateUnit(
@@ -80,7 +78,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
         {
-            return _prefabCache.GetCruiser(hullKey);
+            return PrefabCache.GetCruiser(hullKey);
         }
 
         public Cruiser CreateCruiser(Cruiser cruiserPrefab)
@@ -92,14 +90,14 @@ namespace BattleCruisers.Utils.Fetchers
 
         public IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey)
         {
-            ExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
+            ExplosionController explosionPrefab = PrefabCache.GetExplosion(explosionKey);
             ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             return newExplosion.Initialise();
         }
 
         public IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)
         {
-            ShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
+            ShipDeathInitialiser shipDeathPrefab = PrefabCache.GetShipDeath(shipDeathKey);
             ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             return newShipDeath.CreateShipDeath();
         }
@@ -111,15 +109,15 @@ namespace BattleCruisers.Utils.Fetchers
         {
             Assert.IsNotNull(factoryProvider);
 
-            TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
-            TProjectile projectile = Object.Instantiate(prefab);
+            Prefab prefab = PrefabCache.GetProjectile(prefabKey);
+            TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.Initialise(factoryProvider);
             return projectile;
         }
 
         public IDroneController CreateDrone()
         {
-            DroneController newDrone = Object.Instantiate(_prefabCache.Drone);
+            DroneController newDrone = Object.Instantiate(PrefabCache.Drone);
             newDrone.StaticInitialise();
             return newDrone;
         }
@@ -128,23 +126,23 @@ namespace BattleCruisers.Utils.Fetchers
         {
             Assert.IsNotNull(realTimeDeferrer);
 
-            AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
+            AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PrefabCache.AudioSource);
             return audioSourceInitialiser.Initialise(realTimeDeferrer, _settingsManager);
         }
 
         public CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
         {
-            return _prefabCache.GetCaptainExo(captainExoKey);
+            return PrefabCache.GetCaptainExo(captainExoKey);
         }
 
         public Bodykit GetBodykit(IPrefabKey bodykitKey)
         {
-            return _prefabCache.GetBodykit(bodykitKey);
+            return PrefabCache.GetBodykit(bodykitKey);
         }
 
         public VariantPrefab GetVariant(IPrefabKey variantKey)
         {
-            return _prefabCache.GetVariant(variantKey);
+            return PrefabCache.GetVariant(variantKey);
         }
     }
 }

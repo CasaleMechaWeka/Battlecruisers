@@ -113,7 +113,6 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
-        PrefabCache _prefabCache;
         [SerializeField]
         private Sprite[] difficultyIndicators;
 
@@ -136,11 +135,8 @@ namespace BattleCruisers.Scenes
 
             _ = LocTableCache.LoadTableAsync(TableName.STORY);
 
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            Task<PrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
+            Task loadPrefabCache = PrefabCache.CreatePrefabCacheAsync();
 
             premiumEditionButton.gameObject.SetActive(false);
 
@@ -322,9 +318,9 @@ namespace BattleCruisers.Scenes
 
             _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
 
-            _prefabCache = await loadPrefabCache;
+            await loadPrefabCache;
 
-            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory(_dataProvider.SettingsManager);
             _isPlaying = false;
 
             // TEMP  For showing PostBattleScreen :)

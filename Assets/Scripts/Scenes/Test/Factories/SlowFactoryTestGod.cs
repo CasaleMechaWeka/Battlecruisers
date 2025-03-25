@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Factories
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: 5, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(buildSpeedMultiplier: 5, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()

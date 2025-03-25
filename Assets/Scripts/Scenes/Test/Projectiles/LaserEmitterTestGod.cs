@@ -18,46 +18,46 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 {
     public class LaserStats
     {
-		public LaserEmitter Laser { get; }
-		public float AngleInDegrees { get; }
-		public bool IsSourceMirrored { get; }
+        public LaserEmitter Laser { get; }
+        public float AngleInDegrees { get; }
+        public bool IsSourceMirrored { get; }
 
-		public LaserStats(LaserEmitter laser, float angleInDegrees, bool isSourceMirrored)
-		{
-			Laser = laser;
-			AngleInDegrees = angleInDegrees;
-			IsSourceMirrored = isSourceMirrored;
-		}
+        public LaserStats(LaserEmitter laser, float angleInDegrees, bool isSourceMirrored)
+        {
+            Laser = laser;
+            AngleInDegrees = angleInDegrees;
+            IsSourceMirrored = isSourceMirrored;
+        }
     }
 
     public class LaserTest<T> where T : class, IBuildable
-	{
+    {
         public LaserStats LaserStats { get; }
-		public T Target { get; }
+        public T Target { get; }
 
-		public LaserTest(LaserEmitter laser, T target, float angleInDegrees, bool isSourceMirrored)
-		{
+        public LaserTest(LaserEmitter laser, T target, float angleInDegrees, bool isSourceMirrored)
+        {
             LaserStats = new LaserStats(laser, angleInDegrees, isSourceMirrored);
-			Target = target;
-		}
-	}
+            Target = target;
+        }
+    }
 
-	public class LaserEmitterTestGod : TestGodBase
-	{
-		private Faction _enemyFaction;
+    public class LaserEmitterTestGod : TestGodBase
+    {
+        private Faction _enemyFaction;
         private IList<LaserTest<IBuilding>> _stationaryTargets;
         private IList<LaserTest<IUnit>> _movingTargets;
 
-		public Building targetRightLevel, targetRightLevelBlockingEnemy, targetRightLevelBlockingFriendly, targetLeftLevel, targetLeftAngled, targetRightAngled;
-		public TestAircraftController targetRightMoving, targetMovingLeft;
-		public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving, laserEmitterRightMoving;
+        public Building targetRightLevel, targetRightLevelBlockingEnemy, targetRightLevelBlockingFriendly, targetLeftLevel, targetLeftAngled, targetRightAngled;
+        public TestAircraftController targetRightMoving, targetMovingLeft;
+        public LaserEmitter laserEmitterRightLevel, laserEmitterLeftLevel, laserEmitterRightAngled, laserEmitterLeftAngled, laserEmitterLeftMoving, laserEmitterRightMoving;
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(timeScaleDeferrer);
 
-            return await HelperFactory.CreateHelperAsync(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
+            return HelperFactory.CreateHelper(updaterProvider: _updaterProvider, deferrer: timeScaleDeferrer);
         }
 
         protected override List<GameObject> GetGameObjects()
@@ -77,11 +77,11 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 
         protected override async Task SetupAsync(Helper helper)
         {
-			_enemyFaction = Faction.Blues;
-			Faction friendlyFaction = Faction.Reds;
+            _enemyFaction = Faction.Blues;
+            Faction friendlyFaction = Faction.Reds;
 
-			// Stationary targets
-			_stationaryTargets = CreateStationaryTargetTests();
+            // Stationary targets
+            _stationaryTargets = CreateStationaryTargetTests();
             foreach (LaserTest<IBuilding> test in _stationaryTargets)
             {
                 helper.InitialiseBuilding(test.Target, _enemyFaction);
@@ -93,33 +93,33 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             // Moving targets
             _movingTargets = CreateMovingTargetTests();
 
-			foreach (LaserTest<IUnit> test in _movingTargets)
-			{
+            foreach (LaserTest<IUnit> test in _movingTargets)
+            {
                 helper.InitialiseUnit(test.Target, _enemyFaction);
                 test.Target.StartConstruction();
 
                 await SetupLaserAsync(test.LaserStats.Laser, helper.Deferrer);
-			}
+            }
 
-			// Blocking targets
-			helper.InitialiseBuilding(targetRightLevelBlockingEnemy, _enemyFaction);
-			targetRightLevelBlockingEnemy.StartConstruction();
+            // Blocking targets
+            helper.InitialiseBuilding(targetRightLevelBlockingEnemy, _enemyFaction);
+            targetRightLevelBlockingEnemy.StartConstruction();
 
-			helper.InitialiseBuilding(targetRightLevelBlockingFriendly, friendlyFaction);
-			targetRightLevelBlockingFriendly.StartConstruction();
+            helper.InitialiseBuilding(targetRightLevelBlockingFriendly, friendlyFaction);
+            targetRightLevelBlockingFriendly.StartConstruction();
 
 
             _updaterProvider.BarrelControllerUpdater.Updated += BarrelControllerUpdater_Updated;
-		}
+        }
 
         private IList<LaserTest<IBuilding>> CreateStationaryTargetTests()
         {
             IList<LaserTest<IBuilding>> stationaryTargets = new List<LaserTest<IBuilding>>();
 
-			stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
-			stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
-			stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
-			stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
+            stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterLeftLevel, targetRightLevel, angleInDegrees: 0, isSourceMirrored: false));
+            stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterRightLevel, targetLeftLevel, angleInDegrees: 0, isSourceMirrored: true));
+            stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterRightAngled, targetLeftAngled, angleInDegrees: 45, isSourceMirrored: true));
+            stationaryTargets.Add(new LaserTest<IBuilding>(laserEmitterLeftAngled, targetRightAngled, angleInDegrees: 45, isSourceMirrored: false));
 
             return stationaryTargets;
         }
@@ -128,11 +128,11 @@ namespace BattleCruisers.Scenes.Test.Projectiles
         {
             IList<LaserTest<IUnit>> movingTargets = new List<LaserTest<IUnit>>();
 
-			movingTargets.Add(new LaserTest<IUnit>(laserEmitterLeftMoving, targetRightMoving, angleInDegrees: 0, isSourceMirrored: false));
-			SetupMovingTarget(targetRightMoving, isSourceMirrored: false);
+            movingTargets.Add(new LaserTest<IUnit>(laserEmitterLeftMoving, targetRightMoving, angleInDegrees: 0, isSourceMirrored: false));
+            SetupMovingTarget(targetRightMoving, isSourceMirrored: false);
 
-			movingTargets.Add(new LaserTest<IUnit>(laserEmitterRightMoving, targetMovingLeft, angleInDegrees: 0, isSourceMirrored: true));
-			SetupMovingTarget(targetMovingLeft, isSourceMirrored: true);
+            movingTargets.Add(new LaserTest<IUnit>(laserEmitterRightMoving, targetMovingLeft, angleInDegrees: 0, isSourceMirrored: true));
+            SetupMovingTarget(targetMovingLeft, isSourceMirrored: true);
 
             return movingTargets;
         }
@@ -144,24 +144,24 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             ITarget parent = Substitute.For<ITarget>();
             await laserEmitter
                 .InitialiseAsync(
-                    targetFilter, 
-                    damagePerS: 100, 
-                    parent: parent, 
+                    targetFilter,
+                    damagePerS: 100,
+                    parent: parent,
                     settingsManager: ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager,
                     deltaTimeProvider: _updaterProvider.BarrelControllerUpdater,
                     timeScaleDeferrer: timeScaleDeferrer);
         }
 
         private void SetupMovingTarget(TestAircraftController movingTarget, bool isSourceMirrored)
-		{
+        {
             // Pretend to be cruiser so laser will attack aircraft
-			movingTarget.SetTargetType(TargetType.Cruiser);
-			movingTarget.PatrolPoints = new List<Vector2>() 
-			{
-				movingTarget.Position,
-				new Vector2(movingTarget.Position.x + (isSourceMirrored ? -2 : 2), movingTarget.Position.y)
-			};
-		}
+            movingTarget.SetTargetType(TargetType.Cruiser);
+            movingTarget.PatrolPoints = new List<Vector2>()
+            {
+                movingTarget.Position,
+                new Vector2(movingTarget.Position.x + (isSourceMirrored ? -2 : 2), movingTarget.Position.y)
+            };
+        }
 
 
         private void BarrelControllerUpdater_Updated(object sender, EventArgs e)
@@ -172,9 +172,9 @@ namespace BattleCruisers.Scenes.Test.Projectiles
             }
 
             foreach (LaserTest<IUnit> test in _movingTargets)
-			{
-				FireOrCease(test.LaserStats, test.Target);
-			}
+            {
+                FireOrCease(test.LaserStats, test.Target);
+            }
         }
 
         private static void FireOrCease(LaserStats stats, IBuildable target)

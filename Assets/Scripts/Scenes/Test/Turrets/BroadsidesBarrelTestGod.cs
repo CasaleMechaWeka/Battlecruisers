@@ -22,7 +22,7 @@ namespace BattleCruisers.Scenes.Test
             IDeferrer deferrer = GetComponent<IDeferrer>();
             Assert.IsNotNull(deferrer);
 
-            return await HelperFactory.CreateHelperAsync(deferrer: deferrer, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(deferrer: deferrer, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()

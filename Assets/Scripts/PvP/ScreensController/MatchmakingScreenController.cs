@@ -19,7 +19,6 @@ using System;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
@@ -182,11 +181,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             _applicationModel = ApplicationModelProvider.ApplicationModel;
             _dataProvider = _applicationModel.DataProvider;
             _gameModel = _dataProvider.GameModel;
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
-            _prefabFactory = new PrefabFactory(prefabCache, _dataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory(_dataProvider.SettingsManager);
             //    leftCruiserName.text = dataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = dataProvider.GameModel.PlayerName;
             int rank = CalculateRank(dataProvider.GameModel.LifetimeDestructionScore);

@@ -26,7 +26,6 @@ using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -153,9 +152,7 @@ namespace BattleCruisers.Scenes.BattleScene
             waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
-            PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager);
+            PrefabFactory prefabFactory = new PrefabFactory(dataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);

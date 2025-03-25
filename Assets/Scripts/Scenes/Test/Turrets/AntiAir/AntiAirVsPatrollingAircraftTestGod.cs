@@ -11,28 +11,28 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-    public class AntiAirVsPatrollingAircraftTestGod : TestGodBase 
-	{
-		private TurretController _turret;
-		private TestAircraftController[] _aircraft;
+    public class AntiAirVsPatrollingAircraftTestGod : TestGodBase
+    {
+        private TurretController _turret;
+        private TestAircraftController[] _aircraft;
 
-		public Vector2[] aircraftPatrolPoints;
+        public Vector2[] aircraftPatrolPoints;
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(timeScaleDeferrer);
 
-            return await HelperFactory.CreateHelperAsync(deferrer: timeScaleDeferrer, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(deferrer: timeScaleDeferrer, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()
         {
-			_aircraft = FindObjectsOfType<TestAircraftController>();
-			Assert.IsTrue(_aircraft.Length > 0);
+            _aircraft = FindObjectsOfType<TestAircraftController>();
+            Assert.IsTrue(_aircraft.Length > 0);
 
             _turret = FindObjectOfType<TurretController>();
-			Assert.IsNotNull(_turret);
+            Assert.IsNotNull(_turret);
 
             List<GameObject> gameObjects
                 = _aircraft
@@ -46,19 +46,19 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
         {
             // Setup turret
             helper.InitialiseBuilding(_turret, faction: Faction.Reds);
-			_turret.StartConstruction();
+            _turret.StartConstruction();
 
-			InitialisePlanes(helper, _aircraft, Faction.Blues);
-		}
+            InitialisePlanes(helper, _aircraft, Faction.Blues);
+        }
 
-		private void InitialisePlanes(Helper helper, IList<TestAircraftController> planes, Faction faction)
-		{
-			foreach (TestAircraftController plane in planes)
-			{
-				plane.PatrolPoints = aircraftPatrolPoints;
+        private void InitialisePlanes(Helper helper, IList<TestAircraftController> planes, Faction faction)
+        {
+            foreach (TestAircraftController plane in planes)
+            {
+                plane.PatrolPoints = aircraftPatrolPoints;
                 helper.InitialiseUnit(plane, faction);
-				plane.StartConstruction();
-			}
-		}
-	}
+                plane.StartConstruction();
+            }
+        }
+    }
 }

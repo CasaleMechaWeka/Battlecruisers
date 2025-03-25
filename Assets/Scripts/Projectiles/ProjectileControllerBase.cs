@@ -17,7 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public abstract class ProjectileControllerBase<TActivationArgs, TStats> : Projectile,
+    public abstract class ProjectileControllerBase<TActivationArgs, TStats> : Prefab,
         IRemovable,
         IPoolable<TActivationArgs>
             where TActivationArgs : ProjectileActivationArgs<TStats>

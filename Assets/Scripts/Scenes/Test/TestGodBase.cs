@@ -57,7 +57,7 @@ namespace BattleCruisers.Scenes.Test
             IDeferrer realTimeDeferrer = GetComponent<RealTimeDeferrer>();
 
             return
-                await HelperFactory.CreateHelperAsync(
+                HelperFactory.CreateHelper(
                     updaterProvider: updaterProvider,
                     deferrer: deferrer,
                     realTimeDeferrer: realTimeDeferrer,

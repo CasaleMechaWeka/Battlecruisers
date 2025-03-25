@@ -161,9 +161,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             waterSplashVolumeController.Initialise(dataProvider.SettingsManager);
 
             // Common setup
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
-            PrefabFactory prefabFactory = new PrefabFactory(prefabCache, dataProvider.SettingsManager);
+            PrefabFactory prefabFactory = new PrefabFactory(dataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(applicationModel, prefabFactory, components.Deferrer, navigationPermitters);
