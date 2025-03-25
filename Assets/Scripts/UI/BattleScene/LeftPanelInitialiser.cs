@@ -94,7 +94,7 @@ namespace BattleCruisers.UI.BattleScene
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
             IBuildableSorterFactory sorterFactory
-                = new BuildableSorterFactory(new BuildableKeyFactory());
+                = new BuildableSorterFactory();
 
             return
                 buildMenuInitialiser.Initialise(

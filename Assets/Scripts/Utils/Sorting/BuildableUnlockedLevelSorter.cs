@@ -1,16 +1,9 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
-
-namespace BattleCruisers.Utils.Sorting
+﻿namespace BattleCruisers.Utils.Sorting
 {
     public abstract class BuildableUnlockedLevelSorter
     {
-        protected readonly BuildableKeyFactory _keyFactory;
-
-        protected BuildableUnlockedLevelSorter(BuildableKeyFactory keyFactory)
+        protected BuildableUnlockedLevelSorter()
         {
-            Helper.AssertIsNotNull(keyFactory);
-
-            _keyFactory = keyFactory;
         }
     }
 }
