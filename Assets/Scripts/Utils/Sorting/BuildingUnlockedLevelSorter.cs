@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BattleCruisers.Utils.Sorting
 {
-    public class BuildingUnlockedLevelSorter : BuildableUnlockedLevelSorter, IBuildableSorter<IBuilding>
+    public class BuildingUnlockedLevelSorter : IBuildableSorter<IBuilding>
     {
         public BuildingUnlockedLevelSorter()
             : base() { }

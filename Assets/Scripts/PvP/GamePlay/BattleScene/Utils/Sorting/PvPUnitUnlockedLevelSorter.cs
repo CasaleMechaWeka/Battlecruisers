@@ -8,7 +8,7 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting
 {
-    public class PvPUnitUnlockedLevelSorter : PvPBuildableUnlockedLevelSorter, IPvPBuildableSorter<IPvPUnit>
+    public class PvPUnitUnlockedLevelSorter : IPvPBuildableSorter<IPvPUnit>
     {
         public PvPUnitUnlockedLevelSorter()
             : base() { }
