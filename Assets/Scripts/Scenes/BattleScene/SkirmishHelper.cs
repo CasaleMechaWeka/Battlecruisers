@@ -35,7 +35,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public override ILevel GetLevel()
         {
             int levelNum = 1;  // Unused for skirmish
-            ILevel backgroundLevel = _appModel.DataProvider.GetLevel(_skirmish.BackgroundLevelNum);
+            ILevel backgroundLevel = StaticData.Levels[_skirmish.BackgroundLevelNum];
 
             return
                 new Level(

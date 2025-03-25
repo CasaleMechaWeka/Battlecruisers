@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -61,12 +62,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual ILevel GetLevel()
         {
-            return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
+            return StaticData.Levels[_appModel.SelectedLevel];
         }
 
         public virtual ISideQuestData GetSideQuest()
         {
-            return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID);
+            return StaticData.SideQuests[_appModel.SelectedSideQuestID];
         }
 
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
@@ -112,9 +113,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public virtual IPrefabKey GetAiCruiserKey()
         {
             if (_appModel.Mode == GameMode.SideQuest)
-                return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID).Hull;
+                return StaticData.SideQuests[_appModel.SelectedSideQuestID].Hull;
             else
-                return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
+                return StaticData.Levels[_appModel.SelectedLevel].Hull;
         }
     }
 }

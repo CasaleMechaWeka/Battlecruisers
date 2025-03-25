@@ -19,6 +19,7 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -83,7 +84,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public virtual IPvPLevel GetPvPLevel()
         {
             /*#if UNITY_EDITOR*/
-            return _appModel.DataProvider.GetPvPLevel((Map)_appModel.DataProvider.GameModel.GameMap);
+            return StaticData.PvPLevels[(Map)_appModel.DataProvider.GameModel.GameMap];
             /*#else
                         return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
             #endif*/

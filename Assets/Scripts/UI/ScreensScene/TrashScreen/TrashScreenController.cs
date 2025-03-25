@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
@@ -118,7 +119,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             if (_appModel.Mode == GameMode.SideQuest)
             {
                 int sideQuestID = _appModel.SelectedSideQuestID;
-                ISideQuestData sideQuestData = _appModel.DataProvider.SideQuests[sideQuestID];
+                ISideQuestData sideQuestData = StaticData.SideQuests[sideQuestID];
                 enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(sideQuestData.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + sideQuestData.SkyMaterial + SPRITES_FILE_EXTENSION;
 
@@ -127,7 +128,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             else
             {
                 int levelIndex = _appModel.SelectedLevel - 1;
-                ILevel level = _appModel.DataProvider.Levels[levelIndex];
+                ILevel level = StaticData.Levels[levelIndex];
                 enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
 

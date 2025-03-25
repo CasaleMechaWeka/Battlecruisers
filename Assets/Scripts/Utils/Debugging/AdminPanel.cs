@@ -51,12 +51,12 @@ namespace BattleCruisers.Utils.Debugging
             DataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
 
             // Levels
-            foreach (ILevel level in dataProvider.Levels)
+            foreach (ILevel level in StaticData.Levels)
             {
                 dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
             }
 
-            foreach (ISideQuestData sideQuest in dataProvider.SideQuests)
+            foreach (ISideQuestData sideQuest in StaticData.SideQuests)
             {
                 dataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
             }
@@ -116,14 +116,14 @@ namespace BattleCruisers.Utils.Debugging
             // Unlock specified levels
             foreach (int levelNum in levelsToUnlock)
             {
-                ILevel level = dataProvider.Levels.FirstOrDefault(l => l.Num == levelNum);
+                ILevel level = StaticData.Levels.FirstOrDefault(l => l.Num == levelNum);
                 if (level != null)
                 {
                     dataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
                 }
                 else
                 {
-                    ISideQuestData sideQuest = dataProvider.SideQuests.FirstOrDefault(sq => sq.SideLevelNum == levelNum);
+                    ISideQuestData sideQuest = StaticData.SideQuests.FirstOrDefault(sq => sq.SideLevelNum == levelNum);
                     if (sideQuest != null)
                     {
                         dataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));

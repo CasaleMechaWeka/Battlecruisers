@@ -261,7 +261,7 @@ namespace BattleCruisers.Scenes
 
         private async Task InitialiseLevelsScreenAsync()
         {
-            IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
+            IList<LevelInfo> levels = CreateLevelInfo(StaticData.Levels, _dataProvider.GameModel.CompletedLevels);
 
             await levelsScreen.InitialiseAsync(
                 this,
@@ -512,7 +512,7 @@ namespace BattleCruisers.Scenes
             {
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
-                ILevel level = _applicationModel.DataProvider.Levels[sideQuestLevelNum - 1];
+                ILevel level = StaticData.Levels[sideQuestLevelNum - 1];
                 _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 _applicationModel.DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
