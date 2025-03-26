@@ -11,12 +11,12 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public class AirFactory : Factory
-	{
-		public LayerMask aircraftLayerMask;
+    {
+        public LayerMask aircraftLayerMask;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AirFactory;
         public override UnitCategory UnitCategory => UnitCategory.Aircraft;
-		public  override LayerMask UnitLayerMask => aircraftLayerMask;
+        public override LayerMask UnitLayerMask => aircraftLayerMask;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
-            return _factoryProvider.SpawnDeciderFactory.CreateAircraftSpawnPositionFinder(this);
+            return new AirFactorySpawnPositionFinder(this);
         }
     }
 }

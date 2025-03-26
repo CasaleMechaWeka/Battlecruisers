@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
@@ -77,7 +76,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new SoundPlayerFactory(deferrer),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
-                    new SpawnDeciderFactory(),
                     updaterProvider,
                     UiManager);
 
@@ -111,7 +109,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ISoundPlayerFactory soundPlayerFactory,
             DeferrerProvider deferrerProvider,
             TargetFactoriesProvider targetFactories,
-            ISpawnDeciderFactory spawnDeciderFactory,
             IUpdaterProvider updaterProvider,
             IUIManager uiManager)
         {
@@ -121,7 +118,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
-            factoryProvider.SpawnDeciderFactory.Returns(spawnDeciderFactory);
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
             factoryProvider.SettingsManager.Returns(DataProvider.SettingsManager);

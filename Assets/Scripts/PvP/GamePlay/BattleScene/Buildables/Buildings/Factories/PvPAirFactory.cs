@@ -22,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override UnitCategory UnitCategory => UnitCategory.Aircraft;
         public override LayerMask UnitLayerMask => aircraftLayerMask;
 
-
         // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
@@ -250,7 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
-            return _factoryProvider.SpawnDeciderFactory.CreateAircraftSpawnPositionFinder(this);
+            return new PvPAirFactorySpawnPositionFinder(this);
         }
 
         // ----------------------------------------

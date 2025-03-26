@@ -11,12 +11,12 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Buildings.Factories
 {
     public class NavalFactory : Factory
-	{
-		public LayerMask unitsLayerMask;
+    {
+        public LayerMask unitsLayerMask;
 
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.NavalFactory;
         public override UnitCategory UnitCategory => UnitCategory.Naval;
-		public override LayerMask UnitLayerMask => unitsLayerMask;
+        public override LayerMask UnitLayerMask => unitsLayerMask;
 
         protected override void AddBuildRateBoostProviders(
             IGlobalBoostProviders globalBoostProviders,
@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
-            return _factoryProvider.SpawnDeciderFactory.CreateNavalSpawnPositionFinder(this);
+            return new NavalFactorySpawnPositionFinder(this);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
-            return _factoryProvider.SpawnDeciderFactory.CreateNavalSpawnPositionFinder(this);
+            return new PvPNavalFactorySpawnPositionFinder(this);
         }
 
 

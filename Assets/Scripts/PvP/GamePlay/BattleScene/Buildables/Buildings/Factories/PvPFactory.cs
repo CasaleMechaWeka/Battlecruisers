@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.C
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,6 +15,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -118,7 +118,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Activate(activationArgs);
 
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
-            _unitSpawnDecider = _factoryProvider.SpawnDeciderFactory.CreateSpawnDecider(this, _unitSpawnPositionFinder);
+            _unitSpawnDecider = new PvPCompositeSpawnDecider(
+                    new PvPCooldownSpawnDecider(
+                        new PvPUnitSpawnTimer(
+                            this,
+                            TimeBC.Instance)),
+                    new PvPSpaceSpawnDecider(
+                        this,
+                        _unitSpawnPositionFinder),
+                    new PvPPopulationLimitSpawnDecider(
+                        ParentCruiser.UnitMonitor,
+                        Constants.POPULATION_LIMIT));
 
             // sava added
             UnitUnderConstruction = null;

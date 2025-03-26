@@ -1,6 +1,5 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
@@ -23,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPPoolProviders PoolProviders { get; }
         IPvPPrefabFactory PrefabFactory { get; }
         ISoundFactoryProvider Sound { get; }
-        IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         IPvPTargetFactoriesProvider Targets { get; }
         IUpdaterProvider UpdaterProvider { get; }
         SettingsManager SettingsManager { get; }

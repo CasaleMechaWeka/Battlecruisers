@@ -10,6 +10,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -120,7 +121,17 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             base.Activate(activationArgs);
 
             _unitSpawnPositionFinder = CreateSpawnPositionFinder();
-            _unitSpawnDecider = _factoryProvider.SpawnDeciderFactory.CreateSpawnDecider(this, _unitSpawnPositionFinder);
+            _unitSpawnDecider = new CompositeSpawnDecider(
+                                    new CooldownSpawnDecider(
+                                        new UnitSpawnTimer(
+                                            this,
+                                            TimeBC.Instance)),
+                                    new SpaceSpawnDecider(
+                                        this,
+                                        _unitSpawnPositionFinder),
+                                    new PopulationLimitSpawnDecider(
+                                        ParentCruiser.UnitMonitor,
+                                        Constants.POPULATION_LIMIT));
         }
 
         protected abstract IUnitSpawnPositionFinder CreateSpawnPositionFinder();

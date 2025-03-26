@@ -1,6 +1,5 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
@@ -25,7 +24,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IPvPMovementControllerFactory MovementControllerFactory { get; }
         public IPvPPrefabFactory PrefabFactory { get; }
-        public IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public SettingsManager SettingsManager { get; }
@@ -51,7 +49,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
-            SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
         }
         // Not in constructor because of circular dependency
