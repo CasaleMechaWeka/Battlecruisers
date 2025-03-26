@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test.Offensive
             TimeScaleDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
             // Is ok for deferrer to be null :)
 
-            return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, deferrer: deferrer);
+            return HelperFactory.CreateHelper(updaterProvider: updaterProvider, deferrer: deferrer);
         }
 
         protected override void Setup(Helper helper)

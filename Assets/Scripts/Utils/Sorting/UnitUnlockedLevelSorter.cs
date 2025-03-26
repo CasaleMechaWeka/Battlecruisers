@@ -7,17 +7,22 @@ using System.Linq;
 
 namespace BattleCruisers.Utils.Sorting
 {
-    public class UnitUnlockedLevelSorter : BuildableUnlockedLevelSorter, IBuildableSorter<IUnit>
+    public class UnitUnlockedLevelSorter : IBuildableSorter<IUnit>
     {
-        public UnitUnlockedLevelSorter(IStaticData staticData, IBuildableKeyFactory keyFactory)
-            : base(staticData, keyFactory) { }
+        public UnitUnlockedLevelSorter()
+            : base() { }
 
         public IList<IBuildableWrapper<IUnit>> Sort(IList<IBuildableWrapper<IUnit>> units)
         {
             return
                 units
-                    .OrderBy(unit => _staticData.UnitUnlockLevel(_keyFactory.CreateUnitKey(unit.Buildable)))
+                    .OrderBy(unit => StaticData.UnitUnlockLevel(CreateUnitKey(unit.Buildable)))
                     .ToList();
+        }
+
+        private UnitKey CreateUnitKey(IUnit unit)
+        {
+            return new UnitKey(unit.Category, unit.PrefabName);
         }
     }
 }

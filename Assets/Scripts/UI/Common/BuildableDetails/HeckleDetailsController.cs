@@ -5,6 +5,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils.Properties;
 using BattleCruisers.Data;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
@@ -17,7 +18,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         public void Initialize()
         {
-            _selectedItem = new SettableBroadcastingProperty<IHeckleData>(initialValue: ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Heckles[0]); // Heckle000 is default;
+            _selectedItem = new SettableBroadcastingProperty<IHeckleData>(initialValue: StaticData.Heckles[0]); // Heckle000 is default;
             SelectedItem = new BroadcastingProperty<IHeckleData>(_selectedItem);
         }
 

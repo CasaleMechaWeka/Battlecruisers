@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.Clouds;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
@@ -46,9 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             rightCloud.Initialise(skyStats);
 
             ICloudRandomiser cloudRandomiser
-                = new CloudRandomiser(
-                    RandomGenerator.Instance,
-                    rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
+                = new CloudRandomiser(rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
             _cloudTeleporter

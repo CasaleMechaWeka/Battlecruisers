@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Music
     {
         public async Task<ILayeredMusicPlayer> CreatePlayerAsync(
             SoundKeyPair soundKeys,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(soundKeys, settingsManager);
 

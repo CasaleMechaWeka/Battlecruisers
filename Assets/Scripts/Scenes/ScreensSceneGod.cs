@@ -46,8 +46,6 @@ namespace BattleCruisers.Scenes
     {
         public PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
-        private IApplicationModel _applicationModel;
-        private IDataProvider _dataProvider;
         private IGameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
@@ -113,7 +111,6 @@ namespace BattleCruisers.Scenes
         public bool serverStatus;
         public string requiredVer; // App version from Cloud;
         private static bool IsFirstTimeLoad = true;
-        PrefabCache _prefabCache;
         [SerializeField]
         private Sprite[] difficultyIndicators;
 
@@ -129,18 +126,13 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             DestroyAllNetworkObjects();
-            _applicationModel = ApplicationModelProvider.ApplicationModel;
-            _dataProvider = _applicationModel.DataProvider;
-            _gameModel = _dataProvider.GameModel;
+            _gameModel = DataProvider.GameModel;
             //components = GetComponent<ScreensSceneGodCompoments>();
 
             _ = LocTableCache.LoadTableAsync(TableName.STORY);
 
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            Task<PrefabCache> loadPrefabCache = prefabCacheFactory.CreatePrefabCacheAsync();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
+            Task loadPrefabCache = PrefabCache.CreatePrefabCacheAsync();
 
             premiumEditionButton.gameObject.SetActive(false);
 
@@ -159,36 +151,36 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    Task refreshEcoConfig = _dataProvider.RefreshEconomyConfiguration();
+                    Task refreshEcoConfig = DataProvider.RefreshEconomyConfiguration();
                     if (IsFirstTimeLoad)
                     {
-                        await _dataProvider.CloudLoad();
+                        await DataProvider.CloudLoad();
                         IsFirstTimeLoad = false;
                     }
 
                     await refreshEcoConfig;
-                    await _dataProvider.ApplyRemoteConfig();
+                    await DataProvider.ApplyRemoteConfig();
 
                     // local transactions syncing:
-                    if (_dataProvider.GameModel.OutstandingCaptainTransactions != null &&
-                        _dataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
-                        _dataProvider.GameModel.OutstandingHeckleTransactions != null &&
-                        _dataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
-                        _dataProvider.GameModel.OutstandingBodykitTransactions != null &&
-                        _dataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
-                        _dataProvider.GameModel.OutstandingVariantTransactions != null &&
-                        _dataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
-                        _dataProvider.GameModel.CoinsChange > 0 ||
-                        _dataProvider.GameModel.CreditsChange > 0)
+                    if (DataProvider.GameModel.OutstandingCaptainTransactions != null &&
+                        DataProvider.GameModel.OutstandingCaptainTransactions.Count > 0 ||
+                        DataProvider.GameModel.OutstandingHeckleTransactions != null &&
+                        DataProvider.GameModel.OutstandingHeckleTransactions.Count > 0 ||
+                        DataProvider.GameModel.OutstandingBodykitTransactions != null &&
+                        DataProvider.GameModel.OutstandingBodykitTransactions.Count > 0 ||
+                        DataProvider.GameModel.OutstandingVariantTransactions != null &&
+                        DataProvider.GameModel.OutstandingVariantTransactions.Count > 0 ||
+                        DataProvider.GameModel.CoinsChange > 0 ||
+                        DataProvider.GameModel.CreditsChange > 0)
                     {
                         Debug.Log("Processing offline shop purchases and currency changes.");
-                        await _dataProvider.ProcessOfflineTransactions();
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        await DataProvider.ProcessOfflineTransactions();
+                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
                     }
 
                     // version check
                     string currentVersion = Application.version;
-                    requiredVer = _dataProvider.GetPVPVersion();
+                    requiredVer = DataProvider.GetPVPVersion();
                     Debug.Log("Application Version: " + currentVersion);
                     Debug.Log("DataProvider Version: " + requiredVer);
 
@@ -214,7 +206,7 @@ namespace BattleCruisers.Scenes
                     else
                     {
                         // set pvp status in Battle Hub
-                        serverStatus = _dataProvider.RefreshPVPServerStatus();
+                        serverStatus = DataProvider.RefreshPVPServerStatus();
                         if (serverStatus)
                         {
                             // server available
@@ -256,7 +248,7 @@ namespace BattleCruisers.Scenes
                 Debug.Log("Offline, can't find out status of PVP Server.");
 
                 // Shop should not load until after a first remote config sync
-                if (!_dataProvider.GameModel.HasSyncdShop)
+                if (!DataProvider.GameModel.HasSyncdShop)
                 {
                     hubScreen.shopButton.gameObject.SetActive(false);
                     hubScreen.leaderboardButton.gameObject.SetActive(false);
@@ -280,16 +272,15 @@ namespace BattleCruisers.Scenes
             _soundPlayer
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_uiAudioSource),
-                        _dataProvider.SettingsManager, 1));
+                        new AudioSourceBC(_uiAudioSource), 1));
 
 
             levelTrashDataList.Initialise();
             sideQuestTrashDataList.Initialise();
 
-            homeScreen.Initialise(this, _soundPlayer, _dataProvider);
-            settingsScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager, _dataProvider.GameModel.Hotkeys);
-            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
+            homeScreen.Initialise(this, _soundPlayer);
+            settingsScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager, DataProvider.GameModel.Hotkeys);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
 
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
@@ -299,10 +290,10 @@ namespace BattleCruisers.Scenes
             }
 
             messageBox.gameObject.SetActive(true);
-            messageBox.Initialize(_dataProvider, _soundPlayer);
+            messageBox.Initialize(_soundPlayer);
             messageBox.HideMessage();
             messageBoxBig.gameObject.SetActive(true);
-            messageBoxBig.Initialize(_dataProvider, _soundPlayer);
+            messageBoxBig.Initialize(_soundPlayer);
             messageBoxBig.HideMessage();
 
 #if !PREMIUM_EDITION
@@ -318,13 +309,13 @@ namespace BattleCruisers.Scenes
             processingPanel.SetActive(false);
 
             processingPanel.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("Processing");
-            Debug.Log(_applicationModel.Mode);
+            Debug.Log(ApplicationModel.Mode);
 
-            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+            DataProvider.GameModel.ID_Bodykit_AIbot = -1;
 
-            _prefabCache = await loadPrefabCache;
+            await loadPrefabCache;
 
-            _prefabFactory = new PrefabFactory(_prefabCache, _dataProvider.SettingsManager);
+            _prefabFactory = new PrefabFactory();
             _isPlaying = false;
 
             // TEMP  For showing PostBattleScreen :)
@@ -332,30 +323,30 @@ namespace BattleCruisers.Scenes
             {
                 _gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
                 //_gameModel.LastBattleResult = new BattleResult(1, wasVictory: false);
-                _applicationModel.ShowPostBattleScreen = true;
-                //_applicationModel.IsTutorial = true;
+                ApplicationModel.ShowPostBattleScreen = true;
+                //ApplicationModel.IsTutorial = true;
             }
 
             ShowCharlieOnMainMenu();
 
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, _applicationModel);
-            trashScreen.Initialise(this, _soundPlayer, _applicationModel, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
+            hubScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            trashScreen.Initialise(this, _soundPlayer, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
             Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
             if (captainsCamera != null)
             {
                 trashScreen.SetCamera(captainsCamera);
             }
-            chooseDifficultyScreen.Initialise(this, _soundPlayer, _dataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _applicationModel, _soundPlayer, _prefabFactory);
-            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider, IsInternetAccessable);
-            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory, _dataProvider);
-            captainSelectorPanel.Initialize(_soundPlayer, _prefabFactory, _dataProvider);
+            chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
+            skirmishScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, IsInternetAccessable);
+            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            captainSelectorPanel.Initialize(_soundPlayer, _prefabFactory);
 
-            _applicationModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
 
-            if (_applicationModel.ShowPostBattleScreen)
+            if (ApplicationModel.ShowPostBattleScreen)
             {
-                _applicationModel.ShowPostBattleScreen = false;
+                ApplicationModel.ShowPostBattleScreen = false;
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync();
 #if !THIRD_PARTY_PUBLISHER
@@ -363,10 +354,10 @@ namespace BattleCruisers.Scenes
 #endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
-            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            else if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
-                _applicationModel.ShowPostBattleScreen = false;
-                //_applicationModel.Mode = GameMode.Campaign;
+                ApplicationModel.ShowPostBattleScreen = false;
+                //ApplicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
                 //PlayAdvertisementMusic();
                 //fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
@@ -376,10 +367,10 @@ namespace BattleCruisers.Scenes
                 else
                     GoToTrashScreen(LandingSceneGod.Instance.coinBattleLevelNum);
             }
-            else if (_applicationModel.Mode == GameMode.PvP_1VS1)
+            else if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
-                _applicationModel.ShowPostBattleScreen = false;
-                //_applicationModel.Mode = GameMode.Campaign;
+                ApplicationModel.ShowPostBattleScreen = false;
+                //ApplicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
                 fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
@@ -394,10 +385,10 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_dataProvider, _prefabFactory, _soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_dataProvider, _prefabFactory, _soundPlayer);
-            loadoutScreen.Initialise(this, _soundPlayer, _dataProvider, _prefabFactory);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_prefabFactory, _soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_prefabFactory, _soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_prefabFactory, _soundPlayer);
+            loadoutScreen.Initialise(this, _soundPlayer, _prefabFactory);
 
             // TEMP  Go to specific screen :)
             //GoToLoadoutScreen();
@@ -470,9 +461,9 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _applicationModel, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
             //--->CODE CHANGED BY ANUJ
-            if (_applicationModel.Mode == GameMode.PvP_1VS1)
+            if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
             }
@@ -572,16 +563,15 @@ namespace BattleCruisers.Scenes
 
         private async Task InitialiseLevelsScreenAsync()
         {
-            IList<LevelInfo> levels = CreateLevelInfo(_dataProvider.Levels, _dataProvider.GameModel.CompletedLevels);
+            IList<LevelInfo> levels = CreateLevelInfo(StaticData.Levels, DataProvider.GameModel.CompletedLevels);
 
             await levelsScreen.InitialiseAsync(
                 this,
                 _soundPlayer,
                 levels,
-                testLevelsScreen ? numOfLevelsUnlocked : _dataProvider.LockedInfo.NumOfLevelsUnlocked,
+                testLevelsScreen ? numOfLevelsUnlocked : DataProvider.LockedInfo.NumOfLevelsUnlocked,
                 difficultyIndicators,
-                levelTrashDataList,
-                _dataProvider);
+                levelTrashDataList);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
@@ -630,40 +620,40 @@ namespace BattleCruisers.Scenes
         public void GoToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
-            Assert.IsTrue(levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {ApplicationModel.Mode}  levelNum: {levelNum}");
+            Assert.IsTrue(levelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-            _applicationModel.SelectedLevel = levelNum;
+            ApplicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign)
+            if (ApplicationModel.Mode == GameMode.Campaign)
             {
                 if (LevelStages.STAGE_STARTS.Contains(levelNum - 1) && levelToShowCutscene != levelNum)
                 {
                     levelToShowCutscene = levelNum;
-                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-                    _applicationModel.DataProvider.SaveGame();
+                    DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    DataProvider.SaveGame();
                     //GoToScreen(trashScreen, playDefaultMusic: false);
                     _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
                 else
                 {
                     levelToShowCutscene = 0;
-                    _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-                    _applicationModel.DataProvider.SaveGame();
+                    DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+                    DataProvider.SaveGame();
                     //_musicPlayer.PlayTrashMusic();
                     GoToScreen(trashScreen, playDefaultMusic: false);
                     //_musicPlayer.PlayTrashMusic();
                 }
             }
-            else if (_applicationModel.Mode == GameMode.CoinBattle)
+            else if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
-                ILevel level = _applicationModel.DataProvider.Levels[levelNum - 1];
-                _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
-                //_applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
-                _applicationModel.DataProvider.SaveGame();
+                ILevel level = StaticData.Levels[levelNum - 1];
+                DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                //DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
+                DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
             }
             else
@@ -678,7 +668,7 @@ namespace BattleCruisers.Scenes
             if (hullType != HullType.None)
             {
                 List<int> bodykits = new List<int>();
-                for (int i = 0; i < /*12*/ _applicationModel.DataProvider.StaticData.Bodykits.Count; i++)
+                for (int i = 0; i < /*12*/ StaticData.Bodykits.Count; i++)
                 {
                     if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
                     {
@@ -740,14 +730,14 @@ namespace BattleCruisers.Scenes
         public void GoStraightToTrashScreen(int levelNum)
         {
             AdvertisingBanner.stopAdvert();
-            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {_applicationModel.Mode}  levelNum: {levelNum}");
+            Logging.Log(Tags.SCREENS_SCENE_GOD, $"Game mode: {ApplicationModel.Mode}  levelNum: {levelNum}");
             Assert.IsTrue(
-                levelNum <= _dataProvider.LockedInfo.NumOfLevelsUnlocked,
-                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + _dataProvider.LockedInfo.NumOfLevelsUnlocked);
+                levelNum <= DataProvider.LockedInfo.NumOfLevelsUnlocked,
+                "levelNum: " + levelNum + " should be <= than number of levels unlocked: " + DataProvider.LockedInfo.NumOfLevelsUnlocked);
 
-            _applicationModel.SelectedLevel = levelNum;
+            ApplicationModel.SelectedLevel = levelNum;
 
-            if (_applicationModel.Mode == GameMode.Campaign || _applicationModel.Mode == GameMode.CoinBattle)
+            if (ApplicationModel.Mode == GameMode.Campaign || ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 levelToShowCutscene = 0;
                 GoToScreen(trashScreen, playDefaultMusic: false);
@@ -764,13 +754,13 @@ namespace BattleCruisers.Scenes
             // Implementation similar to GoToTrashScreen method, but for side quest levels
             AdvertisingBanner.stopAdvert();
             if (firstLevelOfStage > -1)
-                _applicationModel.SelectedLevel = firstLevelOfStage + 1;
-            _applicationModel.Mode = GameMode.SideQuest;
+                ApplicationModel.SelectedLevel = firstLevelOfStage + 1;
+            ApplicationModel.Mode = GameMode.SideQuest;
 
-            _applicationModel.SelectedSideQuestID = sideQuestLevelNum;
+            ApplicationModel.SelectedSideQuestID = sideQuestLevelNum;
             levelToShowCutscene = 0;
-            _applicationModel.DataProvider.GameModel.ID_Bodykit_AIbot = -1;
-            _applicationModel.DataProvider.SaveGame();
+            DataProvider.GameModel.ID_Bodykit_AIbot = -1;
+            DataProvider.SaveGame();
             GoToScreen(trashScreen, playDefaultMusic: false);
         }
 
@@ -811,8 +801,8 @@ namespace BattleCruisers.Scenes
 
         public void LoadBattleSceneSideQuest(int sideQuestID)
         {
-            _applicationModel.SelectedSideQuestID = sideQuestID;
-            _applicationModel.Mode = GameMode.SideQuest;
+            ApplicationModel.SelectedSideQuestID = sideQuestID;
+            ApplicationModel.Mode = GameMode.SideQuest;
             AdvertisingBanner.stopAdvert();
             _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
@@ -856,7 +846,7 @@ namespace BattleCruisers.Scenes
 
         public void PlayAdvertisementMusic()
         {
-            //if (_applicationModel.DataProvider.GameModel.Settings.ShowAds || !_applicationModel.DataProvider.GameModel.PremiumEdition)
+            //if (DataProvider.GameModel.Settings.ShowAds || !DataProvider.GameModel.PremiumEdition)
             //{
             //    _musicPlayer.PlayAdsMusic();
             //}
@@ -920,12 +910,12 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                _applicationModel.DataProvider.SaveGame();
-                _applicationModel.DataProvider.SyncCoinsToCloud();
-                _applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                _applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {
@@ -952,7 +942,7 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(DataProvider.GameModel.PlayerName + "#" + DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
                     PlayerPrefs.SetInt("SETNAME", 1);
                 }
                 catch
@@ -965,7 +955,7 @@ namespace BattleCruisers.Scenes
             {
                 try
                 {
-                    await AuthenticationService.Instance.UpdatePlayerNameAsync(_dataProvider.GameModel.PlayerName + "#" + _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(DataProvider.GameModel.PlayerName + "#" + DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
                     PlayerPrefs.SetInt("SETNAME", 1);
                 }
                 catch

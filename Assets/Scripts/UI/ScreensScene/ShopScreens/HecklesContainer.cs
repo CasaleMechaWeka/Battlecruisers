@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -27,14 +28,12 @@ namespace BattleCruisers.UI.ScreensScene
         public Text hecklePrice;
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
         {
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             priceLabel = hecklePrice.transform.parent.gameObject;
@@ -43,26 +42,26 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if (_dataProvider.GameModel.Coins >= currentHeckleData.HeckleCost)
+            if (DataProvider.GameModel.Coins >= currentHeckleData.HeckleCost)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
                     // Online purchasing
                     try
                     {
-                        bool result = await _dataProvider.PurchaseHeckleV2(currentHeckleData.Index);
+                        bool result = await DataProvider.PurchaseHeckleV2(currentHeckleData.Index);
                         if (result)
                         {
-                            //    await _dataProvider.SyncCurrencyFromCloud();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                            //    await DataProvider.SyncCurrencyFromCloud();
+                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
-                            _dataProvider.SaveGame();
-                            await _dataProvider.CloudSave();
+                            DataProvider.GameModel.AddHeckle(currentHeckleData.Index);
+                            DataProvider.SaveGame();
+                            await DataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {
@@ -80,7 +79,6 @@ namespace BattleCruisers.UI.ScreensScene
 #if LOG_ANALYTICS
                 Debug.Log("Analytics: " + logName);
 #endif
-                            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                             Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "heckleIndex", currentHeckleData.Index } };
                         }
                         else
@@ -106,7 +104,7 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.AddHeckle(currentHeckleData.Index);
+                        DataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                         {
@@ -120,18 +118,18 @@ namespace BattleCruisers.UI.ScreensScene
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
-                        _dataProvider.GameModel.Coins -= currentHeckleData.HeckleCost;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        DataProvider.GameModel.Coins -= currentHeckleData.HeckleCost;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
 
                         // Keep track of transaction for later:
-                        _dataProvider.GameModel.CoinsChange -= currentHeckleData.HeckleCost;
-                        HeckleData heckle = _dataProvider.StaticData.Heckles[currentHeckleData.Index];
-                        if (_dataProvider.GameModel.OutstandingHeckleTransactions == null)
+                        DataProvider.GameModel.CoinsChange -= currentHeckleData.HeckleCost;
+                        HeckleData heckle = StaticData.Heckles[currentHeckleData.Index];
+                        if (DataProvider.GameModel.OutstandingHeckleTransactions == null)
                         {
-                            _dataProvider.GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
+                            DataProvider.GameModel.OutstandingHeckleTransactions = new List<HeckleData>();
                         }
-                        _dataProvider.GameModel.OutstandingHeckleTransactions.Add(heckle);
-                        _dataProvider.SaveGame();
+                        DataProvider.GameModel.OutstandingHeckleTransactions.Add(heckle);
+                        DataProvider.SaveGame();
                     }
                     catch
                     {
@@ -154,7 +152,7 @@ namespace BattleCruisers.UI.ScreensScene
                 ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, LocTableCache.ScreensSceneTable.GetString("GetCoins"));
 #endif
             }
-            Debug.Log(_dataProvider.GameModel.Coins);
+            Debug.Log(DataProvider.GameModel.Coins);
 
         }
 
@@ -164,7 +162,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentItem = (HeckleItemController)sender;
             currentHeckleData = e.heckleData;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
-            if (_dataProvider.GameModel.PurchasedHeckles.Contains(e.heckleData.Index))
+            if (DataProvider.GameModel.PurchasedHeckles.Contains(e.heckleData.Index))
             {
                 priceLabel.SetActive(false);
                 btnBuy.SetActive(false);

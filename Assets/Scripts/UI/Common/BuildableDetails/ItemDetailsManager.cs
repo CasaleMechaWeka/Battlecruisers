@@ -19,14 +19,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private readonly IComparableItemDetails<IUnit> _unitDetails;
         private readonly IComparableItemDetails<ICruiser> _cruiserDetails;
         private readonly PrefabFactory _prefabFactory;
-        private readonly IDataProvider _dataProvider;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public ItemDetailsManager(IInformatorPanel informator, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public ItemDetailsManager(IInformatorPanel informator, PrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(informator, dataProvider, prefabFactory);
+            Helper.AssertIsNotNull(informator, prefabFactory);
 
             _informatorPanel = informator;
             _buildingDetails = informator.BuildingDetails;
@@ -34,7 +33,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             _cruiserDetails = informator.CruiserDetails;
 
             _prefabFactory = prefabFactory;
-            _dataProvider = dataProvider;
 
             _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
             SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
@@ -52,19 +50,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void ShowItemDetailsV2(IBuilding building)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (building.Faction == Faction.Blues)
             {
-                int index = dataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
                 if (index != -1)
                 {
                     VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                     _buildingDetails.ShowItemDetails(staticBuilding, variant);
                     _buildingDetails.GetBuildingVariantDetailController().variantName.text
-                     = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                     = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
                      + " " + LocTableCache.CommonTable.GetString("Buildables/Buildings/" + building.keyName + "Name");
-                    //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                    //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(DataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
                     _selectedItem.Value = building;
@@ -85,9 +82,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     IBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
                     _buildingDetails.ShowItemDetails(staticBuilding, variant);
                     _buildingDetails.GetBuildingVariantDetailController().variantName.text
-                     = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                     = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
                       + " " + LocTableCache.CommonTable.GetString("Buildables/Buildings/" + building.keyName + "Name");
-                    //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                    //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(DataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
                     _selectedItem.Value = building;
@@ -119,19 +116,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void ShowItemDetailsV2(IUnit unit)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (unit.Faction == Faction.Blues)
             {
-                int index = dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
                 if (index != -1)
                 {
                     VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                     IUnit staticUnit = variant.GetUnit(_prefabFactory);
                     _unitDetails.ShowItemDetails(staticUnit, variant);
                     _unitDetails.GetUnitVariantDetailController().variantName.text
-                     = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                     = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
                       + " " + LocTableCache.CommonTable.GetString("Buildables/Units/" + unit.keyName + "Name");
-                    //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                    //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(DataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
                     _selectedItem.Value = unit;
@@ -152,9 +148,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                     IUnit staticUnit = variant.GetUnit(_prefabFactory);
                     _unitDetails.ShowItemDetails(staticUnit, variant);
                     _unitDetails.GetUnitVariantDetailController().variantName.text
-                     = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[index].VariantNameStringKeyBase)
+                     = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
                       + " " + LocTableCache.CommonTable.GetString("Buildables/Units/" + unit.keyName + "Name");
-                    //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(dataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                    //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(DataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
                     _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
                     _selectedItem.Value = unit;

@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.UI.Music;
+﻿using BattleCruisers.UI.Music;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -28,7 +27,6 @@ namespace BattleCruisers.Scenes.Test.UI
                 .Initialise(
                     Substitute.For<IScreensSceneGod>(),
                     Substitute.For<ISingleSoundPlayer>(),
-                    ApplicationModelProvider.ApplicationModel,
                     helper.PrefabFactory,
                     trashDataList,
                     trashDataList,
@@ -36,7 +34,6 @@ namespace BattleCruisers.Scenes.Test.UI
 
             levelButtonsPanel
                 .Initialise(
-                    ApplicationModelProvider.ApplicationModel,
                     trashScreen,
                     startingLevelNum);
         }

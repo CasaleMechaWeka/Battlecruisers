@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.FAST, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.FAST, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()
@@ -77,7 +77,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
 
             // Setup kamikaze signals
             TimeScaleDeferrer timeScaleDeferrer = GetComponent<TimeScaleDeferrer>();
-            
+
             for (int i = 0; i < _kamikazeSignals.Length; ++i)
             {
                 KamikazeSignal kamikazeSignal = _kamikazeSignals[i];

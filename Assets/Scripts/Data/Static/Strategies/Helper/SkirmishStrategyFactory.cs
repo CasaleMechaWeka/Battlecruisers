@@ -9,13 +9,11 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
     {
         private readonly StrategyType _strategyType;
         private readonly bool _canUseUltras;
-        private readonly IRandomGenerator _random;
 
         public SkirmishStrategyFactory(StrategyType strategyType, bool canUseUltras)
         {
             _strategyType = strategyType;
             _canUseUltras = canUseUltras;
-            _random = RandomGenerator.Instance;
         }
 
         public IStrategy GetAdaptiveStrategy()
@@ -63,7 +61,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     return new BasicBalancedStrategy();
 
                 case StrategyType.Boom:
-                    if (_random.NextBool())
+                    if (RandomGenerator.NextBool())
                     {
                         return new BasicBoomAggressiveStrategy();
                     }
@@ -90,42 +88,31 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 allOptions = GetOffensiveRequestsListNoUltras(strategyType);
             }
 
-            return _random.RandomItem(allOptions);
+            return RandomGenerator.RandomItem(allOptions);
         }
 
         private IList<IOffensiveRequest[]> GetOffensiveRequestsList(StrategyType strategyType)
         {
-            switch (strategyType)
+            return strategyType switch
             {
-                case StrategyType.Rush:
-                    return OffensiveRequestsProvider.Rush.All;
+                StrategyType.Rush => OffensiveRequestsProvider.Rush.All,
+                StrategyType.Balanced => OffensiveRequestsProvider.Balanced.All,
+                StrategyType.Boom => OffensiveRequestsProvider.Boom.All,
+                _ => throw new InvalidOperationException($"Unknown strategy type: {strategyType}"),
+            };
 
-                case StrategyType.Balanced:
-                    return OffensiveRequestsProvider.Balanced.All;
-
-                case StrategyType.Boom:
-                    return OffensiveRequestsProvider.Boom.All;
-                default:
-                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
-            }
         }
 
         private IList<IOffensiveRequest[]> GetOffensiveRequestsListNoUltras(StrategyType strategyType)
         {
-            switch (strategyType)
+            return strategyType switch
             {
-                case StrategyType.Rush:
-                    return OffensiveRequestsProvider.Rush.NoUltras;
+                StrategyType.Rush => OffensiveRequestsProvider.Rush.NoUltras,
+                StrategyType.Balanced => OffensiveRequestsProvider.Balanced.NoUltras,
+                StrategyType.Boom => OffensiveRequestsProvider.Boom.NoUltras,
+                _ => throw new InvalidOperationException($"Unknown strategy type: {strategyType}"),
+            };
 
-                case StrategyType.Balanced:
-                    return OffensiveRequestsProvider.Balanced.NoUltras;
-
-                case StrategyType.Boom:
-                    return OffensiveRequestsProvider.Boom.NoUltras;
-
-                default:
-                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
-            }
         }
     }
 }

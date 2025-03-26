@@ -20,7 +20,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private IItemDetailsDisplayer<IBuilding> _buildingDetails;
         private IBuildingNameToKey _buildingNameToKey;
-        private IDataProvider _dataProvider;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
         private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
@@ -35,16 +34,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override bool ToggleVisibility => true;
 
         public void Initialise(ISingleSoundPlayer soundPlayer,
-            IDataProvider dataProvider,
             IItemDetailsDisplayer<IBuilding> buildingDetails,
             IBuildingNameToKey buildingName,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
             IComparingItemFamilyTracker comparingItemFamily)
         {
             base.Initialise(soundPlayer);
-            Helper.AssertIsNotNull(dataProvider, buildingDetails, buildingName, _itemFamily);
+            Helper.AssertIsNotNull(buildingDetails, buildingName, _itemFamily);
 
-            _dataProvider = dataProvider;
             _buildingDetails = buildingDetails;
             _comparingItemFamilyTracker = comparingItemFamily;
             _comparingFamily = _itemFamily;
@@ -66,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Assert.IsNotNull(displayBuilding);
             BuildingKey buildingKey = _buildingNameToKey.GetKey(displayBuilding.Name);
 
-            Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
             List<BuildingKey> buildingKeys = playerLoadout.GetBuildingKeys(displayBuilding.Category);
             Assert.IsNotNull(buildingKeys);
             if (!buildingKeys.Contains(buildingKey))
@@ -76,13 +73,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     playerLoadout.AddBuildingItem(displayBuilding.Category, buildingKey);
                     UpdateSelectText(true);
                 }
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
                 limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
             }
             else
             {
                 playerLoadout.RemoveBuildItem(displayBuilding.Category, buildingKey);
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
                 limit.text = playerLoadout.GetBuildingListSize(displayBuilding.Category).ToString();
                 UpdateSelectText(false);
             }
@@ -135,7 +132,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private void DisplayedBuildingChanged(object sender, EventArgs e)
         {
             IBuilding displayBuilding = _buildingDetails.SelectedItem.Value;
-            Loadout playerLoadout = _dataProvider.GameModel.PlayerLoadout;
+            Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
 
             //Assert.IsNotNull(displayBuilding);
             if (displayBuilding != null)
@@ -155,7 +152,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private bool IsOverLimit()
         {
-            Loadout loadout = _dataProvider.GameModel.PlayerLoadout;
+            Loadout loadout = DataProvider.GameModel.PlayerLoadout;
             if (_buildingDetails.SelectedItem.Value != null)
             {
                 if ((loadout.GetBuildingListSize(_buildingDetails.SelectedItem.Value.Category) == buildingLimit) && selectText.activeSelf)

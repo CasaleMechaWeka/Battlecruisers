@@ -30,7 +30,6 @@ namespace BattleCruisers.UI.BattleScene
         public HelpButton helpButton;
 
         public RightPanelComponents Initialise(
-            IApplicationModel applicationModel,
             IUIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
@@ -42,7 +41,6 @@ namespace BattleCruisers.UI.BattleScene
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
             Helper.AssertIsNotNull(
-                applicationModel,
                 uiManager,
                 playerCruiser,
                 userChosenTargetHelper,
@@ -53,9 +51,9 @@ namespace BattleCruisers.UI.BattleScene
                 navigationPermitterManager);
 
             IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
-            SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters, applicationModel);
+            SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
-            modalMenu.Initialise(soundPlayer, applicationModel.IsTutorial, mainMenuManager, applicationModel.DataProvider.SettingsManager);
+            modalMenu.Initialise(soundPlayer, ApplicationModel.IsTutorial, mainMenuManager, DataProvider.SettingsManager);
             SetupMainMenuButtons(soundPlayer, mainMenuManager);
 
             return
@@ -88,11 +86,11 @@ namespace BattleCruisers.UI.BattleScene
             return informator;
         }
 
-        private SpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters, IApplicationModel applicationModel)
+        private SpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
-            return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter, applicationModel);
+            return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
         private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)

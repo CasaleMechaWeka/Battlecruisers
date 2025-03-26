@@ -5,6 +5,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage
 {
@@ -14,20 +15,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public float hideTime = 5f;
         private RectTransform messageFrame;
 
-        private IDataProvider _dataProvider;
-        private ISingleSoundPlayer _soundPlayer;
-
-        public void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer)
+        public void Initialise(ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(dataProvider, soundPlayer);
-            _dataProvider = dataProvider;
-            _soundPlayer = soundPlayer;
+            Helper.AssertIsNotNull(soundPlayer);
             messageFrame = GetComponent<RectTransform>();
         }
 
         public void Show(int heckleIndex)
         {
-            message.text = LocTableCache.HecklesTable.GetString(_dataProvider.StaticData.Heckles[heckleIndex].StringKeyBase);
+            message.text = LocTableCache.HecklesTable.GetString(StaticData.Heckles[heckleIndex].StringKeyBase);
             messageFrame.localScale = Vector3.zero;
             messageFrame.DOScale(Vector3.one * 1.5f, 0.2f);
             Invoke("Hide", hideTime);

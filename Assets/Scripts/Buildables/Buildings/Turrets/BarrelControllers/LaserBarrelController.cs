@@ -56,14 +56,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
         {
-            await
-                _laserEmitter.InitialiseAsync(
-                    args.TargetFilter,
-                    _laserTurretStats.damagePerS,
-                    args.Parent,
-                    args.FactoryProvider.SettingsManager,
-                    args.Updater,
-                    args.FactoryProvider.DeferrerProvider.Deferrer);
+            _laserEmitter.Initialise(
+                args.TargetFilter,
+                _laserTurretStats.damagePerS,
+                args.Parent,
+                args.Updater,
+                args.FactoryProvider.DeferrerProvider.Deferrer);
 
             ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
             Assert.IsNotNull(laserCooldownEffectInitialiser);

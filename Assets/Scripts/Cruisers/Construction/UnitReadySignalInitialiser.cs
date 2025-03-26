@@ -25,11 +25,9 @@ namespace BattleCruisers.Cruisers.Construction
                 new UnitReadySignal(
                     parentCruiser.UnitMonitor,
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(navalAudioSource),
-                        parentCruiser.FactoryProvider.SettingsManager),
+                        new AudioSourceBC(navalAudioSource)),
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(aircraftAudioSource),
-                        parentCruiser.FactoryProvider.SettingsManager));
+                        new AudioSourceBC(aircraftAudioSource)));
         }
     }
 }

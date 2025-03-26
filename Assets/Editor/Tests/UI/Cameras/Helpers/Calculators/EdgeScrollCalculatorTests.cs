@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             ICamera camera = Substitute.For<ICamera>();
             ITime time = Substitute.For<ITime>();
             IRange<float> validOrthographicSizes = new Range<float>(5, 40);
-            ISettingsManager settingsManager = Substitute.For<ISettingsManager>();
+            SettingsManager settingsManager = Substitute.For<SettingsManager>();
             ILevelToMultiplierConverter scrollConverter = Substitute.For<ILevelToMultiplierConverter>();
 
             _calculator = new EdgeScrollCalculator(time, settingsManager, scrollConverter, camera, validOrthographicSizes, MULTIPLIER);

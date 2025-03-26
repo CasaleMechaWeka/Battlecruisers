@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     {
         public GameSpeedButton slowMotion, normalSpeed, fastForward, pause;
 
-        public SpeedComponents Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, IApplicationModel applicationModel)
+        public SpeedComponents Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
             Helper.AssertIsNotNull(slowMotion, normalSpeed, fastForward);
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
                 speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, TimeBC.Instance);
             }
 
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition || applicationModel.Mode != GameMode.Skirmish)
+            if (!DataProvider.GameModel.PremiumEdition || ApplicationModel.Mode != GameMode.Skirmish)
                 pause.gameObject.SetActive(false);
 
             IToggleButtonGroup speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);

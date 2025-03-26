@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using DigitalRuby.LightningBolt;
 using UnityEngine.Assertions;
@@ -12,9 +11,9 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Lightning
 
         public LightningBoltScript lightningBolt;
 
-        public void Initialise(ITargetFilter targetFilter, float damage, ITarget parent, ISettingsManager settingsManager)
+        public void Initialise(ITargetFilter targetFilter, float damage, ITarget parent)
         {
-            base.Initialise(targetFilter, parent, settingsManager);
+            base.Initialise(targetFilter, parent);
 
             Assert.IsTrue(damage > 0);
             _damage = damage;

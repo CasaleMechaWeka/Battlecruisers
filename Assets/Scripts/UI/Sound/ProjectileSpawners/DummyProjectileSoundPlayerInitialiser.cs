@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     public class DummyProjectileSoundPlayerInitialiser : MonoBehaviour, IProjectileSoundPlayerInitialiser
     {
         public Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory, 
-            ISoundKey firingSound, 
+            ISoundPlayerFactory soundPlayerFactory,
+            ISoundKey firingSound,
             int burstSize,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Assert.IsNotNull(soundPlayerFactory);
             return Task.FromResult(soundPlayerFactory.DummyPlayer);

@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPInGameSettingsPanel : Panel
     {
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         public PvPInGameSaveButton saveButton;
         public PvPCanvasGroupButton cancelButton;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(saveButton, cancelButton, musicVolumeSlider, effectVolumeSlider);
             PvPHelper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager);

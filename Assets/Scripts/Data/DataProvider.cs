@@ -4,9 +4,6 @@ using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
-using BattleCruisers.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using UnityEngine.Assertions;
 using System.Threading.Tasks;
 using Unity.Services.Economy.Model;
@@ -24,33 +21,23 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 
 namespace BattleCruisers.Data
 {
-    public class DataProvider : IDataProvider
+    public static class DataProvider
     {
-        private readonly ISerializer _serializer;       // functions for local read/write on disk and JSON serialization/deserialization
-        private readonly ISaveClient _cloudSaveService; // cloud save serialized JSON
+        private static readonly ISerializer _serializer = new Serializer(new ModelFilePathProvider());       // functions for local read/write on disk and JSON serialization/deserialization
 
-        public IStaticData StaticData { get; }
-        public IList<ILevel> Levels => StaticData.Levels;
-        public IList<ISideQuestData> SideQuests => StaticData.SideQuests;
-        public IDictionary<Map, IPvPLevel> PvPLevels => StaticData.PvPLevels;
-        public ISettingsManager SettingsManager { get; }
-        public ILockedInformation LockedInfo { get; }
+        public static SettingsManager SettingsManager { get; private set; }
+        public static ILockedInformation LockedInfo { get; private set; }
 
-        private readonly GameModel _gameModel;
+        private static GameModel _gameModel;
 
-        public IGameModel GameModel => _gameModel;
-        public List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
-        public VirtualShopConfig virtualShopConfig { get; set; }
-        public EcoConfig ecoConfig { get; set; }
+        public static IGameModel GameModel => _gameModel;
+        public static List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
+        public static VirtualShopConfig virtualShopConfig { get; set; }
+        public static EcoConfig ecoConfig { get; set; }
         /*     public PvPConfig pvpConfig { get; set; }*/
-        public bool pvpServerAvailable { get; set; }
-        public DataProvider(IStaticData staticData, ISerializer serializer)
+        public static bool pvpServerAvailable { get; set; }
+        static DataProvider()
         {
-            Helper.AssertIsNotNull(staticData, serializer);
-
-            StaticData = staticData;
-            _serializer = serializer;
-
             if (_serializer.DoesSavedGameExist())
             {
                 _gameModel = _serializer.LoadGame();
@@ -72,30 +59,12 @@ namespace BattleCruisers.Data
                 SaveGame();
             }
 
-            SettingsManager = new SettingsManager(this);
+            SettingsManager = new SettingsManager();
 
-            LockedInfo = new LockedInformation(GameModel, StaticData);
+            LockedInfo = new LockedInformation(GameModel);
         }
 
-        public ILevel GetLevel(int levelNum)
-        {
-            Assert.IsTrue(levelNum > 0 && levelNum <= Levels.Count);
-            return Levels[levelNum - 1];
-        }
-
-        public ISideQuestData GetSideQuest(int sideQuestID)
-        {
-            Assert.IsTrue(sideQuestID >= 0 && sideQuestID <= SideQuests.Count);
-            return SideQuests[sideQuestID];
-        }
-
-        public IPvPLevel GetPvPLevel(Map map)
-        {
-            // Assert.IsTrue(levelNum > 0 && levelNum <= PvPLevels.Count);
-            return PvPLevels[map];
-        }
-
-        public void SaveGame()
+        public static void SaveGame()
         {
             try
             {
@@ -117,13 +86,13 @@ namespace BattleCruisers.Data
             _serializer.SaveGame(_gameModel);
         }
 
-        public void Reset()
+        public static void Reset()
         {
             _serializer.DeleteSavedGame();
             _serializer.DeleteCloudSave();
         }
 
-        public async Task CloudSave()
+        public static async Task CloudSave()
         {
             if (!SettingsManager.CloudSaveDisabled)
             {
@@ -137,7 +106,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task CloudLoad()
+        public static async Task CloudLoad()
         {
             SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
             if (saveModel == null || saveModel._lifetimeDestructionScore < _gameModel.LifetimeDestructionScore)
@@ -166,40 +135,40 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task<bool> SyncCurrencyFromCloud()
+        public static async Task<bool> SyncCurrencyFromCloud()
         {
-            return await _serializer.SyncCurrencyFromCloud(this);
+            return await _serializer.SyncCurrencyFromCloud();
         }
 
-        public async Task<bool> SyncInventoryFromCloud()
+        public static async Task<bool> SyncInventoryFromCloud()
         {
-            return await _serializer.SyncInventoryFromCloud(this);
+            return await _serializer.SyncInventoryFromCloud();
         }
 
-        public async Task<bool> SyncCoinsToCloud()
+        public static async Task<bool> SyncCoinsToCloud()
         {
-            return await _serializer.SyncCoinsToCloud(this);
+            return await _serializer.SyncCoinsToCloud();
         }
 
-        public async Task<bool> SyncCreditsToCloud()
+        public static async Task<bool> SyncCreditsToCloud()
         {
-            return await _serializer.SyncCreditsToCloud(this);
+            return await _serializer.SyncCreditsToCloud();
         }
 
-        public async Task RefreshEconomyConfiguration()
+        public static async Task RefreshEconomyConfiguration()
         {
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
         }
 
-        public async Task ApplyRemoteConfig()
+        public static async Task ApplyRemoteConfig()
         {
             Debug.Log("ApplyRemoteSettings");
             RemoteConfigService.Instance.FetchCompleted += ApplyRemoteConfig;
             RemoteConfigService.Instance.FetchConfigs(new UserAttributes(), new AppAttributes());
         }
 
-        async void ApplyRemoteConfig(ConfigResponse configResponse)
+        async static void ApplyRemoteConfig(ConfigResponse configResponse)
         {
             switch (configResponse.requestOrigin)
             {
@@ -233,7 +202,7 @@ namespace BattleCruisers.Data
         }
 
 
-        public void MigrateInventory()
+        public static void MigrateInventory()
         {
             //captain exos
             for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
@@ -251,7 +220,7 @@ namespace BattleCruisers.Data
                 _gameModel.AddVariant(_gameModel.PurchasedVariants[i]);
         }
 
-        public async Task SyncInventroyV2()
+        public static async Task SyncInventroyV2()
         {
             // captain exos
             for (int i = 0; i < _gameModel.PurchasedExos.Count; i++)
@@ -278,7 +247,7 @@ namespace BattleCruisers.Data
 
             await Task.CompletedTask;
         }
-        private async Task FetchConfigs()
+        private static async Task FetchConfigs()
         {
             try
             {
@@ -291,7 +260,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public void GetConfigValues()
+        public static void GetConfigValues()
         {
             // Fetch and deserialize GAME_CONFIG
             var gameConfigsJson = RemoteConfigService.Instance.appConfig.GetJson("GAME_CONFIG");
@@ -351,7 +320,7 @@ namespace BattleCruisers.Data
             SaveGame();
         }
 
-        public string GetPVPVersion()
+        public static string GetPVPVersion()
         {
             var version = RemoteConfigService.Instance.appConfig.GetString("CURRENT_VERSION");
 #if UNITY_EDITOR
@@ -360,13 +329,13 @@ namespace BattleCruisers.Data
             return version;
         }
 
-        public bool RefreshPVPServerStatus()
+        public static bool RefreshPVPServerStatus()
         {
             pvpServerAvailable = RemoteConfigService.Instance.appConfig.GetBool("PVP_SERVER_AVAILABLE");
             return pvpServerAvailable;
         }
 
-        public async Task SyncItemsCost()
+        public static async Task SyncItemsCost()
         {
             if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
@@ -410,7 +379,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task SyncItemsCostV2()
+        public static async Task SyncItemsCostV2()
         {
             await Task.Yield();
             // captainexos cost sync
@@ -452,7 +421,7 @@ namespace BattleCruisers.Data
             SaveGame();
         }
 
-        public async Task SyncHecklesCost()
+        public static async Task SyncHecklesCost()
         {
             if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
             {
@@ -481,7 +450,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task<bool> PurchaseCaptain(int index)
+        public static async Task<bool> PurchaseCaptain(int index)
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
             try
@@ -499,7 +468,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task<bool> PurchaseCaptainV2(int index)
+        public static async Task<bool> PurchaseCaptainV2(int index)
         {
             Assert.IsTrue(index > 0); // 0 is default item. can not buy them.
             await Task.Yield();
@@ -510,7 +479,7 @@ namespace BattleCruisers.Data
             return true;
         }
 
-        public async Task<bool> PurchaseHeckle(int index)
+        public static async Task<bool> PurchaseHeckle(int index)
         {
             //    Assert.IsTrue(index > 2); // 0,1,2 are default items. can not buy them.
             try
@@ -528,7 +497,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task<bool> PurchaseHeckleV2(int index)
+        public static async Task<bool> PurchaseHeckleV2(int index)
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
@@ -538,7 +507,7 @@ namespace BattleCruisers.Data
             await SyncCoinsToCloud();
             return true;
         }
-        public async Task<bool> PurchaseBodykit(int index)
+        public static async Task<bool> PurchaseBodykit(int index)
         {
             Assert.IsTrue(index > 0); // 0 is trident for premium
             try
@@ -556,7 +525,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task<bool> PurchaseBodykitV2(int index)
+        public static async Task<bool> PurchaseBodykitV2(int index)
         {
             Assert.IsTrue(index > 0); // 0 is trident for premium
             await Task.Yield();
@@ -567,7 +536,7 @@ namespace BattleCruisers.Data
             return true;
         }
 
-        public async Task<bool> PurchaseVariant(int index)
+        public static async Task<bool> PurchaseVariant(int index)
         {
             Assert.IsTrue(index >= 0);
             await Task.Yield();
@@ -578,7 +547,7 @@ namespace BattleCruisers.Data
             return true;
         }
 
-        List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)
+        static List<ItemAndAmountSpec> ParseEconomyItems(List<PurchaseItemQuantity> itemQuantities)
         {
             var itemsAndAmountsSpec = new List<ItemAndAmountSpec>();
 
@@ -592,7 +561,7 @@ namespace BattleCruisers.Data
         }
 
         // Any shop items bought while offline need to be accounted for and either merged with cloud economy or discarded
-        public async Task ProcessOfflineTransactions()
+        public static async Task ProcessOfflineTransactions()
         {
             await SyncCurrencyFromCloud();
             // these two lines are duplicated from GetConfigValues():
@@ -703,7 +672,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys all the Bodykits that were bought offline:
-        private async Task ProcessOfflineBodykits()
+        private static async Task ProcessOfflineBodykits()
         {
             List<BodykitData> RetryBodykits = new List<BodykitData>();
 
@@ -730,7 +699,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys Captains based on what was bought offline, but only as many as the cloud economy allows:
-        private async Task<int> ProcessOfflineBodykitsConflicts(int runningCoinTotal)
+        private static async Task<int> ProcessOfflineBodykitsConflicts(int runningCoinTotal)
         {
             List<int> GoodBodykits = new List<int>();
 
@@ -766,7 +735,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys all the Captains that were bought offline:
-        private async Task ProcessOfflineCaptains()
+        private static async Task ProcessOfflineCaptains()
         {
             List<CaptainData> RetryCaptains = new List<CaptainData>();
 
@@ -793,7 +762,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys Captains based on what was bought offline, but only as many as the cloud economy allows:
-        private async Task<int> ProcessOfflineCaptainsConflicts(int runningCoinTotal)
+        private static async Task<int> ProcessOfflineCaptainsConflicts(int runningCoinTotal)
         {
             List<int> GoodCaptains = new List<int>();
 
@@ -830,7 +799,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys all the Heckles that were bought offline:
-        private async Task ProcessOfflineHeckles()
+        private static async Task ProcessOfflineHeckles()
         {
             List<HeckleData> RetryHeckles = new List<HeckleData>();
 
@@ -857,7 +826,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys Heckles based on what was bought offline, but only as many as the cloud economy allows:
-        private async Task<int> ProcessOfflineHecklesConflicts(int runningCoinTotal)
+        private static async Task<int> ProcessOfflineHecklesConflicts(int runningCoinTotal)
         {
             List<int> GoodHeckles = new List<int>();
 
@@ -893,7 +862,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys all the Variants that were bought offline:
-        private async Task ProcessOfflineVariants()
+        private static async Task ProcessOfflineVariants()
         {
             List<VariantData> RetryVariants = new List<VariantData>();
 
@@ -919,7 +888,7 @@ namespace BattleCruisers.Data
         }
 
         // Officially buys Variants based on what was bought offline, but only as many as the cloud economy allows:
-        private async Task<int> ProcessOfflineVariantsConflicts(int runningCreditTotal)
+        private static async Task<int> ProcessOfflineVariantsConflicts(int runningCreditTotal)
         {
             List<int> GoodVariants = new List<int>();
 

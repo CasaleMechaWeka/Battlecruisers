@@ -21,7 +21,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         [SerializeField]
         private GameObject captainItemPrefab; // assign this from the editor
 
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
 
@@ -35,10 +34,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public void Initialize(
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
-            IDataProvider dataProvider)
+            PrefabFactory prefabFactory)
         {
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
             captainDataChanged += CaptainDataChanged;
@@ -66,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             byte ii = 0;
             for (int i = 0; i < StaticPrefabKeys.CaptainExos.CaptainExoCount; i++)
             {
-                if (_dataProvider.GameModel.PurchasedExos.Contains(i))
+                if (DataProvider.GameModel.PurchasedExos.Contains(i))
                 {
 
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
@@ -75,9 +72,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
                     visualOfCaptains.Add(captainExo.gameObject);
-                    captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, _dataProvider.StaticData.Captains[i], this, ii);
+                    captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[i], this, ii);
 
-                    if (_dataProvider.StaticData.Captains[i].NameStringKeyBase == _dataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName)  // the first item should be clicked :)
+                    if (StaticData.Captains[i].NameStringKeyBase == DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName)  // the first item should be clicked :)
                     {
                         captainItem.GetComponent<CaptainSelectionItemController>()._clickedFeedback.SetActive(true);
                         currentItem = captainItem.GetComponent<CaptainSelectionItemController>();
@@ -91,7 +88,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public void ShowCurrentCaptain()
         {
-            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo charlie = Instantiate(charliePrefab, captainCamContainer);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);
@@ -124,22 +121,22 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             {
                 try
                 {
-                    oldExoKey = _dataProvider.GameModel.PlayerLoadout.CurrentCaptain;
-                    _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(currentCaptainData.NameStringKeyBase);
-                    _dataProvider.SaveGame();
+                    oldExoKey = DataProvider.GameModel.PlayerLoadout.CurrentCaptain;
+                    DataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(currentCaptainData.NameStringKeyBase);
+                    DataProvider.SaveGame();
 
                     // online functions
                     if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                     {
-                        await _dataProvider.CloudSave();
+                        await DataProvider.CloudSave();
                     }
 
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    _dataProvider.GameModel.PlayerLoadout.CurrentCaptain = oldExoKey;
-                    _dataProvider.SaveGame();
+                    DataProvider.GameModel.PlayerLoadout.CurrentCaptain = oldExoKey;
+                    DataProvider.SaveGame();
                     Debug.LogException(ex);
                     return false;
                 }

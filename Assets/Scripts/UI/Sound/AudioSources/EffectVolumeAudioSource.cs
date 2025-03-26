@@ -7,19 +7,19 @@ namespace BattleCruisers.UI.Sound.AudioSources
     public class EffectVolumeAudioSource : VolumeAwareAudioSource
     {
         private int _type = -1;
-        public EffectVolumeAudioSource(IAudioSource audioSource, ISettingsManager settingsManager, int type)
-            : base(audioSource, settingsManager)
+        public EffectVolumeAudioSource(IAudioSource audioSource, int type)
+            : base(audioSource)
         {
             _type = type;
         }
 
-        public EffectVolumeAudioSource(IAudioSource audioSource, ISettingsManager settingsManager)
-            : base(audioSource, settingsManager)
+        public EffectVolumeAudioSource(IAudioSource audioSource)
+            : base(audioSource)
         {
             _type = -1;
         }
 
-        protected override float GetVolume(ISettingsManager settingsManager)
+        protected override float GetVolume(SettingsManager settingsManager)
         {
             if (settingsManager == null)
                 return 0f;

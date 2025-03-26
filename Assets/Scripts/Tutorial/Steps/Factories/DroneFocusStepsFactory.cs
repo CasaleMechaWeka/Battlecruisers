@@ -16,26 +16,26 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class DroneFocusStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IAutoNavigationStepFactory _autoNavigationStepFactory;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly IChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
-        private readonly IConstructBuildingStepsFactory _constructBuildingStepsFactory;
+        private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
+        private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
-        private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
+        private readonly SlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
         private readonly PrefabFactory _prefabFactory;
 
         public DroneFocusStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
-            IConstructBuildingStepsFactory constructBuildingStepsFactory,
+            TutorialStepArgsFactory argsFactory,
+            AutoNavigationStepFactory autoNavigationStepFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory,
+            ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
+            ConstructBuildingStepsFactory constructBuildingStepsFactory,
             ITutorialProvider tutorialProvider,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             RightPanelComponents rightPanelComponents,
-            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory,
+            SlidingPanelWaitStepFactory slidingPanelWaitStepFactory,
             PrefabFactory prefabFactory)
 
             : base(argsFactory)

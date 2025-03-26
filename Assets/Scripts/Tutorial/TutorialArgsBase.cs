@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -12,7 +11,6 @@ namespace BattleCruisers.Tutorial
 {
     public class TutorialArgsBase : ITutorialArgsBase
     {
-        public IApplicationModel AppModel { get; }
         public ICruiser PlayerCruiser { get; }
         public ICruiser AICruiser { get; }
         public ITutorialProvider TutorialProvider { get; }
@@ -27,7 +25,6 @@ namespace BattleCruisers.Tutorial
 
         public TutorialArgsBase(ITutorialArgsBase baseArgs)
             : this(
-                baseArgs.AppModel,
                 baseArgs.PlayerCruiser,
                 baseArgs.AICruiser,
                 baseArgs.TutorialProvider,
@@ -42,7 +39,6 @@ namespace BattleCruisers.Tutorial
         { }
 
         public TutorialArgsBase(
-            IApplicationModel appModel,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ITutorialProvider tutorialProvider,
@@ -56,7 +52,6 @@ namespace BattleCruisers.Tutorial
             GameEndMonitor gameEndMonitor)
         {
             Helper.AssertIsNotNull(
-                appModel,
                 playerCruiser,
                 aiCruiser,
                 prefabFactory,
@@ -69,7 +64,6 @@ namespace BattleCruisers.Tutorial
                 gameEndMonitor);
             // tutorialProvider may be null :/
 
-            AppModel = appModel;
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
             TutorialProvider = tutorialProvider;

@@ -9,7 +9,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data;
 using BattleCruisers.Movement;
-using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -50,7 +49,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
-            IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             SpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
@@ -78,7 +76,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
-                    damageApplierFactory ?? new DamageApplierFactory(),
                     spriteChooserFactory ??
                     new SpriteChooserFactory(),
                     new SoundPlayerFactory(deferrer),
@@ -94,7 +91,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 droneFeedbackFactory
                     = new DroneFeedbackFactory(
                         FactoryProvider.PoolProviders.DronePool,
-                        new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                        new SpawnPositionFinder(Constants.WATER_LINE),
                         faction);
             }
 
@@ -115,7 +112,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             PrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
             IFlightPointsProviderFactory flightPointsProviderFactory,
-            IDamageApplierFactory damageApplierFactory,
             SpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             DeferrerProvider deferrerProvider,
@@ -126,7 +122,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
 
-            factoryProvider.DamageApplierFactory.Returns(damageApplierFactory);
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
@@ -135,7 +130,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
-            factoryProvider.SettingsManager.Returns(ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+            factoryProvider.SettingsManager.Returns(DataProvider.SettingsManager);
 
             // Pools
             PoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);

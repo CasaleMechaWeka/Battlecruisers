@@ -149,8 +149,6 @@ namespace BattleCruisers.Scenes
             _ = LocTableCache.LoadTableAsync(TableName.HECKLES);
             _ = LocTableCache.LoadTableAsync(TableName.SCREENS_SCENE);
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
             bool startingState = await CheckForInternetConnection();
 
             if (startingState)
@@ -164,7 +162,7 @@ namespace BattleCruisers.Scenes
             IAudioSource audioSource
                 = new MusicVolumeAudioSource(
                     new AudioSourceBC(platformAudioSource),
-                    applicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
 
             soundPlayer = new SingleSoundPlayer(audioSource);
 
@@ -208,14 +206,13 @@ namespace BattleCruisers.Scenes
                 // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
-            IDataProvider dataProvider = applicationModel.DataProvider;
-            messagebox.Initialize(dataProvider, soundPlayer);
-            MusicPlayer = CreateMusicPlayer(dataProvider);
+            messagebox.Initialize(soundPlayer);
+            MusicPlayer = CreateMusicPlayer();
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
-            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
-            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, dataProvider.GameModel, RandomGenerator.Instance);
+            HintProviders hintProviders = new HintProviders();
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, DataProvider.GameModel);
 
             try
             {
@@ -722,14 +719,14 @@ namespace BattleCruisers.Scenes
             Debug.Log("===> You're Expired from UGS!!!");
         }
 
-        private IMusicPlayer CreateMusicPlayer(IDataProvider dataProvider)
+        private IMusicPlayer CreateMusicPlayer()
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
             IAudioSource audioSource
                 = new MusicVolumeAudioSource(
                     new AudioSourceBC(platformAudioSource),
-                    dataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
 
             return
                 new MusicPlayer(
@@ -740,11 +737,11 @@ namespace BattleCruisers.Scenes
         {
             string hint = null;
             if (sceneName == SceneNames.BATTLE_SCENE
-                && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+                && !ApplicationModel.IsTutorial)
             {
                 hint = _hintProvider.GetHint();
             }
-            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModelProvider.ApplicationModel.IsTutorial)
+            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModel.IsTutorial)
             {
                 // should be replace with PvP
                 hint = _hintProvider.GetHint();

@@ -13,7 +13,6 @@ using System.Collections;
 using Unity.Netcode;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Data;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Buildables.Boost;
@@ -116,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, 2);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
@@ -152,7 +151,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private async void ApplyVariantPvP(IPvPUnit unit, int varint_index)
         {
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             if (varint_index != -1)
             {
                 VariantPrefab variant = await _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(varint_index));
@@ -161,8 +159,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     HealthBar.variantIcon.color = new Color(HealthBar.variantIcon.color.r, HealthBar.variantIcon.color.g, HealthBar.variantIcon.color.b, 1f);
-                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantNameStringKeyBase);
-                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[varint_index].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(StaticData.Variants[varint_index].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(StaticData.Variants[varint_index].VariantDescriptionStringKeyBase);
                     ApplyVariantStats(variant.statVariant);
                 }
                 else

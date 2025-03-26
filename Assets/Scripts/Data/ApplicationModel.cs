@@ -1,10 +1,20 @@
-﻿using UnityEngine.Assertions;
-
-namespace BattleCruisers.Data
+﻿namespace BattleCruisers.Data
 {
-    public class ApplicationModel : IApplicationModel
+    public enum GameMode
     {
-        public int SelectedLevel
+        Campaign = 1,
+        Tutorial = 2,
+        Skirmish = 3,
+        PvP_1VS1 = 4,
+        CoinBattle = 5,
+        SideQuest = 6
+
+        //Voyage = 5
+    }
+
+    public static class ApplicationModel
+    {
+        public static int SelectedLevel
         {
             get => DataProvider.GameModel.SelectedLevel;
             set
@@ -14,7 +24,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public int SelectedPvPLevel
+        public static int SelectedPvPLevel
         {
             get => DataProvider.GameModel.SelectedPvPLevel;
             set
@@ -24,7 +34,7 @@ namespace BattleCruisers.Data
             }
         }
 
-        public int SelectedSideQuestID
+        public static int SelectedSideQuestID
         {
             get => DataProvider.GameModel.SelectedSideQuestID;
             set
@@ -34,17 +44,13 @@ namespace BattleCruisers.Data
             }
         }
 
-        public bool ShowPostBattleScreen { get; set; }
-        public GameMode Mode { get; set; }
-        public bool IsTutorial => Mode == GameMode.Tutorial;
-        public IDataProvider DataProvider { get; }
-        public bool UserWonSkirmish { get; set; }
+        public static bool ShowPostBattleScreen { get; set; }
+        public static GameMode Mode { get; set; }
+        public static bool IsTutorial => Mode == GameMode.Tutorial;
+        public static bool UserWonSkirmish { get; set; }
 
-        public ApplicationModel(IDataProvider dataProvider)
+        public static void Initialise()
         {
-            Assert.IsNotNull(dataProvider);
-
-            DataProvider = dataProvider;
             ShowPostBattleScreen = false;
             Mode = GameMode.Campaign;
             UserWonSkirmish = false;

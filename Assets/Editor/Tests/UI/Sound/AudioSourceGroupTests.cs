@@ -10,14 +10,14 @@ namespace BattleCruisers.Tests.UI.Sound
     {
         private AudioSourceGroup _audioSourceGroup;
         private IAudioSource _audioSource1, _audioSource2;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         [SetUp]
         public void TestSetup()
         {
             _audioSource1 = Substitute.For<IAudioSource>();
             _audioSource2 = Substitute.For<IAudioSource>();
-            _settingsManager = Substitute.For<ISettingsManager>();
+            _settingsManager = Substitute.For<SettingsManager>();
             _settingsManager.EffectVolume.Returns(0.33f);
 
             _audioSourceGroup = new AudioSourceGroup(_settingsManager, _audioSource1, _audioSource2);
@@ -45,9 +45,9 @@ namespace BattleCruisers.Tests.UI.Sound
 
             _audioSource1.ClearReceivedCalls();
             _audioSource2.ClearReceivedCalls();
-            
+
             _settingsManager.SettingsSaved += Raise.Event();
-            
+
             _audioSource1.DidNotReceiveWithAnyArgs().Volume = default;
             _audioSource2.DidNotReceiveWithAnyArgs().Volume = default;
         }

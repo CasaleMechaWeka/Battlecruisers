@@ -28,7 +28,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     private const string ANIMATOR_TRIGGER = "Play";
 
-    async void Start()
+    void Start()
     {
         StartPlatformSpecificAds();
 
@@ -39,8 +39,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         _soundPlayer
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_uiAudioSource),
-                        ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
+                        new AudioSourceBC(_uiAudioSource), 1));
 
         RemoveAdvertsButton.Initialise(_soundPlayer, ShowPurchaseConfirmationScreenDelayed);
         MerchShoppeButton.Initialise(_soundPlayer, RedirectToMerchShoppe);
@@ -93,14 +92,12 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     void StartPlatformSpecificAds()
     {
-        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
 #if UNITY_STANDALONE || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
         gameObject.SetActive(false);
 
         /*#elif UNITY_ANDROID && FREE_EDITION*/
 #elif UNITY_ANDROID
-        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        if (!DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
         }
@@ -110,7 +107,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
         }
 /*#elif UNITY_EDITOR && FREE_EDITION*/
 #elif UNITY_EDITOR
-        if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+        if (!DataProvider.GameModel.PremiumEdition)
         {
             gameObject.SetActive(true);
         }
@@ -124,12 +121,9 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
 
     void Update()
     {
-        IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
-
         if (IAPManager.instance != null)
         {
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+            if (!DataProvider.GameModel.PremiumEdition)
             {
                 ShowIAPButton();
                 startAdvert();

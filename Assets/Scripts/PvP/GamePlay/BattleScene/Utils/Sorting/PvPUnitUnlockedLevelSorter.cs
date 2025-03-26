@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using System.Collections.Generic;
@@ -9,23 +8,23 @@ using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting
 {
-    public class PvPUnitUnlockedLevelSorter : PvPBuildableUnlockedLevelSorter, IPvPBuildableSorter<IPvPUnit>
+    public class PvPUnitUnlockedLevelSorter : IPvPBuildableSorter<IPvPUnit>
     {
-        public PvPUnitUnlockedLevelSorter(IStaticData staticData, IPvPBuildableKeyFactory keyFactory)
-            : base(staticData, keyFactory) { }
+        public PvPUnitUnlockedLevelSorter()
+            : base() { }
 
         public IList<IPvPBuildableWrapper<IPvPUnit>> Sort(IList<IPvPBuildableWrapper<IPvPUnit>> units)
         {
             return
                 units
-                      //   .OrderBy(unit => _staticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))
-                      .OrderBy(unit => _staticData.UnitUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.UnitKey(convertToPvP(unit.Buildable.Category), convertToPvP(unit.Buildable.PrefabName))))
+                      //   .OrderBy(unit => StaticData.LevelFirstAvailableIn(_keyFactory.CreateUnitKey(unit.Buildable)))
+                      .OrderBy(unit => StaticData.UnitUnlockLevel(new BattleCruisers.Data.Models.PrefabKeys.UnitKey(convertToPvP(unit.Buildable.Category), convertToPvP(unit.Buildable.PrefabName))))
                     .ToList();
 
             // return null;
         }
 
-        private BattleCruisers.Buildables.Units.UnitCategory convertToPvP(UnitCategory category)
+        private UnitCategory convertToPvP(UnitCategory category)
         {
             switch (category)
             {

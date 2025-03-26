@@ -16,13 +16,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private IHeckleData _heckleData;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         private PvPHecklePanelController _panelController;
-        public void StaticInitialise(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, IHeckleData heckleData, PvPHecklePanelController panelController)
+        public void StaticInitialise(ISingleSoundPlayer soundPlayer, IHeckleData heckleData, PvPHecklePanelController panelController)
         {
-            Helper.AssertIsNotNull(soundPlayer, dataProvider, heckleData, panelController);
+            Helper.AssertIsNotNull(soundPlayer, heckleData, panelController);
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _heckleData = heckleData;
             _panelController = panelController;
             heckleButton.Initialise(_soundPlayer, SendHeckleMessage);

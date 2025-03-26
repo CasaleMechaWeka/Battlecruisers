@@ -9,8 +9,7 @@ namespace BattleCruisers.Scenes.Test
         {
             Debug.Log("About to load the world :D");
 
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-            PrefabCache cache = await prefabCacheFactory.CreatePrefabCacheAsync();
+            await PrefabCache.CreatePrefabCacheAsync();
 
             Debug.Log("Finished loading the world :)");
         }

@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound.AudioSources;
@@ -30,16 +29,15 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
             Assert.IsNotNull(_platformAudioSource);
         }
 
-        protected void Initialise(ITargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
+        protected void Initialise(ITargetFilter targetFilter, ITarget parent)
         {
             Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
-            Helper.AssertIsNotNull(targetFilter, parent, settingsManager);
+            Helper.AssertIsNotNull(targetFilter, parent);
 
             _parent = parent;
             _audioSource
                 = new EffectVolumeAudioSource(
-                    new AudioSourceBC(_platformAudioSource),
-                    settingsManager);
+                    new AudioSourceBC(_platformAudioSource));
 
             ContactFilter2D contactFilter = new ContactFilter2D()
             {

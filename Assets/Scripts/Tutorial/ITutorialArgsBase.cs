@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Cruisers;
-using BattleCruisers.Data;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -11,7 +10,6 @@ namespace BattleCruisers.Tutorial
 {
     public interface ITutorialArgsBase
     {
-        IApplicationModel AppModel { get; }
         ICruiser PlayerCruiser { get; }
         ICruiser AICruiser { get; }
         ITutorialProvider TutorialProvider { get; }

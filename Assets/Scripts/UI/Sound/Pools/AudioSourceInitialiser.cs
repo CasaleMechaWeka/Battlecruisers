@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.UI.Sound.AudioSources;
+﻿using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.Threading;
@@ -14,16 +13,15 @@ namespace BattleCruisers.UI.Sound.Pools
         private AudioSource _audioSource;
         public int type = -1;
 
-        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer, ISettingsManager settingsManager)
+        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(_audioSource);
-            Helper.AssertIsNotNull(realTimeDeferrer, settingsManager);
+            Helper.AssertIsNotNull(realTimeDeferrer);
 
-            return 
+            return
                 new AudioSourcePoolable(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_audioSource),
-                        settingsManager, type), 
+                        new AudioSourceBC(_audioSource), type),
                     realTimeDeferrer);
         }
     }

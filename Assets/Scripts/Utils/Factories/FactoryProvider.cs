@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement;
-using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
@@ -19,7 +18,6 @@ namespace BattleCruisers.Utils.Factories
     {
         private readonly IBattleSceneGodComponents _components;
 
-        public IDamageApplierFactory DamageApplierFactory { get; }
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
@@ -29,7 +27,7 @@ namespace BattleCruisers.Utils.Factories
         public SpriteChooserFactory SpriteChooserFactory { get; }
         public TargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
-        public ISettingsManager SettingsManager { get; }
+        public SettingsManager SettingsManager { get; }
 
         // Circular dependencies :/
         public PoolProviders PoolProviders { get; private set; }
@@ -38,7 +36,7 @@ namespace BattleCruisers.Utils.Factories
         public FactoryProvider(
             IBattleSceneGodComponents components,
             PrefabFactory prefabFactory,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(components, prefabFactory, settingsManager);
 
@@ -48,7 +46,6 @@ namespace BattleCruisers.Utils.Factories
             Targets = new TargetFactoriesProvider();
             MovementControllerFactory = new MovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            DamageApplierFactory = new DamageApplierFactory();
             SpriteChooserFactory
                 = new SpriteChooserFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);

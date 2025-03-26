@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             Faction = activationArgs.Faction;
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);
-            state.normalizedTime = RandomGenerator.Instance.Value;
+            state.normalizedTime = RandomGenerator.Value;
             _animation.Play();
             _animatedDrone.Play();
             _droneSpark.Play();
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 {
                     AnimationState state = _animation["BuilderDrone"];
                     Assert.IsNotNull(state);
-                    state.normalizedTime = RandomGenerator.Instance.Value;
+                    state.normalizedTime = RandomGenerator.Value;
                     _animation.Play();
                     _animatedDrone.Play();
                     _droneSpark.Play();

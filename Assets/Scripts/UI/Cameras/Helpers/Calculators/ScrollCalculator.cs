@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly ICamera _camera;
         private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private readonly ILevelToMultiplierConverter _scrollLevelConverter;
         private readonly float _scrollMultiplier;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             ICamera camera,
             ITime time,
             IRange<float> validOrthographicSizes,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             ILevelToMultiplierConverter scrollLevelConverter,
             float scrollMultiplier)
         {

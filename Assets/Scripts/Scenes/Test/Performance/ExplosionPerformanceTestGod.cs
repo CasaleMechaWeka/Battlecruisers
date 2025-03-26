@@ -1,17 +1,15 @@
 ﻿using BattleCruisers.Data.Static;
-using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
-using BCUtils = BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Performance
 {
     public class ExplosionPerformanceTestGod : TestGodBase
     {
         private PrefabFactory _prefabFactory;
-        private BCUtils.IRandomGenerator _random;
 
         public float spawnRadiusXInM = 8;
         public float spawnRadiusYInM = 5;
@@ -24,10 +22,9 @@ namespace BattleCruisers.Scenes.Test.Performance
             };
         }
 
-        protected override void Setup(Helper helper)
+        protected override void Setup(Utilities.Helper helper)
         {
             _prefabFactory = helper.PrefabFactory;
-            _random = BCUtils.RandomGenerator.Instance;
         }
 
         private void Update()
@@ -38,8 +35,8 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         private Vector3 FindRandomSpawnPosition()
         {
-            float x = _random.Range(-spawnRadiusXInM, spawnRadiusXInM);
-            float y = _random.Range(-spawnRadiusYInM, spawnRadiusYInM);
+            float x = RandomGenerator.Range(-spawnRadiusXInM, spawnRadiusXInM);
+            float y = RandomGenerator.Range(-spawnRadiusYInM, spawnRadiusYInM);
             return new Vector3(x, y, 0);
         }
     }

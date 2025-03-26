@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.Music
         private ILayeredMusicPlayer _musicPlayer;
         private AudioVolumeFade _audioVolumeFade;
         private IAudioSource _primarySource, _secondarySource;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         [SetUp]
         public void TestSetup()
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Music
             _audioVolumeFade = Substitute.For<AudioVolumeFade>();
             _primarySource = Substitute.For<IAudioSource>();
             _secondarySource = Substitute.For<IAudioSource>();
-            _settingsManager = Substitute.For<ISettingsManager>();
+            _settingsManager = Substitute.For<SettingsManager>();
 
             _musicPlayer = new LayeredMusicPlayer(_audioVolumeFade, _primarySource, _secondarySource, _settingsManager);
 

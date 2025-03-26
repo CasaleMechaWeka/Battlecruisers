@@ -24,7 +24,6 @@ namespace BattleCruisers.UI.Loading
         private string _defaultLoadingText;
         private string startingText;
         public static LoadingScreenController Instance { get; private set; }
-        public IApplicationModel applicationModel;
         public GameObject logos;
         public Button idButton;
         public GameObject idHighlight;
@@ -35,15 +34,14 @@ namespace BattleCruisers.UI.Loading
         {
             Helper.AssertIsNotNull(root, loadingText);
 
-            applicationModel = ApplicationModelProvider.ApplicationModel;
             string subTitle = String.Empty;
 
             //if player NOT already paid then use Free title
-            if (!applicationModel.DataProvider.GameModel.PremiumEdition)
+            if (!DataProvider.GameModel.PremiumEdition)
             {
                 subTitle = LocTableCache.CommonTable.GetString("GameNameFreeEdition").ToUpper();
             }
-            else if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            else if (DataProvider.GameModel.PremiumEdition)
             {
                 subTitle = LocTableCache.CommonTable.GetString("GameNameSubtitle").ToUpper();
             }
@@ -121,12 +119,12 @@ namespace BattleCruisers.UI.Loading
         {
             try
             {
-                applicationModel.DataProvider.SaveGame();
-                applicationModel.DataProvider.SyncCoinsToCloud();
-                applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {
@@ -147,7 +145,7 @@ namespace BattleCruisers.UI.Loading
             idHighlight.SetActive(false);
         }
 
-        private async void DisplayUserID()
+        private void DisplayUserID()
         {
 #if !UNITY_EDITOR
             await System.Threading.Tasks.Task.Delay(10000);

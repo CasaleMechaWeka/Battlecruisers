@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
@@ -15,7 +16,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
     {
         private ILootManager _lootManager;
 
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
@@ -26,21 +26,20 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         [SetUp]
         public void SetuUp()
         {
-            _dataProvider = Substitute.For<IDataProvider>();
             _prefabFactory = Substitute.For<PrefabFactory>();
             _middleDetailsGroup = Substitute.For<IItemDetailsGroup>();
             _leftDetailsGroup = Substitute.For<IItemDetailsGroup>();
             _rightDetailsGroup = Substitute.For<IItemDetailsGroup>();
 
-            _lootManager = new LootManager(_dataProvider, _prefabFactory, _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup);
+            _lootManager = new LootManager(_prefabFactory, _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup);
 
             _lootItems = new List<ILootItem>();
             ReadOnlyCollection<ILootItem> readonlyLootItems = new ReadOnlyCollection<ILootItem>(_lootItems);
             _unlockedLoot = Substitute.For<ILoot>();
             _unlockedLoot.Items.Returns(readonlyLootItems);
 
-            _dataProvider.StaticData.GetLevelLoot(default).ReturnsForAnyArgs(_unlockedLoot);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(99);
+            StaticData.GetLevelLoot(default).ReturnsForAnyArgs(_unlockedLoot);
+            StaticData.LastLevelWithLoot.Returns(99);
 
             _item1 = Substitute.For<ILootItem>();
             _item2 = Substitute.For<ILootItem>();
@@ -51,7 +50,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void ShouldShowLoot_HaveCompletedLevelBefore_ReturnsFalse()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted);
+            DataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted);
 
             Assert.IsFalse(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
@@ -60,8 +59,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void ShouldShowLoot_HaveNotCompletedLevelBefore_LevelDoesNotHaveLoot_ReturnsFalse()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
+            DataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
+            StaticData.LastLevelWithLoot.Returns(levelCompleted - 1);
 
             Assert.IsFalse(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
@@ -70,8 +69,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         public void ShouldShowLoot_HaveNotCompletedLevelBefore_LevelHasLoot_ReturnsTrue()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
+            DataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
+            StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
             Assert.IsTrue(_lootManager.ShouldShowLevelLoot(levelCompleted));
         }
@@ -85,8 +84,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
             TriggerUnlock();
 
-            _item1.Received().UnlockItem(_dataProvider.GameModel);
-            _item2.Received().UnlockItem(_dataProvider.GameModel);
+            _item1.Received().UnlockItem(DataProvider.GameModel);
+            _item2.Received().UnlockItem(DataProvider.GameModel);
         }
 
         #region ShowLoot
@@ -127,8 +126,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         private void TriggerUnlock()
         {
             int levelCompleted = 7;
-            _dataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
-            _dataProvider.StaticData.LastLevelWithLoot.Returns(levelCompleted);
+            DataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
+            StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
             _lootManager.UnlockLevelLoot(levelCompleted);
         }

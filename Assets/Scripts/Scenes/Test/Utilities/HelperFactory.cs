@@ -1,10 +1,7 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Threading;
-using System.Threading.Tasks;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -12,19 +9,15 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         private const int DEFAULT_NUM_OF_DRONES = 10;
 
-        public static async Task<Helper> CreateHelperAsync(
+        public static Helper CreateHelper(
             int numOfDrones = DEFAULT_NUM_OF_DRONES,
             float buildSpeedMultiplier = BuildSpeedMultipliers.VERY_FAST,
             IDeferrer deferrer = null,
             IDeferrer realTimeDeferrer = null,
             IUpdaterProvider updaterProvider = null)
         {
-            PrefabCacheFactory prefabCacheFactory = new PrefabCacheFactory();
-            PrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             PrefabFactory prefabFactory
-                = new PrefabFactory(
-                    prefabCache,
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                = new PrefabFactory();
 
             return
                 new Helper(

@@ -1,14 +1,20 @@
 ﻿using BattleCruisers.Data.Models;
 using System;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Settings
 {
-    public class SettingsManager : ISettingsManager
+    public enum Difficulty
     {
-        private readonly ISettingsModel _settings;
-        private readonly IDataProvider _dataProvider;
+        Easy = 0,
+        Normal = 1,
+        Hard = 2,
+        Harder = 3
+    }
+
+    public class SettingsManager
+    {
+        private readonly SettingsModel _settings;
 
         public event EventHandler SettingsSaved;
 
@@ -131,17 +137,14 @@ namespace BattleCruisers.Data.Settings
             set => _settings.Resolution = value;
         }
 
-        public SettingsManager(IDataProvider dataProvider)
+        public SettingsManager()
         {
-            Assert.IsNotNull(dataProvider);
-
-            _settings = dataProvider.GameModel.Settings;
-            _dataProvider = dataProvider;
+            _settings = DataProvider.GameModel.Settings;
         }
 
         public void Save()
         {
-            _dataProvider.SaveGame();
+            DataProvider.SaveGame();
             SettingsSaved?.Invoke(this, EventArgs.Empty);
         }
     }

@@ -14,7 +14,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.D
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
-using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
@@ -205,8 +204,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                 // should update Name and Description for Bodykit
-                Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].NameStringKeyBase);
-                Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[index].DescriptionKeyBase);
+                Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
+                Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
             }
         }
 
@@ -365,10 +364,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                ApplicationModel applicationModel = ApplicationModel;
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException e)
@@ -446,10 +445,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 #if LOG_ANALYTICS
     Debug.Log("Analytics: " + logName);
 #endif
-                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                ApplicationModel applicationModel = ApplicationModel;
                 try
                 {
-                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                     AnalyticsService.Instance.Flush();
                 }
                 catch (ConsentCheckException ex)
@@ -721,8 +720,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 return;
             AudioSource audioSource = droneSoundFeedbackInitialiser.gameObject.GetComponentInChildren<AudioSource>();
             IAudioSource _audioSource = new EffectVolumeAudioSource(
-                        new AudioSourceBC(audioSource),
-                        PvPBattleSceneGodClient.Instance.factoryProvider.SettingsManager, 2);
+                        new AudioSourceBC(audioSource), 2);
             _audioSource?.Play(isSpatial: true);
             //   _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
         }

@@ -16,7 +16,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Seabed;
-using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -102,7 +101,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             base.Initialise(uiManager, factoryProvider);
 
             _velocityBoostable = new Boostable(1);
-            _fuzziedMaxVelocityInMPerS = RandomGenerator.Instance.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
+            _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
         }
 

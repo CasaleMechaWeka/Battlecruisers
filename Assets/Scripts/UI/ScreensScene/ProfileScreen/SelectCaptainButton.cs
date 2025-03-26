@@ -11,25 +11,21 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
     public class SelectCaptainButton : CanvasGroupButton
     {
         private IComparisonStateTracker _comparisonStateTracker;
-        private IDataProvider _dataProvider;
 
         private ISettableBroadcastingProperty<CaptainExoKey> _selectedCaptain;
         public IBroadcastingProperty<CaptainExoKey> SelectedCaptain { get; private set; }
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IComparisonStateTracker comparisonStateTracker,
-            IDataProvider dataProvider
-            )
+            IComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise(soundPlayer);
 
-            Helper.AssertIsNotNull(comparisonStateTracker, dataProvider);
+            Helper.AssertIsNotNull(comparisonStateTracker);
 
             _comparisonStateTracker = comparisonStateTracker;
             //_comparisonStateTracker.State.ValueChanged += ComparisonStateChanged;
 
-            _dataProvider = dataProvider;
-            _selectedCaptain = new SettableBroadcastingProperty<CaptainExoKey>(initialValue: _dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            _selectedCaptain = new SettableBroadcastingProperty<CaptainExoKey>(initialValue: DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
 
             SelectedCaptain = new BroadcastingProperty<CaptainExoKey>(_selectedCaptain);
         }

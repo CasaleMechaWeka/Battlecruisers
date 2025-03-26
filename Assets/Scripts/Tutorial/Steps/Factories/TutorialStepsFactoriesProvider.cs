@@ -33,22 +33,22 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         {
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
 
-            ITutorialStepArgsFactory argsFactory = new TutorialStepArgsFactory(highlighter, explanationPanel.TextDisplayer);
-            ITutorialStepFactory cameraAdjustmentWaitStepFactory = new CameraAdjustmentWaitStepFactory(argsFactory, tutorialArgs.CameraComponents);
-            IExplanationDismissableStepFactory explanationDismissableStepFactory
+            TutorialStepArgsFactory argsFactory = new TutorialStepArgsFactory(highlighter, explanationPanel.TextDisplayer);
+            CameraAdjustmentWaitStepFactory cameraAdjustmentWaitStepFactory = new CameraAdjustmentWaitStepFactory(argsFactory, tutorialArgs.CameraComponents);
+            ExplanationDismissableStepFactory explanationDismissableStepFactory
                 = new ExplanationDismissableStepFactory(argsFactory, explanationPanel.OkButton, explanationPanel.DoneButton);
-            IFeaturePermitterStepFactory featurePermitterStepFactory = new FeaturePermitterStepFactory(argsFactory);
-            IAutoNavigationStepFactory autoNavigationStepFactory
+            FeaturePermitterStepFactory featurePermitterStepFactory = new FeaturePermitterStepFactory(argsFactory);
+            AutoNavigationStepFactory autoNavigationStepFactory
                 = new AutoNavigationStepFactory(argsFactory, cameraAdjustmentWaitStepFactory, tutorialArgs.CameraComponents);
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider
                 = tutorialArgs.TutorialProvider.CreateLastIncompleteBuildingStartedProvider(tutorialArgs.PlayerCruiser);
-            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory
+            SlidingPanelWaitStepFactory slidingPanelWaitStepFactory
                 = new SlidingPanelWaitStepFactory(
                     argsFactory,
                     tutorialArgs.LeftPanelComponents.BuildMenu.SelectorPanel,
                     tutorialArgs.RightPanelComponents.InformatorPanel);
 
-            IConstructBuildingStepsFactory constructBuildingStepsFactory
+            ConstructBuildingStepsFactory constructBuildingStepsFactory
                 = new ConstructBuildingStepsFactory(
                     argsFactory,
                     tutorialArgs.LeftPanelComponents,
@@ -133,7 +133,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     explanationDismissableStepFactory,
                     tutorialArgs.PrefabFactory);
 
-            IChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory = new ChangeCruiserBuildSpeedStepFactory(argsFactory);
+            ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory = new ChangeCruiserBuildSpeedStepFactory(argsFactory);
             ICreateProducingFactoryStepsFactory createProducingFactoryStepsFactory
                 = new CreateProducingFactoryStepsFactory(
                     argsFactory,

@@ -18,7 +18,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public static ProfilePanelScreenController Instance { get; private set; }
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
 
         public CanvasGroupButton captainEditButton;
@@ -54,15 +53,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
-            IDataProvider dataProvider)
+            PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory);
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
 
             million = LocTableCache.CommonTable.GetString("Million");
@@ -70,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             trillion = LocTableCache.CommonTable.GetString("Trillion");
             quadrillion = LocTableCache.CommonTable.GetString("Quadrillion");
 
-            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory, dataProvider);
+            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
             playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
             selectButton.Initialise(_soundPlayer, OnClickSelectButton);
@@ -80,14 +77,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             spinnerOfSelect.SetActive(false);
             lableOfSelect.SetActive(true);
 
-            playerName.text = _dataProvider.GameModel.PlayerName;
-            int rank = CalculateRank(_dataProvider.GameModel.LifetimeDestructionScore);
+            playerName.text = DataProvider.GameModel.PlayerName;
+            int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
             rankTitle.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
 
             int nextLevelXP;
             int currentXP;
-            long lDes = dataProvider.GameModel.LifetimeDestructionScore;
+            long lDes = DataProvider.GameModel.LifetimeDestructionScore;
             if (lDes > 0)
             {
                 nextLevelXP = (int)CalculateLevelXP(rank);
@@ -104,7 +101,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             levelXPString.text = FormatNumber(nextLevelXP);
 
             Text scoreString = notorietyScore?.GetComponent<Text>();
-            scoreString.text = Mathf.Floor(_dataProvider.GameModel.BattleWinScore).ToString();
+            scoreString.text = Mathf.Floor(DataProvider.GameModel.BattleWinScore).ToString();
 
         }
 
@@ -176,7 +173,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             lableOfSelect.SetActive(false);
             if (await captainsPanel.SaveCurrentItem())
             {
-                PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
             }
             captainsPanel.gameObject.SetActive(false);
             spinnerOfSelect.SetActive(false);

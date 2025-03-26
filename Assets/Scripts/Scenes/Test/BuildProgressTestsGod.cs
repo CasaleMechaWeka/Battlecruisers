@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test
         protected override List<GameObject> GetGameObjects()
         {
             _buildings = FindObjectsOfType<Building>();
-            return 
+            return
                 _buildings
                     .Select(building => building.GameObject)
                     .ToList();
@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.Test
 
         protected async override Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: 5, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(buildSpeedMultiplier: 5, updaterProvider: updaterProvider);
         }
 
         protected override void Setup(Helper helper)

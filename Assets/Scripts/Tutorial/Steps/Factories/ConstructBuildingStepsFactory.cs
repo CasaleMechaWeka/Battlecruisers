@@ -16,21 +16,21 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class ConstructBuildingStepsFactory : TutorialFactoryBase, IConstructBuildingStepsFactory
+    public class ConstructBuildingStepsFactory : TutorialFactoryBase
     {
         private readonly LeftPanelComponents _leftPanelComponents;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
-        private readonly ISlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
+        private readonly SlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
 
         public ConstructBuildingStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             LeftPanelComponents leftPanelComponents,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
-            ISlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
+            SlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelWaitStepFactory);

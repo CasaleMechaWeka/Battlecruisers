@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -29,7 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly IPvPFactoryProvider _factoryProvider;
         private readonly IPvPBattleSceneHelper _helper;
-        private readonly IApplicationModel _applicationModel;
         private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
         private readonly IPvPUIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
@@ -38,15 +36,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPCruiserFactory(
             IPvPFactoryProvider factoryProvider,
-            IPvPBattleSceneHelper helper,
-            IApplicationModel applicationModel
+            IPvPBattleSceneHelper helper
          /*   IPvPUIManager uiManager*/)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, helper, applicationModel/*, uiManager*/);
+            PvPHelper.AssertIsNotNull(factoryProvider, helper/*, uiManager*/);
 
             _factoryProvider = factoryProvider;
             _helper = helper;
-            _applicationModel = applicationModel;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             // _uiManager = uiManager;
             _fogVisibilityDecider = new FogVisibilityDecider();
@@ -229,7 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private IPvPCruiserHelper CreatePlayerBHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            // if (_applicationModel.IsTutorial)
+            // if (ApplicationModel.IsTutorial)
             // {
             //     return new PvPTutorialAICruiserHelper(uiManager, cameraFocuser);
             // }
@@ -241,7 +237,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private IPvPCruiserHelper CreatePlayerBHelper(/*IPvPUIManager uiManager  , ICameraFocuser cameraFocuser*/)
         {
-            // if (_applicationModel.IsTutorial)
+            // if (ApplicationModel.IsTutorial)
             // {
             //     return new PvPTutorialAICruiserHelper(uiManager, cameraFocuser);
             // }
@@ -253,7 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
-            // if (_applicationModel.IsTutorial)
+            // if (ApplicationModel.IsTutorial)
             // {
             //     return new PvPTutorialPlayerCruiserHelper(uiManager, cameraFocuser);
             // }
@@ -266,7 +262,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private IPvPCruiserHelper CreatePlayerHelper(/*IPvPUIManager uiManager , ICameraFocuser cameraFocuser*/)
         {
-            // if (_applicationModel.IsTutorial)
+            // if (ApplicationModel.IsTutorial)
             // {
             //     return new PvPTutorialPlayerCruiserHelper(uiManager, cameraFocuser);
             // }

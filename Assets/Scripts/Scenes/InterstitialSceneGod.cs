@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
-            IGameModel gm = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel;
+            IGameModel gm = DataProvider.GameModel;
             if (_sceneNavigator == null)
             {
                 screens[TestingScreen - 1].SetActive(true);
@@ -44,8 +44,7 @@ namespace BattleCruisers.Scenes
             _soundPlayer
                 = new SingleSoundPlayer(
                     new EffectVolumeAudioSource(
-                        new AudioSourceBC(_uiAudioSource),
-                        ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager, 1));
+                        new AudioSourceBC(_uiAudioSource), 1));
 
 
             nextButton.Initialise(_soundPlayer, Done);

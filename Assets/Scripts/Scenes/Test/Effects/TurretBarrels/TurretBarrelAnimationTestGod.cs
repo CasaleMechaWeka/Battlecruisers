@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Effects.TurretBarrels
             // May be null
             IDeferrer deferrer = GetComponent<IDeferrer>();
 
-            return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, deferrer: deferrer);
+            return HelperFactory.CreateHelper(updaterProvider: updaterProvider, deferrer: deferrer);
         }
 
         protected override List<GameObject> GetGameObjects()

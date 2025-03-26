@@ -81,7 +81,7 @@ namespace BattleCruisers.Buildables.Units
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
+            _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, 2);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -106,7 +106,7 @@ namespace BattleCruisers.Buildables.Units
             else if (!ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
                 // Set Variant to AI
-                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
+                if (ApplicationModel.Mode == GameMode.CoinBattle && UnityEngine.Random.Range(0, 5) == 2)
                 {
                     ApplyRandomeVariantToAI(this);
                     isAppliedVariant = true;
@@ -122,13 +122,12 @@ namespace BattleCruisers.Buildables.Units
                 VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
                 if (variant != null)
                 {
-                    IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
                     // apply icon, name and description
                     HealthBar.variantIcon.sprite = variant.variantSprite;
                     HealthBar.variantIcon.enabled = true;
                     variantIndex = randomID;
-                    Name = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[randomID].VariantNameStringKeyBase);
-                    Description = LocTableCache.CommonTable.GetString(dataProvider.StaticData.Variants[randomID].VariantDescriptionStringKeyBase);
+                    Name = LocTableCache.CommonTable.GetString(StaticData.Variants[randomID].VariantNameStringKeyBase);
+                    Description = LocTableCache.CommonTable.GetString(StaticData.Variants[randomID].VariantDescriptionStringKeyBase);
 
                     // apply variant stats for building (maxhealth, numof drones required, build time)
                     ApplyVariantStats(variant.statVariant);
@@ -144,9 +143,8 @@ namespace BattleCruisers.Buildables.Units
         private int GetRandomVariantForAI(IUnit unit)
         {
             int variant_ID = -1;
-            IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
             List<int> ids = new List<int>();
-            for (int i = 0; i < dataProvider.StaticData.Variants.Count; i++)
+            for (int i = 0; i < StaticData.Variants.Count; i++)
             {
                 VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
                 if (variant != null)
@@ -167,17 +165,16 @@ namespace BattleCruisers.Buildables.Units
 
         private void ApplyVariantToPlayer(IUnit unit)
         {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            VariantPrefab variant = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
             if (variant != null)
             {
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
-                int index = applicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
                 variantIndex = index;
-                Name = LocTableCache.CommonTable.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
-                Description = LocTableCache.CommonTable.GetString(applicationModel.DataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
+                Name = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
+                Description = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);
 
                 // apply max health, num of drone required, build time
                 ApplyVariantStats(variant.statVariant);

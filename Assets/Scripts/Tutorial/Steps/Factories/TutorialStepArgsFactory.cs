@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class TutorialStepArgsFactory : ITutorialStepArgsFactory
+    public class TutorialStepArgsFactory
     {
         private readonly IHighlighter _highlighter;
         private readonly ITextDisplayer _displayer;
@@ -23,10 +23,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IHighlightable highlightable = null,
             bool shouldUnhighlight = true)
         {
-            return 
+            return
                 CreateTutorialStepArgs(
-                    textToDisplay, 
-                    new StaticProvider<IHighlightable>(highlightable), 
+                    textToDisplay,
+                    new StaticProvider<IHighlightable>(highlightable),
                     shouldUnhighlight);
         }
 

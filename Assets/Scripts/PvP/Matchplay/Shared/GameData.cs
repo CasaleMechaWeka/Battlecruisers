@@ -41,13 +41,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData(ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerName, AuthenticationService.Instance.PlayerId, 0, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo(), ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore, ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
+            Data = new UserData(DataProvider.GameModel.PlayerName, AuthenticationService.Instance.PlayerId, 0, DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo(), DataProvider.GameModel.LifetimeDestructionScore, DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
 
 
             //cheat code
             Data.userGamePreferences.gameQueue = GameQueue.Casual;
             Data.userGamePreferences.gameMode = GameMode.Starting;
-            Data.userGamePreferences.map = (Map)ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap;
+            Data.userGamePreferences.map = (Map)DataProvider.GameModel.GameMap;
         }
 
         public UserData Data { get; }

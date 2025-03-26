@@ -32,13 +32,11 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
     public class SkirmishScreenController : ScreenController
     {
-        private IApplicationModel _applicationModel;
         private IList<HullKey> _unlockedHulls;
         private List<HullKey> _playableHulls;   //these also include the boss hulls
-        private IRandomGenerator _random;
         private StrategyType[] _strategies;
 
-        private ISkirmishModel Skirmish => _applicationModel.DataProvider.GameModel.Skirmish;
+        private ISkirmishModel Skirmish => DataProvider.GameModel.Skirmish;
 
         private string _randomDropdownEntry;
 
@@ -48,27 +46,24 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            IApplicationModel applicationModel,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, playerCruiserDropdown, aiCruiserDropdown);
-            Helper.AssertIsNotNull(applicationModel, soundPlayer, prefabFactory);
+            Helper.AssertIsNotNull(soundPlayer, prefabFactory);
 
-            _applicationModel = applicationModel;
-            _unlockedHulls = applicationModel.DataProvider.GameModel.UnlockedHulls.ToList();
+            _unlockedHulls = DataProvider.GameModel.UnlockedHulls.ToList();
             _playableHulls = _unlockedHulls.ToList();
 
-            if (applicationModel.DataProvider.GameModel.CompletedLevels.Count >= 15)
+            if (DataProvider.GameModel.CompletedLevels.Count >= 15)
                 _playableHulls.Add(StaticPrefabKeys.Hulls.ManOfWarBoss);
-            if (applicationModel.DataProvider.GameModel.CompletedLevels.Count >= 31)
+            if (DataProvider.GameModel.CompletedLevels.Count >= 31)
                 _playableHulls.Add(StaticPrefabKeys.Hulls.HuntressBoss);
-            if (applicationModel.DataProvider.GameModel.CompletedSideQuests.ToArray().Select(sideQuest => sideQuest.LevelNum).Contains(23))
+            if (DataProvider.GameModel.CompletedSideQuests.ToArray().Select(sideQuest => sideQuest.LevelNum).Contains(23))
                 _playableHulls.Add(StaticPrefabKeys.Hulls.FortressPrime);
 
-            _random = RandomGenerator.Instance;
             _randomDropdownEntry = LocTableCache.ScreensSceneTable.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
             battleButton.Initialise(soundPlayer, Battle, this);
@@ -87,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
             else
             {
-                return _applicationModel.DataProvider.SettingsManager.AIDifficulty;
+                return DataProvider.SettingsManager.AIDifficulty;
             }
         }
 
@@ -160,7 +155,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public void Battle()
         {
-            _applicationModel.Mode = GameMode.Skirmish;
+            ApplicationModel.Mode = GameMode.Skirmish;
             SaveSkirmishSettings();
             Logging.Log(Tags.SKIRMISH_SCREEN, Skirmish);
             _screensSceneGod.LoadBattleScene();
@@ -179,13 +174,13 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private void SaveSkirmishSettings()
         {
-            int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
+            int backgroundLevelNum = RandomGenerator.Range(1, StaticData.NUM_OF_LEVELS);
 
             DropdownResult<HullKey> playerCruiserResult = GetSelectedCruiser(playerCruiserDropdown);
             DropdownResult<HullKey> aiCruiserResult = GetSelectedCruiser(aiCruiserDropdown);
             DropdownResult<StrategyType> strategyResult = GetSelectedStrategy();
 
-            _applicationModel.DataProvider.GameModel.Skirmish
+            DataProvider.GameModel.Skirmish
                 = new SkirmishModel(
                     difficultyDropdown.Difficulty,
                     playerCruiserResult.WasRandom,
@@ -195,7 +190,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                     strategyResult.WasRandom,
                     strategyResult.Result,
                     backgroundLevelNum);
-            _applicationModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
 
         private DropdownResult<HullKey> GetSelectedCruiser(StringDropdown cruiserDropdown)
@@ -208,15 +203,15 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
-                cruiserKey = RandomGenerator.Instance.RandomItem(_unlockedHulls);
+                cruiserKey = RandomGenerator.RandomItem(_unlockedHulls);
             }
             else
             {
                 Assert.IsTrue(adjustedIndex < _playableHulls.Count);
                 cruiserKey = _playableHulls[adjustedIndex];
             }
-            if (cruiserKey != _applicationModel.DataProvider.GameModel.PlayerLoadout.Hull)
-                _applicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
+            if (cruiserKey != DataProvider.GameModel.PlayerLoadout.Hull)
+                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
 
             return new DropdownResult<HullKey>(wasRandom, cruiserKey);
         }
@@ -231,7 +226,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random strategy!");
-                strategy = RandomGenerator.Instance.RandomItem(_strategies);
+                strategy = RandomGenerator.RandomItem(_strategies);
             }
             else
             {

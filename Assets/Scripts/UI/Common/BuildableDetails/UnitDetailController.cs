@@ -36,7 +36,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             set { _currentButton = value; }
         }
 
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private Dictionary<IUnit, List<int>> _unlockedVariants;
@@ -48,11 +47,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public Text variantParentName;
         public StatsController<IUnit> variantStats;
 
-        public void Initialize(IDataProvider dataProvider, PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+        public void Initialize(PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, soundPlayer);
+            Helper.AssertIsNotNull(prefabFactory, soundPlayer);
             Helper.AssertIsNotNull(leftNav, rightNav);
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
@@ -67,7 +65,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
         private void SetInitVariant()
         {
-            _selectedVariant = _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
+            _selectedVariant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
             if (_unlockedVariants.ContainsKey(_selectedUnit))
             {
                 if (_unlockedVariants[_selectedUnit].Count > 0)
@@ -137,10 +135,10 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             variantIcon.gameObject.SetActive(true);
             variantName.gameObject.SetActive(true);
             VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-            variantName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantNameStringKeyBase);
+            variantName.text = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
             variantIcon.sprite = variant.variantSprite;
             variantParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-            variantDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[index].VariantDescriptionStringKeyBase);
+            variantDescription.text = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);
             variantStats.ShowStatsOfVariant(_selectedUnit, variant);
         }
 
@@ -153,15 +151,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private void LeftNavButton_OnClicked()
         {
             --_index;
-            int current_index = _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
+            int current_index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
             if (_index <= -1)
             {
                 _index = -1;
                 leftNav.gameObject.SetActive(false);
                 rightNav.gameObject.SetActive(true);
                 ShowOriginalUnit();
-                _dataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
-                _dataProvider.SaveGame();
+                DataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
+                DataProvider.SaveGame();
                 _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = -1 });
                 return;
             }
@@ -170,16 +168,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 leftNav.gameObject.SetActive(true);
                 rightNav.gameObject.SetActive(true);
             }
-            _dataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
-            _dataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedUnit][_index]);
-            _dataProvider.SaveGame();
+            DataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
+            DataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedUnit][_index]);
+            DataProvider.SaveGame();
             ShowVariantDetail(_unlockedVariants[_selectedUnit][_index]);
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedUnit][_index] });
         }
         private void RightNavButton_OnClicked()
         {
             ++_index;
-            int current_index = _dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
+            int current_index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, _selectedUnit);
             if (_index >= _unlockedVariants[_selectedUnit].Count - 1)
             {
                 _index = _unlockedVariants[_selectedUnit].Count - 1;
@@ -191,9 +189,9 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                 leftNav.gameObject.SetActive(true);
                 rightNav.gameObject.SetActive(true);
             }
-            _dataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
-            _dataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedUnit][_index]);
-            _dataProvider.SaveGame();
+            DataProvider.GameModel.PlayerLoadout.RemoveCurrentSelectedVariant(current_index);
+            DataProvider.GameModel.PlayerLoadout.AddSelectedVariant(_unlockedVariants[_selectedUnit][_index]);
+            DataProvider.SaveGame();
             ShowVariantDetail(_unlockedVariants[_selectedUnit][_index]);
             _currentButton.variantChanged.Invoke(this, new VariantChangeEventArgs { Index = _unlockedVariants[_selectedUnit][_index] });
         }
@@ -201,15 +199,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public void CollectUnlockedUnitVariant()
         {
             _unlockedVariants = new Dictionary<IUnit, List<int>>();
-            for (int i = 0; i < _dataProvider.GameModel.PurchasedVariants.Count; i++)
+            for (int i = 0; i < DataProvider.GameModel.PurchasedVariants.Count; i++)
             {
-                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(_dataProvider.GameModel.PurchasedVariants[i]));
+                VariantPrefab variant = _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(DataProvider.GameModel.PurchasedVariants[i]));
                 if (variant != null)
                     if (variant.IsUnit())
                         if (_unlockedVariants.ContainsKey(variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)))
-                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)].Add(_dataProvider.GameModel.PurchasedVariants[i]);
+                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)].Add(DataProvider.GameModel.PurchasedVariants[i]);
                         else
-                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { _dataProvider.GameModel.PurchasedVariants[i] };
+                            _unlockedVariants[variant.GetUnit(ScreensSceneGod.Instance._prefabFactory)] = new List<int> { DataProvider.GameModel.PurchasedVariants[i] };
             }
         }
     }

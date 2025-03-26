@@ -12,10 +12,9 @@ namespace BattleCruisers.Tests.UI.Loading
         public void GetHint()
         {
             IList<string> hints = new List<string>() { "a", "sweet", "hint" };
-            IRandomGenerator random = Substitute.For<IRandomGenerator>();
-            random.Range(0, hints.Count - 1).Returns(2);
+            RandomGenerator.Range(0, hints.Count - 1).Returns(2);
 
-            IHintProvider hintProvider = new HintProvider(hints, random);
+            IHintProvider hintProvider = new HintProvider(hints);
             Assert.AreEqual(hints[2], hintProvider.GetHint());
         }
     }

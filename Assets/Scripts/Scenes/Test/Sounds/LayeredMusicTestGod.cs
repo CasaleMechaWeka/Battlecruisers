@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
                     SoundKeys.Music.Background.Confusion,
                     //SoundKeys.Music.Background.Bobby
                     //SoundKeys.Music.Background.Juggernaut
-                    ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             _musicPlayer.Play();
         }
 

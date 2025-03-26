@@ -106,15 +106,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             //    _playerBCruiserName = "";
 
 
-            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
                 difficultyDestructionScoreMultiplier = 1.0f;
             }
-            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
             {
                 difficultyDestructionScoreMultiplier = 1.5f;
             }
-            if (ApplicationModelProvider.ApplicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
             {
                 difficultyDestructionScoreMultiplier = 2.0f;
             }

@@ -28,7 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPUIManager uiManager,
             IList<IPvPBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
-            IPvPBuildableSorterFactory sorterFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -40,7 +39,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 uiManager,
                 buildingGroups,
                 units,
-                sorterFactory,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
@@ -62,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             // Building menus
             PvPBuildingMenus buildingMenus = GetComponentInChildren<PvPBuildingMenus>();
             Assert.IsNotNull(buildingMenus);
-            IPvPBuildableSorter<IPvPBuilding> buildingSorter = sorterFactory.CreateBuildingSorter();
+            IPvPBuildableSorter<IPvPBuilding> buildingSorter = new PvPBuildingUnlockedLevelSorter();
             IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
             IPvPBuildingClickHandler buildingClickHandler
                 = new PvPBuildingClickHandler(
@@ -83,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     new PvPPopulationLimitReachedDecider(populationLimitMonitor));
             PvPUnitMenus unitMenus = GetComponentInChildren<PvPUnitMenus>();
             Assert.IsNotNull(unitMenus);
-            IPvPBuildableSorter<IPvPUnit> unitSorter = sorterFactory.CreateUnitSorter();
+            IPvPBuildableSorter<IPvPUnit> unitSorter = new PvPUnitUnlockedLevelSorter();
             unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, uiSoundPlayer, unitClickHandler);
 
             return

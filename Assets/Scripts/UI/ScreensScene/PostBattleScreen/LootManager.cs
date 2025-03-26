@@ -8,25 +8,23 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using UnityEngine;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class LootManager : ILootManager
     {
-        private readonly IDataProvider _dataProvider;
         private readonly PrefabFactory _prefabFactory;
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
-            IDataProvider dataProvider,
             PrefabFactory prefabFactory,
             IItemDetailsGroup middleDetailsGroup,
             IItemDetailsGroup leftDetailsGroup,
             IItemDetailsGroup rightDetailsGroup)
         {
-            Helper.AssertIsNotNull(dataProvider, prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
+            Helper.AssertIsNotNull(prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
 
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _middleDetailsGroup = middleDetailsGroup;
             _leftDetailsGroup = leftDetailsGroup;
@@ -35,33 +33,33 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowLevelLoot(int levelCompleted)
         {
-            ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+            ILoot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
             bool containsNewLoot = false;
             if (unlockedLoot.Items.Count != 0)
                 for (int i = 0; i < unlockedLoot.Items.Count; i++)
-                    if (!unlockedLoot.Items[i].IsUnlocked(_dataProvider.GameModel))
+                    if (!unlockedLoot.Items[i].IsUnlocked(DataProvider.GameModel))
                         containsNewLoot = true;
 
             return
-                containsNewLoot || (levelCompleted > _dataProvider.GameModel.NumOfLevelsCompleted
-                && levelCompleted <= _dataProvider.StaticData.LastLevelWithLoot);
+                containsNewLoot || (levelCompleted > DataProvider.GameModel.NumOfLevelsCompleted
+                && levelCompleted <= StaticData.LastLevelWithLoot);
         }
 
         //have to do when SideQuest data is stored in StaticData
         public bool ShouldShowSideQuestLoot(int sideQuestID)
         {
-            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
+            ILoot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
 
-            bool containsNewLoot = unlockedLoot.Items.Any(item => !item.IsUnlocked(_dataProvider.GameModel));
+            bool containsNewLoot = unlockedLoot.Items.Any(item => !item.IsUnlocked(DataProvider.GameModel));
 
             // If there are no completed sidequests recorded, simply return based on new loot found.
-            if (_dataProvider.GameModel.CompletedSideQuests == null ||
-                !_dataProvider.GameModel.CompletedSideQuests.Any())
+            if (DataProvider.GameModel.CompletedSideQuests == null ||
+                !DataProvider.GameModel.CompletedSideQuests.Any())
             {
                 return containsNewLoot;
             }
 
-            List<int> completedSideQuestIDs = _dataProvider.GameModel.CompletedSideQuests
+            List<int> completedSideQuestIDs = DataProvider.GameModel.CompletedSideQuests
                 .Select(completedSQ => completedSQ.LevelNum)  // Ensure LevelNum here really represents sidequest ID.
                 .ToList();
 
@@ -71,12 +69,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public ILoot UnlockLevelLoot(int levelCompleted)
         {
             Debug.Log($"UnlockLevelLoot called for level: {levelCompleted}");
-            ILoot unlockedLoot = _dataProvider.StaticData.GetLevelLoot(levelCompleted);
+            ILoot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
             {
                 UnlockLootItems(unlockedLoot);
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
             }
 
             return unlockedLoot;
@@ -85,12 +83,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public ILoot UnlockSideQuestLoot(int sideQuestID)
         {
             Debug.Log($"UnlockSideQuestLoot called for sideQuestID: {sideQuestID}");
-            ILoot unlockedLoot = _dataProvider.StaticData.GetSideQuestLoot(sideQuestID);
+            ILoot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
 
             if (unlockedLoot.Items.Count != 0)
             {
                 UnlockLootItems(unlockedLoot);
-                _dataProvider.SaveGame();
+                DataProvider.SaveGame();
             }
 
             return unlockedLoot;
@@ -100,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             foreach (ILootItem lootItem in unlockedLoot.Items)
             {
-                lootItem.UnlockItem(_dataProvider.GameModel);
+                lootItem.UnlockItem(DataProvider.GameModel);
             }
         }
 

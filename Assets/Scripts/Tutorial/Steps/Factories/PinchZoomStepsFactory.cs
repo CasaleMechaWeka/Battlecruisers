@@ -7,16 +7,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class PinchZoomStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _pinchZoomPermitter, _swipePermitter;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public PinchZoomStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter pinchZoomPermitter,
             IPermitter swipePermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, pinchZoomPermitter, swipePermitter, explanationDismissableStepFactory);

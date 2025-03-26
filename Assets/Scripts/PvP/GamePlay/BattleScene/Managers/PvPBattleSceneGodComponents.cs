@@ -56,8 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
-        //        public void Initialise_Client(ISettingsManager settingsManager)
-        public void Initialise(ISettingsManager settingsManager)
+        //        public void Initialise_Client(SettingsManager settingsManager)
+        public void Initialise(SettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(
                 backgroundClickableEmitter,
@@ -72,12 +72,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             PrioritisedSoundPlayerAudioSource
                 = new EffectVolumeAudioSource(
-                    new AudioSourceBC(prioritisedSoundPlayerAudioSource),
-                    settingsManager, 0);
+                    new AudioSourceBC(prioritisedSoundPlayerAudioSource), 0);
             UISoundsAudioSource
                 = new EffectVolumeAudioSource(
-                    new AudioSourceBC(uiSoundsAudioSource),
-                    settingsManager, 1);
+                    new AudioSourceBC(uiSoundsAudioSource), 1);
 
             SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
             Assert.IsNotNull(SkyboxInitialiser);

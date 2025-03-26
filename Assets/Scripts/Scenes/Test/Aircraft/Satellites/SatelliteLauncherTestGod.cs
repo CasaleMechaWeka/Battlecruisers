@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             {
                 Vector2 parentCruiserPosition = launcher.transform.position;
                 Vector2 enemyCruiserPosition = new Vector2(launcher.transform.position.x + 30, launcher.transform.position.y);
-                IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, BCUtils.RandomGenerator.Instance);
+                IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 
                 helper.InitialiseBuilding(launcher, aircraftProvider: aircraftProvider);
                 launcher.StartConstruction();
@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         protected async override Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             float buildSpeedMultiplier = useFastBuildSpeed ? BCUtils.BuildSpeedMultipliers.FAST : BCUtils.BuildSpeedMultipliers.DEFAULT;
-            return await HelperFactory.CreateHelperAsync(updaterProvider: updaterProvider, buildSpeedMultiplier: buildSpeedMultiplier);
+            return HelperFactory.CreateHelper(updaterProvider: updaterProvider, buildSpeedMultiplier: buildSpeedMultiplier);
         }
 
         public void DestroyLaunchers()

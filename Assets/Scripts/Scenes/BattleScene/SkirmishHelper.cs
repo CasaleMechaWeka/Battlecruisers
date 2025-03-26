@@ -23,10 +23,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IPrefabKey PlayerCruiser => _skirmish.PlayerCruiser;
 
         public SkirmishHelper(
-            IApplicationModel appModel,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFactory, deferrer)
+            : base(prefabFactory, deferrer)
         {
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);
@@ -35,7 +34,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public override ILevel GetLevel()
         {
             int levelNum = 1;  // Unused for skirmish
-            ILevel backgroundLevel = _appModel.DataProvider.GetLevel(_skirmish.BackgroundLevelNum);
+            ILevel backgroundLevel = StaticData.Levels[_skirmish.BackgroundLevelNum];
 
             return
                 new Level(
@@ -48,7 +47,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            bool canUseUltras = _appModel.DataProvider.GameModel.UnlockedBuildings.Any(building => building.BuildingCategory == BuildingCategory.Ultra);
+            bool canUseUltras = DataProvider.GameModel.UnlockedBuildings.Any(building => building.BuildingCategory == BuildingCategory.Ultra);
             return new SkirmishStrategyFactory(_skirmish.AIStrategy, canUseUltras);
         }
 

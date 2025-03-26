@@ -28,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject hecklesMessage;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         public Transform captainCamContainer;
         public Text blackMarketText;
         private bool InternetConnection;
@@ -45,13 +44,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IDataProvider dataProvider,
             bool hasInternetonnection = false)
         {
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer, bodykitsContainer, variantsContainer);
             Helper.AssertIsNotNull(captainsButton, hecklesButton, bodykitButton, variantsButton);
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
@@ -64,10 +61,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
             variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
             infoButton.Initialise(_soundPlayer, InfoButton_OnClick);
-            captainsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            hecklesContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            bodykitsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
-            variantsContainer.Initialize(_soundPlayer, _dataProvider, _prefabFactory);
+            captainsContainer.Initialize(_soundPlayer, _prefabFactory);
+            hecklesContainer.Initialize(_soundPlayer, _prefabFactory);
+            bodykitsContainer.Initialize(_soundPlayer, _prefabFactory);
+            variantsContainer.Initialize(_soundPlayer, _prefabFactory);
             variantsContainer.itemDetailsPanel.SetActive(false);
             bodykitsContainer.itemDetailsPanel.SetActive(false);
             captainsContainer.itemDetailsPanel.SetActive(false);
@@ -89,9 +86,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 blackMarketButton.gameObject.SetActive(false);
 #endif
 
-            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.StaticData.Captains.Count - 1, 1, 1);
+            exoBaseList = GeneratePseudoRandomList(14, StaticData.Captains.Count - 1, 1, 1);
 #if UNITY_EDITOR
-            exoBaseList = GenerateFullList(_dataProvider.StaticData.Captains.Count);
+            exoBaseList = GenerateFullList(StaticData.Captains.Count);
 #endif
             foreach (int index in exoBaseList)
             {
@@ -106,9 +103,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 variants.Add(variant);
             }
 
-            //bodykitList = GeneratePseudoRandomList(6, _dataProvider.GameModel.Bodykits.Count - 1, 6, 1);
+            //bodykitList = GeneratePseudoRandomList(6, DataProvider.GameModel.Bodykits.Count - 1, 6, 1);
 
-            bodykitList = GenerateFullList(_dataProvider.StaticData.Bodykits.Count);
+            bodykitList = GenerateFullList(StaticData.Bodykits.Count);
 
             foreach (int index in bodykitList)
             {
@@ -297,7 +294,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     VariantPrefab variant = variants[ii]; // Use the variant list index ii
                     Sprite parentSprite = variant.IsUnit() ? variant.GetUnit(ScreensSceneGod.Instance._prefabFactory).Sprite : variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory).Sprite;
 
-                    int variantPrice = _dataProvider.StaticData.Variants[variant.variantIndex].VariantCredits;
+                    int variantPrice = StaticData.Variants[variant.variantIndex].VariantCredits;
                     // Debug.Log($"Variant {variant.variantIndex} Price: {variantPrice}");
 
                     variantItem.GetComponent<VariantItemController>().StaticInitialise(
@@ -305,11 +302,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         parentSprite,
                         variant.variantSprite,
                         variant.GetParentName(ScreensSceneGod.Instance._prefabFactory),
-                        _dataProvider.StaticData.Variants[variant.variantIndex],
+                        StaticData.Variants[variant.variantIndex],
                         variantsContainer,
                         variant,
                         variant.variantIndex,
-                        _dataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
+                        DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
                     );
 
                     if (ii == 0)
@@ -326,10 +323,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         variantsContainer.ParentImage.sprite = parentSprite;
                         variantsContainer.VariantPrice.text = variantPrice.ToString();
                         variantsContainer.variantIcon.sprite = variant.variantSprite;
-                        variantsContainer.VariantName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantNameStringKeyBase);
-                        variantsContainer.variantDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Variants[variant.variantIndex].VariantDescriptionStringKeyBase);
+                        variantsContainer.VariantName.text = LocTableCache.CommonTable.GetString(StaticData.Variants[variant.variantIndex].VariantNameStringKeyBase);
+                        variantsContainer.variantDescription.text = LocTableCache.CommonTable.GetString(StaticData.Variants[variant.variantIndex].VariantDescriptionStringKeyBase);
                         variantsContainer.ParentName.text = variant.GetParentName(ScreensSceneGod.Instance._prefabFactory);
-                        variantsContainer.currentVariantData = _dataProvider.StaticData.Variants[variant.variantIndex];
+                        variantsContainer.currentVariantData = StaticData.Variants[variant.variantIndex];
 
                         if (variant.IsUnit())
                         {
@@ -344,7 +341,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), variant);
                         }
 
-                        if (_dataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex))
+                        if (DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex))
                         {
                             variantsContainer.btnBuy.SetActive(false);
                             variantsContainer.priceLabel.SetActive(false);
@@ -389,17 +386,17 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer);
                 Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
                 bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(
-                    _soundPlayer, bodykit.bodykitImage, _dataProvider.StaticData.Bodykits[index], bodykitsContainer, _dataProvider, _prefabFactory, ii, _dataProvider.GameModel.PurchasedBodykits.Contains(index));
+                    _soundPlayer, bodykit.bodykitImage, StaticData.Bodykits[index], bodykitsContainer, _prefabFactory, ii, DataProvider.GameModel.PurchasedBodykits.Contains(index));
                 if (ii == 0)
                 {
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
                     bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
                     bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
-                    bodykitsContainer.bodykitPrice.text = _dataProvider.StaticData.Bodykits[index].bodykitCost.ToString();
-                    bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].nameStringKeyBase);
-                    bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Bodykits[index].descriptionKeyBase);
-                    bodykitsContainer.currentBodykitData = _dataProvider.StaticData.Bodykits[index];
-                    if (_dataProvider.GameModel.PurchasedBodykits.Contains(index))
+                    bodykitsContainer.bodykitPrice.text = StaticData.Bodykits[index].bodykitCost.ToString();
+                    bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].nameStringKeyBase);
+                    bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].descriptionKeyBase);
+                    bodykitsContainer.currentBodykitData = StaticData.Bodykits[index];
+                    if (DataProvider.GameModel.PurchasedBodykits.Contains(index))
                     {
                         bodykitsContainer.btnBuy.SetActive(false);
                         bodykitsContainer.priceLabel.SetActive(false);
@@ -443,21 +440,21 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             hecklesContainer.btnBuy.SetActive(false);
             hecklesContainer.ownFeedback.SetActive(false);
-            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_dataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo captainExo = Instantiate(charliePrefab, captainCamContainer);
             captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
             captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
 
-            List<int> heckleBaseList = GeneratePseudoRandomList(15, _dataProvider.StaticData.Heckles.Count - 1, 10);
+            List<int> heckleBaseList = GeneratePseudoRandomList(15, StaticData.Heckles.Count - 1, 10);
 #if UNITY_EDITOR
-            heckleBaseList = GenerateFullList(_dataProvider.StaticData.Heckles.Count);
+            heckleBaseList = GenerateFullList(StaticData.Heckles.Count);
 #endif
             byte ii = 0;
             foreach (int index in heckleBaseList)
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
                 heckleItem.GetComponent<HeckleItemController>().StaticInitialise(
-                    _soundPlayer, _dataProvider.StaticData.Heckles[index], hecklesContainer, ii, _dataProvider.GameModel.PurchasedHeckles.Contains(index));
+                    _soundPlayer, StaticData.Heckles[index], hecklesContainer, ii, DataProvider.GameModel.PurchasedHeckles.Contains(index));
 
 
 
@@ -469,11 +466,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
 
                     heckleItem.GetComponent<HeckleItemController>().OnClicked();
-                    hecklesContainer.hecklePrice.text = _dataProvider.StaticData.Heckles[index].HeckleCost.ToString();
-                    hecklesContainer.currentHeckleData = _dataProvider.StaticData.Heckles[index];
-                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(_dataProvider.GameModel.Heckles[index].StringKeyBase);
+                    hecklesContainer.hecklePrice.text = StaticData.Heckles[index].HeckleCost.ToString();
+                    hecklesContainer.currentHeckleData = StaticData.Heckles[index];
+                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(DataProvider.GameModel.Heckles[index].StringKeyBase);
 
-                    if (_dataProvider.GameModel.PurchasedHeckles.Contains(index))
+                    if (DataProvider.GameModel.PurchasedHeckles.Contains(index))
                     {
                         hecklesContainer.hecklePrice.text = "0";
                         hecklesContainer.btnBuy.SetActive(false);
@@ -519,7 +516,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             RemoveAllCaptainsFromRenderCamera();
 
-            /*            exoBaseList = GeneratePseudoRandomList(14, _dataProvider.GameModel.Captains.Count - 1, 1, 1);
+            /*            exoBaseList = GeneratePseudoRandomList(14, DataProvider.GameModel.Captains.Count - 1, 1, 1);
                         exoBaseList.Insert(0, 0);*/
 
             byte ii = 0;
@@ -532,7 +529,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 captainExo.gameObject.SetActive(false);
                 captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
                 captainItem.GetComponent<CaptainItemController>().StaticInitialise(
-                    _soundPlayer, captainExo.CaptainExoImage, _dataProvider.StaticData.Captains[index], captainsContainer, ii, _dataProvider.GameModel.PurchasedExos.Contains(index));
+                    _soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[index], captainsContainer, ii, DataProvider.GameModel.PurchasedExos.Contains(index));
 
                 if (ii == 0)  // the first item should be clicked :)
                 {
@@ -542,11 +539,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     if (index == 0)
                     {
                         captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
-                        captainsContainer.captainName.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Captains[0].NameStringKeyBase);
-                        captainsContainer.captainDescription.text = LocTableCache.CommonTable.GetString(_dataProvider.StaticData.Captains[0].DescriptionKeyBase);
+                        captainsContainer.captainName.text = LocTableCache.CommonTable.GetString(StaticData.Captains[0].NameStringKeyBase);
+                        captainsContainer.captainDescription.text = LocTableCache.CommonTable.GetString(StaticData.Captains[0].DescriptionKeyBase);
                     }
                     captainExo.gameObject.SetActive(true);
-                    if (_dataProvider.GameModel.PurchasedExos.Contains(index))
+                    if (DataProvider.GameModel.PurchasedExos.Contains(index))
                     {
                         captainsContainer.btnBuy.SetActive(false);
                         captainsContainer.priceLabel.SetActive(false);
@@ -583,9 +580,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         List<int> VariantsForOwnedItems()
         {
             // Use original implementation, uncomment line below to use VariantOrganizer.
-            // return new VariantOrganizer(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            // return new VariantOrganizer(_prefabFactory).GetOrganizedVariants();
             // For categorized sorting and logging, uncomment line below to use VariantSorter.
-            return new VariantSorter(_dataProvider, _prefabFactory).GetOrganizedVariants();
+            return new VariantSorter(_prefabFactory).GetOrganizedVariants();
         }
 
         List<int> GenerateFullList(int elements)

@@ -7,20 +7,18 @@ namespace BattleCruisers.UI.Loading
     public class HintProvider : IHintProvider
     {
         private readonly IList<string> _hints;
-        private readonly IRandomGenerator _random;
 
-        public HintProvider(IList<string> hints, IRandomGenerator random)
+        public HintProvider(IList<string> hints)
         {
-            Helper.AssertIsNotNull(hints, random);
+            Helper.AssertIsNotNull(hints);
             Assert.IsTrue(hints.Count > 0);
 
             _hints = hints;
-            _random = random;
         }
 
         public string GetHint()
         {
-            int randomIndex = _random.Range(0, _hints.Count - 1);
+            int randomIndex = RandomGenerator.Range(0, _hints.Count - 1);
             return _hints[randomIndex];
         }
     }

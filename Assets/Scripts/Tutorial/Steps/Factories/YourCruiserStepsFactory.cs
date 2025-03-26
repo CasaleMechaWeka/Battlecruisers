@@ -9,17 +9,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class YourCruiserStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly ICruiser _playerCruiser;
-        private readonly ITutorialStepFactory _cameraAdjustmentWaitStepFactory;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        private readonly CameraAdjustmentWaitStepFactory _cameraAdjustmentWaitStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _navigationPermitter;
 
         public YourCruiserStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             ICruiser playerCruiser,
-            ITutorialStepFactory cameraAdjustmentWaitStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            CameraAdjustmentWaitStepFactory cameraAdjustmentWaitStepFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationPermitter)
             : base(argsFactory)
         {

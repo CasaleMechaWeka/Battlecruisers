@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class AutoNavigationStepFactory : TutorialFactoryBase, IAutoNavigationStepFactory
+    public class AutoNavigationStepFactory : TutorialFactoryBase
     {
-        private readonly ITutorialStepFactory _cameraAdjustmentWaitStepFactory;
+        private readonly CameraAdjustmentWaitStepFactory _cameraAdjustmentWaitStepFactory;
         private readonly ICameraComponents _cameraComponents;
 
         public AutoNavigationStepFactory(
-            ITutorialStepArgsFactory argsFactory,
-            ITutorialStepFactory cameraAdjustmentWaitStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            CameraAdjustmentWaitStepFactory cameraAdjustmentWaitStepFactory,
             ICameraComponents cameraComponents)
             : base(argsFactory)
         {

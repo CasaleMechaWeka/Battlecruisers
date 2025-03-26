@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
         protected override async Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
-            return await HelperFactory.CreateHelperAsync(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.DEFAULT_TUTORIAL, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(buildSpeedMultiplier: BCUtils.BuildSpeedMultipliers.DEFAULT_TUTORIAL, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()

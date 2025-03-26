@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Players;
@@ -13,7 +14,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashScreenController : ScreenController
     {
-        private IApplicationModel _appModel;
         private PrefabFactory _prefabFactory;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
@@ -41,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            IApplicationModel appModel,
             PrefabFactory prefabFactory,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
@@ -50,9 +49,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
-            Helper.AssertIsNotNull(appModel, prefabFactory, levelTrashDataList, musicPlayer);
+            Helper.AssertIsNotNull(prefabFactory, levelTrashDataList, musicPlayer);
 
-            _appModel = appModel;
             _prefabFactory = prefabFactory;
             _levelTrashDataList = levelTrashDataList;
             _sideQuestTrashDataList = sideQuestTrashDataList;
@@ -115,30 +113,30 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             ITrashTalkData trashTalkData;
             ICruiser enemyCruiserPrefab;
             string skyPath;
-            if (_appModel.Mode == GameMode.SideQuest)
+            if (ApplicationModel.Mode == GameMode.SideQuest)
             {
-                int sideQuestID = _appModel.SelectedSideQuestID;
-                ISideQuestData sideQuestData = _appModel.DataProvider.SideQuests[sideQuestID];
+                int sideQuestID = ApplicationModel.SelectedSideQuestID;
+                ISideQuestData sideQuestData = StaticData.SideQuests[sideQuestID];
                 enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(sideQuestData.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + sideQuestData.SkyMaterial + SPRITES_FILE_EXTENSION;
 
-                trashTalkData = await _sideQuestTrashDataList.GetTrashTalkAsync(_appModel.SelectedSideQuestID + 1);
+                trashTalkData = await _sideQuestTrashDataList.GetTrashTalkAsync(ApplicationModel.SelectedSideQuestID + 1);
             }
             else
             {
-                int levelIndex = _appModel.SelectedLevel - 1;
-                ILevel level = _appModel.DataProvider.Levels[levelIndex];
+                int levelIndex = ApplicationModel.SelectedLevel - 1;
+                ILevel level = StaticData.Levels[levelIndex];
                 enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
 
-                trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(_appModel.SelectedLevel);
+                trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(ApplicationModel.SelectedLevel);
             }
 
             trashTalkBubbles.Initialise(trashTalkData);
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
-            ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(_appModel.DataProvider.GameModel.PlayerLoadout.Hull);
+            ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky
@@ -172,7 +170,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             if (enemyModel != null)
                 Destroy(enemyModel);
-            if (_appModel.DataProvider.GameModel.FirstNonTutorialBattle || _appModel.Mode == GameMode.CoinBattle)
+            if (DataProvider.GameModel.FirstNonTutorialBattle || ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 _screensSceneGod.GotoHubScreen();
             }

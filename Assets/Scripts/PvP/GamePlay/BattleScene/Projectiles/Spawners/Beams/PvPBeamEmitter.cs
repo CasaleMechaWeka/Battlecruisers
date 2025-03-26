@@ -39,13 +39,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (IsClient)
                 _audioSource
                     = new EffectVolumeAudioSource(
-                        new AudioSourceBC(_platformAudioSource),
-                        PvPBattleSceneGodClient.Instance.dataProvider.SettingsManager);
+                        new AudioSourceBC(_platformAudioSource));
 
             base.OnNetworkSpawn();
         }
 
-        protected void Initialise(ITargetFilter targetFilter, ITarget parent, ISettingsManager settingsManager)
+        protected void Initialise(ITargetFilter targetFilter, ITarget parent, SettingsManager settingsManager)
         {
             // Logging.Verbose(Tags.BEAM, $"parent: {parent}  unitsLayerMask: {unitsLayerMask.value}  shieldsLayerMask: {shieldsLayerMask.value}");
             PvPHelper.AssertIsNotNull(targetFilter, parent, settingsManager);

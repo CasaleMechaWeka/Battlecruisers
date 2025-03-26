@@ -21,9 +21,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ScreenController _currentScreen;
         private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
-        private IApplicationModel _applicationModel;
-
 
         public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
         public GameObject coins;
@@ -54,19 +51,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
-            IDataProvider dataProvider,
-            IApplicationModel applicationModel)
+            PrefabFactory prefabFactory)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(dataProvider);
             Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton);
 
-            _lastBattleResult = dataProvider.GameModel.LastBattleResult;
+            _lastBattleResult = DataProvider.GameModel.LastBattleResult;
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
-            _applicationModel = applicationModel;
             _prefabFactory = prefabFactory;
 
             homeButton.Initialise(_soundPlayer, GoHome);
@@ -85,11 +77,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             battlePanel.Initialise(screensSceneGod);
             leaderboardPanel.Initialise(screensSceneGod, prefabFactory);
-            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory, dataProvider);
-            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, dataProvider);
+            profilePanel.Initialise(screensSceneGod, _soundPlayer, prefabFactory);
+            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer);
 
-            coinBattleController.Initialise(screensSceneGod, _applicationModel);
-            playerInfoPanelController.UpdateInfo(_dataProvider, _prefabFactory);
+            coinBattleController.Initialise(screensSceneGod);
+            playerInfoPanelController.UpdateInfo(_prefabFactory);
 
             continueTitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaign");
             continueSubtitle.text = LocTableCache.ScreensSceneTable.GetString("ContinueCampaignDescription");
@@ -123,7 +115,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             playerInfoPanelController.gameObject.SetActive(true);
 
-            if (_applicationModel.Mode != GameMode.PvP_1VS1)
+            if (ApplicationModel.Mode != GameMode.PvP_1VS1)
             {
                 if (ScreensSceneGod.Instance.cameraOfCaptains != null)
                     ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
@@ -189,15 +181,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (_lastBattleResult == null)
             {
                 playerInfoPanelController.gameObject.SetActive(false);
-                _applicationModel.Mode = GameMode.Campaign;
+                ApplicationModel.Mode = GameMode.Campaign;
                 _screensSceneGod.GoToTrashScreen(1);
             }
             else
             {
                 Assert.IsNotNull(_lastBattleResult);
                 playerInfoPanelController.gameObject.SetActive(false);
-                _applicationModel.Mode = GameMode.Campaign;
-                int nextLevelToPlay = _dataProvider.GameModel.NumOfLevelsCompleted < 31 ? _dataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
+                ApplicationModel.Mode = GameMode.Campaign;
+                int nextLevelToPlay = DataProvider.GameModel.NumOfLevelsCompleted < 31 ? DataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
                 _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
             }
         }
@@ -205,7 +197,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoToLevelsScreen()
         {
             playerInfoPanelController.gameObject.SetActive(false);
-            _applicationModel.Mode = GameMode.Campaign;
+            ApplicationModel.Mode = GameMode.Campaign;
             _screensSceneGod.GoToLevelsScreen();
         }
 
@@ -218,14 +210,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GoToSkirmishScreen()
         {
             playerInfoPanelController.gameObject.SetActive(false);
-            _applicationModel.Mode = GameMode.Skirmish;
+            ApplicationModel.Mode = GameMode.Skirmish;
             _screensSceneGod.GoToSkirmishScreen();
         }
 
         public void GotoPvPMode()
         {
 #if DISABLE_MATCHMAKING
-            _applicationModel.Mode = GameMode.CoinBattle;
+            ApplicationModel.Mode = GameMode.CoinBattle;
             // Set UI elements for offline-only mode
             if (ScreensSceneGod.Instance != null)
             {
@@ -253,7 +245,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 }
                 else
                 {
-                    _applicationModel.Mode = GameMode.CoinBattle;
+                    ApplicationModel.Mode = GameMode.CoinBattle;
                     coinBattleController.Battle();
                 }
             }
@@ -263,7 +255,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public void GotoCoinBattle()
         {
 
-            _applicationModel.Mode = GameMode.CoinBattle;
+            ApplicationModel.Mode = GameMode.CoinBattle;
             coinBattleController.Battle();
             CanvasGroup AIv1ButtonCanvasGroup = coinBattleButton.GetComponent<CanvasGroup>();
             AIv1ButtonCanvasGroup.blocksRaycasts = false;

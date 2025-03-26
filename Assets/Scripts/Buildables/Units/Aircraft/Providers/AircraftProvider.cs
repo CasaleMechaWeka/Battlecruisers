@@ -2,14 +2,12 @@
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
 	public class AircraftProvider : IAircraftProvider
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
-		private readonly IRandomGenerator _random;
 		private readonly bool _isTutorial;
 
 		private const float SAFE_ZONE_PARENT_CRUISER_OVERLAP = 10;
@@ -35,14 +33,11 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 		public AircraftProvider(
 			Vector2 parentCruiserPosition,
 			Vector2 enemyCruiserPosition,
-			IRandomGenerator random,
 			bool isTutorial = false)
 		{
 			_parentCruiserPosition = parentCruiserPosition;
 			_enemyCruiserPosition = enemyCruiserPosition;
 
-			Assert.IsNotNull(random);
-			_random = random;
 			_isTutorial = isTutorial;
 
 			float minX, maxX;
@@ -174,7 +169,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 				cruisingAltitudeInM = cruisingAltitudeInM - CRUISING_ALTITUDE_ERROR_MARGIN_IN_M;
 			}
 
-			return _random.RangeFromCenter(cruisingAltitudeInM, CRUISING_ALTITUDE_ERROR_MARGIN_IN_M);
+			return RandomGenerator.RangeFromCenter(cruisingAltitudeInM, CRUISING_ALTITUDE_ERROR_MARGIN_IN_M);
 		}
 	}
 }

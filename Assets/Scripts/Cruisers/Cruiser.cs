@@ -51,7 +51,7 @@ namespace BattleCruisers.Cruisers
 #pragma warning disable CS0414  // Variable is assigned but never used
         private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private ISettingsManager settingsManager;
+        private SettingsManager settingsManager;
 
         public string stringKeyBase;
         public int numOfDrones;
@@ -185,7 +185,7 @@ namespace BattleCruisers.Cruisers
 
             DroneSoundFeedbackInitialiser droneSoundFeedbackInitialiser = GetComponentInChildren<DroneSoundFeedbackInitialiser>();
             Assert.IsNotNull(droneSoundFeedbackInitialiser);
-            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones, FactoryProvider.SettingsManager);
+            _droneFeedbackSound = droneSoundFeedbackInitialiser.Initialise(args.HasActiveDrones);
 
             ISoundKey selectedSoundKey = IsPlayerCruiser ? SoundKeys.UI.Selected.FriendlyCruiser : SoundKeys.UI.Selected.EnemyCruiser;
             _selectedSound = await SoundFetcher.GetSoundAsync(selectedSoundKey);
@@ -196,8 +196,7 @@ namespace BattleCruisers.Cruisers
 
 
             // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            settingsManager = applicationModel.DataProvider.SettingsManager;
+            settingsManager = DataProvider.SettingsManager;
             if (settingsManager.RichMode)
             {
                 DroneManager.NumOfDrones = numOfDrones * 4;
@@ -206,7 +205,7 @@ namespace BattleCruisers.Cruisers
             if (IsPlayerCruiser)
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
-                int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
+                int id_bodykit = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
                 if (id_bodykit != -1)
                 {
                     Bodykit bodykit = FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
@@ -214,18 +213,18 @@ namespace BattleCruisers.Cruisers
                     {
                         GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
-                        Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                        Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                        Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                        Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                         isUsingBodykit = true;
                     }
                 }
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
                 #endif
-                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                ApplicationModel applicationModel = ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                                    AnalyticsService.Instance.CustomData("Battle_Cruiser", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch(ConsentCheckException e)
@@ -237,9 +236,9 @@ namespace BattleCruisers.Cruisers
             else
             {
                 // AI bot
-                if (ApplicationModelProvider.ApplicationModel.Mode == GameMode.CoinBattle)
+                if (ApplicationModel.Mode == GameMode.CoinBattle)
                 {
-                    int id_bodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.ID_Bodykit_AIbot;
+                    int id_bodykit = DataProvider.GameModel.ID_Bodykit_AIbot;
                     Debug.Log(id_bodykit);
                     if (id_bodykit != -1)
                     {
@@ -247,8 +246,8 @@ namespace BattleCruisers.Cruisers
                         if (bodykit.cruiserType == hullType)
                         {
                             GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
-                            Name = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].NameStringKeyBase);
-                            Description = LocTableCache.CommonTable.GetString(ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
+                            Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].NameStringKeyBase);
+                            Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                             isUsingBodykit = true;
                         }
                     }
@@ -311,10 +310,10 @@ namespace BattleCruisers.Cruisers
                 /*#if LOG_ANALYTICS
                     Debug.Log("Analytics: " + logName);
                 #endif
-                                IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
+                                ApplicationModel applicationModel = ApplicationModel;
                                 try
                                 {
-                                    AnalyticsService.Instance.CustomData("Battle_Buildable", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));                    
+                                    AnalyticsService.Instance.CustomData("Battle_Buildable", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));                    
                                     AnalyticsService.Instance.Flush();
                                 }
                                 catch (ConsentCheckException ex)

@@ -417,11 +417,11 @@ namespace BattleCruisers.Data.Serialization
             await CloudSaveService.Instance.Data.ForceDeleteAsync("GameModel");
         }
 
-        public async Task<bool> SyncCoinsToCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCoinsToCloud()
         {
             try
             {
-                await EconomyManager.SetEconomyBalance("COIN", dataProvider.GameModel.Coins);
+                await EconomyManager.SetEconomyBalance("COIN", DataProvider.GameModel.Coins);
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -437,7 +437,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncCurrencyFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCurrencyFromCloud()
         {
             GetBalancesResult balanceResult = null;
             try
@@ -450,11 +450,11 @@ namespace BattleCruisers.Data.Serialization
                 {
                     if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
-                        dataProvider.GameModel.Coins = balance.Balance;
+                        DataProvider.GameModel.Coins = balance.Balance;
                     }
                     if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
-                        dataProvider.GameModel.Credits = balance.Balance;
+                        DataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
                 return true;
@@ -468,11 +468,11 @@ namespace BattleCruisers.Data.Serialization
                 {
                     if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
-                        dataProvider.GameModel.Coins = balance.Balance;
+                        DataProvider.GameModel.Coins = balance.Balance;
                     }
                     if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
-                        dataProvider.GameModel.Credits = balance.Balance;
+                        DataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
                 return true;
@@ -485,7 +485,7 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncInventoryFromCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncInventoryFromCloud()
         {
             GetInventoryResult inventoryResult = null;
             try
@@ -498,20 +498,20 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddExo(index);
+                        DataProvider.GameModel.AddExo(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddHeckle(index);
+                        DataProvider.GameModel.AddHeckle(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddBodykit(index);
+                        DataProvider.GameModel.AddBodykit(index);
                     }
                 }
-                dataProvider.SaveGame();
+                DataProvider.SaveGame();
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -524,20 +524,20 @@ namespace BattleCruisers.Data.Serialization
                     if (inventory.GetItemDefinition().Name.Contains("Captain"))
                     {
                         int index = StaticPrefabKeys.CaptainItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddExo(index);
+                        DataProvider.GameModel.AddExo(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Heckle"))
                     {
                         int index = StaticPrefabKeys.HeckleItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddHeckle(index);
+                        DataProvider.GameModel.AddHeckle(index);
                     }
                     if (inventory.GetItemDefinition().Name.Contains("Bodykit"))
                     {
                         int index = StaticPrefabKeys.BodykitItems[inventory.GetItemDefinition().Name.ToUpper()];
-                        dataProvider.GameModel.AddBodykit(index);
+                        DataProvider.GameModel.AddBodykit(index);
                     }
                 }
-                dataProvider.SaveGame();
+                DataProvider.SaveGame();
                 return true;
             }
             catch (Exception e)
@@ -548,11 +548,11 @@ namespace BattleCruisers.Data.Serialization
             }
         }
 
-        public async Task<bool> SyncCreditsToCloud(IDataProvider dataProvider)
+        public async Task<bool> SyncCreditsToCloud()
         {
             try
             {
-                await EconomyManager.SetEconomyBalance("CREDIT", dataProvider.GameModel.Credits);
+                await EconomyManager.SetEconomyBalance("CREDIT", DataProvider.GameModel.Credits);
                 return true;
             }
             catch (EconomyRateLimitedException e)

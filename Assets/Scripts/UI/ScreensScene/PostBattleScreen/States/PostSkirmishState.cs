@@ -14,20 +14,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public PostSkirmishState(
             PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
             IMusicPlayer musicPlayer,
             ISingleSoundPlayer soundPlayer)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);
-            Assert.IsNotNull(appModel.DataProvider.GameModel.Skirmish);
-            //Assert.AreEqual(GameMode.Skirmish, appModel.Mode);
+            Assert.IsNotNull(DataProvider.GameModel.Skirmish);
+            //Assert.AreEqual(GameMode.Skirmish, ApplicationModel.Mode);
 
-            _userWonSkirmish = appModel.UserWonSkirmish;
+            _userWonSkirmish = ApplicationModel.UserWonSkirmish;
 
             postBattleScreen.levelName.gameObject.SetActive(false);
 
-            if (appModel.UserWonSkirmish)
+            if (ApplicationModel.UserWonSkirmish)
             {
                 postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VictoryState.VICTORY_TITLE_NO_LOOT_KEY);
                 postBattleScreen.title.color = Color.black;
@@ -44,12 +43,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             postBattleScreen.postSkirmishButtonsPanel.Initialise(postBattleScreen, soundPlayer, _userWonSkirmish);
 
             // Reset to default
-            appModel.Mode = GameMode.Campaign;
-            appModel.UserWonSkirmish = false;
+            ApplicationModel.Mode = GameMode.Campaign;
+            ApplicationModel.UserWonSkirmish = false;
         }
 
         public override bool ShowVictoryBackground => _userWonSkirmish;
         public override bool ShowDifficultySymbol => _userWonSkirmish;
-        public override Difficulty Difficulty => _appModel.DataProvider.GameModel.Skirmish.Difficulty;
+        public override Difficulty Difficulty => DataProvider.GameModel.Skirmish.Difficulty;
     }
 }

@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
         private ICamera _camera;
         private ITime _time;
         private IRange<float> _validOrthographicSizes;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
         private ILevelToMultiplierConverter _scrollConverter;
         private float _scrollDeltaMultiplier;
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _camera = Substitute.For<ICamera>();
             _time = Substitute.For<ITime>();
             _validOrthographicSizes = new Range<float>(5, 40);
-            _settingsManager = Substitute.For<ISettingsManager>();
+            _settingsManager = Substitute.For<SettingsManager>();
             _scrollConverter = Substitute.For<ILevelToMultiplierConverter>();
 
             float multiplier = 4;

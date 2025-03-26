@@ -7,16 +7,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public abstract class SwipeStepsFactoryBase : TutorialFactoryBase, ITutorialStepsFactory
     {
-        protected readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        protected readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _swipePermitter;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly string _messageKey;
 
         protected SwipeStepsFactoryBase(
-            ITutorialStepArgsFactory argsFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter swipePermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory,
             string messageKey)
             : base(argsFactory)
         {

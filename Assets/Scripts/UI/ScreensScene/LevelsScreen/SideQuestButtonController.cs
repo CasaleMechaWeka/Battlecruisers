@@ -4,14 +4,13 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
-using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.Data;
 
 public class SideQuestButtonController : ElementWithClickSound
 {
     private bool isButtonEnabled;
     private IScreensSceneGod _screensSceneGod;
-    private IStaticData _staticData;
     public int sideQuestID;
     protected override ISoundKey ClickSound => SoundKeys.UI.Click;
     private GameObject checkmark;
@@ -27,26 +26,24 @@ public class SideQuestButtonController : ElementWithClickSound
     public void Initialise(
         IScreensSceneGod screensSceneGod,
         ISingleSoundPlayer soundPlayer,
-        IDataProvider dataProvider,
         int numOfLevelsUnlocked,
         bool completed)
     {
         //Most of side quest scripts will need to be modified once side quest manager is done
         _screensSceneGod = screensSceneGod;
-        _staticData = dataProvider.StaticData;
         levelsSetController = transform.parent.GetComponent<LevelsSetController>();
 
         if (levelsSetController == null)
             Debug.LogError("LevelsSetController component was not found");
 
         base.Initialise(soundPlayer);
-        requiredLevel = _staticData.SideQuests[sideQuestID].UnlockRequirementLevel;
-        requiredSideQuestID = _staticData.SideQuests[sideQuestID].RequiredSideQuestID;
+        requiredLevel = StaticData.SideQuests[sideQuestID].UnlockRequirementLevel;
+        requiredSideQuestID = StaticData.SideQuests[sideQuestID].RequiredSideQuestID;
 
-        completed = dataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
+        completed = DataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
 
         if (requiredSideQuestID != -1)
-            isButtonEnabled = (numOfLevelsUnlocked >= requiredLevel) && dataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
+            isButtonEnabled = (numOfLevelsUnlocked >= requiredLevel) && DataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
         else
             isButtonEnabled = numOfLevelsUnlocked >= requiredLevel;
 

@@ -9,19 +9,16 @@ namespace BattleCruisers.Utils.BattleScene
 {
     public class BattleCompletionHandler
     {
-        private readonly IApplicationModel _applicationModel;
         private readonly ISceneNavigator _sceneNavigator;
         private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
         public BattleCompletionHandler(
-            IApplicationModel applicationModel,
             ISceneNavigator sceneNavigator)
         {
-            Helper.AssertIsNotNull(applicationModel, sceneNavigator);
+            Helper.AssertIsNotNull(sceneNavigator);
 
-            _applicationModel = applicationModel;
             _sceneNavigator = sceneNavigator;
 
             _isCompleted = false;
@@ -39,39 +36,39 @@ namespace BattleCruisers.Utils.BattleScene
             BattleCompleted?.Invoke(this, EventArgs.Empty);
             Debug.Log(wasVictory);
 
-            switch (_applicationModel.Mode)
+            switch (ApplicationModel.Mode)
             {
                 case GameMode.SideQuest:
-                    BattleResult sideQuestBattleResult = new BattleResult(_applicationModel.SelectedSideQuestID, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
+                    BattleResult sideQuestBattleResult = new BattleResult(ApplicationModel.SelectedSideQuestID, wasVictory);
+                    DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
                     break;
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
-                    BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                    BattleResult battleResult = new BattleResult(ApplicationModel.SelectedLevel, wasVictory);
+                    DataProvider.GameModel.LastBattleResult = battleResult;
                     break;
 
                 case GameMode.Skirmish:
-                    _applicationModel.UserWonSkirmish = wasVictory;
+                    ApplicationModel.UserWonSkirmish = wasVictory;
                     break;
 
                 // Coin Battle uses the same post-game as Skirmish right now (return to menu, no next, etc):
                 case GameMode.CoinBattle:
-                    _applicationModel.UserWonSkirmish = wasVictory;
+                    ApplicationModel.UserWonSkirmish = wasVictory;
                     break;
             }
 
 
-            _applicationModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
 
-            if (_applicationModel.Mode == GameMode.CoinBattle)
+            if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
-                _applicationModel.ShowPostBattleScreen = false;
+                ApplicationModel.ShowPostBattleScreen = false;
             }
             else
             {
-                _applicationModel.ShowPostBattleScreen = true;
+                ApplicationModel.ShowPostBattleScreen = true;
             }
             TimeBC.Instance.TimeScale = 1;
 
@@ -96,39 +93,39 @@ namespace BattleCruisers.Utils.BattleScene
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
 
-            switch (_applicationModel.Mode)
+            switch (ApplicationModel.Mode)
             {
                 case GameMode.SideQuest:
-                    BattleResult sideQuestBattleResult = new BattleResult(_applicationModel.SelectedSideQuestID, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
+                    BattleResult sideQuestBattleResult = new BattleResult(ApplicationModel.SelectedSideQuestID, wasVictory);
+                    DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
                     break;
 
                 case GameMode.Campaign:
                     // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
-                    BattleResult battleResult = new BattleResult(_applicationModel.SelectedLevel, wasVictory);
-                    _applicationModel.DataProvider.GameModel.LastBattleResult = battleResult;
+                    BattleResult battleResult = new BattleResult(ApplicationModel.SelectedLevel, wasVictory);
+                    DataProvider.GameModel.LastBattleResult = battleResult;
                     break;
 
                 case GameMode.Skirmish:
-                    _applicationModel.UserWonSkirmish = wasVictory;
+                    ApplicationModel.UserWonSkirmish = wasVictory;
                     break;
 
                 // Coin Battle uses the same post-game as Skirmish right now (return to menu, no next, etc):
                 case GameMode.CoinBattle:
-                    _applicationModel.UserWonSkirmish = wasVictory;
+                    ApplicationModel.UserWonSkirmish = wasVictory;
                     break;
             }
 
 
-            //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
-            if (_applicationModel.Mode == GameMode.CoinBattle)
+            //Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
+            if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
-                _applicationModel.ShowPostBattleScreen = false;
+                ApplicationModel.ShowPostBattleScreen = false;
             }
             else
             {
-                _applicationModel.ShowPostBattleScreen = true;
+                ApplicationModel.ShowPostBattleScreen = true;
             }
 
             TimeBC.Instance.TimeScale = 1;
@@ -139,14 +136,14 @@ namespace BattleCruisers.Utils.BattleScene
             }
             else if (wasVictory)
             {
-                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - before");
-                _applicationModel.DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
-                //Debug.Log(_applicationModel.DataProvider.GameModel.LifetimeDestructionScore + " - after");
-                if (_applicationModel.DataProvider.GameModel.BestDestructionScore < destructionScore)
+                //Debug.Log(DataProvider.GameModel.LifetimeDestructionScore + " - before");
+                DataProvider.GameModel.LifetimeDestructionScore += destructionScore;
+                //Debug.Log(DataProvider.GameModel.LifetimeDestructionScore + " - after");
+                if (DataProvider.GameModel.BestDestructionScore < destructionScore)
                 {
-                    _applicationModel.DataProvider.GameModel.BestDestructionScore = destructionScore;
+                    DataProvider.GameModel.BestDestructionScore = destructionScore;
                 }
-                _applicationModel.DataProvider.SaveGame();
+                DataProvider.SaveGame();
                 _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
 
             }

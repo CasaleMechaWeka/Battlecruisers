@@ -4,12 +4,12 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.Factories
 {
-    public class ExplanationDismissableStepFactory : TutorialFactoryBase, IExplanationDismissableStepFactory
+    public class ExplanationDismissableStepFactory : TutorialFactoryBase
     {
         private readonly IExplanationDismissButton _okButton, _doneButton;
 
         public ExplanationDismissableStepFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             IExplanationDismissButton okButton,
             IExplanationDismissButton doneButton)
             : base(argsFactory)

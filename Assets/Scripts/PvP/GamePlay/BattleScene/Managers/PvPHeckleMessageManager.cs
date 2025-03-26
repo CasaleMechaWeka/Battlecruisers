@@ -2,7 +2,6 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Data;
 using BattleCruisers.Utils;
 using BattleCruisers.UI.Sound.Players;
 
@@ -21,12 +20,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 rightMessage.Show(UnityEngine.Random.Range(0, 280));
             }
         }
-        public void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer)
+        public void Initialise(ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(dataProvider, soundPlayer, leftMessage, rightMessage);
+            Helper.AssertIsNotNull(soundPlayer, leftMessage, rightMessage);
 
-            leftMessage.Initialise(dataProvider, soundPlayer);
-            rightMessage.Initialise(dataProvider, soundPlayer);
+            leftMessage.Initialise(soundPlayer);
+            rightMessage.Initialise(soundPlayer);
 
             leftMessage.Hide();
             rightMessage.Hide();

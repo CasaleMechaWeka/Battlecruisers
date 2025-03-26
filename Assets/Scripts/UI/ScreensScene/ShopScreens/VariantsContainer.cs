@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails.Stats;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
@@ -36,7 +37,6 @@ namespace BattleCruisers.UI.ScreensScene
 
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         private VariantPrefab currentVariant;
         public GameObject content;
@@ -44,12 +44,11 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject itemDetailsPanel;
         public Text t_variantsMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
         {
             variantDataChanged += VariantDataChanged;
             onVariantItemClick += OnVariantItemClick;
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             buildingStatsController.Initialise();
@@ -60,26 +59,26 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if (_dataProvider.GameModel.Credits >= currentVariantData.VariantCredits)
+            if (DataProvider.GameModel.Credits >= currentVariantData.VariantCredits)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
                     // online purchase
                     try
                     {
-                        bool result = await _dataProvider.PurchaseVariant(currentVariantData.Index);
+                        bool result = await DataProvider.PurchaseVariant(currentVariantData.Index);
                         if (result)
                         {
-                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 1f);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.AddVariant(currentVariantData.Index);
-                            _dataProvider.SaveGame();
-                            await _dataProvider.CloudSave();
+                            DataProvider.GameModel.AddVariant(currentVariantData.Index);
+                            DataProvider.SaveGame();
+                            await DataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableCache.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
                             priceLabel.SetActive(false);
@@ -102,31 +101,31 @@ namespace BattleCruisers.UI.ScreensScene
                     // offline purchase
                     try
                     {
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
                         currentItem._clickedFeedback.SetActive(true);
                         currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 1f);
                         currentItem._ownedItemMark.SetActive(true);
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.AddVariant(currentVariantData.Index);
+                        DataProvider.GameModel.AddVariant(currentVariantData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " + LocTableCache.CommonTable.GetString(currentVariantData.VariantNameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
-                        _dataProvider.GameModel.Credits -= currentVariantData.VariantCredits;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        DataProvider.GameModel.Credits -= currentVariantData.VariantCredits;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
 
                         // Keep track of transaction for later:
-                        _dataProvider.GameModel.CreditsChange -= currentVariantData.VariantCredits;
-                        VariantData variant = _dataProvider.StaticData.Variants[currentVariantData.Index];
-                        if (_dataProvider.GameModel.OutstandingVariantTransactions == null)
+                        DataProvider.GameModel.CreditsChange -= currentVariantData.VariantCredits;
+                        VariantData variant = StaticData.Variants[currentVariantData.Index];
+                        if (DataProvider.GameModel.OutstandingVariantTransactions == null)
                         {
-                            _dataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
+                            DataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
                         }
-                        _dataProvider.GameModel.OutstandingVariantTransactions.Add(variant);
-                        _dataProvider.SaveGame();
+                        DataProvider.GameModel.OutstandingVariantTransactions.Add(variant);
+                        DataProvider.SaveGame();
                     }
                     catch
                     {
@@ -163,7 +162,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentVariant = e.varint;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
 
-            if (_dataProvider.GameModel.PurchasedVariants.Contains(e.variantData.Index))
+            if (DataProvider.GameModel.PurchasedVariants.Contains(e.variantData.Index))
             {
                 priceLabel.SetActive(false);
                 btnBuy.SetActive(false);

@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Data;
-using BattleCruisers.Data.Static;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -15,8 +13,6 @@ namespace BattleCruisers.UI.ScreensScene
             Assert.IsNotNull(versionText);
 
             string value = "v" + Application.version;
-
-            IStaticData staticData = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData;
 
 #if IS_DEMO
                 value += " - DEMO";

@@ -32,17 +32,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private PvPUIManager _uiManager;
 
-        protected IDataProvider DataProvider => _appModel.DataProvider;
-
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public PvPBattleHelper(
-            IApplicationModel appModel,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer
-        ) : base(appModel)
+        ) : base()
         {
             // _appModel = appModel;
             _prefabFactory = prefabFactory;

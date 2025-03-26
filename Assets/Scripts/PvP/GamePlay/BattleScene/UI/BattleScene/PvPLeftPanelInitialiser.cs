@@ -3,15 +3,12 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
 using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     IPrioritisedSoundPlayer eventSoundPlayer,
                     IPvPSingleSoundPlayer uiSoundPlayer,
                     IPopulationLimitMonitor populationLimitMonitor,
-                    IStaticData staticData)
+                    StaticData staticData)
                 {
                     PvPHelper.AssertIsNotNull(
                         droneManager,
@@ -97,7 +94,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData,
             bool flipClickAndDragIcon)
         {
             PvPHelper.AssertIsNotNull(
@@ -109,8 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
                 uiSoundPlayer,
-                populationLimitMonitor,
-                staticData);
+                populationLimitMonitor);
             PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
@@ -125,7 +120,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     eventSoundPlayer,
                     uiSoundPlayer,
                     populationLimitMonitor,
-                    staticData,
                     flipClickAndDragIcon);
 
             MakeLeftBackgroundPanelFit();
@@ -153,17 +147,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
-            IStaticData staticData,
             bool flipClickAndDragIcon)
         {
-            IPvPBuildingGroupFactory buildingGroupFactory = new PvPBuildingGroupFactory();
-            IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory, buildingGroupFactory);
+            IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory);
             IList<IPvPBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units = prefabOrganiser.GetUnits();
-            IPvPBuildableSorterFactory sorterFactory
-                = new PvPBuildableSorterFactory(
-                    staticData,
-                    new PvPBuildableKeyFactory());
 
             return
                 buildMenuInitialiser.Initialise(
@@ -171,7 +159,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     uiManager,
                     buildingGroups,
                     units,
-                    sorterFactory,
                     buttonVisibilityFilters,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,

@@ -8,14 +8,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class EnemyCruiserStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
         private readonly ICruiser _aiCruiser;
-        private readonly IAutoNavigationStepFactory _autNavigationStepFactory;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly AutoNavigationStepFactory _autNavigationStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
 
         public EnemyCruiserStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
+            TutorialStepArgsFactory argsFactory,
             ICruiser aiCruiser,
-            IAutoNavigationStepFactory autoNavigationStepFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory)
+            AutoNavigationStepFactory autoNavigationStepFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, autoNavigationStepFactory, explanationDismissableStepFactory);

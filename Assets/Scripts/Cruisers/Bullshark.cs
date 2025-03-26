@@ -18,11 +18,10 @@ namespace BattleCruisers.Cruisers
 
         public override void Initialise(ICruiserArgs args)
         {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            if (args.Faction == Faction.Reds && applicationModel.SelectedLevel == 2) //Level #2 "Jimmo" would be too hard otherwise
+            if (args.Faction == Faction.Reds && ApplicationModel.SelectedLevel == 2) //Level #2 "Jimmo" would be too hard otherwise
                 shieldBuildRateBoost = 1f;
 
-            if (applicationModel.SelectedLevel == 34) //This is where UltraCruiser Level is designated
+            if (ApplicationModel.SelectedLevel == 34) //This is where UltraCruiser Level is designated
             {
                 SetUltraCruiserHealth(args);
                 defensivesFireRateBoost = SetUltraCruiserUtility(args, defensivesFireRateBoost);

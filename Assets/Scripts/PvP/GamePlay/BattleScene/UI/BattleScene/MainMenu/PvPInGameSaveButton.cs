@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPInGameSaveButton : PvPElementWithClickSound
     {
         private IMainMenuManager _mainMenuManager;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<bool> _showToolTips;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             IBroadcastingProperty<float> musicVolume,
             IBroadcastingProperty<float> effectVolume,
             IBroadcastingProperty<int> zoomSpeedLevel,

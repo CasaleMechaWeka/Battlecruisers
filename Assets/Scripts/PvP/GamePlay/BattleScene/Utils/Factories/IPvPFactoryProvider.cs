@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
@@ -18,7 +17,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public interface IPvPFactoryProvider
     {
-        IDamageApplierFactory DamageApplierFactory { get; }
         DeferrerProvider DeferrerProvider { get; }
         IDroneMonitor DroneMonitor { get; }
         IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
@@ -30,6 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         IPvPTargetFactoriesProvider Targets { get; }
         IUpdaterProvider UpdaterProvider { get; }
-        ISettingsManager SettingsManager { get; }
+        SettingsManager SettingsManager { get; }
     }
 }

@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -32,19 +33,17 @@ namespace BattleCruisers.UI.ScreensScene
         private string firstDescrtiptionString;
 
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         public GameObject content;
         public GameObject captainMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_captainMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
         {
             captainDataChanged += CaptainDataChanged;
             onCaptainItemClick += OnCaptainItemClick;
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             firstNameString = captainName.text;
@@ -53,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene
             ShopBuyControls.SetActive(false);
         }
 
-        private async void OnEnable()
+        private void OnEnable()
         {
             if (firstNameString != null)
                 captainName.text = firstNameString;
@@ -64,26 +63,26 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if (_dataProvider.GameModel.Coins >= currentCaptainData.CaptainCost)
+            if (DataProvider.GameModel.Coins >= currentCaptainData.CaptainCost)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
                     // Online purchasing
                     try
                     {
-                        bool result = await _dataProvider.PurchaseCaptainV2(currentCaptainData.Index);
+                        bool result = await DataProvider.PurchaseCaptainV2(currentCaptainData.Index);
                         if (result)
                         {
-                            //    await _dataProvider.SyncCurrencyFromCloud();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                            //    await DataProvider.SyncCurrencyFromCloud();
+                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.AddExo(currentCaptainData.Index);
-                            _dataProvider.SaveGame();
-                            await _dataProvider.CloudSave();
+                            DataProvider.GameModel.AddExo(currentCaptainData.Index);
+                            DataProvider.SaveGame();
+                            await DataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CaptainExoPurchased") + " " + LocTableCache.CommonTable.GetString(currentCaptainData.NameStringKeyBase));
                             priceLabel.SetActive(false);
@@ -105,7 +104,6 @@ namespace BattleCruisers.UI.ScreensScene
 #if LOG_ANALYTICS
                 Debug.Log("Analytics: " + logName);
 #endif
-                    IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
                     Dictionary<string, object> transactionDetails = new Dictionary<string, object>() { { "exoIndex", currentCaptainData.Index } };
                 }
                 else
@@ -118,24 +116,24 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.AddExo(currentCaptainData.Index);
+                        DataProvider.GameModel.AddExo(currentCaptainData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("CaptainExoPurchased") + " " + LocTableCache.CommonTable.GetString(currentCaptainData.NameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
-                        _dataProvider.GameModel.Coins -= currentCaptainData.CaptainCost;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        DataProvider.GameModel.Coins -= currentCaptainData.CaptainCost;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
 
                         // Keep track of transaction for later:
-                        _dataProvider.GameModel.CoinsChange -= currentCaptainData.CaptainCost;
-                        CaptainData captain = _dataProvider.StaticData.Captains[currentCaptainData.Index];
-                        if (_dataProvider.GameModel.OutstandingCaptainTransactions == null)
+                        DataProvider.GameModel.CoinsChange -= currentCaptainData.CaptainCost;
+                        CaptainData captain = StaticData.Captains[currentCaptainData.Index];
+                        if (DataProvider.GameModel.OutstandingCaptainTransactions == null)
                         {
-                            _dataProvider.GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
+                            DataProvider.GameModel.OutstandingCaptainTransactions = new List<CaptainData>();
                         }
-                        _dataProvider.GameModel.OutstandingCaptainTransactions.Add(captain);
-                        _dataProvider.SaveGame();
+                        DataProvider.GameModel.OutstandingCaptainTransactions.Add(captain);
+                        DataProvider.SaveGame();
                     }
                     catch
                     {
@@ -178,7 +176,7 @@ namespace BattleCruisers.UI.ScreensScene
             currentCaptainData = e.captainData;
             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("select");
             ShopBuyControls.SetActive(true);
-            if (_dataProvider.GameModel.PurchasedExos.Contains(e.captainData.Index))
+            if (DataProvider.GameModel.PurchasedExos.Contains(e.captainData.Index))
             {
                 priceLabel.SetActive(false);
                 btnBuy.SetActive(false);

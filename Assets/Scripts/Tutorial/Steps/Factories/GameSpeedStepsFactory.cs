@@ -9,16 +9,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class GameSpeedStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _gameSpeedPermitter, _navigationPermitter;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly IUIManager _uiManager;
 
         public GameSpeedStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter gameSpeedPermitter,
             IPermitter navigationPermitter,
             RightPanelComponents rightPanelComponents,

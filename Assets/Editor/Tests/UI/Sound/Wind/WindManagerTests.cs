@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
         private IAudioSource _audioSource;
         private ICamera _camera;
         private IVolumeCalculator _volumeCalculator;
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
         private float _volume;
 
         [SetUp]
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
             _audioSource = Substitute.For<IAudioSource>();
             _camera = Substitute.For<ICamera>();
             _volumeCalculator = Substitute.For<IVolumeCalculator>();
-            _settingsManager = Substitute.For<ISettingsManager>();
+            _settingsManager = Substitute.For<SettingsManager>();
 
             _volume = 71.2f;
             _camera.OrthographicSize.Returns(17);

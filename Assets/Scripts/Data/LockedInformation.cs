@@ -11,14 +11,12 @@ namespace BattleCruisers.Data
     public class LockedInformation : ILockedInformation
     {
         private readonly IGameModel _gameModel;
-        private readonly IStaticData _staticData;
 
-        public LockedInformation(IGameModel gameModel, IStaticData staticData)
+        public LockedInformation(IGameModel gameModel)
         {
-            Helper.AssertIsNotNull(gameModel, staticData);
+            Helper.AssertIsNotNull(gameModel);
 
             _gameModel = gameModel;
-            _staticData = staticData;
         }
 
         public int NumOfLevelsUnlocked
@@ -28,7 +26,7 @@ namespace BattleCruisers.Data
 #if IS_DEMO
                 int maxLevelCount = StaticData.NUM_OF_LEVELS_IN_DEMO;
 #else
-                int maxLevelCount = _staticData.Levels.Count;
+                int maxLevelCount = StaticData.Levels.Count;
 #endif
                 return Mathf.Min(_gameModel.NumOfLevelsCompleted + 1, maxLevelCount);
             }
@@ -38,7 +36,7 @@ namespace BattleCruisers.Data
         {
             get
             {
-                return _staticData.HullKeys.Count - _gameModel.UnlockedHulls.Count;
+                return StaticData.HullKeys.Count - _gameModel.UnlockedHulls.Count;
             }
         }
 
@@ -51,7 +49,7 @@ namespace BattleCruisers.Data
 
         private int NumOfBuildings(BuildingCategory buildingCategory)
         {
-            return _staticData.BuildingKeys.Count(key => key.BuildingCategory == buildingCategory);
+            return StaticData.BuildingKeys.Count(key => key.BuildingCategory == buildingCategory);
         }
 
         public int NumOfLockedUnits(UnitCategory unitCategory)
@@ -63,7 +61,7 @@ namespace BattleCruisers.Data
 
         private int NumOfUnits(UnitCategory unitCategory)
         {
-            return _staticData.UnitKeys.Count(key => key.UnitCategory == unitCategory);
+            return StaticData.UnitKeys.Count(key => key.UnitCategory == unitCategory);
         }
     }
 }

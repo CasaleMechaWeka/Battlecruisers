@@ -14,14 +14,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
             IMusicPlayer musicPlayer,
             ISingleSoundPlayer soundPlayer)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);
 
-            appModel.Mode = GameMode.Campaign;
+            ApplicationModel.Mode = GameMode.Campaign;
             postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(TUTORIAL_TITLE_KEY);
 
             postBattleScreen.title.color = Color.black;
@@ -32,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             musicPlayer.PlayVictoryMusic();
             postBattleScreen.levelName.gameObject.SetActive(false);
 
-            postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, appModel.DataProvider.GameModel);
+            postBattleScreen.postTutorialButtonsPanel.Initialise(postBattleScreen, soundPlayer, DataProvider.GameModel);
         }
     }
 }

@@ -13,28 +13,28 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 {
-    public class AntiAirVsBomberTestGod : TestGodBase 
-	{
-		private BomberController _bomber;
-		private TurretController _antiAirTurret;
+    public class AntiAirVsBomberTestGod : TestGodBase
+    {
+        private BomberController _bomber;
+        private TurretController _antiAirTurret;
 
-		public List<Vector2> bomberPatrolPoints;
+        public List<Vector2> bomberPatrolPoints;
 
         protected async override Task<Helper> CreateHelperAsync(IUpdaterProvider updaterProvider)
         {
             IDeferrer deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(deferrer);
 
-            return await HelperFactory.CreateHelperAsync(deferrer: deferrer, updaterProvider: updaterProvider);
+            return HelperFactory.CreateHelper(deferrer: deferrer, updaterProvider: updaterProvider);
         }
 
         protected override List<GameObject> GetGameObjects()
         {
-			_antiAirTurret = FindObjectOfType<TurretController>();
-			Assert.IsNotNull(_antiAirTurret);
+            _antiAirTurret = FindObjectOfType<TurretController>();
+            Assert.IsNotNull(_antiAirTurret);
 
             _bomber = FindObjectOfType<BomberController>();
-			Assert.IsNotNull(_bomber);
+            Assert.IsNotNull(_bomber);
 
             return new List<GameObject>()
             {
@@ -45,17 +45,17 @@ namespace BattleCruisers.Scenes.Test.Turrets.AnitAir
 
         protected override void Setup(Helper helper)
         {
-			// Set up turret
+            // Set up turret
             helper.InitialiseBuilding(_antiAirTurret, faction: Faction.Reds);
-			_antiAirTurret.StartConstruction();
+            _antiAirTurret.StartConstruction();
 
-			// Set up bomber
+            // Set up bomber
             IList<TargetType> targetTypes = new List<TargetType>() { _antiAirTurret.TargetType };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_antiAirTurret.Faction, targetTypes);
             ITargetFactories targetFactories = helper.CreateTargetFactories(_antiAirTurret.GameObject, targetFilter: targetFilter);
-			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
+            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
             helper.InitialiseUnit(_bomber, faction: Faction.Blues, targetFactories: targetFactories, aircraftProvider: aircraftProvider);
-			_bomber.StartConstruction();
-		}
-	}
+            _bomber.StartConstruction();
+        }
+    }
 }

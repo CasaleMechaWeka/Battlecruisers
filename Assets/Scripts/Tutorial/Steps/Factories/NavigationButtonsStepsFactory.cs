@@ -9,17 +9,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class NavigationButtonsStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly IFeaturePermitterStepFactory _featurePermitterStepFactory;
+        private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _navigationButtonsPermitter, _hotkeysPermitter;
-        private readonly IExplanationDismissableStepFactory _explanationDismissableStepFactory;
+        private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ICameraComponents _cameraComponents;
 
         public NavigationButtonsStepsFactory(
-            ITutorialStepArgsFactory argsFactory,
-            IFeaturePermitterStepFactory featurePermitterStepFactory,
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
             IPermitter navigationButtonsPermitter,
             IPermitter hotkeysPermitter,
-            IExplanationDismissableStepFactory explanationDismissableStepFactory,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory,
             ICameraComponents cameraComponents)
             : base(argsFactory)
         {

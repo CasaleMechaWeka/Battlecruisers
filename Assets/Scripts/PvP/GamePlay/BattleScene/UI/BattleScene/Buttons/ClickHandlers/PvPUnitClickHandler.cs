@@ -1,3 +1,4 @@
+using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories;
@@ -38,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             if (canAffordBuildable)
             {
                 //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
-                int variantIndex = await PvPBattleSceneGodClient.Instance.dataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(PvPBattleSceneGodClient.Instance.prefabFactory, unitClicked.Buildable);
+                int variantIndex = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(PvPBattleSceneGodClient.Instance.prefabFactory, unitClicked.Buildable);
                 HandleFactory(unitClicked, unitFactory, variantIndex);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_playerCruiser, unitFactory))

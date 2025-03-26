@@ -11,16 +11,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public DefeatState(
             PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
             IMusicPlayer musicPlayer)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, musicPlayer)
         {
             Helper.AssertIsNotNull(postBattleScreen, musicPlayer);
 
             postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(LOSS_TITLE_KEY);
             postBattleScreen.defeatMessage.SetActive(true);
             musicPlayer.PlayDefeatMusic();
-            if (appModel.Mode == GameMode.CoinBattle)
+            if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
             }
@@ -30,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
 
             //Reset gamemode to Campaign
-            appModel.Mode = GameMode.Campaign;
+            ApplicationModel.Mode = GameMode.Campaign;
         }
 
         public override bool ShowVictoryBackground => false;

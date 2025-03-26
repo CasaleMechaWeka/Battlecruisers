@@ -7,14 +7,14 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class LightningBarrelController : BarrelController
-	{
+    {
         public LightningEmitter lightningEmitter;
 
         public override Vector3 ProjectileSpawnerPosition => lightningEmitter.transform.position;
         public override bool CanFireWithoutTarget => false;
 
         public override void StaticInitialise()
-		{
+        {
             base.StaticInitialise();
             Assert.IsNotNull(lightningEmitter);
         }
@@ -24,17 +24,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         {
             lightningEmitter
                 .Initialise(
-                    args.TargetFilter, 
-                    _projectileStats.Damage, 
-                    args.Parent,
-                    args.FactoryProvider.SettingsManager);
+                    args.TargetFilter,
+                    _projectileStats.Damage,
+                    args.Parent);
         }
 #pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         public override void Fire(float angleInDegrees)
-		{
-			lightningEmitter.FireBeam(angleInDegrees, transform.IsMirrored());
-		}
+        {
+            lightningEmitter.FireBeam(angleInDegrees, transform.IsMirrored());
+        }
 
         public override void CleanUp()
         {

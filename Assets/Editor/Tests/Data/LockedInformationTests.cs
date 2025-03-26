@@ -16,24 +16,23 @@ namespace BattleCruisers.Tests.Data
         private ILockedInformation _lockedInfo;
 
         private IGameModel _gameModel;
-        private IStaticData _staticData;
         private ReadOnlyCollection<ILevel> _levels;
 
         [SetUp]
         public void SetuUp()
         {
             _gameModel = Substitute.For<IGameModel>();
-            _staticData = Substitute.For<IStaticData>();
 
             IList<ILevel> levels = new List<ILevel>();
             for (int i = 0; i < StaticData.NUM_OF_LEVELS_IN_DEMO + 1; ++i)
             {
                 levels.Add(Substitute.For<ILevel>());
-            };
+            }
+            ;
             _levels = new ReadOnlyCollection<ILevel>(levels);
-            _staticData.Levels.Returns(_levels);
+            StaticData.Levels.Returns(_levels);
 
-            _lockedInfo = new LockedInformation(_gameModel, _staticData);
+            _lockedInfo = new LockedInformation(_gameModel);
         }
 
         #region NumOfLevelsUnlocked
@@ -68,7 +67,7 @@ namespace BattleCruisers.Tests.Data
                 new HullKey("Raptor"),
                 new HullKey("Longbow")
             });
-            _staticData.HullKeys.Returns(allHulls);
+            StaticData.HullKeys.Returns(allHulls);
 
             ReadOnlyCollection<HullKey> unlockedHulls = new ReadOnlyCollection<HullKey>(new List<HullKey>()
             {
@@ -90,7 +89,7 @@ namespace BattleCruisers.Tests.Data
                 new BuildingKey(BuildingCategory.Tactical, "Gods Eye"),
                 new BuildingKey(BuildingCategory.Offence, "Catapult")
             });
-            _staticData.BuildingKeys.Returns(allBuildings);
+            StaticData.BuildingKeys.Returns(allBuildings);
 
             IList<BuildingKey> unlockedBuildings = Substitute.For<IList<BuildingKey>>();
             unlockedBuildings.Count.Returns(1);
@@ -111,7 +110,7 @@ namespace BattleCruisers.Tests.Data
                 new UnitKey(UnitCategory.Naval, "Rubber Ducky"),
                 //new UnitKey(UnitCategory.Untouchable, "Sun")
             });
-            _staticData.UnitKeys.Returns(allUnits);
+            StaticData.UnitKeys.Returns(allUnits);
 
             IList<UnitKey> unlockedUnits = Substitute.For<IList<UnitKey>>();
             unlockedUnits.Count.Returns(1);

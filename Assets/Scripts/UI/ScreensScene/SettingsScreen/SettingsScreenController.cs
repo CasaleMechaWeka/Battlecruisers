@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SettingsScreenController : ScreenController
     {
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         public DifficultyDropdown difficultyDropdown;
         public LanguageDropdown languageDropdown;
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             IHotkeysModel hotkeysModel)
         {
             base.Initialise(screensSceneGod);
@@ -153,8 +153,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             ShowTab(); //Hotkeys tab - only show for keyboard devices
 
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-
             idButton.Initialise(soundPlayer, CopyID, this);
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
             iapRefreshButton.gameObject.SetActive(true);
@@ -169,15 +167,15 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
 #if THIRD_PARTY_PUBLISHER
-            applicationModel.DataProvider.GameModel.PremiumEdition = true;
+            DataProvider.GameModel.PremiumEdition = true;
             premiumButton.gameObject.SetActive(false);
 #elif UNITY_ANDROID || UNITY_IOS
             premiumButton.gameObject.SetActive(false);
-            if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            if (DataProvider.GameModel.PremiumEdition)
                 premiumButton.gameObject.SetActive(true);
 #elif UNITY_EDITOR
             premiumButton.gameObject.SetActive(false);
-            if (applicationModel.DataProvider.GameModel.PremiumEdition)
+            if (DataProvider.GameModel.PremiumEdition)
                 premiumButton.gameObject.SetActive(true);
 #endif
         }

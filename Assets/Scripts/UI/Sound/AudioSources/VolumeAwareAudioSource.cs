@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Settings;
+﻿using BattleCruisers.Data;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace BattleCruisers.UI.Sound.AudioSources
     public abstract class VolumeAwareAudioSource : IManagedDisposable, IAudioSource
     {
         private readonly IAudioSource _audioSource;
-        private readonly ISettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
 
         public bool IsPlaying => _audioSource.IsPlaying;
         public AudioClipWrapper AudioClip { set => _audioSource.AudioClip = value; }
@@ -16,15 +17,15 @@ namespace BattleCruisers.UI.Sound.AudioSources
         public Vector2 Position { get => _audioSource.Position; set => _audioSource.Position = value; }
         public bool IsActive { get => _audioSource.IsActive; set => _audioSource.IsActive = value; }
 
-        protected VolumeAwareAudioSource(IAudioSource audioSource, ISettingsManager settingsManager)
+        protected VolumeAwareAudioSource(IAudioSource audioSource)
         {
-            Helper.AssertIsNotNull(audioSource, settingsManager);
+            Helper.AssertIsNotNull(audioSource);
 
             _audioSource = audioSource;
 
-            if (settingsManager != null)
+            if (DataProvider.SettingsManager != null)
             {
-                _settingsManager = settingsManager;
+                _settingsManager = DataProvider.SettingsManager;
                 _settingsManager.SettingsSaved += _settingsManager_SettingsSaved;
             }
 
@@ -41,7 +42,7 @@ namespace BattleCruisers.UI.Sound.AudioSources
             _audioSource.Volume = GetVolume(_settingsManager);
         }
 
-        protected abstract float GetVolume(ISettingsManager settingsManager);
+        protected abstract float GetVolume(SettingsManager settingsManager);
 
         public void DisposeManagedState()
         {

@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
@@ -40,10 +41,9 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public SideQuestHelper(
-            IApplicationModel appModel,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel)
+            : base()
         {
             Helper.AssertIsNotNull(prefabFactory, deferrer);
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             ShowInGameHints =
                 DataProvider.SettingsManager.ShowInGameHints
-                && _appModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
+                && ApplicationModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
 
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();
@@ -66,14 +66,14 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsyncSideQuest(_appModel.SelectedSideQuestID);
+            return await _backgroundStatsProvider.GetStatsAsyncSideQuest(ApplicationModel.SelectedSideQuestID);
         }
 
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
         {
             ILevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, DataProvider.GameModel, _prefabFactory);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, DataProvider, _deferrer, playerCruiser, strategyFactory);
+            IAIManager aiManager = new AIManager(_prefabFactory, _deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo, FindDifficulty());
         }
 
@@ -84,7 +84,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
         {
-            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), _appModel.SelectedSideQuestID, true);
+            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), ApplicationModel.SelectedSideQuestID, true);
         }
 
         protected virtual Difficulty FindDifficulty()
@@ -94,7 +94,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
         {
-            return new DefaultStrategyFactory(DataProvider.StaticData.Strategies, DataProvider.StaticData.SideQuestStrategies, currentLevelNum, _appModel.Mode == GameMode.SideQuest);
+            return new DefaultStrategyFactory(StaticData.Strategies, StaticData.SideQuestStrategies, currentLevelNum, ApplicationModel.Mode == GameMode.SideQuest);
         }
 
         public override ISlotFilter CreateHighlightableSlotFilter()

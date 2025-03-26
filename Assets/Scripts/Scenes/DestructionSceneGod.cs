@@ -12,6 +12,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Scenes
 {
@@ -20,7 +21,6 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private Text screenTitle;
 
-        private IApplicationModel applicationModel;
         private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
@@ -130,13 +130,11 @@ namespace BattleCruisers.Scenes
             if (_sceneNavigator != null)
             {
                 LandingSceneGod.MusicPlayer.PlayVictoryMusic();
-                applicationModel = ApplicationModelProvider.ApplicationModel;
 
                 _soundPlayer
                     = new SingleSoundPlayer(
                         new EffectVolumeAudioSource(
-                            new AudioSourceBC(_uiAudioSource),
-                            applicationModel.DataProvider.SettingsManager, 1));
+                            new AudioSourceBC(_uiAudioSource), 1));
 
                 nextButton.Initialise(_soundPlayer, Done);
                 skipButton.Initialise(_soundPlayer, SkipAnim);
@@ -149,14 +147,14 @@ namespace BattleCruisers.Scenes
             {
                 // real values:
 
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
-                applicationModel.DataProvider.StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
+                StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
+                StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
+                StaticData.GameConfigs.TryGetValue("coin1threshold", out coin1Threshold);
+                StaticData.GameConfigs.TryGetValue("coin2threshold", out coin2Threshold);
+                StaticData.GameConfigs.TryGetValue("coin3threshold", out coin3Threshold);
+                StaticData.GameConfigs.TryGetValue("coin4threshold", out coin4Threshold);
+                StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
+                StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
 
                 PopulateScreen();
             }
@@ -192,7 +190,7 @@ namespace BattleCruisers.Scenes
         private void PopulateScreen()
         {
             // Get some values from GameModel and its friends:
-            allTimeVal = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
+            allTimeVal = DataProvider.GameModel.LifetimeDestructionScore;
             levelTimeInSeconds = BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime();
 
             aircraftVal = BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();
@@ -247,17 +245,17 @@ namespace BattleCruisers.Scenes
 
             if (LandingSceneGod.Instance.coinBattleLevelNum == -2)
             {
-                applicationModel.Mode = GameMode.CoinBattle;
+                ApplicationModel.Mode = GameMode.CoinBattle;
                 LandingSceneGod.Instance.coinBattleLevelNum = -1;
             }
 
             // Campaign specific reward handling; only reward on first completion:
-            if (applicationModel.Mode == GameMode.Campaign && applicationModel.DataProvider.GameModel.SelectedLevel == applicationModel.DataProvider.GameModel.NumOfLevelsCompleted + 1)
+            if (ApplicationModel.Mode == GameMode.Campaign && DataProvider.GameModel.SelectedLevel == DataProvider.GameModel.NumOfLevelsCompleted + 1)
             {
                 CalculateRewards();
             }
             // Everything else:
-            else if (applicationModel.Mode != GameMode.Skirmish && applicationModel.Mode != GameMode.Campaign)
+            else if (ApplicationModel.Mode != GameMode.Skirmish && ApplicationModel.Mode != GameMode.Campaign)
             {
                 CalculateRewards();
             }
@@ -445,7 +443,7 @@ namespace BattleCruisers.Scenes
             skipButton.gameObject.SetActive(false);
 
             // Award any rewards:
-            if (applicationModel != null && applicationModel.Mode != GameMode.Skirmish)
+            if (ApplicationModel.Mode != GameMode.Skirmish)
             {
                 if (coinsToAward > 0 || creditsToAward > 0 || nukesToAward > 0)
                 {
@@ -660,31 +658,31 @@ namespace BattleCruisers.Scenes
         {
             // Update GameModel vars
             // lifetime damage (this value is all we need for rank image/titles elsewhere):
-            if (applicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
+            if (ApplicationModel.Mode != GameMode.Skirmish)//update the gamemodel if the game mode is not skirmish
             {
                 long destructionScore = aircraftVal + shipsVal + cruiserVal + buildingsVal;
-                applicationModel.DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;
+                DataProvider.GameModel.LifetimeDestructionScore = allTimeVal;
 
                 // we need XPToNextLevel to populate any XP progress bars:
-                long newLifetimeScore = applicationModel.DataProvider.GameModel.LifetimeDestructionScore;
-                Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+                long newLifetimeScore = DataProvider.GameModel.LifetimeDestructionScore;
+                Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
 
                 // Give the player their rewards:
-                applicationModel.DataProvider.GameModel.Coins += coinsToAward;
-                applicationModel.DataProvider.GameModel.Credits += creditsToAward;
-                applicationModel.DataProvider.SaveGame();
-                //applicationModel.DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
+                DataProvider.GameModel.Coins += coinsToAward;
+                DataProvider.GameModel.Credits += creditsToAward;
+                DataProvider.SaveGame();
+                //DataProvider.GameModel.Nukes += nukesToAward; <--- This does not exist right now.
 
 
                 if (await LandingSceneGod.CheckForInternetConnection())
                 {
                     try
                     {
-                        await applicationModel.DataProvider.SyncCoinsToCloud();
-                        await applicationModel.DataProvider.SyncCreditsToCloud();
+                        await DataProvider.SyncCoinsToCloud();
+                        await DataProvider.SyncCreditsToCloud();
 
                         // Save changes:
-                        await applicationModel.DataProvider.CloudSave();
+                        await DataProvider.CloudSave();
                     }
                     catch (Exception ex)
                     {
@@ -694,8 +692,8 @@ namespace BattleCruisers.Scenes
                 else
                 {
                     // Can't sync, save for later:
-                    applicationModel.DataProvider.GameModel.CoinsChange += coinsToAward;
-                    applicationModel.DataProvider.GameModel.CreditsChange += (int)creditsToAward;
+                    DataProvider.GameModel.CoinsChange += coinsToAward;
+                    DataProvider.GameModel.CreditsChange += (int)creditsToAward;
                 }
             }
 
@@ -764,16 +762,16 @@ namespace BattleCruisers.Scenes
 
         void OnApplicationQuit()
         {
-            applicationModel.DataProvider.SaveGame();
-            Debug.Log(applicationModel.DataProvider.GameModel.LifetimeDestructionScore);
+            DataProvider.SaveGame();
+            Debug.Log(DataProvider.GameModel.LifetimeDestructionScore);
             try
             {
-                applicationModel.DataProvider.SaveGame();
-                applicationModel.DataProvider.SyncCoinsToCloud();
-                applicationModel.DataProvider.SyncCreditsToCloud();
+                DataProvider.SaveGame();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                applicationModel.DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

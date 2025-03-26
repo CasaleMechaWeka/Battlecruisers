@@ -2,23 +2,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Serialization;
-using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.Buildables.Units;
 using System.Linq;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using UnityEditor;
 
 public class PlayerSaveGameEditor : EditorWindow
 {
     private GameModel gameModel;
-    private ApplicationModel applicationModel;
     private List<bool> sideQuestCompletion;
     private int mainQuestsUnlocked;
     private string gameModelDataDisplay;
-    private StaticData staticData;
 
     [MenuItem("Tools/Player Save Game Editor")]
     public static void ShowWindow()
@@ -28,15 +21,14 @@ public class PlayerSaveGameEditor : EditorWindow
 
     private void OnEnable()
     {
-        staticData = new StaticData();
         LoadGameModel();
-        sideQuestCompletion = new List<bool>(new bool[staticData.SideQuests.Count]);
+        sideQuestCompletion = new List<bool>(new bool[StaticData.SideQuests.Count]);
         gameModelDataDisplay = "";
     }
 
     private void OnGUI()
     {
-        if (gameModel == null || applicationModel == null)
+        if (gameModel == null)
         {
             EditorGUILayout.HelpBox("GameModel or ApplicationModel is not available.", MessageType.Warning);
             return;
@@ -55,9 +47,9 @@ public class PlayerSaveGameEditor : EditorWindow
         EditorGUILayout.LabelField($"Tutorial Completed: {gameModel.HasAttemptedTutorial}");
 
         EditorGUILayout.LabelField("Application Model Details", EditorStyles.boldLabel);
-        EditorGUILayout.LabelField($"Selected Level: {applicationModel.SelectedLevel}");
-        EditorGUILayout.LabelField($"Selected Side Quest ID: {applicationModel.SelectedSideQuestID}");
-        EditorGUILayout.LabelField($"Game Mode: {applicationModel.Mode}");
+        EditorGUILayout.LabelField($"Selected Level: {ApplicationModel.SelectedLevel}");
+        EditorGUILayout.LabelField($"Selected Side Quest ID: {ApplicationModel.SelectedSideQuestID}");
+        EditorGUILayout.LabelField($"Game Mode: {ApplicationModel.Mode}");
         EditorGUILayout.LabelField($"Lifetime Destruction Score: {gameModel.LifetimeDestructionScore}");
         EditorGUILayout.LabelField($"Num of Levels Completed: {gameModel.NumOfLevelsCompleted}");
 
@@ -73,24 +65,21 @@ public class PlayerSaveGameEditor : EditorWindow
 
     private void LoadGameModel()
     {
-        IDataProvider dataProvider = ApplicationModelProvider.ApplicationModel.DataProvider;
-
-        if (dataProvider == null || dataProvider.GameModel == null)
+        if (DataProvider.GameModel == null)
         {
             Debug.LogError("DataProvider or GameModel is not initialized.");
             return;
         }
 
-        gameModel = dataProvider.GameModel as GameModel;
-        applicationModel = ApplicationModelProvider.ApplicationModel as ApplicationModel;
+        gameModel = DataProvider.GameModel as GameModel;
 
-        if (gameModel == null || applicationModel == null)
+        if (gameModel == null)
         {
             Debug.LogError("GameModel or ApplicationModel is not of type GameModel or ApplicationModel.");
             return;
         }
         mainQuestsUnlocked = gameModel.CompletedLevels.Count;
-        sideQuestCompletion = new List<bool>(new bool[staticData.SideQuests.Count]);
+        sideQuestCompletion = new List<bool>(new bool[StaticData.SideQuests.Count]);
 
         foreach (var completedQuest in gameModel.CompletedSideQuests)
         {

@@ -7,7 +7,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     public class PvPPlayerManager : NetworkBehaviour
     {
-        IApplicationModel applicationModel;
         NetworkVariable<NetworkString> prefabPathOfCruiser = new NetworkVariable<NetworkString>(readPerm: NetworkVariableReadPermission.Everyone, writePerm: NetworkVariableWritePermission.Owner);
 
         private void Start()
@@ -20,8 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             if (IsClient)
             {
-                applicationModel = ApplicationModelProvider.ApplicationModel;
-                PrioritisedSoundKeys.SetSoundKeys(applicationModel.DataProvider.SettingsManager.AltDroneSounds);
+                PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
             }
             else if (IsServer)
             {

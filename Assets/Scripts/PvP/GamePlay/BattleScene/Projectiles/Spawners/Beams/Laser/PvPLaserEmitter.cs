@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
-            ISettingsManager settingsManager,
+            SettingsManager settingsManager,
             IDeltaTimeProvider deltaTimeProvider,
             IDeferrer timeScaleDeferrer)
         {

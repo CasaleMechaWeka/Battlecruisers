@@ -23,7 +23,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
@@ -114,7 +113,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
-            IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
             IUserChosenTargetManager userChosenTargetManager = null)
@@ -131,7 +129,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     movementControllerFactory,
                     flightPointsProviderFactory,
                     globalBoostProviders,
-                    damageApplierFactory,
                     parentCruiserDirection,
                     deferrer: Deferrer,
                     updaterProvider: UpdaterProvider,
@@ -169,7 +166,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IMovementControllerFactory movementControllerFactory = null,
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
-            IDamageApplierFactory damageApplierFactory = null,
             Direction parentCruiserDirection = Direction.Right,
             IUserChosenTargetManager userChosenTargetManager = null,
             bool showDroneFeedback = false)
@@ -186,7 +182,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     movementControllerFactory,
                     flightPointsProviderFactory,
                     globalBoostProviders,
-                    damageApplierFactory,
                     parentCruiserDirection,
                     userChosenTargetManager: userChosenTargetManager,
                     deferrer: Deferrer,

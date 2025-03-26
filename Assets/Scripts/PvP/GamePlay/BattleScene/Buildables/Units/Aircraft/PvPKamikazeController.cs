@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -44,11 +45,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
             _targetFilter = factoryProvider.Targets.FilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
 
-            kamikazeDamageStats
-                = _factoryProvider.DamageApplierFactory.CreateDamageStats(
-                    damage: remainingPotentialDamage,
-                    damageRadiusInM: parentAircraft.Size.x);
-            _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+            kamikazeDamageStats = new DamageStats(remainingPotentialDamage, parentAircraft.Size.x);
+            _damageApplier = new PvPAreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
             _explosionPoolProvider = _factoryProvider.PoolProviders.ExplosionPoolProvider;
 
@@ -85,11 +83,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 && !_parentAircraft.IsDestroyed)
             {
                 float prevTargetHP = _targetToDamage.Health;
-                kamikazeDamageStats
-                = _factoryProvider.DamageApplierFactory.CreateDamageStats(
-                    damage: Mathf.Min(remainingPotentialDamage, _targetToDamage.Health),
-                    damageRadiusInM: _parentAircraft.Size.x);
-                _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+                kamikazeDamageStats = new DamageStats(
+                    Mathf.Min(remainingPotentialDamage, _targetToDamage.Health),
+                    _parentAircraft.Size.x);
+
+                _damageApplier = new PvPAreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
                 _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
@@ -103,11 +101,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 if (damageDealt < remainingPotentialDamage)
                 {
                     remainingPotentialDamage -= damageDealt;
-                    kamikazeDamageStats
-                        = _factoryProvider.DamageApplierFactory.CreateDamageStats(
+                    kamikazeDamageStats = new DamageStats(
                             damage: remainingPotentialDamage,
                             damageRadiusInM: _parentAircraft.Size.x);
-                    _damageApplier = _factoryProvider.DamageApplierFactory.CreateFactionSpecificAreaOfDamageApplier(kamikazeDamageStats, _initialTarget.Faction);
+                    _damageApplier = new AreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
                 }
                 else
                 {

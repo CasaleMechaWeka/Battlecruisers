@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
@@ -27,18 +28,13 @@ namespace BattleCruisers.Scenes.BattleScene
         protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
         private ITrashTalkProvider _trashTalkProvider;
 
-        protected readonly IApplicationModel _appModel;
-        protected IDataProvider DataProvider => _appModel.DataProvider;
 
         public abstract bool ShowInGameHints { get; }
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
-        public virtual IPrefabKey PlayerCruiser => _appModel.DataProvider.GameModel.PlayerLoadout.Hull;
+        public virtual IPrefabKey PlayerCruiser => DataProvider.GameModel.PlayerLoadout.Hull;
 
-        protected BattleSceneHelper(IApplicationModel appModel)
+        protected BattleSceneHelper()
         {
-            Helper.AssertIsNotNull(appModel);
-
-            _appModel = appModel;
             _backgroundStatsProvider = new BackgroundStatsProvider();
             _calculatorFactory
                 = new BuildProgressCalculatorFactory(
@@ -61,12 +57,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual ILevel GetLevel()
         {
-            return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel);
+            return StaticData.Levels[ApplicationModel.SelectedLevel];
         }
 
         public virtual ISideQuestData GetSideQuest()
         {
-            return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID);
+            return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID];
         }
 
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
@@ -74,10 +70,10 @@ namespace BattleCruisers.Scenes.BattleScene
             ITrashTalkData levelTrashTalkData;
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {_appModel.Mode}");
+            Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {ApplicationModel.Mode}");
 #endif
 
-            if (_appModel.Mode == GameMode.SideQuest)
+            if (ApplicationModel.Mode == GameMode.SideQuest)
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting side quest trash talk for level {levelNum}");
@@ -93,7 +89,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[BattleSceneHelper] Full trash talk data for {(_appModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
+            Debug.Log($"[BattleSceneHelper] Full trash talk data for {(ApplicationModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
                      $"  Enemy Name: {levelTrashTalkData.EnemyName}\n" +
                      $"  Player Text: {levelTrashTalkData.PlayerText}\n" +
                      $"  Enemy Text: {levelTrashTalkData.EnemyText}\n" +
@@ -111,10 +107,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual IPrefabKey GetAiCruiserKey()
         {
-            if (_appModel.Mode == GameMode.SideQuest)
-                return _appModel.DataProvider.GetSideQuest(_appModel.SelectedSideQuestID).Hull;
+            if (ApplicationModel.Mode == GameMode.SideQuest)
+                return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
             else
-                return _appModel.DataProvider.GetLevel(_appModel.SelectedLevel).Hull;
+                return StaticData.Levels[ApplicationModel.SelectedLevel].Hull;
         }
     }
 }

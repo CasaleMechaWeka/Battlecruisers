@@ -19,17 +19,17 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
     public abstract class PvPBattleSceneHelper : IPvPBattleSceneHelper
     {
-        protected readonly IApplicationModel _appModel;
         protected readonly IPvPBuildProgressCalculatorFactory _calculatorFactory;
 
         protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
-        public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerAPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
-        public virtual IPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerBPrefabName.Value) ? new PvPHullKey("PvP" + _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
+        public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerAPrefabName.Value) ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
+        public virtual IPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerBPrefabName.Value) ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
         public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         public abstract IFilter<IPvPSlot> CreateHighlightableSlotFilter();
         public abstract IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
@@ -67,12 +67,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             "Yeti"
         };
 
-        protected PvPBattleSceneHelper(
-            IApplicationModel appModel)
+        protected PvPBattleSceneHelper()
         {
-            _appModel = appModel;
             _backgroundStatsProvider = new BackgroundStatsProvider();
-            // _appModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabPat
+            // DataProvider.GameModel.PlayerLoadout.Hull.PrefabPat
             // PlayerACruiser = new PvPHullKey("PvPYeti");
             // PlayerBCruiser = new PvPHullKey("PvPRaptor");
             _calculatorFactory
@@ -83,11 +81,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public virtual IPvPLevel GetPvPLevel()
         {
             /*#if UNITY_EDITOR*/
-            return _appModel.DataProvider.GetPvPLevel((Map)_appModel.DataProvider.GameModel.GameMap);
+            return StaticData.PvPLevels[(Map)DataProvider.GameModel.GameMap];
             /*#else
-                        return _appModel.DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
+                        return DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
             #endif*/
-            // return _appModel.DataProvider.GetPvPLevel();
+            // return DataProvider.GetPvPLevel();
         }
 
         public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)

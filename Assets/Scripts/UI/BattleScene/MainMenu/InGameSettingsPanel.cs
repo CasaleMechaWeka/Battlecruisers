@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 {
     public class InGameSettingsPanel : Panel
     {
-        private ISettingsManager _settingsManager;
+        private SettingsManager _settingsManager;
 
         public InGameSaveButton saveButton;
         public CanvasGroupButton cancelButton;
@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
-            ISettingsManager settingsManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(saveButton, cancelButton, musicVolumeSlider, effectVolumeSlider);
             Helper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager);
@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
 
             showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
-            
+
 
             saveButton
                 .Initialise(

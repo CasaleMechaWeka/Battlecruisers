@@ -20,20 +20,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public VictoryState(
             PostBattleScreenController postBattleScreen,
-            IApplicationModel appModel,
             IMusicPlayer musicPlayer,
             ISingleSoundPlayer soundPlayer,
             ILootManager lootManager,
             ITrashTalkData trashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)
-            : base(postBattleScreen, appModel, musicPlayer)
+            : base(postBattleScreen, musicPlayer)
         {
             Helper.AssertIsNotNull(soundPlayer, lootManager, trashTalkData);
 
 
             _lootManager = lootManager;
 
-            BattleResult battleResult = _appModel.DataProvider.GameModel.LastBattleResult;
+            BattleResult battleResult = DataProvider.GameModel.LastBattleResult;
 
             postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_NO_LOOT_KEY);
             postBattleScreen.title.color = Color.black;
@@ -43,7 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 #if IS_DEMO
     // (demo branch unchanged)
 #else
-            if (appModel.Mode != GameMode.SideQuest &&
+            if (ApplicationModel.Mode != GameMode.SideQuest &&
                (desiredBehaviour == PostBattleScreenBehaviour.Victory_LootUnlocked ||
                 (desiredBehaviour == PostBattleScreenBehaviour.Default &&
                  _lootManager.ShouldShowLevelLoot(battleResult.LevelNum))))
@@ -54,20 +53,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
                 _unlockedLoot = lootManager.UnlockLevelLoot(battleResult.LevelNum);
             }
-            else if (appModel.Mode == GameMode.SideQuest &&
+            else if (ApplicationModel.Mode == GameMode.SideQuest &&
                     (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
                      (desiredBehaviour == PostBattleScreenBehaviour.Default &&
-                      _lootManager.ShouldShowSideQuestLoot(_appModel.SelectedSideQuestID))))
+                      _lootManager.ShouldShowSideQuestLoot(ApplicationModel.SelectedSideQuestID))))
             {
                 postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                _unlockedLoot = lootManager.UnlockSideQuestLoot(_appModel.SelectedSideQuestID);
+                _unlockedLoot = lootManager.UnlockSideQuestLoot(ApplicationModel.SelectedSideQuestID);
             }
             else
             {
-                if (appModel.Mode == GameMode.CoinBattle)
+                if (ApplicationModel.Mode == GameMode.CoinBattle)
                 {
                     postBattleScreen.victoryNoLootMessage.gameObject.SetActive(true);
                     postBattleScreen.postSkirmishButtonsPanel.gameObject.SetActive(true);
@@ -81,10 +80,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             }
 #endif
 
-            if (appModel.Mode == GameMode.CoinBattle)
+            if (ApplicationModel.Mode == GameMode.CoinBattle)
             {
                 //Reset gamemode to Campaign
-                appModel.Mode = GameMode.Campaign;
+                ApplicationModel.Mode = GameMode.Campaign;
             }
             else
             {
@@ -94,19 +93,19 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         private void SaveVictory(BattleResult battleResult)
         {
-            CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: _appModel.DataProvider.SettingsManager.AIDifficulty);
-            if (_appModel.Mode != GameMode.SideQuest)
-                _appModel.DataProvider.GameModel.AddCompletedLevel(level);
+            CompletedLevel level = new CompletedLevel(levelNum: battleResult.LevelNum, hardestDifficulty: DataProvider.SettingsManager.AIDifficulty);
+            if (ApplicationModel.Mode != GameMode.SideQuest)
+                DataProvider.GameModel.AddCompletedLevel(level);
             else
-                _appModel.DataProvider.GameModel.AddCompletedSideQuest(level);
+                DataProvider.GameModel.AddCompletedSideQuest(level);
 
             int nextLevel = 0;
-            if (_appModel.Mode != GameMode.SideQuest)
-                nextLevel = _appModel.SelectedLevel + 1;
-            if (nextLevel <= _appModel.DataProvider.LockedInfo.NumOfLevelsUnlocked)
-                _appModel.DataProvider.GameModel.SelectedLevel = nextLevel;
+            if (ApplicationModel.Mode != GameMode.SideQuest)
+                nextLevel = ApplicationModel.SelectedLevel + 1;
+            if (nextLevel <= DataProvider.LockedInfo.NumOfLevelsUnlocked)
+                DataProvider.GameModel.SelectedLevel = nextLevel;
 
-            _appModel.DataProvider.SaveGame();
+            DataProvider.SaveGame();
         }
 
         public void ShowLoot()

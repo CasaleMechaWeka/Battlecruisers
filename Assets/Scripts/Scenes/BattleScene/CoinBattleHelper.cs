@@ -11,10 +11,9 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly ICoinBattleModel _coinBattle;
 
         public CoinBattleHelper(
-            IApplicationModel appModel,
             PrefabFactory prefabFactory,
             IDeferrer deferrer)
-            : base(appModel, prefabFactory, deferrer)
+            : base(prefabFactory, deferrer)
         {
             _coinBattle = DataProvider.GameModel.CoinBattle;
             Assert.IsNotNull(_coinBattle);

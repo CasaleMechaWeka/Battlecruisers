@@ -14,8 +14,7 @@ namespace BattleCruisers.Cruisers
 
         public override void Initialise(ICruiserArgs args)
         {
-            IApplicationModel applicationModel = ApplicationModelProvider.ApplicationModel;
-            if (applicationModel.SelectedLevel == 36) //This is where UltraCruiser Level is designated
+            if (ApplicationModel.SelectedLevel == 36) //This is where UltraCruiser Level is designated
             {
                 SetUltraCruiserHealth(args);
                 droneBuildingBuildRateBoost = SetUltraCruiserUtility(args, droneBuildingBuildRateBoost);

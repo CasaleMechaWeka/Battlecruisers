@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -28,7 +29,6 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         public CanvasGroupButton premiumButton;
         private ISingleSoundPlayer _soundPlayer;
-        private IDataProvider _dataProvider;
         private PrefabFactory _prefabFactory;
         public GameObject content;
         public GameObject bodykitMessagePanel;
@@ -38,12 +38,11 @@ namespace BattleCruisers.UI.ScreensScene
         public Animator seaAnimator;
         public GameObject previewCanvas;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, IDataProvider dataProvider, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
         {
             bodykitDataChanged += BodykitDataChanged;
             onBodykitItemClick += OnBodykitItemClick;
             _soundPlayer = soundPlayer;
-            _dataProvider = dataProvider;
             _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             premiumButton.Initialise(_soundPlayer, ScreensSceneGod.Instance.ShowPremiumEditionIAP);
@@ -52,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void OnEnable()
         {
-            if (_dataProvider.GameModel.PurchasedBodykits.Contains(0))
+            if (DataProvider.GameModel.PurchasedBodykits.Contains(0))
             {
                 priceLabel.SetActive(false);
                 premiumButton.gameObject.SetActive(false);
@@ -66,26 +65,26 @@ namespace BattleCruisers.UI.ScreensScene
         private async void Purchase()
         {
             ScreensSceneGod.Instance.processingPanel.SetActive(true);
-            if (_dataProvider.GameModel.Coins >= currentBodykitData.BodykitCost)
+            if (DataProvider.GameModel.Coins >= currentBodykitData.BodykitCost)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
                 {
                     // online purchase
                     try
                     {
-                        bool result = await _dataProvider.PurchaseBodykitV2(currentBodykitData.Index);
+                        bool result = await DataProvider.PurchaseBodykitV2(currentBodykitData.Index);
                         if (result)
                         {
-                            //    await _dataProvider.SyncCurrencyFromCloud();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                            //    await DataProvider.SyncCurrencyFromCloud();
+                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
                             ownFeedback.SetActive(true);
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                            _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
-                            _dataProvider.SaveGame();
-                            await _dataProvider.CloudSave();
+                            DataProvider.GameModel.AddBodykit(currentBodykitData.Index);
+                            DataProvider.SaveGame();
+                            await DataProvider.CloudSave();
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("BodykitPurchased") + " " + LocTableCache.CommonTable.GetString(currentBodykitData.NameStringKeyBase));
                             priceLabel.SetActive(false);
@@ -113,24 +112,24 @@ namespace BattleCruisers.UI.ScreensScene
                         btnBuy.SetActive(false);
                         ownFeedback.SetActive(true);
                         ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
-                        _dataProvider.GameModel.AddBodykit(currentBodykitData.Index);
+                        DataProvider.GameModel.AddBodykit(currentBodykitData.Index);
                         ScreensSceneGod.Instance.processingPanel.SetActive(false);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("BodykitPurchased") + " " + LocTableCache.CommonTable.GetString(currentBodykitData.NameStringKeyBase));
                         priceLabel.SetActive(false);
 
                         // Subtract from local economy:
-                        _dataProvider.GameModel.Coins -= currentBodykitData.BodykitCost;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_dataProvider, _prefabFactory);
+                        DataProvider.GameModel.Coins -= currentBodykitData.BodykitCost;
+                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
 
                         // Keep track of transaction for later:
-                        _dataProvider.GameModel.CoinsChange -= currentBodykitData.BodykitCost;
-                        BodykitData bodykit = _dataProvider.StaticData.Bodykits[currentBodykitData.Index];
-                        if (_dataProvider.GameModel.OutstandingBodykitTransactions == null)
+                        DataProvider.GameModel.CoinsChange -= currentBodykitData.BodykitCost;
+                        BodykitData bodykit = StaticData.Bodykits[currentBodykitData.Index];
+                        if (DataProvider.GameModel.OutstandingBodykitTransactions == null)
                         {
-                            _dataProvider.GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
+                            DataProvider.GameModel.OutstandingBodykitTransactions = new List<BodykitData>();
                         }
-                        _dataProvider.GameModel.OutstandingBodykitTransactions.Add(bodykit);
-                        _dataProvider.SaveGame();
+                        DataProvider.GameModel.OutstandingBodykitTransactions.Add(bodykit);
+                        DataProvider.SaveGame();
                     }
                     catch
                     {
@@ -201,7 +200,7 @@ namespace BattleCruisers.UI.ScreensScene
             btnBuy.transform.parent.gameObject.SetActive(true);
             premiumButton.gameObject.SetActive(false);
 
-            if (_dataProvider.GameModel.PurchasedBodykits.Contains(e.bodykitData.Index))
+            if (DataProvider.GameModel.PurchasedBodykits.Contains(e.bodykitData.Index))
             {
                 btnBuy.SetActive(false);
                 priceLabel.SetActive(false);

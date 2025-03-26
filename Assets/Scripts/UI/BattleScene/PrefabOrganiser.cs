@@ -5,7 +5,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 
@@ -15,26 +14,24 @@ namespace BattleCruisers.UI.BattleScene
     {
         private readonly ILoadout _playerLoadout;
         private readonly PrefabFactory _prefabFactory;
-        private readonly IBuildingGroupFactory _buildingGroupFactory;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PrefabOrganiser(ILoadout playerLoadout, PrefabFactory prefabFactory, IBuildingGroupFactory buildingGroupFactory)
+        public PrefabOrganiser(ILoadout playerLoadout, PrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(playerLoadout, prefabFactory, buildingGroupFactory);
+            Helper.AssertIsNotNull(playerLoadout, prefabFactory);
 
             _playerLoadout = playerLoadout;
             _prefabFactory = prefabFactory;
-            _buildingGroupFactory = buildingGroupFactory;
         }
 
         public IList<IBuildingGroup> GetBuildingGroups()
         {
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
-            return CreateBuildingGroups(buildings, _buildingGroupFactory);
+            return CreateBuildingGroups(buildings);
         }
 
         private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(ILoadout loadout, PrefabFactory prefabFactory)
@@ -59,14 +56,16 @@ namespace BattleCruisers.UI.BattleScene
         }
 
         private IList<IBuildingGroup> CreateBuildingGroups(
-            IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildingCategoryToGroups,
-            IBuildingGroupFactory buildingGroupFactory)
+            IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildingCategoryToGroups)
         {
             IList<IBuildingGroup> buildingGroups = new List<IBuildingGroup>();
 
             foreach (KeyValuePair<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings in buildingCategoryToGroups)
             {
-                IBuildingGroup group = buildingGroupFactory.CreateBuildingGroup(categoryToBuildings.Key, categoryToBuildings.Value);
+                IBuildingGroup group = new BuildingGroup(categoryToBuildings.Key,
+                                                            categoryToBuildings.Value,
+                                                            GetGroupName(categoryToBuildings.Key),
+                                                            GetGroupDescription(categoryToBuildings.Key));
                 buildingGroups.Add(group);
             }
 
@@ -106,6 +105,32 @@ namespace BattleCruisers.UI.BattleScene
                 unitWrappers.Add(unitWrapper);
             }
             return unitWrappers;
+        }
+
+        private string GetGroupName(BuildingCategory category)
+        {
+            return category switch
+            {
+                BuildingCategory.Factory => "Factories",
+                BuildingCategory.Tactical => "Tactical",
+                BuildingCategory.Defence => "Defence",
+                BuildingCategory.Offence => "Offence",
+                BuildingCategory.Ultra => "Ultras",
+                _ => throw new ArgumentException(),
+            };
+        }
+
+        private string GetGroupDescription(BuildingCategory category)
+        {
+            return category switch
+            {
+                BuildingCategory.Factory => "Buildings that produce units",
+                BuildingCategory.Tactical => "Specialised buildings",
+                BuildingCategory.Defence => "Defensive buildings to protect your cruiser",
+                BuildingCategory.Offence => "Offensive buildings to destroy the enemy cruiser",
+                BuildingCategory.Ultra => "Ridiculously awesome creations meant to end to game",
+                _ => throw new ArgumentException(),
+            };
         }
     }
 }

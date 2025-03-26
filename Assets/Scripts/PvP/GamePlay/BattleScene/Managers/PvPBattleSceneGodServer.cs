@@ -5,7 +5,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.Bat
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Multiplayer.Samples.Utilities;
@@ -32,8 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static IPvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         public IPvPPrefabFactory prefabFactory;
-        private IApplicationModel applicationModel;
-        public IDataProvider dataProvider;
         private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
@@ -155,9 +152,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async Task _Initialise()
         {
-            applicationModel = ApplicationModelProvider.ApplicationModel;
-            dataProvider = applicationModel.DataProvider;
-
             IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
             IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             prefabFactory = new PvPPrefabFactory(prefabCache, null);
@@ -165,9 +159,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
-            components.Initialise(applicationModel.DataProvider.SettingsManager);
+            components.Initialise(DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            pvpBattleHelper = CreatePvPBattleHelper(applicationModel, prefabFactory, components.Deferrer);
+            pvpBattleHelper = CreatePvPBattleHelper(prefabFactory, components.Deferrer);
 
             playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
@@ -177,14 +171,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
-            factoryProvider = new PvPFactoryProvider(components, prefabFactory, dataProvider.SettingsManager);
+            factoryProvider = new PvPFactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
             factoryProvider.Initialise();
             GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             _Initialise_Rest();
         }
         public void _Initialise_Rest()
         {
-            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper, applicationModel /*, uiManager */);
+            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper /*, uiManager */);
             //await Task.Delay(500);
             playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             //await Task.Delay(500);
@@ -221,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             #endif
                         try
                         {
-                            AnalyticsService.Instance.CustomData("Battle", applicationModel.DataProvider.GameModel.Analytics(applicationModel.Mode.ToString(), logName, applicationModel.UserWonSkirmish));
+                            AnalyticsService.Instance.CustomData("Battle", DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(), logName, ApplicationModel.UserWonSkirmish));
                             AnalyticsService.Instance.Flush();
                         }
                         catch (Exception ex)
@@ -292,15 +286,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             deadBuildables_right.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
 
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
             {
                 difficultyDestructionScoreMultiplier = 1.0f;
             }
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
             {
                 difficultyDestructionScoreMultiplier = 1.5f;
             }
-            if (applicationModel.DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
+            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
             {
                 difficultyDestructionScoreMultiplier = 2.0f;
             }
@@ -401,11 +395,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiser.pvp_DroneNumIncreased.Value = !playerBCruiser.pvp_DroneNumIncreased.Value;
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
-            IApplicationModel applicationModel,
             IPvPPrefabFactory prefabFactory,
             IDeferrer deferrer)
         {
-            return new PvPBattleHelper(applicationModel, prefabFactory, deferrer);
+            return new PvPBattleHelper(prefabFactory, deferrer);
         }
     }
 }

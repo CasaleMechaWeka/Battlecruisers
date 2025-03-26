@@ -45,14 +45,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 playerId = playerId,
                 playerName = playerName,
-                playerHullPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName,
-                playerScore = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.LifetimeDestructionScore,
+                playerHullPrefabName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName,
+                playerScore = DataProvider.GameModel.LifetimeDestructionScore,
                 playerNetworkId = 0,
-                playerCaptainPrefabName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
-                playerGameMap = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.GameMap,
-                playerRating = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.BattleWinScore,
-                playerBodykit = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.SelectedBodykit,
-                //        playerSelectedVariants = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
+                playerCaptainPrefabName = DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
+                playerGameMap = DataProvider.GameModel.GameMap,
+                playerRating = DataProvider.GameModel.BattleWinScore,
+                playerBodykit = DataProvider.GameModel.PlayerLoadout.SelectedBodykit,
+                //        playerSelectedVariants = DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
                 //               isDebug = Debug.isDebugBuild
             });
 

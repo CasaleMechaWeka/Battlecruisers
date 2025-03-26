@@ -1,4 +1,5 @@
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
@@ -20,14 +21,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public ISlidingPanel HecklePanel => hecklePanel;
 
-        private IDataProvider _dataProvider;
         private ISingleSoundPlayer _soundPlayer;
         private IPvPUIManager _puUIManager;
         private bool isOpened;
-        public async void Initialise(IDataProvider dataProvider, ISingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
+        public async void Initialise(ISingleSoundPlayer soundPlayer, IPvPUIManager uiManager)
         {
-            Helper.AssertIsNotNull(dataProvider, soundPlayer, closed, opened, hecklesButton);
-            _dataProvider = dataProvider;
+            Helper.AssertIsNotNull(soundPlayer, closed, opened, hecklesButton);
             _soundPlayer = soundPlayer;
             _puUIManager = uiManager;
 
@@ -36,10 +35,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             hecklesButton.Initialise(_soundPlayer, OnHeckleButtonClicked);
             hecklePanel.Initialise();
             await Task.Delay(10);
-            foreach (int i in _dataProvider.GameModel.PlayerLoadout.CurrentHeckles)
+            foreach (int i in DataProvider.GameModel.PlayerLoadout.CurrentHeckles)
             {
                 PvPHeckleButton heckleButton = Instantiate(heckleButtonPrefab, hecklesParent);
-                heckleButton.StaticInitialise(soundPlayer, dataProvider, _dataProvider.StaticData.Heckles[i], this);
+                heckleButton.StaticInitialise(soundPlayer, StaticData.Heckles[i], this);
             }
         }
 

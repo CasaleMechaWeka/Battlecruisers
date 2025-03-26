@@ -334,7 +334,7 @@ namespace BattleCruisers.Data.Static
                 return new CaptainExoKey("CaptainExo" + index.ToString("000"));
             }
 
-            public static int CaptainExoCount => ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Captains.Count;
+            public static int CaptainExoCount => StaticData.Captains.Count;
 
             public static IList<IPrefabKey> AllKeys
             {
@@ -362,7 +362,7 @@ namespace BattleCruisers.Data.Static
                 get
                 {
                     List<IPrefabKey> bodykitKeys = new List<IPrefabKey>();
-                    int bodykitCount = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Bodykits.Count;
+                    int bodykitCount = StaticData.Bodykits.Count;
 
                     for (int i = 0; i < bodykitCount; i++)
                         bodykitKeys.Add(GetBodykitKey(i));
@@ -384,7 +384,7 @@ namespace BattleCruisers.Data.Static
                 get
                 {
                     List<IPrefabKey> variantKeys = new List<IPrefabKey>();
-                    int variantCount = ApplicationModelProvider.ApplicationModel.DataProvider.StaticData.Variants.Count;
+                    int variantCount = StaticData.Variants.Count;
 
                     for (int i = 0; i < variantCount; i++)
                         variantKeys.Add(GetVariantKey(i));

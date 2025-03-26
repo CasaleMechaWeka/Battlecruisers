@@ -1,11 +1,9 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Effects.Laser;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
-using System.Threading.Tasks;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -42,15 +40,14 @@ namespace BattleCruisers.Projectiles.Spawners.Beams.Laser
             IsLaserFiring = new BroadcastingProperty<bool>(_isLaserFiring);
         }
 
-        public async Task InitialiseAsync(
+        public void Initialise(
             ITargetFilter targetFilter,
             float damagePerS,
             ITarget parent,
-            ISettingsManager settingsManager,
             IDeltaTimeProvider deltaTimeProvider,
             IDeferrer timeScaleDeferrer)
         {
-            base.Initialise(targetFilter, parent, settingsManager);
+            base.Initialise(targetFilter, parent);
             Assert.IsNotNull(deltaTimeProvider);
             Assert.IsTrue(damagePerS > 0);
 

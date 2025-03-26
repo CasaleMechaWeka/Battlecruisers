@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             PvPBattleSceneGodTunnel._playerACruiserVal = 3500;  // in case of worse state
             PvPBattleSceneGodTunnel._playerBCruiserVal = 3500;
-            PvPBattleSceneGodTunnel._playerBCruiserName = ApplicationModelProvider.ApplicationModel.DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
+            PvPBattleSceneGodTunnel._playerBCruiserName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
         }
 
         public override void Exit() { }
