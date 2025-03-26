@@ -45,7 +45,11 @@
         }
 
         public static bool ShowPostBattleScreen { get; set; }
+#if UNITY_EDITOR
+        public static GameMode Mode { get; set; } = GameMode.Campaign;
+#else
         public static GameMode Mode { get; set; }
+#endif
         public static bool IsTutorial => Mode == GameMode.Tutorial;
         public static bool UserWonSkirmish { get; set; }
 
