@@ -45,8 +45,8 @@ namespace BattleCruisers.Scenes.Test.Effects
 
         private Vector2 RandomisePosition(Vector2 originalPosition)
         {
-            float x = RandomGenerator.Instance.Range(-spawnRadiusInM, spawnRadiusInM);
-            float y = RandomGenerator.Instance.Range(-spawnRadiusInM, spawnRadiusInM);
+            float x = RandomGenerator.Range(-spawnRadiusInM, spawnRadiusInM);
+            float y = RandomGenerator.Range(-spawnRadiusInM, spawnRadiusInM);
             return new Vector2(originalPosition.x + x, originalPosition.y + y);
         }
     }

@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
+            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(GlobalBoostProviders);
             //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                    new SpawnPositionFinder(Constants.WATER_LINE),
                     faction);
         }
 
@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance);
+            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(GlobalBoostProviders);
             //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                    new SpawnPositionFinder(Constants.WATER_LINE),
                     faction);
         }
     }

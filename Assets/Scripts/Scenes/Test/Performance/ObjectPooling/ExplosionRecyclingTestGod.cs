@@ -32,8 +32,8 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
         private void ShowExplosion()
         {
             Vector2 spawnPosition = new Vector2(
-                BCUtils.RandomGenerator.Instance.Range(-xRadiusInM, xRadiusInM),
-                BCUtils.RandomGenerator.Instance.Range(-yRadiusInM, yRadiusInM));
+                BCUtils.RandomGenerator.Range(-xRadiusInM, xRadiusInM),
+                BCUtils.RandomGenerator.Range(-yRadiusInM, yRadiusInM));
 
             _pool.GetItem(spawnPosition);
         }

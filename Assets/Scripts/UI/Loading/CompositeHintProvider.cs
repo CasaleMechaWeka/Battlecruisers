@@ -7,26 +7,24 @@ namespace BattleCruisers.UI.Loading
     {
         private readonly IHintProvider _basicHints, _advancedHints;
         private readonly IGameModel _gameModel;
-        private readonly IRandomGenerator _random;
 
         // The level local boosters are unlocked (one of the advanced hints refers
         // to local boosters)
         public const int ADVANCED_HINT_LEVEL_REQUIREMENT = 9;
 
-        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, IGameModel gameModel, IRandomGenerator random)
+        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, IGameModel gameModel)
         {
-            Helper.AssertIsNotNull(basicHints, advancedHints, gameModel, random);
+            Helper.AssertIsNotNull(basicHints, advancedHints, gameModel);
 
             _basicHints = basicHints;
             _advancedHints = advancedHints;
             _gameModel = gameModel;
-            _random = random;
         }
 
         public string GetHint()
         {
             if (_gameModel.NumOfLevelsCompleted > ADVANCED_HINT_LEVEL_REQUIREMENT
-                && _random.NextBool())
+                && RandomGenerator.NextBool())
             {
                 return _advancedHints.GetHint();
             }

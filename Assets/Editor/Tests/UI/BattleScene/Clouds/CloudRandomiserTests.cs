@@ -11,17 +11,15 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
     public class CloudRandomiserTests
     {
         private ICloudRandomiser _cloudRandomiser;
-        private IRandomGenerator _random;
         private IRange<float> _rightCloudValidXPositions;
         private ICloud _leftCloud, _rightCloud;
 
         [SetUp]
         public void TestSetup()
         {
-            _random = Substitute.For<IRandomGenerator>();
             _rightCloudValidXPositions = new Range<float>(0, 4);
 
-            _cloudRandomiser = new CloudRandomiser(_random, _rightCloudValidXPositions);
+            _cloudRandomiser = new CloudRandomiser(_rightCloudValidXPositions);
 
             _leftCloud = Substitute.For<ICloud>();
             _leftCloud.Position.Returns(new Vector3(-2, 1, 0));
@@ -41,7 +39,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Clouds
         {
             // Arrange
             float distanceBetweenCloudsInM = _rightCloud.Position.x - _leftCloud.Position.x;
-            _random.Range(_rightCloudValidXPositions).Returns(-17);
+            RandomGenerator.Range(_rightCloudValidXPositions).Returns(-17);
 
             float rightCloudXPosition = -17;
             Vector2 expectedRightCloudPosition = new Vector2(rightCloudXPosition, _rightCloud.Position.y);

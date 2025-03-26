@@ -10,9 +10,9 @@ using BcUtils = BattleCruisers.Utils;
 namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
 {
     public class DeathstarTestGod : TestGodBase
-	{
+    {
         public Building leftTarget, rightTarget;
-		public DeathstarController leftDeathstar, rightDeathstar;
+        public DeathstarController leftDeathstar, rightDeathstar;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -28,27 +28,27 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         protected override void Setup(Helper helper)
         {
             SetupPair(helper, leftTarget, rightDeathstar, Faction.Blues);
-			SetupPair(helper, rightTarget, leftDeathstar, Faction.Reds);
-		}
+            SetupPair(helper, rightTarget, leftDeathstar, Faction.Reds);
+        }
 
-		private void SetupPair(
+        private void SetupPair(
             Helper helper,
-            IBuilding target, 
-            DeathstarController deathstar, 
+            IBuilding target,
+            DeathstarController deathstar,
             Faction targetFaction)
-		{
-			// Setup target
+        {
+            // Setup target
             helper.InitialiseBuilding(target, targetFaction);
-			
-			// Setup deathstar
-			Faction deathstarFaction = BcUtils.Helper.GetOppositeFaction(targetFaction);
 
-			Vector2 parentCruiserPosition = deathstar.transform.position;
+            // Setup deathstar
+            Faction deathstarFaction = BcUtils.Helper.GetOppositeFaction(targetFaction);
+
+            Vector2 parentCruiserPosition = deathstar.transform.position;
             Vector2 enemyCruiserPosition = target.Position;
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition, BcUtils.RandomGenerator.Instance);
-			
+            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
+
             helper.InitialiseUnit(deathstar, deathstarFaction, aircraftProvider: aircraftProvider);
-			deathstar.StartConstruction();
-		}
-	}
+            deathstar.StartConstruction();
+        }
+    }
 }

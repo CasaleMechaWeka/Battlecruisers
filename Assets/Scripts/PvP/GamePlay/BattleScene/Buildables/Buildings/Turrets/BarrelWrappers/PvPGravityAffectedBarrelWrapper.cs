@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             else
             {
-                return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, RandomGenerator.Instance, barrel.TurretStats);
+                return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, barrel.TurretStats);
             }
         }
 

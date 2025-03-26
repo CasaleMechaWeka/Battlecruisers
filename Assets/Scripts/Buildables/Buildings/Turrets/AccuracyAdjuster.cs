@@ -13,23 +13,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class AccuracyAdjuster
     {
         private readonly IAngleCalculator _angleCalculator;
-        private readonly IRandomGenerator _random;
         private readonly ITurretStats _turretStats;
         private readonly (float x, float y) _targetMargins;
 
         public AccuracyAdjuster(
             (float x, float y) targetMargins,
             IAngleCalculator angleCalculator = null,
-            IRandomGenerator random = null,
             ITurretStats turretStats = null)
         {
             if (targetMargins != (0, 0))
-                Helper.AssertIsNotNull(angleCalculator, random, turretStats);
+                Helper.AssertIsNotNull(angleCalculator, turretStats);
 
             //_boundsFinder = boundsFinder;
             _targetMargins = targetMargins;
             _angleCalculator = angleCalculator;
-            _random = random;
             _turretStats = turretStats;
         }
 
@@ -62,7 +59,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             Logging.Log(Tags.ACCURACY_ADJUSTERS, $"FireAngleRange: {fireMin} - {fireMax}");
 
             // Return a randomized angle within the computed range
-            return _random.Range(fireMin, fireMax);
+            return RandomGenerator.Range(fireMin, fireMax);
         }
     }
 }

@@ -5,43 +5,35 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils
 {
-    public class RandomGenerator : IRandomGenerator
+    public enum ChangeDirection
     {
-        private static RandomGenerator _instance;
-        public static RandomGenerator Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new RandomGenerator();
-                }
-                return _instance;
-            }
-        }
+        Down,
+        Up,
+        Both
+    }
 
-        public float Value => Random.value;
+    public static class RandomGenerator
+    {
+        public static float Value => Random.value;
 
-        private RandomGenerator() { }
-
-        public float RangeFromCenter(float center, float radius)
+        public static float RangeFromCenter(float center, float radius)
         {
             Assert.IsTrue(radius > 0);
             return Range(center - radius, center + radius);
         }
 
-        public float Range(IRange<float> range)
+        public static float Range(IRange<float> range)
         {
             return Range(range.Min, range.Max);
         }
 
-        public float Range(float minInclusive, float maxInclusive)
+        public static float Range(float minInclusive, float maxInclusive)
         {
             //Assert.IsTrue(minInclusive < maxInclusive, $"{minInclusive} should be < than {maxInclusive}");
             return Random.Range(minInclusive, maxInclusive);
         }
 
-        public int Range(int minInclusive, int maxInclusive)
+        public static int Range(int minInclusive, int maxInclusive)
         {
             Assert.IsTrue(minInclusive <= maxInclusive);
 
@@ -54,7 +46,7 @@ namespace BattleCruisers.Utils
             return Mathf.RoundToInt(randomFloat);
         }
 
-        public float Randomise(float baseValue, float maxChangeByProportionOfBaseValue, ChangeDirection changeDirection)
+        public static float Randomise(float baseValue, float maxChangeByProportionOfBaseValue, ChangeDirection changeDirection)
         {
             Assert.IsTrue(maxChangeByProportionOfBaseValue >= 0);
             float maxChange = Mathf.Abs(baseValue) * maxChangeByProportionOfBaseValue;
@@ -64,12 +56,12 @@ namespace BattleCruisers.Utils
             return Range(floor, ceiling);
         }
 
-        public bool NextBool()
+        public static bool NextBool()
         {
             return Random.value > 0.5f;
         }
 
-        public TItem RandomItem<TItem>(IList<TItem> items)
+        public static TItem RandomItem<TItem>(IList<TItem> items)
         {
             int index = Range(0, items.Count - 1);
             return items[index];

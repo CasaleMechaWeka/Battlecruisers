@@ -7,14 +7,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class CloudRandomiser : ICloudRandomiser
     {
-        private readonly IRandomGenerator _random;
         private readonly IRange<float> _rightCloudValidXPositions;
 
-        public CloudRandomiser(IRandomGenerator random, IRange<float> rightCloudValidXPositions)
+        public CloudRandomiser(IRange<float> rightCloudValidXPositions)
         {
-            Helper.AssertIsNotNull(random, rightCloudValidXPositions);
+            Helper.AssertIsNotNull(rightCloudValidXPositions);
 
-            _random = random;
             _rightCloudValidXPositions = rightCloudValidXPositions;
         }
 
@@ -25,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 
             float distanceBetweenCloudsInM = rightCloud.Position.x - leftCloud.Position.x;
 
-            float rightCloudXPosition = _random.Range(_rightCloudValidXPositions);
+            float rightCloudXPosition = RandomGenerator.Range(_rightCloudValidXPositions);
             rightCloud.Position = new Vector3(rightCloudXPosition, rightCloud.Position.y, rightCloud.Position.z);
 
             float leftCloudXPosition = rightCloudXPosition - distanceBetweenCloudsInM;

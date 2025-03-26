@@ -61,7 +61,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Smokes
 
         private float FuzzCruisingAltitude(float cruisingAltitudeInM)
         {
-            return BCUtils.RandomGenerator.Instance.RangeFromCenter(cruisingAltitudeInM, radius: 1);
+            return BCUtils.RandomGenerator.RangeFromCenter(cruisingAltitudeInM, radius: 1);
         }
 
         public void KillPlanes()

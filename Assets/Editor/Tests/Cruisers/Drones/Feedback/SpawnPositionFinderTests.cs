@@ -10,14 +10,12 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
     public class SpawnPositionFinderTests
     {
         private ISpawnPositionFinder _positionFinder;
-        private IRandomGenerator _random;
         private IDroneConsumerInfo _droneConsumerInfo;
 
         [SetUp]
         public void TestSetup()
         {
-            _random = Substitute.For<IRandomGenerator>();
-            _positionFinder = new SpawnPositionFinder(_random, Constants.WATER_LINE);
+            _positionFinder = new SpawnPositionFinder(Constants.WATER_LINE);
 
             _droneConsumerInfo = Substitute.For<IDroneConsumerInfo>();
         }
@@ -41,8 +39,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
                     _droneConsumerInfo.Position.y + yDeltaInM);
 
             Vector2 expectedPosition = new Vector2(17, 71);
-            _random.Range(xPositionRange).Returns(expectedPosition.x);
-            _random.Range(yPositionRange).Returns(expectedPosition.y);
+            RandomGenerator.Range(xPositionRange).Returns(expectedPosition.x);
+            RandomGenerator.Range(yPositionRange).Returns(expectedPosition.y);
 
             Assert.AreEqual(expectedPosition, _positionFinder.FindSpawnPosition(_droneConsumerInfo));
         }
@@ -69,8 +67,8 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
                     Constants.WATER_LINE);
 
             Vector2 expectedPosition = new Vector2(17, 71);
-            _random.Range(xPositionRange).Returns(expectedPosition.x);
-            _random.Range(yPositionRange).Returns(expectedPosition.y);
+            RandomGenerator.Range(xPositionRange).Returns(expectedPosition.x);
+            RandomGenerator.Range(yPositionRange).Returns(expectedPosition.y);
 
             Assert.AreEqual(expectedPosition, _positionFinder.FindSpawnPosition(_droneConsumerInfo));
         }

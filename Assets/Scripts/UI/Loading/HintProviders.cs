@@ -11,12 +11,12 @@ namespace BattleCruisers.UI.Loading
         public IHintProvider BasicHints { get; }
         public IHintProvider AdvancedHints { get; }
 
-        public HintProviders(IRandomGenerator random)
+        public HintProviders()
         {
-            Helper.AssertIsNotNull(random);
+            Helper.AssertIsNotNull();
 
-            BasicHints = new HintProvider(CreateBasicHints(), random);
-            AdvancedHints = new HintProvider(CreateAdvancedHints(), random);
+            BasicHints = new HintProvider(CreateBasicHints());
+            AdvancedHints = new HintProvider(CreateAdvancedHints());
         }
 
         private IList<string> CreateBasicHints()

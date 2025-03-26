@@ -34,7 +34,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
     {
         private IList<HullKey> _unlockedHulls;
         private List<HullKey> _playableHulls;   //these also include the boss hulls
-        private IRandomGenerator _random;
         private StrategyType[] _strategies;
 
         private ISkirmishModel Skirmish => DataProvider.GameModel.Skirmish;
@@ -65,7 +64,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             if (DataProvider.GameModel.CompletedSideQuests.ToArray().Select(sideQuest => sideQuest.LevelNum).Contains(23))
                 _playableHulls.Add(StaticPrefabKeys.Hulls.FortressPrime);
 
-            _random = RandomGenerator.Instance;
             _randomDropdownEntry = LocTableCache.ScreensSceneTable.GetString("UI/SkirmishScreen/RandomDropdownEntry");
 
             battleButton.Initialise(soundPlayer, Battle, this);
@@ -176,7 +174,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         private void SaveSkirmishSettings()
         {
-            int backgroundLevelNum = _random.Range(1, StaticData.NUM_OF_LEVELS);
+            int backgroundLevelNum = RandomGenerator.Range(1, StaticData.NUM_OF_LEVELS);
 
             DropdownResult<HullKey> playerCruiserResult = GetSelectedCruiser(playerCruiserDropdown);
             DropdownResult<HullKey> aiCruiserResult = GetSelectedCruiser(aiCruiserDropdown);
@@ -205,7 +203,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random cruiser!");
-                cruiserKey = RandomGenerator.Instance.RandomItem(_unlockedHulls);
+                cruiserKey = RandomGenerator.RandomItem(_unlockedHulls);
             }
             else
             {
@@ -228,7 +226,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             if (wasRandom)
             {
                 Logging.Log(Tags.SKIRMISH_SCREEN, $"Choosing random strategy!");
-                strategy = RandomGenerator.Instance.RandomItem(_strategies);
+                strategy = RandomGenerator.RandomItem(_strategies);
             }
             else
             {

@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             if (barrel.TurretStats.Accuracy >= Constants.MAX_ACCURACY)
                 return new AccuracyAdjuster((0, 0));
             else
-                return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, RandomGenerator.Instance, barrel.TurretStats);
+                return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, barrel.TurretStats);
         }
 
         protected override AngleLimiter CreateAngleLimiter()

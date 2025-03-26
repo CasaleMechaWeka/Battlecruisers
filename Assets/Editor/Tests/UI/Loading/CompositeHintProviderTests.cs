@@ -10,7 +10,6 @@ namespace BattleCruisers.Tests.UI.Loading
     {
         private IHintProvider _compositHintProvider, _basicHints, _advancedHints;
         private IGameModel _gameModel;
-        private IRandomGenerator _random;
         private string _basicHint, _advancedHint;
 
         [SetUp]
@@ -19,9 +18,8 @@ namespace BattleCruisers.Tests.UI.Loading
             _basicHints = Substitute.For<IHintProvider>();
             _advancedHints = Substitute.For<IHintProvider>();
             _gameModel = Substitute.For<IGameModel>();
-            _random = Substitute.For<IRandomGenerator>();
 
-            _compositHintProvider = new CompositeHintProvider(_basicHints, _advancedHints, _gameModel, _random);
+            _compositHintProvider = new CompositeHintProvider(_basicHints, _advancedHints, _gameModel);
 
             _basicHint = "basic hint";
             _basicHints.GetHint().Returns(_basicHint);
@@ -41,7 +39,7 @@ namespace BattleCruisers.Tests.UI.Loading
         public void GetHint_LateInGame_StillBasicHint()
         {
             _gameModel.NumOfLevelsCompleted.Returns(CompositeHintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT + 1);
-            _random.NextBool().Returns(false);
+            RandomGenerator.NextBool().Returns(false);
             Assert.AreEqual(_basicHint, _compositHintProvider.GetHint());
         }
 
@@ -49,7 +47,7 @@ namespace BattleCruisers.Tests.UI.Loading
         public void GetHint_LateInGame_AdvancedHint()
         {
             _gameModel.NumOfLevelsCompleted.Returns(CompositeHintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT + 1);
-            _random.NextBool().Returns(true);
+            RandomGenerator.NextBool().Returns(true);
             Assert.AreEqual(_advancedHint, _compositHintProvider.GetHint());
         }
     }

@@ -43,9 +43,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             rightCloud.Initialise(skyStats);
 
             ICloudRandomiser cloudRandomiser
-                = new CloudRandomiser(
-                    RandomGenerator.Instance,
-                    rightCloudValidXPositions: new Range<float>(min: -100, max: 400));
+                = new CloudRandomiser(new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
             _cloudTeleporter

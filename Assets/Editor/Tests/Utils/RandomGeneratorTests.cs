@@ -5,14 +5,6 @@ namespace BattleCruisers.Tests.Utils
 {
     public class RandomGeneratorTests
     {
-        private IRandomGenerator _randomGenerator;
-
-        [SetUp]
-        public void TestSetup()
-        {
-            _randomGenerator = RandomGenerator.Instance;
-        }
-
         [Test]
         public void Randomise_BothDirections()
         {
@@ -58,7 +50,7 @@ namespace BattleCruisers.Tests.Utils
         {
             for (int i = 0; i < 100; i++)
             {
-                float generatedValue = _randomGenerator.Randomise(baseValue, maxChangeByProportionOfBaseValue, changeDirection);
+                float generatedValue = RandomGenerator.Randomise(baseValue, maxChangeByProportionOfBaseValue, changeDirection);
                 Assert.IsTrue(generatedValue >= min);
                 Assert.IsTrue(generatedValue <= max);
             }

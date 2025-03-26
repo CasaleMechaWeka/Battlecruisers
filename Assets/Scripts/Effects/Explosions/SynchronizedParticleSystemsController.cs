@@ -15,7 +15,7 @@ namespace BattleCruisers.Effects.Explosions
 
             if (_randomSeed == 0)
             {
-                _randomSeed = RandomGenerator.Instance.Range(0, int.MaxValue);
+                _randomSeed = RandomGenerator.Range(0, int.MaxValue);
             }
 
             Logging.Verbose(Tags.EXPLOSIONS, $"{ToString()}  seed: {_randomSeed}");
@@ -33,7 +33,7 @@ namespace BattleCruisers.Effects.Explosions
 
         public void ResetSeed()
         {
-            _randomSeed = RandomGenerator.Instance.Range(0, int.MaxValue);
+            _randomSeed = RandomGenerator.Range(0, int.MaxValue);
             Initialise();
         }
     }

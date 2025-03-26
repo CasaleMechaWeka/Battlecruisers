@@ -34,7 +34,7 @@ namespace BattleCruisers.Effects.Drones
 
             AnimationState state = _animation["BuilderDrone"];
             Assert.IsNotNull(state);
-            state.normalizedTime = RandomGenerator.Instance.Value;
+            state.normalizedTime = RandomGenerator.Value;
             _animation.Play();
 
             Activated?.Invoke(this, EventArgs.Empty);

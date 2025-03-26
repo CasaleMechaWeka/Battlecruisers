@@ -211,8 +211,8 @@ namespace BattleCruisers.Scenes
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
-            HintProviders hintProviders = new HintProviders(RandomGenerator.Instance);
-            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, DataProvider.GameModel, RandomGenerator.Instance);
+            HintProviders hintProviders = new HintProviders();
+            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, DataProvider.GameModel);
 
             try
             {

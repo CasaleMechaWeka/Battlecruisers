@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             foreach (Animator animation in animations)
             {
-                animation.Play("MistRotor", layer: -1, normalizedTime: RandomGenerator.Instance.Value);
+                animation.Play("MistRotor", layer: -1, normalizedTime: RandomGenerator.Value);
             }
         }
     }

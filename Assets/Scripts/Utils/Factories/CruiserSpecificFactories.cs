@@ -31,7 +31,7 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, RandomGenerator.Instance, isTutorial);
+            AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new TurretStatsFactory(GlobalBoostProviders);
             BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Utils.Factories
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     factoryProvider.PoolProviders.DronePool,
-                    new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                    new SpawnPositionFinder(Constants.WATER_LINE),
                     faction);
         }
     }

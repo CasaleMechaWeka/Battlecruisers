@@ -7,14 +7,10 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class SpawnPositionFinder : ISpawnPositionFinder
     {
-        private readonly IRandomGenerator _random;
         private readonly float _waterLine;
 
-        public SpawnPositionFinder(IRandomGenerator random, float waterLine)
+        public SpawnPositionFinder(float waterLine)
         {
-            Assert.IsNotNull(random);
-
-            _random = random;
             _waterLine = waterLine;
         }
 
@@ -23,20 +19,20 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             Assert.IsNotNull(droneConsumerInfo);
 
             float xDeltaInM = droneConsumerInfo.Size.x / 2;
-            IRange<float> xPositionRange 
+            IRange<float> xPositionRange
                 = new Range<float>(
-                    droneConsumerInfo.Position.x - xDeltaInM, 
+                    droneConsumerInfo.Position.x - xDeltaInM,
                     droneConsumerInfo.Position.x + xDeltaInM);
 
             float yDeltaInM = droneConsumerInfo.Size.y / 2;
-            IRange<float> yPositionRange 
+            IRange<float> yPositionRange
                 = new Range<float>(
                     // Drones must be above the water line
                     Mathf.Max(droneConsumerInfo.Position.y - yDeltaInM, _waterLine),
                     Mathf.Max(droneConsumerInfo.Position.y + yDeltaInM, _waterLine));
 
-            float xPosition = _random.Range(xPositionRange);
-            float yPosition = _random.Range(yPositionRange);
+            float xPosition = RandomGenerator.Range(xPositionRange);
+            float yPosition = RandomGenerator.Range(yPositionRange);
 
             return new Vector2(xPosition, yPosition);
         }

@@ -91,7 +91,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 droneFeedbackFactory
                     = new DroneFeedbackFactory(
                         FactoryProvider.PoolProviders.DronePool,
-                        new SpawnPositionFinder(RandomGenerator.Instance, Constants.WATER_LINE),
+                        new SpawnPositionFinder(Constants.WATER_LINE),
                         faction);
             }
 

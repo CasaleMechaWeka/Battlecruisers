@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.BattleScene.Update;
 using UnityEngine;
-using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Scenes.Test.Balancing
 {
@@ -13,8 +12,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
     {
         // Create aircraft provider for aircraft
         protected override BuildableInitialisationArgs CreateLeftGroupArgs(
-            Helper helper, 
-            Vector2 spawnPosition, 
+            Helper helper,
+            Vector2 spawnPosition,
             IUpdaterProvider updaterProvider,
             ICruiser parentCruiser,
             ICruiser enemyCruiser)
@@ -23,8 +22,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             IAircraftProvider aircraftProvider
                 = new AircraftProvider(
                     parentCruiserPosition: spawnPosition,
-                    enemyCruiserPosition: shieldSpawnPosition,
-                    random: BCUtils.RandomGenerator.Instance);
+                    enemyCruiserPosition: shieldSpawnPosition);
 
             return
                 new BuildableInitialisationArgs(
