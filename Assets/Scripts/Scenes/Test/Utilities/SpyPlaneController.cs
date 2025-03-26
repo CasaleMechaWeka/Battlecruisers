@@ -1,4 +1,7 @@
-﻿using BattleCruisers.Movement.Velocity;
+﻿using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using UnityEngine;
 using BCUtils = BattleCruisers.Utils;
@@ -41,7 +44,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BCUtils.PrefabKeyName.Unit_SpyPlane, this);
+            IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_SpyPlane);
+            _spriteChooser = new SpriteChooser(aircraftSprites, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

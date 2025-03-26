@@ -25,6 +25,8 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Targets.Factories;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -128,7 +130,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             SetupTargetDetection();
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(PrefabKeyName.Unit_Fighter, this);
+            IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_Fighter);
+            _spriteChooser = new SpriteChooser(aircraftSprites, this);
             _barrelController.ApplyVariantStats(this);
 
         }

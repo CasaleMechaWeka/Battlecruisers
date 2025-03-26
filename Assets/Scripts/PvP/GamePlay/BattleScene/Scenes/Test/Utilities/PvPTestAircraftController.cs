@@ -1,6 +1,9 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -51,7 +54,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 ActiveMovementController = DummyMovementController;
             }
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter, this);
+            IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_Fighter);
+            _spriteChooser = new PvPSpriteChooser(aircraftSprites, this);
         }
 
         public void SetTargetType(TargetType targetType)

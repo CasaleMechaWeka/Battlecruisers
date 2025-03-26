@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
-using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data;
@@ -50,7 +49,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IFlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
-            SpriteChooserFactory spriteChooserFactory = null,
             IDeferrer deferrer = null,
             IDeferrer realTimeDeferrer = null,
             IUserChosenTargetManager userChosenTargetManager = null,
@@ -76,8 +74,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     helper.PrefabFactory,
                     movementControllerFactory ?? new MovementControllerFactory(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
-                    spriteChooserFactory ??
-                    new SpriteChooserFactory(),
                     new SoundPlayerFactory(deferrer),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
                     targetFactoriesProvider,
@@ -112,7 +108,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             PrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
             IFlightPointsProviderFactory flightPointsProviderFactory,
-            SpriteChooserFactory spriteChooserFactory,
             ISoundPlayerFactory soundPlayerFactory,
             DeferrerProvider deferrerProvider,
             TargetFactoriesProvider targetFactories,
@@ -127,7 +122,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.SpawnDeciderFactory.Returns(spawnDeciderFactory);
-            factoryProvider.SpriteChooserFactory.Returns(spriteChooserFactory);
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
             factoryProvider.SettingsManager.Returns(DataProvider.SettingsManager);

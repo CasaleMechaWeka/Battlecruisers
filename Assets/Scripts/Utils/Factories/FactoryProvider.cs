@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Movement;
@@ -24,7 +23,6 @@ namespace BattleCruisers.Utils.Factories
         public IMovementControllerFactory MovementControllerFactory { get; }
         public PrefabFactory PrefabFactory { get; }
         public ISpawnDeciderFactory SpawnDeciderFactory { get; }
-        public SpriteChooserFactory SpriteChooserFactory { get; }
         public TargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public SettingsManager SettingsManager { get; }
@@ -46,8 +44,6 @@ namespace BattleCruisers.Utils.Factories
             Targets = new TargetFactoriesProvider();
             MovementControllerFactory = new MovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            SpriteChooserFactory
-                = new SpriteChooserFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new SpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;

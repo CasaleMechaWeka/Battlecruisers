@@ -1,4 +1,7 @@
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using UnityEngine;
 using BCUtils = BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -40,9 +43,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 ActiveMovementController = DummyMovementController;
             }
-
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_SpyPlane, this);
-
+            IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_SpyPlane);
+            _spriteChooser = new PvPSpriteChooser(aircraftSprites, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

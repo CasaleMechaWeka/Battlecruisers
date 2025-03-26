@@ -17,6 +17,8 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -132,7 +134,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
             _targetProcessor.AddTargetConsumer(this);
 
-            _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(PrefabKeyName.Unit_Bomber, this);
+            IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_Bomber);
+            _spriteChooser = new SpriteChooser(aircraftSprites, this);
         }
 
         protected override IList<IPatrolPoint> GetPatrolPoints()

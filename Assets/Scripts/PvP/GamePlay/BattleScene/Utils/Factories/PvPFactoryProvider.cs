@@ -1,7 +1,6 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
@@ -27,7 +26,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPMovementControllerFactory MovementControllerFactory { get; }
         public IPvPPrefabFactory PrefabFactory { get; }
         public IPvPSpawnDeciderFactory SpawnDeciderFactory { get; }
-        public IPvPSpriteChooserFactory SpriteChooserFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public SettingsManager SettingsManager { get; }
@@ -52,8 +50,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Targets = new PvPTargetFactoriesProvider();
             MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
-            SpriteChooserFactory
-                = new PvPSpriteChooserFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             SpawnDeciderFactory = new PvPSpawnDeciderFactory();
             UpdaterProvider = components.UpdaterProvider;
@@ -79,6 +75,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsNotNull(uiManager);
             Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
         }
-
     }
 }

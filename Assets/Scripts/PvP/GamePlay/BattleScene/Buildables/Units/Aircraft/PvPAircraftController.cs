@@ -11,7 +11,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetProviders;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Seabed;
@@ -141,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             ActiveMovementController = DummyMovementController;
             ActiveMovementController.Velocity = Vector2.zero;
-            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
+            _spriteChooser = new PvPDummySpriteChooser(_spriteRenderer.sprite);
             _onSeabed = false;
             _kamikazeController.gameObject.SetActive(false);
         }
@@ -149,7 +148,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate_PvPClient()
         {
             _aircraftTrail.Clear();
-            _spriteChooser = _factoryProvider.SpriteChooserFactory.CreateDummySpriteChooser(_spriteRenderer.sprite);
+            _spriteChooser = new PvPDummySpriteChooser(_spriteRenderer.sprite);
             PatrollingMovementController
                 = _movementControllerFactory.CreatePatrollingMovementController(
                         rigidBody,

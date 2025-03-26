@@ -22,6 +22,8 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -148,13 +150,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
                 _targetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.BomberTargetProcessor;
                 _targetProcessor.AddTargetConsumer(this);
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber, this);
+                IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_Bomber);
+                _spriteChooser = new PvPSpriteChooser(aircraftSprites, this);
                 OnBuildableCompletedClientRpc();
             }
             else
             {
                 OnBuildableCompleted_PvPClient();
-                _spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber, this);
+                IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(PrefabKeyName.Unit_Bomber);
+                _spriteChooser = new PvPSpriteChooser(aircraftSprites, this);
             }
         }
 

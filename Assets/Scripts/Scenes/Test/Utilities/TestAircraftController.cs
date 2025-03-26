@@ -1,6 +1,8 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -51,7 +53,8 @@ namespace BattleCruisers.Scenes.Test.Utilities
 				ActiveMovementController = DummyMovementController;
 			}
 
-			_spriteChooser = await _factoryProvider.SpriteChooserFactory.CreateAircraftSpriteChooserAsync(BCUtils.PrefabKeyName.Unit_Fighter, this);
+			IList<Sprite> aircraftSprites = await SpriteProvider.GetAircraftSpritesAsync(BCUtils.PrefabKeyName.Unit_Fighter);
+			_spriteChooser = new SpriteChooser(aircraftSprites, this);
 		}
 
 		public void SetTargetType(TargetType targetType)
