@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
     public class HeckleItemContainerV2 : ItemContainer
     {
-        public IHeckleData heckleData;
+        public HeckleData heckleData;
         public SelectHeckleButton toggleSelectionButton;
 
         protected override ItemButton InitialiseItemButton(

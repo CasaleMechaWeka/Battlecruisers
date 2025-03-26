@@ -12,13 +12,13 @@ namespace BattleCruisers.UI.ScreensScene
         public Image _iapImage;
         public CanvasGroupButton clickingArea;
         public GameObject _clickedFeedback;
-        public IIAPData _iapData;
+        public IAPData _iapData;
         private ISingleSoundPlayer _soundPlayer;
         private BlackMarketScreenController _blackMarketScreenController;
 
         public async void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
-            IIAPData iapData,
+            IAPData iapData,
             BlackMarketScreenController blackMarketScreenController
             )
         {

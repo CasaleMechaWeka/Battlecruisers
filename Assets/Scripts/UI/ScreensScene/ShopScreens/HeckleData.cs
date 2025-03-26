@@ -4,7 +4,7 @@ using System;
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     [Serializable]
-    public class HeckleData : IHeckleData
+    public class HeckleData
     {
         public int HeckleCost { get; set; }
         public string StringKeyBase { get; }
@@ -19,4 +19,3 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         }
     }
 }
-

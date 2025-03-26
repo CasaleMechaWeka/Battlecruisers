@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _ownedItemMark;
         public GameObject _lockedItemMark;
         public GameObject _clickedFeedback;
-        private IBodykitData _bodykitData;
+        private BodykitData _bodykitData;
         private ISingleSoundPlayer _soundPlayer;
         private BodykitsContainer _bodykitContainer;
         private Sprite _bodykitSprite;
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
             Sprite spriteBodykit,
-            IBodykitData bodykitData,
+            BodykitData bodykitData,
             BodykitsContainer bodykitContainer,
             PrefabFactory prefabFactory,
             int index,

@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene
         public EventHandler<BodykitDataEventArgs> bodykitDataChanged;
         public EventHandler<BodykitDataEventArgs> onBodykitItemClick;
         public BodykitItemController currentItem;
-        public IBodykitData currentBodykitData;
+        public BodykitData currentBodykitData;
         public GameObject btnBuy, ownFeedback;
         public GameObject priceLabel;
         public CanvasGroupButton premiumButton;
@@ -284,9 +284,8 @@ namespace BattleCruisers.UI.ScreensScene
 
     public class BodykitDataEventArgs : EventArgs
     {
-        public IBodykitData bodykitData { get; set; }
+        public BodykitData bodykitData { get; set; }
         public Sprite bodykitImage { get; set; }
         public bool purchasable { get; set; }
     }
 }
-

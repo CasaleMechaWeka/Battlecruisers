@@ -1,10 +1,9 @@
 using System;
 
-
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     [Serializable]
-    public class VariantData : IVariantData
+    public class VariantData
     {
         public int VariantCoins { get; set; }
 

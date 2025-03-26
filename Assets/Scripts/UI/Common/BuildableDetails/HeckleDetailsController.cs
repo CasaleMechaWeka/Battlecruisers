@@ -13,16 +13,16 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     {
         public GameObject heckleMessage;
         public Text heckleText;
-        private ISettableBroadcastingProperty<IHeckleData> _selectedItem;
-        public IBroadcastingProperty<IHeckleData> SelectedItem;
+        private ISettableBroadcastingProperty<HeckleData> _selectedItem;
+        public IBroadcastingProperty<HeckleData> SelectedItem;
 
         public void Initialize()
         {
-            _selectedItem = new SettableBroadcastingProperty<IHeckleData>(initialValue: StaticData.Heckles[0]); // Heckle000 is default;
-            SelectedItem = new BroadcastingProperty<IHeckleData>(_selectedItem);
+            _selectedItem = new SettableBroadcastingProperty<HeckleData>(initialValue: StaticData.Heckles[0]); // Heckle000 is default;
+            SelectedItem = new BroadcastingProperty<HeckleData>(_selectedItem);
         }
 
-        public void ShowHeckle(IHeckleData heckleData)
+        public void ShowHeckle(HeckleData heckleData)
         {
             _selectedItem.Value = heckleData;
             heckleText.text = LocTableCache.HecklesTable.GetString(heckleData.StringKeyBase);

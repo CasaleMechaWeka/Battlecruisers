@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton clickingArea;
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
-        private ICaptainData _captainData;
+        private CaptainData _captainData;
         private ISingleSoundPlayer _soundPlayer;
         private CaptainsContainer _captainsContainer;
         private Sprite _captainSprite;
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
             Sprite spriteCaptain,
-            ICaptainData captainData,
+            CaptainData captainData,
             CaptainsContainer captainsContainer,
             int index,
             bool isOwned)

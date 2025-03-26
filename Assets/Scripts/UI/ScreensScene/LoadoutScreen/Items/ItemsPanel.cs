@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public EventHandler HeckleButtonChanged;
 
-        public void AddHeckle(IHeckleData heckleData)
+        public void AddHeckle(HeckleData heckleData)
         {
             if (DataProvider.GameModel.PurchasedHeckles.Contains(heckleData.Index))
             {
@@ -84,7 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (itemType == ItemType.Heckle)
             {
                 HasUnlockedItem = true;
-                foreach (IHeckleData heckleData in StaticData.Heckles)
+                foreach (HeckleData heckleData in StaticData.Heckles)
                 {
                     AddHeckle(heckleData);
                 }

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public CaptainSelectionItemController currentItem;
 
-        private ICaptainData currentCaptainData;
+        private CaptainData currentCaptainData;
 
         public void Initialize(
             ISingleSoundPlayer soundPlayer,

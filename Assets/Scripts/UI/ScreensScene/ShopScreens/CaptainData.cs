@@ -4,7 +4,7 @@ using System;
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     [Serializable]
-    public class CaptainData : ICaptainData
+    public class CaptainData
     {
         public int CaptainCost { get; set; }
 
@@ -25,5 +25,3 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
         }
     }
 }
-
-

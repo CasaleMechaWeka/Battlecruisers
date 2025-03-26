@@ -1,6 +1,6 @@
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
-    public class RankData : IRankData
+    public class RankData
     {
         public string rankImage { get; set; }
         public string RankImage => rankImage;

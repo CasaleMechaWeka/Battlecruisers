@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene
         public EventHandler<IAPDataEventArgs> iapDataChanged;
         public GameObject itemPrefab;
         private IAPItemController _currentItem;
-        private IIAPData currenIAPData;
+        private IAPData currenIAPData;
         public Image iapIcon;
         public Text iapName;
         public Text iapDescription;
@@ -186,7 +186,7 @@ namespace BattleCruisers.UI.ScreensScene
 
     public class IAPDataEventArgs : EventArgs
     {
-        public IIAPData iapData { get; set; }
+        public IAPData iapData { get; set; }
     }
     public class IAPEventArgs : EventArgs
     {

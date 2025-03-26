@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         void ShowDetails(IUnit unit, ItemButton button);
         void ShowDetails(ICruiser cruiser);
         void ShowDetails(HullType hullType);
-        void ShowDetails(IHeckleData heckleData);
+        void ShowDetails(HeckleData heckleData);
 
         void CompareWithSelectedItem(IBuilding building);
         void CompareWithSelectedItem(IUnit unit);

@@ -14,10 +14,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public CanvasGroup background;
         public TextMeshProUGUI message;
 
-        private IHeckleData _heckleData;
+        private HeckleData _heckleData;
         private ISingleSoundPlayer _soundPlayer;
         private PvPHecklePanelController _panelController;
-        public void StaticInitialise(ISingleSoundPlayer soundPlayer, IHeckleData heckleData, PvPHecklePanelController panelController)
+        public void StaticInitialise(ISingleSoundPlayer soundPlayer, HeckleData heckleData, PvPHecklePanelController panelController)
         {
             Helper.AssertIsNotNull(soundPlayer, heckleData, panelController);
             _soundPlayer = soundPlayer;

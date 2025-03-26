@@ -178,7 +178,7 @@ namespace BattleCruisers.Data.Static
             public static RankData rank32 { get; } = new RankData("Rank32Admiral5Star", "32", "Rank32");
             public static RankData rank33 { get; } = new RankData("Rank33SupremeCommander", "33", "Rank33");
 
-            public static ReadOnlyCollection<IRankData> AllRanks = new ReadOnlyCollection<IRankData>(new List<IRankData>()
+            public static ReadOnlyCollection<RankData> AllRanks = new ReadOnlyCollection<RankData>(new List<RankData>()
             {
                 rank00, rank01, rank02, rank03, rank04, rank05, rank06, rank07, rank08, rank09,
                 rank10, rank11, rank12, rank13, rank14, rank15, rank16, rank17, rank18, rank19,

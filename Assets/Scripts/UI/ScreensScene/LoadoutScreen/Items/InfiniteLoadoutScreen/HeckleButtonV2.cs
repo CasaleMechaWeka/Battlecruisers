@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private RectTransform _selectedFeedback;
         public override IComparableItem Item => null;   // it's really dummy, only for heckles
         private IComparingItemFamilyTracker _itemFamilyTracker;
-        private IHeckleData _heckleData;
+        private HeckleData _heckleData;
         private IGameModel _gameModel;
         private ItemsPanel _itemsPanel;
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public void Initialise(
             ItemsPanel itemsPanel,
             ISingleSoundPlayer soundPlayer,
-            IHeckleData heckleData,
+            HeckleData heckleData,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingItemFamily,
             IGameModel gameModel)

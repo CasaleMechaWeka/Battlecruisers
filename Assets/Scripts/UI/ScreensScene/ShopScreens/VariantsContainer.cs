@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene
         public EventHandler<VariantDataEventArgs> variantDataChanged;
         public EventHandler<VariantDataEventArgs> onVariantItemClick;
         public VariantItemController currentItem;
-        public IVariantData currentVariantData;
+        public VariantData currentVariantData;
         public GameObject btnBuy, ownFeedback;
 
         public GameObject priceLabel;
@@ -209,7 +209,7 @@ namespace BattleCruisers.UI.ScreensScene
 
     public class VariantDataEventArgs : EventArgs
     {
-        public IVariantData variantData { get; set; }
+        public VariantData variantData { get; set; }
         public Sprite parentSprite { get; set; }
         public Sprite variantSprite { get; set; }
         public string parentName { get; set; }

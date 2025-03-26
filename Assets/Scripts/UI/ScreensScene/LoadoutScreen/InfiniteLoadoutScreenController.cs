@@ -142,7 +142,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
         }
 
-        public void AddHeckle(IHeckleData heckleData)
+        public void AddHeckle(HeckleData heckleData)
         {
             itemPanels.AddHeckle(heckleData);
             /*IList<IItemButton> itemButtons

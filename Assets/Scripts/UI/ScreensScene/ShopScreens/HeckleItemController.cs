@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton clickingArea;
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
-        private IHeckleData _heckleData;
+        private HeckleData _heckleData;
         private ISingleSoundPlayer _soundPlayer;
         private HecklesContainer _hecklesContainer;
         public int _index;
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void StaticInitialise(
             ISingleSoundPlayer soundPlayer,
-            IHeckleData heckleData,
+            HeckleData heckleData,
             HecklesContainer hecklesContainer,
             int index,
             bool isOwned)

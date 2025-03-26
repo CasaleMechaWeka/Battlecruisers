@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject obj_heckleMessage;
         public GameObject btnBuy, ownFeedback;
         public HeckleItemController currentItem;
-        public IHeckleData currentHeckleData;
+        public HeckleData currentHeckleData;
         public Text hecklePrice;
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
@@ -195,6 +195,6 @@ namespace BattleCruisers.UI.ScreensScene
 
     public class HeckleDataEventArgs : EventArgs
     {
-        public IHeckleData heckleData { get; set; }
+        public HeckleData heckleData { get; set; }
     }
 }

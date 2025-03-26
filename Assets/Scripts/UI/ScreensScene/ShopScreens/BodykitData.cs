@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     [Serializable]
 
-    public class BodykitData : IBodykitData
+    public class BodykitData
     {
         public int BodykitCost { get; set; }
         public string NameStringKeyBase { get; }

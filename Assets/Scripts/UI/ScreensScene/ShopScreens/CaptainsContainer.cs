@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene
         public EventHandler<CaptainDataEventArgs> captainDataChanged;
         public EventHandler<CaptainDataEventArgs> onCaptainItemClick;
         public CaptainItemController currentItem;
-        private ICaptainData currentCaptainData;
+        private CaptainData currentCaptainData;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
         public GameObject btnBuy, ownFeedback;
         public GameObject priceLabel;
@@ -210,7 +210,7 @@ namespace BattleCruisers.UI.ScreensScene
 
     public class CaptainDataEventArgs : EventArgs
     {
-        public ICaptainData captainData { get; set; }
+        public CaptainData captainData { get; set; }
         public Sprite captainImage { get; set; }
     }
 }

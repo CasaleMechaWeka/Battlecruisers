@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
         public Image _clickedFeedbackVariantImage;
-        private IVariantData _variantData;
+        private VariantData _variantData;
         private ISingleSoundPlayer _soundPlayer;
         private VariantsContainer _variantsContainer;
         private Sprite _parentSprite;
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene
             Sprite spriteParent,
             Sprite spriteVariant,
             string parentName,
-            IVariantData variantData,
+            VariantData variantData,
             VariantsContainer variantsContainer,
             VariantPrefab variant,
             int index,

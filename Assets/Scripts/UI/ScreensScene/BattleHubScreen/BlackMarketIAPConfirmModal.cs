@@ -24,7 +24,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
     private PrefabFactory _prefabFactory;
     private ISingleSoundPlayer _soundPlayer;
 
-    private IIAPData _currentIAPData;
+    private IAPData _currentIAPData;
 
     public void Initiaize(PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
     {
@@ -128,7 +128,7 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
         }
     }
 
-    public void Show(IIAPData iapData)
+    public void Show(IAPData iapData)
     {
         Assert.IsNotNull(iapData);
         _currentIAPData = iapData;

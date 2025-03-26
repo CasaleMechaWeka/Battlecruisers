@@ -100,7 +100,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             ShowDetails(_cruiserDetails, hullType);
         }
 
-        public void ShowDetails(IHeckleData heckleData)
+        public void ShowDetails(HeckleData heckleData)
         {
             HideDetails();
             SelectedItemFamily = ItemFamily.Heckles;

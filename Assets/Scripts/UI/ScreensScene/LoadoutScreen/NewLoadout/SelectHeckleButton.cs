@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             base.OnClicked();
 
-            IHeckleData heckleData = _heckleDetails.SelectedItem.Value;
+            HeckleData heckleData = _heckleDetails.SelectedItem.Value;
             Assert.IsNotNull(heckleData);
             int index = heckleData.Index;
 
@@ -127,7 +127,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void DisplayedHeckleChanged(object sender, EventArgs e)
         {
-            IHeckleData heckleData = _heckleDetails.SelectedItem.Value;
+            HeckleData heckleData = _heckleDetails.SelectedItem.Value;
             if (heckleData != null)
             {
                 Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;

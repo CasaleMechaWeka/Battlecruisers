@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene
         public CanvasGroupButton clickingArea;
         public GameObject _clickedFeedback;
         public TextMeshProUGUI CaptainName;
-        private ICaptainData _captainData;
+        private CaptainData _captainData;
         private ISingleSoundPlayer _soundPlayer;
         private Sprite _captainSprite;
         private CaptainSelectorPanel _captainSelectorPanel;
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene
             ISingleSoundPlayer soundPlayer,
             /*PrefabFactory prefabFactory,*/
             Sprite spriteCaptain,
-            ICaptainData captainData,
+            CaptainData captainData,
             CaptainSelectorPanel captainSelectorPanel,
             int index
             )

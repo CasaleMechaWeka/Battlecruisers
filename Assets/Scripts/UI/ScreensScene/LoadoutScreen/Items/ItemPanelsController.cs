@@ -75,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             return allItemButtons;
         }
 
-        public void AddHeckle(IHeckleData heckleData)
+        public void AddHeckle(HeckleData heckleData)
         {
             ItemsPanel[] panels = GetComponentsInChildren<ItemsPanel>(includeInactive: true);
             panels[panels.Length - 1].AddHeckle(heckleData);

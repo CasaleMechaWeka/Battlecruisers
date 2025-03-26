@@ -1,10 +1,9 @@
 using System;
 
-
 namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     [Serializable]
-    public class IAPData : IIAPData
+    public class IAPData
     {
         public int IAPType { get; }
 
