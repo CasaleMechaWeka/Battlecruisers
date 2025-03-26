@@ -12,17 +12,15 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
     public class FactoriesMonitor : IFactoriesMonitor, IManagedDisposable
     {
         private readonly ICruiserBuildingMonitor _bulidingMonitor;
-        private readonly IFactoryMonitorFactory _monitorFactory;
         private readonly IList<IFactoryMonitor> _completedFactories;
 
         public IReadOnlyCollection<IFactoryMonitor> CompletedFactories { get; }
 
-        public FactoriesMonitor(ICruiserBuildingMonitor buildingMonitor, IFactoryMonitorFactory monitorFactory)
+        public FactoriesMonitor(ICruiserBuildingMonitor buildingMonitor)
         {
-            Helper.AssertIsNotNull(buildingMonitor, monitorFactory);
+            Helper.AssertIsNotNull(buildingMonitor);
 
             _bulidingMonitor = buildingMonitor;
-            _monitorFactory = monitorFactory;
             _completedFactories = new List<IFactoryMonitor>();
             CompletedFactories = new ReadOnlyCollection<IFactoryMonitor>(_completedFactories);
 
@@ -36,7 +34,7 @@ namespace BattleCruisers.AI.Drones.BuildingMonitors
             if (factory != null)
             {
                 Assert.IsNull(GetMonitor(factory));
-                _completedFactories.Add(_monitorFactory.CreateMonitor(factory));
+                _completedFactories.Add(new FactoryMonitor(factory, RandomGenerator.Range(2, 4)));
 
                 factory.Destroyed += Factory_Destroyed;
             }

@@ -15,7 +15,6 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
     {
         private FactoriesMonitor _monitor;
         private ICruiserBuildingMonitor _buildingMonitor;
-        private IFactoryMonitorFactory _monitorFactory;
         private IFactoryMonitor _factoryMonitor;
         private IFactory _factory;
 
@@ -23,16 +22,13 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
         public void TestSetup()
         {
             _buildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
-            _monitorFactory = Substitute.For<IFactoryMonitorFactory>();
 
-            _monitor = new FactoriesMonitor(_buildingMonitor, _monitorFactory);
+            _monitor = new FactoriesMonitor(_buildingMonitor);
 
             _factoryMonitor = Substitute.For<IFactoryMonitor>();
 
             _factory = Substitute.For<IFactory>();
             _factoryMonitor.Factory.Returns(_factory);
-
-            _monitorFactory.CreateMonitor(_factory).Returns(_factoryMonitor);
         }
 
         [Test]

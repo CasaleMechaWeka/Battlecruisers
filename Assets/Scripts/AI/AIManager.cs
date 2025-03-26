@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI.BuildOrders;
-using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.TaskProducers.SlotNumber;
@@ -24,7 +23,6 @@ namespace BattleCruisers.AI
         private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
-        private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
         public AIManager(
             PrefabFactory prefabFactory,
@@ -43,8 +41,6 @@ namespace BattleCruisers.AI
 
             ISlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, DataProvider.GameModel, strategyFactory);
-
-            _factoryMonitorFactory = new FactoryMonitorFactory();
         }
 
         public IArtificialIntelligence CreateAI(ILevelInfo levelInfo, Difficulty difficulty)
@@ -62,7 +58,7 @@ namespace BattleCruisers.AI
                     taskFactory,
                     _slotNumCalculatorFactory,
                     _threatMonitorFactory);
-            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory, _factoryMonitorFactory);
+            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
 
             if (IsAdaptiveAI(difficulty))
             {

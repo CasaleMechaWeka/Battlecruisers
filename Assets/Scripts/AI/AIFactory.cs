@@ -18,23 +18,21 @@ namespace BattleCruisers.AI
     {
         private readonly ITaskProducerFactory _taskProducerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
-        private readonly IFactoryMonitorFactory _factoryMonitorFactory;
 
-        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderFactory buildOrderFactory, IFactoryMonitorFactory factoryMonitorFactory)
+        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderFactory buildOrderFactory)
         {
-            Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory, factoryMonitorFactory);
+            Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory);
 
             _taskProducerFactory = taskProducerFactory;
             _buildOrderFactory = buildOrderFactory;
-            _factoryMonitorFactory = factoryMonitorFactory;
         }
 
-		/// <summary>
-		/// Creates a basic AI that:
-		/// 1. Follows a base strategy (eg:  balanced, boom or rush)
-		/// 2. Replaces destroyed buildings
-		/// </summary>
-		public IArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo)
+        /// <summary>
+        /// Creates a basic AI that:
+        /// 1. Follows a base strategy (eg:  balanced, boom or rush)
+        /// 2. Replaces destroyed buildings
+        /// </summary>
+        public IArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo)
         {
             ITaskList tasks = new TaskList();
 
@@ -48,13 +46,13 @@ namespace BattleCruisers.AI
             return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
-		/// <summary>
-		/// Creates an adaptive AI that:
-		/// 1. Follows a base strategy (eg:  balanced, boom or rush)
-		/// 2. Responds to threats (eg: air, naval)
-		/// 3. Replaces destroyed buildings
-		/// </summary>
-		public IArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo)
+        /// <summary>
+        /// Creates an adaptive AI that:
+        /// 1. Follows a base strategy (eg:  balanced, boom or rush)
+        /// 2. Responds to threats (eg: air, naval)
+        /// 3. Replaces destroyed buildings
+        /// </summary>
+        public IArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo)
         {
             ITaskList tasks = new TaskList();
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
@@ -100,7 +98,7 @@ namespace BattleCruisers.AI
         {
             IFactoryAnalyzer factoryAnalyzer
                 = new FactoryAnalyzer(
-                    new FactoriesMonitor(aiCruiser.BuildingMonitor, _factoryMonitorFactory),
+                    new FactoriesMonitor(aiCruiser.BuildingMonitor),
                     new FactoryWastingDronesFilter());
 
             IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(aiCruiser);
