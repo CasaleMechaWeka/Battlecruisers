@@ -8,7 +8,6 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Effects.Smoke;
-using BattleCruisers.Movement;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -46,7 +45,6 @@ namespace BattleCruisers.Buildables
         protected IUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected TargetFactoriesProvider _targetFactories;
-        protected IMovementControllerFactory _movementControllerFactory;
         protected IAircraftProvider _aircraftProvider;
         protected FactoryProvider _factoryProvider;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
@@ -252,7 +250,6 @@ namespace BattleCruisers.Buildables
             _uiManager = uiManager;
             _factoryProvider = factoryProvider;
             _targetFactories = _factoryProvider.Targets;
-            _movementControllerFactory = _factoryProvider.MovementControllerFactory;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = new Boostable(1);

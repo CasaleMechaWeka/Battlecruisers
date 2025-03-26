@@ -1,6 +1,5 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -18,7 +17,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         DeferrerProvider DeferrerProvider { get; }
         IDroneMonitor DroneMonitor { get; }
         FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        IPvPMovementControllerFactory MovementControllerFactory { get; }
         IPvPPoolProviders PoolProviders { get; }
         IPvPPrefabFactory PrefabFactory { get; }
         ISoundFactoryProvider Sound { get; }

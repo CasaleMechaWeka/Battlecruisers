@@ -20,7 +20,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Movement;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -110,7 +109,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
-            IMovementControllerFactory movementControllerFactory = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -126,7 +124,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     enemyCruiser,
                     aircraftProvider,
                     targetFactories,
-                    movementControllerFactory,
                     flightPointsProviderFactory,
                     globalBoostProviders,
                     parentCruiserDirection,
@@ -163,7 +160,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
-            IMovementControllerFactory movementControllerFactory = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -179,7 +175,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     enemyCruiser,
                     aircraftProvider,
                     targetFactories,
-                    movementControllerFactory,
                     flightPointsProviderFactory,
                     globalBoostProviders,
                     parentCruiserDirection,

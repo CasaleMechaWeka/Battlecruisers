@@ -6,7 +6,6 @@ using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data;
-using BattleCruisers.Movement;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -44,7 +43,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ICruiser enemyCruiser = null,
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
-            IMovementControllerFactory movementControllerFactory = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
@@ -71,7 +69,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             FactoryProvider
                 = CreateFactoryProvider(
                     helper.PrefabFactory,
-                    movementControllerFactory ?? new MovementControllerFactory(),
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     new SoundPlayerFactory(deferrer),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
@@ -104,7 +101,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private FactoryProvider CreateFactoryProvider(
             PrefabFactory prefabFactory,
-            IMovementControllerFactory movementControllerFactory,
             FlightPointsProviderFactory flightPointsProviderFactory,
             ISoundPlayerFactory soundPlayerFactory,
             DeferrerProvider deferrerProvider,
@@ -116,7 +112,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
-            factoryProvider.MovementControllerFactory.Returns(movementControllerFactory);
             factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);

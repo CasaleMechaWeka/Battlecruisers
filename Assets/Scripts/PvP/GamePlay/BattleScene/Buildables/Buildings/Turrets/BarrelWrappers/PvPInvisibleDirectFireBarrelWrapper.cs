@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
-            return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
+            return new DummyRotationMovementController();
         }
 
         protected override AngleLimiter CreateAngleLimiter()

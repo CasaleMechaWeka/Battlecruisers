@@ -26,6 +26,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -279,10 +280,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return
-                _factoryProvider.MovementControllerFactory.CreateRotationMovementController(
-                    barrel.TurretStats.TurretRotateSpeedInDegrees,
-                    barrel.Transform,
-                    deltaTimeProvider);
+                new RotationMovementController(
+                    new TransformBC(barrel.Transform),
+                    deltaTimeProvider,
+                    barrel.TurretStats.TurretRotateSpeedInDegrees);
         }
 
         protected virtual AccuracyAdjuster CreateAccuracyAdjuster(IAngleCalculator angleCalculator, IBarrelController barrel)

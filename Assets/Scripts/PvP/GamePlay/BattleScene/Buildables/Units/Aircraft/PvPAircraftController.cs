@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
+using BattleCruisers.Movement.Velocity.Homing;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -107,7 +108,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Initialise( /* uiManager, */ factoryProvider);
             _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
-            DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
+            DummyMovementController = new DummyMovementController();
         }
 
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
@@ -115,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Initialise(factoryProvider, uiManager);
             _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
-            DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
+            DummyMovementController = new DummyMovementController();
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
@@ -132,9 +133,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _localBoosterBoostableGroup.BoostChanged += _boostableGroup_BoostChanged;
 
             PatrollingMovementController
-                = _movementControllerFactory.CreatePatrollingMovementController(
+                = new PatrollingMovementController(
                     rigidBody,
-                    maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
+                    maxVelocityProvider: new PatrollingVelocityProvider(this),
                     patrolPoints: GetPatrolPoints(),
                     positionEqualityMarginInM: PositionEqualityMarginInM);
 
@@ -150,9 +151,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftTrail.Clear();
             _spriteChooser = new PvPDummySpriteChooser(_spriteRenderer.sprite);
             PatrollingMovementController
-                = _movementControllerFactory.CreatePatrollingMovementController(
+                = new PatrollingMovementController(
                         rigidBody,
-                        maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
+                        maxVelocityProvider: new PatrollingVelocityProvider(this),
                         patrolPoints: GetPatrolPoints(),
                         positionEqualityMarginInM: PositionEqualityMarginInM);
 
@@ -227,7 +228,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
 
             ITargetProvider cruiserTarget = _cruiserSpecificFactories.Targets.ProviderFactory.CreateStaticTargetProvider(kamikazeTarget);
-            ActiveMovementController = _movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget);
+            ActiveMovementController = new HomingMovementController(rigidBody, this, cruiserTarget);
 
             UpdateFaction(kamikazeTarget);
 

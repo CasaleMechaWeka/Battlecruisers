@@ -1,5 +1,4 @@
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -21,10 +20,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
         }
 
-        public void Initialise(IPvPMovementControllerFactory movementControllerFactory)
+        public void Initialise()
         {
-            _constantRotationController = movementControllerFactory.CreateConstantRotationController(rotateSpeedInDegreesPerS, transform);
-            _dummyRotationController = movementControllerFactory.CreateDummyConstantRotationController();
+            _constantRotationController = new ConstantRotationController(rotateSpeedInDegreesPerS, transform);
+            _dummyRotationController = new DummyConstantRotationController();
             _activeRotationController = _dummyRotationController;
         }
 

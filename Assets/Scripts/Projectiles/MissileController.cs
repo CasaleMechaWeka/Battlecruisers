@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
@@ -51,16 +52,16 @@ namespace BattleCruisers.Projectiles
             Target = _activationArgs.Target;
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
 
-            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
 
             MovementController
-                = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
+                = new MissileMovementController(
                     _rigidBody,
                     maxVelocityProvider,
                     targetProvider);
 
-            _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+            _dummyMovementController = new DummyMovementController();
             missile.enabled = true;
 
             _rocketTarget.GameObject.SetActive(true);
@@ -91,20 +92,20 @@ namespace BattleCruisers.Projectiles
         {
             // Do NOT call base.OnImpactCleanUp() as it would hide the trail
             // Instead, manually implement the parts we need:
-            
+
             // Stop movement but don't touch the trail
             _rigidBody.velocity = Vector2.zero;
             MovementController = null;
-            
+
             // Disable collision
             GetComponent<Collider2D>().enabled = false;
-            
+
             // Hide the missile sprite only, not the trail
             missile.enabled = false;
-            
+
             // Deactivate rocket target but keep the main object active for trail lifetime
             _rocketTarget.GameObject.SetActive(false);
-            
+
             // Unsubscribe from target destruction event
             if (_activationArgs != null && Target != null)
             {
@@ -117,12 +118,12 @@ namespace BattleCruisers.Projectiles
             // Show explosion and hide the sprite
             ShowExplosion();
             OnImpactCleanUp();
-            
+
             // Invoke destroyed and defer cleanup after trail lifetime
             InvokeDestroyed();
             _deferrer.Defer(OnTrailsDoneCleanup, TrailLifetimeInS);
         }
-        
+
         // Add our own cleanup method for when trails are done
         private void OnTrailsDoneCleanup()
         {

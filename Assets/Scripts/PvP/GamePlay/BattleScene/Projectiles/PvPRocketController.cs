@@ -14,6 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Movement.Velocity.Homing;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -69,7 +70,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 OnAddMoveControllerToClientRpc(objectId, activationArgs.ProjectileStats.MaxVelocityInMPerS, activationArgs.ProjectileStats.IsAccurate, activationArgs.ProjectileStats.CruisingAltitudeInM);
             }
 
-            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
             IFlightPointsProvider flightPointsProvider
                 = activationArgs.ProjectileStats.IsAccurate ?
@@ -77,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
 
             MovementController
-                = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                = new RocketMovementController(
                     _rigidBody,
                     maxVelocityProvider,
                     targetProvider,
@@ -280,14 +281,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     }
                     Target = target;
                     ITargetProvider targetProvider = this;
-                    IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
+                    IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(MaxVelocityInMPerS);
 
                     IFlightPointsProvider flightPointsProvider
                         = IsAccurate ?
                             _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
                             _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
                     MovementController
-                        = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                        = new RocketMovementController(
                             _rigidBody,
                             maxVelocityProvider,
                             targetProvider,

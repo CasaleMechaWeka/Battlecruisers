@@ -19,6 +19,7 @@ using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
+using BattleCruisers.Movement.Velocity.Homing;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -109,16 +110,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
 
-            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
 
             MovementController
-                = _factoryProvider.MovementControllerFactory.CreateMissileMovementController(
+                = new MissileMovementController(
                     _rigidBody,
                     maxVelocityProvider,
                     targetProvider);
 
-            _dummyMovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+            _dummyMovementController = new DummyMovementController();
 
             SetupTargetProcessor(activationArgs);
 

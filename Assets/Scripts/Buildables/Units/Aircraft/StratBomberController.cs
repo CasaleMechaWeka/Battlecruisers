@@ -13,7 +13,6 @@ using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
@@ -88,7 +87,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
         {
             base.Initialise(uiManager, factoryProvider);
-            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
+            _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)

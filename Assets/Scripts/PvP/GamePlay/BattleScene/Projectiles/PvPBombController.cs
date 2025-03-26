@@ -1,3 +1,4 @@
+using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
@@ -13,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public override void Activate(ProjectileActivationArgs<IProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
-            MovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+            MovementController = new DummyMovementController();
         }
 
         protected override void OnImpactCleanUp()

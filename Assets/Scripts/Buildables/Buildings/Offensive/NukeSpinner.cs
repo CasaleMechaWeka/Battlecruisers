@@ -1,11 +1,10 @@
-﻿using BattleCruisers.Movement;
-using BattleCruisers.Movement.Rotation;
+﻿using BattleCruisers.Movement.Rotation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Offensive
 {
-    public class NukeSpinner : MonoBehaviour
+	public class NukeSpinner : MonoBehaviour
 	{
 		private IConstantRotationController _activeRotationController, _constantRotationController, _dummyRotationController;
 
@@ -21,10 +20,10 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
 			Assert.IsTrue(rotateSpeedInDegreesPerS > 0);
 		}
 
-		public void Initialise(IMovementControllerFactory movementControllerFactory)
+		public void Initialise()
 		{
-			_constantRotationController = movementControllerFactory.CreateConstantRotationController(rotateSpeedInDegreesPerS, transform);
-			_dummyRotationController = movementControllerFactory.CreateDummyConstantRotationController();
+			_constantRotationController = new ConstantRotationController(rotateSpeedInDegreesPerS, transform);
+			_dummyRotationController = new DummyConstantRotationController();
 			_activeRotationController = _dummyRotationController;
 		}
 

@@ -2,6 +2,7 @@ using BattleCruisers.Movement.Rotation;
 using System;
 using UnityEngine;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation
 {
@@ -13,10 +14,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public event EventHandler ReachedDesiredAngle;
 
-        public void Initialise(IPvPMovementControllerFactory movementControllerFactory, float rotateSpeedInMPerS, float targetAngleInDegrees)
+        public void Initialise(float rotateSpeedInMPerS, float targetAngleInDegrees)
         {
-            _realRotationController = movementControllerFactory.CreateRotationMovementController(rotateSpeedInMPerS, transform, TimeBC.Instance);
-            _dummyRotationController = movementControllerFactory.CreateDummyRotationMovementController(isOnTarget: false);
+            _realRotationController = new RotationMovementController(new TransformBC(transform), TimeBC.Instance, rotateSpeedInMPerS);
+            _dummyRotationController = new DummyRotationMovementController(isOnTarget: false);
             _activeRotationController = _dummyRotationController;
 
             _targetAngleInDegrees = targetAngleInDegrees;

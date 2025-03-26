@@ -85,25 +85,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Initialise(/*uiManager,*/ factoryProvider);
 
-            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
+            _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
             IVelocityProvider inRangeVelocityProvider
-                = _movementControllerFactory.CreateMultiplyingVelocityProvider(
+                = new MultiplyingVelocityProvider(
                     providerToWrap: this,
                     multiplier: WITHIN_RANGE_VELOCITY_MULTIPLIER);
-            _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
+            _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
+            _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
             IVelocityProvider inRangeVelocityProvider
-                = _movementControllerFactory.CreateMultiplyingVelocityProvider(
+                = new MultiplyingVelocityProvider(
                     providerToWrap: this,
                     multiplier: WITHIN_RANGE_VELOCITY_MULTIPLIER);
-            _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
+            _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
         protected override void AddBuildRateBoostProviders(

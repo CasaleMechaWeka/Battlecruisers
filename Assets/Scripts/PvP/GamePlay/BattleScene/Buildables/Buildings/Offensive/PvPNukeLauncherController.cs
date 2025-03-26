@@ -10,7 +10,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -81,19 +80,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Initialise(factoryProvider);
 
-            leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
-            rightSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+            leftSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+            rightSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
 
-            _spinner.Initialise(_movementControllerFactory);
+            _spinner.Initialise();
         }
 
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
-            rightSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+            leftSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+            rightSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
 
-            _spinner.Initialise(_movementControllerFactory);
+            _spinner.Initialise();
         }
 
 

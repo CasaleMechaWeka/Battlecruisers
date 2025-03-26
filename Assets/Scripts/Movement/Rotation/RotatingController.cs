@@ -1,10 +1,11 @@
 ﻿using System;
+using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 
 namespace BattleCruisers.Movement.Rotation
 {
-	public class RotatingController : MonoBehaviour 
+	public class RotatingController : MonoBehaviour
 	{
 		private IRotationMovementController _activeRotationController, _realRotationController, _dummyRotationController;
 		private float _targetAngleInDegrees;
@@ -12,10 +13,10 @@ namespace BattleCruisers.Movement.Rotation
 
 		public event EventHandler ReachedDesiredAngle;
 
-		public void Initialise(IMovementControllerFactory movementControllerFactory, float rotateSpeedInMPerS, float targetAngleInDegrees)
+		public void Initialise(float rotateSpeedInMPerS, float targetAngleInDegrees)
 		{
-			_realRotationController = movementControllerFactory.CreateRotationMovementController(rotateSpeedInMPerS, transform, TimeBC.Instance);
-			_dummyRotationController = movementControllerFactory.CreateDummyRotationMovementController(isOnTarget: false);
+			_realRotationController = new RotationMovementController(new TransformBC(transform), TimeBC.Instance, rotateSpeedInMPerS);
+			_dummyRotationController = new DummyRotationMovementController(isOnTarget: false);
 			_activeRotationController = _dummyRotationController;
 
 			_targetAngleInDegrees = targetAngleInDegrees;

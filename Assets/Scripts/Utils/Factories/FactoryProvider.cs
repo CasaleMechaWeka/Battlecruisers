@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
-using BattleCruisers.Movement;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
@@ -19,7 +18,6 @@ namespace BattleCruisers.Utils.Factories
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        public IMovementControllerFactory MovementControllerFactory { get; }
         public PrefabFactory PrefabFactory { get; }
         public TargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
@@ -40,7 +38,6 @@ namespace BattleCruisers.Utils.Factories
             PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new TargetFactoriesProvider();
-            MovementControllerFactory = new MovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;

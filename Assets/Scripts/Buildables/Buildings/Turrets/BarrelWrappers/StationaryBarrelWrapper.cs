@@ -15,12 +15,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             base.StaticInitialise();
 
             Assert.IsTrue(_barrels.Length != 0);
-			_desiredAngleInDegrees = _barrels[0].transform.eulerAngles.z;
+            _desiredAngleInDegrees = _barrels[0].transform.eulerAngles.z;
         }
 
         protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
-            return _factoryProvider.MovementControllerFactory.CreateDummyRotationMovementController();
+            return new DummyRotationMovementController();
         }
-	}
+    }
 }

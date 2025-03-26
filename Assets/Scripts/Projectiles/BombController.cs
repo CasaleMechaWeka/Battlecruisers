@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.ActivationArgs;
+﻿using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace BattleCruisers.Projectiles
         public override void Activate(ProjectileActivationArgs<IProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
-            MovementController = _factoryProvider.MovementControllerFactory.CreateDummyMovementController();
+            MovementController = new DummyMovementController();
         }
 
         protected override void OnImpactCleanUp()

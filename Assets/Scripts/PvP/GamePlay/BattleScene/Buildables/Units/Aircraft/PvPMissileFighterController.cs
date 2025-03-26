@@ -30,6 +30,9 @@ using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Movement.Rotation;
+using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -94,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
             base.Activate(activationArgs);
             _fighterMovementController
-                = _movementControllerFactory.CreateFighterMovementController(
+                = new FighterMovementController(
                     rigidBody,
                     maxVelocityProvider: this,
                     targetProvider: this,
@@ -124,7 +127,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         new LinearTargetPositionPredictor(),
                         new AngleCalculator(),
                         new AccuracyAdjuster((0, 0)),
-                        _movementControllerFactory.CreateRotationMovementController(_barrelController.TurretStats.TurretRotateSpeedInDegrees, _barrelController.transform, updater),
+                        new RotationMovementController(new TransformBC(_barrelController.transform), updater, _barrelController.TurretStats.TurretRotateSpeedInDegrees),
                         new FacingMinRangePositionValidator(0, true),
                         new AngleLimiter(-180, 180),
                         _factoryProvider,

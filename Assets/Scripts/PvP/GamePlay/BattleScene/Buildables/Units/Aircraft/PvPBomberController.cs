@@ -95,13 +95,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise( /* IPvPUIManager uiManager, */ IPvPFactoryProvider factoryProvider)
         {
             base.Initialise(/* uiManager,*/ factoryProvider);
-            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
+            _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
         public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
-            _bomberMovementControler = _movementControllerFactory.CreateBomberMovementController(rigidBody, maxVelocityProvider: this);
+            _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)

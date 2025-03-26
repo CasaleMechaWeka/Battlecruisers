@@ -11,7 +11,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,6 +22,7 @@ using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Movement.Deciders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -200,7 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     rangeCalculator);
 
             return
-                _movementControllerFactory.CreateShipMovementDecider(
+                new PvPShipMovementDecider(
                     this,
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),

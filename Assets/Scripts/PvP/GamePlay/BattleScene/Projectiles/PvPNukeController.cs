@@ -12,6 +12,7 @@ using UnityEngine;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.Movement.Velocity.Homing;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -34,11 +35,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public void Launch()
         {
-            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
 
             MovementController
-                = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                = new RocketMovementController(
                     _rigidBody,
                     maxVelocityProvider,
                     targetProvider,
@@ -185,10 +186,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                         target = obj.gameObject.GetComponent<PvPCruiser>()?.Parse<ITarget>();
                     }
                     Target = target;
-                    IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(MaxVelocityInMPerS);
+                    IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(MaxVelocityInMPerS);
                     ITargetProvider targetProvider = this;
                     MovementController
-                        = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                        = new RocketMovementController(
                             _rigidBody,
                             maxVelocityProvider,
                             targetProvider,

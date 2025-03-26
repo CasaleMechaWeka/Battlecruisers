@@ -1,7 +1,6 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -22,7 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        public IPvPMovementControllerFactory MovementControllerFactory { get; }
         public IPvPPrefabFactory PrefabFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
@@ -46,7 +44,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new PvPTargetFactoriesProvider();
-            MovementControllerFactory = new PvPMovementControllerFactory();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;

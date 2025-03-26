@@ -71,13 +71,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.Initialise(uiManager, factoryProvider);
 
-            _outsideRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
+            _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
             IVelocityProvider inRangeVelocityProvider
-                = _movementControllerFactory.CreateMultiplyingVelocityProvider(
+                = new MultiplyingVelocityProvider(
                     providerToWrap: this,
                     multiplier: WITHTIN_RANGE_VELOCITY_MULTIPLIER);
-            _inRangeMovementController = _movementControllerFactory.CreateFollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
+            _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)

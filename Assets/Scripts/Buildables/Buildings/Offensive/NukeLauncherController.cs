@@ -11,7 +11,6 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -74,10 +73,10 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         {
             base.Initialise(uiManager, factoryProvider);
 
-            leftSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
-            rightSiloHalf.Initialise(_movementControllerFactory, SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+            leftSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
+            rightSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
 
-            _spinner.Initialise(_movementControllerFactory);
+            _spinner.Initialise();
         }
 
         protected override void OnBuildableCompleted()

@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -45,7 +46,7 @@ namespace BattleCruisers.Projectiles
 
             Target = activationArgs.Target;
 
-            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
+            IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
             IFlightPointsProvider flightPointsProvider
                 = activationArgs.ProjectileStats.IsAccurate ?
@@ -53,7 +54,7 @@ namespace BattleCruisers.Projectiles
                     _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
 
             MovementController
-                = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
+                = new RocketMovementController(
                     _rigidBody,
                     maxVelocityProvider,
                     targetProvider,

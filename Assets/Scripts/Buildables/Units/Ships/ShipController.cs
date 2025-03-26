@@ -13,7 +13,6 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -191,7 +190,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     rangeCalculator);
 
             return
-                _movementControllerFactory.CreateShipMovementDecider(
+                new ShipMovementDecider(
                     this,
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),

@@ -16,6 +16,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Seabed;
+using BattleCruisers.Movement.Velocity.Homing;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -102,7 +103,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
-            DummyMovementController = _movementControllerFactory.CreateDummyMovementController();
+            DummyMovementController = new DummyMovementController();
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -119,9 +120,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _localBoosterBoostableGroup.BoostChanged += _boostableGroup_BoostChanged;
 
             PatrollingMovementController
-                = _movementControllerFactory.CreatePatrollingMovementController(
+                = new PatrollingMovementController(
                     rigidBody,
-                    maxVelocityProvider: _movementControllerFactory.CreatePatrollingVelocityProvider(this),
+                    maxVelocityProvider: new PatrollingVelocityProvider(this),
                     patrolPoints: GetPatrolPoints(),
                     positionEqualityMarginInM: PositionEqualityMarginInM);
 
@@ -179,7 +180,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
 
             ITargetProvider cruiserTarget = _cruiserSpecificFactories.Targets.ProviderFactory.CreateStaticTargetProvider(kamikazeTarget);
-            ActiveMovementController = _movementControllerFactory.CreateHomingMovementController(rigidBody, this, cruiserTarget);
+            ActiveMovementController = new HomingMovementController(rigidBody, this, cruiserTarget);
 
             UpdateFaction(kamikazeTarget);
 

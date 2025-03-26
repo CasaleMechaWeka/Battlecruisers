@@ -5,7 +5,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,8 +40,8 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 		{
 			base.Initialise(uiManager, factoryProvider);
 
-			leftWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
-			rightWing.Initialise(_movementControllerFactory, WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
+			leftWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
+			rightWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
 		}
 
 		protected override void OnBuildableCompleted()

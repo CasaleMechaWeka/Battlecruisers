@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -9,50 +10,50 @@ using UnityEngine;
 namespace BattleCruisers.Projectiles
 {
     public class NukeController :
-        ProjectileWithTrail<TargetProviderActivationArgs<INukeStats>, INukeStats>, 
+        ProjectileWithTrail<TargetProviderActivationArgs<INukeStats>, INukeStats>,
         ITargetProvider
-	{
-		private INukeStats _nukeStats;
-		private IFlightPointsProvider _flightPointsProvider;
+    {
+        private INukeStats _nukeStats;
+        private IFlightPointsProvider _flightPointsProvider;
         public SpriteRenderer nukeSprite; // Reference to the nuke's sprite
 
-		public ITarget Target { get; private set; }
+        public ITarget Target { get; private set; }
 
         public override void Activate(TargetProviderActivationArgs<INukeStats> activationArgs)
         {
             base.Activate(activationArgs);
 
-			_nukeStats = activationArgs.ProjectileStats;
+            _nukeStats = activationArgs.ProjectileStats;
             _flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
-			Target = activationArgs.Target;
-            
+            Target = activationArgs.Target;
+
             // Make sure the sprite is visible when activated
             if (nukeSprite != null)
             {
                 nukeSprite.enabled = true;
             }
-		}
+        }
 
-		public void Launch()
-		{
-            IVelocityProvider maxVelocityProvider = _factoryProvider.MovementControllerFactory.CreateStaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
-			ITargetProvider targetProvider = this;
+        public void Launch()
+        {
+            IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(_nukeStats.MaxVelocityInMPerS);
+            ITargetProvider targetProvider = this;
 
-			MovementController 
-                = _factoryProvider.MovementControllerFactory.CreateRocketMovementController(
-                    _rigidBody, 
-                    maxVelocityProvider, 
-                    targetProvider, 
-                    _nukeStats.CruisingAltitudeInM, 
+            MovementController
+                = new RocketMovementController(
+                    _rigidBody,
+                    maxVelocityProvider,
+                    targetProvider,
+                    _nukeStats.CruisingAltitudeInM,
                     _flightPointsProvider);
-		}
-        
+        }
+
         // Add cleanup method to hide visual elements on detonation
         protected override void OnImpactCleanUp()
         {
             base.OnImpactCleanUp();
-            
+
             // Hide the sprite when the nuke detonates
             if (nukeSprite != null)
             {
@@ -68,7 +69,7 @@ namespace BattleCruisers.Projectiles
                 }
             }
         }
-        
+
         // Backup method in case OnImpactCleanUp isn't called
         protected override void DestroyProjectile()
         {
@@ -86,8 +87,8 @@ namespace BattleCruisers.Projectiles
                     sprite.enabled = false;
                 }
             }
-            
+
             base.DestroyProjectile();
         }
-	}
+    }
 }
