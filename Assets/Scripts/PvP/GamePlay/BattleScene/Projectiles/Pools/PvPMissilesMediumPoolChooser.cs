@@ -7,8 +7,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public class PvPMissilesMediumPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
     {
+        
+        public bool isRailSlug = false;
         public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
+                         if (isRailSlug)
+            {
+                return projectilePoolProvider.RailSlugsPool;
+            }
             return projectilePoolProvider.MissilesMediumPool;
         }
     }

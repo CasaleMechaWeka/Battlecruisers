@@ -69,5 +69,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         GunBoat = 0607,
         RocketTurtle = 0608,
         FlakTurtle = 0609,
+        
     }
 }

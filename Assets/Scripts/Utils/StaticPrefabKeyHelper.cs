@@ -80,7 +80,7 @@ namespace BattleCruisers.Utils
         Building_UltraCIWS = 0506,
         Building_GlobeShield = 0507,
         Building_Sledgehammer = 0508,
-
+        Building_RailCannon = 0509,
 
         // === Units ===
         // Aircraft

@@ -15,10 +15,8 @@ namespace BattleCruisers.Projectiles.Pools
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FlakBulletsPool { get; }
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
-
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
-
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
         public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
         public Pool<BombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
@@ -28,6 +26,7 @@ namespace BattleCruisers.Projectiles.Pools
         public Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
         public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
+        public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> RailSlugsPool { get; }
         public Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
         public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public Pool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
@@ -49,10 +48,10 @@ namespace BattleCruisers.Projectiles.Pools
                     InitialCapacity.BULLET);
 
             TinyBulletsPool
-               = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                   factoryProvider,
-                   StaticPrefabKeys.Projectiles.TinyBullet,
-                   InitialCapacity.BULLET);
+                = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    StaticPrefabKeys.Projectiles.TinyBullet,
+                    InitialCapacity.BULLET);
 
             FlakBulletsPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
@@ -130,6 +129,13 @@ namespace BattleCruisers.Projectiles.Pools
                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
                     factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileMF,
+                    InitialCapacity.MISSILE_MEDIUM);
+                    
+
+            RailSlugsPool
+                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    StaticPrefabKeys.Projectiles.RailSlug,
                     InitialCapacity.MISSILE_MEDIUM);
 
             MissilesFirecrackerPool

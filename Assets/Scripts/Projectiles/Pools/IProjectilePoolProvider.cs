@@ -22,6 +22,7 @@ namespace BattleCruisers.Projectiles.Pools
         Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
+        Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> RailSlugsPool { get; }
         Pool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         Pool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
