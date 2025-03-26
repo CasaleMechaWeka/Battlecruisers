@@ -1,12 +1,12 @@
 ﻿namespace BattleCruisers.Projectiles.FlightPoints
 {
-	public class FlightPointsProviderFactory : IFlightPointsProviderFactory
+	public class FlightPointsProviderFactory
 	{
 		public IFlightPointsProvider RocketFlightPointsProvider { get; }
-        public IFlightPointsProvider InaccurateRocketFlightPointsProvider { get; }
+		public IFlightPointsProvider InaccurateRocketFlightPointsProvider { get; }
 		public IFlightPointsProvider NukeFlightPointsProvider { get; }
 
-        public FlightPointsProviderFactory()
+		public FlightPointsProviderFactory()
 		{
 			RocketFlightPointsProvider = new RocketFlightPointsProvider();
 			InaccurateRocketFlightPointsProvider

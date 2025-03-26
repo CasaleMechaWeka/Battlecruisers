@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-            IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            FlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
             IDeferrer deferrer = null,
@@ -105,7 +105,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         private FactoryProvider CreateFactoryProvider(
             PrefabFactory prefabFactory,
             IMovementControllerFactory movementControllerFactory,
-            IFlightPointsProviderFactory flightPointsProviderFactory,
+            FlightPointsProviderFactory flightPointsProviderFactory,
             ISoundPlayerFactory soundPlayerFactory,
             DeferrerProvider deferrerProvider,
             TargetFactoriesProvider targetFactories,

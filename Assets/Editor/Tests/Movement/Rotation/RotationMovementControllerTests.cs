@@ -10,7 +10,6 @@ namespace BattleCruisers.Tests.Movement.Rotation
     public class RotationMovementControllerTests
     {
         private IRotationMovementController _movementController;
-        private IRotationHelper _rotationHelper;
         private ITransform _transform;
         private ITime _time;
         private float _rotateSpeedInDegreesPerS;
@@ -18,12 +17,11 @@ namespace BattleCruisers.Tests.Movement.Rotation
         [SetUp]
         public void TestSetup()
         {
-            _rotationHelper = Substitute.For<IRotationHelper>();
             _transform = Substitute.For<ITransform>();
             _time = Substitute.For<ITime>();
             _rotateSpeedInDegreesPerS = 10;
 
-            _movementController = new RotationMovementController(_rotationHelper, _transform, _time, _rotateSpeedInDegreesPerS);
+            _movementController = new RotationMovementController(_transform, _time, _rotateSpeedInDegreesPerS);
 
             _transform.EulerAngles.Returns(new Vector3(0, 0, 12));
         }
@@ -47,7 +45,7 @@ namespace BattleCruisers.Tests.Movement.Rotation
         {
             float desiredAngleInDegrees = 5;
             float directionMultiplier = -1;
-            _rotationHelper.FindDirectionMultiplier(_transform.EulerAngles.z, desiredAngleInDegrees).Returns(directionMultiplier);
+            FindDirectionMultiplier(_transform.EulerAngles.z, desiredAngleInDegrees).Returns(directionMultiplier);
             _time.DeltaTime.Returns(0.2f);
 
             _movementController.AdjustRotation(desiredAngleInDegrees);
@@ -63,7 +61,7 @@ namespace BattleCruisers.Tests.Movement.Rotation
             float difference = -0.1f;
             float desiredAngleInDegrees = _transform.EulerAngles.z + difference;
             float directionMultiplier = -1;
-            _rotationHelper.FindDirectionMultiplier(_transform.EulerAngles.z, desiredAngleInDegrees).Returns(directionMultiplier);
+            FindDirectionMultiplier(_transform.EulerAngles.z, desiredAngleInDegrees).Returns(directionMultiplier);
             _time.DeltaTime.Returns(0.2f);
 
             _movementController.AdjustRotation(desiredAngleInDegrees);
@@ -71,6 +69,31 @@ namespace BattleCruisers.Tests.Movement.Rotation
             // increment.z: -0.100004
             // difference:  -0.1
             _transform.Received().Rotate(Arg.Is<Vector3>(increment => Mathf.Abs(increment.z - difference) < 0.001f));
+        }
+
+        public float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees)
+        {
+            if (currentAngleInDegrees == desiredAngleInDegrees)
+            {
+                return 0;
+            }
+
+            float distance = Mathf.Abs(currentAngleInDegrees - desiredAngleInDegrees);
+            float directionMultiplier = FindDirectionMultiplier(currentAngleInDegrees, desiredAngleInDegrees, distance);
+
+            return directionMultiplier;
+        }
+
+        private float FindDirectionMultiplier(float currentAngleInDegrees, float desiredAngleInDegrees, float distance)
+        {
+            if (desiredAngleInDegrees > currentAngleInDegrees)
+            {
+                return distance < 180 ? 1 : -1;
+            }
+            else
+            {
+                return distance < 180 ? -1 : 1;
+            }
         }
     }
 }

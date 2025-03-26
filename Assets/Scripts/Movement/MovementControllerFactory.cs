@@ -18,14 +18,7 @@ namespace BattleCruisers.Movement
 {
 	public class MovementControllerFactory : IMovementControllerFactory
 	{
-		private readonly IRotationHelper _rotationHelper;
-
 		public const float DEFAULT_POSITION_EQUALITY_MARGIN_IN_M = 0.5f;
-
-		public MovementControllerFactory()
-		{
-			_rotationHelper = new RotationHelper();
-		}
 
 		#region Velocity
 		#region Homing
@@ -98,7 +91,7 @@ namespace BattleCruisers.Movement
 		#region Rotation
 		public IRotationMovementController CreateRotationMovementController(float rotateSpeedInDegreesPerS, Transform transform, IDeltaTimeProvider deltaTimeProvider)
 		{
-			return new RotationMovementController(_rotationHelper, new TransformBC(transform), deltaTimeProvider, rotateSpeedInDegreesPerS);
+			return new RotationMovementController(new TransformBC(transform), deltaTimeProvider, rotateSpeedInDegreesPerS);
 		}
 
 		public IRotationMovementController CreateDummyRotationMovementController(bool isOnTarget = true)

@@ -18,7 +18,7 @@ namespace BattleCruisers.Utils.Factories
 
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
-        public IFlightPointsProviderFactory FlightPointsProviderFactory { get; }
+        public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
         public IMovementControllerFactory MovementControllerFactory { get; }
         public PrefabFactory PrefabFactory { get; }
         public TargetFactoriesProvider Targets { get; }

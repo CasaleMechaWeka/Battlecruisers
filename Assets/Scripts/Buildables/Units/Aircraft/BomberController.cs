@@ -13,7 +13,6 @@ using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;

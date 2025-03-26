@@ -111,7 +111,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-            IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            FlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
@@ -164,7 +164,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             IMovementControllerFactory movementControllerFactory = null,
-            IFlightPointsProviderFactory flightPointsProviderFactory = null,
+            FlightPointsProviderFactory flightPointsProviderFactory = null,
             IGlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
             IUserChosenTargetManager userChosenTargetManager = null,
@@ -429,7 +429,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             return
                 new RotationMovementController(
-                    new RotationHelper(),
                     new TransformBC(barrel.transform),
                     updater,
                     barrel.TurretStats.TurretRotateSpeedInDegrees);
