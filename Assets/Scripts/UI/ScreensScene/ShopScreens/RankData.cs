@@ -2,20 +2,15 @@ namespace BattleCruisers.UI.ScreensScene.ShopScreen
 {
     public class RankData
     {
-        public string rankImage { get; set; }
-        public string RankImage => rankImage;
-
-        public string rankNumber { get; set; }
-        public string RankNumber => rankNumber;
-
-        public string rankNameKeyBase { get; set; }
-        public string RankNameKeyBase => rankNameKeyBase;
+        public string RankImage { get; set; }
+        public string RankNumber { get; set; }
+        public string RankNameKeyBase { get; set; }
 
         public RankData(string rankImage, string rankNumber, string rankNameKeyBase)
         {
-            this.rankImage = rankImage;
-            this.rankNumber = rankNumber;
-            this.rankNameKeyBase = rankNameKeyBase;
+            RankImage = rankImage;
+            RankNumber = rankNumber;
+            RankNameKeyBase = rankNameKeyBase;
         }
     }
 }
