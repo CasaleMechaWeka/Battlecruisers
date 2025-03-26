@@ -366,7 +366,7 @@ namespace BattleCruisers.Data
                                 int index = StaticPrefabKeys.BodykitItems[reward.id];
                                 foreach (ItemAndAmountSpec cost in costs)
                                     if (cost.id == "COIN")
-                                        StaticData.Bodykits[index].bodykitCost = cost.amount;
+                                        StaticData.Bodykits[index].BodykitCost = cost.amount;
                             }
                         }
                     }
@@ -407,7 +407,7 @@ namespace BattleCruisers.Data
                 int iCoins = 0;
                 int.TryParse(coins, out iCoins);
                 if (i < StaticData.Bodykits.Count)
-                    StaticData.Bodykits[i].bodykitCost = iCoins;
+                    StaticData.Bodykits[i].BodykitCost = iCoins;
             }
             // variant cost async
             for (int i = 0; i < ecoConfig.categories[3].items.Count; i++)
@@ -529,7 +529,7 @@ namespace BattleCruisers.Data
         {
             Assert.IsTrue(index > 0); // 0 is trident for premium
             await Task.Yield();
-            int iCoins = StaticData.Bodykits[index].bodykitCost;
+            int iCoins = StaticData.Bodykits[index].BodykitCost;
             _gameModel.Coins -= iCoins;
             SaveGame();
             await SyncCoinsToCloud();
@@ -679,16 +679,16 @@ namespace BattleCruisers.Data
             // Captains
             foreach (BodykitData txn in GameModel.OutstandingBodykitTransactions)
             {
-                Debug.Log("Purchasing Bodykit " + txn.index);
-                bool result = await PurchaseBodykitV2(txn.index);
+                Debug.Log("Purchasing Bodykit " + txn.Index);
+                bool result = await PurchaseBodykitV2(txn.Index);
                 if (result)
                 {
-                    GameModel.AddBodykit(txn.index);
-                    GameModel.CoinsChange += txn.bodykitCost;
+                    GameModel.AddBodykit(txn.Index);
+                    GameModel.CoinsChange += txn.BodykitCost;
                 }
                 else
                 {
-                    Debug.LogWarning("FAILED: Purchasing Bodykit " + txn.index + ", will retry next time the game is run.");
+                    Debug.LogWarning("FAILED: Purchasing Bodykit " + txn.Index + ", will retry next time the game is run.");
                     RetryBodykits.Add(txn);
                 }
             }
@@ -705,15 +705,15 @@ namespace BattleCruisers.Data
 
             foreach (BodykitData txn in GameModel.OutstandingBodykitTransactions)
             {
-                if (runningCoinTotal - txn.bodykitCost >= 0)
+                if (runningCoinTotal - txn.BodykitCost >= 0)
                 {
-                    runningCoinTotal -= txn.bodykitCost;
-                    GoodBodykits.Add(txn.index);
+                    runningCoinTotal -= txn.BodykitCost;
+                    GoodBodykits.Add(txn.Index);
                 }
                 else
                 {
-                    Debug.Log("Reverting purchase of Bodykit " + txn.index);
-                    GameModel.RemoveBodykit(txn.index);
+                    Debug.Log("Reverting purchase of Bodykit " + txn.Index);
+                    GameModel.RemoveBodykit(txn.Index);
                 }
             }
             GameModel.OutstandingBodykitTransactions = new List<BodykitData>();

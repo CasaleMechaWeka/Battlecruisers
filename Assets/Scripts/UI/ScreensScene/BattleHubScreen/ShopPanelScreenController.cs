@@ -392,9 +392,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
                     bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
                     bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
-                    bodykitsContainer.bodykitPrice.text = StaticData.Bodykits[index].bodykitCost.ToString();
-                    bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].nameStringKeyBase);
-                    bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].descriptionKeyBase);
+                    bodykitsContainer.bodykitPrice.text = StaticData.Bodykits[index].BodykitCost.ToString();
+                    bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
+                    bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
                     bodykitsContainer.currentBodykitData = StaticData.Bodykits[index];
                     if (DataProvider.GameModel.PurchasedBodykits.Contains(index))
                     {
