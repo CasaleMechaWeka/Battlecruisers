@@ -12,6 +12,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public Pool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> RailSlugImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> NovaShellImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> RocketShellImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> BombExplosionPool { get; }
@@ -32,6 +33,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
             BulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BulletImpact);
             HighCalibreBulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.HighCalibreBulletImpact);
             TinyBulletImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.TinyBulletImpact);
+            RailSlugImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.RailSlugImpact);
             NovaShellImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.NovaShellImpact);
             RocketShellImpactPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.RocketShellImpact);
             BombExplosionPool = CreateExplosionPool(prefabFactory, StaticPrefabKeys.Explosions.BombExplosion);
@@ -57,6 +59,7 @@ namespace BattleCruisers.Effects.Explosions.Pools
         public void SetInitialCapacity()
         {
             TinyBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
+            RailSlugImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             HighCalibreBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT);
             BombExplosionPool.AddCapacity(InitialCapacity.BOMB);

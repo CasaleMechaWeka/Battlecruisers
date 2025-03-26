@@ -13,6 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public Pool<IPoolable<Vector3>, Vector3> BulletImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> HighCalibreBulletImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
+        public Pool<IPoolable<Vector3>, Vector3> RailSlugImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> NovaShellImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> RocketShellImpactPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> BombExplosionPool { get; }
@@ -32,6 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             BulletImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPBulletImpact);
             HighCalibreBulletImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPHighCalibreBulletImpact);
             TinyBulletImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPTinyBulletImpact);
+            RailSlugImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPRailSlugImpact);
             NovaShellImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPNovaShellImpact);
             RocketShellImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPRocketShellImpact);
             BombExplosionPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPBombExplosion);
@@ -57,6 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public void SetInitialCapacity()
         {
             TinyBulletImpactPool.AddCapacity(0);
+            RailSlugImpactPool.AddCapacity(0);
             HighCalibreBulletImpactPool.AddCapacity(0);
             BulletImpactPool.AddCapacity(0);
             BombExplosionPool.AddCapacity(0);
@@ -75,6 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public void SetInitialCapacity_Rest()
         {
             TinyBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
+            RailSlugImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
             HighCalibreBulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
             BulletImpactPool.AddCapacity(InitialCapacity.BULLET_IMPACT - 1);
             BombExplosionPool.AddCapacity(InitialCapacity.BOMB - 1);

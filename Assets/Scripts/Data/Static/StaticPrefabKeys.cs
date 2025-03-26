@@ -48,6 +48,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey Cannon { get; } = new BuildingKey(BuildingCategory.Offence, "Cannon");
             public static BuildingKey BlastVLS { get; } = new BuildingKey(BuildingCategory.Offence, "BlastVLS");
             public static BuildingKey FirecrackerVLS { get; } = new BuildingKey(BuildingCategory.Offence, "FirecrackerVLS");
+
             // Ultras
             public static BuildingKey DeathstarLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "DeathstarLauncher");
             public static BuildingKey NukeLauncher { get; } = new BuildingKey(BuildingCategory.Ultra, "NukeLauncher");
@@ -57,7 +58,8 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey NovaArtillery { get; } = new BuildingKey(BuildingCategory.Ultra, "NovaArtillery");
             public static BuildingKey UltraCIWS { get; } = new BuildingKey(BuildingCategory.Ultra, "UltraCIWS");
             public static BuildingKey GlobeShield { get; } = new BuildingKey(BuildingCategory.Ultra, "GlobeShield");
-            public static BuildingKey Sledgehammer { get; } = new BuildingKey(BuildingCategory.Ultra, "Sledgehammer");//new
+            public static BuildingKey Sledgehammer { get; } = new BuildingKey(BuildingCategory.Ultra, "Sledgehammer");
+            public static BuildingKey RailCannon { get; } = new BuildingKey(BuildingCategory.Ultra, "RailCannon");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
@@ -68,9 +70,9 @@ namespace BattleCruisers.Data.Static
                 // Defence
                 AntiShipTurret, AntiAirTurret, Mortar, SamSite, TeslaCoil, Coastguard, FlakTurret, CIWS,
                 // Offence
-                Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, MissilePod, IonCannon, Cannon, BlastVLS, FirecrackerVLS, //railgun = LasCannon! 
+                Artillery, RocketLauncher, Railgun, MLRS, GatlingMortar, IonCannon, MissilePod, Cannon, BlastVLS, FirecrackerVLS, //railgun = LasCannon!
                 // Ultras
-                DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS, GlobeShield, Sledgehammer
+                DeathstarLauncher, NukeLauncher, Ultralisk, KamikazeSignal, Broadsides, NovaArtillery, UltraCIWS, GlobeShield, Sledgehammer, RailCannon
             });
         }
 
@@ -401,6 +403,7 @@ namespace BattleCruisers.Data.Static
             public static ExplosionKey BulletImpact { get; } = new ExplosionKey("BulletImpact");
             public static ExplosionKey HighCalibreBulletImpact { get; } = new ExplosionKey("HighCalibreBulletImpact");
             public static ExplosionKey TinyBulletImpact { get; } = new ExplosionKey("TinyBulletImpact");
+            public static ExplosionKey RailSlugImpact { get; } = new ExplosionKey("RailSlugImpact");
             public static ExplosionKey NovaShellImpact { get; } = new ExplosionKey("NovaShellImpact");
             public static ExplosionKey RocketShellImpact { get; } = new ExplosionKey("RocketShellImpact");
             public static ExplosionKey BombExplosion { get; } = new ExplosionKey("ExplosionBomb");
@@ -415,7 +418,7 @@ namespace BattleCruisers.Data.Static
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, NovaShellImpact, RocketShellImpact,
+                BulletImpact, HighCalibreBulletImpact, TinyBulletImpact, RailSlugImpact, NovaShellImpact, RocketShellImpact,
                 BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker,
                 Explosion150, Explosion500, ExplosionMF, ExplosionFiveShellCluster
             });
@@ -426,6 +429,7 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey Bullet { get; } = new ProjectileKey("Bullet");
             public static ProjectileKey HighCalibreBullet { get; } = new ProjectileKey("HighCalibreBullet");
             public static ProjectileKey TinyBullet { get; } = new ProjectileKey("TinyBullet");
+            public static ProjectileKey RailSlug { get; } = new ProjectileKey("RailSlug");
             public static ProjectileKey FlakBullet { get; } = new ProjectileKey("FlakBullet");
             public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
@@ -446,7 +450,7 @@ namespace BattleCruisers.Data.Static
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellSmall, ShellLarge, NovaShell, FiveShellCluster, RocketShell, MissileSmall,
+                Bullet, HighCalibreBullet, TinyBullet, RailSlug, FlakBullet, ShellSmall, ShellLarge, NovaShell, FiveShellCluster, RocketShell, MissileSmall,
                 MissileMedium, MissileMF, MissileLarge, MissileSmart, MissileFirecracker, Bomb, StratBomb, Nuke, Rocket, RocketSmall
             });
         }

@@ -72,7 +72,8 @@ namespace BattleCruisers.Data.Static
             { Buildings.NovaArtillery, 33 },
             { Buildings.UltraCIWS, 95 },
             { Buildings.GlobeShield, 95 },
-            { Buildings.Sledgehammer, 95 } //Set to 95: way past the highest main story level, so that the sidequest unlocks it instead.
+            { Buildings.Sledgehammer, 95 },
+            { Buildings.RailCannon, 95 }//Set to 95: way past the highest main story level, so that the sidequest unlocks it instead.
         });
         private static ReadOnlyDictionary<UnitKey, int> _unitToUnlockedLevel
         = new ReadOnlyDictionary<UnitKey, int>(new Dictionary<UnitKey, int>()
@@ -389,9 +390,9 @@ namespace BattleCruisers.Data.Static
             Buildings.GatlingMortar,
             Buildings.IonCannon,
             Buildings.MissilePod,
-            Buildings.Cannon,//new
-            Buildings.BlastVLS,//new
-            Buildings.FirecrackerVLS,//new
+            Buildings.Cannon,
+            Buildings.BlastVLS,
+            Buildings.FirecrackerVLS,
 
             // Ultras
             Buildings.DeathstarLauncher,
@@ -402,7 +403,8 @@ namespace BattleCruisers.Data.Static
             Buildings.NovaArtillery,
             Buildings.UltraCIWS,
             Buildings.GlobeShield,
-            Buildings.Sledgehammer//new
+            Buildings.Sledgehammer,
+            Buildings.RailCannon
         });
         public static ReadOnlyCollection<BuildingKey> AIBannedUltrakeys { get; } = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
         {

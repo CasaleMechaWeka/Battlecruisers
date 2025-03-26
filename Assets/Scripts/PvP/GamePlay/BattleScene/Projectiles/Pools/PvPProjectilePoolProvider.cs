@@ -27,7 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
         public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
-        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
+        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }        
+        public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> RailSlugsPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
@@ -48,16 +49,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.BULLET);
 
             TinyBulletsPool
-               = CreatePool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                   factoryProvider,
-                   PvPStaticPrefabKeys.PvPProjectiles.PvPTinyBullet,
-                   PvPInitialCapacity.BULLET);
+                = CreatePool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    PvPStaticPrefabKeys.PvPProjectiles.PvPTinyBullet,
+                    PvPInitialCapacity.BULLET);
 
             FlakBulletsPool
-               = CreatePool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                   factoryProvider,
-                   PvPStaticPrefabKeys.PvPProjectiles.PvPFlakBullet,
-                   PvPInitialCapacity.BULLET);
+                = CreatePool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    PvPStaticPrefabKeys.PvPProjectiles.PvPFlakBullet,
+                    PvPInitialCapacity.BULLET);
 
             ShellsSmallPool
                 = CreatePool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
@@ -133,6 +134,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileMF,
                     PvPInitialCapacity.MISSILE_MEDIUM);
 
+            RailSlugsPool
+                = CreatePool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
+                    factoryProvider,
+                    PvPStaticPrefabKeys.PvPProjectiles.PvPRailSlug,
+                    PvPInitialCapacity.MISSILE_MEDIUM);
+
             MissilesFirecrackerPool
                 = CreatePool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
                     factoryProvider,
@@ -184,6 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             MissilesSmallPool.AddCapacity(1);
             MissilesMediumPool.AddCapacity(1);
             MissilesMFPool.AddCapacity(1);
+            RailSlugsPool.AddCapacity(1);
             MissilesFirecrackerPool.AddCapacity(1);
             MissilesLargePool.AddCapacity(1);
             MissilesSmartPool.AddCapacity(1);
@@ -207,6 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL - 1);
             MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             MissilesMFPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
+            RailSlugsPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             MissilesFirecrackerPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE - 1);
             MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART - 1);

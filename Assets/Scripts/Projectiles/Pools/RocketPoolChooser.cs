@@ -16,6 +16,7 @@ namespace BattleCruisers.Projectiles.Pools
             {
                 return projectilePoolProvider.RocketsSmallPool;
             }
+
             return projectilePoolProvider.RocketsPool;
         }
     }

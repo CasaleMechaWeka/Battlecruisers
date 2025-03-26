@@ -14,6 +14,9 @@ namespace BattleCruisers.Effects.Explosions.Pools
         // CIWS
         Pool<IPoolable<Vector3>, Vector3> TinyBulletImpactPool { get; }
 
+        // Railgun
+        Pool<IPoolable<Vector3>, Vector3> RailSlugImpactPool { get; }
+
         // Radius 0.75  => Small shells: Mortar, frigate & destroyer front cannon.
         Pool<IPoolable<Vector3>, Vector3> SmallExplosionsPool { get; }
 
