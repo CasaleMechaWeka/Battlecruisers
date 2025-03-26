@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using Unity.Netcode;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -128,8 +129,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             AdjustGameObjectDirection();
 
-            _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
-            _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
+            _damageApplier = CreateDamageApplier(activationArgs.ProjectileStats);
+            _singleDamageApplier = new SingleDamageApplier(activationArgs.ProjectileStats.Damage);
             _isActiveAndAlive = true;
 
             autoDetonationTimer.Value = AutoDetonationTimer;
@@ -157,12 +158,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
         }
 
-        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(IProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?
-                damageApplierFactory.CreateAreaOfDamageApplier(projectileStats) :
-                damageApplierFactory.CreateSingleDamageApplier(projectileStats);
+                    new PvPAreaOfEffectDamageApplier(projectileStats, new DummyTargetFilter(isMatchResult: true)) :
+                    new SingleDamageApplier(projectileStats.Damage);
         }
 
         void FixedUpdate()

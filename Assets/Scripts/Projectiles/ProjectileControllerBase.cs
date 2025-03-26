@@ -105,8 +105,8 @@ namespace BattleCruisers.Projectiles
 
             AdjustGameObjectDirection();
 
-            _damageApplier = CreateDamageApplier(_factoryProvider.DamageApplierFactory, activationArgs.ProjectileStats);
-            _singleDamageApplier = _factoryProvider.DamageApplierFactory.CreateSingleDamageApplier(activationArgs.ProjectileStats);
+            _damageApplier = CreateDamageApplier(activationArgs.ProjectileStats);
+            _singleDamageApplier = new SingleDamageApplier(activationArgs.ProjectileStats.Damage);
             _isActiveAndAlive = true;
 
             if (gameObject.activeInHierarchy && autoDetonationTimer > 0f)
@@ -121,12 +121,12 @@ namespace BattleCruisers.Projectiles
 
         }
 
-        private IDamageApplier CreateDamageApplier(IDamageApplierFactory damageApplierFactory, IProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(IProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?
-                damageApplierFactory.CreateAreaOfDamageApplier(projectileStats) :
-                damageApplierFactory.CreateSingleDamageApplier(projectileStats);
+                    new AreaOfEffectDamageApplier(projectileStats, new DummyTargetFilter(isMatchResult: true)) :
+                    new SingleDamageApplier(projectileStats.Damage);
         }
 
         void FixedUpdate()
