@@ -85,12 +85,49 @@ namespace BattleCruisers.Projectiles
                 DestroyProjectile();
         }
 
+        // Override the OnImpactCleanUp to NOT call base.OnImpactCleanUp() since that would 
+        // hide ALL effects including trails
+        protected override void OnImpactCleanUp()
+        {
+            // Do NOT call base.OnImpactCleanUp() as it would hide the trail
+            // Instead, manually implement the parts we need:
+            
+            // Stop movement but don't touch the trail
+            _rigidBody.velocity = Vector2.zero;
+            MovementController = null;
+            
+            // Disable collision
+            GetComponent<Collider2D>().enabled = false;
+            
+            // Hide the missile sprite only, not the trail
+            missile.enabled = false;
+            
+            // Deactivate rocket target but keep the main object active for trail lifetime
+            _rocketTarget.GameObject.SetActive(false);
+            
+            // Unsubscribe from target destruction event
+            if (_activationArgs != null && Target != null)
+            {
+                Target.Destroyed -= Target_Destroyed;
+            }
+        }
+
         protected override void DestroyProjectile()
         {
-            missile.enabled = false;
-            _rocketTarget.GameObject.SetActive(false);
-            Target.Destroyed -= Target_Destroyed;
-            base.DestroyProjectile();
+            // Show explosion and hide the sprite
+            ShowExplosion();
+            OnImpactCleanUp();
+            
+            // Invoke destroyed and defer cleanup after trail lifetime
+            InvokeDestroyed();
+            _deferrer.Defer(OnTrailsDoneCleanup, TrailLifetimeInS);
+        }
+        
+        // Add our own cleanup method for when trails are done
+        private void OnTrailsDoneCleanup()
+        {
+            gameObject.SetActive(false);
+            InvokeDeactivated();
         }
     }
 }
