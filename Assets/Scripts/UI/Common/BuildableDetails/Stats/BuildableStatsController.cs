@@ -88,6 +88,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Stats
             if (shouldShowRow)
             {
                 int damageStars = ValueToStarsConverter.ConvertValueToStars(damagePerS, type);
+                // Ensure the star rating is at least 1
+                if (damageStars == 0)
+                {
+                    damageStars = 1;
+                }
                 damageStatsRow.ShowResult(damageStars, HigherIsBetterComparer.CompareStats(damagePerS, comparingItemDamagePerS));
             }
         }
