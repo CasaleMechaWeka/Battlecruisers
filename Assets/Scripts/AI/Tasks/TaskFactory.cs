@@ -13,7 +13,7 @@ namespace BattleCruisers.AI.Tasks
         private readonly IDeferrer _deferrer;
 
         // For cheating :)
-        public static DelayProvider delayProvider;
+        public static float delayInS;
 
         public const float DEFAULT_DELAY_IN_S = 1.5f;
         public const float MIN_DELAY_IN_S = 0.1f;
@@ -26,7 +26,7 @@ namespace BattleCruisers.AI.Tasks
             _cruiser = cruiser;
             _deferrer = deferrer;
 
-            delayProvider = new DelayProvider(DEFAULT_DELAY_IN_S);
+            delayInS = DEFAULT_DELAY_IN_S;
         }
 
         public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
@@ -38,7 +38,7 @@ namespace BattleCruisers.AI.Tasks
         private IPrioritisedTask CreatePrioritisedTask(ITask task, TaskPriority priority)
         {
             IPrioritisedTask prioritisedTask = new PrioritisedTask(priority, task);
-            return new DeferredPrioritisedTask(prioritisedTask, _deferrer, delayProvider);
+            return new DeferredPrioritisedTask(prioritisedTask, _deferrer, delayInS);
         }
     }
 }

@@ -82,19 +82,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public void SetSpeedNormal()
         {
             SetSpeed(PvPBuildSpeed.InfinitelySlow);
-            PvPTaskFactory.delayProvider.DelayInS = PvPTaskFactory.DEFAULT_DELAY_IN_S;
+            PvPTaskFactory.delayInS = PvPTaskFactory.DEFAULT_DELAY_IN_S;
         }
 
         public void SetSpeedFast()
         {
             SetSpeed(PvPBuildSpeed.Normal);
-            PvPTaskFactory.delayProvider.DelayInS = PvPTaskFactory.MIN_DELAY_IN_S;
+            PvPTaskFactory.delayInS = PvPTaskFactory.MIN_DELAY_IN_S;
         }
 
         public void SetSpeedVeryFast()
         {
             SetSpeed(PvPBuildSpeed.VeryFast);
-            PvPTaskFactory.delayProvider.DelayInS = PvPTaskFactory.MIN_DELAY_IN_S;
+            PvPTaskFactory.delayInS = PvPTaskFactory.MIN_DELAY_IN_S;
         }
 
         private void SetSpeed(PvPBuildSpeed buildSpeed)

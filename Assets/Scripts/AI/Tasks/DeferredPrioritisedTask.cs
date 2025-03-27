@@ -27,7 +27,7 @@ namespace BattleCruisers.AI.Tasks
     {
         private readonly IPrioritisedTask _baseTask;
         private readonly IDeferrer _deferrer;
-        private readonly IDelayProvider _delayProvider;
+        private readonly float _delayInS;
 
         public TaskPriority Priority => _baseTask.Priority;
 
@@ -37,23 +37,23 @@ namespace BattleCruisers.AI.Tasks
             remove { _baseTask.Completed -= value; }
         }
 
-        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer, IDelayProvider delayProvider)
+        public DeferredPrioritisedTask(IPrioritisedTask baseTask, IDeferrer deferrer, float delayInS)
         {
-            Helper.AssertIsNotNull(baseTask, deferrer, delayProvider);
+            Helper.AssertIsNotNull(baseTask, deferrer);
 
             _baseTask = baseTask;
             _deferrer = deferrer;
-            _delayProvider = delayProvider;
+            _delayInS = delayInS;
         }
 
         public void Start()
         {
-            _deferrer.Defer(() => _baseTask.Start(), _delayProvider.DelayInS);
+            _deferrer.Defer(() => _baseTask.Start(), _delayInS);
         }
 
         public void Stop()
         {
-            _deferrer.Defer(() => _baseTask.Stop(), _delayProvider.DelayInS);
+            _deferrer.Defer(() => _baseTask.Stop(), _delayInS);
         }
 
         public override string ToString()

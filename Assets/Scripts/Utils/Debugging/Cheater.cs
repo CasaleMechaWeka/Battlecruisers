@@ -85,19 +85,19 @@ namespace BattleCruisers.Utils.Debugging
         public void SetSpeedNormal()
         {
             SetSpeed(BuildSpeed.InfinitelySlow);
-            TaskFactory.delayProvider.DelayInS = TaskFactory.DEFAULT_DELAY_IN_S;
+            TaskFactory.delayInS = TaskFactory.DEFAULT_DELAY_IN_S;
         }
 
         public void SetSpeedFast()
         {
             SetSpeed(BuildSpeed.Normal);
-            TaskFactory.delayProvider.DelayInS = TaskFactory.MIN_DELAY_IN_S;
+            TaskFactory.delayInS = TaskFactory.MIN_DELAY_IN_S;
         }
 
         public void SetSpeedVeryFast()
         {
             SetSpeed(BuildSpeed.VeryFast);
-            TaskFactory.delayProvider.DelayInS = TaskFactory.MIN_DELAY_IN_S;
+            TaskFactory.delayInS = TaskFactory.MIN_DELAY_IN_S;
         }
 
         private void SetSpeed(BuildSpeed buildSpeed)

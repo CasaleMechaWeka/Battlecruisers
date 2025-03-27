@@ -10,17 +10,15 @@ namespace BattleCruisers.Tests.AI.Tasks
     {
         private IPrioritisedTask _deferredTask, _baseTask;
         private IDeferrer _deferrer;
-        private IDelayProvider _delayProvider;
+        private float delayInS;
 
         [SetUp]
         public void TestSetup()
         {
             _baseTask = Substitute.For<IPrioritisedTask>();
             _deferrer = SubstituteFactory.CreateDeferrer();
-            _delayProvider = Substitute.For<IDelayProvider>();
-            _delayProvider.DelayInS.Returns(1);
 
-            _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer, _delayProvider);
+            _deferredTask = new DeferredPrioritisedTask(_baseTask, _deferrer, delayInS);
         }
 
         [Test]
