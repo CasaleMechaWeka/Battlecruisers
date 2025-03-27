@@ -4,7 +4,7 @@ using BattleCruisers.Data.Static.Strategies.Requests;
 
 namespace BattleCruisers.AI.BuildOrders
 {
-    public class SlotAssigner : ISlotAssigner
+	public class SlotAssigner
 	{
 		/// <summary>
 		/// 1. High focus requests are served once before low focus requests

@@ -16,7 +16,7 @@ namespace BattleCruisers.AI.BuildOrders
 {
     public class BuildOrderFactory : IBuildOrderFactory
     {
-        private readonly ISlotAssigner _slotAssigner;
+        private readonly SlotAssigner _slotAssigner;
         private readonly IGameModel _gameModel;
         private readonly IStrategyFactory _strategyFactory;
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.AI.BuildOrders
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-        public BuildOrderFactory(ISlotAssigner slotAssigner, IGameModel gameModel, IStrategyFactory strategyFactory)
+        public BuildOrderFactory(SlotAssigner slotAssigner, IGameModel gameModel, IStrategyFactory strategyFactory)
         {
             Helper.AssertIsNotNull(slotAssigner, gameModel, strategyFactory);
 
@@ -123,7 +123,7 @@ namespace BattleCruisers.AI.BuildOrders
             return new CombinedBuildOrders(buildOrders);
         }
 
-        private void AssignSlots(ISlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+        private void AssignSlots(SlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
         {
             // Should have a single naval request at most
             IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
