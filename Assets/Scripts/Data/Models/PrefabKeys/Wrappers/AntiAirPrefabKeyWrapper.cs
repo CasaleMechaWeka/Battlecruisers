@@ -2,11 +2,13 @@
 
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
-    public class AntiAirPrefabKeyWrapper : BasePrefabKeyWrapper
+	public class AntiAirPrefabKeyWrapper : BasePrefabKeyWrapper
 	{
-		protected override IDynamicBuildOrder GetBuildOrder(IBuildOrders buildOrders)
+		protected override IDynamicBuildOrder GetBuildOrder(IDynamicBuildOrder offensiveBuildOrder,
+																IDynamicBuildOrder antiAirBuildOrder,
+																IDynamicBuildOrder antiNavalBuildOrder)
 		{
-            return buildOrders.AntiAirBuildOrder;
+			return antiAirBuildOrder;
 		}
 	}
 }

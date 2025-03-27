@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
     public class StaticPrefabKeyWrapper : IPrefabKeyWrapper
-	{
+    {
         public bool HasKey => true;
         public BuildingKey Key { get; }
 
@@ -14,9 +14,11 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
             Key = key;
         }
 
-        public void Initialise(IBuildOrders buildOrders) 
-        { 
+        public void Initialise(IDynamicBuildOrder offensiveBuildOrder,
+                                IDynamicBuildOrder antiAirBuildOrder,
+                                IDynamicBuildOrder antiNavalBuildOrder)
+        {
             // Do nothing
         }
-	}
+    }
 }

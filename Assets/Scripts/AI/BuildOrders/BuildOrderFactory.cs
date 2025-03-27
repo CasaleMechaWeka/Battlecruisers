@@ -70,13 +70,11 @@ namespace BattleCruisers.AI.BuildOrders
             IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
             IDynamicBuildOrder antiNavalBuildOrder = hasDefensivePlaceholders ? CreateAntiNavalBuildOrder(levelInfo) : null;
 
-            IBuildOrders buildOrders = new BuildOrders(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
-
             IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy.BuildOrder;
 
             foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
             {
-                keyWrapper.Initialise(buildOrders);
+                keyWrapper.Initialise(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
             }
 
             return new StrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);

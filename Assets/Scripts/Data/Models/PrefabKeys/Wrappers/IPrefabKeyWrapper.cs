@@ -7,6 +7,8 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
         bool HasKey { get; }
         BuildingKey Key { get; }
 
-        void Initialise(IBuildOrders buildOrders);
+        void Initialise(IDynamicBuildOrder offensiveBuildOrder,
+                        IDynamicBuildOrder antiAirBuildOrder,
+                        IDynamicBuildOrder antiNavalBuildOrder);
     }
 }

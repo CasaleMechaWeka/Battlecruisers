@@ -4,9 +4,11 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
     public class OffensivePrefabKeyWrapper : BasePrefabKeyWrapper
     {
-        protected override IDynamicBuildOrder GetBuildOrder(IBuildOrders buildOrders)
+        protected override IDynamicBuildOrder GetBuildOrder(IDynamicBuildOrder offensiveBuildOrder,
+                                                                IDynamicBuildOrder antiAirBuildOrder,
+                                                                IDynamicBuildOrder antiNavalBuildOrder)
         {
-            return buildOrders.OffensiveBuildOrder;
+            return offensiveBuildOrder;
         }
     }
 }
