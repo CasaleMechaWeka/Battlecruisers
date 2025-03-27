@@ -58,7 +58,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsyncLevel(_skirmish.BackgroundLevelNum);
+            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(new LevelBackgroundImageStatsKey(levelNum));
         }
 
         public override IPrefabKey GetAiCruiserKey()

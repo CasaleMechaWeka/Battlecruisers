@@ -24,7 +24,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
-        protected readonly IBackgroundStatsProvider _backgroundStatsProvider;
         protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
         private ITrashTalkProvider _trashTalkProvider;
 
@@ -35,7 +34,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
         protected BattleSceneHelper()
         {
-            _backgroundStatsProvider = new BackgroundStatsProvider();
             _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
@@ -102,7 +100,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsyncLevel(levelNum);
+            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(new LevelBackgroundImageStatsKey(levelNum));
         }
 
         public virtual IPrefabKey GetAiCruiserKey()

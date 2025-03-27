@@ -5,6 +5,7 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -66,7 +67,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await _backgroundStatsProvider.GetStatsAsyncSideQuest(ApplicationModel.SelectedSideQuestID);
+            IPrefabKey key = new SideQuestBackgroundImageStatsKey(ApplicationModel.SelectedSideQuestID);
+            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(key);
         }
 
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
