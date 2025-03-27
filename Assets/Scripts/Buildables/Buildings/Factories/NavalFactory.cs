@@ -19,7 +19,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         public override LayerMask UnitLayerMask => unitsLayerMask;
 
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

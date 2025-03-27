@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         public GrapheneSectorShieldController _shieldController;
 
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

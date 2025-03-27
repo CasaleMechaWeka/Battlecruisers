@@ -8,9 +8,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public class TurretStatsFactory : ITurretStatsFactory
     {
-        private readonly IGlobalBoostProviders _globalBoostProviders;
+        private readonly GlobalBoostProviders _globalBoostProviders;
 
-        public TurretStatsFactory(IGlobalBoostProviders globalBoostProviders)
+        public TurretStatsFactory(GlobalBoostProviders globalBoostProviders)
         {
             Helper.AssertIsNotNull(globalBoostProviders);
 

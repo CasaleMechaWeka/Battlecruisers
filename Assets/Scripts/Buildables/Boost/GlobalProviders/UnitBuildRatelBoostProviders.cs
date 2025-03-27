@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
-    public class UnitBuildRatelBoostProviders : IUnitBuildRatelBoostProviders
+    public class UnitBuildRatelBoostProviders
     {
         public ObservableCollection<IBoostProvider> AircraftProviders { get; }
         public ObservableCollection<IBoostProvider> ShipProviders { get; }

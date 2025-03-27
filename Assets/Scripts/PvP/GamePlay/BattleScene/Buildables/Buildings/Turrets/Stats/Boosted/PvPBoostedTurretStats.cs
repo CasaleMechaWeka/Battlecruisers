@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITurretStats baseStats,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders,
-            IGlobalBoostProviders globalBoostProviders)
+            GlobalBoostProviders globalBoostProviders)
             : base(baseStats, localBoostProviders, globalFireRateBoostProviders)
         {
             Assert.IsNotNull(globalBoostProviders);

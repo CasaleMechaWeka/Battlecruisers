@@ -110,7 +110,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
-            IGlobalBoostProviders globalBoostProviders = null,
+            GlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
             ISlot parentSlot = null,
             IUserChosenTargetManager userChosenTargetManager = null)
@@ -161,7 +161,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IAircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
-            IGlobalBoostProviders globalBoostProviders = null,
+            GlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
             IUserChosenTargetManager userChosenTargetManager = null,
             bool showDroneFeedback = false)
@@ -429,9 +429,9 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     barrel.TurretStats.TurretRotateSpeedInDegrees);
         }
 
-        public static IGlobalBoostProviders CreateGlobalBoostProviders()
+        public static GlobalBoostProviders CreateGlobalBoostProviders()
         {
-            IGlobalBoostProviders globalBoostProviders = Substitute.For<IGlobalBoostProviders>();
+            GlobalBoostProviders globalBoostProviders = Substitute.For<GlobalBoostProviders>();
 
             ObservableCollection<IBoostProvider> aircraftBoostProviders = Substitute.For<ObservableCollection<IBoostProvider>>();
             globalBoostProviders.AircraftBoostProviders.Returns(aircraftBoostProviders);

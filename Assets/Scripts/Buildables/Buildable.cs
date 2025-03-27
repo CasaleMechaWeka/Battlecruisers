@@ -319,7 +319,7 @@ namespace BattleCruisers.Buildables
         public void Activate(TActivationArgs activationArgs, Faction faction)
         {
         }
-        private IBoostableGroup CreateHealthBoostableGroup(IGlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
+        private IBoostableGroup CreateHealthBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
         {
             IBoostableGroup healthBoostableGroup = new BoostableGroup();
             healthBoostableGroup.AddBoostable(healthBoostable);
@@ -335,7 +335,7 @@ namespace BattleCruisers.Buildables
             return healthBoostableGroup;
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = new BoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
@@ -357,14 +357,14 @@ namespace BattleCruisers.Buildables
         /// + Shields   => Boost from Raptor
         /// </summary>
         protected virtual void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);
         }
 
         protected virtual void AddHealthBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);

@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         public ProjectileType projectileType = ProjectileType.Rocket;
 
         protected override void AddBuildRateBoostProviders(
-        IGlobalBoostProviders globalBoostProviders,
+        GlobalBoostProviders globalBoostProviders,
         IList<ObservableCollection<IBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, rocketBuildingsBuildRateBoostProvidersList);

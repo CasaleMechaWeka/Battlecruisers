@@ -7,7 +7,7 @@ namespace BattleCruisers.Tutorial.Steps.BoostSteps
     {
         public AddArtilleryFireRateBoostStep(
             ITutorialStepArgs args,
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
             : base(args, globalBoostProviders, boostProvider)
         {

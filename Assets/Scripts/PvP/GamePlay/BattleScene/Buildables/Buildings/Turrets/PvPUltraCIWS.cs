@@ -8,7 +8,7 @@ public class PvPUltraCIWS : PvPAntiAirTurret
 {
     // Start is called before the first frame update
     protected override void AddBuildRateBoostProviders(
-        IGlobalBoostProviders globalBoostProviders,
+        GlobalBoostProviders globalBoostProviders,
         IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
     {
         base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

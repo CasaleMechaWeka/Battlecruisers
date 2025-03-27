@@ -7,12 +7,12 @@ namespace BattleCruisers.Tutorial.Steps.BoostSteps
 {
     public abstract class BoostStep : TutorialStep
     {
-        protected readonly IGlobalBoostProviders _globalBoostProviders;
+        protected readonly GlobalBoostProviders _globalBoostProviders;
         protected readonly IBoostProvider _boostProvider;
 
         protected BoostStep(
             ITutorialStepArgs args,
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
             : base(args)
         {

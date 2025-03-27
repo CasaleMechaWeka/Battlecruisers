@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
-    public class BuildingHealthlBoostProviders : IBuildingHealthlBoostProviders
+    public class BuildingHealthlBoostProviders
     {
         public ObservableCollection<IBoostProvider> AllBuildingsProviders { get; }
 

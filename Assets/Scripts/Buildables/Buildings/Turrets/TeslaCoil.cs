@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected override ISoundKey FiringSound => SoundKeys.Firing.Lightning;
 
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

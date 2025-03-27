@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
-    public class BuildingBuildRatelBoostProviders : IBuildingBuildRatelBoostProviders
+    public class BuildingBuildRatelBoostProviders
     {
         public ObservableCollection<IBoostProvider> DefensivesProviders { get; }
         public ObservableCollection<IBoostProvider> OffensivesProviders { get; }

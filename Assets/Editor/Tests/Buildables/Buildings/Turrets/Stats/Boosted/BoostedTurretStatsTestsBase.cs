@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
     public abstract class BoostedTurretStatsTestsBase<TStats> where TStats : class, IBasicTurretStats
     {
         protected TStats _baseStats;
-        protected IGlobalBoostProviders _globalBoostProviders;
+        protected GlobalBoostProviders _globalBoostProviders;
         protected ObservableCollection<IBoostProvider> _localBoostProviders;
         protected IBoostable _boostable;
         protected IBoostableGroup _boostableGroup;

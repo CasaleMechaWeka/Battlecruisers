@@ -1,10 +1,8 @@
-﻿
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
-    public class GlobalBoostProviders : IGlobalBoostProviders
+    public class GlobalBoostProviders
     {
         // The BoostableGroup does not allow the same IBoostProviders collection
         // to be added twice, even if it is just the same DummyBoostProviders :/
@@ -21,10 +19,10 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 
         public ObservableCollection<IBoostProvider> RocketBuildingsFireRateBoostProviders { get; }
 
-        public IBuildingBuildRatelBoostProviders BuildingBuildRate { get; }
-        public IUnitBuildRatelBoostProviders UnitBuildRate { get; }
+        public BuildingBuildRatelBoostProviders BuildingBuildRate { get; }
+        public UnitBuildRatelBoostProviders UnitBuildRate { get; }
 
-        public IBuildingHealthlBoostProviders BuildingHealth { get; }
+        public BuildingHealthlBoostProviders BuildingHealth { get; }
 
         public GlobalBoostProviders()
         {

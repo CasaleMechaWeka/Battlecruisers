@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Factories
         public IAircraftProvider AircraftProvider { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IDroneFeedbackFactory DroneFeedbackFactory { get; }
-        public IGlobalBoostProviders GlobalBoostProviders { get; }
+        public GlobalBoostProviders GlobalBoostProviders { get; }
         public ITurretStatsFactory TurretStatsFactory { get; }
         public CruiserTargetFactoriesProvider Targets { get; }
 

@@ -262,14 +262,14 @@ namespace BattleCruisers.Buildables.Buildings
             return isImmune;
         }
 
-        protected override void AddHealthBoostProviders(IGlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
+        protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {
             base.AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
             healthBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders);
         }
 
         protected override void AddBuildRateBoostProviders(
-    IGlobalBoostProviders globalBoostProviders,
+    GlobalBoostProviders globalBoostProviders,
     IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

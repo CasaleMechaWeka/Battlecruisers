@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
     public abstract class BoostStepTestsBase : TutorialStepTestsBase
     {
-        protected IGlobalBoostProviders _globalBoostProviders;
+        protected GlobalBoostProviders _globalBoostProviders;
         protected IBoostProvider _boostProvider;
 
         [SetUp]

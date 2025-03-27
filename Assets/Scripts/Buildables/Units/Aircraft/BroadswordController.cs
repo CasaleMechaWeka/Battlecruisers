@@ -98,7 +98,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         }
 
         protected override void AddBuildRateBoostProviders(
-    IGlobalBoostProviders globalBoostProviders,
+    GlobalBoostProviders globalBoostProviders,
     IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

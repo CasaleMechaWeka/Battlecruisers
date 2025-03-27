@@ -412,7 +412,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(IGlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = new BoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
@@ -434,7 +434,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// + Shields   => Boost from Raptor
         /// </summary>
         protected virtual void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders,
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);

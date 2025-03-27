@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
     public abstract class TacticalBuilding : Building
     {
         protected override void AddBuildRateBoostProviders(
-            IGlobalBoostProviders globalBoostProviders, 
+            GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);

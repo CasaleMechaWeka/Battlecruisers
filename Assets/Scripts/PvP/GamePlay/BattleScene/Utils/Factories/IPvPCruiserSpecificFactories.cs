@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         IAircraftProvider AircraftProvider { get; }
         IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         IDroneFeedbackFactory DroneFeedbackFactory { get; }
-        IGlobalBoostProviders GlobalBoostProviders { get; }
+        GlobalBoostProviders GlobalBoostProviders { get; }
         ITurretStatsFactory TurretStatsFactory { get; }
         IPvPCruiserTargetFactoriesProvider Targets { get; }
     }

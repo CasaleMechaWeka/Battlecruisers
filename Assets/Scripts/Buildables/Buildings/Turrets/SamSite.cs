@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SamSite;
         protected override ISoundKey FiringSound => SoundKeys.Firing.Missile;
         protected override void AddBuildRateBoostProviders(
-        IGlobalBoostProviders globalBoostProviders,
+        GlobalBoostProviders globalBoostProviders,
         IList<ObservableCollection<IBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, rocketBuildingsBuildRateBoostProvidersList);
