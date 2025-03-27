@@ -19,8 +19,8 @@ namespace BattleCruisers.Tests.Data.Static.Strategies
             {
                 offensiveRequest
             };
-            IStrategy originalStrategy = new Strategy(baseStrategy, offensiveRequests);
-            IStrategy copiedStrategy = new Strategy(originalStrategy);
+            Strategy originalStrategy = new Strategy(baseStrategy, offensiveRequests);
+            Strategy copiedStrategy = new Strategy(originalStrategy);
 
             // Strategies are originally equal
             Assert.AreEqual(originalStrategy, copiedStrategy);

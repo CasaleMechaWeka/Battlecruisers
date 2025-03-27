@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static.Strategies
 {
-    public class Strategy : IStrategy
+    public class Strategy
     {
         public IBaseStrategy BaseStrategy { get; }
         public IEnumerable<OffensiveRequest> Offensives { get; }
@@ -20,7 +20,7 @@ namespace BattleCruisers.Data.Static.Strategies
             Offensives = offensives;
         }
 
-        public Strategy(IStrategy strategyToCopy)
+        public Strategy(Strategy strategyToCopy)
         {
             BaseStrategy = strategyToCopy.BaseStrategy;
 

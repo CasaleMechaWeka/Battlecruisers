@@ -7,7 +7,7 @@
 
     public interface IStrategyFactory
     {
-        IStrategy GetAdaptiveStrategy();
-        IStrategy GetBasicStrategy();
+        Strategy GetAdaptiveStrategy();
+        Strategy GetBasicStrategy();
     }
 }

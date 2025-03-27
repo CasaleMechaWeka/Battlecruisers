@@ -39,7 +39,7 @@ namespace BattleCruisers.AI.BuildOrders
         /// </summary>
         public IDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
         {
-            IStrategy strategy = _strategyFactory.GetBasicStrategy();
+            Strategy strategy = _strategyFactory.GetBasicStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
         }
 
@@ -49,11 +49,11 @@ namespace BattleCruisers.AI.BuildOrders
         /// </summary>
         public IDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
         {
-            IStrategy strategy = _strategyFactory.GetAdaptiveStrategy();
+            Strategy strategy = _strategyFactory.GetAdaptiveStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
         }
 
-        private IDynamicBuildOrder GetBuildOrder(IStrategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
+        private IDynamicBuildOrder GetBuildOrder(Strategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
         {
             // Create offensive build order
             //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);

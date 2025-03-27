@@ -19,7 +19,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             _isSideQuest = isSideQuest;
         }
 
-        public IStrategy GetAdaptiveStrategy()
+        public Strategy GetAdaptiveStrategy()
         {
             if (_isSideQuest)
                 return _sideQuestStrategies.GetAdaptiveStrategy(_levelNum);
@@ -27,7 +27,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 return _levelStrategies.GetAdaptiveStrategy(_levelNum);
         }
 
-        public IStrategy GetBasicStrategy()
+        public Strategy GetBasicStrategy()
         {
             if (_isSideQuest)
                 return _sideQuestStrategies.GetBasicStrategy(_levelNum);

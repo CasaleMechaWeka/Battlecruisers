@@ -2,7 +2,7 @@
 {
     public interface ILevelStrategies
     {
-        IStrategy GetAdaptiveStrategy(int levelNum);
-        IStrategy GetBasicStrategy(int levelNum);
+        Strategy GetAdaptiveStrategy(int levelNum);
+        Strategy GetBasicStrategy(int levelNum);
     }
 }

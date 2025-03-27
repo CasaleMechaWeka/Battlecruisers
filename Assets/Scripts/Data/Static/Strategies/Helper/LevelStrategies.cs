@@ -6,8 +6,8 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 {
     public class LevelStrategies : ILevelStrategies
     {
-        private IList<IStrategy> _adaptiveStrategies;
-        private IList<IStrategy> _basicStrategies;
+        private IList<Strategy> _adaptiveStrategies;
+        private IList<Strategy> _basicStrategies;
 
         public LevelStrategies()
         {
@@ -420,11 +420,11 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-        private IList<IStrategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
+        private IList<Strategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 
-            IList<IStrategy> strategies = new List<IStrategy>();
+            IList<Strategy> strategies = new List<Strategy>();
 
             for (int i = 0; i < baseStrategies.Count; ++i)
                 strategies.Add(new Strategy(baseStrategies[i], offensiveRequests[i]));
@@ -432,17 +432,17 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             return strategies;
         }
 
-        public IStrategy GetAdaptiveStrategy(int levelNum)
+        public Strategy GetAdaptiveStrategy(int levelNum)
         {
             return GetStrategy(_adaptiveStrategies, levelNum);
         }
 
-        public IStrategy GetBasicStrategy(int levelNum)
+        public Strategy GetBasicStrategy(int levelNum)
         {
             return GetStrategy(_basicStrategies, levelNum);
         }
 
-        private IStrategy GetStrategy(IList<IStrategy> strategies, int levelNum)
+        private Strategy GetStrategy(IList<Strategy> strategies, int levelNum)
         {
             int levelIndex = levelNum - 1;
             Assert.IsTrue(levelIndex < strategies.Count);

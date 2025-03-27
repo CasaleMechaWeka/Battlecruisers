@@ -16,7 +16,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             _canUseUltras = canUseUltras;
         }
 
-        public IStrategy GetAdaptiveStrategy()
+        public Strategy GetAdaptiveStrategy()
         {
             return
                 new Strategy(
@@ -42,7 +42,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             }
         }
 
-        public IStrategy GetBasicStrategy()
+        public Strategy GetBasicStrategy()
         {
             return
                 new Strategy(
