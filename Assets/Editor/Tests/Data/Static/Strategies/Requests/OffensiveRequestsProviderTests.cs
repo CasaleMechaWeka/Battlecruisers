@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.Data.Static.Strategies.Requests
             Assert.IsTrue(HasUltrasRequest(OffensiveRequestsProvider.Boom.All));
         }
 
-        private bool HasUltrasRequest(IList<IOffensiveRequest[]> requestsList)
+        private bool HasUltrasRequest(IList<OffensiveRequest[]> requestsList)
         {
             return
                 requestsList

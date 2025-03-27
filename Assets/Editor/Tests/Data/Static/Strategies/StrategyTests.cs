@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Data.Static.Strategies
             {
                 NumOfSlotsToUse = 1
             };
-            IOffensiveRequest[] offensiveRequests = new OffensiveRequest[]
+            OffensiveRequest[] offensiveRequests = new OffensiveRequest[]
             {
                 offensiveRequest
             };

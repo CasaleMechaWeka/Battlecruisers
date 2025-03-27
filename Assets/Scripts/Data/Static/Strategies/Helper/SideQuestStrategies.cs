@@ -13,7 +13,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         {
             IList<IBaseStrategy> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
             IList<IBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
-            IList<IOffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
+            IList<OffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
             _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
@@ -105,32 +105,32 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-        private IList<IOffensiveRequest[]> CreateOffensiveRequests()
+        private IList<OffensiveRequest[]> CreateOffensiveRequests()
         {
-            return new List<IOffensiveRequest[]>()
+            return new List<OffensiveRequest[]>()
             {
                 // Set 1: SideQuests 0 - 8
 
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
@@ -138,26 +138,26 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
 
-                 new IOffensiveRequest[]
+                 new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 },
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
@@ -165,7 +165,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
 
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
@@ -175,7 +175,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
                 // Set 2: SideQuests 9 - 23
                 //SQ9
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -185,7 +185,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
                 //SQ10
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -193,14 +193,14 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 },
                 //SQ11
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
                 //SQ12
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -208,7 +208,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
                 },
                 //SQ13
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -217,7 +217,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
                 },
                 //SQ14
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
@@ -225,7 +225,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                 },
                 //SQ15
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -233,7 +233,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                 },
                 //SQ16
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
@@ -241,7 +241,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                 },
                 //SQ17
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -250,7 +250,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                 },
                 //SQ18
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -260,7 +260,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                 },
                 //SQ19
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
@@ -268,7 +268,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                 },
                 //SQ20
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
@@ -276,7 +276,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                 },
                 //SQ21
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
@@ -284,7 +284,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                 },
                 //SQ22
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
@@ -293,7 +293,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                 },
                 //SQ23 Fortress Prime
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -310,7 +310,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
                 // Set 3 for 6.5 : SideQuests 24 - 30
                 //SQ24
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -319,7 +319,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
                 //SQ25
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -328,7 +328,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 },
                 //SQ26
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
@@ -336,7 +336,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
                 //SQ27
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -345,7 +345,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
                 },
                 //SQ28
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
@@ -354,7 +354,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High)
                 },
                 //SQ29
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
@@ -363,7 +363,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
                 //SQ30
-                new IOffensiveRequest[]
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
@@ -374,7 +374,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-        private IList<IStrategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<IOffensiveRequest[]> offensiveRequests)
+        private IList<IStrategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 

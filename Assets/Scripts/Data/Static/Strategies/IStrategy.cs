@@ -6,6 +6,6 @@ namespace BattleCruisers.Data.Static.Strategies
     public interface IStrategy
     {
         IBaseStrategy BaseStrategy { get; }
-        IEnumerable<IOffensiveRequest> Offensives { get; }
+        IEnumerable<OffensiveRequest> Offensives { get; }
     }
 }

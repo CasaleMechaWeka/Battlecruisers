@@ -11,10 +11,10 @@ namespace BattleCruisers.AI.BuildOrders
 		/// 2. Low focus request get one slot at most
 		/// 3. Remaining slots are split evenly between high focus requests
 		/// </summary>
-		public void AssignSlots(IEnumerable<IOffensiveRequest> slotRequests, int numOfSlotsAvailable)
+		public void AssignSlots(IEnumerable<OffensiveRequest> slotRequests, int numOfSlotsAvailable)
 		{
-			IEnumerable<IOffensiveRequest> highFocusRequests = slotRequests.Where(request => request.Focus == OffensiveFocus.High);
-			IEnumerable<IOffensiveRequest> lowFocusRequest = slotRequests.Where(request => request.Focus == OffensiveFocus.Low);
+			IEnumerable<OffensiveRequest> highFocusRequests = slotRequests.Where(request => request.Focus == OffensiveFocus.High);
+			IEnumerable<OffensiveRequest> lowFocusRequest = slotRequests.Where(request => request.Focus == OffensiveFocus.Low);
 
 			int numOfSlotsUsed = 0;
 
@@ -34,9 +34,9 @@ namespace BattleCruisers.AI.BuildOrders
 			}
 		}
 
-		private int AssignSlotsToRequests(IEnumerable<IOffensiveRequest> requests, int numOfPlatformSlots, int numOfSlotsUsed)
+		private int AssignSlotsToRequests(IEnumerable<OffensiveRequest> requests, int numOfPlatformSlots, int numOfSlotsUsed)
 		{
-			foreach (IOffensiveRequest request in requests)
+			foreach (OffensiveRequest request in requests)
 			{
 				if (numOfSlotsUsed < numOfPlatformSlots)
 				{

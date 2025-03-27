@@ -2,11 +2,20 @@
 
 namespace BattleCruisers.Data.Static.Strategies.Requests
 {
-    public class OffensiveRequest : IOffensiveRequest
+    public enum OffensiveType
     {
-		public OffensiveType Type { get; }
-		public OffensiveFocus Focus { get; }
-		public int NumOfSlotsToUse { get; set; }
+        Air, Naval, Buildings, Ultras
+    }
+    public enum OffensiveFocus
+    {
+        Low, High
+    }
+
+    public class OffensiveRequest
+    {
+        public OffensiveType Type { get; }
+        public OffensiveFocus Focus { get; }
+        public int NumOfSlotsToUse { get; set; }
 
         public OffensiveRequest(OffensiveType type, OffensiveFocus focus)
         {
@@ -15,7 +24,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
             NumOfSlotsToUse = 0;
         }
 
-        public OffensiveRequest(IOffensiveRequest requestToCopy)
+        public OffensiveRequest(OffensiveRequest requestToCopy)
         {
             Type = requestToCopy.Type;
             Focus = requestToCopy.Focus;

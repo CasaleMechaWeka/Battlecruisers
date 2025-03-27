@@ -107,13 +107,13 @@ namespace BattleCruisers.AI.BuildOrders
         /// IEnumerable I would get a fresh copy of the object, so any changes I made to
         /// those objects were lost!!!
         /// </summary>
-        private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<IOffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
+        private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
         {
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
             // Create individual build orders
             IList<IDynamicBuildOrder> buildOrders = new List<IDynamicBuildOrder>();
-            foreach (IOffensiveRequest request in requests)
+            foreach (OffensiveRequest request in requests)
             {
                 UnityEngine.Debug.Log(request);
                 buildOrders.Add(CreateBuildOrder(request, levelInfo));
@@ -123,17 +123,17 @@ namespace BattleCruisers.AI.BuildOrders
             return new CombinedBuildOrders(buildOrders);
         }
 
-        private void AssignSlots(SlotAssigner slotAssigner, IList<IOffensiveRequest> requests, int numOfPlatformSlots)
+        private void AssignSlots(SlotAssigner slotAssigner, IList<OffensiveRequest> requests, int numOfPlatformSlots)
         {
             // Should have a single naval request at most
-            IOffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
+            OffensiveRequest navalRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Naval);
             if (navalRequest != null)
             {
                 navalRequest.NumOfSlotsToUse = NUM_OF_NAVAL_FACTORY_SLOTS;
             }
 
             // Should have a single air request at most
-            IOffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
+            OffensiveRequest airRequest = requests.FirstOrDefault(request => request.Type == OffensiveType.Air);
             if (airRequest != null)
             {
                 airRequest.NumOfSlotsToUse = NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE;
@@ -141,12 +141,12 @@ namespace BattleCruisers.AI.BuildOrders
 
             // All non-naval requests (offensives or non-banned ultras) require platform slots, 
             // so need to split the available platform slots between these requests.
-            IEnumerable<IOffensiveRequest> platformRequests = requests.Where
+            IEnumerable<OffensiveRequest> platformRequests = requests.Where
                 (request => request.Type != OffensiveType.Naval && request.Type != OffensiveType.Air);
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
-        private IDynamicBuildOrder CreateBuildOrder(IOffensiveRequest request, ILevelInfo levelInfo)
+        private IDynamicBuildOrder CreateBuildOrder(OffensiveRequest request, ILevelInfo levelInfo)
         {
             Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 

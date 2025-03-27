@@ -9,9 +9,9 @@ namespace BattleCruisers.Data.Static.Strategies
     public class Strategy : IStrategy
     {
         public IBaseStrategy BaseStrategy { get; }
-        public IEnumerable<IOffensiveRequest> Offensives { get; }
+        public IEnumerable<OffensiveRequest> Offensives { get; }
 
-        public Strategy(IBaseStrategy baseStrategy, IOffensiveRequest[] offensives)
+        public Strategy(IBaseStrategy baseStrategy, OffensiveRequest[] offensives)
         {
             Assert.IsNotNull(baseStrategy);
             Assert.IsTrue(offensives.Length != 0);
@@ -23,13 +23,13 @@ namespace BattleCruisers.Data.Static.Strategies
         public Strategy(IStrategy strategyToCopy)
         {
             BaseStrategy = strategyToCopy.BaseStrategy;
-            
+
             // Offensive requests can be modified.  Hence, make a copy so
             // that modifying the offensive requests of one strategy does
             // not affect other strategies.
             Offensives
                 = strategyToCopy.Offensives
-                    .Select(originalOffensiveRequest => (IOffensiveRequest)new OffensiveRequest(originalOffensiveRequest))
+                    .Select(originalOffensiveRequest => (OffensiveRequest)new OffensiveRequest(originalOffensiveRequest))
                     .ToList();
         }
 

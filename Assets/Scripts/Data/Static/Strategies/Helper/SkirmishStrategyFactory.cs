@@ -75,9 +75,9 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             }
         }
 
-        private IOffensiveRequest[] GetOffensiveRequests(StrategyType strategyType)
+        private OffensiveRequest[] GetOffensiveRequests(StrategyType strategyType)
         {
-            IList<IOffensiveRequest[]> allOptions;
+            IList<OffensiveRequest[]> allOptions;
 
             if (_canUseUltras)
             {
@@ -91,7 +91,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             return RandomGenerator.RandomItem(allOptions);
         }
 
-        private IList<IOffensiveRequest[]> GetOffensiveRequestsList(StrategyType strategyType)
+        private IList<OffensiveRequest[]> GetOffensiveRequestsList(StrategyType strategyType)
         {
             return strategyType switch
             {
@@ -103,7 +103,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
         }
 
-        private IList<IOffensiveRequest[]> GetOffensiveRequestsListNoUltras(StrategyType strategyType)
+        private IList<OffensiveRequest[]> GetOffensiveRequestsListNoUltras(StrategyType strategyType)
         {
             return strategyType switch
             {

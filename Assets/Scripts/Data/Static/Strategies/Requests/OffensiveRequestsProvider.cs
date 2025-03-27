@@ -11,45 +11,45 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
         /// </summary>
         public static class Rush
         {
-            public static IOffensiveRequest[] NavalAirOffensiveUltra = new IOffensiveRequest[]
+            public static OffensiveRequest[] NavalAirOffensiveUltra = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] AirNavalOffensiveUltra = new IOffensiveRequest[]
+            public static OffensiveRequest[] AirNavalOffensiveUltra = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] NavalOffensiveAir = new IOffensiveRequest[]
+            public static OffensiveRequest[] NavalOffensiveAir = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] AirOffensiveNaval = new IOffensiveRequest[]
+            public static OffensiveRequest[] AirOffensiveNaval = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] NavalAirOffensive = new IOffensiveRequest[]
+            public static OffensiveRequest[] NavalAirOffensive = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] AirNavalOffensive = new IOffensiveRequest[]
+            public static OffensiveRequest[] AirNavalOffensive = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IList<IOffensiveRequest[]> All = new List<IOffensiveRequest[]>()
+            public static IList<OffensiveRequest[]> All = new List<OffensiveRequest[]>()
             {
                 NavalAirOffensiveUltra,
                 AirNavalOffensiveUltra,
@@ -58,8 +58,8 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 AirNavalOffensive,
                 NavalAirOffensive
             };
-            public static IList<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
-            {   
+            public static IList<OffensiveRequest[]> NoUltras = new List<OffensiveRequest[]>()
+            {
                 NavalOffensiveAir,
                 AirOffensiveNaval,
                 AirNavalOffensive,
@@ -73,54 +73,54 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
         /// </summary>
         public static class Balanced
         {
-            public static IOffensiveRequest[] NavalOffensive = new IOffensiveRequest[]
+            public static OffensiveRequest[] NavalOffensive = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] OffensiveUltraAir = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveUltraAir = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                 };
-            public static IOffensiveRequest[] OffensiveAirNaval = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveAirNaval = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] OffensiveNavalAir = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveNavalAir = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] OffensiveNaval = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveNaval = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] OffensiveAirUltra = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveAirUltra = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] OffensiveNavalOffensive = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveNavalOffensive = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] OffensiveAirOffensive = new IOffensiveRequest[]
+            public static OffensiveRequest[] OffensiveAirOffensive = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
 
-            public static List<IOffensiveRequest[]> All = new List<IOffensiveRequest[]>()
+            public static List<OffensiveRequest[]> All = new List<OffensiveRequest[]>()
             {
                 NavalOffensive,
                 OffensiveUltraAir,
@@ -132,7 +132,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                 OffensiveAirOffensive,
             };
 
-            public static List<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
+            public static List<OffensiveRequest[]> NoUltras = new List<OffensiveRequest[]>()
             {
                 NavalOffensive,
                 OffensiveAirNaval,
@@ -149,45 +149,45 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
         /// </summary>
         public static class Boom
         {
-            public static IOffensiveRequest[] UltrasOffOff = new IOffensiveRequest[]
+            public static OffensiveRequest[] UltrasOffOff = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
 
                 };
-            public static IOffensiveRequest[] UltraNavalOffensive = new IOffensiveRequest[]
+            public static OffensiveRequest[] UltraNavalOffensive = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] UltraOffensiveUltraNaval = new IOffensiveRequest[]
+            public static OffensiveRequest[] UltraOffensiveUltraNaval = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] UltraAirNaval = new IOffensiveRequest[]
+            public static OffensiveRequest[] UltraAirNaval = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
                 };
-            public static IOffensiveRequest[] UltraNavalUltra = new IOffensiveRequest[]
+            public static OffensiveRequest[] UltraNavalUltra = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 };
-            public static IOffensiveRequest[] NavalOffensiveAir = new IOffensiveRequest[]
+            public static OffensiveRequest[] NavalOffensiveAir = new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low)
                 };
-            public static List<IOffensiveRequest[]> All = new List<IOffensiveRequest[]>()
+            public static List<OffensiveRequest[]> All = new List<OffensiveRequest[]>()
             {
                  UltrasOffOff,
                  UltraNavalOffensive,
@@ -196,7 +196,7 @@ namespace BattleCruisers.Data.Static.Strategies.Requests
                  UltraNavalUltra,
                  NavalOffensiveAir
              };
-            public static List<IOffensiveRequest[]> NoUltras = new List<IOffensiveRequest[]>()
+            public static List<OffensiveRequest[]> NoUltras = new List<OffensiveRequest[]>()
             {
                  NavalOffensiveAir
             };
