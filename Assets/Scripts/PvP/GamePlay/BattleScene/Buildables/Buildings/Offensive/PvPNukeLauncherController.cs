@@ -121,7 +121,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private async void CreateNuke()
+        private void CreateNuke()
         {
             PvPProjectileKey prefabKey = new PvPProjectileKey("PvPNuke");
             /*            var isLoaded = await SynchedServerData.Instance.TrySpawnCruiserDynamicSynchronously(prefabKey, nukeMissilePrefab);

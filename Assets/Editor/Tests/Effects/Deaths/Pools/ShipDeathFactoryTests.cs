@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;

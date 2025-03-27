@@ -15,7 +15,6 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly ICruiserController _aiCruiser;
         private readonly PrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
-        private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         // For spy satellite launcher and shields.  All cruisers have at least 6
@@ -29,15 +28,13 @@ namespace BattleCruisers.AI.TaskProducers
             ICruiserController aiCruiser,
             PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
-            ISlotNumCalculatorFactory slotNumCalculatorFactory,
             IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, slotNumCalculatorFactory, threatMonitorFactory);
+            Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, threatMonitorFactory);
 
             _aiCruiser = aiCruiser;
             _prefabFactory = prefabFactory;
             _taskFactory = taskFactory;
-            _slotNumCalculatorFactory = slotNumCalculatorFactory;
             _threatMonitorFactory = threatMonitorFactory;
         }
 
@@ -56,7 +53,7 @@ namespace BattleCruisers.AI.TaskProducers
             IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
 
             int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
-            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiAirSlotNumCalculator(maxNumOfDeckSlots);
+            ISlotNumCalculator slotNumCalculator = new AntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
         }
@@ -66,7 +63,7 @@ namespace BattleCruisers.AI.TaskProducers
             IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
 
             int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
-            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateAntiNavalSlotNumCalculator(maxNumOfDeckSlots);
+            ISlotNumCalculator slotNumCalculator = new AntiNavalSlotNumCalculator(maxNumOfDeckSlots);
 
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
         }
@@ -74,7 +71,7 @@ namespace BattleCruisers.AI.TaskProducers
         public ITaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder)
         {
             IThreatMonitor rocketLauncherThreatMonitor = _threatMonitorFactory.CreateRocketThreatMonitor();
-            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
+            ISlotNumCalculator slotNumCalculator = new StaticSlotNumCalculator(numOfSlots: 1);
 
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
         }
@@ -82,7 +79,7 @@ namespace BattleCruisers.AI.TaskProducers
         public ITaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IDynamicBuildOrder antiStealthBuildOrder)
         {
             IThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor();
-            ISlotNumCalculator slotNumCalculator = _slotNumCalculatorFactory.CreateStaticSlotNumCalculator(numOfSlots: 1);
+            ISlotNumCalculator slotNumCalculator = new StaticSlotNumCalculator(numOfSlots: 1);
 
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiStealthBuildOrder, stealthThreatMonitor, slotNumCalculator);
         }

@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.FactoryManagers;
 using BattleCruisers.AI.TaskProducers;
-using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
@@ -19,7 +18,6 @@ namespace BattleCruisers.AI
     {
         private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
-        private readonly ISlotNumCalculatorFactory _slotNumCalculatorFactory;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
@@ -35,7 +33,6 @@ namespace BattleCruisers.AI
             _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
-            _slotNumCalculatorFactory = new SlotNumCalculatorFactory();
             _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, TimeBC.Instance, deferrer);
             _factoryManagerFactory = new FactoryManagerFactory(DataProvider.GameModel, _prefabFactory, _threatMonitorFactory);
 
@@ -56,7 +53,6 @@ namespace BattleCruisers.AI
                     levelInfo.AICruiser,
                     _prefabFactory,
                     taskFactory,
-                    _slotNumCalculatorFactory,
                     _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
 
