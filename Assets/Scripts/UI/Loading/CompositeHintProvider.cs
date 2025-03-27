@@ -6,13 +6,13 @@ namespace BattleCruisers.UI.Loading
     public class CompositeHintProvider : IHintProvider
     {
         private readonly IHintProvider _basicHints, _advancedHints;
-        private readonly IGameModel _gameModel;
+        private readonly GameModel _gameModel;
 
         // The level local boosters are unlocked (one of the advanced hints refers
         // to local boosters)
         public const int ADVANCED_HINT_LEVEL_REQUIREMENT = 9;
 
-        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, IGameModel gameModel)
+        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, GameModel gameModel)
         {
             Helper.AssertIsNotNull(basicHints, advancedHints, gameModel);
 

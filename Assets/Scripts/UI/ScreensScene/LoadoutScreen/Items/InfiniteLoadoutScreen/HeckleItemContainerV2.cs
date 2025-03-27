@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IGameModel gameModel)
+            GameModel gameModel)
         {
             HeckleButtonV2 heckleButton = GetComponentInChildren<HeckleButtonV2>(includeInactive: true);
             Assert.IsNotNull(heckleButton);
@@ -33,17 +33,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
 
         // Heckle button is not working as like other category buttons
-        protected override bool IsUnlocked(IGameModel gameModel)
+        protected override bool IsUnlocked(GameModel gameModel)
         {
             return true;
         }
 
-        protected override bool IsNew(IGameModel gameModel)
+        protected override bool IsNew(GameModel gameModel)
         {
             return false;
         }
 
-        protected override void MakeOld(IGameModel gameModel)
+        protected override void MakeOld(GameModel gameModel)
         {
 
         }

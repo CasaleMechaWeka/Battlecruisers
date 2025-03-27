@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         public IBuildableWrapper<IBuilding> _buildingPrefab;
         private IComparingItemFamilyTracker _itemFamilyTracker;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         private BuildingKey _buildingKey;
 
         public SelectBuildingButton selectBuildingButton;
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBuildableWrapper<IBuilding> buildingPrefab,
-            IGameModel gameModel,
+            GameModel gameModel,
             BuildingKey buildingKey)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);

@@ -10,9 +10,9 @@ namespace BattleCruisers.Data
 {
     public class LockedInformation : ILockedInformation
     {
-        private readonly IGameModel _gameModel;
+        private readonly GameModel _gameModel;
 
-        public LockedInformation(IGameModel gameModel)
+        public LockedInformation(GameModel gameModel)
         {
             Helper.AssertIsNotNull(gameModel);
 

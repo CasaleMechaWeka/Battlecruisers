@@ -12,12 +12,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         protected override ItemFamily ItemFamily => ItemFamily.Units;
 
-        protected override bool HasNewItems(IGameModel gameModel)
+        protected override bool HasNewItems(GameModel gameModel)
         {
             return gameModel.NewUnits.Items.Any(unitKey => UnitCategoryToItemType(unitKey.UnitCategory) == itemType);
         }
 
-        protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
+        protected override void SetupNewMarkVisibilityCallback(GameModel gameModel)
         {
             gameModel.NewUnits.Items.Parse<INotifyCollectionChanged>().CollectionChanged += UnitItemsCategoryButton_CollectionChanged;
         }
@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             }
         }
 
-        protected override void CleanUp(IGameModel gameModel)
+        protected override void CleanUp(GameModel gameModel)
         {
             gameModel.NewUnits.Items.Parse<INotifyCollectionChanged>().CollectionChanged -= UnitItemsCategoryButton_CollectionChanged;
         }

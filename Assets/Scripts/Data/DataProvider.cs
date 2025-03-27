@@ -30,7 +30,7 @@ namespace BattleCruisers.Data
 
         private static GameModel _gameModel;
 
-        public static IGameModel GameModel => _gameModel;
+        public static GameModel GameModel => _gameModel;
         public static List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public static VirtualShopConfig virtualShopConfig { get; set; }
         public static EcoConfig ecoConfig { get; set; }

@@ -9,12 +9,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         protected override ItemFamily ItemFamily => ItemFamily.Hulls;
 
-        protected override bool HasNewItems(IGameModel gameModel)
+        protected override bool HasNewItems(GameModel gameModel)
         {
             return gameModel.NewHulls.Items.Count != 0;
         }
 
-        protected override void SetupNewMarkVisibilityCallback(IGameModel gameModel)
+        protected override void SetupNewMarkVisibilityCallback(GameModel gameModel)
         {
             gameModel.NewHulls.Items.Parse<INotifyCollectionChanged>().CollectionChanged += HullItemsCategoryButton_CollectionChanged;
         }
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             UpdateNewItemMarkVisibility();
         }
 
-        protected override void CleanUp(IGameModel gameModel)
+        protected override void CleanUp(GameModel gameModel)
         {
             gameModel.NewHulls.Items.Parse<INotifyCollectionChanged>().CollectionChanged -= HullItemsCategoryButton_CollectionChanged;
         }

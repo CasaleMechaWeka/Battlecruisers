@@ -11,7 +11,7 @@ namespace BattleCruisers.AI
 {
     public class LevelInfo
     {
-        private readonly IGameModel _gameModel;
+        private readonly GameModel _gameModel;
         private readonly PrefabFactory _prefabFactory;
 
         public ICruiserController AICruiser { get; }
@@ -20,7 +20,7 @@ namespace BattleCruisers.AI
         public LevelInfo(
             ICruiserController aiCruiser,
             ICruiserController playerCruiser,
-            IGameModel gameModel,
+            GameModel gameModel,
             PrefabFactory prefabFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, playerCruiser, gameModel, prefabFactory);

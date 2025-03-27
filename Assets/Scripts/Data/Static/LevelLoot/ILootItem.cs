@@ -11,9 +11,9 @@ namespace BattleCruisers.Data.Static.LevelLoot
         /// 1. The game model's unlocked buildings/units/hulls
         /// 2. The player's loadout (if not a hull)
         /// </summary>
-        void UnlockItem(IGameModel gameModel);
+        void UnlockItem(GameModel gameModel);
 
         void ShowItemDetails(PrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers);
-        bool IsUnlocked(IGameModel gameModel);
+        bool IsUnlocked(GameModel gameModel);
     }
 }

@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IGameModel gamemodel)
+            GameModel gamemodel)
         {
             Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);
             HullButton hullButton = GetComponentInChildren<HullButton>(includeInactive: true);
@@ -43,17 +43,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             return hullButton;
         }
 
-        protected override bool IsUnlocked(IGameModel gameModel)
+        protected override bool IsUnlocked(GameModel gameModel)
         {
             return gameModel.UnlockedHulls.Contains(HullKey);
         }
 
-        protected override bool IsNew(IGameModel gameModel)
+        protected override bool IsNew(GameModel gameModel)
         {
             return gameModel.NewHulls.Items.Contains(HullKey);
         }
 
-        protected override void MakeOld(IGameModel gameModel)
+        protected override void MakeOld(GameModel gameModel)
         {
             gameModel.NewHulls.RemoveItem(HullKey);
         }

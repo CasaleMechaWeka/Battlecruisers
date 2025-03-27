@@ -32,7 +32,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
         protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsGroup itemDetailsControllers);
 
-        public abstract void UnlockItem(IGameModel gameModel);
+        public abstract void UnlockItem(GameModel gameModel);
 
         public override bool Equals(object obj)
         {
@@ -43,7 +43,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
                 && _itemKey.SmartEquals(other._itemKey);
         }
 
-        public abstract bool IsUnlocked(IGameModel gameModel);
+        public abstract bool IsUnlocked(GameModel gameModel);
 
         public override int GetHashCode()
         {

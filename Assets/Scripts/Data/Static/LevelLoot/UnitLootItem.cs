@@ -22,7 +22,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
             return itemDetailsControllers.UnitDetails;
         }
 
-        public override void UnlockItem(IGameModel gameModel)
+        public override void UnlockItem(GameModel gameModel)
         {
             if (!IsUnlocked(gameModel))
             {
@@ -31,7 +31,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
             }
         }
 
-        public override bool IsUnlocked(IGameModel gameModel)
+        public override bool IsUnlocked(GameModel gameModel)
         {
             return gameModel.GetUnlockedUnits(_itemKey.UnitCategory).Contains(_itemKey);
         }

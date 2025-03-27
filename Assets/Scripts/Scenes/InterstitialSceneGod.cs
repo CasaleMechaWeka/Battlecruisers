@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes
         {
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
-            IGameModel gm = DataProvider.GameModel;
+            GameModel gm = DataProvider.GameModel;
             if (_sceneNavigator == null)
             {
                 screens[TestingScreen - 1].SetActive(true);

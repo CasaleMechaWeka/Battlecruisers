@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Data.Static
         [Test]
         public void InitialGameModel()
         {
-            IGameModel initialGameModel = StaticData.InitialGameModel;
+            GameModel initialGameModel = StaticData.InitialGameModel;
 
             Assert.AreEqual(0, initialGameModel.NumOfLevelsCompleted);
             Assert.AreEqual(StaticPrefabKeys.Hulls.Trident, initialGameModel.PlayerLoadout.Hull);

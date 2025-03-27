@@ -22,13 +22,13 @@ namespace BattleCruisers.Data.Static.LevelLoot
             return itemDetailsControllers.HullDetails;
         }
 
-        public override void UnlockItem(IGameModel gameModel)
+        public override void UnlockItem(GameModel gameModel)
         {
             if (!IsUnlocked(gameModel))
                 gameModel.AddUnlockedHull(_itemKey);
         }
 
-        public override bool IsUnlocked(IGameModel gameModel)
+        public override bool IsUnlocked(GameModel gameModel)
         {
             return gameModel.UnlockedHulls.Contains(_itemKey);
         }

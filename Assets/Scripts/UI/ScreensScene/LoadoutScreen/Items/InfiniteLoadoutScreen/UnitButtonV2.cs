@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     {
         private IBuildableWrapper<IUnit> _unitPrefab;
         private IComparingItemFamilyTracker _itemFamilyTracker;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         private UnitKey _unitkey;
         public SelectUnitButton selectUnitButton;
         public override IComparableItem Item => _unitPrefab.Buildable;
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingItemFamily,
             IBuildableWrapper<IUnit> unitPrefab,
             PrefabKeyName unitKeyName,
-            IGameModel gameModel,
+            GameModel gameModel,
             UnitKey key)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingItemFamily);

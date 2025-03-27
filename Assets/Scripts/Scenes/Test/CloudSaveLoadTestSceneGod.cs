@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes
 {
     public class CloudSaveLoadTestSceneGod : MonoBehaviour
     {
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
 
         public InputField userIdInputField;
         public Text idTextBox;

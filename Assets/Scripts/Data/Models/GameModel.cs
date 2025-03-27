@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class GameModel : IGameModel
+    public class GameModel
     {
         private long _credits;
         public long Credits

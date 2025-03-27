@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public abstract class ItemContainer : MonoBehaviour
     {
         private IItemButton _itemButton;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         private NewItemMark _newItemMark;
         protected ItemsPanel _itemsPanel;
 
@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             ItemsPanel itemsPanel,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
-            IGameModel gameModel,
+            GameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory)
@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
             PrefabFactory prefabFactory,
-            IGameModel gameModel);
+            GameModel gameModel);
 
         private void ItemButton_Clicked(object sender, EventArgs e)
         {
@@ -84,9 +84,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        protected abstract bool IsUnlocked(IGameModel gameModel);
-        protected abstract bool IsNew(IGameModel gameModel);
-        protected abstract void MakeOld(IGameModel gameModel);
+        protected abstract bool IsUnlocked(GameModel gameModel);
+        protected abstract bool IsNew(GameModel gameModel);
+        protected abstract void MakeOld(GameModel gameModel);
 
         private void UpdateNewItemMarkVisibility()
         {

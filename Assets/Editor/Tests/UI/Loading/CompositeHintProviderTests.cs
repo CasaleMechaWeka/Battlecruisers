@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Loading
     public class CompositeHintProviderTests
     {
         private IHintProvider _compositHintProvider, _basicHints, _advancedHints;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         private string _basicHint, _advancedHint;
 
         [SetUp]
@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.UI.Loading
         {
             _basicHints = Substitute.For<IHintProvider>();
             _advancedHints = Substitute.For<IHintProvider>();
-            _gameModel = Substitute.For<IGameModel>();
+            _gameModel = Substitute.For<GameModel>();
 
             _compositHintProvider = new CompositeHintProvider(_basicHints, _advancedHints, _gameModel);
 

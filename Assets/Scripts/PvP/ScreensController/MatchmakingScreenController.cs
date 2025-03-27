@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
     {
         private ISceneNavigator _sceneNavigator;
         private PrefabFactory _prefabFactory;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         private ITrashTalkData _trashTalkData;
         public Animator animator;
         public TrashTalkBubblesController trashTalkBubbles;

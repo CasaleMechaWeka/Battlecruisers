@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory, IGameModel gameModel)
+            PrefabFactory prefabFactory, GameModel gameModel)
         {
             IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(Key);
             UnitButton unitButton = GetComponentInChildren<UnitButton>(includeInactive: true);
@@ -43,17 +43,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             return unitButton;
         }
 
-        protected override bool IsUnlocked(IGameModel gameModel)
+        protected override bool IsUnlocked(GameModel gameModel)
         {
             return gameModel.UnlockedUnits.Contains(Key);
         }
 
-        protected override bool IsNew(IGameModel gameModel)
+        protected override bool IsNew(GameModel gameModel)
         {
             return gameModel.NewUnits.Items.Contains(Key);
         }
 
-        protected override void MakeOld(IGameModel gameModel)
+        protected override void MakeOld(GameModel gameModel)
         {
             gameModel.NewUnits.RemoveItem(Key);
         }

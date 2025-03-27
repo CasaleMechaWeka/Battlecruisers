@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
 
 
-        private HomeScreenLayout GetLayout(IGameModel gameModel)
+        private HomeScreenLayout GetLayout(GameModel gameModel)
         {
             // TEMP  Force layouyts :)
             //return transform.FindNamedComponent<HomeScreenLayout>("FirstTimeLayout");

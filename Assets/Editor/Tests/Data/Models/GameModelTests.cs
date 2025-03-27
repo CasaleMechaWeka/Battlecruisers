@@ -11,9 +11,9 @@ using UnityAsserts = UnityEngine.Assertions;
 
 namespace BattleCruisers.Tests.Data.Models
 {
-    public class GameModelTests
+	public class GameModelTests
 	{
-		private IGameModel _gameModel;
+		private GameModel _gameModel;
 
 		private HullKey _hull;
 		private BuildingKey _building;
@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.Data.Models
 			Assert.IsFalse(_gameModel.UnlockedBuildings.Contains(_building));
 			Assert.IsFalse(_gameModel.NewBuildings.Items.Contains(_building));
 
-            _gameModel.AddUnlockedBuilding(_building);
+			_gameModel.AddUnlockedBuilding(_building);
 
 			Assert.IsTrue(_gameModel.UnlockedBuildings.Contains(_building));
 			Assert.IsTrue(_gameModel.NewBuildings.Items.Contains(_building));
@@ -83,8 +83,8 @@ namespace BattleCruisers.Tests.Data.Models
 			Assert.IsFalse(_gameModel.UnlockedUnits.Contains(_unit));
 			Assert.IsFalse(_gameModel.NewUnits.Items.Contains(_unit));
 
-            _gameModel.AddUnlockedUnit(_unit);
-            
+			_gameModel.AddUnlockedUnit(_unit);
+
 			Assert.IsTrue(_gameModel.UnlockedUnits.Contains(_unit));
 			Assert.IsTrue(_gameModel.NewUnits.Items.Contains(_unit));
 		}
@@ -98,64 +98,64 @@ namespace BattleCruisers.Tests.Data.Models
 			_gameModel.AddUnlockedUnit(_unit);
 			Assert.AreEqual(1, FindCount(_gameModel.UnlockedUnits, _unit));
 		}
-        #endregion AddUnlockedUnit
+		#endregion AddUnlockedUnit
 
-        #region AddCompletedLevel
-        [Test]
-        public void AddCompletedLevel_HaveNotCompletedPreceedingLevel_Throws()
-        {
-            CompletedLevel level = new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Easy);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddCompletedLevel(level));
-        }
+		#region AddCompletedLevel
+		[Test]
+		public void AddCompletedLevel_HaveNotCompletedPreceedingLevel_Throws()
+		{
+			CompletedLevel level = new CompletedLevel(levelNum: 2, hardestDifficulty: Difficulty.Easy);
+			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddCompletedLevel(level));
+		}
 
-        [Test]
-        public void AddCompletedLevel_TooSmallLevelNum_Throws()
-        {
-            CompletedLevel level = new CompletedLevel(levelNum: 0, hardestDifficulty: Difficulty.Easy);
-            Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddCompletedLevel(level));
-        }
+		[Test]
+		public void AddCompletedLevel_TooSmallLevelNum_Throws()
+		{
+			CompletedLevel level = new CompletedLevel(levelNum: 0, hardestDifficulty: Difficulty.Easy);
+			Assert.Throws<UnityAsserts.AssertionException>(() => _gameModel.AddCompletedLevel(level));
+		}
 
-        [Test]
-        public void AddCompletedLevel_FirstTimeLevelCompleted_AddsLevel()
-        {
-            CompletedLevel level = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
-            _gameModel.AddCompletedLevel(level);
-            Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
-            Assert.AreSame(level, _gameModel.CompletedLevels[0]);
-        }
+		[Test]
+		public void AddCompletedLevel_FirstTimeLevelCompleted_AddsLevel()
+		{
+			CompletedLevel level = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
+			_gameModel.AddCompletedLevel(level);
+			Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
+			Assert.AreSame(level, _gameModel.CompletedLevels[0]);
+		}
 
-        [Test]
-        public void AddCompletedLevel_SecondTimeLevelCompleted_HarderDifficulty_UpdatesDifficulty()
-        {
-            // Complete first time on easy
-            CompletedLevel firstTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
-            _gameModel.AddCompletedLevel(firstTime);
+		[Test]
+		public void AddCompletedLevel_SecondTimeLevelCompleted_HarderDifficulty_UpdatesDifficulty()
+		{
+			// Complete first time on easy
+			CompletedLevel firstTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
+			_gameModel.AddCompletedLevel(firstTime);
 
-            // Complete second time on normal
-            CompletedLevel secondTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Normal);
-            _gameModel.AddCompletedLevel(secondTime);
-            Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
-            Assert.AreEqual(secondTime, _gameModel.CompletedLevels[0]);
-        }
+			// Complete second time on normal
+			CompletedLevel secondTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Normal);
+			_gameModel.AddCompletedLevel(secondTime);
+			Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
+			Assert.AreEqual(secondTime, _gameModel.CompletedLevels[0]);
+		}
 
-        [Test]
-        public void AddCompletedLevel_SecondTimeLevelCompleted_EasierDifficulty_DoesNotUpdateDifficulty()
-        {
-            // Complete first time on normal
-            CompletedLevel firstTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Normal);
-            _gameModel.AddCompletedLevel(firstTime);
+		[Test]
+		public void AddCompletedLevel_SecondTimeLevelCompleted_EasierDifficulty_DoesNotUpdateDifficulty()
+		{
+			// Complete first time on normal
+			CompletedLevel firstTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Normal);
+			_gameModel.AddCompletedLevel(firstTime);
 
-            // Complete second time on easy
-            CompletedLevel secondTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
-            _gameModel.AddCompletedLevel(secondTime);
-            Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
-            Assert.AreSame(firstTime, _gameModel.CompletedLevels[0]);
-        }
-        #endregion AddCompletedLevel
+			// Complete second time on easy
+			CompletedLevel secondTime = new CompletedLevel(levelNum: 1, hardestDifficulty: Difficulty.Easy);
+			_gameModel.AddCompletedLevel(secondTime);
+			Assert.AreEqual(1, _gameModel.CompletedLevels.Count);
+			Assert.AreSame(firstTime, _gameModel.CompletedLevels[0]);
+		}
+		#endregion AddCompletedLevel
 
 		[Test]
 		public void IsUnitUnlocked_False()
-        {
+		{
 			Assert.IsFalse(_gameModel.IsUnitUnlocked(StaticPrefabKeys.Units.ArchonBattleship));
 		}
 
@@ -164,7 +164,7 @@ namespace BattleCruisers.Tests.Data.Models
 		{
 			UnitKey unitKey = StaticPrefabKeys.Units.ArchonBattleship;
 			_gameModel.AddUnlockedUnit(unitKey);
-            Assert.IsTrue(_gameModel.IsUnitUnlocked(unitKey));
+			Assert.IsTrue(_gameModel.IsUnitUnlocked(unitKey));
 		}
 
 		[Test]
@@ -183,12 +183,12 @@ namespace BattleCruisers.Tests.Data.Models
 
 		[Test]
 		public void LastBattleResult_DoesNotResetSelectedLevel()
-        {
+		{
 			_gameModel.SelectedLevel = 3;
 			_gameModel.LastBattleResult = null;
 
 			Assert.AreEqual(3, _gameModel.SelectedLevel);
-        }
+		}
 
 		[Test, Sequential]
 		public void FirstNonTutorialBattle(
@@ -200,24 +200,24 @@ namespace BattleCruisers.Tests.Data.Models
 			_gameModel.HasAttemptedTutorial = hasCompletedTutorial;
 
 			if (isLasteBattleResultNull)
-            {
+			{
 				_gameModel.LastBattleResult = null;
-            }
+			}
 			else
-            {
+			{
 				_gameModel.LastBattleResult = new BattleResult(1, wasVictory: true);
-            }
+			}
 
 			if (hasCompletedAnyLevel)
-            {
+			{
 				_gameModel.AddCompletedLevel(new CompletedLevel(levelNum: 1, Difficulty.Easy));
-            }
+			}
 
 			Assert.AreEqual(result, _gameModel.FirstNonTutorialBattle);
 		}
 
 		private int FindCount<TKey>(ICollection<TKey> list, TKey instance)
-        {
+		{
 			return list.Count(item => ReferenceEquals(item, instance));
 		}
 	}

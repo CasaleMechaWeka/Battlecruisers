@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private IItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         private bool _hasUnlockedItem;
         private GameObject _selectedFeedback;
         private NewItemMark _newItemMark;
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             ISingleSoundPlayer soundPlayer,
             IItemPanelsController itemPanels,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
-            IGameModel gameModel,
+            GameModel gameModel,
             IList<IItemButton> itemButtons,
             IComparingItemFamilyTracker itemFamilyTracker)
         {
@@ -124,8 +124,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemFamilyTracker.SetComparingFamily(null);
         }
 
-        protected abstract void SetupNewMarkVisibilityCallback(IGameModel gameModel);
-        protected abstract bool HasNewItems(IGameModel gameModel);
+        protected abstract void SetupNewMarkVisibilityCallback(GameModel gameModel);
+        protected abstract bool HasNewItems(GameModel gameModel);
 
         protected void UpdateNewItemMarkVisibility()
         {
@@ -143,6 +143,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             CleanUp(_gameModel);
         }
 
-        protected abstract void CleanUp(IGameModel gameModel);
+        protected abstract void CleanUp(GameModel gameModel);
     }
 }
