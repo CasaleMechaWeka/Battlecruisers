@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// was stuffed :P  Hence have test scene specifically for checking this.
     /// </summary>
     public class PatrollingFighterTestGod : TestGodBase
-	{
+    {
         private FighterController _fighter;
 
         protected override List<GameObject> GetGameObjects()
@@ -26,14 +26,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
         protected override void Setup(Helper helper)
         {
-            IAircraftProvider provider = CreateAircraftProvider();
+            AircraftProvider provider = CreateAircraftProvider();
             helper.InitialiseUnit(_fighter, aircraftProvider: provider);
             _fighter.StartConstruction();
-		}
+        }
 
-        private IAircraftProvider CreateAircraftProvider()
+        private AircraftProvider CreateAircraftProvider()
         {
-            IAircraftProvider provider = Substitute.For<IAircraftProvider>();
+            AircraftProvider provider = Substitute.For<AircraftProvider>();
 
             IList<Vector2> fighterPatrolPoints = new List<Vector2>()
             {
@@ -51,5 +51,5 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
 
             return provider;
         }
-	}
+    }
 }

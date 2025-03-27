@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Aircraft
 {
 	public class AircraftProviderTests
 	{
-		private IAircraftProvider _playerAircraftProvider, _aiAircraftProvider;
+		private AircraftProvider _playerAircraftProvider, _aiAircraftProvider;
 		private Vector2 _playerCruiserPosition, _aiCruiserPosition;
 		private float _bomberAltitude, _fighterAltitude, _deathstarAltitude;
 

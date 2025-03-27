@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUIManager uiManager = null,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
-            IAircraftProvider aircraftProvider = null,
+            AircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             GlobalBoostProviders globalBoostProviders = null,
@@ -133,7 +133,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         private void SetupCruiserSpecificFactories(
             CruiserSpecificFactories cruiserSpecificFactories,
-            IAircraftProvider aircraftProvider,
+            AircraftProvider aircraftProvider,
             GlobalBoostProviders globalBoostProviders,
             ITurretStatsFactory turretStatsFactory,
             ITargetProcessorFactory targetProcessorFactory,

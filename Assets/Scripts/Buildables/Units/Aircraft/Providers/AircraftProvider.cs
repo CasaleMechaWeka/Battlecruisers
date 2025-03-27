@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.Providers
 {
-	public class AircraftProvider : IAircraftProvider
+	public class AircraftProvider
 	{
 		private readonly Vector2 _parentCruiserPosition, _enemyCruiserPosition;
 		private readonly bool _isTutorial;

@@ -21,17 +21,17 @@ namespace BattleCruisers.Scenes.Test.Performance
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
             // Setup fighters
-            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: patrolPoints);
 
             InitialiseGroup(helper, redCruiser, blueCruiser, aircraftProvider, leftFighterGroup, leftSpawnPosition);
             InitialiseGroup(helper, blueCruiser, redCruiser, aircraftProvider, rightFighterGroup, rightSpawnPosition);
         }
 
         private void InitialiseGroup(
-            Helper helper, 
-            ICruiser enemyCruiser, 
-            ICruiser parentCruiser, 
-            IAircraftProvider aircraftProvider,
+            Helper helper,
+            ICruiser enemyCruiser,
+            ICruiser parentCruiser,
+            AircraftProvider aircraftProvider,
             BuildableGroupController fightersGroupController,
             Vector2 spawnPosition)
         {

@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
             // Satellite
             Vector2 parentCruiserPosition = _launcher.transform.position;
             Vector2 enemyCruiserPosition = new Vector2(_launcher.transform.position.x + 30, _launcher.transform.position.y);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
+            AircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 
             helper.InitialiseBuilding(_launcher, Faction.Blues, aircraftProvider: aircraftProvider);
             _launcher.StartConstruction();

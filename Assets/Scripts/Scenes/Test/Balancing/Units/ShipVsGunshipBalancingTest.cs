@@ -88,7 +88,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             ICruiser enemyCruiser)
         {
             IList<Vector2> gunshipPatrolPoints = GetGunshipPatrolPoints(factory.Position, GUNSHIP_CRUISING_ALTITUDE_IN_M);
-            IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
+            AircraftProvider aircraftProvider = _helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
 
             _helper
                 .InitialiseBuilding(
@@ -114,7 +114,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
                 new Vector2(factoryPosition.x, cruisingAltitudeInM),
                 new Vector2(factoryPosition.x - GUNSHIP_PATROLLING_RANGE_IN_M, cruisingAltitudeInM)
             };
-        } 
+        }
 
         private void OnFactoryCompleted(IFactory factory, IBuildableWrapper<IUnit> unitToBuild, IKillCountController killCounter)
         {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using Unity.Netcode;
 using UnityEngine;
+using BattleCruisers.Buildables.Units.Aircraft.Providers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
             {
-                _aircraftProvider = new PvPAircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
+                _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
                 FacingDirection = facingDirection;
                 Activate_PvPClient();
             }

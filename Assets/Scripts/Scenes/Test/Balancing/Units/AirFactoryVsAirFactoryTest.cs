@@ -5,7 +5,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 {
     public class AirFactoryVsAirFactoryTest : FactoryVsFactoryTest
     {
-        protected override IAircraftProvider CreateAircraftProvider(Direction facingDirection)
+        protected override AircraftProvider CreateAircraftProvider(Direction facingDirection)
         {
             return
                 facingDirection == Direction.Right ?

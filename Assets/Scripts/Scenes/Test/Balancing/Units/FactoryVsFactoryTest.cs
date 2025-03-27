@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
         private IKillCountController _leftKillCount, _rightKillCount;
         private IList<ITarget> _completedUnits;
 
-		protected IFactory _leftFactory, _rightFactory;
+        protected IFactory _leftFactory, _rightFactory;
         protected TestUtils.Helper _helper;
         protected IDeferrer _deferrer;
 
@@ -118,13 +118,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             Faction faction,
             Direction facingDirection,
             IBuildableWrapper<IUnit> unitWrapper,
-            float waitTimeInS, 
+            float waitTimeInS,
             IKillCountController killCounter,
-            ICruiser parentCruiser, 
+            ICruiser parentCruiser,
             ICruiser enemyCruiser,
             IUpdaterProvider updaterProvider)
         {
-            IAircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
+            AircraftProvider aircraftProvider = CreateAircraftProvider(facingDirection);
             TestUtils.BuildableInitialisationArgs args
                 = new TestUtils.BuildableInitialisationArgs(
                     _helper,
@@ -145,7 +145,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             TestUtils.Helper.SetupFactoryForUnitMonitor(factory, parentCruiser);
         }
 
-        protected virtual IAircraftProvider CreateAircraftProvider(Direction facingDirection)
+        protected virtual AircraftProvider CreateAircraftProvider(Direction facingDirection)
         {
             return null;
         }
@@ -175,11 +175,11 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
             if (!_leftFactory.IsDestroyed)
             {
                 _leftFactory.StopBuildingUnit();
-			}
+            }
             if (!_rightFactory.IsDestroyed)
             {
                 _rightFactory.StopBuildingUnit();
-			}
+            }
 
             int currentLeftKillCount = _leftKillCount.KillCount;
             int currentRightKillCount = _rightKillCount.KillCount;

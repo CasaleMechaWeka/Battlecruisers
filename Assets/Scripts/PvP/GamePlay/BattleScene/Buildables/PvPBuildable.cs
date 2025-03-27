@@ -49,7 +49,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected IPvPTargetFactoriesProvider _targetFactories;
-        protected IAircraftProvider _aircraftProvider;
+        protected AircraftProvider _aircraftProvider;
         protected IPvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses

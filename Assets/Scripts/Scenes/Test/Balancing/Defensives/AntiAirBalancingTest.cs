@@ -16,13 +16,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         {
             AirFactory factory = GetComponentInChildren<AirFactory>();
             IList<Vector2> bomberPatrolPoints = GetBomberPatrolPoints(factory.transform.position, BOMBER_CRUISING_ALTITUDE_IN_M);
-            IAircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
+            AircraftProvider aircraftProvider = _helper.CreateAircraftProvider(bomberPatrolPoints);
 
             _helper
                 .InitialiseBuilding(
-                    factory, 
-                    Faction.Blues, 
-                    parentCruiserDirection: Direction.Right, 
+                    factory,
+                    Faction.Blues,
+                    parentCruiserDirection: Direction.Right,
                     aircraftProvider: aircraftProvider,
                     enemyCruiser: enemyCruiser);
 
@@ -36,6 +36,6 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                 new Vector2(factoryPosition.x, bomberCruisingAltitudeInM),
                 new Vector2(DEFENCE_BUILDINGS_OFFSET_IN_M, bomberCruisingAltitudeInM)
             };
-        }    
+        }
     }
 }

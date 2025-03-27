@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
         {
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
 
-            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: gunshipPatrolPoints);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: gunshipPatrolPoints);
             helper.InitialiseUnit(_kamikazoo, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left, enemyCruiser: redCruiser);
             _kamikazoo.StartConstruction();
 

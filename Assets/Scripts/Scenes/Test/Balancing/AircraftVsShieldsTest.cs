@@ -19,7 +19,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
             ICruiser enemyCruiser)
         {
             Vector2 shieldSpawnPosition = new Vector2(spawnPosition.x + LeftOffsetInM + RightOffsetInM, spawnPosition.y);
-            IAircraftProvider aircraftProvider
+            AircraftProvider aircraftProvider
                 = new AircraftProvider(
                     parentCruiserPosition: spawnPosition,
                     enemyCruiserPosition: shieldSpawnPosition);

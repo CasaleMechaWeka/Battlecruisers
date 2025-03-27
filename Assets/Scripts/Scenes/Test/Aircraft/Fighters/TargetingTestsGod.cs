@@ -16,9 +16,9 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// 4. Target quickly moves out of range, fighter stops pursuing target and continues patrolling
     /// 5. Repeat
     /// </summary>
-    public class TargetingTestsGod : TestGodBase 
-	{
-		private FighterController _fighter;
+    public class TargetingTestsGod : TestGodBase
+    {
+        private FighterController _fighter;
         private TestAircraftController _target;
 
         public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
@@ -39,14 +39,14 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
         {
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
-			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints);
             helper.InitialiseUnit(_fighter, Faction.Reds, aircraftProvider: aircraftProvider, enemyCruiser: blueCruiser);
-			_fighter.StartConstruction();
+            _fighter.StartConstruction();
 
-			_target.PatrolPoints = targetPatrolPoints;
+            _target.PatrolPoints = targetPatrolPoints;
             helper.InitialiseUnit(_target, faction: Faction.Blues);
-			_target.StartConstruction();
+            _target.StartConstruction();
             Helper.SetupUnitForUnitMonitor(_target, blueCruiser);
-		}
-	}
+        }
+    }
 }

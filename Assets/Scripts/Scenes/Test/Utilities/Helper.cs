@@ -107,7 +107,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUIManager uiManager = null,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
-            IAircraftProvider aircraftProvider = null,
+            AircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             GlobalBoostProviders globalBoostProviders = null,
@@ -158,7 +158,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IUIManager uiManager = null,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
-            IAircraftProvider aircraftProvider = null,
+            AircraftProvider aircraftProvider = null,
             ITargetFactories targetFactories = null,
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             GlobalBoostProviders globalBoostProviders = null,
@@ -282,7 +282,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return targetFactories;
         }
 
-        public IAircraftProvider CreateAircraftProvider(
+        public AircraftProvider CreateAircraftProvider(
             IList<Vector2> bomberPatrolPoints = null,
             IList<Vector2> gunshipPatrolPoints = null,
             IList<Vector2> fighterPatrolPoints = null,
@@ -291,7 +291,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IList<Vector2> missileFighterPatrolPoints = null,
             Rectangle fighterSafeZone = null)
         {
-            IAircraftProvider provider = Substitute.For<IAircraftProvider>();
+            AircraftProvider provider = Substitute.For<AircraftProvider>();
 
             if (bomberPatrolPoints == null)
             {

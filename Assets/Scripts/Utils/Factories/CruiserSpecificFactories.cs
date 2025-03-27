@@ -13,7 +13,7 @@ namespace BattleCruisers.Utils.Factories
 {
     public class CruiserSpecificFactories
     {
-        public IAircraftProvider AircraftProvider { get; }
+        public AircraftProvider AircraftProvider { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IDroneFeedbackFactory DroneFeedbackFactory { get; }
         public GlobalBoostProviders GlobalBoostProviders { get; }

@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// </summary>
     public interface IPvPCruiserSpecificFactories
     {
-        IAircraftProvider AircraftProvider { get; }
+        AircraftProvider AircraftProvider { get; }
         IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         IDroneFeedbackFactory DroneFeedbackFactory { get; }
         GlobalBoostProviders GlobalBoostProviders { get; }

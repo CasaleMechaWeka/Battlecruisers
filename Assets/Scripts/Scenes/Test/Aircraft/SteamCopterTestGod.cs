@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             ICruiser redCruiser = helper.CreateCruiser(Direction.Left, Faction.Reds);
 
             // Setup gunship
-            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
             helper.InitialiseUnit(_copter, Faction.Blues, aircraftProvider: aircraftProvider, parentCruiserDirection: Direction.Left, enemyCruiser: redCruiser);
             _copter.StartConstruction();
 
@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft
                 helper.InitialiseUnit(ship, Faction.Reds);
                 ship.StartConstruction();
                 Helper.SetupUnitForUnitMonitor(ship, redCruiser);
-			}
+            }
         }
     }
 }

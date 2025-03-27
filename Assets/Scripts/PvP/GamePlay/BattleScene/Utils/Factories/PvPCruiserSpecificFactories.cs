@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers;
@@ -16,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPCruiserSpecificFactories : IPvPCruiserSpecificFactories
     {
-        public IAircraftProvider AircraftProvider { get; }
+        public AircraftProvider AircraftProvider { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }
         public IDroneFeedbackFactory DroneFeedbackFactory { get; }
         public GlobalBoostProviders GlobalBoostProviders { get; }
@@ -34,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
+            AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(GlobalBoostProviders);
             //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
@@ -58,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
-            AircraftProvider = new PvPAircraftProvider(parentCruiser.Position, enemyCruiser.Position);
+            AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(GlobalBoostProviders);
             //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;

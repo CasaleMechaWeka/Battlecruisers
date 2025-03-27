@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.Test.Performance
             ITargetFactories targetFactories = helper.CreateTargetFactories(_factory.GameObject, targetFilter: targetFilter);
 
             // Setup bombers
-            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: bomberPatrolPoints);
 
             BuildableGroupController bombersGroup = FindObjectOfType<BuildableGroupController>();
             BuildableInitialisationArgs groupArgs

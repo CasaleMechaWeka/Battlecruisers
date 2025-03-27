@@ -63,7 +63,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
             enemyCruiser.AttackCapabilities.Returns(new ReadOnlyCollection<TargetType>(new List<TargetType>()));
 
             // Setup air factory
-            IAircraftProvider aircraftProvider = Substitute.For<IAircraftProvider>();
+            AircraftProvider aircraftProvider = Substitute.For<AircraftProvider>();
             IList<Vector2> bomberPatrolPonts = new List<Vector2>()
             {
                 new Vector2(-12, 10),

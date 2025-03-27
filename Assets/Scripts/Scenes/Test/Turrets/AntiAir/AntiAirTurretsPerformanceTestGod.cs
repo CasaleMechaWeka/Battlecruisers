@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Performance
             unitPrefab.StaticInitialise();
 
             // Initialise air factory
-            IAircraftProvider aircraftProvider = Substitute.For<IAircraftProvider>();
+            AircraftProvider aircraftProvider = Substitute.For<AircraftProvider>();
             aircraftProvider.FighterSafeZone.Returns(new Rectangle(-50, 50, -50, 50));
             aircraftProvider.FindFighterPatrolPoints(default).ReturnsForAnyArgs(patrolPoints);
 

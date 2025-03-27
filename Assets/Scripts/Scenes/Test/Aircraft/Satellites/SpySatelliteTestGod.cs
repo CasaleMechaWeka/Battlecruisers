@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Satellites
         {
             Vector2 parentCruiserPosition = new Vector2(-35, 0);
             Vector2 enemyCruiserPosition = new Vector2(35, 0);
-            IAircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
+            AircraftProvider aircraftProvider = new AircraftProvider(parentCruiserPosition, enemyCruiserPosition);
 
             helper.InitialiseUnit(_satellite, aircraftProvider: aircraftProvider);
             _satellite.StartConstruction();

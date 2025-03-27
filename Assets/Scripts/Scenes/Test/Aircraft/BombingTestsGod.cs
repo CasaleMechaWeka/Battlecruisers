@@ -11,15 +11,15 @@ using UnityEngine;
 namespace BattleCruisers.Scenes.Test.Aircraft
 {
     public class BombingTestsGod : TestGodBase
-	{
+    {
         private AirFactory _factory;
 
         public AircraftController bomberToLeft, bomberToRight;
-		public List<Vector2> leftPatrolPoints, rightPatrolPoints;
+        public List<Vector2> leftPatrolPoints, rightPatrolPoints;
 
         protected override List<GameObject> GetGameObjects()
         {
-			_factory = FindObjectOfType<AirFactory>();
+            _factory = FindObjectOfType<AirFactory>();
 
             return new List<GameObject>()
             {
@@ -39,11 +39,11 @@ namespace BattleCruisers.Scenes.Test.Aircraft
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_factory.Faction, targetTypes);
             ITargetFactories targetFactories = helper.CreateTargetFactories(_factory.GameObject, targetFilter: targetFilter);
 
-            IAircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
+            AircraftProvider leftAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: leftPatrolPoints);
             helper.InitialiseUnit(bomberToLeft, Faction.Reds, aircraftProvider: leftAircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Right);
             bomberToLeft.StartConstruction();
 
-            IAircraftProvider rightAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: rightPatrolPoints);
+            AircraftProvider rightAircraftProvider = helper.CreateAircraftProvider(bomberPatrolPoints: rightPatrolPoints);
             helper.InitialiseUnit(bomberToRight, Faction.Reds, aircraftProvider: rightAircraftProvider, targetFactories: targetFactories, parentCruiserDirection: Direction.Left);
             bomberToRight.StartConstruction();
         }

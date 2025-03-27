@@ -45,7 +45,7 @@ namespace BattleCruisers.Buildables
         protected IUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected TargetFactoriesProvider _targetFactories;
-        protected IAircraftProvider _aircraftProvider;
+        protected AircraftProvider _aircraftProvider;
         protected FactoryProvider _factoryProvider;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses

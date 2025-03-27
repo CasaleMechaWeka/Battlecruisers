@@ -20,12 +20,12 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
     /// 7. Repeat
     /// </summary>
     public class SafeZoneTestsGod : TestGodBase
-	{
-		private FighterController _fighter;
+    {
+        private FighterController _fighter;
         private TestAircraftController _target;
 
         public List<Vector2> fighterPatrolPoints, targetPatrolPoints;
-		public float safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
+        public float safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -43,16 +43,16 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
         {
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
-			Rectangle safeZone = new Rectangle(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
-			IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
+            Rectangle safeZone = new Rectangle(safeZoneMinX, safeZoneMaxX, safeZoneMinY, safeZoneMaxY);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(fighterPatrolPoints: fighterPatrolPoints, fighterSafeZone: safeZone);
             helper.InitialiseUnit(_fighter, Faction.Reds, aircraftProvider: aircraftProvider, enemyCruiser: blueCruiser);
-			_fighter.StartConstruction();
+            _fighter.StartConstruction();
 
-			// Target aircraft
-			_target.PatrolPoints = targetPatrolPoints;
+            // Target aircraft
+            _target.PatrolPoints = targetPatrolPoints;
             helper.InitialiseUnit(_target, faction: Faction.Blues);
-			_target.StartConstruction();
+            _target.StartConstruction();
             Helper.SetupUnitForUnitMonitor(_target, blueCruiser);
-		}
-	}
+        }
+    }
 }

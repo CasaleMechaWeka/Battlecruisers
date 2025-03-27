@@ -40,7 +40,7 @@ namespace BattleCruisers.Scenes.Test.Performance
             ICruiser blueCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
 
             // Setup gunships
-            IAircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
+            AircraftProvider aircraftProvider = helper.CreateAircraftProvider(gunshipPatrolPoints: gunshipPatrolPoints);
 
             BuildableGroupController gunshipsGroup = FindObjectOfType<BuildableGroupController>();
             if (gunshipsGroup != null)
