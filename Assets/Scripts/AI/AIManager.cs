@@ -40,7 +40,7 @@ namespace BattleCruisers.AI
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, DataProvider.GameModel, strategyFactory);
         }
 
-        public IArtificialIntelligence CreateAI(ILevelInfo levelInfo, Difficulty difficulty)
+        public IArtificialIntelligence CreateAI(LevelInfo levelInfo, Difficulty difficulty)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )

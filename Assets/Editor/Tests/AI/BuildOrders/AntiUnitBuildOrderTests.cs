@@ -9,18 +9,18 @@ using UnityAsserts = UnityEngine.Assertions;
 namespace BattleCruisers.Tests.AI.BuildOrders
 {
     public class AntiUnitBuildOrderTests
-	{
+    {
         private IDynamicBuildOrder _buildOrder;
         private BuildingKey _basicDefenceKey, _advancedDefenceKey;
-        private ILevelInfo _levelInfo;
+        private LevelInfo _levelInfo;
         private int _numOfSlotsToUse;
 
-		[SetUp]
-		public void SetuUp()
-		{
+        [SetUp]
+        public void SetuUp()
+        {
             _basicDefenceKey = new BuildingKey(BuildingCategory.Defence, "Kasper");
             _advancedDefenceKey = new BuildingKey(BuildingCategory.Defence, "Seppel");
-            _levelInfo = Substitute.For<ILevelInfo>();
+            _levelInfo = Substitute.For<LevelInfo>();
             _numOfSlotsToUse = 2;
 
             _buildOrder
@@ -52,8 +52,8 @@ namespace BattleCruisers.Tests.AI.BuildOrders
         }
 
         [Test]
-		public void MoveNext_NotFirst_CanBuildAdvanced_CurrentIsAdvanced()
-		{
+        public void MoveNext_NotFirst_CanBuildAdvanced_CurrentIsAdvanced()
+        {
             MoveNext_FirstKey_CurrentIsBasic();
 
             _levelInfo.CanConstructBuilding(_advancedDefenceKey).Returns(true);
@@ -62,20 +62,20 @@ namespace BattleCruisers.Tests.AI.BuildOrders
 
             Assert.IsTrue(hasKey);
             Assert.AreSame(_advancedDefenceKey, _buildOrder.Current);
-		}
+        }
 
         [Test]
         public void MoveNext_CannotBuildAdvanced_CurrentIsBasic()
-		{
+        {
             MoveNext_FirstKey_CurrentIsBasic();
 
             _levelInfo.CanConstructBuilding(_advancedDefenceKey).Returns(false);
-			
+
             bool hasKey = _buildOrder.MoveNext();
-			
+
             Assert.IsTrue(hasKey);
             Assert.AreSame(_basicDefenceKey, _buildOrder.Current);
-		}
+        }
 
         [Test]
         public void MoveNext_NoMoreSlots_CurrentIsNull()
@@ -90,5 +90,5 @@ namespace BattleCruisers.Tests.AI.BuildOrders
             Assert.IsFalse(hasKey);
             Assert.IsNull(_buildOrder.Current);
         }
-	}
+    }
 }

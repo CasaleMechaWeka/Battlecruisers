@@ -8,17 +8,17 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.AI.BuildOrders
 {
     public class InfiniteBuildOrder : IDynamicBuildOrder
-	{
-        private readonly ILevelInfo _levelInfo;
+    {
+        private readonly LevelInfo _levelInfo;
         private readonly IList<BuildingKey> _availableBuildings;
 
         public BuildingKey Current { get; private set; }
 
         public InfiniteBuildOrder(
-            BuildingCategory buildingCategory, 
-            ILevelInfo levelInfo,
+            BuildingCategory buildingCategory,
+            LevelInfo levelInfo,
             IList<BuildingKey> bannedBuildings)
-		{
+        {
             Assert.IsNotNull(levelInfo);
 
             _levelInfo = levelInfo;
@@ -28,7 +28,7 @@ namespace BattleCruisers.AI.BuildOrders
 
             RemoveBuildingsToIgnore(bannedBuildings);
             Assert.IsTrue(_availableBuildings.Count != 0, $"No available buildings for: {buildingCategory}");
-		}
+        }
 
         private void RemoveBuildingsToIgnore(IList<BuildingKey> bannedBuildings)
         {
@@ -50,7 +50,7 @@ namespace BattleCruisers.AI.BuildOrders
                     .Where(_levelInfo.CanConstructBuilding)
                     .Shuffle()
                     .FirstOrDefault();
-            
+
             return Current != null;
         }
     }

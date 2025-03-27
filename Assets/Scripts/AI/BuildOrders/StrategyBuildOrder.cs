@@ -8,7 +8,7 @@ namespace BattleCruisers.AI.BuildOrders
     public class StrategyBuildOrder : IDynamicBuildOrder
     {
         private readonly IEnumerator<IPrefabKeyWrapper> _baseBuildOrder;
-        private readonly ILevelInfo _levelInfo;
+        private readonly LevelInfo _levelInfo;
 
         private BuildingKey _current;
         public BuildingKey Current
@@ -21,7 +21,7 @@ namespace BattleCruisers.AI.BuildOrders
             }
         }
 
-        public StrategyBuildOrder(IEnumerator<IPrefabKeyWrapper> baseBuildOrder, ILevelInfo levelInfo)
+        public StrategyBuildOrder(IEnumerator<IPrefabKeyWrapper> baseBuildOrder, LevelInfo levelInfo)
         {
             Helper.AssertIsNotNull(baseBuildOrder, levelInfo);
 
@@ -34,10 +34,10 @@ namespace BattleCruisers.AI.BuildOrders
             while (_baseBuildOrder.MoveNext())
             {
                 Logging.Log(
-                    Tags.AI_BUILD_ORDERS, 
+                    Tags.AI_BUILD_ORDERS,
                     $"{this}.MoveNext()  _baseBuildOrder.Current: {_baseBuildOrder.Current}  _baseBuildOrder.Current.HasKey: {_baseBuildOrder.Current.HasKey}");
 
-                if (_baseBuildOrder.Current.HasKey 
+                if (_baseBuildOrder.Current.HasKey
                     && _levelInfo.CanConstructBuilding(_baseBuildOrder.Current.Key))
                 {
                     Current = _baseBuildOrder.Current.Key;

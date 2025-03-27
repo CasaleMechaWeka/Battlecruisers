@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.AI
 {
-    public class LevelInfo : ILevelInfo
+    public class LevelInfo
     {
         private readonly IGameModel _gameModel;
         private readonly PrefabFactory _prefabFactory;

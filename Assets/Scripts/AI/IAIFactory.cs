@@ -2,7 +2,7 @@
 {
     public interface IAIFactory
     {
-        IArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo);
-        IArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo);
-	}
+        IArtificialIntelligence CreateBasicAI(LevelInfo levelInfo);
+        IArtificialIntelligence CreateAdaptiveAI(LevelInfo levelInfo);
+    }
 }

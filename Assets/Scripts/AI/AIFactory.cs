@@ -32,7 +32,7 @@ namespace BattleCruisers.AI
         /// 1. Follows a base strategy (eg:  balanced, boom or rush)
         /// 2. Replaces destroyed buildings
         /// </summary>
-        public IArtificialIntelligence CreateBasicAI(ILevelInfo levelInfo)
+        public IArtificialIntelligence CreateBasicAI(LevelInfo levelInfo)
         {
             ITaskList tasks = new TaskList();
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.AI
         /// 2. Responds to threats (eg: air, naval)
         /// 3. Replaces destroyed buildings
         /// </summary>
-        public IArtificialIntelligence CreateAdaptiveAI(ILevelInfo levelInfo)
+        public IArtificialIntelligence CreateAdaptiveAI(LevelInfo levelInfo)
         {
             ITaskList tasks = new TaskList();
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();

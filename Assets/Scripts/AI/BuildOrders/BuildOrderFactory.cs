@@ -37,7 +37,7 @@ namespace BattleCruisers.AI.BuildOrders
         /// <summary>
         /// Gets the basic build order, which contains counters to threats.
         /// </summary>
-        public IDynamicBuildOrder CreateBasicBuildOrder(ILevelInfo levelInfo)
+        public IDynamicBuildOrder CreateBasicBuildOrder(LevelInfo levelInfo)
         {
             Strategy strategy = _strategyFactory.GetBasicStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
@@ -47,13 +47,13 @@ namespace BattleCruisers.AI.BuildOrders
         /// Build orders do NOT contain counters to threats.  These counters
         /// get created on the fly in response to threats.
         /// </summary>
-        public IDynamicBuildOrder CreateAdaptiveBuildOrder(ILevelInfo levelInfo)
+        public IDynamicBuildOrder CreateAdaptiveBuildOrder(LevelInfo levelInfo)
         {
             Strategy strategy = _strategyFactory.GetAdaptiveStrategy();
             return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
         }
 
-        private IDynamicBuildOrder GetBuildOrder(Strategy strategy, ILevelInfo levelInfo, bool hasDefensivePlaceholders)
+        private IDynamicBuildOrder GetBuildOrder(Strategy strategy, LevelInfo levelInfo, bool hasDefensivePlaceholders)
         {
             // Create offensive build order
             //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
@@ -81,7 +81,7 @@ namespace BattleCruisers.AI.BuildOrders
         }
 
         // TODO: Find a better class to move this to. Make the method public to add unit test!
-        private int FindNumOfOffensiveSlots(ILevelInfo levelInfo)
+        private int FindNumOfOffensiveSlots(LevelInfo levelInfo)
         {
             // Reserve 2 mast slots for a stealth gen and teslacoil.
             int numOfMastSlotsToReserve = 2;
@@ -107,7 +107,7 @@ namespace BattleCruisers.AI.BuildOrders
         /// IEnumerable I would get a fresh copy of the object, so any changes I made to
         /// those objects were lost!!!
         /// </summary>
-        private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots, ILevelInfo levelInfo)
+        private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots, LevelInfo levelInfo)
         {
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
@@ -146,7 +146,7 @@ namespace BattleCruisers.AI.BuildOrders
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
-        private IDynamicBuildOrder CreateBuildOrder(OffensiveRequest request, ILevelInfo levelInfo)
+        private IDynamicBuildOrder CreateBuildOrder(OffensiveRequest request, LevelInfo levelInfo)
         {
             Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
@@ -169,7 +169,7 @@ namespace BattleCruisers.AI.BuildOrders
             }
         }
 
-        public IDynamicBuildOrder CreateAntiAirBuildOrder(ILevelInfo levelInfo)
+        public IDynamicBuildOrder CreateAntiAirBuildOrder(LevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
@@ -182,7 +182,7 @@ namespace BattleCruisers.AI.BuildOrders
                     numOfSlotsToUse: numOfSlotsToUse);
         }
 
-        public IDynamicBuildOrder CreateAntiNavalBuildOrder(ILevelInfo levelInfo)
+        public IDynamicBuildOrder CreateAntiNavalBuildOrder(LevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
@@ -226,7 +226,7 @@ namespace BattleCruisers.AI.BuildOrders
         private IDynamicBuildOrder CreateDynamicBuildOrder(
             BuildingCategory buildingCategory,
             int size,
-            ILevelInfo levelInfo,
+            LevelInfo levelInfo,
             IList<BuildingKey> bannedBuildings = null)
         {
             return

@@ -4,6 +4,6 @@ namespace BattleCruisers.AI
 {
     public interface IAIManager
     {
-        IArtificialIntelligence CreateAI(ILevelInfo levelInfo, Difficulty difficulty);
-	}
+        IArtificialIntelligence CreateAI(LevelInfo levelInfo, Difficulty difficulty);
+    }
 }

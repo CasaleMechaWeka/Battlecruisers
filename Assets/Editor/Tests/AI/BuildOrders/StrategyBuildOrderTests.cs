@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
         private IEnumerator<IPrefabKeyWrapper> _baseBuildOrder;
         private IPrefabKeyWrapper _keyWrapper;
         private BuildingKey _buildingKey;
-        private ILevelInfo _levelInfo;
+        private LevelInfo _levelInfo;
 
         [SetUp]
         public void SetuUp()
@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
             _baseBuildOrder = Substitute.For<IEnumerator<IPrefabKeyWrapper>>();
             _baseBuildOrder.Current.Returns(_keyWrapper);
 
-            _levelInfo = Substitute.For<ILevelInfo>();
+            _levelInfo = Substitute.For<LevelInfo>();
 
             _buildOrder = new StrategyBuildOrder(_baseBuildOrder, _levelInfo);
         }
@@ -97,7 +97,7 @@ namespace BattleCruisers.Tests.AI.BuildOrders
             _baseBuildOrder.MoveNext().Returns(true, true, false);
 
             // First key is not constructable, second key is
-			_keyWrapper.HasKey.Returns(true, true);
+            _keyWrapper.HasKey.Returns(true, true);
             _levelInfo.CanConstructBuilding(_buildingKey).Returns(false, true);
 
             Assert.IsTrue(_buildOrder.MoveNext());

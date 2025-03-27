@@ -14,8 +14,8 @@ namespace BattleCruisers.AI.BuildOrders
     public class AntiUnitBuildOrder : IDynamicBuildOrder
     {
         private readonly BuildingKey _basicDefenceKey, _advancedDefenceKey;
-        private readonly ILevelInfo _levelInfo;
-		private readonly int _numOfSlotsToUse;
+        private readonly LevelInfo _levelInfo;
+        private readonly int _numOfSlotsToUse;
         private int _numOfSlotsUsed;
         private bool _isFirstKey;
 
@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.BuildOrders
         public AntiUnitBuildOrder(
             BuildingKey basicDefenceKey,
             BuildingKey advancedDefenceKey,
-			ILevelInfo levelInfo,
+            LevelInfo levelInfo,
             int numOfSlotsToUse)
         {
             Helper.AssertIsNotNull(basicDefenceKey, advancedDefenceKey, levelInfo);
