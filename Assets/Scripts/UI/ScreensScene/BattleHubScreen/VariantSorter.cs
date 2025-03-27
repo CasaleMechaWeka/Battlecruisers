@@ -56,22 +56,60 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     return new List<int>();
                 }
 
+                // Filter for unlocked items first
+                var unlockedVariants = allVariants.Where(v =>
+                {
+                    try
+                    {
+                        var prefab = _prefabFactory.GetVariant(
+                            StaticPrefabKeys.Variants.GetVariantKey(v.Index));
+
+                        if (prefab == null || prefab.parent == null)
+                            return false;
+
+                        var parentName = prefab.parent.ToString().ToLowerInvariant();
+                        
+                        // Check if parent is a building
+                        if (DataProvider.GameModel.UnlockedBuildings.Any(b => 
+                            b.PrefabName.ToLowerInvariant() == parentName))
+                            return true;
+
+                        // Check if parent is a unit
+                        if (DataProvider.GameModel.UnlockedUnits.Any(u => 
+                            u.PrefabName.ToLowerInvariant() == parentName))
+                            return true;
+
+                        return false;
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogError($"[VariantSorter] Error checking unlock status for variant {v.Index}: {e}");
+                        return false;
+                    }
+                }).ToList();
+
+                if (unlockedVariants.Count == 0)
+                {
+                    Debug.LogWarning("[VariantSorter] No unlocked variants found");
+                    return new List<int>();
+                }
+
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                LogExampleVariant(allVariants[0]);
+                LogExampleVariant(unlockedVariants[0]);
 #endif
 
-                CacheVariantParents(allVariants);
+                CacheVariantParents(unlockedVariants);
 
                 // Log how many variants we found before categorizing
-                Debug.Log($"[VariantSorter] Found {allVariants.Count} total variants");
+                Debug.Log($"[VariantSorter] Found {unlockedVariants.Count} unlocked variants");
 
-                var uncachedVariants = allVariants.Where(v => !_variantParentCache.ContainsKey(v.Index)).ToList();
+                var uncachedVariants = unlockedVariants.Where(v => !_variantParentCache.ContainsKey(v.Index)).ToList();
                 if (uncachedVariants.Any())
                 {
                     Debug.LogWarning($"[VariantSorter] Found {uncachedVariants.Count} variants without parents");
                 }
 
-                var (buildingVariants, aircraftVariants, navalVariants) = CategorizeVariants(allVariants);
+                var (buildingVariants, aircraftVariants, navalVariants) = CategorizeVariants(unlockedVariants);
 
                 var result = buildingVariants
                     .Concat(aircraftVariants)
@@ -120,9 +158,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 #endif
 
                 // If we lost variants in the process, log a warning
-                if (result.Count < allVariants.Count - uncachedVariants.Count)
+                if (result.Count < unlockedVariants.Count - uncachedVariants.Count)
                 {
-                    Debug.LogWarning($"[VariantSorter] Lost {allVariants.Count - uncachedVariants.Count - result.Count} variants during organization");
+                    Debug.LogWarning($"[VariantSorter] Lost {unlockedVariants.Count - uncachedVariants.Count - result.Count} variants during organization");
                 }
 
                 return result;
