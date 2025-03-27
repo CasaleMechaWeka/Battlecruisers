@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data.Models;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -11,7 +11,6 @@ namespace BattleCruisers.AI
 {
     public class LevelInfo
     {
-        private readonly GameModel _gameModel;
         private readonly PrefabFactory _prefabFactory;
 
         public ICruiserController AICruiser { get; }
@@ -20,14 +19,12 @@ namespace BattleCruisers.AI
         public LevelInfo(
             ICruiserController aiCruiser,
             ICruiserController playerCruiser,
-            GameModel gameModel,
             PrefabFactory prefabFactory)
         {
-            Helper.AssertIsNotNull(aiCruiser, playerCruiser, gameModel, prefabFactory);
+            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory);
 
             AICruiser = aiCruiser;
             PlayerCruiser = playerCruiser;
-            _gameModel = gameModel;
             _prefabFactory = prefabFactory;
         }
 
@@ -36,7 +33,7 @@ namespace BattleCruisers.AI
             IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
 
             return
-                _gameModel.IsBuildingUnlocked(buildingKey)
+                DataProvider.GameModel.IsBuildingUnlocked(buildingKey)
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
         }
 
@@ -68,7 +65,7 @@ namespace BattleCruisers.AI
 
         public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category)
         {
-            return _gameModel.GetUnlockedBuildings(category);
+            return DataProvider.GameModel.GetUnlockedBuildings(category);
         }
     }
 }
