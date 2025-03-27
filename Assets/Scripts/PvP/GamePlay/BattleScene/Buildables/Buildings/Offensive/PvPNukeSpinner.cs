@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPNukeSpinner : MonoBehaviour
     {
-        private IConstantRotationController _activeRotationController, _constantRotationController, _dummyRotationController;
+        private ConstantRotationController _activeRotationController, _constantRotationController, _dummyRotationController;
 
         public float rotateSpeedInDegreesPerS;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void Initialise()
         {
             _constantRotationController = new ConstantRotationController(rotateSpeedInDegreesPerS, transform);
-            _dummyRotationController = new DummyConstantRotationController();
+            _dummyRotationController = new ConstantRotationController(0, transform);
             _activeRotationController = _dummyRotationController;
         }
 

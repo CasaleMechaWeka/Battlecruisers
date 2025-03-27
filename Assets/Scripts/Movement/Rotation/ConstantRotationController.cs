@@ -3,17 +3,17 @@ using UnityEngine;
 
 namespace BattleCruisers.Movement.Rotation
 {
-	public class ConstantRotationController : IConstantRotationController
+	public class ConstantRotationController
 	{
 		private float _rotateSpeedInDegreesPerS;
 		private Transform _transform;
-        private ITime _time;
+		private ITime _time;
 
 		public ConstantRotationController(float rotateSpeedInDegreesPerS, Transform transform)
 		{
 			_rotateSpeedInDegreesPerS = rotateSpeedInDegreesPerS;
 			_transform = transform;
-            _time = TimeBC.Instance;
+			_time = TimeBC.Instance;
 		}
 
 		public void Rotate()
