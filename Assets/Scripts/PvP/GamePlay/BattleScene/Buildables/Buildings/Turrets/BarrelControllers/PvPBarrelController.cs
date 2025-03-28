@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
 
-        private TurretStats _baseTurretStats;
+        protected TurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats TurretStats => _turretStatsWrapper;
 

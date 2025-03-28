@@ -22,6 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public override void StaticInitialise()
         {
+            _baseTurretStats = _laserTurretStats;
             base.StaticInitialise();
 
             _laserEmitter = GetComponentInChildren<PvPLaserEmitter>();
@@ -41,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPLaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPLaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);
 
-            IDurationProvider waitingDurationProvider = _laserTurretStats;
+            IDurationProvider waitingDurationProvider = TurretStats;
             IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
             return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
         }

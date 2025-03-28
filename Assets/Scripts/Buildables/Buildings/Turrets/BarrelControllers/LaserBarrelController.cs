@@ -20,6 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public override void StaticInitialise()
         {
+            _baseTurretStats = _laserTurretStats;
             base.StaticInitialise();
 
             _laserEmitter = GetComponentInChildren<LaserEmitter>();
@@ -30,6 +31,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         {
             _laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
             Assert.IsNotNull(_laserTurretStats);
+
             _laserTurretStats.Initialise();
             return _laserTurretStats;
         }
@@ -39,7 +41,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             LaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<LaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);
 
-            IDurationProvider waitingDurationProvider = _laserTurretStats;
+            IDurationProvider waitingDurationProvider = TurretStats;
             IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
             return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
         }
