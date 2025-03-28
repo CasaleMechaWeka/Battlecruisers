@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPNovaArtillery { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPNovaArtillery");
             public static PvPBuildingKey PvPUltraCIWS { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPUltraCIWS");
             public static PvPBuildingKey PvPGlobeShield { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPGlobeShield");
-            public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPSledgehammer");    
+            public static PvPBuildingKey PvPSledgehammer { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPSledgehammer");
             public static PvPBuildingKey PvPRailCannon { get; } = new PvPBuildingKey(BuildingCategory.Ultra, "PvPRailCannon");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
@@ -177,7 +177,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPBullet { get; } = new PvPProjectileKey("PvPBullet");
             public static PvPProjectileKey PvPHighCalibreBullet { get; } = new PvPProjectileKey("PvPHighCalibreBullet");
             public static PvPProjectileKey PvPTinyBullet { get; } = new PvPProjectileKey("PvPTinyBullet");
-            public static PvPProjectileKey PvPRailSlug { get; } = new PvPProjectileKey("PvPRailSlug");
+            //public static PvPProjectileKey PvPRailSlug { get; } = new PvPProjectileKey("PvPRailSlug");
             public static PvPProjectileKey PvPFlakBullet { get; } = new PvPProjectileKey("PvPFlakBullet");
             public static PvPProjectileKey PvPShellSmall { get; } = new PvPProjectileKey("PvPShellSmall");
             public static PvPProjectileKey PvPShellLarge { get; } = new PvPProjectileKey("PvPShellLarge");
@@ -198,7 +198,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPRailSlug, PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell,
+                PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, /*PvPRailSlug,*/ PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell,
                 PvPMissileSmall, PvPMissileMedium, PvPMissileMF, PvPMissileFirecracker, PvPMissileLarge, PvPMissileSmart,
                 PvPBomb, PvPStratBomb, PvPNuke, PvPRocket, PvPRocketSmall
             });
