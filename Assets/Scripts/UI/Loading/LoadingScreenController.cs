@@ -145,7 +145,7 @@ namespace BattleCruisers.UI.Loading
             idHighlight.SetActive(false);
         }
 
-        private void DisplayUserID()
+        private async void DisplayUserID()
         {
 #if !UNITY_EDITOR
             await System.Threading.Tasks.Task.Delay(10000);
