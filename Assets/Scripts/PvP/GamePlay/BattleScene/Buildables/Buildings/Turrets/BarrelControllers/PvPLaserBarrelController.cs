@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPLaserBarrelController : PvPBarrelController
     {
-        private PvPLaserTurretStats _laserTurretStats;
+        private LaserTurretStats _laserTurretStats;
         private PvPLaserEmitter _laserEmitter;
         private IManagedDisposable _laserCooldownEffect;
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override TurretStats SetupTurretStats()
         {
-            _laserTurretStats = gameObject.GetComponent<PvPLaserTurretStats>();
+            _laserTurretStats = gameObject.GetComponent<LaserTurretStats>();
             Assert.IsNotNull(_laserTurretStats);
             _laserTurretStats.Initialise();
             return _laserTurretStats;
