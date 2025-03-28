@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     {
         private HintManager _manager;
         private IBuildingMonitor _enemyBuildingMonitor, _friendlyBuildingMonitor;
-        private IFactoryMonitor _friendlyFactoryMonitor;
+        private FactoryMonitor _friendlyFactoryMonitor;
         private ICruiserDamageMonitor _playerCruiserDamageMonitor;
         private IDroneFocuser _playerCruiserDroneFocuser;
         private GameEndMonitor _gameEndMonitor;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         {
             _enemyBuildingMonitor = Substitute.For<IBuildingMonitor>();
             _friendlyBuildingMonitor = Substitute.For<IBuildingMonitor>();
-            _friendlyFactoryMonitor = Substitute.For<IFactoryMonitor>();
+            _friendlyFactoryMonitor = Substitute.For<FactoryMonitor>();
             _playerCruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
             _playerCruiserDroneFocuser = Substitute.For<IDroneFocuser>();
             _gameEndMonitor = Substitute.For<GameEndMonitor>();

@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public Pool<IPoolable<Vector3>, Vector3> HugeExplosionsPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
 
-        public PvPExplosionPoolProvider(IPvPPrefabFactory prefabFactory)
+        public PvPExplosionPoolProvider(PvPPrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
 
@@ -47,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFiveShellCluster);
         }
 
-        private Pool<IPoolable<Vector3>, Vector3> CreateExplosionPool(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
+        private Pool<IPoolable<Vector3>, Vector3> CreateExplosionPool(PvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(

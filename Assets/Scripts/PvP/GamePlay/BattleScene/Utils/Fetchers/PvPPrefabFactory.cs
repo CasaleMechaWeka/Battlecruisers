@@ -14,7 +14,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -33,7 +32,7 @@ using BattleCruisers.Effects.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
-    public class PvPPrefabFactory : IPvPPrefabFactory
+    public class PvPPrefabFactory
     {
         private readonly IPvPPrefabCache _prefabCache;
         private readonly SettingsManager _settingsManager;

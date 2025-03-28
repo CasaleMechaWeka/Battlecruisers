@@ -82,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
         public IPvPUIManager uiManager;
-        public IPvPPrefabFactory prefabFactory;
+        public PvPPrefabFactory prefabFactory;
         public PvPFactoryProvider factoryProvider;
         public PvPCruiser playerCruiser;
         public PvPCruiser enemyCruiser;
@@ -886,7 +886,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
 
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
-            IPvPPrefabFactory prefabFactory,
+            PvPPrefabFactory prefabFactory,
             IDeferrer deferrer)
         {
             return new PvPBattleHelper(prefabFactory, deferrer);

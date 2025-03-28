@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPExplosionFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private readonly PvPExplosionKey _explosionKey;
 
-        public PvPExplosionFactory(IPvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
+        public PvPExplosionFactory(PvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
         {
             PvPHelper.AssertIsNotNull(prefabFactory, explosionKey);
 

@@ -16,14 +16,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPPrefabOrganiser : IPvPPrefabOrganiser
     {
         private readonly ILoadout _playerLoadout;
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PvPPrefabOrganiser(ILoadout playerLoadout, IPvPPrefabFactory prefabFactory)
+        public PvPPrefabOrganiser(ILoadout playerLoadout, PvPPrefabFactory prefabFactory)
         {
             PvPHelper.AssertIsNotNull(playerLoadout, prefabFactory);
 
@@ -75,7 +75,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout, IPvPPrefabFactory prefabFactory)
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout, PvPPrefabFactory prefabFactory)
         {
             IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
 
@@ -180,7 +180,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return categoryToUnits;
         }
 
-        private IList<IPvPBuildableWrapper<IPvPUnit>> GetUnits(IList<PvPUnitKey> unitKeys, IPvPPrefabFactory prefabFactory)
+        private IList<IPvPBuildableWrapper<IPvPUnit>> GetUnits(IList<PvPUnitKey> unitKeys, PvPPrefabFactory prefabFactory)
         {
             IList<IPvPBuildableWrapper<IPvPUnit>> unitWrappers = new List<IPvPBuildableWrapper<IPvPUnit>>(unitKeys.Count);
 

@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public Pool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
 
-        public PvPShipDeathPoolProvider(IPvPPrefabFactory prefabFactory)
+        public PvPShipDeathPoolProvider(PvPPrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
 
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             TurtlePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPTurtle);
         }
 
-        private Pool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
+        private Pool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(PvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(

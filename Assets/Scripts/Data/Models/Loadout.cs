@@ -137,7 +137,7 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
-        public async Task<int> GetSelectedUnitVariantIndex(IPvPPrefabFactory prefabFactory, IPvPUnit unit)
+        public async Task<int> GetSelectedUnitVariantIndex(PvPPrefabFactory prefabFactory, IPvPUnit unit)
         {
             foreach (int index in _selectedVariants)
             {
@@ -188,7 +188,7 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
-        public async Task<int> GetSelectedBuildingVariantIndex(IPvPPrefabFactory prefabFactory, IPvPBuilding building)
+        public async Task<int> GetSelectedBuildingVariantIndex(PvPPrefabFactory prefabFactory, IPvPBuilding building)
         {
             foreach (int index in _selectedVariants)
             {

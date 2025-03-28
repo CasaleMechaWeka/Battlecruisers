@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeathFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private readonly PvPShipDeathKey _shipDeathKey;
 
-        public PvPShipDeathFactory(IPvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
+        public PvPShipDeathFactory(PvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
         {
             PvPHelper.AssertIsNotNull(prefabFactory, shipDeathKey);
 

@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     public class PvPBattleHelper : PvPBattleSceneHelper
     {
 
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
         private PvPUIManager _uiManager;
@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public PvPBattleHelper(
-            IPvPPrefabFactory prefabFactory,
+            PvPPrefabFactory prefabFactory,
             IDeferrer deferrer
         ) : base()
         {

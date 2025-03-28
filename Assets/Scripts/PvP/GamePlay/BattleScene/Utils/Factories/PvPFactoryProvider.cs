@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        public IPvPPrefabFactory PrefabFactory { get; }
+        public PvPPrefabFactory PrefabFactory { get; }
         public IPvPTargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public SettingsManager SettingsManager { get; }
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private PvPPoolProviders poolProviders;
         public PvPFactoryProvider(
             IPvPBattleSceneGodComponents components,
-            IPvPPrefabFactory prefabFactory,
+            PvPPrefabFactory prefabFactory,
             SettingsManager settingsManager
             )
         {

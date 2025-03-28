@@ -11,20 +11,20 @@ namespace BattleCruisers.Tests.AI.Drones
     public class FactoryAnalyzerTests
     {
         private IFactoryAnalyzer _analyzer;
-        private IFactoriesMonitor _factoriesMonitor;
-        private IList<IFactoryMonitor> _factoryMonitors;
-        private IFactoryMonitor _factoryMonitor;
-        private IFilter<IFactoryMonitor> _wastingDronesFilter;
+        private FactoriesMonitor _factoriesMonitor;
+        private IList<FactoryMonitor> _factoryMonitors;
+        private FactoryMonitor _factoryMonitor;
+        private IFilter<FactoryMonitor> _wastingDronesFilter;
 
         [SetUp]
         public void TestSetup()
         {
-            _factoriesMonitor = Substitute.For<IFactoriesMonitor>();
-            _factoryMonitor = Substitute.For<IFactoryMonitor>();
-            _wastingDronesFilter = Substitute.For<IFilter<IFactoryMonitor>>();
+            _factoriesMonitor = Substitute.For<FactoriesMonitor>();
+            _factoryMonitor = Substitute.For<FactoryMonitor>();
+            _wastingDronesFilter = Substitute.For<IFilter<FactoryMonitor>>();
 
-            _factoryMonitors = new List<IFactoryMonitor>();
-            ReadOnlyCollection<IFactoryMonitor> readonlyFactoryMonitors = new ReadOnlyCollection<IFactoryMonitor>(_factoryMonitors);
+            _factoryMonitors = new List<FactoryMonitor>();
+            ReadOnlyCollection<FactoryMonitor> readonlyFactoryMonitors = new ReadOnlyCollection<FactoryMonitor>(_factoryMonitors);
             _factoriesMonitor.CompletedFactories.Returns(readonlyFactoryMonitors);
 
             _analyzer = new FactoryAnalyzer(_factoriesMonitor, _wastingDronesFilter);

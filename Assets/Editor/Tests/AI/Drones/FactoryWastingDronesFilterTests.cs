@@ -10,8 +10,8 @@ namespace BattleCruisers.Tests.AI.Drones
 {
     public class FactoryWastingDronesFilterTests
     {
-        private IFilter<IFactoryMonitor> _filter;
-        private IFactoryMonitor _factoryMonitor;
+        private IFilter<FactoryMonitor> _filter;
+        private FactoryMonitor _factoryMonitor;
         private IFactory _factory;
         private IDroneConsumer _factoryDroneConsumer;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _filter = new FactoryWastingDronesFilter();
 
-            _factoryMonitor = Substitute.For<IFactoryMonitor>();
+            _factoryMonitor = Substitute.For<FactoryMonitor>();
 
             _factory = Substitute.For<IFactory>();
             _factoryMonitor.Factory.Returns(_factory);

@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         }
 
 
-        public IPvPBuilding GetBuilding(IPvPPrefabFactory prefabFactory)
+        public IPvPBuilding GetBuilding(PvPPrefabFactory prefabFactory)
         {
             if (prefabFactory == null)
             {
@@ -88,7 +88,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             return PrefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
         }
 
-        public IPvPUnit GetUnit(IPvPPrefabFactory prefabFactory)
+        public IPvPUnit GetUnit(PvPPrefabFactory prefabFactory)
         {
             IPvPUnit unit = null;
             if (prefabFactory != null)

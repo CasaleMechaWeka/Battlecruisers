@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.AI.Drones.BuildingMonitors
 {
     public class FactoryMonitorTests
     {
-        private IFactoryMonitor _monitor;
+        private FactoryMonitor _monitor;
         private IFactory _factory;
 
         [SetUp]

@@ -15,14 +15,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
     public class PvPConstructBuildingTask : ITask
     {
         private readonly IPrefabKey _buildingToConstruct;
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private readonly IPvPCruiserController _parentCruiser;
 
         private IPvPBuildable _building;
 
         public event EventHandler Completed;
 
-        public PvPConstructBuildingTask(IPrefabKey buildingToconstruct, IPvPPrefabFactory prefabFactory, IPvPCruiserController parentCruiser)
+        public PvPConstructBuildingTask(IPrefabKey buildingToconstruct, PvPPrefabFactory prefabFactory, IPvPCruiserController parentCruiser)
         {
             PvPHelper.AssertIsNotNull(buildingToconstruct, prefabFactory, parentCruiser);
 

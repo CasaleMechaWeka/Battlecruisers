@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
 {
     public class PvPTaskFactory : ITaskFactory
     {
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private readonly IPvPCruiserController _cruiser;
         private readonly IDeferrer _deferrer;
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
         public const float DEFAULT_DELAY_IN_S = 1.5f;
         public const float MIN_DELAY_IN_S = 0.1f;
 
-        public PvPTaskFactory(IPvPPrefabFactory prefabFactory, IPvPCruiserController cruiser, IDeferrer deferrer)
+        public PvPTaskFactory(PvPPrefabFactory prefabFactory, IPvPCruiserController cruiser, IDeferrer deferrer)
         {
             PvPHelper.AssertIsNotNull(prefabFactory, cruiser, deferrer);
 

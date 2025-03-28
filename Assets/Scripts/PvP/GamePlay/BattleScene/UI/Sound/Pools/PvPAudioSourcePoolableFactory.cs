@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sou
 {
     public class PvPAudioSourcePoolableFactory : IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>
     {
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private readonly IDeferrer _realTimeDeferrer;
 
-        public PvPAudioSourcePoolableFactory(IPvPPrefabFactory prefabFactory, IDeferrer realTimeDeferrer)
+        public PvPAudioSourcePoolableFactory(PvPPrefabFactory prefabFactory, IDeferrer realTimeDeferrer)
         {
             PvPHelper.AssertIsNotNull(prefabFactory, realTimeDeferrer);
 

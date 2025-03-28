@@ -6,10 +6,10 @@ namespace BattleCruisers.AI.Drones
 {
     public class FactoryAnalyzer : IFactoryAnalyzer
     {
-        private readonly IFactoriesMonitor _factoriesMonitor;
-        private readonly IFilter<IFactoryMonitor> _wastingDronesFilter;
+        private readonly FactoriesMonitor _factoriesMonitor;
+        private readonly IFilter<FactoryMonitor> _wastingDronesFilter;
 
-        public FactoryAnalyzer(IFactoriesMonitor factoriesMonitor, IFilter<IFactoryMonitor> wastingDronesFilter)
+        public FactoryAnalyzer(FactoriesMonitor factoriesMonitor, IFilter<FactoryMonitor> wastingDronesFilter)
         {
             Helper.AssertIsNotNull(factoriesMonitor, wastingDronesFilter);
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.AI.Drones
         {
             get
             {
-                return 
+                return
                     _factoriesMonitor
                         .CompletedFactories
                         .Any(_wastingDronesFilter.IsMatch);

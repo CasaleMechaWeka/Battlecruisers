@@ -8,11 +8,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPDroneFactory : IDroneFactory
     {
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
 
         public event EventHandler<DroneCreatedEventArgs> DroneCreated;
 
-        public PvPDroneFactory(IPvPPrefabFactory prefabFactory)
+        public PvPDroneFactory(PvPPrefabFactory prefabFactory)
         {
             Assert.IsNotNull(prefabFactory);
             _prefabFactory = prefabFactory;

@@ -19,11 +19,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IPvPComparableItemDetails<IPvPUnit> _unitDetails;
         private readonly IPvPComparableItemDetails<IPvPCruiser> _cruiserDetails;
 
-        private readonly IPvPPrefabFactory _prefabFactory;
+        private readonly PvPPrefabFactory _prefabFactory;
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public PvPItemDetailsManager(IPvPInformatorPanel informator, IPvPPrefabFactory prefabFactory)
+        public PvPItemDetailsManager(IPvPInformatorPanel informator, PvPPrefabFactory prefabFactory)
         {
             PvPHelper.AssertIsNotNull(informator, prefabFactory);
 

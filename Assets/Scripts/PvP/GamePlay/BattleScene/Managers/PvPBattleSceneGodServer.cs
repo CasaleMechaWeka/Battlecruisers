@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     {
         private static IPvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-        public IPvPPrefabFactory prefabFactory;
+        public PvPPrefabFactory prefabFactory;
         private PvPBattleSceneGodComponents components;
         public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
@@ -395,7 +395,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiser.pvp_DroneNumIncreased.Value = !playerBCruiser.pvp_DroneNumIncreased.Value;
         }
         private IPvPBattleSceneHelper CreatePvPBattleHelper(
-            IPvPPrefabFactory prefabFactory,
+            PvPPrefabFactory prefabFactory,
             IDeferrer deferrer)
         {
             return new PvPBattleHelper(prefabFactory, deferrer);

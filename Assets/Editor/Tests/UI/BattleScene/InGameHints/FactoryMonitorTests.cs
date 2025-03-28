@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
 {
     public class FactoryMonitorTests
     {
-        private IFactoryMonitor _factoryMonitor;
+        private FactoryMonitor _factoryMonitor;
         private ICruiserBuildingMonitor _buildingMonitor;
         private IBuilding _nonFactory;
         private IFactory _factory;
