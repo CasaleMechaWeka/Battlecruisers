@@ -14,7 +14,6 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
     public class StartConstructingBuildingStep : TutorialStep, IItemProvider<IBuildable>
     {
         private readonly IPrefabKey _buildingToConstruct;
-        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiserController _parentCruiser;
 
         private IBuilding _building;
@@ -22,14 +21,12 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         public StartConstructingBuildingStep(
             ITutorialStepArgs args,
             IPrefabKey buildingToConstruct,
-            PrefabFactory prefabFactory,
             ICruiserController parentCruiser)
             : base(args)
         {
-            Helper.AssertIsNotNull(buildingToConstruct, prefabFactory, parentCruiser);
+            Helper.AssertIsNotNull(buildingToConstruct, parentCruiser);
 
             _buildingToConstruct = buildingToConstruct;
-            _prefabFactory = prefabFactory;
             _parentCruiser = parentCruiser;
         }
 
@@ -42,7 +39,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         {
             base.Start(completionCallback);
 
-            IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab = PrefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
             Assert.IsTrue(_parentCruiser.SlotAccessor.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotSpecification));
             ISlot slot = _parentCruiser.SlotAccessor.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);

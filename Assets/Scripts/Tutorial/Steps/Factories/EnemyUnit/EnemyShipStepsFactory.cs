@@ -28,18 +28,17 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         public EnemyShipStepsFactory(
             TutorialStepArgsFactory argsFactory,
             EnemyUnitArgs enemyUnitArgs,
-            ISingleBuildableProvider unitBuiltProvider,
-            PrefabFactory prefabFactory)
+            ISingleBuildableProvider unitBuiltProvider)
             : base(argsFactory, enemyUnitArgs)
         {
             Helper.AssertIsNotNull(unitBuiltProvider);
 
             _unitBuiltProvider = unitBuiltProvider;
 
-            string attackBoatName = prefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.AttackBoat).Buildable.Name;
+            string attackBoatName = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.AttackBoat).Buildable.Name;
             _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.AttackBoat, attackBoatName);
 
-            string shipTurretName = prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiShipTurret).Buildable.Name;
+            string shipTurretName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiShipTurret).Buildable.Name;
             _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiShipTurret, shipTurretName);
 
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiShip, preferCruiserFront: true);

@@ -15,7 +15,6 @@ using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using UnityEngine.Assertions;
@@ -68,7 +67,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             FactoryProvider
                 = CreateFactoryProvider(
-                    helper.PrefabFactory,
                     flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
                     new SoundPlayerFactory(deferrer),
                     new DeferrerProvider(deferrer, realTimeDeferrer),
@@ -100,7 +98,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         }
 
         private FactoryProvider CreateFactoryProvider(
-            PrefabFactory prefabFactory,
             FlightPointsProviderFactory flightPointsProviderFactory,
             ISoundPlayerFactory soundPlayerFactory,
             DeferrerProvider deferrerProvider,
@@ -112,7 +109,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             factoryProvider.DeferrerProvider.Returns(deferrerProvider);
             factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
-            factoryProvider.PrefabFactory.Returns(prefabFactory);
             factoryProvider.Targets.Returns(targetFactories);
             factoryProvider.UpdaterProvider.Returns(updaterProvider);
             factoryProvider.SettingsManager.Returns(DataProvider.SettingsManager);
@@ -156,7 +152,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         {
             if (_poolProviders == null)
             {
-                IDroneFactory droneFactory = new DroneFactory(factoryProvider.PrefabFactory);
+                IDroneFactory droneFactory = new DroneFactory();
                 PoolProviders poolProviders = new PoolProviders(factoryProvider, uiManager, droneFactory);
                 factoryProvider.PoolProviders.Returns(poolProviders);
                 poolProviders.SetInitialCapacities();

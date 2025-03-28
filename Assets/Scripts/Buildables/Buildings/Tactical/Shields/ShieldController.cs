@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Static;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -9,6 +8,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -180,7 +180,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             Debug.Log(variantIndex);
             if (variantIndex != -1)
             {
-                VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 StatVariant statVariant = variant.statVariant;
                 maxHealth += statVariant.shield_health;
                 Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;

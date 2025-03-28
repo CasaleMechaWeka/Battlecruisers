@@ -42,10 +42,9 @@ namespace BattleCruisers.AI.TaskProducers
         public ReplaceDestroyedBuildingsTaskProducer(
             ITaskList tasks,
             ICruiserController cruiser,
-            PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             IList<BuildingKey> buildingKeys)
-            : base(tasks, cruiser, taskFactory, prefabFactory)
+            : base(tasks, cruiser, taskFactory)
         {
             _buildingNamesToKeys = CreateMap(buildingKeys);
 
@@ -60,7 +59,7 @@ namespace BattleCruisers.AI.TaskProducers
             {
                 Assert.IsNotNull(key);
                 //Debug.Log(key);
-                IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(key);
+                IBuildableWrapper<IBuilding> buildingWrapper = PrefabFactory.GetBuildingWrapperPrefab(key);
                 //Debug.Log(buildingWrapper.Buildable.keyName);
                 Assert.IsFalse(buildingNamesToKeys.ContainsKey(buildingWrapper.Buildable.keyName));
                 buildingNamesToKeys.Add(buildingWrapper.Buildable.keyName, key);

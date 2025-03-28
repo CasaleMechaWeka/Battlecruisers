@@ -4,7 +4,6 @@ using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
@@ -22,12 +21,11 @@ namespace BattleCruisers.AI.TaskProducers
         public AntiThreatTaskProducer(
             ITaskList tasks,
             ICruiserController cruiser,
-            PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             IDynamicBuildOrder antiThreatBuildOrder,
             IThreatMonitor threatMonitor,
             ISlotNumCalculator slotNumCalculator)
-            : base(tasks, cruiser, taskFactory, prefabFactory)
+            : base(tasks, cruiser, taskFactory)
         {
             Helper.AssertIsNotNull(antiThreatBuildOrder, threatMonitor, slotNumCalculator);
 

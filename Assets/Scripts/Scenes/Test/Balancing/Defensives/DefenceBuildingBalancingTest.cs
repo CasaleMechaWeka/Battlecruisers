@@ -8,6 +8,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Balancing.Spawners;
 using BattleCruisers.Scenes.Test.Balancing.Units;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using System;
@@ -26,7 +27,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private IFactory _offensiveFactory;
         private IList<ITarget> _completedOffensiveUnits;
         private IKillCountController _unitKillCount;
-		private IList<IBuilding> _defenceBuildings;
+        private IList<IBuilding> _defenceBuildings;
         private int _numOfDefenceBuildngsDestroyed;
         private IDeferrer _deferrer;
 
@@ -41,13 +42,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
         private const float DEFENCE_BUILDING_SPACING_MULTIPLIER = 4;
 
         private const string DEFENCE_BUILDINGS_COST_PREFIX = "Building cost (drone seconds): ";
-		
+
         public Camera Camera { get; private set; }
 
         public void Initialise(
             TestUtils.Helper baseHelper,
-            IPrefabKey unitKey, 
-            IPrefabKey basicDefenceBuildingKey, 
+            IPrefabKey unitKey,
+            IPrefabKey basicDefenceBuildingKey,
             IPrefabKey advancedDefenceBuildingKey)
         {
             Helper.AssertIsNotNull(baseHelper, unitKey, basicDefenceBuildingKey, advancedDefenceBuildingKey);
@@ -73,15 +74,15 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             Camera = GetComponentInChildren<Camera>();
             Camera.enabled = false;
 
-			SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
+            SetupTexts(basicDefenceBuildingKey, advancedDefenceBuildingKey);
             CreateDefenceBuildings(basicDefenceBuildingKey, advancedDefenceBuildingKey);
         }
 
         private void CreateDefenceBuildings(IPrefabKey basicDefenceBuildingKey, IPrefabKey advancedDefenceBuildingKey)
         {
             ICruiser blueCruiser = _helper.CreateCruiser(Direction.Right, Faction.Blues);
-            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left , Faction.Reds);
-            
+            ICruiser redCruiser = _helper.CreateCruiser(Direction.Left, Faction.Reds);
+
             // Need to creat factory BEFORE defence buildings, so the defence buildings are captured
             // by the factory's GlobalTargetFinder
             _offensiveFactory = CreateFactory(blueCruiser, redCruiser);
@@ -90,10 +91,10 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
             int basicBuildingsXPos = (int)transform.position.x + DEFENCE_BUILDINGS_OFFSET_IN_M;
             Vector2 basicBuildingsSpawnPos = new Vector2(basicBuildingsXPos, 0);
-            TestUtils.BuildableInitialisationArgs defenceBuildingArgs 
+            TestUtils.BuildableInitialisationArgs defenceBuildingArgs
                 = new TestUtils.BuildableInitialisationArgs(
-                    _helper, 
-                    Faction.Reds, 
+                    _helper,
+                    Faction.Reds,
                     parentCruiserDirection: Direction.Left,
                     updaterProvider: _helper.UpdaterProvider,
                     parentCruiser: redCruiser,
@@ -104,7 +105,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                 = buildingSpawner.SpawnBuildables(
                     basicDefenceBuildingKey,
                     numOfBasicDefenceBuildings,
-				    defenceBuildingArgs,
+                    defenceBuildingArgs,
                     basicBuildingsSpawnPos,
                     DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
@@ -115,7 +116,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
                 buildingSpawner.SpawnBuildables(
                     advancedDefenceBuildingKey,
                     numOfAdvancedDefenceBuildings,
-					defenceBuildingArgs,
+                    defenceBuildingArgs,
                     advancedBuildingsSpawnPosition,
                     DEFENCE_BUILDING_SPACING_MULTIPLIER);
 
@@ -127,7 +128,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
                 // For the GlobalTargetFinder
                 redCruiser.BuildingStarted += Raise.EventWith(new BuildingStartedEventArgs((IBuilding)defenceBuilding));
-            }            
+            }
         }
 
         private void SetupTexts(IPrefabKey basicDefenceKey, IPrefabKey advancedDefenceKey)
@@ -146,13 +147,13 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
 
         private int FindBuildingCost(IPrefabKey buildingKey, int numOfBuildings)
         {
-            IBuildableWrapper<IBuilding> building = _helper.PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
             return (int)building.Buildable.CostInDroneS * numOfBuildings;
         }
 
         private float FindUnitCost(IPrefabKey unitKey)
         {
-            IBuildableWrapper<IUnit> unit = _helper.PrefabFactory.GetUnitWrapperPrefab(unitKey);
+            IBuildableWrapper<IUnit> unit = PrefabFactory.GetUnitWrapperPrefab(unitKey);
             return unit.Buildable.CostInDroneS;
         }
 
@@ -165,7 +166,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Defensives
             {
                 _offensiveFactory.CompletedBuildable += (factory, eventArgs) =>
                 {
-                    _offensiveFactory.StartBuildingUnit(_helper.PrefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
+                    _offensiveFactory.StartBuildingUnit(PrefabFactory.GetUnitWrapperPrefab(_offensiveUnitKey));
                     _offensiveFactory.UnitCompleted += Factory_CompletedUnit;
                 };
 

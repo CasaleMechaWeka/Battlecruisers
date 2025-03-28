@@ -17,7 +17,6 @@ namespace BattleCruisers.Tests.AI.Tasks
         private ITask _task;
 
         private IPrefabKey _key;
-        private PrefabFactory _prefabFactory;
         private ICruiserController _cruiser;
         private ISlotAccessor _slotAccessor;
         private IBuildableWrapper<IBuilding> _prefab;
@@ -30,13 +29,12 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void SetuUp()
         {
             _key = Substitute.For<IPrefabKey>();
-            _prefabFactory = Substitute.For<PrefabFactory>();
             _slotAccessor = Substitute.For<ISlotAccessor>();
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.IsAlive.Returns(true);
             _cruiser.SlotAccessor.Returns(_slotAccessor);
 
-            _task = new ConstructBuildingTask(_key, _prefabFactory, _cruiser);
+            _task = new ConstructBuildingTask(_key, _cruiser);
 
             _task.Completed += _task_Completed;
 
@@ -53,7 +51,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Start_StartsConstructingBuilding_ReturnsTrue()
         {
-            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            PrefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
             _cruiser.SlotAccessor.GetFreeSlot(_building.SlotSpecification).Returns(_slot);
             _cruiser.ConstructBuilding(_prefab.UnityObject, _slot).Returns(_building);
@@ -68,7 +66,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void Start_CannotAffordBuilding_ReturnsFalse()
         {
             _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
-            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            PrefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _building.NumOfDronesRequired.Returns(4);
             IDroneManager droneManager = Substitute.For<IDroneManager>();
             droneManager.NumOfDrones = 2;
@@ -84,7 +82,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Start_CruiserIsNotAlive_ReturnsFalse()
         {
-            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            PrefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _cruiser.IsAlive.Returns(false);
 
             bool haveStarted = _task.Start();
@@ -97,7 +95,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         [Test]
         public void Start_NoAvailabeSlots_ReturnsFalse()
         {
-            _prefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
+            PrefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(false);
 
             bool haveStarted = _task.Start();

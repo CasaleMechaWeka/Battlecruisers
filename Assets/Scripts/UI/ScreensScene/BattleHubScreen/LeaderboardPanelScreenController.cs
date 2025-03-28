@@ -1,5 +1,4 @@
 using BattleCruisers.Scenes;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using Unity.Services.Leaderboards;
 using System.Collections.Generic;
@@ -16,9 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject leaderboardPanelPrefab;
         public Transform leaderboardPanelParent;
         public GameObject noData;
-        public async void Initialise(
-            IScreensSceneGod screensSceneGod,
-            PrefabFactory prefabFactory)
+        public async void Initialise(IScreensSceneGod screensSceneGod)
         {
             base.Initialise(screensSceneGod);
             noData.SetActive(false);
@@ -48,12 +45,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             if (entry.Rank == 0)
                             {
                                 TopPlayer.gameObject.SetActive(true);
-                                TopPlayer.Initialise(prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
+                                TopPlayer.Initialise(list[0], entry.Score, entry.Rank, list[1]);
                             }
                             else
                             {
                                 GameObject panel = Instantiate(leaderboardPanelPrefab, leaderboardPanelParent);
-                                panel.GetComponent<LeaderboradPanel>().Initialise(prefabFactory, list[0], entry.Score, entry.Rank, list[1]);
+                                panel.GetComponent<LeaderboradPanel>().Initialise(list[0], entry.Score, entry.Rank, list[1]);
                             }
                             i++;
                         }

@@ -13,28 +13,26 @@ namespace BattleCruisers.UI.BattleScene
     public class PrefabOrganiser : IPrefabOrganiser
     {
         private readonly ILoadout _playerLoadout;
-        private readonly PrefabFactory _prefabFactory;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PrefabOrganiser(ILoadout playerLoadout, PrefabFactory prefabFactory)
+        public PrefabOrganiser(ILoadout playerLoadout)
         {
-            Helper.AssertIsNotNull(playerLoadout, prefabFactory);
+            Helper.AssertIsNotNull(playerLoadout);
 
             _playerLoadout = playerLoadout;
-            _prefabFactory = prefabFactory;
         }
 
         public IList<IBuildingGroup> GetBuildingGroups()
         {
-            IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
+            IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout);
             return CreateBuildingGroups(buildings);
         }
 
-        private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(ILoadout loadout, PrefabFactory prefabFactory)
+        private IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> GetBuildingsFromKeys(ILoadout loadout)
         {
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>>();
 
@@ -47,7 +45,7 @@ namespace BattleCruisers.UI.BattleScene
 
                 foreach (BuildingKey buildingKey in buildingKeys)
                 {
-                    IBuildableWrapper<IBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                    IBuildableWrapper<IBuilding> buildingWrapper = PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
                     categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
                 }
             }
@@ -88,20 +86,20 @@ namespace BattleCruisers.UI.BattleScene
 
                 if (unitKeys.Count != 0)
                 {
-                    categoryToUnits[unitCategory] = GetUnits(unitKeys, _prefabFactory);
+                    categoryToUnits[unitCategory] = GetUnits(unitKeys);
                 }
             }
 
             return categoryToUnits;
         }
 
-        private IList<IBuildableWrapper<IUnit>> GetUnits(IList<UnitKey> unitKeys, PrefabFactory prefabFactory)
+        private IList<IBuildableWrapper<IUnit>> GetUnits(IList<UnitKey> unitKeys)
         {
             IList<IBuildableWrapper<IUnit>> unitWrappers = new List<IBuildableWrapper<IUnit>>(unitKeys.Count);
 
             foreach (UnitKey unitKey in unitKeys)
             {
-                IBuildableWrapper<IUnit> unitWrapper = prefabFactory.GetUnitWrapperPrefab(unitKey);
+                IBuildableWrapper<IUnit> unitWrapper = PrefabFactory.GetUnitWrapperPrefab(unitKey);
                 unitWrappers.Add(unitWrapper);
             }
             return unitWrappers;

@@ -87,17 +87,15 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
-        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         private Dictionary<HullType, List<int>> _unlockedBodykits = new Dictionary<HullType, List<int>>();
         private int _index;
         public CanvasGroupButton leftNavButton, rightNavButton;
 
-        public void Initialise(PrefabFactory prefabFactory, ISingleSoundPlayer soundPlayer)
+        public void Initialise(ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(prefabFactory, soundPlayer);
+            Helper.AssertIsNotNull(soundPlayer);
             Helper.AssertIsNotNull(leftNavButton, rightNavButton);
-            _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
             leftNavButton.Initialise(_soundPlayer, LeftNavButton_OnClicked);
@@ -178,7 +176,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (index < 0)
                 return;
-            Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+            Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
             GetComponent<ComparableCruiserDetailsController>().itemName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
             GetComponent<ComparableCruiserDetailsController>().itemImage.sprite = bodykit.BodykitImage;
@@ -239,7 +237,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             {
                 if (DataProvider.GameModel.PurchasedBodykits.Contains(i))
                 {
-                    Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i));
+                    Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i));
                     if (_unlockedBodykits.ContainsKey(bodykit.cruiserType))
                     {
                         _unlockedBodykits[bodykit.cruiserType].Add(i);

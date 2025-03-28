@@ -14,7 +14,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject PlaceNumber;
 
         public void Initialise(
-            PrefabFactory prefabFactory,
             string playerName,
             double eol,
             int placenumber,
@@ -23,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             string str_index = captain.ToUpper().Replace("CAPTAINEXO", "");
             int index = 0;
             int.TryParse(str_index, out index);
-            CaptainExo captainexo = prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+            CaptainExo captainexo = PrefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
             Text name = PlayerName.gameObject.GetComponent<Text>();
             name.text = playerName;
             Text eolString = EOL.GetComponent<Text>();

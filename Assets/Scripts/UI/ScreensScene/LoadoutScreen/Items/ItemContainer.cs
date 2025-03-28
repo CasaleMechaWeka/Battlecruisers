@@ -4,7 +4,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using System;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
@@ -35,10 +34,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             GameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+            ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer, prefabFactory, itemsPanel);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamilyTracker, gameModel, selectedHull, soundPlayer, itemsPanel);
             _itemsPanel = itemsPanel;
             _gameModel = gameModel;
 
@@ -48,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _newItemMark = GetComponentInChildren<NewItemMark>(includeInactive: true);
             Assert.IsNotNull(_newItemMark);
 
-            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, prefabFactory, gameModel);
+            ItemButton itemButton = InitialiseItemButton(itemDetailsManager, comparingFamilyTracker, selectedHull, soundPlayer, gameModel);
             itemButton.Clicked += ItemButton_Clicked;
 
             bool isItemUnlocked = IsUnlocked(gameModel);
@@ -65,7 +63,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             GameModel gameModel);
 
         private void ItemButton_Clicked(object sender, EventArgs e)

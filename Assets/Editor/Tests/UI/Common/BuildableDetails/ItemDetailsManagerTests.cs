@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _informatorPanel.UnitDetails.Returns(_unitDetails);
             _informatorPanel.CruiserDetails.Returns(_cruiserDetails);
 
-            _detailsManager = new ItemDetailsManager(_informatorPanel, null);
+            _detailsManager = new ItemDetailsManager(_informatorPanel);
 
             _building = Substitute.For<IBuilding>();
             _unit = Substitute.For<IUnit>();

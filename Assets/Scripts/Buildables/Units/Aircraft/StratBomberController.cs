@@ -14,9 +14,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
 {
@@ -110,7 +110,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             if (variantIndex != -1)
             {
-                VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
             }
             _bombStats = GetComponent<ProjectileStats>();

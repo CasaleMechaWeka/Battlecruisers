@@ -3,20 +3,13 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Utils.Fetchers;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class VariantOrganizer
     {
-        private readonly PrefabFactory _prefabFactory;
-
-        public VariantOrganizer(PrefabFactory prefabFactory)
-        {
-            _prefabFactory = prefabFactory;
-        }
-
         public List<int> GetOrganizedVariants()
         {
             var variants = new List<int>();
@@ -82,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             return StaticData.Variants
                 .Where(v =>
                 {
-                    var variant = _prefabFactory.GetVariant(
+                    var variant = PrefabFactory.GetVariant(
                         StaticPrefabKeys.Variants.GetVariantKey(v.Index));
                     return variant.parent.ToString() == building.PrefabName;
                 })
@@ -95,7 +88,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             return StaticData.Variants
                 .Where(v =>
                 {
-                    var variant = _prefabFactory.GetVariant(
+                    var variant = PrefabFactory.GetVariant(
                         StaticPrefabKeys.Variants.GetVariantKey(v.Index));
                     return variant.parent.ToString() == unit.PrefabName;
                 })

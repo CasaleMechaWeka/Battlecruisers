@@ -25,9 +25,9 @@ namespace BattleCruisers.Data.Models
 
         void AddUnit(UnitKey unitToAdd);
         void RemoveUnit(UnitKey unitToRemove);
-        VariantPrefab GetSelectedUnitVariant(PrefabFactory prefabFactory, IUnit unit);
-        int GetSelectedUnitVariantIndex(PrefabFactory prefabFactory, IUnit unit);
-        VariantPrefab GetSelectedBuildingVariant(PrefabFactory prefabFactory, IBuilding building);
-        int GetSelectedBuildingVariantIndex(PrefabFactory prefabFactory, IBuilding building);
+        VariantPrefab GetSelectedUnitVariant(IUnit unit);
+        int GetSelectedUnitVariantIndex(IUnit unit);
+        VariantPrefab GetSelectedBuildingVariant(IBuilding building);
+        int GetSelectedBuildingVariantIndex(IBuilding building);
     }
 }

@@ -2,7 +2,6 @@
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -14,18 +13,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class LootManager : ILootManager
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
-            PrefabFactory prefabFactory,
             IItemDetailsGroup middleDetailsGroup,
             IItemDetailsGroup leftDetailsGroup,
             IItemDetailsGroup rightDetailsGroup)
         {
-            Helper.AssertIsNotNull(prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
+            Helper.AssertIsNotNull(middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
 
-            _prefabFactory = prefabFactory;
             _middleDetailsGroup = middleDetailsGroup;
             _leftDetailsGroup = leftDetailsGroup;
             _rightDetailsGroup = rightDetailsGroup;
@@ -110,13 +106,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             {
                 case 1:
                     // Show item details in middle of screen
-                    unlockedLoot.Items[0].ShowItemDetails(_prefabFactory, _middleDetailsGroup);
+                    unlockedLoot.Items[0].ShowItemDetails(_middleDetailsGroup);
                     break;
 
                 case 2:
                     // Show item details to left and right sides of screen
-                    unlockedLoot.Items[0].ShowItemDetails(_prefabFactory, _leftDetailsGroup);
-                    unlockedLoot.Items[1].ShowItemDetails(_prefabFactory, _rightDetailsGroup);
+                    unlockedLoot.Items[0].ShowItemDetails(_leftDetailsGroup);
+                    unlockedLoot.Items[1].ShowItemDetails(_rightDetailsGroup);
                     break;
 
                 default:

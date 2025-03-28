@@ -5,7 +5,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
 {
@@ -14,7 +13,6 @@ namespace BattleCruisers.Tutorial
         public ICruiser PlayerCruiser { get; }
         public ICruiser AICruiser { get; }
         public ITutorialProvider TutorialProvider { get; }
-        public PrefabFactory PrefabFactory { get; }
         public IBattleSceneGodComponents Components { get; }
         public ICameraComponents CameraComponents { get; }
         public TopPanelComponents TopPanelComponents { get; }
@@ -28,7 +26,6 @@ namespace BattleCruisers.Tutorial
                 baseArgs.PlayerCruiser,
                 baseArgs.AICruiser,
                 baseArgs.TutorialProvider,
-                baseArgs.PrefabFactory,
                 baseArgs.Components,
                 baseArgs.CameraComponents,
                 baseArgs.TopPanelComponents,
@@ -42,7 +39,6 @@ namespace BattleCruisers.Tutorial
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ITutorialProvider tutorialProvider,
-            PrefabFactory prefabFactory,
             IBattleSceneGodComponents battleSceneGodComponents,
             ICameraComponents cameraComponents,
             TopPanelComponents topPanelComponents,
@@ -54,7 +50,6 @@ namespace BattleCruisers.Tutorial
             Helper.AssertIsNotNull(
                 playerCruiser,
                 aiCruiser,
-                prefabFactory,
                 battleSceneGodComponents,
                 cameraComponents,
                 topPanelComponents,
@@ -67,7 +62,6 @@ namespace BattleCruisers.Tutorial
             PlayerCruiser = playerCruiser;
             AICruiser = aiCruiser;
             TutorialProvider = tutorialProvider;
-            PrefabFactory = prefabFactory;
             Components = battleSceneGodComponents;
             CameraComponents = cameraComponents;
             TopPanelComponents = topPanelComponents;

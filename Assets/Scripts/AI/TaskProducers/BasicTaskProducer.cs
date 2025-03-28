@@ -20,10 +20,9 @@ namespace BattleCruisers.AI.TaskProducers
         public BasicTaskProducer(
             ITaskList tasks,
             ICruiserController cruiser,
-            PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             IDynamicBuildOrder buildOrder)
-            : base(tasks, cruiser, taskFactory, prefabFactory)
+            : base(tasks, cruiser, taskFactory)
         {
             Assert.IsNotNull(buildOrder);
 
@@ -61,7 +60,7 @@ namespace BattleCruisers.AI.TaskProducers
             while (_buildOrder.MoveNext())
             {
                 IPrefabKey buildingKey = _buildOrder.Current;
-                IBuildableWrapper<IBuilding> buildingWrapper = _prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+                IBuildableWrapper<IBuilding> buildingWrapper = PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
                 if (CanConstructBuilding(buildingWrapper.Buildable))
                 {

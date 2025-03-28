@@ -9,7 +9,6 @@ namespace BattleCruisers.Scenes.Test.Performance
 {
     public class ExplosionPerformanceTestGod : TestGodBase
     {
-        private PrefabFactory _prefabFactory;
 
         public float spawnRadiusXInM = 8;
         public float spawnRadiusYInM = 5;
@@ -22,14 +21,9 @@ namespace BattleCruisers.Scenes.Test.Performance
             };
         }
 
-        protected override void Setup(Utilities.Helper helper)
-        {
-            _prefabFactory = helper.PrefabFactory;
-        }
-
         private void Update()
         {
-            IPoolable<Vector3> explosion = _prefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.FlakExplosion);
+            IPoolable<Vector3> explosion = PrefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.FlakExplosion);
             explosion.Activate(FindRandomSpawnPosition());
         }
 

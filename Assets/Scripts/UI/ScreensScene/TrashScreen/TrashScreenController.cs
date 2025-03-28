@@ -14,7 +14,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashScreenController : ScreenController
     {
-        private PrefabFactory _prefabFactory;
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
         private IMusicPlayer _musicPlayer;
 
@@ -41,7 +40,6 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public void Initialise(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer)
@@ -49,9 +47,8 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(trashTalkBubbles, cruisers, sky, enemyPrefab, startBattleButton, levelTrashDataList, homeButton);
-            Helper.AssertIsNotNull(prefabFactory, levelTrashDataList, musicPlayer);
+            Helper.AssertIsNotNull(levelTrashDataList, musicPlayer);
 
-            _prefabFactory = prefabFactory;
             _levelTrashDataList = levelTrashDataList;
             _sideQuestTrashDataList = sideQuestTrashDataList;
             _musicPlayer = musicPlayer;
@@ -117,7 +114,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             {
                 int sideQuestID = ApplicationModel.SelectedSideQuestID;
                 ISideQuestData sideQuestData = StaticData.SideQuests[sideQuestID];
-                enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(sideQuestData.Hull);
+                enemyCruiserPrefab = PrefabFactory.GetCruiserPrefab(sideQuestData.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + sideQuestData.SkyMaterial + SPRITES_FILE_EXTENSION;
 
                 trashTalkData = await _sideQuestTrashDataList.GetTrashTalkAsync(ApplicationModel.SelectedSideQuestID + 1);
@@ -126,7 +123,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             {
                 int levelIndex = ApplicationModel.SelectedLevel - 1;
                 ILevel level = StaticData.Levels[levelIndex];
-                enemyCruiserPrefab = _prefabFactory.GetCruiserPrefab(level.Hull);
+                enemyCruiserPrefab = PrefabFactory.GetCruiserPrefab(level.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
 
                 trashTalkData = await _levelTrashDataList.GetTrashTalkAsync(ApplicationModel.SelectedLevel);
@@ -136,7 +133,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             SetupEnemyCharacter(trashTalkData);
 
             // Cruisers
-            ICruiser playerCruiserPrefab = _prefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
+            ICruiser playerCruiserPrefab = PrefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
             cruisers.Initialise(playerCruiserPrefab, enemyCruiserPrefab);
 
             // Sky

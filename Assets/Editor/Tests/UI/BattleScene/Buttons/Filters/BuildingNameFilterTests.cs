@@ -12,7 +12,6 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
     {
         private BuildingNameFilter _filter;
 
-        private PrefabFactory _prefabFactory;
         private IBuildable _buildableToFilter;
         private IPrefabKey _permittedBuildingKey;
         private IBuildableWrapper<IBuilding> _permittedBuildingWrapper;
@@ -22,8 +21,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
         [SetUp]
         public void SetuUp()
         {
-            _prefabFactory = Substitute.For<PrefabFactory>();
-            _filter = new BuildingNameFilter(_prefabFactory);
+            _filter = new BuildingNameFilter();
 
             _eventCounter = 0;
             _filter.PotentialMatchChange += (sender, e) => _eventCounter++;
@@ -35,7 +33,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
 
             _permittedBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _permittedBuildingWrapper.Buildable.Returns(_permittedBuilding);
-            _prefabFactory.GetBuildingWrapperPrefab(_permittedBuildingKey).Returns(_permittedBuildingWrapper);
+            PrefabFactory.GetBuildingWrapperPrefab(_permittedBuildingKey).Returns(_permittedBuildingWrapper);
         }
 
         [Test]
@@ -44,7 +42,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
             _filter.PermittedBuilding = null;
 
             Assert.AreEqual(1, _eventCounter);
-            _prefabFactory.DidNotReceiveWithAnyArgs().GetBuildingWrapperPrefab(default);
+            PrefabFactory.GetBuildingWrapperPrefab(default);
         }
 
         [Test]
@@ -53,7 +51,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
             _filter.PermittedBuilding = _permittedBuildingKey;
 
             Assert.AreEqual(1, _eventCounter);
-            _prefabFactory.Received().GetBuildingWrapperPrefab(_permittedBuildingKey);
+            PrefabFactory.GetBuildingWrapperPrefab(_permittedBuildingKey);
         }
 
         [Test]

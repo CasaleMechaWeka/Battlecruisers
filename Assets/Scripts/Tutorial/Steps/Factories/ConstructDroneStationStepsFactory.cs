@@ -12,27 +12,24 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly PrefabFactory _prefabFactory;
 
         public ConstructDroneStationStepsFactory(
             TutorialStepArgsFactory argsFactory,
             ConstructBuildingStepsFactory constructBuildingStepsFactory,
-            ExplanationDismissableStepFactory explanationDismissableStepFactory,
-            PrefabFactory prefabFactory)
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory, prefabFactory);
+            Helper.AssertIsNotNull(constructBuildingStepsFactory, explanationDismissableStepFactory);
 
             _constructBuildingStepsFactory = constructBuildingStepsFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
-            _prefabFactory = prefabFactory;
         }
 
         public IList<ITutorialStep> CreateSteps()
         {
             List<ITutorialStep> steps = new List<ITutorialStep>();
 
-            string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
+            string builderBayName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
             string promptBase = LocTableCache.TutorialTable.GetString("Steps/ConstructDroneStation/Prompt");
 
             steps.AddRange(

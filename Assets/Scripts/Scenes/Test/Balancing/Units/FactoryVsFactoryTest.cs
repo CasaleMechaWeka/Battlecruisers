@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,8 +50,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             ShowScenarioDetails(leftUnitKey, rightUnitKey);
 
-            IBuildableWrapper<IUnit> leftUnit = parentHelper.PrefabFactory.GetUnitWrapperPrefab(leftUnitKey);
-            IBuildableWrapper<IUnit> rightUnit = parentHelper.PrefabFactory.GetUnitWrapperPrefab(rightUnitKey);
+            IBuildableWrapper<IUnit> leftUnit = PrefabFactory.GetUnitWrapperPrefab(leftUnitKey);
+            IBuildableWrapper<IUnit> rightUnit = PrefabFactory.GetUnitWrapperPrefab(rightUnitKey);
 
             _leftKillCount = InitialiseKillCount("LeftFactoryKillCount", rightUnit.Buildable);
             _rightKillCount = InitialiseKillCount("RightFactoryKillCount", leftUnit.Buildable);

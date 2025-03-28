@@ -46,13 +46,12 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+            ISingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(battleButton, homeButton, difficultyDropdown, strategyDropdown, playerCruiserDropdown, aiCruiserDropdown);
-            Helper.AssertIsNotNull(soundPlayer, prefabFactory);
+            Helper.AssertIsNotNull(soundPlayer);
 
             _unlockedHulls = DataProvider.GameModel.UnlockedHulls.ToList();
             _playableHulls = _unlockedHulls.ToList();
@@ -70,8 +69,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             homeButton.Initialise(soundPlayer, Home, this);
             difficultyDropdown.Initialise(FindDefaultDifficulty());
             InitialiseStrategyDropdown();
-            InitialiseCruiserDropdown(playerCruiserDropdown, prefabFactory, FindDefaultPlayerCruiser(prefabFactory));
-            InitialiseCruiserDropdown(aiCruiserDropdown, prefabFactory, FindDefaultAICruiser(prefabFactory));
+            InitialiseCruiserDropdown(playerCruiserDropdown, FindDefaultPlayerCruiser());
+            InitialiseCruiserDropdown(aiCruiserDropdown, FindDefaultAICruiser());
         }
 
         private Difficulty FindDefaultDifficulty()
@@ -110,14 +109,14 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             strategyDropdown.Initialise(strategyStrings, initialValue);
         }
 
-        private void InitialiseCruiserDropdown(StringDropdown dropdown, PrefabFactory prefabFactory, string defaultCruiser)
+        private void InitialiseCruiserDropdown(StringDropdown dropdown, string defaultCruiser)
         {
             IList<string> hullNames = new List<string>();
 
             foreach (HullKey hull in _playableHulls)
             {
                 // Use cruiser prefab name, as this has been localised
-                ICruiser cruiser = prefabFactory.GetCruiserPrefab(hull);
+                ICruiser cruiser = PrefabFactory.GetCruiserPrefab(hull);
                 hullNames.Add(cruiser.Name);
             }
 
@@ -125,12 +124,12 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             dropdown.Initialise(hullNames, defaultCruiser);
         }
 
-        private string FindDefaultPlayerCruiser(PrefabFactory prefabFactory)
+        private string FindDefaultPlayerCruiser()
         {
             if (Skirmish != null
                 && !Skirmish.WasRandomPlayerCruiser)
             {
-                ICruiser cruiser = prefabFactory.GetCruiserPrefab(Skirmish.PlayerCruiser);
+                ICruiser cruiser = PrefabFactory.GetCruiserPrefab(Skirmish.PlayerCruiser);
                 return cruiser.Name;
             }
             else
@@ -139,12 +138,12 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             }
         }
 
-        private string FindDefaultAICruiser(PrefabFactory prefabFactory)
+        private string FindDefaultAICruiser()
         {
             if (Skirmish != null
                 && !Skirmish.WasRandomAICruiser)
             {
-                ICruiser cruiser = prefabFactory.GetCruiserPrefab(Skirmish.AICruiser);
+                ICruiser cruiser = PrefabFactory.GetCruiserPrefab(Skirmish.AICruiser);
                 return cruiser.Name;
             }
             else

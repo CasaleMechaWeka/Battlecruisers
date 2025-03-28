@@ -15,8 +15,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -107,7 +107,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             {
                 if (variantIndex != -1)
                 {
-                    VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                    VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                     // turret stats
                     _baseTurretStats.ApplyVariantStats(variant.statVariant);
                     GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
@@ -119,7 +119,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             int variantIndex = unit.variantIndex;
             if (variantIndex != -1)
             {
-                VariantPrefab variant = BattleSceneGod.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 // turret stats
                 _baseTurretStats.ApplyVariantStats(variant.statVariant);
                 GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);

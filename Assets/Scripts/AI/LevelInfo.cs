@@ -11,26 +11,23 @@ namespace BattleCruisers.AI
 {
     public class LevelInfo
     {
-        private readonly PrefabFactory _prefabFactory;
 
         public ICruiserController AICruiser { get; }
         public ICruiserController PlayerCruiser { get; }
 
         public LevelInfo(
             ICruiserController aiCruiser,
-            ICruiserController playerCruiser,
-            PrefabFactory prefabFactory)
+            ICruiserController playerCruiser)
         {
-            Helper.AssertIsNotNull(aiCruiser, playerCruiser, prefabFactory);
+            Helper.AssertIsNotNull(aiCruiser, playerCruiser);
 
             AICruiser = aiCruiser;
             PlayerCruiser = playerCruiser;
-            _prefabFactory = prefabFactory;
         }
 
         public bool CanConstructBuilding(BuildingKey buildingKey)
         {
-            IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
+            IBuilding building = PrefabFactory.GetBuildingWrapperPrefab(buildingKey).Buildable;
 
             return
                 DataProvider.GameModel.IsBuildingUnlocked(buildingKey)
@@ -54,7 +51,7 @@ namespace BattleCruisers.AI
 
             foreach (BuildingKey offensive in offensives)
             {
-                IBuilding building = _prefabFactory.GetBuildingWrapperPrefab(offensive).Buildable;
+                IBuilding building = PrefabFactory.GetBuildingWrapperPrefab(offensive).Buildable;
                 if (building.SlotSpecification.SlotType == slotType)
                 {
                     return true;

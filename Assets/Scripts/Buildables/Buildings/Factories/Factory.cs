@@ -77,7 +77,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         private void ApplyVariantIfExist(IUnit unit)
         {
-            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(unit);
             if (variant != null)
             {
                 SetupDroneConsumer(unit.NumOfDronesRequired + variant.statVariant.drone_num, showDroneFeedback: false);

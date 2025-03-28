@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Presentables;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
@@ -152,11 +151,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void ApplyVariantIfExist(IBuilding building)
         {
-            PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
+            int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(building);
             if (index != -1)
             {
-                VariantPrefab variant = prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;
@@ -181,11 +179,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
         public void ApplyVariantIfExist(IUnit unit)
         {
-            PrefabFactory prefabFactory = BattleSceneGod.Instance.factoryProvider.PrefabFactory;
-            int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
+            int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(unit);
             if (index != -1)
             {
-                VariantPrefab variant = prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;

@@ -22,14 +22,14 @@ using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
 {
-    public class PrefabFactory
+    public static class PrefabFactory
     {
-        public IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
+        public static IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return PrefabCache.GetBuilding(buildingKey);
         }
 
-        public IBuilding CreateBuilding(
+        public static IBuilding CreateBuilding(
             IBuildableWrapper<IBuilding> buildingWrapperPrefab,
             IUIManager uiManager,
             FactoryProvider factoryProvider)
@@ -37,12 +37,12 @@ namespace BattleCruisers.Utils.Fetchers
             return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager, factoryProvider);
         }
 
-        public IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
+        public static IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
         {
             return PrefabCache.GetUnit(unitKey);
         }
 
-        public IUnit CreateUnit(
+        public static IUnit CreateUnit(
             IBuildableWrapper<IUnit> unitWrapperPrefab,
             IUIManager uiManager,
             FactoryProvider factoryProvider)
@@ -50,7 +50,7 @@ namespace BattleCruisers.Utils.Fetchers
             return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager, factoryProvider);
         }
 
-        private TBuildable CreateBuildable<TBuildable>(
+        private static TBuildable CreateBuildable<TBuildable>(
             BuildableWrapper<TBuildable> buildableWrapperPrefab,
             IUIManager uiManager,
             FactoryProvider factoryProvider) where TBuildable : class, IBuildable
@@ -66,33 +66,33 @@ namespace BattleCruisers.Utils.Fetchers
             return buildableWrapper.Buildable;
         }
 
-        public Cruiser GetCruiserPrefab(IPrefabKey hullKey)
+        public static Cruiser GetCruiserPrefab(IPrefabKey hullKey)
         {
             return PrefabCache.GetCruiser(hullKey);
         }
 
-        public Cruiser CreateCruiser(Cruiser cruiserPrefab)
+        public static Cruiser CreateCruiser(Cruiser cruiserPrefab)
         {
             Cruiser cruiser = Object.Instantiate(cruiserPrefab);
             cruiser.StaticInitialise();
             return cruiser;
         }
 
-        public IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey)
+        public static IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey)
         {
             ExplosionController explosionPrefab = PrefabCache.GetExplosion(explosionKey);
             ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             return newExplosion.Initialise();
         }
 
-        public IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)
+        public static IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)
         {
             ShipDeathInitialiser shipDeathPrefab = PrefabCache.GetShipDeath(shipDeathKey);
             ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             return newShipDeath.CreateShipDeath();
         }
 
-        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, FactoryProvider factoryProvider)
+        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey, FactoryProvider factoryProvider)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
@@ -105,14 +105,14 @@ namespace BattleCruisers.Utils.Fetchers
             return projectile;
         }
 
-        public IDroneController CreateDrone()
+        public static IDroneController CreateDrone()
         {
             DroneController newDrone = Object.Instantiate(PrefabCache.Drone);
             newDrone.StaticInitialise();
             return newDrone;
         }
 
-        public IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
+        public static IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
 
@@ -120,17 +120,17 @@ namespace BattleCruisers.Utils.Fetchers
             return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
 
-        public CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
+        public static CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
         {
             return PrefabCache.GetCaptainExo(captainExoKey);
         }
 
-        public Bodykit GetBodykit(IPrefabKey bodykitKey)
+        public static Bodykit GetBodykit(IPrefabKey bodykitKey)
         {
             return PrefabCache.GetBodykit(bodykitKey);
         }
 
-        public VariantPrefab GetVariant(IPrefabKey variantKey)
+        public static VariantPrefab GetVariant(IPrefabKey variantKey)
         {
             return PrefabCache.GetVariant(variantKey);
         }

@@ -4,7 +4,6 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Tutorial
 {
@@ -13,7 +12,6 @@ namespace BattleCruisers.Tutorial
         ICruiser PlayerCruiser { get; }
         ICruiser AICruiser { get; }
         ITutorialProvider TutorialProvider { get; }
-        PrefabFactory PrefabFactory { get; }
         IBattleSceneGodComponents Components { get; }
         ICameraComponents CameraComponents { get; }
         TopPanelComponents TopPanelComponents { get; }

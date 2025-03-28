@@ -22,10 +22,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public override bool ShowInGameHints => false;
         public override IPrefabKey PlayerCruiser => _skirmish.PlayerCruiser;
 
-        public SkirmishHelper(
-            PrefabFactory prefabFactory,
-            IDeferrer deferrer)
-            : base(prefabFactory, deferrer)
+        public SkirmishHelper(IDeferrer deferrer)
+            : base(deferrer)
         {
             _skirmish = DataProvider.GameModel.Skirmish;
             Assert.IsNotNull(_skirmish);

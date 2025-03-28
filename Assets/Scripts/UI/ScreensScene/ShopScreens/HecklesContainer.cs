@@ -4,7 +4,6 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using DG.Tweening;
 using System;
@@ -28,13 +27,11 @@ namespace BattleCruisers.UI.ScreensScene
         public Text hecklePrice;
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             priceLabel = hecklePrice.transform.parent.gameObject;
         }
@@ -53,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene
                         if (result)
                         {
                             //    await DataProvider.SyncCurrencyFromCloud();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                            PlayerInfoPanelController.Instance.UpdateInfo();
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
@@ -119,7 +116,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Subtract from local economy:
                         DataProvider.GameModel.Coins -= currentHeckleData.HeckleCost;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo();
 
                         // Keep track of transaction for later:
                         DataProvider.GameModel.CoinsChange -= currentHeckleData.HeckleCost;

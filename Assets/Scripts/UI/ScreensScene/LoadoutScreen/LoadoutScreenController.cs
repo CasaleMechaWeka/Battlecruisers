@@ -16,7 +16,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class LoadoutScreenController : ScreenController, ILoadoutScreenController, IManagedDisposable
     {
-        private PrefabFactory _prefabFactory;
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourController _loadoutItemColourController;
@@ -30,17 +29,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+            ISingleSoundPlayer soundPlayer)
         {
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
 
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton);
-            Helper.AssertIsNotNull(prefabFactory);
-
-            _prefabFactory = prefabFactory;
 
             itemDetailsPanel.Initialise();
 
@@ -70,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     soundPlayer,
                     cruiserDetails,
                     comparisonStateTracker,
-                    new HullNameToKey(DataProvider.GameModel.UnlockedHulls, prefabFactory));
+                    new HullNameToKey(DataProvider.GameModel.UnlockedHulls));
 
             IList<IItemButton> itemButtons
                 = itemPanels.Initialise(
@@ -78,8 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     ItemType.Hull,
                     _comparingFamilyTracker,
                     selectCruiserButton.SelectedHull,
-                    soundPlayer,
-                    prefabFactory);
+                    soundPlayer);
 
             _loadoutItemColourController = new LoadoutItemColourController(_itemDetailsManager, itemButtons);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, DataProvider.GameModel, itemButtons, _comparingFamilyTracker);
@@ -92,7 +86,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void ShowPlayerHull()
         {
-            ICruiser playerCruiser = _prefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
+            ICruiser playerCruiser = PrefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
             _itemDetailsManager.ShowDetails(playerCruiser);
         }
 

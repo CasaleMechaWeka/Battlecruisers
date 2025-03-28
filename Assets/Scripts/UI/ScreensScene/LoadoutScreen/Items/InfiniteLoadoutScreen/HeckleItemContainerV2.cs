@@ -3,7 +3,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
 using IItemDetailsManager = BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.IItemDetailsManager;
@@ -20,7 +19,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             GameModel gameModel)
         {
             HeckleButtonV2 heckleButton = GetComponentInChildren<HeckleButtonV2>(includeInactive: true);
@@ -29,8 +27,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             heckleButton.selectHeckleButton = toggleSelectionButton;
             return heckleButton;
         }
-
-
 
         // Heckle button is not working as like other category buttons
         protected override bool IsUnlocked(GameModel gameModel)

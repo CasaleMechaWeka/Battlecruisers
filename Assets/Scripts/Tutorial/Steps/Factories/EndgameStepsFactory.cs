@@ -19,7 +19,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly PrefabFactory _prefabFactory;
 
         public EndgameStepsFactory(
             TutorialStepArgsFactory argsFactory,
@@ -27,18 +26,16 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             AutoNavigationStepFactory autoNavigationStepFactory,
             ITutorialProvider tutorialProvider,
             ICruiser playerCruiser,
-            ICruiser aiCruiser,
-            PrefabFactory prefabFactory)
+            ICruiser aiCruiser)
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser, prefabFactory);
+            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser);
 
             _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
             _autoNavigationStepFactory = autoNavigationStepFactory;
             _tutorialProvider = tutorialProvider;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
-            _prefabFactory = prefabFactory;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -55,7 +52,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
 
             // Wait for artillery to complete
-            string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
+            string artilleryName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
             string waitForArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForArtillery");
             steps.Add(
                 new BuildableCompletedWaitStep(

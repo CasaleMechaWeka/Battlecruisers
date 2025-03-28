@@ -13,7 +13,6 @@ using BattleCruisers.UI.ScreensScene.PostBattleScreen.States;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -65,7 +64,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             IMusicPlayer musicPlayer,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashTalkList,
@@ -82,10 +80,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 postTutorialButtonsPanel, postBattleButtonsPanel,
                 postSkirmishButtonsPanel, appraisalSection,
                 appraisalButtonsPanel,
-                prefabFactory, musicPlayer,
+                musicPlayer,
                 difficultyIndicators);
 
-            _lootManager = CreateLootManager(prefabFactory);
+            _lootManager = CreateLootManager();
             _gameMode = ApplicationModel.Mode;
             Debug.Log(_gameMode);
 
@@ -224,13 +222,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ShowDifficultySymbolIfNeeded(postBattleState, difficultyIndicators);
         }
 
-        private ILootManager CreateLootManager(PrefabFactory prefabFactory)
+        private ILootManager CreateLootManager()
         {
             IItemDetailsGroup middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
             IItemDetailsGroup leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
             IItemDetailsGroup rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
 
-            return new LootManager(prefabFactory, middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
+            return new LootManager(middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
         }
 
         private IItemDetailsGroup InitialiseGroup(string componentPath)

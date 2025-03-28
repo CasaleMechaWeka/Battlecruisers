@@ -15,7 +15,6 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
     {
         private ITutorialStep _tutorialStep;
         private IPrefabKey _unitToConstruct;
-        private PrefabFactory _prefabFactory;
         private IItemProvider<IFactory> _factoryProvider;
 
         [SetUp]
@@ -24,10 +23,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
             base.SetuUp();
 
             _unitToConstruct = Substitute.For<IPrefabKey>();
-            _prefabFactory = Substitute.For<PrefabFactory>();
             _factoryProvider = Substitute.For<IItemProvider<IFactory>>();
 
-            _tutorialStep = new StartConstructingUnitStep(_args, _unitToConstruct, _prefabFactory, _factoryProvider);
+            _tutorialStep = new StartConstructingUnitStep(_args, _unitToConstruct, _factoryProvider);
         }
 
         [Test]
@@ -35,7 +33,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
         {
             IBuildableWrapper<IUnit> buildableWrapper = Substitute.For<IBuildableWrapper<IUnit>>();
 
-            _prefabFactory
+            PrefabFactory
                 .GetUnitWrapperPrefab(_unitToConstruct)
                 .Returns(buildableWrapper);
 

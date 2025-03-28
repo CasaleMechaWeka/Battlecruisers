@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -24,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings
 		{
 			base.OnBuildableCompleted();
 
-			_satellite = _factoryProvider.PrefabFactory.CreateUnit(satellitePrefab, _uiManager, _factoryProvider);
+			_satellite = PrefabFactory.CreateUnit(satellitePrefab, _uiManager, _factoryProvider);
 			_satellite.Position = transform.position + SpawnPositionAdjustment;
 
 			_satellite.Activate(

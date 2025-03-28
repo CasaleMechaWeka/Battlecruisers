@@ -6,14 +6,12 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
     public class TaskProducerFactory : ITaskProducerFactory
     {
         private readonly ICruiserController _aiCruiser;
-        private readonly PrefabFactory _prefabFactory;
         private readonly ITaskFactory _taskFactory;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
@@ -26,26 +24,24 @@ namespace BattleCruisers.AI.TaskProducers
 
         public TaskProducerFactory(
             ICruiserController aiCruiser,
-            PrefabFactory prefabFactory,
             ITaskFactory taskFactory,
             IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(aiCruiser, prefabFactory, taskFactory, threatMonitorFactory);
+            Helper.AssertIsNotNull(aiCruiser, taskFactory, threatMonitorFactory);
 
             _aiCruiser = aiCruiser;
-            _prefabFactory = prefabFactory;
             _taskFactory = taskFactory;
             _threatMonitorFactory = threatMonitorFactory;
         }
 
         public ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder)
         {
-            return new BasicTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, buildOrder);
+            return new BasicTaskProducer(tasks, _aiCruiser, _taskFactory, buildOrder);
         }
 
         public ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
         {
-            return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, StaticData.BuildingKeys);
+            return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _taskFactory, StaticData.BuildingKeys);
         }
 
         public ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder)
@@ -55,7 +51,7 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
             ISlotNumCalculator slotNumCalculator = new AntiAirSlotNumCalculator(maxNumOfDeckSlots);
 
-            return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
+            return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
         }
 
         public ITaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IDynamicBuildOrder antiNavalBuildOrder)
@@ -65,7 +61,7 @@ namespace BattleCruisers.AI.TaskProducers
             int maxNumOfDeckSlots = Helper.Half(_aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
             ISlotNumCalculator slotNumCalculator = new AntiNavalSlotNumCalculator(maxNumOfDeckSlots);
 
-            return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
+            return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
         }
 
         public ITaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder)
@@ -73,7 +69,7 @@ namespace BattleCruisers.AI.TaskProducers
             IThreatMonitor rocketLauncherThreatMonitor = _threatMonitorFactory.CreateRocketThreatMonitor();
             ISlotNumCalculator slotNumCalculator = new StaticSlotNumCalculator(numOfSlots: 1);
 
-            return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
+            return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
         }
 
         public ITaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IDynamicBuildOrder antiStealthBuildOrder)
@@ -81,7 +77,7 @@ namespace BattleCruisers.AI.TaskProducers
             IThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor();
             ISlotNumCalculator slotNumCalculator = new StaticSlotNumCalculator(numOfSlots: 1);
 
-            return new AntiThreatTaskProducer(tasks, _aiCruiser, _prefabFactory, _taskFactory, antiStealthBuildOrder, stealthThreatMonitor, slotNumCalculator);
+            return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiStealthBuildOrder, stealthThreatMonitor, slotNumCalculator);
         }
     }
 }

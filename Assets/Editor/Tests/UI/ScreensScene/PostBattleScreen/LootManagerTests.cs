@@ -3,7 +3,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
-using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -16,7 +15,6 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
     {
         private ILootManager _lootManager;
 
-        private PrefabFactory _prefabFactory;
         private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         private ILoot _unlockedLoot;
@@ -26,12 +24,11 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         [SetUp]
         public void SetuUp()
         {
-            _prefabFactory = Substitute.For<PrefabFactory>();
             _middleDetailsGroup = Substitute.For<IItemDetailsGroup>();
             _leftDetailsGroup = Substitute.For<IItemDetailsGroup>();
             _rightDetailsGroup = Substitute.For<IItemDetailsGroup>();
 
-            _lootManager = new LootManager(_prefabFactory, _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup);
+            _lootManager = new LootManager(_middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup);
 
             _lootItems = new List<ILootItem>();
             ReadOnlyCollection<ILootItem> readonlyLootItems = new ReadOnlyCollection<ILootItem>(_lootItems);
@@ -107,7 +104,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
             _lootManager.ShowLoot(_unlockedLoot);
 
-            _item1.Received().ShowItemDetails(_prefabFactory, _middleDetailsGroup);
+            _item1.Received().ShowItemDetails(_middleDetailsGroup);
         }
 
         [Test]
@@ -118,8 +115,8 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
             _lootManager.ShowLoot(_unlockedLoot);
 
-            _item1.Received().ShowItemDetails(_prefabFactory, _leftDetailsGroup);
-            _item2.Received().ShowItemDetails(_prefabFactory, _rightDetailsGroup);
+            _item1.Received().ShowItemDetails(_leftDetailsGroup);
+            _item2.Received().ShowItemDetails(_rightDetailsGroup);
         }
         #endregion ShowLoot
 

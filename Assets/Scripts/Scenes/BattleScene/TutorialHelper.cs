@@ -16,7 +16,6 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -50,17 +49,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public IBuildSpeedController AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
-        public TutorialHelper(
-            PrefabFactory prefabFactory,
-            NavigationPermitters navigationPermitters)
+        public TutorialHelper(NavigationPermitters navigationPermitters)
             : base()
         {
-            Assert.IsNotNull(prefabFactory);
-
             NavigationPermitters = navigationPermitters;
 
             _slotFilter = new SpecificSlotsFilter();
-            _buildingNameFilter = new BuildingNameFilter(prefabFactory);
+            _buildingNameFilter = new BuildingNameFilter();
             _buildingCategoryFilter = new BuildingCategoryFilter();
             _backButtonPermitter = new BroadcastingFilter(isMatch: false);
             SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);

@@ -4,7 +4,6 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
@@ -33,18 +32,16 @@ namespace BattleCruisers.UI.ScreensScene
         private string firstDescrtiptionString;
 
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
         public GameObject content;
         public GameObject captainMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_captainMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
             captainDataChanged += CaptainDataChanged;
             onCaptainItemClick += OnCaptainItemClick;
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             firstNameString = captainName.text;
             firstDescrtiptionString = captainDescription.text;
@@ -74,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene
                         if (result)
                         {
                             //    await DataProvider.SyncCurrencyFromCloud();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                            PlayerInfoPanelController.Instance.UpdateInfo();
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
@@ -123,7 +120,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Subtract from local economy:
                         DataProvider.GameModel.Coins -= currentCaptainData.CaptainCost;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo();
 
                         // Keep track of transaction for later:
                         DataProvider.GameModel.CoinsChange -= currentCaptainData.CaptainCost;

@@ -4,7 +4,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using BattleCruisers.Utils.Properties;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
@@ -32,7 +31,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IComparingItemFamilyTracker _comparingFamiltyTracker;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
         // Heckle Logic
 
         private HeckleButtonV2 _currentHeckleButton;
@@ -58,7 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
                 heckleContainer.heckleData = heckleData;
                 heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
-                IItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, DataProvider.GameModel, _selectedHull, _soundPlayer, _prefabFactory);
+                IItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, DataProvider.GameModel, _selectedHull, _soundPlayer);
                 buttons.Add(button);
                 heckleContainer.gameObject.SetActive(true);
             }
@@ -68,16 +66,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+            ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull, prefabFactory);
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull);
 
             _itemDetailsManager = itemDetailsManager;
             _comparingFamiltyTracker = comparingFamiltyTracker;
             _selectedHull = selectedHull;
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
 
             if (this == null)
                 return null;
@@ -102,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
                 foreach (ItemContainer itemContainer in itemContainers)
                 {
-                    IItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, DataProvider.GameModel, selectedHull, soundPlayer, prefabFactory);
+                    IItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, DataProvider.GameModel, selectedHull, soundPlayer);
                     buttons.Add(button);
                     HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
                     itemContainer.gameObject.SetActive(button.IsUnlocked);

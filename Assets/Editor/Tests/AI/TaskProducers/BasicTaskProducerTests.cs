@@ -5,6 +5,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -33,7 +34,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _platformSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _platformSlotBuildingWrapper.Buildable.Returns(_platformSlotBuilding);
             _platformBuildingKey = new BuildingKey(BuildingCategory.Ultra, "Kaffeemuehle");
-            _prefabFactory.GetBuildingWrapperPrefab(_platformBuildingKey).Returns(_platformSlotBuildingWrapper);
+            PrefabFactory.GetBuildingWrapperPrefab(_platformBuildingKey).Returns(_platformSlotBuildingWrapper);
             _platformBuildingTask = Substitute.For<IPrioritisedTask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _platformBuildingKey).Returns(_platformBuildingTask);
 
@@ -43,7 +44,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _deckSlotBuildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             _deckSlotBuildingWrapper.Buildable.Returns(_deckSlotBuilding);
             _deckBuildingKey = new BuildingKey(BuildingCategory.Tactical, "Hirsch");
-            _prefabFactory.GetBuildingWrapperPrefab(_deckBuildingKey).Returns(_deckSlotBuildingWrapper);
+            PrefabFactory.GetBuildingWrapperPrefab(_deckBuildingKey).Returns(_deckSlotBuildingWrapper);
             _deckBuildingTask = Substitute.For<IPrioritisedTask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _deckBuildingKey).Returns(_deckBuildingTask);
 
@@ -57,7 +58,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _buildOrder.MoveNext().Returns(true);
             _buildOrder.Current.Returns(_platformBuildingKey);
 
-            _taskProducer = new BasicTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder);
+            _taskProducer = new BasicTaskProducer(_tasks, _cruiser, _taskFactory, _buildOrder);
         }
 
         [Test]

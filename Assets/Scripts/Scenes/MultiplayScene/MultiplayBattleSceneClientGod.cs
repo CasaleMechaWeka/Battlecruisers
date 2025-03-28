@@ -156,10 +156,9 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             waterSplashVolumeController.Initialise(DataProvider.SettingsManager);
 
             // Common setup
-            PrefabFactory prefabFactory = new PrefabFactory();
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(prefabFactory, components.Deferrer);
+            IBattleSceneHelper helper = CreateHelper(components.Deferrer);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -168,7 +167,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
+            factoryProvider = new FactoryProvider(components, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, uiManager);
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
@@ -220,7 +219,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     new DroneManagerMonitor(playerCruiser.DroneManager, components.Deferrer),
                     uiManager,
                     helper.GetPlayerLoadout(),
-                    prefabFactory,
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
@@ -240,7 +238,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
-            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel, null);
+            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new BuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
 
@@ -417,9 +415,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
         }
 
 
-        private IBattleSceneHelper CreateHelper(
-           PrefabFactory prefabFactory,
-           IDeferrer deferrer)
+        private IBattleSceneHelper CreateHelper(IDeferrer deferrer)
         {
             switch (ApplicationModel.Mode)
             {
@@ -429,10 +425,10 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                 //     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(prefabFactory, deferrer);
+                    return new NormalHelper(deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(prefabFactory, deferrer);
+                    return new SkirmishHelper(deferrer);
                 // case GameMode.PvP_1VS1:
                 //     return;
 

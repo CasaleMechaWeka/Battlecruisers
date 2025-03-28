@@ -36,7 +36,6 @@ namespace BattleCruisers.Scenes
 {
     public class TempScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        private PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private GameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
@@ -108,7 +107,6 @@ namespace BattleCruisers.Scenes
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource), 1));
 
-            _prefabFactory = new PrefabFactory();
             levelTrashDataList.Initialise();
             sideQuestTrashDataList.Initialise();
 
@@ -129,12 +127,12 @@ namespace BattleCruisers.Scenes
             }
 
             homeScreen.Initialise(this, _soundPlayer);
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            hubScreen.Initialise(this, _soundPlayer);
             settingsScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager, DataProvider.GameModel.Hotkeys);
-            trashScreen.Initialise(this, _soundPlayer, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
+            trashScreen.Initialise(this, _soundPlayer, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _soundPlayer, _prefabFactory);
-            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            skirmishScreen.Initialise(this, _soundPlayer);
+            shopPanelScreen.Initialise(this, _soundPlayer);
 
             if (ApplicationModel.ShowPostBattleScreen)
             {
@@ -158,7 +156,7 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            loadoutScreen.Initialise(this, _soundPlayer);
 
             // TEMP  Go to specific screen :)
             //GoToLoadoutScreen();
@@ -213,7 +211,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
 
             GoToScreen(postBattleScreen, playDefaultMusic: false);
         }
@@ -522,7 +520,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < /*12*/ StaticData.Bodykits.Count; i++)
                 {
-                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
+                    if (PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }

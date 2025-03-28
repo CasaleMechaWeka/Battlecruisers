@@ -12,20 +12,18 @@ namespace BattleCruisers.Tests.Effects.Deaths.Pools
     public class ShipDeathFactoryTests
     {
         private IPoolableFactory<IPoolable<Vector3>, Vector3> _factory;
-        private PrefabFactory _prefabFactory;
         private ShipDeathKey _shipDeathKey;
         private IPoolable<Vector3> _shipDeath;
 
         [SetUp]
         public void TestSetup()
         {
-            _prefabFactory = Substitute.For<PrefabFactory>();
             _shipDeathKey = StaticPrefabKeys.ShipDeaths.Archon;
 
-            _factory = new ShipDeathFactory(_prefabFactory, _shipDeathKey);
+            _factory = new ShipDeathFactory(_shipDeathKey);
 
             _shipDeath = Substitute.For<IPoolable<Vector3>>();
-            _prefabFactory.CreateShipDeath(_shipDeathKey).Returns(_shipDeath);
+            PrefabFactory.CreateShipDeath(_shipDeathKey).Returns(_shipDeath);
         }
 
         [Test]

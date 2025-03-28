@@ -130,8 +130,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 = new ConstructDroneStationStepsFactory(
                     argsFactory,
                     constructBuildingStepsFactory,
-                    explanationDismissableStepFactory,
-                    tutorialArgs.PrefabFactory);
+                    explanationDismissableStepFactory);
 
             ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory = new ChangeCruiserBuildSpeedStepFactory(argsFactory);
             ICreateProducingFactoryStepsFactory createProducingFactoryStepsFactory
@@ -139,7 +138,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     argsFactory,
                     changeCruiserBuildSpeedStepFactory,
                     tutorialArgs.TutorialProvider,
-                    tutorialArgs.PrefabFactory,
                     tutorialArgs.AICruiser);
             EnemyUnitArgs enemyUnitArgs
                 = new EnemyUnitArgs(
@@ -156,15 +154,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     enemyUnitArgs,
                     tutorialArgs.AICruiser,
                     deferrer,
-                    tutorialArgs.TutorialProvider.SingleAircraftProvider,
-                    tutorialArgs.PrefabFactory);
+                    tutorialArgs.TutorialProvider.SingleAircraftProvider);
 
             EnemyShipStepsFactory
                 = new EnemyShipStepsFactory(
                     argsFactory,
                     enemyUnitArgs,
-                    tutorialArgs.TutorialProvider.SingleShipProvider,
-                    tutorialArgs.PrefabFactory);
+                    tutorialArgs.TutorialProvider.SingleShipProvider);
 
             DroneFocusStepsFactory
                 = new DroneFocusStepsFactory(
@@ -176,8 +172,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     tutorialArgs.TutorialProvider,
                     lastPlayerIncompleteBuildingStartedProvider,
                     tutorialArgs.RightPanelComponents,
-                    slidingPanelWaitStepFactory,
-                    tutorialArgs.PrefabFactory);
+                    slidingPanelWaitStepFactory);
 
             GameSpeedStepsFactory
                 = new GameSpeedStepsFactory(
@@ -196,8 +191,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     autoNavigationStepFactory,
                     tutorialArgs.TutorialProvider,
                     tutorialArgs.PlayerCruiser,
-                    tutorialArgs.AICruiser,
-                    tutorialArgs.PrefabFactory);
+                    tutorialArgs.AICruiser);
         }
     }
 }

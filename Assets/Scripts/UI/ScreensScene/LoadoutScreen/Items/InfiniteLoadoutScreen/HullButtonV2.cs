@@ -10,7 +10,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -29,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private const char SEPARATOR = '_';
         private string lootType;
         private string lootName;
-        private PrefabFactory _prefabFactory;
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,

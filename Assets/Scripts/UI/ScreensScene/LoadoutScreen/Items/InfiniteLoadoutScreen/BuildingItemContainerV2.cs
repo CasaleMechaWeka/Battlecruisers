@@ -34,10 +34,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             GameModel gameModel)
         {
-            IBuildableWrapper<IBuilding> buildingPrefab = prefabFactory.GetBuildingWrapperPrefab(Key);
+            IBuildableWrapper<IBuilding> buildingPrefab = PrefabFactory.GetBuildingWrapperPrefab(Key);
             BuildingButtonV2 buildingButton = GetComponentInChildren<BuildingButtonV2>(includeInactive: true);
             Assert.IsNotNull(buildingButton);
             buildingButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, buildingPrefab, gameModel, Key);

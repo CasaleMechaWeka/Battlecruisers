@@ -13,25 +13,23 @@ namespace BattleCruisers.AI.Tasks
     public class ConstructBuildingTask : ITask
     {
         private readonly IPrefabKey _buildingToConstruct;
-        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiserController _parentCruiser;
 
         private IBuildable _building;
 
         public event EventHandler Completed;
 
-        public ConstructBuildingTask(IPrefabKey buildingToconstruct, PrefabFactory prefabFactory, ICruiserController parentCruiser)
+        public ConstructBuildingTask(IPrefabKey buildingToconstruct, ICruiserController parentCruiser)
         {
-            Helper.AssertIsNotNull(buildingToconstruct, prefabFactory, parentCruiser);
+            Helper.AssertIsNotNull(buildingToconstruct, parentCruiser);
 
             _buildingToConstruct = buildingToconstruct;
-            _prefabFactory = prefabFactory;
             _parentCruiser = parentCruiser;
         }
 
         public bool Start()
         {
-            IBuildableWrapper<IBuilding> buildingWrapperPrefab = _prefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab = PrefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
 
             bool haveStartedTask = false;
 

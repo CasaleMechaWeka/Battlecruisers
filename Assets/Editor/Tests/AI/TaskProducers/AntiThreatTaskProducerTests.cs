@@ -20,13 +20,13 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private BuildingKey _buildingKey;
         private IPrioritisedTask _task;
 
-		[SetUp]
-		public override void SetuUp()
-		{
+        [SetUp]
+        public override void SetuUp()
+        {
             base.SetuUp();
 
             _task = Substitute.For<IPrioritisedTask>();
-			_slotNumCalculator = Substitute.For<ISlotNumCalculator>();
+            _slotNumCalculator = Substitute.For<ISlotNumCalculator>();
 
             _threatMonitor = Substitute.For<IThreatMonitor>();
             _threatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
@@ -40,44 +40,44 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _buildOrder.Current.Returns(_buildingKey);
             _buildOrder.MoveNext().Returns(true);
 
-            new AntiThreatTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
-		}
+            new AntiThreatTaskProducer(_tasks, _cruiser, _taskFactory, _buildOrder, _threatMonitor, _slotNumCalculator);
+        }
 
-		#region ThreatLevelChanged
-		[Test]
-		public void ThreatLevelChanged_AlreadyHaveMetThreat_DoesNotCreateTask()
-		{
+        #region ThreatLevelChanged
+        [Test]
+        public void ThreatLevelChanged_AlreadyHaveMetThreat_DoesNotCreateTask()
+        {
             _slotNumCalculator.FindSlotNum(_threatMonitor.CurrentThreatLevel).Returns(-1);
 
             _threatMonitor.ThreatLevelChanged += Raise.Event();
 
             _slotNumCalculator.Received().FindSlotNum(_threatMonitor.CurrentThreatLevel);
             _taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default, null);
-		}
+        }
 
-		[Test]
-		public void ThreatLevelChanged_HaveNotMetThreat_CreatesTask()
-		{
+        [Test]
+        public void ThreatLevelChanged_HaveNotMetThreat_CreatesTask()
+        {
             CreateTask(numOfSlotsForThreat: 99);
-		}
+        }
 
-		[Test]
-		public void ThreatLevelChanged_AlreadyHaveCurrentTask_DoesNotCreateTask()
-		{
+        [Test]
+        public void ThreatLevelChanged_AlreadyHaveCurrentTask_DoesNotCreateTask()
+        {
             CreateTask(numOfSlotsForThreat: 99);
 
             _taskFactory.ClearReceivedCalls();
 
-			_threatMonitor.ThreatLevelChanged += Raise.Event();
+            _threatMonitor.ThreatLevelChanged += Raise.Event();
 
-			_taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default, null);
-		}
-		#endregion ThreatLevelChanged
+            _taskFactory.DidNotReceiveWithAnyArgs().CreateConstructBuildingTask(default, null);
+        }
+        #endregion ThreatLevelChanged
 
         [Test]
         public void TaskCompleted_HaveNotMetThreat_CreatesTask()
-		{
-			CreateTask(numOfSlotsForThreat: 2);  // Have 1/2 tasks
+        {
+            CreateTask(numOfSlotsForThreat: 2);  // Have 1/2 tasks
 
             _taskFactory.ClearReceivedCalls();
 
@@ -86,24 +86,24 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _tasks.Received().Add(_task);
         }
 
-		[Test]
-		public void BuildOrderEmpty_DoesNotCreateTask()
-		{
+        [Test]
+        public void BuildOrderEmpty_DoesNotCreateTask()
+        {
             _buildOrder.MoveNext().Returns(false);
 
-			_threatMonitor.ThreatLevelChanged += Raise.Event();
+            _threatMonitor.ThreatLevelChanged += Raise.Event();
 
             _tasks.DidNotReceiveWithAnyArgs().Add(taskToAdd: null);
-		}
+        }
 
         private void CreateTask(int numOfSlotsForThreat)
         {
             _slotNumCalculator.FindSlotNum(_threatMonitor.CurrentThreatLevel).Returns(numOfSlotsForThreat);
-			_taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _buildingKey).Returns(_task);
+            _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _buildingKey).Returns(_task);
 
-			_threatMonitor.ThreatLevelChanged += Raise.Event();
+            _threatMonitor.ThreatLevelChanged += Raise.Event();
 
-			_tasks.Received().Add(_task);            
+            _tasks.Received().Add(_task);
         }
-	}
+    }
 }

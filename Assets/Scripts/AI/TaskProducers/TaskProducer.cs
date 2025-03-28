@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.AI.TaskProducers
 {
@@ -10,20 +9,17 @@ namespace BattleCruisers.AI.TaskProducers
         protected readonly ITaskList _tasks;
         protected readonly ICruiserController _cruiser;
         protected readonly ITaskFactory _taskFactory;
-        protected readonly PrefabFactory _prefabFactory;
 
         public TaskProducer(
             ITaskList tasks,
             ICruiserController cruiser,
-            ITaskFactory taskFactory,
-            PrefabFactory prefabFactory)
+            ITaskFactory taskFactory)
         {
-            Helper.AssertIsNotNull(tasks, cruiser, taskFactory, prefabFactory);
+            Helper.AssertIsNotNull(tasks, cruiser, taskFactory);
 
             _tasks = tasks;
             _cruiser = cruiser;
             _taskFactory = taskFactory;
-            _prefabFactory = prefabFactory;
         }
 
         public virtual void DisposeManagedState()

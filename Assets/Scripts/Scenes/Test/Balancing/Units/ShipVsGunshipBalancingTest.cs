@@ -6,6 +6,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -42,8 +43,8 @@ namespace BattleCruisers.Scenes.Test.Balancing.Units
 
             ShowScenarioDetails(shipKey, gunshipKey);
 
-            IBuildableWrapper<IUnit> ship = _helper.PrefabFactory.GetUnitWrapperPrefab(shipKey);
-            IBuildableWrapper<IUnit> gunship = _helper.PrefabFactory.GetUnitWrapperPrefab(gunshipKey);
+            IBuildableWrapper<IUnit> ship = PrefabFactory.GetUnitWrapperPrefab(shipKey);
+            IBuildableWrapper<IUnit> gunship = PrefabFactory.GetUnitWrapperPrefab(gunshipKey);
 
             _aircraftKillCount = InitialiseKillCount("ShipsKillCount", gunship.Buildable);
             _shipsKillCount = InitialiseKillCount("AircraftKillCount", ship.Buildable);

@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Buildables.Buildings
 {
@@ -120,7 +121,7 @@ namespace BattleCruisers.Buildables.Buildings
             int randomID = GetRandomVariantForAI(building);
             if (randomID != -1)
             {
-                VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
                 if (variant != null)
                 {
                     // apply icon, name and description
@@ -147,7 +148,7 @@ namespace BattleCruisers.Buildables.Buildings
             List<int> ids = new List<int>();
             for (int i = 0; i < StaticData.Variants.Count; i++)
             {
-                VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
                 if (variant != null)
                 {
                     if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
@@ -166,14 +167,14 @@ namespace BattleCruisers.Buildables.Buildings
 
         public void ApplyVariantToPlayer(IBuilding building)
         {
-            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(_factoryProvider.PrefabFactory, building);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariant(building);
 
             if (variant != null)
             {
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
-                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_factoryProvider.PrefabFactory, building);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(building);
                 variantIndex = index;
                 Name = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
                 Description = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);

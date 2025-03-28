@@ -34,13 +34,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             GameModel gameModel)
         {
-            IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(Key);
+            IBuildableWrapper<IUnit> unitPrefab = PrefabFactory.GetUnitWrapperPrefab(Key);
             UnitButtonV2 unitButton = GetComponentInChildren<UnitButtonV2>(includeInactive: true);
             Assert.IsNotNull(unitButton);
-            unitButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, unitPrefab, unitKeyName, gameModel, Key);
+            unitButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, unitPrefab, gameModel, Key);
             return unitButton;
         }
 

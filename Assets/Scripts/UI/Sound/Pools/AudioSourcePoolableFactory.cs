@@ -7,20 +7,18 @@ namespace BattleCruisers.UI.Sound.Pools
 {
     public class AudioSourcePoolableFactory : IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _realTimeDeferrer;
 
-        public AudioSourcePoolableFactory(PrefabFactory prefabFactory, IDeferrer realTimeDeferrer)
+        public AudioSourcePoolableFactory(IDeferrer realTimeDeferrer)
         {
-            Helper.AssertIsNotNull(prefabFactory, realTimeDeferrer);
+            Helper.AssertIsNotNull(realTimeDeferrer);
 
-            _prefabFactory = prefabFactory;
             _realTimeDeferrer = realTimeDeferrer;
         }
 
         public IPoolable<AudioSourceActivationArgs> CreateItem()
         {
-            return _prefabFactory.CreateAudioSource(_realTimeDeferrer);
+            return PrefabFactory.CreateAudioSource(_realTimeDeferrer);
         }
     }
 }

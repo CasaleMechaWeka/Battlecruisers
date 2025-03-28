@@ -14,7 +14,6 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
     {
         private StartConstructingBuildingStep _tutorialStep;
         private IPrefabKey _buildingToConstruct;
-        private PrefabFactory _prefabFactory;
         private ICruiserController _parentCruiser;
 
         [SetUp]
@@ -23,17 +22,16 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
             base.SetuUp();
 
             _buildingToConstruct = Substitute.For<IPrefabKey>();
-            _prefabFactory = Substitute.For<PrefabFactory>();
             _parentCruiser = Substitute.For<ICruiserController>();
 
-            _tutorialStep = new StartConstructingBuildingStep(_args, _buildingToConstruct, _prefabFactory, _parentCruiser);
+            _tutorialStep = new StartConstructingBuildingStep(_args, _buildingToConstruct, _parentCruiser);
         }
 
         [Test]
         public void Start_ConstructsBuilding_AndCompletes()
         {
             IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
-            _prefabFactory
+            PrefabFactory
                 .GetBuildingWrapperPrefab(_buildingToConstruct)
                 .Returns(buildingWrapper);
 
@@ -53,7 +51,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
 
             _tutorialStep.Start(_completionCallback);
 
-            _prefabFactory.Received().GetBuildingWrapperPrefab(_buildingToConstruct);
+            PrefabFactory.GetBuildingWrapperPrefab(_buildingToConstruct);
             _parentCruiser.SlotAccessor.Received().IsSlotAvailable(buildingWrapper.Buildable.SlotSpecification);
             _parentCruiser.SlotAccessor.Received().GetFreeSlot(buildingWrapper.Buildable.SlotSpecification);
             _parentCruiser.Received().ConstructBuilding(buildingWrapper.UnityObject, slot);

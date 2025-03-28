@@ -10,6 +10,7 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -119,7 +120,7 @@ namespace BattleCruisers.Buildables.Units
             int randomID = GetRandomVariantForAI(unit);
             if (randomID != -1)
             {
-                VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(randomID));
                 if (variant != null)
                 {
                     // apply icon, name and description
@@ -146,7 +147,7 @@ namespace BattleCruisers.Buildables.Units
             List<int> ids = new List<int>();
             for (int i = 0; i < StaticData.Variants.Count; i++)
             {
-                VariantPrefab variant = _factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(i));
                 if (variant != null)
                 {
                     if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variant.GetPrefabKey().PrefabName.ToUpper())
@@ -165,13 +166,13 @@ namespace BattleCruisers.Buildables.Units
 
         private void ApplyVariantToPlayer(IUnit unit)
         {
-            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(_factoryProvider.PrefabFactory, unit);
+            VariantPrefab variant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariant(unit);
             if (variant != null)
             {
                 // apply icon, name and description
                 HealthBar.variantIcon.sprite = variant.variantSprite;
                 HealthBar.variantIcon.enabled = true;
-                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_factoryProvider.PrefabFactory, unit);
+                int index = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(unit);
                 variantIndex = index;
                 Name = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
                 Description = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);

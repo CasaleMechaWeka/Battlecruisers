@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Tests.Utils.Extensions;
+using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private IPrioritisedTask _normalRebuildTask, _highPriorityRebuildTask;
 
         [SetUp]
-		public override void SetuUp()
+        public override void SetuUp()
         {
             base.SetuUp();
 
@@ -42,20 +43,20 @@ namespace BattleCruisers.Tests.AI.TaskProducers
                 droneStationBuildingKey
             };
 
-            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _prefabFactory, _taskFactory, unlockedBuildingKeys);
+            new ReplaceDestroyedBuildingsTaskProducer(_tasks, _cruiser, _taskFactory, unlockedBuildingKeys);
         }
 
         private IPrioritisedTask SetupBuilding(
-            BuildingKey buildingKey, 
-            IBuilding building, 
-            string buildingName, 
+            BuildingKey buildingKey,
+            IBuilding building,
+            string buildingName,
             TaskPriority taskPriority)
         {
             building.Name.Returns(buildingName);
 
             IBuildableWrapper<IBuilding> buildingWrapper = Substitute.For<IBuildableWrapper<IBuilding>>();
             buildingWrapper.Buildable.Returns(building);
-            _prefabFactory
+            PrefabFactory
                 .GetBuildingWrapperPrefab(buildingKey)
                 .Returns(buildingWrapper);
 
@@ -68,11 +69,11 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         }
 
         [Test]
-		public void BuildingDestroyed_NotDronesStation_CreatesNormalPriorityTask()
-		{
+        public void BuildingDestroyed_NotDronesStation_CreatesNormalPriorityTask()
+        {
             _cruiser.BuildingMonitor.EmitBuildingDestroyed(_normalBuilding);
-			_tasks.Received().Add(_normalRebuildTask);
-		}
+            _tasks.Received().Add(_normalRebuildTask);
+        }
 
         [Test]
         public void BuildingDestroyed_DronesStation_CreatesHighPriorityTask()
@@ -82,8 +83,8 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         }
 
         [Test]
-		public void BuildingDestroyed_NoPrefabKey_Throws()
-		{
+        public void BuildingDestroyed_NoPrefabKey_Throws()
+        {
             Assert.Throws<UnityAsserts.AssertionException>(() => _cruiser.BuildingMonitor.EmitBuildingDestroyed(_buildingWithoutKey));
         }
     }

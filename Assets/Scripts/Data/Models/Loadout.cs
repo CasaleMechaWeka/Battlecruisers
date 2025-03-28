@@ -103,12 +103,12 @@ namespace BattleCruisers.Data.Models
             return _builds == null;
         }
 
-        public VariantPrefab GetSelectedUnitVariant(PrefabFactory prefabFactory, IUnit unit)
+        public VariantPrefab GetSelectedUnitVariant(IUnit unit)
         {
             foreach (int index in _selectedVariants)
             {
                 IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
-                VariantPrefab variantPrefab = prefabFactory.GetVariant(variantKey);
+                VariantPrefab variantPrefab = PrefabFactory.GetVariant(variantKey);
                 if (variantPrefab.IsUnit())
                 {
                     if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
@@ -120,12 +120,12 @@ namespace BattleCruisers.Data.Models
             return null;
         }
 
-        public int GetSelectedUnitVariantIndex(PrefabFactory prefabFactory, IUnit unit)
+        public int GetSelectedUnitVariantIndex(IUnit unit)
         {
             foreach (int index in _selectedVariants)
             {
                 IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
-                VariantPrefab variantPrefab = prefabFactory.GetVariant(variantKey);
+                VariantPrefab variantPrefab = PrefabFactory.GetVariant(variantKey);
                 if (variantPrefab.IsUnit())
                 {
                     if (unit.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
@@ -154,12 +154,12 @@ namespace BattleCruisers.Data.Models
             return -1;
         }
 
-        public VariantPrefab GetSelectedBuildingVariant(PrefabFactory prefabFactory, IBuilding building)
+        public VariantPrefab GetSelectedBuildingVariant(IBuilding building)
         {
             foreach (int index in _selectedVariants)
             {
                 IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
-                VariantPrefab variantPrefab = prefabFactory.GetVariant(variantKey);
+                VariantPrefab variantPrefab = PrefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
                     if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())
@@ -171,12 +171,12 @@ namespace BattleCruisers.Data.Models
             return null;
         }
 
-        public int GetSelectedBuildingVariantIndex(PrefabFactory prefabFactory, IBuilding building)
+        public int GetSelectedBuildingVariantIndex(IBuilding building)
         {
             foreach (int index in _selectedVariants)
             {
                 IPrefabKey variantKey = StaticPrefabKeys.Variants.GetVariantKey(index);
-                VariantPrefab variantPrefab = prefabFactory.GetVariant(variantKey);
+                VariantPrefab variantPrefab = PrefabFactory.GetVariant(variantKey);
                 if (!variantPrefab.IsUnit())
                 {
                     if (building.PrefabName.ToUpper().Replace("(CLONE)", "") == variantPrefab.GetPrefabKey().PrefabName.ToUpper())

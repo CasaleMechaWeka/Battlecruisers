@@ -16,7 +16,6 @@ using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
@@ -26,7 +25,6 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class NormalHelper : BattleSceneHelper
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
@@ -38,13 +36,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public NormalHelper(
-            PrefabFactory prefabFactory,
             IDeferrer deferrer)
             : base()
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer);
+            Helper.AssertIsNotNull(deferrer);
 
-            _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
             ShowInGameHints =
@@ -63,9 +59,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
         {
-            LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, _prefabFactory);
+            LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
-            IAIManager aiManager = new AIManager(_prefabFactory, _deferrer, playerCruiser, strategyFactory);
+            IAIManager aiManager = new AIManager(_deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo, FindDifficulty());
         }
 

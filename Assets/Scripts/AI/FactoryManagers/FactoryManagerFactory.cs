@@ -16,7 +16,6 @@ namespace BattleCruisers.AI.FactoryManagers
     public class FactoryManagerFactory : IFactoryManagerFactory
     {
         private readonly GameModel _gameModel;
-        private readonly PrefabFactory _prefabFactory;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
 
         private readonly static UnitKey DEFAULT_PLANE_KEY = StaticPrefabKeys.Units.Bomber;
@@ -26,12 +25,11 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly static UnitKey BROADSWROD_GUNSHIP_KEY = StaticPrefabKeys.Units.Broadsword;
         private readonly static UnitKey STRATBOMBER_KEY = StaticPrefabKeys.Units.StratBomber;
 
-        public FactoryManagerFactory(GameModel gameModel, PrefabFactory prefabFactory, IThreatMonitorFactory threatMonitorFactory)
+        public FactoryManagerFactory(GameModel gameModel, IThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(gameModel, prefabFactory, threatMonitorFactory);
+            Helper.AssertIsNotNull(gameModel, threatMonitorFactory);
 
             _gameModel = gameModel;
-            _prefabFactory = prefabFactory;
             _threatMonitorFactory = threatMonitorFactory;
         }
 
@@ -40,7 +38,7 @@ namespace BattleCruisers.AI.FactoryManagers
             IList<UnitKey> availableShipKeys = _gameModel.GetUnlockedUnits(UnitCategory.Naval);
             IList<IBuildableWrapper<IUnit>> availableShips =
                 availableShipKeys
-                    .Select(key => _prefabFactory.GetUnitWrapperPrefab(key))
+                    .Select(key => PrefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
             IUnitChooser unitChooser
                 = new MostExpensiveUnitChooser(
@@ -54,11 +52,11 @@ namespace BattleCruisers.AI.FactoryManagers
         public IManagedDisposable CreateAirfactoryManager(ICruiserController aiCruiser)
         {
             Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY), "Default plane should always be available.");
-            IBuildableWrapper<IUnit> defaultPlane = _prefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
+            IBuildableWrapper<IUnit> defaultPlane = PrefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
             IBuildableWrapper<IUnit> lategamePlane;
             if (_gameModel.NumOfLevelsCompleted >= 25)
             {
-                lategamePlane = _prefabFactory.GetUnitWrapperPrefab(LATEGAME_PLANE_KEY);
+                lategamePlane = PrefabFactory.GetUnitWrapperPrefab(LATEGAME_PLANE_KEY);
             }
             else
             {
@@ -67,22 +65,22 @@ namespace BattleCruisers.AI.FactoryManagers
 
             IBuildableWrapper<IUnit> antiAirPlane =
                 _gameModel.IsUnitUnlocked(ANTI_AIR_PLANE_KEY) ?
-                _prefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
+                PrefabFactory.GetUnitWrapperPrefab(ANTI_AIR_PLANE_KEY) :
                 defaultPlane;
 
             IBuildableWrapper<IUnit> antiNavalPlane =
                 _gameModel.IsUnitUnlocked(ANTI_NAVAL_PLANE_KEY) ?
-                _prefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
+                PrefabFactory.GetUnitWrapperPrefab(ANTI_NAVAL_PLANE_KEY) :
                 defaultPlane;
 
             IBuildableWrapper<IUnit> broadswordGunship =
             _gameModel.IsUnitUnlocked(BROADSWROD_GUNSHIP_KEY) ?
-            _prefabFactory.GetUnitWrapperPrefab(BROADSWROD_GUNSHIP_KEY) :
+            PrefabFactory.GetUnitWrapperPrefab(BROADSWROD_GUNSHIP_KEY) :
             lategamePlane;
 
             IBuildableWrapper<IUnit> stratBomber =
             _gameModel.IsUnitUnlocked(STRATBOMBER_KEY) ?
-            _prefabFactory.GetUnitWrapperPrefab(STRATBOMBER_KEY) :
+            PrefabFactory.GetUnitWrapperPrefab(STRATBOMBER_KEY) :
             lategamePlane;
 
             IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());

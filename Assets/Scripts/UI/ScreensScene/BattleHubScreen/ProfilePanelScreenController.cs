@@ -3,7 +3,6 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +17,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public static ProfilePanelScreenController Instance { get; private set; }
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
 
         public CanvasGroupButton captainEditButton;
         public CanvasGroupButton playerNameEditButton;
@@ -52,22 +50,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+            ISingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
 
             Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer);
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
 
             million = LocTableCache.CommonTable.GetString("Million");
             billion = LocTableCache.CommonTable.GetString("Billion");
             trillion = LocTableCache.CommonTable.GetString("Trillion");
             quadrillion = LocTableCache.CommonTable.GetString("Quadrillion");
 
-            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer, prefabFactory);
+            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
             playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
             selectButton.Initialise(_soundPlayer, OnClickSelectButton);
@@ -173,7 +169,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             lableOfSelect.SetActive(false);
             if (await captainsPanel.SaveCurrentItem())
             {
-                PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                PlayerInfoPanelController.Instance.UpdateInfo();
             }
             captainsPanel.gameObject.SetActive(false);
             spinnerOfSelect.SetActive(false);

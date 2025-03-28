@@ -7,7 +7,6 @@ using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
@@ -16,22 +15,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
     {
         private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
-        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiser _aiCruiser;
 
         public CreateProducingFactoryStepsFactory(
             TutorialStepArgsFactory argsFactory,
             ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ITutorialProvider tutorialProvider,
-            PrefabFactory prefabFactory,
             ICruiser aiCruiser)
             : base(argsFactory)
         {
-            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, prefabFactory, aiCruiser);
+            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, tutorialProvider, aiCruiser);
 
             _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
             _tutorialProvider = tutorialProvider;
-            _prefabFactory = prefabFactory;
             _aiCruiser = aiCruiser;
         }
 
@@ -54,7 +50,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                 = new StartConstructingBuildingStep(
                     commonArgs,
                     factoryKey,
-                    _prefabFactory,
                     _aiCruiser);
             factorySteps.Add(startConstructingFactoryStep);
 
@@ -73,7 +68,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                 new StartConstructingUnitStep(
                     commonArgs,
                     unitKey,
-                    _prefabFactory,
                     factoryProvider));
 
             return new FactoryStepsResult(factorySteps, factoryProvider);

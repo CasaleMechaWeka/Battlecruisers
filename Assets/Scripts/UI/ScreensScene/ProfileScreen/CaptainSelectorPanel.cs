@@ -21,7 +21,6 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         [SerializeField]
         private GameObject captainItemPrefab; // assign this from the editor
 
-        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
 
         public Transform captainCamContainer;
@@ -32,11 +31,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         private CaptainData currentCaptainData;
 
-        public void Initialize(
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
-            _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
             captainDataChanged += CaptainDataChanged;
         }
@@ -67,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 {
 
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
-                    CaptainExo captainExoPrefab = _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
+                    CaptainExo captainExoPrefab = PrefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
                     CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
@@ -88,7 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         public void ShowCurrentCaptain()
         {
-            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo charlie = Instantiate(charliePrefab, captainCamContainer);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);

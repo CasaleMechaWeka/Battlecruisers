@@ -24,7 +24,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly SlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
-        private readonly PrefabFactory _prefabFactory;
 
         public DroneFocusStepsFactory(
             TutorialStepArgsFactory argsFactory,
@@ -35,8 +34,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ITutorialProvider tutorialProvider,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             RightPanelComponents rightPanelComponents,
-            SlidingPanelWaitStepFactory slidingPanelWaitStepFactory,
-            PrefabFactory prefabFactory)
+            SlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
 
             : base(argsFactory)
         {
@@ -48,8 +46,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                 tutorialProvider,
                 lastPlayerIncompleteBuildingStartedProvider,
                 rightPanelComponents,
-                slidingPanelWaitStepFactory,
-                prefabFactory);
+                slidingPanelWaitStepFactory);
 
             _autoNavigationStepFactory = autoNavigationStepFactory;
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
@@ -59,7 +56,6 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _lastPlayerIncompleteBuildingStartedProvider = lastPlayerIncompleteBuildingStartedProvider;
             _rightPanelComponents = rightPanelComponents;
             _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
-            _prefabFactory = prefabFactory;
         }
 
         public IList<ITutorialStep> CreateSteps()
@@ -82,7 +78,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     BuildSpeed.InfinitelySlow));
 
             // Start 2 buildings
-            string builderBayName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
+            string builderBayName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
             string constructBuilderBayBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ConstructBuilderBay");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(
@@ -94,7 +90,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
             steps.Add(_slidingPanelWaitStepFactory.CreateSelectorHiddenWaitStep());
 
-            string artilleryName = _prefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
+            string artilleryName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
             string constructArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/DroneFocus/ConstructArtillery");
             steps.AddRange(
                 _constructBuildingStepsFactory.CreateSteps(

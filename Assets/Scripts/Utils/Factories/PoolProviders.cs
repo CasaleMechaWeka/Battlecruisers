@@ -43,13 +43,13 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 
-            _explosionPoolProvider = new ExplosionPoolProvider(factoryProvider.PrefabFactory);
-            _shipDeathPoolProvider = new ShipDeathPoolProvider(factoryProvider.PrefabFactory);
+            _explosionPoolProvider = new ExplosionPoolProvider();
+            _shipDeathPoolProvider = new ShipDeathPoolProvider();
             _projectilePoolProvider = new ProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new UnitPoolProvider(uiManager, factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
 
-            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
+            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new AudioSourcePoolableFactory(factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);

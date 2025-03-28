@@ -27,7 +27,6 @@ namespace BattleCruisers.Scenes.Test.UI
                 .Initialise(
                     Substitute.For<IScreensSceneGod>(),
                     Substitute.For<ISingleSoundPlayer>(),
-                    helper.PrefabFactory,
                     trashDataList,
                     trashDataList,
                     Substitute.For<IMusicPlayer>());

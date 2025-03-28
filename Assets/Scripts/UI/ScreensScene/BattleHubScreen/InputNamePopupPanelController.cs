@@ -24,21 +24,18 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         private IScreensSceneGod _screenSceneGod;
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
         private CaptainExoKey loadedCaptain;
 
         public void Initialise(
         IScreensSceneGod screensSceneGod,
-        ISingleSoundPlayer soundPlayer,
-        PrefabFactory prefabFactory)
+        ISingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer, prefabFactory);
+            Helper.AssertIsNotNull(screensSceneGod, soundPlayer);
             _screenSceneGod = screensSceneGod;
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
 
             applyBtn.Initialise(_soundPlayer, ApplyName);
-            CaptainExo captain = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             loadedCaptain = DataProvider.GameModel.PlayerLoadout.CurrentCaptain;
             charlieImage.sprite = captain.CaptainExoImage;
 
@@ -52,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             if (loadedCaptain != DataProvider.GameModel.PlayerLoadout.CurrentCaptain)
             {
-                CaptainExo captain = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+                CaptainExo captain = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
                 loadedCaptain = DataProvider.GameModel.PlayerLoadout.CurrentCaptain;
                 charlieImage.sprite = captain.CaptainExoImage;
             }
@@ -64,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             spinner.SetActive(true);
             applyBtn.enabled = false;
             string oldPlayerName = string.Empty;
-            CaptainExo captain = _prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captain = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             if (inputField.text != DataProvider.GameModel.PlayerName)
             {
                 try
@@ -84,14 +81,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         await AuthenticationService.Instance.UpdatePlayerNameAsync(name);
                     }
 
-                    PlayerInfoPanelController.Instance?.UpdateInfo(_prefabFactory);
+                    PlayerInfoPanelController.Instance?.UpdateInfo();
                     ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
                 }
                 catch (Exception ex)
                 {
                     DataProvider.GameModel.PlayerName = oldPlayerName;
                     DataProvider.SaveGame();
-                    PlayerInfoPanelController.Instance?.UpdateInfo(_prefabFactory);
+                    PlayerInfoPanelController.Instance?.UpdateInfo();
                     ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
                     Debug.LogException(ex);
                 }

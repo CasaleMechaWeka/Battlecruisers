@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.AI;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -11,7 +10,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     {
         protected ITaskList _tasks;
         protected ICruiserController _cruiser;
-        protected PrefabFactory _prefabFactory;
         protected ITaskFactory _taskFactory;
 
         [SetUp]
@@ -19,7 +17,6 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         {
             _tasks = Substitute.For<ITaskList>();
             _cruiser = Substitute.For<ICruiserController>();
-            _prefabFactory = Substitute.For<PrefabFactory>();
             _taskFactory = Substitute.For<ITaskFactory>();
         }
     }

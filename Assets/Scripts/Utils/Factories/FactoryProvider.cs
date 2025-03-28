@@ -5,7 +5,6 @@ using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -18,7 +17,6 @@ namespace BattleCruisers.Utils.Factories
         public DeferrerProvider DeferrerProvider { get; }
         public IDroneMonitor DroneMonitor { get; private set; }
         public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        public PrefabFactory PrefabFactory { get; }
         public TargetFactoriesProvider Targets { get; }
         public IUpdaterProvider UpdaterProvider { get; }
         public SettingsManager SettingsManager { get; }
@@ -29,13 +27,11 @@ namespace BattleCruisers.Utils.Factories
 
         public FactoryProvider(
             IBattleSceneGodComponents components,
-            PrefabFactory prefabFactory,
             SettingsManager settingsManager)
         {
-            Helper.AssertIsNotNull(components, prefabFactory, settingsManager);
+            Helper.AssertIsNotNull(components, settingsManager);
 
             _components = components;
-            PrefabFactory = prefabFactory;
             SettingsManager = settingsManager;
             Targets = new TargetFactoriesProvider();
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
@@ -48,7 +44,7 @@ namespace BattleCruisers.Utils.Factories
         {
             Assert.IsNotNull(uiManager);
 
-            IDroneFactory droneFactory = new DroneFactory(PrefabFactory);
+            IDroneFactory droneFactory = new DroneFactory();
             DroneMonitor = new DroneMonitor(droneFactory);
 
             PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);

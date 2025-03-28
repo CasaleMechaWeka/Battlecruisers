@@ -1,14 +1,12 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.AI.Tasks
 {
     public class TaskFactory : ITaskFactory
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly ICruiserController _cruiser;
         private readonly IDeferrer _deferrer;
 
@@ -18,11 +16,10 @@ namespace BattleCruisers.AI.Tasks
         public const float DEFAULT_DELAY_IN_S = 1.5f;
         public const float MIN_DELAY_IN_S = 0.1f;
 
-        public TaskFactory(PrefabFactory prefabFactory, ICruiserController cruiser, IDeferrer deferrer)
+        public TaskFactory(ICruiserController cruiser, IDeferrer deferrer)
         {
-            Helper.AssertIsNotNull(prefabFactory, cruiser, deferrer);
+            Helper.AssertIsNotNull(cruiser, deferrer);
 
-            _prefabFactory = prefabFactory;
             _cruiser = cruiser;
             _deferrer = deferrer;
 
@@ -31,7 +28,7 @@ namespace BattleCruisers.AI.Tasks
 
         public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
         {
-            ITask constructBuildingTask = new ConstructBuildingTask(buildingKey, _prefabFactory, _cruiser);
+            ITask constructBuildingTask = new ConstructBuildingTask(buildingKey, _cruiser);
             return CreatePrioritisedTask(constructBuildingTask, priority);
         }
 

@@ -8,20 +8,18 @@ namespace BattleCruisers.Effects.Explosions.Pools
 {
     public class ExplosionFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly ExplosionKey _explosionKey;
 
-        public ExplosionFactory(PrefabFactory prefabFactory, ExplosionKey explosionKey)
+        public ExplosionFactory(ExplosionKey explosionKey)
         {
-            Helper.AssertIsNotNull(prefabFactory, explosionKey);
+            Helper.AssertIsNotNull(explosionKey);
 
-            _prefabFactory = prefabFactory;
             _explosionKey = explosionKey;
         }
 
         public IPoolable<Vector3> CreateItem()
         {
-            return _prefabFactory.CreateExplosion(_explosionKey);
+            return PrefabFactory.CreateExplosion(_explosionKey);
         }
 
         public override string ToString()

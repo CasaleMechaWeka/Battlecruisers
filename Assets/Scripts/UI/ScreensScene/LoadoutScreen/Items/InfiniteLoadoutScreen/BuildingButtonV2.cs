@@ -10,9 +10,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
-using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             UpdateSelectedFeedback();
 
             // show variant icon in item button when init load
-            VariantPrefab variant = _gameModel.PlayerLoadout.GetSelectedBuildingVariant(ScreensSceneGod.Instance._prefabFactory, _buildingPrefab.Buildable);
+            VariantPrefab variant = _gameModel.PlayerLoadout.GetSelectedBuildingVariant(_buildingPrefab.Buildable);
             if (variant != null)
             {
                 variantIcon.gameObject.SetActive(true);
@@ -73,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             int index = args.Index;
             if (index != -1)
             {
-                VariantPrefab variant = ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     variantIcon.gameObject.SetActive(true);

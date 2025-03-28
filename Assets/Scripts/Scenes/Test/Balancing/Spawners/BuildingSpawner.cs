@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Spawners
@@ -15,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Balancing.Spawners
 
         protected override IBuildable SpawnBuildable(IPrefabKey buildableKey, BuildableInitialisationArgs args)
         {
-            IBuildableWrapper<IBuilding> buildingWrapperPrefab = _helper.PrefabFactory.GetBuildingWrapperPrefab(buildableKey);
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab = PrefabFactory.GetBuildingWrapperPrefab(buildableKey);
             BuildableWrapper<IBuilding> buildingWrapper = Object.Instantiate(buildingWrapperPrefab.UnityObject);
             buildingWrapper.gameObject.SetActive(true);
             buildingWrapper.StaticInitialise();

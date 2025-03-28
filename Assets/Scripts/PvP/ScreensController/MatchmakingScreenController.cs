@@ -29,7 +29,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
     public class MatchmakingScreenController : ScreenController
     {
         private ISceneNavigator _sceneNavigator;
-        private PrefabFactory _prefabFactory;
         private GameModel _gameModel;
         private ITrashTalkData _trashTalkData;
         public Animator animator;
@@ -169,7 +168,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             DontDestroyOnLoad(gameObject);
             _gameModel = DataProvider.GameModel;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
-            _prefabFactory = new PrefabFactory();
             //    leftCruiserName.text = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = DataProvider.GameModel.PlayerName;
             int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
@@ -179,7 +177,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitA = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
             if (id_bodykitA != -1)
             {
-                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
+                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(DataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
                 {
                     leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
@@ -196,7 +194,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             FoundOpponentText.text = LocTableCache.CommonTable.GetString("FoundOpponent");
 
 
-            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
             characterOfCharlie = charlie.gameObject;
@@ -469,7 +467,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitA = SynchedServerData.Instance.playerABodykit.Value;
             if (id_bodykitA != -1)
             {
-                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
+                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
                 {
                     leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
@@ -485,7 +483,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitB = SynchedServerData.Instance.playerBBodykit.Value;
             if (id_bodykitB != -1)
             {
-                Bodykit bodykit = _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
+                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
                 {
                     rightCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitB].NameStringKeyBase);

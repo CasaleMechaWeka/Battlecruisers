@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Deaths.Pools
 {
@@ -19,28 +17,24 @@ namespace BattleCruisers.Effects.Deaths.Pools
         public Pool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
 
-        public ShipDeathPoolProvider(PrefabFactory prefabFactory)
+        public ShipDeathPoolProvider()
         {
-            Assert.IsNotNull(prefabFactory);
-
-            AttackBoatPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.AttackBoat);
-            AttackRIBPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.AttackRIB);
-            FrigatePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Frigate);
-            DestroyerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Destroyer);
-            SiegeDestroyerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.SiegeDestroyer);
-            ArchonPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Archon);
-            GlassCannoneerPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.GlassCannoneer);
-            GunBoatPool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.GunBoat);
-            TurtlePool = CreateShipDeathPool(prefabFactory, StaticPrefabKeys.ShipDeaths.Turtle);
+            AttackBoatPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.AttackBoat);
+            AttackRIBPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.AttackRIB);
+            FrigatePool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.Frigate);
+            DestroyerPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.Destroyer);
+            SiegeDestroyerPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.SiegeDestroyer);
+            ArchonPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.Archon);
+            GlassCannoneerPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.GlassCannoneer);
+            GunBoatPool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.GunBoat);
+            TurtlePool = CreateShipDeathPool(StaticPrefabKeys.ShipDeaths.Turtle);
         }
 
-        private Pool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(PrefabFactory prefabFactory, ShipDeathKey shipDeathKey)
+        private Pool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(ShipDeathKey shipDeathKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(
-                    new ShipDeathFactory(
-                        prefabFactory,
-                        shipDeathKey));
+                    new ShipDeathFactory(shipDeathKey));
         }
 
         public void SetInitialCapacity()

@@ -8,7 +8,6 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 
@@ -16,25 +15,22 @@ namespace BattleCruisers.AI
 {
     public class AIManager : IAIManager
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly IDeferrer _deferrer;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
         private readonly IFactoryManagerFactory _factoryManagerFactory;
         private readonly IBuildOrderFactory _buildOrderFactory;
 
         public AIManager(
-            PrefabFactory prefabFactory,
             IDeferrer deferrer,
             ICruiserController playerCruiser,
             IStrategyFactory strategyFactory)
         {
-            Helper.AssertIsNotNull(prefabFactory, deferrer, playerCruiser, strategyFactory);
+            Helper.AssertIsNotNull(deferrer, playerCruiser, strategyFactory);
 
-            _prefabFactory = prefabFactory;
             _deferrer = deferrer;
 
             _threatMonitorFactory = new ThreatMonitorFactory(playerCruiser, TimeBC.Instance, deferrer);
-            _factoryManagerFactory = new FactoryManagerFactory(DataProvider.GameModel, _prefabFactory, _threatMonitorFactory);
+            _factoryManagerFactory = new FactoryManagerFactory(DataProvider.GameModel, _threatMonitorFactory);
 
             SlotAssigner slotAssigner = new SlotAssigner();
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, DataProvider.GameModel, strategyFactory);
@@ -47,11 +43,10 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
-            ITaskFactory taskFactory = new TaskFactory(_prefabFactory, levelInfo.AICruiser, _deferrer);
+            ITaskFactory taskFactory = new TaskFactory(levelInfo.AICruiser, _deferrer);
             ITaskProducerFactory taskProducerFactory
                 = new TaskProducerFactory(
                     levelInfo.AICruiser,
-                    _prefabFactory,
                     taskFactory,
                     _threatMonitorFactory);
             IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);

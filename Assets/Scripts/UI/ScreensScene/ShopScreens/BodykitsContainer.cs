@@ -4,7 +4,6 @@ using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject priceLabel;
         public CanvasGroupButton premiumButton;
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
         public GameObject content;
         public GameObject bodykitMessagePanel;
         public GameObject itemDetailsPanel;
@@ -38,12 +36,11 @@ namespace BattleCruisers.UI.ScreensScene
         public Animator seaAnimator;
         public GameObject previewCanvas;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
             bodykitDataChanged += BodykitDataChanged;
             onBodykitItemClick += OnBodykitItemClick;
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             premiumButton.Initialise(_soundPlayer, ScreensSceneGod.Instance.ShowPremiumEditionIAP);
             priceLabel = bodykitPrice.transform.parent.gameObject;
@@ -76,7 +73,7 @@ namespace BattleCruisers.UI.ScreensScene
                         if (result)
                         {
                             //    await DataProvider.SyncCurrencyFromCloud();
-                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                            PlayerInfoPanelController.Instance.UpdateInfo();
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._ownedItemMark.SetActive(true);
                             btnBuy.SetActive(false);
@@ -119,7 +116,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Subtract from local economy:
                         DataProvider.GameModel.Coins -= currentBodykitData.BodykitCost;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo();
 
                         // Keep track of transaction for later:
                         DataProvider.GameModel.CoinsChange -= currentBodykitData.BodykitCost;

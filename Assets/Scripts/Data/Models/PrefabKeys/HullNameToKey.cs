@@ -11,16 +11,16 @@ namespace BattleCruisers.Data.Models.PrefabKeys
         private readonly IDictionary<string, HullKey> _hullNameToKey;
         private readonly IDictionary<string, HullKey> _hullTypeToKey;
 
-        public HullNameToKey(IList<HullKey> keys, PrefabFactory prefabFactory)
+        public HullNameToKey(IList<HullKey> keys)
         {
-            Helper.AssertIsNotNull(keys, prefabFactory);
+            Helper.AssertIsNotNull(keys);
 
             _hullNameToKey = new Dictionary<string, HullKey>();
             _hullTypeToKey = new Dictionary<string, HullKey>();
 
             foreach (HullKey key in keys)
             {
-                ICruiser hullPrefab = prefabFactory.GetCruiserPrefab(key);
+                ICruiser hullPrefab = PrefabFactory.GetCruiserPrefab(key);
                 _hullNameToKey.Add(hullPrefab.Name, key);
                 _hullTypeToKey.Add(key.PrefabName, key);
             }

@@ -8,7 +8,6 @@ using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
@@ -37,19 +36,17 @@ namespace BattleCruisers.UI.ScreensScene
 
         public GameObject priceLabel;
         private ISingleSoundPlayer _soundPlayer;
-        private PrefabFactory _prefabFactory;
         private VariantPrefab currentVariant;
         public GameObject content;
         public GameObject variantMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_variantsMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, PrefabFactory prefabFactory)
+        public void Initialize(ISingleSoundPlayer soundPlayer)
         {
             variantDataChanged += VariantDataChanged;
             onVariantItemClick += OnVariantItemClick;
             _soundPlayer = soundPlayer;
-            _prefabFactory = prefabFactory;
             btnBuy.GetComponent<CanvasGroupButton>().Initialise(_soundPlayer, Purchase);
             buildingStatsController.Initialise();
             unitStatsController.Initialise();
@@ -69,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene
                         bool result = await DataProvider.PurchaseVariant(currentVariantData.Index);
                         if (result)
                         {
-                            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                            PlayerInfoPanelController.Instance.UpdateInfo();
                             currentItem._clickedFeedback.SetActive(true);
                             currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 1f);
                             currentItem._ownedItemMark.SetActive(true);
@@ -101,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene
                     // offline purchase
                     try
                     {
-                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo();
                         currentItem._clickedFeedback.SetActive(true);
                         currentItem._clickedFeedbackVariantImage.color = new Color(currentItem._clickedFeedbackVariantImage.color.r, currentItem._clickedFeedbackVariantImage.color.g, currentItem._clickedFeedbackVariantImage.color.b, 1f);
                         currentItem._ownedItemMark.SetActive(true);
@@ -115,7 +112,7 @@ namespace BattleCruisers.UI.ScreensScene
 
                         // Subtract from local economy:
                         DataProvider.GameModel.Credits -= currentVariantData.VariantCredits;
-                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo();
 
                         // Keep track of transaction for later:
                         DataProvider.GameModel.CreditsChange -= currentVariantData.VariantCredits;
@@ -179,13 +176,13 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 buildingStatsController.gameObject.SetActive(false);
                 unitStatsController.gameObject.SetActive(true);
-                unitStatsController.ShowStatsOfVariant(currentVariant.GetUnit(ScreensSceneGod.Instance._prefabFactory), currentVariant);
+                unitStatsController.ShowStatsOfVariant(currentVariant.GetUnit(), currentVariant);
             }
             else
             {
                 buildingStatsController.gameObject.SetActive(true);
                 unitStatsController.gameObject.SetActive(false);
-                buildingStatsController.ShowStatsOfVariant(currentVariant.GetBuilding(ScreensSceneGod.Instance._prefabFactory), currentVariant);
+                buildingStatsController.ShowStatsOfVariant(currentVariant.GetBuilding(), currentVariant);
             }
 
             VariantPrice.text = e.variantData.VariantCredits.ToString();

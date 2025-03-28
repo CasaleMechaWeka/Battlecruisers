@@ -44,7 +44,6 @@ namespace BattleCruisers.Scenes
 {
     public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
     {
-        public PrefabFactory _prefabFactory;
         private ScreenController _currentScreen;
         private GameModel _gameModel;
         private ISceneNavigator _sceneNavigator;
@@ -175,7 +174,7 @@ namespace BattleCruisers.Scenes
                     {
                         Debug.Log("Processing offline shop purchases and currency changes.");
                         await DataProvider.ProcessOfflineTransactions();
-                        PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+                        PlayerInfoPanelController.Instance.UpdateInfo();
                     }
 
                     // version check
@@ -315,7 +314,6 @@ namespace BattleCruisers.Scenes
 
             await loadPrefabCache;
 
-            _prefabFactory = new PrefabFactory();
             _isPlaying = false;
 
             // TEMP  For showing PostBattleScreen :)
@@ -329,18 +327,18 @@ namespace BattleCruisers.Scenes
 
             ShowCharlieOnMainMenu();
 
-            hubScreen.Initialise(this, _soundPlayer, _prefabFactory);
-            trashScreen.Initialise(this, _soundPlayer, _prefabFactory, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
+            hubScreen.Initialise(this, _soundPlayer);
+            trashScreen.Initialise(this, _soundPlayer, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
             Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
             if (captainsCamera != null)
             {
                 trashScreen.SetCamera(captainsCamera);
             }
             chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
-            skirmishScreen.Initialise(this, _soundPlayer, _prefabFactory);
-            shopPanelScreen.Initialise(this, _soundPlayer, _prefabFactory, IsInternetAccessable);
-            blackMarketScreen.Initialise(this, _soundPlayer, _prefabFactory);
-            captainSelectorPanel.Initialize(_soundPlayer, _prefabFactory);
+            skirmishScreen.Initialise(this, _soundPlayer);
+            shopPanelScreen.Initialise(this, _soundPlayer, IsInternetAccessable);
+            blackMarketScreen.Initialise(this, _soundPlayer);
+            captainSelectorPanel.Initialize(_soundPlayer);
 
             DataProvider.SaveGame();
 
@@ -385,10 +383,10 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_prefabFactory, _soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_prefabFactory, _soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_prefabFactory, _soundPlayer);
-            loadoutScreen.Initialise(this, _soundPlayer, _prefabFactory);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_soundPlayer);
+            loadoutScreen.Initialise(this, _soundPlayer);
 
             // TEMP  Go to specific screen :)
             //GoToLoadoutScreen();
@@ -451,7 +449,7 @@ namespace BattleCruisers.Scenes
                 Destroy(charlie.gameObject);
                 charlie = null;
             }
-            CaptainExo charliePrefab = _prefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 1; //0.5f
             characterOfCharlie = charlie.gameObject;
@@ -461,7 +459,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _prefabFactory, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
             //--->CODE CHANGED BY ANUJ
             if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
@@ -670,7 +668,7 @@ namespace BattleCruisers.Scenes
                 List<int> bodykits = new List<int>();
                 for (int i = 0; i < /*12*/ StaticData.Bodykits.Count; i++)
                 {
-                    if (_prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
+                    if (PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(i)).cruiserType == hullType)
                     {
                         bodykits.Add(i);
                     }

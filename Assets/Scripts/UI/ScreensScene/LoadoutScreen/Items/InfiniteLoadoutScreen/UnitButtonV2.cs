@@ -11,8 +11,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Scenes;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -33,7 +33,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingItemFamily,
             IBuildableWrapper<IUnit> unitPrefab,
-            PrefabKeyName unitKeyName,
             GameModel gameModel,
             UnitKey key)
         {
@@ -45,14 +44,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemFamilyTracker = comparingItemFamily;
             _gameModel = gameModel;
             _unitkey = key;
-            _unitName.text = (unitPrefab.Buildable.Name).ToString();
+            _unitName.text = unitPrefab.Buildable.Name.ToString();
             _itemFamilyTracker.ComparingFamily.ValueChanged += OnUnitListChange;
             Assert.IsNotNull(unitPrefab);
             _unitPrefab = unitPrefab;
             toggleSelectionButton.onClick.AddListener(OnSelectionToggleClicked);
 
             // show variant icon in item button when init load
-            VariantPrefab variant = _gameModel.PlayerLoadout.GetSelectedUnitVariant(ScreensSceneGod.Instance._prefabFactory, _unitPrefab.Buildable);
+            VariantPrefab variant = _gameModel.PlayerLoadout.GetSelectedUnitVariant(_unitPrefab.Buildable);
             if (variant != null)
             {
                 variantIcon.gameObject.SetActive(true);
@@ -70,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             int index = args.Index;
             if (index != -1)
             {
-                VariantPrefab variant = ScreensSceneGod.Instance._prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     variantIcon.gameObject.SetActive(true);

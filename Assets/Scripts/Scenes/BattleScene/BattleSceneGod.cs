@@ -148,10 +148,9 @@ namespace BattleCruisers.Scenes.BattleScene
             waterSplashVolumeController.Initialise(DataProvider.SettingsManager);
 
             // Common setup
-            PrefabFactory prefabFactory = new PrefabFactory();
             navigationPermitters = new NavigationPermitters();
 
-            IBattleSceneHelper helper = CreateHelper(prefabFactory, components.Deferrer, navigationPermitters);
+            IBattleSceneHelper helper = CreateHelper(components.Deferrer, navigationPermitters);
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -160,7 +159,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, prefabFactory, DataProvider.SettingsManager);
+            factoryProvider = new FactoryProvider(components, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, uiManager);
 
@@ -212,13 +211,13 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 currentSideQuest = helper.GetSideQuest();
                 enemyName = await helper.GetEnemyNameAsync(currentSideQuest.SideLevelNum);
-                aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
+                aiCaptainExoPrefab = PrefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
             }
             else
             {
                 currentLevel = helper.GetLevel();
                 enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
-                aiCaptainExoPrefab = prefabFactory.GetCaptainExo(currentLevel.Captains);
+                aiCaptainExoPrefab = PrefabFactory.GetCaptainExo(currentLevel.Captains);
             }
 
             Debug.Log($"Enemy name before instantiating: {enemyName}");
@@ -228,7 +227,7 @@ namespace BattleCruisers.Scenes.BattleScene
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
             // Setting up Captains
-            CaptainExo playerCaptainExoPrefab = prefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo playerCaptainExoPrefab = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             CaptainExo playerCaptain = Instantiate(playerCaptainExoPrefab, playerCaptainContainer);
 
             CaptainExo AICaptain = Instantiate(aiCaptainExoPrefab, AICaptainContainer);
@@ -268,7 +267,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     new DroneManagerMonitor(playerCruiser.DroneManager, components.Deferrer),
                     uiManager,
                     helper.GetPlayerLoadout(),
-                    prefabFactory,
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
@@ -288,7 +286,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
-            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel, prefabFactory);
+            IItemDetailsManager itemDetailsManager = new ItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new BuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
 
@@ -397,7 +395,6 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiser,
                     aiCruiser,
                     _tutorialProvider,
-                    prefabFactory,
                     components,
                     cameraComponents,
                     topPanelComponents,
@@ -488,28 +485,27 @@ namespace BattleCruisers.Scenes.BattleScene
                 }*/
 
         private IBattleSceneHelper CreateHelper(
-            PrefabFactory prefabFactory,
             IDeferrer deferrer,
             NavigationPermitters navigationPermitters)
         {
             switch (ApplicationModel.Mode)
             {
                 case GameMode.Tutorial:
-                    TutorialHelper helper = new TutorialHelper(prefabFactory, navigationPermitters);
+                    TutorialHelper helper = new TutorialHelper(navigationPermitters);
                     _tutorialProvider = helper;
                     return helper;
 
                 case GameMode.Campaign:
-                    return new NormalHelper(prefabFactory, deferrer);
+                    return new NormalHelper(deferrer);
 
                 case GameMode.Skirmish:
-                    return new SkirmishHelper(prefabFactory, deferrer);
+                    return new SkirmishHelper(deferrer);
 
                 case GameMode.CoinBattle:
-                    return new CoinBattleHelper(prefabFactory, deferrer);
+                    return new CoinBattleHelper(deferrer);
 
                 case GameMode.SideQuest:
-                    return new SideQuestHelper(prefabFactory, deferrer);
+                    return new SideQuestHelper(deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {ApplicationModel.Mode}");

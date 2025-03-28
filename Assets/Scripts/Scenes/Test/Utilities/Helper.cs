@@ -38,7 +38,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -46,7 +45,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Utilities
 {
@@ -60,30 +58,18 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
         public IUpdaterProvider UpdaterProvider { get; }
 
-        private PrefabFactory _prefabFactory;
-        public PrefabFactory PrefabFactory
-        {
-            get
-            {
-                Assert.IsNotNull(_prefabFactory);
-                return _prefabFactory;
-            }
-        }
-
         public Helper(
             int numOfDrones,
             float buildSpeedMultiplier,
             IDeferrer deferrer,
             IDeferrer realTimeDeferrer,
-            IUpdaterProvider updaterProvider,
-            PrefabFactory prefabFactory)
+            IUpdaterProvider updaterProvider)
         {
             _numOfDrones = numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier;
             Deferrer = deferrer;
             RealTimeDeferrer = realTimeDeferrer;
             UpdaterProvider = updaterProvider;
-            _prefabFactory = prefabFactory;
         }
 
         public Helper(
@@ -91,14 +77,12 @@ namespace BattleCruisers.Scenes.Test.Utilities
             int? numOfDrones = null,
             float? buildSpeedMultiplier = null,
             IDeferrer deferrer = null,
-            IUpdaterProvider updaterProvider = null,
-            PrefabFactory prefabFactory = null)
+            IUpdaterProvider updaterProvider = null)
         {
             _numOfDrones = numOfDrones ?? helper._numOfDrones;
             _buildSpeedMultiplier = buildSpeedMultiplier ?? helper._buildSpeedMultiplier;
             Deferrer = deferrer ?? helper.Deferrer;
             UpdaterProvider = updaterProvider ?? helper.UpdaterProvider;
-            _prefabFactory = prefabFactory ?? helper._prefabFactory;
         }
 
         public void InitialiseBuilding(

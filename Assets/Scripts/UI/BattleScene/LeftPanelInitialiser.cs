@@ -12,7 +12,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,7 +35,6 @@ namespace BattleCruisers.UI.BattleScene
             IDroneManagerMonitor droneManagerMonitor,
             IUIManager uiManager,
             ILoadout playerLoadout,
-            PrefabFactory prefabFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -48,7 +46,6 @@ namespace BattleCruisers.UI.BattleScene
                 droneManagerMonitor,
                 uiManager,
                 playerLoadout,
-                prefabFactory,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
@@ -61,7 +58,6 @@ namespace BattleCruisers.UI.BattleScene
                 = SetupBuildMenuController(
                     uiManager,
                     playerLoadout,
-                    prefabFactory,
                     buttonVisibilityFilters,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
@@ -80,14 +76,13 @@ namespace BattleCruisers.UI.BattleScene
         private IBuildMenu SetupBuildMenuController(
             IUIManager uiManager,
             ILoadout playerLoadout,
-            PrefabFactory prefabFactory,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
-            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout, prefabFactory);
+            IPrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout);
             IList<IBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units = prefabOrganiser.GetUnits();
 

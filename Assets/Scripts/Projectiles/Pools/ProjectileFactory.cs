@@ -4,6 +4,7 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Projectiles.Pools
 {
@@ -25,7 +26,7 @@ namespace BattleCruisers.Projectiles.Pools
 
         public TProjectile CreateItem()
         {
-            return _factoryProvider.PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
+            return PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
         }
 
         public override string ToString()

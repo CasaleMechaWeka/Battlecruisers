@@ -17,7 +17,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     // - Orders variants within groups by their type (QuickBuild, RapidFire, etc.)
     public class VariantSorter
     {
-        private readonly PrefabFactory _prefabFactory;
         private readonly Dictionary<int, string> _variantParentCache;
         private readonly object _cacheLock = new object();
 
@@ -36,9 +35,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {"Refined", 8}
         };
 
-        public VariantSorter(PrefabFactory prefabFactory)
+        public VariantSorter()
         {
-            _prefabFactory = prefabFactory ?? throw new System.ArgumentNullException(nameof(prefabFactory));
             _variantParentCache = new Dictionary<int, string>();
         }
 
@@ -61,21 +59,21 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 {
                     try
                     {
-                        var prefab = _prefabFactory.GetVariant(
+                        var prefab = PrefabFactory.GetVariant(
                             StaticPrefabKeys.Variants.GetVariantKey(v.Index));
 
                         if (prefab == null || prefab.parent == null)
                             return false;
 
                         var parentName = prefab.parent.ToString().ToLowerInvariant();
-                        
+
                         // Check if parent is a building
-                        if (DataProvider.GameModel.UnlockedBuildings.Any(b => 
+                        if (DataProvider.GameModel.UnlockedBuildings.Any(b =>
                             b.PrefabName.ToLowerInvariant() == parentName))
                             return true;
 
                         // Check if parent is a unit
-                        if (DataProvider.GameModel.UnlockedUnits.Any(u => 
+                        if (DataProvider.GameModel.UnlockedUnits.Any(u =>
                             u.PrefabName.ToLowerInvariant() == parentName))
                             return true;
 
@@ -186,7 +184,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 {
                     try
                     {
-                        var prefab = _prefabFactory.GetVariant(
+                        var prefab = PrefabFactory.GetVariant(
                             StaticPrefabKeys.Variants.GetVariantKey(variant.Index));
 
                         if (prefab == null)

@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.Scenes.Test.Utilities
@@ -16,17 +15,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IDeferrer realTimeDeferrer = null,
             IUpdaterProvider updaterProvider = null)
         {
-            PrefabFactory prefabFactory
-                = new PrefabFactory();
-
             return
                 new Helper(
                     numOfDrones,
                     buildSpeedMultiplier,
                     deferrer,
                     realTimeDeferrer,
-                    updaterProvider,
-                    prefabFactory);
+                    updaterProvider);
         }
     }
 }

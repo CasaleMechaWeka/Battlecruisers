@@ -32,19 +32,13 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public VariantType variantType => _variantType;
         public StatVariant statVariant;
 
-        public string GetParentName(PrefabFactory prefabFactory)
+        public string GetParentName()
         {
-            return IsUnit() ? GetUnit(prefabFactory).Name : GetBuilding(prefabFactory).Name;
+            return IsUnit() ? GetUnit().Name : GetBuilding().Name;
         }
 
-        public IBuilding GetBuilding(PrefabFactory prefabFactory)
+        public IBuilding GetBuilding()
         {
-            if (prefabFactory == null)
-            {
-                Debug.LogError("PrefabFactory is null");
-                return null;
-            }
-
             IPrefabKey buildingKey = GetPrefabKey();
             if (buildingKey == null)
             {
@@ -52,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 return null;
             }
 
-            var buildingWrapperPrefab = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            var buildingWrapperPrefab = PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
             if (buildingWrapperPrefab == null)
             {
                 Debug.LogError($"Building wrapper prefab is null for key: {buildingKey}");
@@ -89,13 +83,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         }
 
 
-        public IUnit GetUnit(PrefabFactory prefabFactory)
+        public IUnit GetUnit()
         {
-            IUnit unit = null;
-            if (prefabFactory != null)
-                unit = prefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
-
-            return unit;
+            return PrefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
         }
 
         public IPvPUnit GetUnit(IPvPPrefabFactory prefabFactory)

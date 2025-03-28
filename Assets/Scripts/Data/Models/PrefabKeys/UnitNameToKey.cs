@@ -11,15 +11,15 @@ namespace BattleCruisers.Data.Models.PrefabKeys
     {
         private readonly IDictionary<string, UnitKey> _unitNameToKey;
 
-        public UnitNameToKey(IList<UnitKey> keys, PrefabFactory prefabFactory)
+        public UnitNameToKey(IList<UnitKey> keys)
         {
-            Helper.AssertIsNotNull(keys, prefabFactory);
+            Helper.AssertIsNotNull(keys);
 
             _unitNameToKey = new Dictionary<string, UnitKey>();
 
             foreach (UnitKey key in keys)
             {
-                IBuildableWrapper<IUnit> unitPrefab = prefabFactory.GetUnitWrapperPrefab(key);
+                IBuildableWrapper<IUnit> unitPrefab = PrefabFactory.GetUnitWrapperPrefab(key);
                 try
                 {
                     _unitNameToKey.Add(unitPrefab.Buildable.Name, key);

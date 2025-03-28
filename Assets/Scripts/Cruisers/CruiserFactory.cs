@@ -18,6 +18,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -50,8 +51,8 @@ namespace BattleCruisers.Cruisers
 
         public Cruiser CreatePlayerCruiser()
         {
-            Cruiser playerCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerCruiser);
-            Cruiser playerCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerCruiserPrefab);
+            Cruiser playerCruiserPrefab = PrefabFactory.GetCruiserPrefab(_helper.PlayerCruiser);
+            Cruiser playerCruiser = PrefabFactory.CreateCruiser(playerCruiserPrefab);
             playerCruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerCruiser.YAdjustmentInM, 0);
 
             return playerCruiser;
@@ -61,8 +62,8 @@ namespace BattleCruisers.Cruisers
         {
             Assert.IsNotNull(aiCruiserKey);
 
-            Cruiser aiCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(aiCruiserKey);
-            Cruiser aiCruiser = _factoryProvider.PrefabFactory.CreateCruiser(aiCruiserPrefab);
+            Cruiser aiCruiserPrefab = PrefabFactory.GetCruiserPrefab(aiCruiserKey);
+            Cruiser aiCruiser = PrefabFactory.CreateCruiser(aiCruiserPrefab);
 
             aiCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiCruiser.YAdjustmentInM, 0);
             Quaternion rotation = aiCruiser.Rotation;

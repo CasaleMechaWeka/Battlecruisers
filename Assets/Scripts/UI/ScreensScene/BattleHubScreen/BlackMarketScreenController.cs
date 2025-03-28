@@ -5,7 +5,6 @@ using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using System;
@@ -18,7 +17,6 @@ namespace BattleCruisers.UI.ScreensScene
     public class BlackMarketScreenController : ScreenController
     {
         public CanvasGroupButton backButton, buyButton;
-        private PrefabFactory _prefabFactory;
         private ISingleSoundPlayer _soundPlayer;
         public Transform iapContainer;
         public EventHandler<IAPDataEventArgs> iapDataChanged;
@@ -61,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene
                     break;
             }
             DataProvider.SaveGame();
-            PlayerInfoPanelController.Instance.UpdateInfo(_prefabFactory);
+            PlayerInfoPanelController.Instance.UpdateInfo();
             try
             {
                 bool result = await DataProvider.SyncCoinsToCloud();
@@ -76,17 +74,15 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory)
+            ISingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
-            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, prefabFactory, iapContainer);
+            Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, iapContainer);
             Helper.AssertIsNotNull(iapIcon, iapName, iapDescription, iapPrice);
 
-            _prefabFactory = prefabFactory;
             _soundPlayer = soundPlayer;
 
-            confirmModal.Initiaize(prefabFactory, soundPlayer);
+            confirmModal.Initiaize(soundPlayer);
             backButton.Initialise(soundPlayer, GoHome, this);
             buyButton.Initialise(soundPlayer, Buy, this);
 

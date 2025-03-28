@@ -33,10 +33,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             ISingleSoundPlayer soundPlayer,
-            PrefabFactory prefabFactory,
             GameModel gameModel)
         {
-            Cruiser cruiserPrefab = prefabFactory.GetCruiserPrefab(HullKey);
+            Cruiser cruiserPrefab = PrefabFactory.GetCruiserPrefab(HullKey);
             HullButtonV2 hullButton = GetComponentInChildren<HullButtonV2>(includeInactive: true);
             Assert.IsNotNull(hullButton);
             hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull, hullKeyName);

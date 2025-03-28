@@ -12,20 +12,17 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
     public class StartConstructingUnitStep : TutorialStep
     {
         private readonly IPrefabKey _unitToConstruct;
-        private readonly PrefabFactory _prefabFactory;
         private readonly IItemProvider<IFactory> _factoryProvider;
 
         public StartConstructingUnitStep(
             ITutorialStepArgs args,
             IPrefabKey unitToConstruct,
-            PrefabFactory prefabFactory,
             IItemProvider<IFactory> factoryProvider)
             : base(args)
         {
-            Helper.AssertIsNotNull(unitToConstruct, prefabFactory, factoryProvider);
+            Helper.AssertIsNotNull(unitToConstruct, factoryProvider);
 
             _unitToConstruct = unitToConstruct;
-            _prefabFactory = prefabFactory;
             _factoryProvider = factoryProvider;
         }
 
@@ -33,7 +30,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         {
             base.Start(completionCallback);
 
-            IBuildableWrapper<IUnit> unitWrapperPrefab = _prefabFactory.GetUnitWrapperPrefab(_unitToConstruct);
+            IBuildableWrapper<IUnit> unitWrapperPrefab = PrefabFactory.GetUnitWrapperPrefab(_unitToConstruct);
             _factoryProvider.FindItem().StartBuildingUnit(unitWrapperPrefab);
 
             OnCompleted();

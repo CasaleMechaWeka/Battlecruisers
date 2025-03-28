@@ -3,7 +3,6 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Static.LevelLoot
@@ -20,15 +19,15 @@ namespace BattleCruisers.Data.Static.LevelLoot
             _itemKey = itemKey;
         }
 
-        public void ShowItemDetails(PrefabFactory prefabFactory, IItemDetailsGroup itemDetailsControllers)
+        public void ShowItemDetails(IItemDetailsGroup itemDetailsControllers)
         {
-            TItem item = GetItem(prefabFactory);
+            TItem item = GetItem();
             IComparableItemDetails<TItem> itemDetails = GetItemDetails(itemDetailsControllers);
 
             itemDetails.ShowItemDetails(item);
         }
 
-        protected abstract TItem GetItem(PrefabFactory prefabFactory);
+        protected abstract TItem GetItem();
 
         protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsGroup itemDetailsControllers);
 

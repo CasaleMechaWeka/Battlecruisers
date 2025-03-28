@@ -80,7 +80,6 @@ namespace BattleCruisers.Buildables.Pools
             Pool<Unit, BuildableActivationArgs> pool
                 = new Pool<Unit, BuildableActivationArgs>(
                     new UnitFactory(
-                        _factoryProvider.PrefabFactory,
                         unitKey,
                         _uiManager,
                         _factoryProvider));
