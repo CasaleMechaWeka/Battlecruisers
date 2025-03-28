@@ -17,16 +17,14 @@ namespace BattleCruisers.AI.FactoryManagers
 	{
 		private readonly IList<IBuildableWrapper<IUnit>> _units;
 		private readonly IDroneManager _droneManager;
-		private readonly AffordableUnitFilter _unitFilter;
 
-		public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager, AffordableUnitFilter unitFilter)
+		public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
 		{
-			Helper.AssertIsNotNull(units, droneManager, unitFilter);
+			Helper.AssertIsNotNull(units, droneManager);
 			Assert.IsTrue(units.Count != 0);
 
 			_units = units;
 			_droneManager = droneManager;
-			_unitFilter = unitFilter;
 
 			_droneManager.DroneNumChanged += _droneManager_DroneNumChanged;
 
@@ -42,7 +40,7 @@ namespace BattleCruisers.AI.FactoryManagers
 		{
 			ChosenUnit =
 				_units
-					.Where(wrapper => _unitFilter.IsBuildableAcceptable(wrapper.Buildable.NumOfDronesRequired, _droneManager.NumOfDrones))
+					.Where(wrapper => wrapper.Buildable.NumOfDronesRequired <= _droneManager.NumOfDrones)
 					.OrderByDescending(wrapper => wrapper.Buildable.NumOfDronesRequired)
 					.FirstOrDefault();
 		}

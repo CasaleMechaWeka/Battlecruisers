@@ -43,8 +43,7 @@ namespace BattleCruisers.AI.FactoryManagers
             UnitChooser unitChooser
                 = new MostExpensiveUnitChooser(
                     availableShips,
-                    aiCruiser.DroneManager,
-                    new AffordableUnitFilter());
+                    aiCruiser.DroneManager);
 
             return new FactoryManager(UnitCategory.Naval, aiCruiser, unitChooser);
         }
