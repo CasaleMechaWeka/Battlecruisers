@@ -191,7 +191,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             MissilesSmallPool.AddCapacity(1);
             MissilesMediumPool.AddCapacity(1);
             MissilesMFPool.AddCapacity(1);
-            RailSlugsPool.AddCapacity(1);
+            //RailSlugsPool.AddCapacity(1);
             MissilesFirecrackerPool.AddCapacity(1);
             MissilesLargePool.AddCapacity(1);
             MissilesSmartPool.AddCapacity(1);
