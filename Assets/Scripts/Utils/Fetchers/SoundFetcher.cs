@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             string soundPath = CreateSoundPath(soundKey);
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
-            Debug.Log("[SoundFetcher] GetSoundAsync started with key: " + soundKey.Type + "/" + soundKey.Name);
+            //Debug.Log("[SoundFetcher] GetSoundAsync started with key: " + soundKey.Type + "/" + soundKey.Name);
             try
             {
                 var validateAddress = Addressables.LoadResourceLocationsAsync(soundPath);
