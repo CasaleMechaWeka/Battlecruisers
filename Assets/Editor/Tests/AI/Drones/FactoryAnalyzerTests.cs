@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.AI.Drones
 {
     public class FactoryAnalyzerTests
     {
-        private IFactoryAnalyzer _analyzer;
+        private FactoryAnalyzer _analyzer;
         private FactoriesMonitor _factoriesMonitor;
         private IList<FactoryMonitor> _factoryMonitors;
         private FactoryMonitor _factoryMonitor;

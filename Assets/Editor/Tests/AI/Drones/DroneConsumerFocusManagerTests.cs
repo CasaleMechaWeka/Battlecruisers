@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private ResponsiveStrategy _strategy;
         private IDroneManager _droneManager;
         private ICruiserBuildingMonitor _aiBuildingMonitor;
-        private IDroneConsumerFocusHelper _focusHelper;
+        private DroneConsumerFocusHelper _focusHelper;
         private IFactory _factory;
         private IDroneConsumer _factoryDroneConsumer;
 
@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.AI.Drones
             _droneManager.NumOfDrones = 12;
             _aiBuildingMonitor = aiCruiser.BuildingMonitor;
 
-            _focusHelper = Substitute.For<IDroneConsumerFocusHelper>();
+            _focusHelper = Substitute.For<DroneConsumerFocusHelper>();
 
             _focusManager = new DroneConsumerFocusManager(_strategy, aiCruiser, _focusHelper);
 

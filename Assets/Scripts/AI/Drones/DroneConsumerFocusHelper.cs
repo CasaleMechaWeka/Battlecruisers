@@ -4,13 +4,13 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.Drones
 {
-    public class DroneConsumerFocusHelper : IDroneConsumerFocusHelper
+    public class DroneConsumerFocusHelper
     {
         private readonly IDroneManager _droneManager;
-        private readonly IFactoryAnalyzer _factoryAnalyzer;
+        private readonly FactoryAnalyzer _factoryAnalyzer;
         private readonly AffordableInProgressNonFocusedProvider _affordableInProgressNonFocusedBuildingProvider;
 
-        public DroneConsumerFocusHelper(IDroneManager droneManager, IFactoryAnalyzer factoryAnalyzer, AffordableInProgressNonFocusedProvider affordableInProgressNonFocusedBuildingProvider)
+        public DroneConsumerFocusHelper(IDroneManager droneManager, FactoryAnalyzer factoryAnalyzer, AffordableInProgressNonFocusedProvider affordableInProgressNonFocusedBuildingProvider)
         {
             Helper.AssertIsNotNull(droneManager, factoryAnalyzer, affordableInProgressNonFocusedBuildingProvider);
 

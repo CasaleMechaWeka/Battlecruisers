@@ -9,10 +9,10 @@ namespace BattleCruisers.Tests.AI.Drones
 {
     public class DroneConsumerFocusHelperTests
     {
-        private IDroneConsumerFocusHelper _focusHelper;
+        private DroneConsumerFocusHelper _focusHelper;
 
         private IDroneManager _droneManager;
-        private IFactoryAnalyzer _factoryAnalyzer;
+        private FactoryAnalyzer _factoryAnalyzer;
         private AffordableInProgressNonFocusedProvider _buildingProvider;
         private IBuilding _inProgressBuilding;
         private IDroneConsumer _inProgressBuildingDroneConsumer;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.AI.Drones
         public void SetuUp()
         {
             _droneManager = Substitute.For<IDroneManager>();
-            _factoryAnalyzer = Substitute.For<IFactoryAnalyzer>();
+            _factoryAnalyzer = Substitute.For<FactoryAnalyzer>();
 
             _inProgressBuilding = Substitute.For<IBuilding>();
             _inProgressBuildingDroneConsumer = Substitute.For<IDroneConsumer>();

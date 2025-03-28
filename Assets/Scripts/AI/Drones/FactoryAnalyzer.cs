@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BattleCruisers.AI.Drones
 {
-    public class FactoryAnalyzer : IFactoryAnalyzer
+    public class FactoryAnalyzer
     {
         private readonly FactoriesMonitor _factoriesMonitor;
         private readonly IFilter<FactoryMonitor> _wastingDronesFilter;

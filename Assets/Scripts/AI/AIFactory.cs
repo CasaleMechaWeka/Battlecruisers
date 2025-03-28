@@ -95,14 +95,14 @@ namespace BattleCruisers.AI
 
         private DroneConsumerFocusManager CreateDroneFocusManager(ICruiserController aiCruiser)
         {
-            IFactoryAnalyzer factoryAnalyzer
+            FactoryAnalyzer factoryAnalyzer
                 = new FactoryAnalyzer(
                     new FactoriesMonitor(aiCruiser.BuildingMonitor),
                     new FactoryWastingDronesFilter());
 
             InProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(aiCruiser);
 
-            IDroneConsumerFocusHelper focusHelper
+            DroneConsumerFocusHelper focusHelper
                 = new DroneConsumerFocusHelper(
                     aiCruiser.DroneManager,
                     factoryAnalyzer,

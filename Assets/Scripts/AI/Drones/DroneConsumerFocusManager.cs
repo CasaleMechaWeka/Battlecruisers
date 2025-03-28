@@ -28,12 +28,12 @@ namespace BattleCruisers.AI.Drones
         private readonly ICruiserBuildingMonitor _aiBuildingMonitor;
         private readonly IDroneManager _droneManager;
         private readonly IList<IFactory> _completedFactories;
-        private readonly IDroneConsumerFocusHelper _focusHelper;
+        private readonly DroneConsumerFocusHelper _focusHelper;
 
         public DroneConsumerFocusManager(
             ResponsiveStrategy strategy,
             ICruiserController aiCruiser,
-            IDroneConsumerFocusHelper focusHelper)
+            DroneConsumerFocusHelper focusHelper)
         {
             Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, focusHelper);
 
