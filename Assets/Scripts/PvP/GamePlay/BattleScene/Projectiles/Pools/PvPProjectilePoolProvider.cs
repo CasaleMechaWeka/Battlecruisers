@@ -215,7 +215,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             MissilesSmallPool.AddCapacity(PvPInitialCapacity.MISSILE_SMALL - 1);
             MissilesMediumPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             MissilesMFPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
-            RailSlugsPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
+            //RailSlugsPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             MissilesFirecrackerPool.AddCapacity(PvPInitialCapacity.MISSILE_MEDIUM - 1);
             MissilesLargePool.AddCapacity(PvPInitialCapacity.MISSILE_LARGE - 1);
             MissilesSmartPool.AddCapacity(PvPInitialCapacity.MISSILE_SMART - 1);
