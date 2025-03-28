@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IAnimation _barrelAnimation;
         private ITarget _parent;
         protected ITargetFilter _targetFilter;
-        protected IFireIntervalManager _fireIntervalManager;
+        protected FireIntervalManager _fireIntervalManager;
 
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
@@ -133,7 +133,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
+        protected virtual FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             PvPFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);

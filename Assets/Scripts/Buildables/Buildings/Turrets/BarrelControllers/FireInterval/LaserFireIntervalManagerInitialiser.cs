@@ -5,9 +5,9 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 {
     public class LaserFireIntervalManagerInitialiser : MonoBehaviour
-	{
-		public IFireIntervalManager Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
-		{
+    {
+        public FireIntervalManager Initialise(IDurationProvider waitingDurationProvider, IDurationProvider firingDurationProvider)
+        {
             Helper.AssertIsNotNull(waitingDurationProvider, firingDurationProvider);
 
             WaitingState waitingState = new WaitingState();
@@ -17,6 +17,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInte
             firingState.Initialise(waitingState, firingDurationProvider);
 
             return new FireIntervalManager(firingState);
-		}
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.Fi
 {
     public class FireIntervalManagerTests
     {
-        private IFireIntervalManager _manager;
+        private FireIntervalManager _manager;
         private IState _firingState, _waitingState;
 
         [SetUp]

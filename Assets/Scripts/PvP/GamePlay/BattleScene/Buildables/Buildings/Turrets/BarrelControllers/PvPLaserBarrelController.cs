@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _laserTurretStats;
         }
 
-        protected override IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
+        protected override FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             PvPLaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPLaserFireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);

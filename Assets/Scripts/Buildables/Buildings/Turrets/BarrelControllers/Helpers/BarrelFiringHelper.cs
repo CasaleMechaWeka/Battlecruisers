@@ -8,7 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
     {
         private readonly IBarrelController _barrelController;
         private readonly AccuracyAdjuster _accuracyAdjuster;
-        private readonly IFireIntervalManager _fireIntervalManager;
+        private readonly FireIntervalManager _fireIntervalManager;
         private readonly IBarrelFirer _barrelFirer;
 
         private readonly bool _doDebug;
@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
         public BarrelFiringHelper(
             IBarrelController barrelController,
             AccuracyAdjuster accuracyAdjuster,
-            IFireIntervalManager fireIntervalManager,
+            FireIntervalManager fireIntervalManager,
             IBarrelFirer barrelFirer,
             bool doDebug)
         {

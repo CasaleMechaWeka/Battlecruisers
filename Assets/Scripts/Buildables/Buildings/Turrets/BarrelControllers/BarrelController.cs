@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         private IParticleSystemGroup _muzzleFlash;
         private ITarget _parent;
         protected ITargetFilter _targetFilter;
-        protected IFireIntervalManager _fireIntervalManager;
+        protected FireIntervalManager _fireIntervalManager;
 
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
@@ -126,7 +126,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             }
         }
 
-        protected virtual IFireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
+        protected virtual FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
             FireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<FireIntervalManagerInitialiser>();
             Assert.IsNotNull(fireIntervalManagerInitialiser);

@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPFireIntervalManagerInitialiser : MonoBehaviour
     {
-        public IFireIntervalManager Initialise(IDurationProvider sharedDurationProvider)
+        public FireIntervalManager Initialise(IDurationProvider sharedDurationProvider)
         {
             Assert.IsNotNull(sharedDurationProvider);
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             waitingState.Initialise(firingState, sharedDurationProvider);
             firingState.Initialise(waitingState, sharedDurationProvider);
 
-            return new PvPFireIntervalManager(firingState);
+            return new FireIntervalManager(firingState);
         }
     }
 }
