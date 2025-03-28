@@ -13,7 +13,7 @@ namespace BattleCruisers.AI.TaskProducers
     {
         private readonly ICruiserController _aiCruiser;
         private readonly ITaskFactory _taskFactory;
-        private readonly IThreatMonitorFactory _threatMonitorFactory;
+        private readonly ThreatMonitorFactory _threatMonitorFactory;
 
         // For spy satellite launcher and shields.  All cruisers have at least 6
         // deck slots:
@@ -25,7 +25,7 @@ namespace BattleCruisers.AI.TaskProducers
         public TaskProducerFactory(
             ICruiserController aiCruiser,
             ITaskFactory taskFactory,
-            IThreatMonitorFactory threatMonitorFactory)
+            ThreatMonitorFactory threatMonitorFactory)
         {
             Helper.AssertIsNotNull(aiCruiser, taskFactory, threatMonitorFactory);
 

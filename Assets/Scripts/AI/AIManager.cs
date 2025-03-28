@@ -16,7 +16,7 @@ namespace BattleCruisers.AI
     public class AIManager : IAIManager
     {
         private readonly IDeferrer _deferrer;
-        private readonly IThreatMonitorFactory _threatMonitorFactory;
+        private readonly ThreatMonitorFactory _threatMonitorFactory;
         private readonly FactoryManagerFactory _factoryManagerFactory;
         private readonly BuildOrderFactory _buildOrderFactory;
 

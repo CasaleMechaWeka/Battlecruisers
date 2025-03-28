@@ -8,7 +8,7 @@ using BattleCruisers.Buildables.Buildings;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
-    public class ThreatMonitorFactory : IThreatMonitorFactory
+    public class ThreatMonitorFactory
     {
         private readonly ICruiserController _playerCruiser;
         private readonly ITime _time;
