@@ -13,13 +13,13 @@ namespace BattleCruisers.Tests.AI.Drones
 
         private IDroneManager _droneManager;
         private IFactoryAnalyzer _factoryAnalyzer;
-        private IBuildingProvider _buildingProvider;
+        private AffordableInProgressNonFocusedProvider _buildingProvider;
         private IBuilding _inProgressBuilding;
         private IDroneConsumer _inProgressBuildingDroneConsumer;
 
-		[SetUp]
-		public void SetuUp()
-		{
+        [SetUp]
+        public void SetuUp()
+        {
             _droneManager = Substitute.For<IDroneManager>();
             _factoryAnalyzer = Substitute.For<IFactoryAnalyzer>();
 
@@ -27,10 +27,10 @@ namespace BattleCruisers.Tests.AI.Drones
             _inProgressBuildingDroneConsumer = Substitute.For<IDroneConsumer>();
             _inProgressBuilding.DroneConsumer.Returns(_inProgressBuildingDroneConsumer);
 
-            _buildingProvider = Substitute.For<IBuildingProvider>();
+            _buildingProvider = Substitute.For<AffordableInProgressNonFocusedProvider>();
 
             _focusHelper = new DroneConsumerFocusHelper(_droneManager, _factoryAnalyzer, _buildingProvider);
-		}
+        }
 
         [Test]
         public void FocusOnNonFactoryDroneConsumer_NoFactoriesWronglyUsingDrones_DoesNothing()
@@ -66,19 +66,19 @@ namespace BattleCruisers.Tests.AI.Drones
             _droneManager.Received().ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
         }
 
-		[Test]
-		public void FocusOnNonFactoryDroneConsumer_GoesFocused()
-		{
+        [Test]
+        public void FocusOnNonFactoryDroneConsumer_GoesFocused()
+        {
             _factoryAnalyzer.AreAnyFactoriesWronglyUsingDrones.Returns(true);
             _buildingProvider.Building.Returns(_inProgressBuilding);
             _inProgressBuildingDroneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Active);
 
             _focusHelper.FocusOnNonFactoryDroneConsumer(forceInProgressBuildingToFocused: true);
 
-			// Idle => Active, Active => Focused
+            // Idle => Active, Active => Focused
             _droneManager
                 .Received(requiredNumberOfCalls: 2)
                 .ToggleDroneConsumerFocus(_inProgressBuildingDroneConsumer);
-		}
+        }
     }
 }

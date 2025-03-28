@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BattleCruisers.AI.Drones
 {
-    public class AffordableInProgressNonFocusedProvider : IBuildingProvider
+    public class AffordableInProgressNonFocusedProvider
     {
         private readonly IDroneManager _droneManager;
         private readonly InProgressBuildingMonitor _buildingMonitor;

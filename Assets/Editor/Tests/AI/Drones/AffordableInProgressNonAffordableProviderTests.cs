@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.AI.Drones
 {
     public class AffordableInProgressNonAffordableProviderTests
     {
-        private IBuildingProvider _provider;
+        private AffordableInProgressNonFocusedProvider _provider;
         private IDroneManager _droneManager;
         private InProgressBuildingMonitor _buildingMonitor;
         private IList<IBuilding> _inProgressBuildings;
