@@ -5,12 +5,12 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 {
     public class TurretStats : BasicTurretStats, ITurretStats
-	{
-		public float accuracy;
-		public float Accuracy => accuracy;
-		
+    {
+        public float accuracy;
+        public float Accuracy => accuracy;
+
         public float turretRotateSpeedInDegrees;
-		public float TurretRotateSpeedInDegrees => turretRotateSpeedInDegrees;
+        public float TurretRotateSpeedInDegrees => turretRotateSpeedInDegrees;
 
         public virtual bool IsInBurst => false;
 
@@ -19,15 +19,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         private const int DEFAULT_BURST_SIZE = 1;
 
         public override void Initialise()
-		{
+        {
             base.Initialise();
 
-			Assert.IsTrue(accuracy >= 0 && accuracy <= 1);
-			Assert.IsTrue(turretRotateSpeedInDegrees > 0);
-		}
+            Assert.IsTrue(accuracy >= 0 && accuracy <= 1);
+            Assert.IsTrue(turretRotateSpeedInDegrees > 0);
+        }
+
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
                 base.ApplyVariantStats(statVariant);
                 accuracy += statVariant.accuracy;

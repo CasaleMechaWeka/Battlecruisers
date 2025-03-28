@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_laserEmitter);
         }
 
-        protected override PvPTurretStats SetupTurretStats()
+        protected override TurretStats SetupTurretStats()
         {
             _laserTurretStats = gameObject.GetComponent<PvPLaserTurretStats>();
             Assert.IsNotNull(_laserTurretStats);

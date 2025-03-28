@@ -26,14 +26,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
         protected bool isAppliedVariant = false;
 
         public virtual void Initialise()
-		{
-			Assert.IsTrue(FireRatePerS > 0);
-			Assert.IsTrue(RangeInM > 0);
+        {
+            Assert.IsTrue(FireRatePerS > 0);
+            Assert.IsTrue(RangeInM > 0);
             Assert.IsTrue(RangeInM > MinRangeInM);
             Assert.IsTrue(attackCapabilities.Count > 0);
 
             AttackCapabilities = new ReadOnlyCollection<TargetType>(attackCapabilities);
-		}
+        }
 
         public virtual void MoveToNextDuration()
         {
@@ -42,7 +42,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public virtual void ApplyVariantStats(StatVariant statVariant)
         {
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
                 fireRatePerS *= statVariant.fire_rate;
                 rangeInM *= statVariant.range;

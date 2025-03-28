@@ -70,8 +70,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
             _meanFireRatePerS = burstSize / cycleTime;
 
             QueryIndex = 0;
-
-
         }
 
         public override void MoveToNextDuration()
@@ -81,7 +79,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats
 
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
                 base.ApplyVariantStats(statVariant);
                 burstFireRatePerS += statVariant.burst_fire_rate;

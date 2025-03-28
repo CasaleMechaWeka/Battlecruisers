@@ -3,7 +3,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats
 {
-    public class PvPLaserTurretStats : PvPTurretStats, ILaserTurretStats
+    public class PvPLaserTurretStats : TurretStats, ILaserTurretStats
     {
         public float damagePerS;
         public float DamagePerS => damagePerS;

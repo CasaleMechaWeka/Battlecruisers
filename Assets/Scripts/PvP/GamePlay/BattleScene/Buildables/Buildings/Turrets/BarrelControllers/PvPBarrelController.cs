@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IProjectileStats _projectileStats;
         public IProjectileStats ProjectileStats => _projectileStats;
 
-        private PvPTurretStats _baseTurretStats;
+        private TurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
         public ITurretStats TurretStats => _turretStatsWrapper;
 
@@ -99,9 +99,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return projectileStats;
         }
 
-        protected virtual PvPTurretStats SetupTurretStats()
+        protected virtual TurretStats SetupTurretStats()
         {
-            PvPTurretStats turretStats = gameObject.GetComponent<PvPTurretStats>();
+            TurretStats turretStats = gameObject.GetComponent<TurretStats>();
             Assert.IsNotNull(turretStats);
             turretStats.Initialise();
             return turretStats;
