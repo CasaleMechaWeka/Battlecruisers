@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using BattleCruisers.Data;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;
@@ -34,6 +35,8 @@ namespace BattleCruisers.Utils.Localisation
         public static LocTable AdvertisingTable => _advertising ??= LoadTable(TableName.ADVERTISING);
         public static LocTable HecklesTable => _heckles ??= LoadTable(TableName.HECKLES);
 
+        private static Locale _locale = null;
+
         public static async Task PreloadAllAsync()
         {
             await Task.WhenAll(
@@ -50,12 +53,20 @@ namespace BattleCruisers.Utils.Localisation
 
         private static LocTable LoadTable(string tableName)
         {
-            if (!LocalizationSettings.InitializationOperation.IsDone)
-                LocalizationSettings.InitializationOperation.WaitForCompletion();
+            if (_locale == null)
+            {
+                if (!LocalizationSettings.InitializationOperation.IsDone)
+                    LocalizationSettings.InitializationOperation.WaitForCompletion();
 
-            Locale locale = LocalizationSettings.SelectedLocale;
+                foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
+                    if (locale.name == DataProvider.SettingsManager.Language)
+                    {
+                        _locale = locale;
+                        LocalizationSettings.SelectedLocale = _locale;
+                    }
+            }
 
-            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, locale);
+            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, _locale);
             handle.WaitForCompletion();
 
             Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
@@ -66,10 +77,18 @@ namespace BattleCruisers.Utils.Localisation
 
         public static async Task LoadTableAsync(string tableName, System.Action<LocTable> assign = null)
         {
-            await LocalizationSettings.InitializationOperation.Task;
-            Locale locale = LocalizationSettings.SelectedLocale;
+            if (_locale == null)
+            {
+                await LocalizationSettings.InitializationOperation.Task;
+                foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
+                    if (locale.name == DataProvider.SettingsManager.Language)
+                    {
+                        _locale = locale;
+                        LocalizationSettings.SelectedLocale = _locale;
+                    }
+            }
 
-            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, locale);
+            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, _locale);
             await handle.Task;
 
             Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
