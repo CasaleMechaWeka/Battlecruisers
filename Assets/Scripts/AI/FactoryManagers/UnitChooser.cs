@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Units;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public abstract class UnitChooser : IUnitChooser
+    public abstract class UnitChooser
     {
         public event EventHandler ChosenUnitChanged;
 

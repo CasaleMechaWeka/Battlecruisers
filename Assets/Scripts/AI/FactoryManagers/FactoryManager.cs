@@ -13,7 +13,7 @@ namespace BattleCruisers.AI.FactoryManagers
     /// <summary>
     /// Decides what units all factories should build.
     /// 
-    /// This manager asks the injected IUnitChooser which unit a factory should
+    /// This manager asks the injected UnitChooser which unit a factory should
     /// build when that factory:
     /// a) Completes building (itself)
     /// b) Completes building a unit
@@ -25,9 +25,9 @@ namespace BattleCruisers.AI.FactoryManagers
         private readonly HashSet<IFactory> _factories;
         private readonly UnitCategory _factoryUnitCategory;
         private readonly ICruiserController _friendlyCruiser;
-        private readonly IUnitChooser _unitChooser;
+        private readonly UnitChooser _unitChooser;
 
-        public FactoryManager(UnitCategory factoryUnitCategory, ICruiserController friendlyCruiser, IUnitChooser unitChooser)
+        public FactoryManager(UnitCategory factoryUnitCategory, ICruiserController friendlyCruiser, UnitChooser unitChooser)
         {
             Helper.AssertIsNotNull(friendlyCruiser, unitChooser);
 

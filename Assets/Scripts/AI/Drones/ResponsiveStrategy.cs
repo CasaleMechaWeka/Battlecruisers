@@ -8,7 +8,7 @@
     /// factory starvation (as long as the factory unit can be afforded
     /// as well as having the in progress building as active).
     /// 
-    /// Hence good to use with a conservative IUnitChooser.
+    /// Hence good to use with a conservative UnitChooser.
     /// </summary>
     public class ResponsiveStrategy
     {

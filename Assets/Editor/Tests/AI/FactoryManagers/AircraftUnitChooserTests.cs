@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
 {
     public class AircraftUnitChooserTests
     {
-        private IUnitChooser _unitChooser;
+        private UnitChooser _unitChooser;
         private IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
         private IDroneManager _droneManager;
         private IThreatMonitor _airThreatMonitor, _navalThreatMonitor;

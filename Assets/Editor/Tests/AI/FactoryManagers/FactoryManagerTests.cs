@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
     public class FactoryManagerTests
     {
         private ICruiserController _friendlyCruiser;
-        private IUnitChooser _unitChooser;
+        private UnitChooser _unitChooser;
         private IBuildableWrapper<IUnit> _unit, _unit2;
         private IFactory _navalFactory, _navalFactory2, _notCompletedNavalFactory, _airFactory;
 
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             _friendlyCruiser = Substitute.For<ICruiserController>();
             _unit = Substitute.For<IBuildableWrapper<IUnit>>();
             _unit2 = Substitute.For<IBuildableWrapper<IUnit>>();
-            _unitChooser = Substitute.For<IUnitChooser>();
+            _unitChooser = Substitute.For<UnitChooser>();
             _unitChooser.ChosenUnit.Returns(_unit, _unit2);
             new FactoryManager(UnitCategory.Naval, _friendlyCruiser, _unitChooser);
 
@@ -56,22 +56,22 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         {
             _friendlyCruiser.StartConstructingBuilding(_airFactory);
             Assert.IsNull(_airFactory.UnitWrapper);
-			_navalFactory.CompletedBuildable += Raise.Event();
-			Assert.IsNull(_airFactory.UnitWrapper);
+            _navalFactory.CompletedBuildable += Raise.Event();
+            Assert.IsNull(_airFactory.UnitWrapper);
         }
 
-		[Test]
-		public void NavalFactory_UnitCompleted_UpdatesChosenUnit()
-		{
+        [Test]
+        public void NavalFactory_UnitCompleted_UpdatesChosenUnit()
+        {
             // Factory completed
             _friendlyCruiser.StartConstructingBuilding(_navalFactory);
             _navalFactory.CompletedBuildable += Raise.Event();
-			Assert.AreNotSame(_unit2, _navalFactory.UnitWrapper);
+            Assert.AreNotSame(_unit2, _navalFactory.UnitWrapper);
 
             // Unit completed
             _navalFactory.UnitCompleted += Raise.EventWith(_navalFactory, new UnitCompletedEventArgs(_unit.Buildable));
             _navalFactory.Received().StartBuildingUnit(_unit2);
-		}
+        }
 
         [Test]
         public void ChosenUnitChanged_StartsBuildingUnit_ForCompletedAndInactiveFactories()

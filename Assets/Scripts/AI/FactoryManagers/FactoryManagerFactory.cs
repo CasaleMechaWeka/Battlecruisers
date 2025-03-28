@@ -13,7 +13,7 @@ using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
-    public class FactoryManagerFactory : IFactoryManagerFactory
+    public class FactoryManagerFactory
     {
         private readonly GameModel _gameModel;
         private readonly IThreatMonitorFactory _threatMonitorFactory;
@@ -40,7 +40,7 @@ namespace BattleCruisers.AI.FactoryManagers
                 availableShipKeys
                     .Select(key => PrefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
-            IUnitChooser unitChooser
+            UnitChooser unitChooser
                 = new MostExpensiveUnitChooser(
                     availableShips,
                     aiCruiser.DroneManager,
@@ -86,7 +86,7 @@ namespace BattleCruisers.AI.FactoryManagers
             IThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
             IThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
 
-            IUnitChooser unitchooser
+            UnitChooser unitchooser
                 = new AircraftUnitChooser(
                     defaultPlane,
                     lategamePlane,
