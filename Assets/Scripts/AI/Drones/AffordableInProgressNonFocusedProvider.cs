@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.Drones
     public class AffordableInProgressNonFocusedProvider : IBuildingProvider
     {
         private readonly IDroneManager _droneManager;
-        private readonly IInProgressBuildingMonitor _buildingMonitor;
+        private readonly InProgressBuildingMonitor _buildingMonitor;
 
         public IBuilding Building
         {
@@ -24,7 +24,7 @@ namespace BattleCruisers.AI.Drones
             }
         }
 
-        public AffordableInProgressNonFocusedProvider(IDroneManager droneManager, IInProgressBuildingMonitor buildingMonitor)
+        public AffordableInProgressNonFocusedProvider(IDroneManager droneManager, InProgressBuildingMonitor buildingMonitor)
         {
             Helper.AssertIsNotNull(droneManager, buildingMonitor);
 

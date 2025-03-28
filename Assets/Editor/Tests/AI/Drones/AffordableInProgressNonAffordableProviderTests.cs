@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.AI.Drones
     {
         private IBuildingProvider _provider;
         private IDroneManager _droneManager;
-        private IInProgressBuildingMonitor _buildingMonitor;
+        private InProgressBuildingMonitor _buildingMonitor;
         private IList<IBuilding> _inProgressBuildings;
         private IBuilding _building;
         private IDroneConsumer _buildingDroneConsumer;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.AI.Drones
         {
             _droneManager = Substitute.For<IDroneManager>();
             _droneManager.NumOfDrones = 6;
-            _buildingMonitor = Substitute.For<IInProgressBuildingMonitor>();
+            _buildingMonitor = Substitute.For<InProgressBuildingMonitor>();
 
             _provider = new AffordableInProgressNonFocusedProvider(_droneManager, _buildingMonitor);
 

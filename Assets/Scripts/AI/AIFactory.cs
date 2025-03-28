@@ -101,7 +101,7 @@ namespace BattleCruisers.AI
                     new FactoriesMonitor(aiCruiser.BuildingMonitor),
                     new FactoryWastingDronesFilter());
 
-            IInProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(aiCruiser);
+            InProgressBuildingMonitor inProgressBuildingMonitor = new InProgressBuildingMonitor(aiCruiser);
 
             IDroneConsumerFocusHelper focusHelper
                 = new DroneConsumerFocusHelper(

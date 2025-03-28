@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.Drones.BuildingMonitors
 {
-    public class InProgressBuildingMonitor : IInProgressBuildingMonitor, IManagedDisposable
+    public class InProgressBuildingMonitor : IManagedDisposable
     {
         private readonly ICruiserController _cruiser;
         private readonly IList<IBuilding> _inProgressBuildings;
