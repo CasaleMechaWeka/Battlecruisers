@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace BattleCruisers.AI.BuildOrders
 {
-    public class BuildOrderFactory : IBuildOrderFactory
+    public class BuildOrderFactory
     {
         private readonly SlotAssigner _slotAssigner;
         private readonly GameModel _gameModel;

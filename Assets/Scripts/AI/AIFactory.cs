@@ -16,9 +16,9 @@ namespace BattleCruisers.AI
     public class AIFactory : IAIFactory
     {
         private readonly ITaskProducerFactory _taskProducerFactory;
-        private readonly IBuildOrderFactory _buildOrderFactory;
+        private readonly BuildOrderFactory _buildOrderFactory;
 
-        public AIFactory(ITaskProducerFactory taskProducerFactory, IBuildOrderFactory buildOrderFactory)
+        public AIFactory(ITaskProducerFactory taskProducerFactory, BuildOrderFactory buildOrderFactory)
         {
             Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory);
 
