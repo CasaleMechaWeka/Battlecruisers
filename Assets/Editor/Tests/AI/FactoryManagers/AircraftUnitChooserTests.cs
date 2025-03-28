@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
         private UnitChooser _unitChooser;
         private IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
         private IDroneManager _droneManager;
-        private IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
+        private BaseThreatMonitor _airThreatMonitor, _navalThreatMonitor;
 
         [SetUp]
         public void SetuUp()
@@ -28,8 +28,8 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             _droneManager = Substitute.For<IDroneManager>();
             _droneManager.NumOfDrones = 12;
 
-            _airThreatMonitor = Substitute.For<IThreatMonitor>();
-            _navalThreatMonitor = Substitute.For<IThreatMonitor>();
+            _airThreatMonitor = Substitute.For<BaseThreatMonitor>();
+            _navalThreatMonitor = Substitute.For<BaseThreatMonitor>();
 
             _unitChooser = new AircraftUnitChooser(
                 _defaultPlane,

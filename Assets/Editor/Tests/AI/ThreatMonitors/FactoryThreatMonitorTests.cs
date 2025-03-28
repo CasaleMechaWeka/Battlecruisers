@@ -13,9 +13,9 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
 {
     public class FactoryThreatMonitorTests
     {
-        private IThreatMonitor _threatMonitor;
+        private BaseThreatMonitor _threatMonitor;
         private ICruiserController _cruiser;
-        private IThreatEvaluator _threatEvaluator;
+        private ThreatEvaluator _threatEvaluator;
         private IFactory _threateningFactory, _threateningFactory2, _nonThreateningFactory;
         private IBuilding _nonFactoryBuilding;
         private int _numOfEventsEmitted;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
             UnitCategory nonThreatCategory = UnitCategory.Naval;
 
             _cruiser = Substitute.For<ICruiserController>();
-            _threatEvaluator = Substitute.For<IThreatEvaluator>();
+            _threatEvaluator = Substitute.For<ThreatEvaluator>();
             _threatEvaluator.FindThreatLevel(value: 17).ReturnsForAnyArgs(_initialThreatLevel);
             _threatMonitor = new FactoryThreatMonitor(_cruiser, _threatEvaluator, threatCategory);
             _threatMonitor.ThreatLevelChanged += (sender, e) => _numOfEventsEmitted++;
@@ -102,9 +102,9 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
         [Test]
         public void NumOfDrones_FromMultipleFactoriesIsConsidered()
         {
-			// Factory 1
+            // Factory 1
             _cruiser.StartConstructingBuilding(_threateningFactory);
-			_threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
+            _threatEvaluator.Received().FindThreatLevel(_threateningFactory.NumOfDrones);
 
             // Factory 2
             _cruiser.StartConstructingBuilding(_threateningFactory2);
@@ -114,7 +114,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
         [Test]
         public void ThreatLevelChanged_EmitsEvent()
         {
-			Assert.AreEqual(0, _numOfEventsEmitted);
+            Assert.AreEqual(0, _numOfEventsEmitted);
 
             _threatEvaluator.FindThreatLevel(117).ReturnsForAnyArgs(ThreatLevel.High);
             _cruiser.StartConstructingBuilding(_threateningFactory);
@@ -122,15 +122,15 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
             Assert.AreEqual(1, _numOfEventsEmitted);
         }
 
-		[Test]
-		public void ThreatLevelNotChanged_DoesNotEmitsEvent()
-		{
-			Assert.AreEqual(0, _numOfEventsEmitted);
+        [Test]
+        public void ThreatLevelNotChanged_DoesNotEmitsEvent()
+        {
+            Assert.AreEqual(0, _numOfEventsEmitted);
 
             _threatEvaluator.FindThreatLevel(117).ReturnsForAnyArgs(_initialThreatLevel);
             _cruiser.StartConstructingBuilding(_threateningFactory);
 
-			Assert.AreEqual(0, _numOfEventsEmitted);
-		}
+            Assert.AreEqual(0, _numOfEventsEmitted);
+        }
     }
 }

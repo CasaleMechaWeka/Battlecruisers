@@ -7,13 +7,13 @@ namespace BattleCruisers.Tests.AI.Tasks.States
     public abstract class StateTestsBase
     {
         protected ITask _task;
-        protected ICompletedEventEmitter _eventEmitter;
+        protected PrioritisedTask _eventEmitter;
 
         [SetUp]
         public virtual void TestSetup()
         {
             _task = Substitute.For<ITask>();
-            _eventEmitter = Substitute.For<ICompletedEventEmitter>();
+            _eventEmitter = Substitute.For<PrioritisedTask>();
         }
     }
 }

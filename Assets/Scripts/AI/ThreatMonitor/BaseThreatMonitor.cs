@@ -2,7 +2,12 @@
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
-    public abstract class BaseThreatMonitor : IThreatMonitor
+	public enum ThreatLevel
+	{
+		None, Low, High
+	}
+
+	public abstract class BaseThreatMonitor
 	{
 		private ThreatLevel _currentThreatLevel;
 		public ThreatLevel CurrentThreatLevel
@@ -18,12 +23,12 @@ namespace BattleCruisers.AI.ThreatMonitors
 				}
 			}
 		}
-		
+
 		public event EventHandler ThreatLevelChanged;
 
-        public BaseThreatMonitor()
-        {
-            CurrentThreatLevel = ThreatLevel.None;
-        }
-    }
+		public BaseThreatMonitor()
+		{
+			CurrentThreatLevel = ThreatLevel.None;
+		}
+	}
 }

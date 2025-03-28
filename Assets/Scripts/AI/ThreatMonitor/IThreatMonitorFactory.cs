@@ -2,12 +2,12 @@
 {
     public interface IThreatMonitorFactory
     {
-        IThreatMonitor CreateAirThreatMonitor();
-        IThreatMonitor CreateNavalThreatMonitor();
+        BaseThreatMonitor CreateAirThreatMonitor();
+        BaseThreatMonitor CreateNavalThreatMonitor();
 
-        IThreatMonitor CreateRocketThreatMonitor();
-        IThreatMonitor CreateStealthThreatMonitor();
+        BaseThreatMonitor CreateRocketThreatMonitor();
+        BaseThreatMonitor CreateStealthThreatMonitor();
 
-        IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor);
+        BaseThreatMonitor CreateDelayedThreatMonitor(BaseThreatMonitor coreMonitor);
     }
 }

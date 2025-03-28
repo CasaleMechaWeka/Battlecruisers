@@ -28,31 +28,31 @@ namespace BattleCruisers.AI.ThreatMonitors
             _deferrer = deferrer;
         }
 
-        public IThreatMonitor CreateAirThreatMonitor()
+        public BaseThreatMonitor CreateAirThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
+            ThreatEvaluator threatEvaluator = new ThreatEvaluator(AIR_HIGH_THREAT_DRONE_NUM);
             return new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Aircraft);
         }
 
-        public IThreatMonitor CreateNavalThreatMonitor()
+        public BaseThreatMonitor CreateNavalThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new ThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
+            ThreatEvaluator threatEvaluator = new ThreatEvaluator(NAVAL_HIGH_THREAT_DRONE_NUM);
             return new FactoryThreatMonitor(_playerCruiser, threatEvaluator, UnitCategory.Naval);
         }
 
-        public IThreatMonitor CreateRocketThreatMonitor()
+        public BaseThreatMonitor CreateRocketThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
+            ThreatEvaluator threatEvaluator = new ThreatEvaluator(ROCKET_LAUNCHER_HIGH_THREAT_BUILDING_NUM);
             return new BuildingThreatMonitor<RocketLauncherController>(_playerCruiser, threatEvaluator);
         }
 
-        public IThreatMonitor CreateStealthThreatMonitor()
+        public BaseThreatMonitor CreateStealthThreatMonitor()
         {
-            IThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
+            ThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
             return new BuildingThreatMonitor<IBuilding>(_playerCruiser, threatEvaluator);
         }
 
-        public IThreatMonitor CreateDelayedThreatMonitor(IThreatMonitor coreMonitor)
+        public BaseThreatMonitor CreateDelayedThreatMonitor(BaseThreatMonitor coreMonitor)
         {
             return new DelayedThreatMonitor(coreMonitor, _time, _deferrer);
         }

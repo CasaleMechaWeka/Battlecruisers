@@ -11,7 +11,7 @@ namespace BattleCruisers.AI.TaskProducers
     public class AntiThreatTaskProducer : TaskProducer
     {
         private readonly IDynamicBuildOrder _antiThreatBuildOrder;
-        private readonly IThreatMonitor _threatMonitor;
+        private readonly BaseThreatMonitor _threatMonitor;
         private readonly ISlotNumCalculator _slotNumCalculator;
 
         private int _targetNumOfSlotsToUse;
@@ -23,7 +23,7 @@ namespace BattleCruisers.AI.TaskProducers
             ICruiserController cruiser,
             ITaskFactory taskFactory,
             IDynamicBuildOrder antiThreatBuildOrder,
-            IThreatMonitor threatMonitor,
+            BaseThreatMonitor threatMonitor,
             ISlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory)
         {

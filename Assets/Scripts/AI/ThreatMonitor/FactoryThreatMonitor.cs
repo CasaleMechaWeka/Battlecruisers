@@ -21,13 +21,13 @@ namespace BattleCruisers.AI.ThreatMonitors
     /// </summary>
     public class FactoryThreatMonitor : ImmediateThreatMonitor
     {
-		private readonly UnitCategory _threatCategory;
+        private readonly UnitCategory _threatCategory;
         private readonly IList<IFactory> _factories;
 
-        public FactoryThreatMonitor(ICruiserController enemyCruiser, IThreatEvaluator threatEvaluator, UnitCategory threatCategory)
+        public FactoryThreatMonitor(ICruiserController enemyCruiser, ThreatEvaluator threatEvaluator, UnitCategory threatCategory)
             : base(enemyCruiser, threatEvaluator)
         {
-			_threatCategory = threatCategory;
+            _threatCategory = threatCategory;
             _factories = new List<IFactory>();
 
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
@@ -37,7 +37,7 @@ namespace BattleCruisers.AI.ThreatMonitors
         {
             IFactory factory = e.StartedBuilding as IFactory;
 
-            if (factory != null 
+            if (factory != null
                 && factory.UnitCategory == _threatCategory)
             {
                 Assert.IsFalse(_factories.Contains(factory));
@@ -46,8 +46,8 @@ namespace BattleCruisers.AI.ThreatMonitors
                 factory.Destroyed += Factory_Destroyed;
                 factory.DroneNumChanged += Factory_DroneNumChanged;
 
-				EvaluateThreatLevel();
-			}
+                EvaluateThreatLevel();
+            }
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)
@@ -60,8 +60,8 @@ namespace BattleCruisers.AI.ThreatMonitors
             _factories.Remove(destroyedFactory);
             destroyedFactory.DroneNumChanged -= Factory_DroneNumChanged;
 
-			EvaluateThreatLevel();
-		}
+            EvaluateThreatLevel();
+        }
 
         private void Factory_DroneNumChanged(object sender, DroneNumChangedEventArgs e)
         {

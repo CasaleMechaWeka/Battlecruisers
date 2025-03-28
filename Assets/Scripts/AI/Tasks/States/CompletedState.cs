@@ -4,16 +4,16 @@ namespace BattleCruisers.AI.Tasks.States
 {
 	public class CompletedState : BaseState
 	{
-        public CompletedState(ITask task, ICompletedEventEmitter eventEmitter)
-            : base(task, eventEmitter)
+		public CompletedState(ITask task, PrioritisedTask eventEmitter)
+			: base(task, eventEmitter)
 		{
-            _eventEmitter.EmitCompletedEvent();
+			_eventEmitter.EmitCompletedEvent();
 		}
 
 		public override IState Start()
 		{
-            _eventEmitter.EmitCompletedEvent();
-            return this;
+			_eventEmitter.EmitCompletedEvent();
+			return this;
 		}
 
 		public override IState Stop()
@@ -21,8 +21,8 @@ namespace BattleCruisers.AI.Tasks.States
 			return this;
 		}
 
-        public override IState OnCompleted()
-        {
+		public override IState OnCompleted()
+		{
 			throw new Exception("Should never complete from the CompletedState :(");
 		}
 	}

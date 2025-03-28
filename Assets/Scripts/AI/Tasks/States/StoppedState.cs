@@ -4,7 +4,7 @@
     {
         private readonly IState _inProgressState;
 
-        public StoppedState(ITask task, ICompletedEventEmitter eventEmitter, IState inProgressState)
+        public StoppedState(ITask task, PrioritisedTask eventEmitter, IState inProgressState)
             : base(task, eventEmitter)
         {
             _inProgressState = inProgressState;

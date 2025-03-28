@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
 {
     public class DelayedThreatMonitorTests
     {
-        private IThreatMonitor _delayedMonitor, _coreMonitor;
+        private BaseThreatMonitor _delayedMonitor, _coreMonitor;
         private ITime _time;
         private IDeferrer _deferrer;
         private float _delayInS;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.ThreatMonitors
         [SetUp]
         public void TestSetup()
         {
-            _coreMonitor = Substitute.For<IThreatMonitor>();
+            _coreMonitor = Substitute.For<BaseThreatMonitor>();
             _time = Substitute.For<ITime>();
             _deferrer = Substitute.For<IDeferrer>();
             _delayInS = 4.32f;

@@ -1,25 +1,25 @@
 ﻿namespace BattleCruisers.AI.ThreatMonitors
 {
-	public class ThreatEvaluator : IThreatEvaluator
+	public class ThreatEvaluator
 	{
-        private readonly float _valueRequiredForHighThreatLevel;
+		private readonly float _valueRequiredForHighThreatLevel;
 
-        public ThreatEvaluator(float valueRequiredForHighThreatLevel)
-        {
-            _valueRequiredForHighThreatLevel = valueRequiredForHighThreatLevel;
-        }
+		public ThreatEvaluator(float valueRequiredForHighThreatLevel)
+		{
+			_valueRequiredForHighThreatLevel = valueRequiredForHighThreatLevel;
+		}
 
-        public ThreatLevel FindThreatLevel(float value)
-        {
+		public ThreatLevel FindThreatLevel(float value)
+		{
 			if (value <= 0)
 			{
 				return ThreatLevel.None;
 			}
-            else if (value < _valueRequiredForHighThreatLevel)
+			else if (value < _valueRequiredForHighThreatLevel)
 			{
 				return ThreatLevel.Low;
 			}
 			return ThreatLevel.High;
-        }
+		}
 	}
 }

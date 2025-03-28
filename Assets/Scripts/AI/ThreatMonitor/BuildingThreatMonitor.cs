@@ -22,14 +22,14 @@ namespace BattleCruisers.AI.ThreatMonitors
     {
         private readonly IList<TBuilding> _buildings;
 
-		private const float BUILD_PROGRESS_CONSIDERED_THREAT = 0.5f;
+        private const float BUILD_PROGRESS_CONSIDERED_THREAT = 0.5f;
 
-        public BuildingThreatMonitor(ICruiserController enemyCruiser, IThreatEvaluator threatEvaluator)
+        public BuildingThreatMonitor(ICruiserController enemyCruiser, ThreatEvaluator threatEvaluator)
             : base(enemyCruiser, threatEvaluator)
         {
             _buildings = new List<TBuilding>();
 
-			_enemyCruiser.BuildingStarted += EnemyCruiser_BuildingStarted;
+            _enemyCruiser.BuildingStarted += EnemyCruiser_BuildingStarted;
         }
 
         private void EnemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
@@ -47,14 +47,14 @@ namespace BattleCruisers.AI.ThreatMonitors
             }
         }
 
-		private void Building_BuildableProgress(object sender, BuildProgressEventArgs e)
-		{
-			if (e.Buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_THREAT)
-			{
-				e.Buildable.BuildableProgress -= Building_BuildableProgress;
+        private void Building_BuildableProgress(object sender, BuildProgressEventArgs e)
+        {
+            if (e.Buildable.BuildProgress >= BUILD_PROGRESS_CONSIDERED_THREAT)
+            {
+                e.Buildable.BuildableProgress -= Building_BuildableProgress;
                 EvaluateThreatLevel();
-			}
-		}
+            }
+        }
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
@@ -65,7 +65,7 @@ namespace BattleCruisers.AI.ThreatMonitors
         }
 
         private void Building_Destroyed(object sender, DestroyedEventArgs e)
-		{
+        {
             e.DestroyedTarget.Destroyed -= Building_Destroyed;
 
             TBuilding destroyedBuilding = e.DestroyedTarget.Parse<TBuilding>();
@@ -73,7 +73,7 @@ namespace BattleCruisers.AI.ThreatMonitors
 
             _buildings.Remove(destroyedBuilding);
             EvaluateThreatLevel();
-		}
+        }
 
         protected override float FindThreatEvaluationParameter()
         {

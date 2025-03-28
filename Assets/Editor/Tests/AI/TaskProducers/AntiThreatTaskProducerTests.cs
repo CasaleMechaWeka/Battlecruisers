@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     {
         private ISlotAccessor _slotAccessor;
         private IDynamicBuildOrder _buildOrder;
-        private IThreatMonitor _threatMonitor;
+        private BaseThreatMonitor _threatMonitor;
         private ISlotNumCalculator _slotNumCalculator;
         private BuildingKey _buildingKey;
         private IPrioritisedTask _task;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _task = Substitute.For<IPrioritisedTask>();
             _slotNumCalculator = Substitute.For<ISlotNumCalculator>();
 
-            _threatMonitor = Substitute.For<IThreatMonitor>();
+            _threatMonitor = Substitute.For<BaseThreatMonitor>();
             _threatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
             _slotAccessor = Substitute.For<ISlotAccessor>();

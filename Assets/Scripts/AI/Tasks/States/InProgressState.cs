@@ -1,7 +1,7 @@
 ﻿namespace BattleCruisers.AI.Tasks.States
 {
-	public class InProgressState : BaseState
-	{
+    public class InProgressState : BaseState
+    {
         private IState _stoppedState;
         private IState StoppedState
         {
@@ -16,20 +16,20 @@
             }
         }
 
-        public InProgressState(ITask task, ICompletedEventEmitter eventEmitter)
+        public InProgressState(ITask task, PrioritisedTask eventEmitter)
             : base(task, eventEmitter)
-		{
-		}
+        {
+        }
 
-		public override IState Start()
-		{
+        public override IState Start()
+        {
             return this;
-		}
+        }
 
-		public override IState Stop()
-		{
+        public override IState Stop()
+        {
             _task.Stop();
             return StoppedState;
-		}
-	}
+        }
+    }
 }

@@ -3,18 +3,18 @@ using BattleCruisers.AI.Tasks.States;
 
 namespace BattleCruisers.AI.Tasks
 {
-	// Converts:
-	/// <summary>
-	/// Converts:
-	/// + ITask.Start()
-	/// + ITask.Stop()
-	/// 
-	/// Into:
-	/// + IInternalTask.Start() => Only ever called once
-	/// + IInternalTask.Stop()  => Only called if started or resumed
-	/// + IInternalTask.Resume()=> Only called if stopped
-	/// </summary>
-    public class PrioritisedTask : IPrioritisedTask, ICompletedEventEmitter
+    // Converts:
+    /// <summary>
+    /// Converts:
+    /// + ITask.Start()
+    /// + ITask.Stop()
+    /// 
+    /// Into:
+    /// + IInternalTask.Start() => Only ever called once
+    /// + IInternalTask.Stop()  => Only called if started or resumed
+    /// + IInternalTask.Resume()=> Only called if stopped
+    /// </summary>
+    public class PrioritisedTask : IPrioritisedTask
     {
         private readonly ITask _task;
         private IState _currentState;
@@ -41,17 +41,17 @@ namespace BattleCruisers.AI.Tasks
         {
             _currentState = _currentState.Stop();
         }
-        
+
         public void EmitCompletedEvent()
         {
             Completed?.Invoke(this, EventArgs.Empty);
         }
-		
-		private void _task_Completed(object sender, EventArgs e)
-		{
-			_task.Completed -= _task_Completed;
-			_currentState = _currentState.OnCompleted();
-		}
+
+        private void _task_Completed(object sender, EventArgs e)
+        {
+            _task.Completed -= _task_Completed;
+            _currentState = _currentState.OnCompleted();
+        }
 
         public override string ToString()
         {

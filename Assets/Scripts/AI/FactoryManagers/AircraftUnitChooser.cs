@@ -19,7 +19,7 @@ namespace BattleCruisers.AI.FactoryManagers
     {
         private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
         private readonly IDroneManager _droneManager;
-        private readonly IThreatMonitor _airThreatMonitor, _navalThreatMonitor;
+        private readonly BaseThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
 
         public AircraftUnitChooser(
@@ -30,8 +30,8 @@ namespace BattleCruisers.AI.FactoryManagers
             IBuildableWrapper<IUnit> broadswordGunship,
             IBuildableWrapper<IUnit> stratBomber,
             IDroneManager droneManager,
-            IThreatMonitor airThreatMonitor,
-            IThreatMonitor navalThreatMonitor,
+            BaseThreatMonitor airThreatMonitor,
+            BaseThreatMonitor navalThreatMonitor,
             ThreatLevel threatLevelThreshold)
         {
             Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, broadswordGunship, stratBomber, droneManager, airThreatMonitor, navalThreatMonitor);
