@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
@@ -11,6 +10,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.Wind;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private GameEndHandler _gameEndHandler;
 
         private ICruiser _playerCruiser, _aiCruiser;
-        private IArtificialIntelligence _ai;
+        private IManagedDisposable _ai;
         private BattleCompletionHandler _battleCompletionHandler;
         private IDeferrer _deferrer;
         private ICruiserDeathCameraFocuser _cameraFocuser;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _aiCruiser = Substitute.For<ICruiser>();
             _aiCruiser.IsPlayerCruiser.Returns(false);
 
-            _ai = Substitute.For<IArtificialIntelligence>();
+            _ai = Substitute.For<IManagedDisposable>();
             _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
             _deferrer = Substitute.For<IDeferrer>();
             _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();

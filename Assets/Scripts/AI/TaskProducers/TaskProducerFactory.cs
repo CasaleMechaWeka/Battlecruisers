@@ -34,17 +34,17 @@ namespace BattleCruisers.AI.TaskProducers
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder)
+        public ITaskProducer CreateBasicTaskProducer(TaskList tasks, IDynamicBuildOrder buildOrder)
         {
             return new BasicTaskProducer(tasks, _aiCruiser, _taskFactory, buildOrder);
         }
 
-        public ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks)
+        public ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(TaskList tasks)
         {
             return new ReplaceDestroyedBuildingsTaskProducer(tasks, _aiCruiser, _taskFactory, StaticData.BuildingKeys);
         }
 
-        public ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder)
+        public ITaskProducer CreateAntiAirTaskProducer(TaskList tasks, IDynamicBuildOrder antiAirBuildOrder)
         {
             BaseThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.AI.TaskProducers
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator);
         }
 
-        public ITaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IDynamicBuildOrder antiNavalBuildOrder)
+        public ITaskProducer CreateAntiNavalTaskProducer(TaskList tasks, IDynamicBuildOrder antiNavalBuildOrder)
         {
             BaseThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.AI.TaskProducers
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator);
         }
 
-        public ITaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder)
+        public ITaskProducer CreateAntiRocketLauncherTaskProducer(TaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder)
         {
             BaseThreatMonitor rocketLauncherThreatMonitor = _threatMonitorFactory.CreateRocketThreatMonitor();
             ISlotNumCalculator slotNumCalculator = new StaticSlotNumCalculator(numOfSlots: 1);
@@ -72,7 +72,7 @@ namespace BattleCruisers.AI.TaskProducers
             return new AntiThreatTaskProducer(tasks, _aiCruiser, _taskFactory, antiRocketLauncherBuildOrder, rocketLauncherThreatMonitor, slotNumCalculator);
         }
 
-        public ITaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IDynamicBuildOrder antiStealthBuildOrder)
+        public ITaskProducer CreateAntiStealthTaskProducer(TaskList tasks, IDynamicBuildOrder antiStealthBuildOrder)
         {
             BaseThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor();
             ISlotNumCalculator slotNumCalculator = new StaticSlotNumCalculator(numOfSlots: 1);

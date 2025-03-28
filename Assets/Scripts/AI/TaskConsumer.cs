@@ -12,7 +12,7 @@ namespace BattleCruisers.AI
     /// </summary>
     public class TaskConsumer : IManagedDisposable
     {
-        private readonly ITaskList _tasks;
+        private readonly TaskList _tasks;
 
         private IPrioritisedTask _currentTask;
         private IPrioritisedTask CurrentTask
@@ -42,7 +42,7 @@ namespace BattleCruisers.AI
             }
         }
 
-        public TaskConsumer(ITaskList tasks)
+        public TaskConsumer(TaskList tasks)
         {
             _tasks = tasks;
             CurrentTask = _tasks.HighestPriorityTask;

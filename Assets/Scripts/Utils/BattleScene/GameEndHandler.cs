@@ -21,7 +21,7 @@ namespace BattleCruisers.Utils.BattleScene
     public class GameEndHandler
     {
         private readonly ICruiser _playerCruiser, _aiCruiser;
-        private readonly IArtificialIntelligence _ai;
+        private readonly IManagedDisposable _ai;
         private readonly BattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
         private readonly ICruiserDeathCameraFocuser _cameraFocuser;
@@ -39,7 +39,7 @@ namespace BattleCruisers.Utils.BattleScene
         public GameEndHandler(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IArtificialIntelligence ai,
+            IManagedDisposable ai,
             BattleCompletionHandler battleCompletionHandler,
             IDeferrer deferrer,
             ICruiserDeathCameraFocuser cameraFocuser,

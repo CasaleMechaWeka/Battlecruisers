@@ -18,7 +18,7 @@ namespace BattleCruisers.AI.TaskProducers
         private readonly IDynamicBuildOrder _buildOrder;
 
         public BasicTaskProducer(
-            ITaskList tasks,
+            TaskList tasks,
             ICruiserController cruiser,
             ITaskFactory taskFactory,
             IDynamicBuildOrder buildOrder)

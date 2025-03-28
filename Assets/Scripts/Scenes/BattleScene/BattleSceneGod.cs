@@ -342,7 +342,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
             PrefabContainer<BackgroundImageStats> backgroundStats;
-            IArtificialIntelligence ai;
+            IManagedDisposable ai;
             if (ApplicationModel.Mode != GameMode.SideQuest)
             {
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedLevel);

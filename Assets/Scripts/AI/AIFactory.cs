@@ -13,7 +13,7 @@ namespace BattleCruisers.AI
     /// 
     /// This factory creates different types of AI.
     /// </summary>
-    public class AIFactory : IAIFactory
+    public class AIFactory
     {
         private readonly ITaskProducerFactory _taskProducerFactory;
         private readonly BuildOrderFactory _buildOrderFactory;
@@ -31,9 +31,9 @@ namespace BattleCruisers.AI
         /// 1. Follows a base strategy (eg:  balanced, boom or rush)
         /// 2. Replaces destroyed buildings
         /// </summary>
-        public IArtificialIntelligence CreateBasicAI(LevelInfo levelInfo)
+        public IManagedDisposable CreateBasicAI(LevelInfo levelInfo)
         {
-            ITaskList tasks = new TaskList();
+            TaskList tasks = new TaskList();
 
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
@@ -51,9 +51,9 @@ namespace BattleCruisers.AI
         /// 2. Responds to threats (eg: air, naval)
         /// 3. Replaces destroyed buildings
         /// </summary>
-        public IArtificialIntelligence CreateAdaptiveAI(LevelInfo levelInfo)
+        public IManagedDisposable CreateAdaptiveAI(LevelInfo levelInfo)
         {
-            ITaskList tasks = new TaskList();
+            TaskList tasks = new TaskList();
             IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
 
             // Base build order, main strategy
@@ -85,7 +85,7 @@ namespace BattleCruisers.AI
             return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
-        private IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ITaskList tasks, IList<ITaskProducer> taskProducers)
+        private IManagedDisposable CreateAI(ICruiserController aiCruiser, TaskList tasks, IList<ITaskProducer> taskProducers)
         {
             TaskConsumer taskConsumer = new TaskConsumer(tasks);
             DroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);

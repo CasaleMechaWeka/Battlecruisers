@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.AI
 {
     public class TaskConsumerTests
     {
-        private ITaskList _tasks;
+        private TaskList _tasks;
         private IPrioritisedTask _task1, _task2;
 
         [SetUp]
@@ -17,12 +17,12 @@ namespace BattleCruisers.Tests.AI
             _task1 = Substitute.For<IPrioritisedTask>();
             _task2 = Substitute.For<IPrioritisedTask>();
 
-            _tasks = Substitute.For<ITaskList>();
+            _tasks = Substitute.For<TaskList>();
 
             new TaskConsumer(_tasks);
         }
 
-        #region ITaskList.HighestPriorityTaskChanged
+        #region TaskList.HighestPriorityTaskChanged
         [Test]
         public void NewHighestPriorityTask_StartsNewTask()
         {
@@ -61,7 +61,7 @@ namespace BattleCruisers.Tests.AI
             _task1.DidNotReceive().Stop();
 
         }
-        #endregion ITaskList.HighestPriorityTaskChanged
+        #endregion TaskList.HighestPriorityTaskChanged
 
         #region ITask.Completed
         [Test]
@@ -69,26 +69,26 @@ namespace BattleCruisers.Tests.AI
         {
             NewHighestPriorityTask_StartsNewTask();
 
-			_tasks.HighestPriorityTask.Returns(_task2);
+            _tasks.HighestPriorityTask.Returns(_task2);
             _task1.Completed += Raise.Event();
 
             // Receives stop even though it has completed
-			_task1.Received().Stop();
-			_task2.Received().Start();
+            _task1.Received().Stop();
+            _task2.Received().Start();
         }
 
         [Test]
-		public void TaskCompleted_HandlesNoMoreTasks()
-		{
-			NewHighestPriorityTask_StartsNewTask();
+        public void TaskCompleted_HandlesNoMoreTasks()
+        {
+            NewHighestPriorityTask_StartsNewTask();
 
-			_tasks.HighestPriorityTask.Returns(default(IPrioritisedTask));
-			_task1.Completed += Raise.Event();
+            _tasks.HighestPriorityTask.Returns(default(IPrioritisedTask));
+            _task1.Completed += Raise.Event();
 
-			// Receives stop even though it has completed
-			_task1.Received().Stop();
+            // Receives stop even though it has completed
+            _task1.Received().Stop();
             _task2.DidNotReceive().Start();
-		}
-		#endregion ITask.Completed
-	}
+        }
+        #endregion ITask.Completed
+    }
 }

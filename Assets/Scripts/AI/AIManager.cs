@@ -13,7 +13,7 @@ using BattleCruisers.Utils.Threading;
 
 namespace BattleCruisers.AI
 {
-    public class AIManager : IAIManager
+    public class AIManager
     {
         private readonly IDeferrer _deferrer;
         private readonly ThreatMonitorFactory _threatMonitorFactory;
@@ -36,7 +36,7 @@ namespace BattleCruisers.AI
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, DataProvider.GameModel, strategyFactory);
         }
 
-        public IArtificialIntelligence CreateAI(LevelInfo levelInfo, Difficulty difficulty)
+        public IManagedDisposable CreateAI(LevelInfo levelInfo, Difficulty difficulty)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
@@ -49,7 +49,7 @@ namespace BattleCruisers.AI
                     levelInfo.AICruiser,
                     taskFactory,
                     _threatMonitorFactory);
-            IAIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
+            AIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
 
             if (IsAdaptiveAI(difficulty))
             {

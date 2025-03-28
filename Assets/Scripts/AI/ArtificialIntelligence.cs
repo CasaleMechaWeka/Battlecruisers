@@ -11,7 +11,7 @@ namespace BattleCruisers.AI
     /// 2. Provides a way to dispose the ITaskConsumer and all ITaskProducers, 
     ///     cleaning up their event handlers.
     /// </summary>
-    public class ArtificialIntelligence : IArtificialIntelligence
+    public class ArtificialIntelligence : IManagedDisposable
     {
         private readonly TaskConsumer _taskConsumer;
         private readonly IList<ITaskProducer> _taskProducers;

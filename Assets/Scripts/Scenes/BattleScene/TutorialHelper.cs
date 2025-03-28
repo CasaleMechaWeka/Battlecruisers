@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
@@ -81,10 +80,10 @@ namespace BattleCruisers.Scenes.BattleScene
             return StaticData.InitialGameModel.PlayerLoadout;
         }
 
-        public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public override IManagedDisposable CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
         {
             // There is no AI for the tutorial :)
-            return new DummyArtificialIntelligence();
+            return new DummyManagedDisposable();
         }
 
         public override ISlotFilter CreateHighlightableSlotFilter()

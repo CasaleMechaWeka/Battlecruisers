@@ -40,7 +40,7 @@ namespace BattleCruisers.AI.TaskProducers
         private const float TASK_DELAY_IN_S = 1;
 
         public ReplaceDestroyedBuildingsTaskProducer(
-            ITaskList tasks,
+            TaskList tasks,
             ICruiserController cruiser,
             ITaskFactory taskFactory,
             IList<BuildingKey> buildingKeys)

@@ -15,7 +15,7 @@ namespace BattleCruisers.AI
     /// same priority, and I want to maintain their order when I add
     /// or remove an task.
     /// </summary>
-    public class TaskList : ITaskList
+    public class TaskList
     {
         private readonly IList<IPrioritisedTask> _tasks;
 

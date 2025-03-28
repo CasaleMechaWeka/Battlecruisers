@@ -19,7 +19,7 @@ namespace BattleCruisers.AI.TaskProducers
         private IPrioritisedTask _currentTask;
 
         public AntiThreatTaskProducer(
-            ITaskList tasks,
+            TaskList tasks,
             ICruiserController cruiser,
             ITaskFactory taskFactory,
             IDynamicBuildOrder antiThreatBuildOrder,

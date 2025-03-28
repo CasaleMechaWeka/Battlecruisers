@@ -6,12 +6,12 @@ namespace BattleCruisers.AI.TaskProducers
 {
     public abstract class TaskProducer : ITaskProducer
     {
-        protected readonly ITaskList _tasks;
+        protected readonly TaskList _tasks;
         protected readonly ICruiserController _cruiser;
         protected readonly ITaskFactory _taskFactory;
 
         public TaskProducer(
-            ITaskList tasks,
+            TaskList tasks,
             ICruiserController cruiser,
             ITaskFactory taskFactory)
         {

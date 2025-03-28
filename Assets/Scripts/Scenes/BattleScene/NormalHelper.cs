@@ -57,11 +57,11 @@ namespace BattleCruisers.Scenes.BattleScene
             return DataProvider.GameModel.PlayerLoadout;
         }
 
-        public override IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public override IManagedDisposable CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
         {
             LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
-            IAIManager aiManager = new AIManager(_deferrer, playerCruiser, strategyFactory);
+            AIManager aiManager = new AIManager(_deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo, FindDifficulty());
         }
 

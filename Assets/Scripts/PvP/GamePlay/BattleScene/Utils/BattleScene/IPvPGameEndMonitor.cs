@@ -1,4 +1,4 @@
-using BattleCruisers.AI;
+using BattleCruisers.Utils;
 using System;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public interface IPvPGameEndMonitor
     {
         event EventHandler GameEnded;
-        void RegisterAIOfLeftPlayer(IArtificialIntelligence ai_LeftPlayer);
-        void RegisterAIOfRightPlayer(IArtificialIntelligence ai_RightPlayer);
+        void RegisterAIOfLeftPlayer(IManagedDisposable ai_LeftPlayer);
+        void RegisterAIOfRightPlayer(IManagedDisposable ai_RightPlayer);
     }
 }

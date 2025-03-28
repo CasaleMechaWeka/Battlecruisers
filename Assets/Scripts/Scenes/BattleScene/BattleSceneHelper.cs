@@ -40,7 +40,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _trashTalkProvider = new TrashTalkProvider();
         }
 
-        public abstract IArtificialIntelligence CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
+        public abstract IManagedDisposable CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum);
         public abstract IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
         public abstract IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         public abstract ISlotFilter CreateHighlightableSlotFilter();

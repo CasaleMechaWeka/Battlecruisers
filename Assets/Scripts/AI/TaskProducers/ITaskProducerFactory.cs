@@ -4,13 +4,13 @@ namespace BattleCruisers.AI.TaskProducers
 {
     public interface ITaskProducerFactory
     {
-        ITaskProducer CreateBasicTaskProducer(ITaskList tasks, IDynamicBuildOrder buildOrder);
-		ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(ITaskList tasks);
+        ITaskProducer CreateBasicTaskProducer(TaskList tasks, IDynamicBuildOrder buildOrder);
+        ITaskProducer CreateReplaceDestroyedBuildingsTaskProducer(TaskList tasks);
 
         // Anti-<threat type> task producers
-        ITaskProducer CreateAntiAirTaskProducer(ITaskList tasks, IDynamicBuildOrder antiAirBuildOrder);
-        ITaskProducer CreateAntiNavalTaskProducer(ITaskList tasks, IDynamicBuildOrder antiNavalBuildOrder);
-        ITaskProducer CreateAntiRocketLauncherTaskProducer(ITaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder);
-        ITaskProducer CreateAntiStealthTaskProducer(ITaskList tasks, IDynamicBuildOrder antiStealthBuildOrder);
-	}
+        ITaskProducer CreateAntiAirTaskProducer(TaskList tasks, IDynamicBuildOrder antiAirBuildOrder);
+        ITaskProducer CreateAntiNavalTaskProducer(TaskList tasks, IDynamicBuildOrder antiNavalBuildOrder);
+        ITaskProducer CreateAntiRocketLauncherTaskProducer(TaskList tasks, IDynamicBuildOrder antiRocketLauncherBuildOrder);
+        ITaskProducer CreateAntiStealthTaskProducer(TaskList tasks, IDynamicBuildOrder antiStealthBuildOrder);
+    }
 }

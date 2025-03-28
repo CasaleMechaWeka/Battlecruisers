@@ -1,9 +1,9 @@
-using BattleCruisers.AI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityEngine;
@@ -14,8 +14,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public class PvPGameEndHandler : IPvPGameEndHandler
     {
         private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
-        private IArtificialIntelligence _ai_LeftPlayer;
-        private IArtificialIntelligence _ai_RightPlayer;
+        private IManagedDisposable _ai_LeftPlayer;
+        private IManagedDisposable _ai_RightPlayer;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private readonly IDeferrer _deferrer;
 
@@ -104,12 +104,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
         }
 
-        public void RegisterAIOfLeftPlayer(IArtificialIntelligence ai_LeftPlayer)
+        public void RegisterAIOfLeftPlayer(IManagedDisposable ai_LeftPlayer)
         {
             _ai_LeftPlayer = ai_LeftPlayer;
         }
 
-        public void RegisterAIOfRightPlayer(IArtificialIntelligence ai_RightPlayer)
+        public void RegisterAIOfRightPlayer(IManagedDisposable ai_RightPlayer)
         {
             _ai_RightPlayer = ai_RightPlayer;
         }
