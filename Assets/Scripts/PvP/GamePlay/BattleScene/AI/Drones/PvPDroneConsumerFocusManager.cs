@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
-using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.AI.Drones;
 using BattleCruisers.Cruisers.Drones;
 
@@ -27,14 +26,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Dro
     /// </summary>
     public class PvPDroneConsumerFocusManager : IManagedDisposable
     {
-        private readonly IDroneFocusingStrategy _strategy;
+        private readonly ResponsiveStrategy _strategy;
         private readonly IPvPCruiserBuildingMonitor _aiBuildingMonitor;
         private readonly IDroneManager _droneManager;
         private readonly IList<IPvPFactory> _completedFactories;
         private readonly IDroneConsumerFocusHelper _focusHelper;
 
         public PvPDroneConsumerFocusManager(
-            IDroneFocusingStrategy strategy,
+            ResponsiveStrategy strategy,
             IPvPCruiserController aiCruiser,
             IDroneConsumerFocusHelper focusHelper)
         {

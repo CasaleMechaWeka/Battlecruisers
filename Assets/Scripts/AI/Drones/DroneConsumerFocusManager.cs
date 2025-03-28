@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI.Drones.Strategies;
-using BattleCruisers.Buildables;
+﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Construction;
@@ -25,15 +24,15 @@ namespace BattleCruisers.AI.Drones
     /// </summary>
     public class DroneConsumerFocusManager : IManagedDisposable
     {
-        private readonly IDroneFocusingStrategy _strategy;
+        private readonly ResponsiveStrategy _strategy;
         private readonly ICruiserBuildingMonitor _aiBuildingMonitor;
         private readonly IDroneManager _droneManager;
         private readonly IList<IFactory> _completedFactories;
         private readonly IDroneConsumerFocusHelper _focusHelper;
 
         public DroneConsumerFocusManager(
-            IDroneFocusingStrategy strategy, 
-            ICruiserController aiCruiser, 
+            ResponsiveStrategy strategy,
+            ICruiserController aiCruiser,
             IDroneConsumerFocusHelper focusHelper)
         {
             Helper.AssertIsNotNull(strategy, aiCruiser, aiCruiser.DroneManager, focusHelper);
@@ -89,12 +88,12 @@ namespace BattleCruisers.AI.Drones
 
         private void Factory_StartedBuildingUnit(object sender, UnitStartedEventArgs e)
         {
-			Logging.LogMethod(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
+            Logging.LogMethod(Tags.DRONE_CONUMSER_FOCUS_MANAGER);
 
             if (_strategy.EvaluateWhenUnitStarted)
             {
                 _focusHelper.FocusOnNonFactoryDroneConsumer(_strategy.ForceInProgressBuildingToFocused);
-			}
+            }
         }
 
         private void Factory_Destroyed(object sender, DestroyedEventArgs e)

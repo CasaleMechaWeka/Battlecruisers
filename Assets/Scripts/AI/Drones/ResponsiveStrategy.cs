@@ -1,4 +1,4 @@
-﻿namespace BattleCruisers.AI.Drones.Strategies
+﻿namespace BattleCruisers.AI.Drones
 {
 
     /// <summary>
@@ -10,11 +10,11 @@
     /// 
     /// Hence good to use with a conservative IUnitChooser.
     /// </summary>
-    public class ResponsiveStrategy : IDroneFocusingStrategy
-	{
+    public class ResponsiveStrategy
+    {
         public bool EvaluateWhenBuildingStarted { get; }
-		public bool EvaluateWhenUnitStarted { get; }
-		public bool ForceInProgressBuildingToFocused { get; }
+        public bool EvaluateWhenUnitStarted { get; }
+        public bool ForceInProgressBuildingToFocused { get; }
 
         public ResponsiveStrategy()
         {
@@ -22,5 +22,5 @@
             EvaluateWhenUnitStarted = true;
             ForceInProgressBuildingToFocused = false;
         }
-	}
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.AI.Drones;
-using BattleCruisers.AI.Drones.Strategies;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Cruisers;
@@ -12,20 +11,20 @@ using NUnit.Framework;
 namespace BattleCruisers.Tests.AI.Drones
 {
     public class DroneConsumerFocusManagerTests
-	{
+    {
         private DroneConsumerFocusManager _focusManager;
 
-        private IDroneFocusingStrategy _strategy;
+        private ResponsiveStrategy _strategy;
         private IDroneManager _droneManager;
         private ICruiserBuildingMonitor _aiBuildingMonitor;
         private IDroneConsumerFocusHelper _focusHelper;
         private IFactory _factory;
         private IDroneConsumer _factoryDroneConsumer;
 
-		[SetUp]
-		public void SetuUp()
-		{
-            _strategy = Substitute.For<IDroneFocusingStrategy>();
+        [SetUp]
+        public void SetuUp()
+        {
+            _strategy = Substitute.For<ResponsiveStrategy>();
 
             ICruiserController aiCruiser = Substitute.For<ICruiserController>();
             _droneManager = aiCruiser.DroneManager;
@@ -39,7 +38,7 @@ namespace BattleCruisers.Tests.AI.Drones
             _factory = Substitute.For<IFactory>();
             _factoryDroneConsumer = Substitute.For<IDroneConsumer>();
             _factory.DroneConsumer.Returns(_factoryDroneConsumer);
-		}
+        }
 
         #region UnitStartedConstruction
         [Test]
