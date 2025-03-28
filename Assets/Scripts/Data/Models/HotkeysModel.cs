@@ -411,10 +411,13 @@ namespace BattleCruisers.Data.Models
         {
             // Navigation
             PlayerCruiser = KeyCode.Z;
+
+#if !UNITY_EDITOR       //Unity loves serializing stuff it shouldn't try to serialize; we have to prevent that
             if (Application.systemLanguage == SystemLanguage.German)
             {
                 PlayerCruiser = KeyCode.Y;
             }
+#endif
             Overview = KeyCode.X;
             EnemyCruiser = KeyCode.C;
 
@@ -549,7 +552,7 @@ namespace BattleCruisers.Data.Models
 
         public override int GetHashCode()
         {
-            return 
+            return
                 this.GetHashCode(
                     PlayerCruiser, Overview, EnemyCruiser,
                     SlowMotion, NormalSpeed, FastForward,

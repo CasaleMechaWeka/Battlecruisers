@@ -291,11 +291,13 @@ namespace BattleCruisers.Data.Models
             HecklesAllowed = true;
             CloudSaveDisabled = false;
 
-            AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+            AltDroneSounds = false;
+
+#if !UNITY_EDITOR   //this should circumvent Unity being stupid and serializing fields it shouldn't serialize
             InitialiseGraphicsSettings();
-
+            AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
+#endif
             //Debug.Log(Application.systemLanguage);
-
         }
 
         public void InitialiseGraphicsSettings()
