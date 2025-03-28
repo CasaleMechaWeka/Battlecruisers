@@ -140,7 +140,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         }
 
 
-        public async Task InitialiseAsync(IBarrelControllerArgs args, bool doDebug = false)
+        public async Task InitialiseAsync(BarrelControllerArgs args, bool doDebug = false)
         {
             Assert.IsNotNull(args);
 
@@ -175,7 +175,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _updater.Updated += _updater_Updated;
         }
 
-        protected virtual IBarrelFirer CreateFirer(IBarrelControllerArgs args)
+        protected virtual IBarrelFirer CreateFirer(BarrelControllerArgs args)
         {
             return new BarrelFirer(
                 this,
@@ -183,14 +183,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 _muzzleFlash);
         }
 
-        protected virtual IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)
+        protected virtual IAnimation GetBarrelFiringAnimation(BarrelControllerArgs args)
         {
             return args.BarrelFiringAnimation;
         }
 
 
 #pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
-        protected virtual async Task InternalInitialiseAsync(IBarrelControllerArgs args) { }
+        protected virtual async Task InternalInitialiseAsync(BarrelControllerArgs args) { }
 #pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         private void _updater_Updated(object sender, EventArgs e)

@@ -10,8 +10,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Shields
 {
-    public class ShieldTestsGod : TestGodBase 
-	{
+    public class ShieldTestsGod : TestGodBase
+    {
         private ShieldGenerator _shield;
         private BarrelController _turret;
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.Test.Shields
             IList<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings };
             ITargetFilter targetFilter = new FactionAndTargetTypeFilter(_shield.Faction, targetTypes);
 
-            IBarrelControllerArgs barrelControllerArgs
+            BarrelControllerArgs barrelControllerArgs
                 = helper
                     .CreateBarrelControllerArgs(
                     _turret,
@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes.Test.Shields
                     targetFilter);
 
             await _turret.InitialiseAsync(barrelControllerArgs);
-			_turret.Target = _shield;
-		}
-	}
+            _turret.Target = _shield;
+        }
+    }
 }

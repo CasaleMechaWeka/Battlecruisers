@@ -140,7 +140,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
             foreach (BarrelController barrel in _barrels)
             {
-                IBarrelControllerArgs barrelArgs
+                BarrelControllerArgs barrelArgs
                     = CreateBarrelControllerArgs(
                         barrel,
                         parent,
@@ -169,7 +169,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             _targetProcessor.AddTargetConsumer(this);
         }
 
-        private IBarrelControllerArgs CreateBarrelControllerArgs(
+        private BarrelControllerArgs CreateBarrelControllerArgs(
             IBarrelController barrel,
             IBuildable parent,
             ITargetFilter targetFilter,
@@ -200,7 +200,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 barrelFiringAnimation);
         }
 
-        protected virtual void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
+        protected virtual void InitialiseBarrelController(BarrelController barrel, BarrelControllerArgs args)
         {
             _ = barrel.InitialiseAsync(args);
         }

@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     {
         protected override float DesiredAngleInDegrees => 60;
 
-        protected override void InitialiseBarrelController(BarrelController barrel, IBarrelControllerArgs args)
+        protected override void InitialiseBarrelController(BarrelController barrel, BarrelControllerArgs args)
         {
             RocketBarrelController rocketBarrel = barrel.Parse<RocketBarrelController>();
             _ = rocketBarrel.InitialiseAsync(args);

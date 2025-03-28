@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return new DamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(BarrelControllerArgs args)
         {
             _laserEmitter.Initialise(
                 args.TargetFilter,

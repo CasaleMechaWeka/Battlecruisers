@@ -17,7 +17,7 @@ namespace BattleCruisers.Projectiles.Spawners
         public ICruiser EnempCruiser { get; }
 
         public ProjectileSpawnerArgs(
-            IBarrelControllerArgs barrelControllerArgs,
+            BarrelControllerArgs barrelControllerArgs,
             IProjectileStats projectileStats,
             int burstSize)
             : this(

@@ -33,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _middleSpawner = _shellSpawners.Middle();
         }
 
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(BarrelControllerArgs args)
         {
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 

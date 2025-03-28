@@ -32,11 +32,11 @@ namespace BattleCruisers.Scenes.Test.Turrets
         {
             // Setup target
             helper.InitialiseBuilding(_airFactory);
-            
+
             // Setup lightning barrel
             _lightningBarrel.StaticInitialise();
 
-            IBarrelControllerArgs barrelControllerArgs
+            BarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     _lightningBarrel,
                     _updaterProvider.PerFrameUpdater,
@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
                     rotationMovementController: new DummyRotationMovementController(isOnTarget: true));
 
             await _lightningBarrel.InitialiseAsync(barrelControllerArgs);
-			_lightningBarrel.Target = _airFactory;
-	    }
-	}
+            _lightningBarrel.Target = _airFactory;
+        }
+    }
 }

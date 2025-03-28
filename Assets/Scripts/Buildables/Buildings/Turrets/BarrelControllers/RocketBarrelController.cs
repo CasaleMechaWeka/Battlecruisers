@@ -9,8 +9,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class RocketBarrelController : BarrelController
-	{
-		private ICircularList<RocketSpawner> _rocketSpawners;
+    {
+        private ICircularList<RocketSpawner> _rocketSpawners;
         private RocketSpawner _middleSpawner;
         private ICruisingProjectileStats _rocketStats;
 
@@ -31,29 +31,29 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected override IProjectileStats GetProjectileStats()
         {
             _rocketStats = GetComponent<CruisingProjectileStats>();
-			Assert.IsNotNull(_rocketStats);
+            Assert.IsNotNull(_rocketStats);
             return _rocketStats;
         }
 
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
-		{
+        protected override async Task InternalInitialiseAsync(BarrelControllerArgs args)
+        {
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _rocketStats, TurretStats.BurstSize);
 
             foreach (RocketSpawner rocketSpawner in _rocketSpawners.Items)
-			{
+            {
                 await rocketSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, _rocketStats);
-			}
-		}
+            }
+        }
 
         public override void Fire(float angleInDegrees)
-		{
-			_rocketSpawners
+        {
+            _rocketSpawners
                 .Next()
                 .SpawnRocket(
-				    angleInDegrees,
-				    transform.IsMirrored(),
-				    Target,
-				    _targetFilter);
-		}
-	}
+                    angleInDegrees,
+                    transform.IsMirrored(),
+                    Target,
+                    _targetFilter);
+        }
+    }
 }

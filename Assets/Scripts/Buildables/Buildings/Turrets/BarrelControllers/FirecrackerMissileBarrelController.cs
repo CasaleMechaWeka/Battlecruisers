@@ -35,7 +35,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _missileStats;
         }
 
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(BarrelControllerArgs args)
         {
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _missileStats, TurretStats.BurstSize);
 

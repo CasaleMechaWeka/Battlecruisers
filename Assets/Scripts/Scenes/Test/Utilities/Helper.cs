@@ -366,7 +366,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return parentSlot;
         }
 
-        public IBarrelControllerArgs CreateBarrelControllerArgs(
+        public BarrelControllerArgs CreateBarrelControllerArgs(
             BarrelController barrel,
             IUpdater updater,
             ITargetFilter targetFilter = null,

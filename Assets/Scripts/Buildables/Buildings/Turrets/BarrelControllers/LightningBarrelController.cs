@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         }
 
 #pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(BarrelControllerArgs args)
         {
             lightningEmitter
                 .Initialise(

@@ -36,7 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return _smartProjectileStats;
         }
 
-        protected override async Task InternalInitialiseAsync(IBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(BarrelControllerArgs args)
         {
             _targetFilter = new FactionAndTargetTypeFilter(args.EnemyCruiser.Faction, _smartProjectileStats.AttackCapabilities);
             IProjectileSpawnerArgs spawnerArgs

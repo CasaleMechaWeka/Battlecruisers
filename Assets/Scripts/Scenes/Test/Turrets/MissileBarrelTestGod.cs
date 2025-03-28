@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
             _missileBarrel.StaticInitialise();
             _missileBarrel.Target = _target;
 
-            IBarrelControllerArgs barrelControllerArgs
+            BarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     _missileBarrel,
                     _updaterProvider.PerFrameUpdater,

@@ -27,12 +27,12 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
         }
 
-        protected override IAnimation GetBarrelFiringAnimation(IBarrelControllerArgs args)
+        protected override IAnimation GetBarrelFiringAnimation(BarrelControllerArgs args)
         {
             return _barrelAnimation;
         }
 
-        protected override IBarrelFirer CreateFirer(IBarrelControllerArgs args)
+        protected override IBarrelFirer CreateFirer(BarrelControllerArgs args)
         {
             return
                 new DeferredBarrelFirer(

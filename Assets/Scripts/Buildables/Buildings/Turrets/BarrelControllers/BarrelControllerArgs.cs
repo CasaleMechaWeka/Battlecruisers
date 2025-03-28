@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public class BarrelControllerArgs : IBarrelControllerArgs
+    public class BarrelControllerArgs
     {
         public IUpdater Updater { get; }
         public ITargetFilter TargetFilter { get; }

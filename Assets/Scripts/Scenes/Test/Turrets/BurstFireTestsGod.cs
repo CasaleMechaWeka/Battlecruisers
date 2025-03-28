@@ -9,9 +9,9 @@ using UnityEngine;
 namespace BattleCruisers.Scenes.Test
 {
     public class BurstFireTestsGod : TestGodBase
-	{
+    {
         public BarrelController barrel1, barrel2, barrel3;
-		public GameObject target1, target2, target3;
+        public GameObject target1, target2, target3;
 
         protected override List<GameObject> GetGameObjects()
         {
@@ -34,16 +34,16 @@ namespace BattleCruisers.Scenes.Test
         }
 
         private async Task InitialisePairAsync(Helper helper, BarrelController barrel, GameObject targetGameObject)
-		{
-			barrel.StaticInitialise();
-			
+        {
+            barrel.StaticInitialise();
+
             ITarget target = Substitute.For<ITarget>();
-			Vector2 targetPosition = targetGameObject.transform.position;
-			target.Position.Returns(targetPosition);
-			barrel.Target = target;
-			
-            IBarrelControllerArgs barrelControllerArgs = helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
+            Vector2 targetPosition = targetGameObject.transform.position;
+            target.Position.Returns(targetPosition);
+            barrel.Target = target;
+
+            BarrelControllerArgs barrelControllerArgs = helper.CreateBarrelControllerArgs(barrel, _updaterProvider.PerFrameUpdater);
             await barrel.InitialiseAsync(barrelControllerArgs);
-		}
-	}
+        }
+    }
 }

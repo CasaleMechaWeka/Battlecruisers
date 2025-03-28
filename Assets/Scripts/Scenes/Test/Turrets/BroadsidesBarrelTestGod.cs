@@ -46,7 +46,7 @@ namespace BattleCruisers.Scenes.Test
             _doubleBarrel.StaticInitialise();
             _doubleBarrel.Target = _target;
 
-            IBarrelControllerArgs barrelControllerArgs
+            BarrelControllerArgs barrelControllerArgs
                 = helper.CreateBarrelControllerArgs(
                     _doubleBarrel,
                     _updaterProvider.PerFrameUpdater,

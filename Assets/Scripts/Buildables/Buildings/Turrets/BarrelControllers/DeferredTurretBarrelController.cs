@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsTrue(delayInS >= 0);
         }
 
-        protected override IBarrelFirer CreateFirer(IBarrelControllerArgs args)
+        protected override IBarrelFirer CreateFirer(BarrelControllerArgs args)
         {
             return
                 new DeferredBarrelFirer(

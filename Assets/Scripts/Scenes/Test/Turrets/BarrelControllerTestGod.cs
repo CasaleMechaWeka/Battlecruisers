@@ -12,7 +12,7 @@ using UnityEngine;
 namespace BattleCruisers.Scenes.Test
 {
     public abstract class BarrelControllerTestGod : TestGodBase
-	{
+    {
         private BarrelController[] _turretBarrels;
         public GameObject targetGameObject;
 
@@ -31,19 +31,19 @@ namespace BattleCruisers.Scenes.Test
             ITarget target = CreateTarget(targetGameObject.transform.position);
 
             foreach (BarrelController barrel in _turretBarrels)
-			{
-				barrel.StaticInitialise();
-				barrel.Target = target;
+            {
+                barrel.StaticInitialise();
+                barrel.Target = target;
 
-                IBarrelControllerArgs barrelControllerArgs
+                BarrelControllerArgs barrelControllerArgs
                     = helper.CreateBarrelControllerArgs(
-                        barrel, 
+                        barrel,
                         _updaterProvider.PerFrameUpdater,
                         angleCalculator: CreateAngleCalculator(barrel.ProjectileStats));
 
                 await barrel.InitialiseAsync(barrelControllerArgs);
-			}
-		}
+            }
+        }
 
         protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
 
@@ -53,5 +53,5 @@ namespace BattleCruisers.Scenes.Test
             target.Position.Returns(targetPosition);
             return target;
         }
-	}
+    }
 }
