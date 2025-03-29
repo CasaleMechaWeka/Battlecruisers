@@ -65,7 +65,7 @@ namespace BattleCruisers.Buildables
         public virtual Color Color { set { /* empty */ } }
         public bool IsInScene => gameObject.scene.IsValid();
         public float Health => _healthTracker?.Health ?? maxHealth;
-        public IRepairCommand RepairCommand { get; private set; }
+        public RepairCommand RepairCommand { get; private set; }
         public float HealthGainPerDroneS { get; protected set; }
 
         private List<TargetType> _attackCapabilities;

@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public Vector2 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public float HealthGainPerDroneS { get; set; }
-        public IRepairCommand RepairCommand { get; set; }
+        public RepairCommand RepairCommand { get; set; }
         public TextMesh NumOfRepairDronesText { get; set; }
         public bool IsDestroyed { get; set; }
         public float Health { get; set; }

@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
-            IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
+            IRepairable repairable = sender.Parse<RepairCommand>().Repairable;
 
             // Logging.Log(Tags.REPAIR_MANAGER, $"{repairable}  repairable.RepairCommand.CanExecute: {repairable.RepairCommand.CanExecute}");
 

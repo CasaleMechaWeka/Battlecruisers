@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
         private IDroneFocuser _droneFocuser;
         private IRepairManager _repairManager;
         private IDroneConsumer _repairDroneConsumer;
-        private IRepairCommand _repairCommand;
+        private RepairCommand _repairCommand;
 
         [SetUp]
         public void TestSetup()
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
 
             _droneFocuser = Substitute.For<IDroneFocuser>();
             _repairManager = Substitute.For<IRepairManager>();
-            _repairCommand = Substitute.For<IRepairCommand>();
+            _repairCommand = Substitute.For<RepairCommand>();
 
             _clickedCruiser = Substitute.For<ICruiser>();
             _clickedCruiser.DroneFocuser.Returns(_droneFocuser);

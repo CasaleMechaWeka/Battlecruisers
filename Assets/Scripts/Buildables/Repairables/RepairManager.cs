@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Repairables
 
         private void RepairCommand_CanExecuteChanged(object sender, EventArgs e)
         {
-            IRepairable repairable = sender.Parse<IRepairCommand>().Repairable;
+            IRepairable repairable = sender.Parse<RepairCommand>().Repairable;
 
             Logging.Log(Tags.REPAIR_MANAGER, $"{repairable}  repairable.RepairCommand.CanExecute: {repairable.RepairCommand.CanExecute}");
 
@@ -120,7 +120,7 @@ namespace BattleCruisers.Buildables.Repairables
 
             IDroneFeedback droneNumFeedback = _feedbackFactory.CreateFeedback(droneConsumer, repairable.DroneAreaPosition, repairable.DroneAreaSize);
             _repairableToFeedback.Add(repairable, droneNumFeedback);
-			
+
             if (repairable.RepairCommand.CanExecute)
             {
                 _droneConsumerProvider.ActivateDroneConsumer(droneConsumer);
@@ -151,11 +151,11 @@ namespace BattleCruisers.Buildables.Repairables
             RemoveRepairable(e.DestroyedTarget);
         }
 
-		public IDroneConsumer GetDroneConsumer(IRepairable repairable)
-		{
-			Assert.IsTrue(_repairableToFeedback.ContainsKey(repairable));
+        public IDroneConsumer GetDroneConsumer(IRepairable repairable)
+        {
+            Assert.IsTrue(_repairableToFeedback.ContainsKey(repairable));
             return _repairableToFeedback[repairable].DroneConsumer;
-		}
+        }
 
         public void DisposeManagedState()
         {

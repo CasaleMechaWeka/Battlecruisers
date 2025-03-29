@@ -14,23 +14,23 @@ using UnityAsserts = UnityEngine.Assertions;
 namespace BattleCruisers.Tests.Buildables.Repairables
 {
     public class RepairManagerTests
-	{
+    {
         private ICruiser _cruiser;
         private IDroneConsumerProvider _droneConsumerProvider;
         private IDroneConsumer _cruiserDroneConsumer, _buildingDroneConsumer;
         private IBuilding _building;
-        private IRepairCommand _cruiserRepairCommand, _buildingRepairCommand;
-		private IDroneFeedbackFactory _feedbackFactory;
+        private RepairCommand _cruiserRepairCommand, _buildingRepairCommand;
+        private IDroneFeedbackFactory _feedbackFactory;
         private IDroneFeedback _cruiserFeedback, _buildingFeedback;
         private float _repairAmount;
 
         private const int NUM_OF_DRONES_REQUIRED_FOR_REPAIR = 1;
-		private const float DELTA_TIME_IN_S = 1;
+        private const float DELTA_TIME_IN_S = 1;
         private const float REPAIRABLE_HEALTH_GAIN_PER_DRONE_S = 3;
 
-		[SetUp]
-		public void SetuUp()
-		{
+        [SetUp]
+        public void SetuUp()
+        {
             // Drones
             _cruiserDroneConsumer = Substitute.For<IDroneConsumer>();
             _cruiserDroneConsumer.NumOfDronesRequired.Returns(1);
@@ -46,7 +46,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _feedbackFactory = Substitute.For<IDroneFeedbackFactory>();
 
             // Cruiser repairable
-            _cruiserRepairCommand = Substitute.For<IRepairCommand>();
+            _cruiserRepairCommand = Substitute.For<RepairCommand>();
             _cruiser = Substitute.For<ICruiser>();
             _cruiser.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
             _cruiser.RepairCommand.Returns(_cruiserRepairCommand);
@@ -55,7 +55,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _cruiser.DroneAreaSize.Returns(new Vector2(28, 82));
 
             // Building repairable
-            _buildingRepairCommand = Substitute.For<IRepairCommand>();
+            _buildingRepairCommand = Substitute.For<RepairCommand>();
             _building = Substitute.For<IBuilding>();
             _building.HealthGainPerDroneS.Returns(REPAIRABLE_HEALTH_GAIN_PER_DRONE_S);
             _building.RepairCommand.Returns(_buildingRepairCommand);
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _building.DroneAreaPosition.Returns(new Vector2(7, 3));
             _building.DroneAreaSize.Returns(new Vector2(8, 2));
             _repairAmount = DELTA_TIME_IN_S * _cruiserDroneConsumer.NumOfDrones * REPAIRABLE_HEALTH_GAIN_PER_DRONE_S * BuildSpeedMultipliers.DEFAULT;
-		}
+        }
 
         [Test]
         public void BuildingStarted_AddsAsRepairable()
@@ -105,18 +105,18 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             // Drone consumer 1
             IRepairManager repairManager = CreateRepairManager();
 
-			// Drone consumer 2
-			AddRepairableBuilding();
+            // Drone consumer 2
+            AddRepairableBuilding();
 
             repairManager.DisposeManagedState();
 
-			// Released 2 drone consumers, 1 for the cruiser and 1 for the building
+            // Released 2 drone consumers, 1 for the cruiser and 1 for the building
             _droneConsumerProvider.Received().ReleaseDroneConsumer(_cruiserDroneConsumer);
             _droneConsumerProvider.Received().ReleaseDroneConsumer(_buildingDroneConsumer);
         }
 
-		#region Repair()
-		[Test]
+        #region Repair()
+        [Test]
         public void Repair_Unrepairable_DroneConsumerIdle_DoesNotRepair()
         {
             IRepairManager repairManager = CreateRepairManager();
@@ -146,7 +146,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _cruiserRepairCommand.CanExecute.Returns(true);
             _cruiserDroneConsumer.State.Returns(DroneConsumerState.Active);
 
-			repairManager.Repair(DELTA_TIME_IN_S);
+            repairManager.Repair(DELTA_TIME_IN_S);
 
             _cruiserRepairCommand.Received().Execute(_repairAmount);
         }
@@ -162,9 +162,9 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             AddRepairableBuilding();
             _buildingDroneConsumer.State.Returns(DroneConsumerState.Active);
 
-			repairManager.Repair(DELTA_TIME_IN_S);
+            repairManager.Repair(DELTA_TIME_IN_S);
 
-			_cruiserRepairCommand.Received().Execute(_repairAmount);
+            _cruiserRepairCommand.Received().Execute(_repairAmount);
             _buildingRepairCommand.Received().Execute(_repairAmount);
         }
 
@@ -182,9 +182,9 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _cruiserRepairCommand.DidNotReceiveWithAnyArgs().Execute(parameter: -99);
             _buildingRepairCommand.Received().Execute(_repairAmount);
         }
-		#endregion Repair()
+        #endregion Repair()
 
-		#region RepairCommand_CanExecuteChanged
+        #region RepairCommand_CanExecuteChanged
         [Test]
         public void RepairCommand_CanExecuteChanged_Repairable_ActivatesDroneConsumer()
         {
@@ -199,19 +199,19 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _droneConsumerProvider.Received().ActivateDroneConsumer(_cruiserDroneConsumer);
         }
 
-		[Test]
-		public void RepairCommand_CanExecuteChanged_NotRepairable_ReleasesDroneConsumer()
-		{
+        [Test]
+        public void RepairCommand_CanExecuteChanged_NotRepairable_ReleasesDroneConsumer()
+        {
             // Add repairable and activating drone consumer
             IRepairManager repairManager = CreateRepairManager();
 
             _droneConsumerProvider.ClearReceivedCalls();
 
-			_cruiserRepairCommand.CanExecute.Returns(false);
-			_cruiserRepairCommand.CanExecuteChanged += Raise.Event();
+            _cruiserRepairCommand.CanExecute.Returns(false);
+            _cruiserRepairCommand.CanExecuteChanged += Raise.Event();
 
             _droneConsumerProvider.Received().ReleaseDroneConsumer(_cruiserDroneConsumer);
-		}
+        }
         #endregion RepairCommand_CanExecuteChanged
 
         #region GetDroneConsumer
@@ -251,7 +251,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
             _feedbackFactory.Received().CreateFeedback(_buildingDroneConsumer, _building.DroneAreaPosition, _building.DroneAreaSize);
             _droneConsumerProvider.Received().ActivateDroneConsumer(_buildingDroneConsumer);
-		}
+        }
 
         private IRepairManager CreateRepairManager()
         {
@@ -263,9 +263,9 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             //repairManager.AddCruiser(_cruiser);
             _droneConsumerProvider.Received().RequestDroneConsumer(NUM_OF_DRONES_REQUIRED_FOR_REPAIR);
             _feedbackFactory.Received().CreateFeedback(_cruiserDroneConsumer, _cruiser.DroneAreaPosition, _cruiser.DroneAreaSize);
-            
-            return repairManager;
-		}
 
-	}
+            return repairManager;
+        }
+
+    }
 }

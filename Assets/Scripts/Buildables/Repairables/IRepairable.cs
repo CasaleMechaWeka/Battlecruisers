@@ -5,7 +5,7 @@ namespace BattleCruisers.Buildables.Repairables
     public interface IRepairable : IDamagable
     {
         float HealthGainPerDroneS { get; }
-        IRepairCommand RepairCommand { get; }
+        RepairCommand RepairCommand { get; }
 
         /// <summary>
         /// Not the whole repairable size might be a good location for drones.
