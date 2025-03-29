@@ -3,6 +3,5 @@
     public interface ILevelStrategies
     {
         Strategy GetAdaptiveStrategy(int levelNum);
-        Strategy GetBasicStrategy(int levelNum);
     }
 }

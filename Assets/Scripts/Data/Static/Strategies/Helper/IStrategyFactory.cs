@@ -8,6 +8,5 @@
     public interface IStrategyFactory
     {
         Strategy GetAdaptiveStrategy();
-        Strategy GetBasicStrategy();
     }
 }

@@ -26,13 +26,5 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             else
                 return _levelStrategies.GetAdaptiveStrategy(_levelNum);
         }
-
-        public Strategy GetBasicStrategy()
-        {
-            if (_isSideQuest)
-                return _sideQuestStrategies.GetBasicStrategy(_levelNum);
-            else
-                return _levelStrategies.GetBasicStrategy(_levelNum);
-        }
     }
 }

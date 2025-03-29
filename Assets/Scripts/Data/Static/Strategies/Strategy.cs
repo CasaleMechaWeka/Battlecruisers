@@ -30,7 +30,7 @@ namespace BattleCruisers.Data.Static.Strategies
             // not affect other strategies.
             Offensives
                 = strategyToCopy.Offensives
-                    .Select(originalOffensiveRequest => (OffensiveRequest)new OffensiveRequest(originalOffensiveRequest))
+                    .Select(originalOffensiveRequest => new OffensiveRequest(originalOffensiveRequest))
                     .ToList();
         }
 

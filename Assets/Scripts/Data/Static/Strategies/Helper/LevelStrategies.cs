@@ -8,16 +8,13 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
     public class LevelStrategies : ILevelStrategies
     {
         private IList<Strategy> _adaptiveStrategies;
-        private IList<Strategy> _basicStrategies;
 
         public LevelStrategies()
         {
             IList<IList<IPrefabKeyWrapper>> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
-            IList<IList<IPrefabKeyWrapper>> basicBaseStrategies = CreateBasicBaseStrategies();
             IList<OffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
-            _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
         }
 
         private IList<IList<IPrefabKeyWrapper>> CreateAdaptiveBaseStrategies()
@@ -25,54 +22,54 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             return new List<IList<IPrefabKeyWrapper>>()
             {
                 // Set 1:  Levels 1 - 3
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Rush,
 
                 // Set 2:  Levels 4 - 7
-				StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Balanced,
+				StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Balanced,
                 
                 // Set 3:  Levels 8 - 10
-				StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
+				StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
 
                 // Set 4:  Levels 11 - 14
-				StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Balanced,
+				StaticBuildOrders.Rush,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Balanced,
 
                 //man o war
-                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Balanced,
 
                 // Set 5:  Levels 15 - 17
-				StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
+				StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
 
                 // Set 6:  Levels 18 - 21
-				StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
+				StaticBuildOrders.Balanced,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
 
                 // Set 7:  Levels 22 - 25
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
 
 
                 // Set 8: Levels 27-31
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
 
                 // Set 9: Levels 32-40
                 /*new BasicTurtleStrategy()
@@ -86,81 +83,15 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 new BasicTurtleStrategy()*/
 
                 //Temp Set 9, Please change accordingly
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Balanced
-            };
-        }
-
-        private IList<IList<IPrefabKeyWrapper>> CreateBasicBaseStrategies()
-        {
-            return new List<IList<IPrefabKeyWrapper>>()
-            {
-                // Set 1:  Levels 1 - 3
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.Rush,
-
-                // Set 2:  Levels 4 - 7
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.Balanced,
-				
-				// Set 3:  Levels 8 - 10
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomAggressive,
-
-                // Set 4:  Levels 11 - 14
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.Turtle,
-
-                //man o war
-                StaticBuildOrders.Basic.Turtle,
-
-                // Set 5:  Levels 16 - 18
-				StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.BoomAggressive,
-
-                // Set 6:  Levels 19 - 22
-				StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Balanced,
-
-                // Set 7: Levels 23 - 26
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomAggressive,
-
-                 // Set 8: Levels 27-31
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Turtle,
-
-                // Set 9: Levels 32-40
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.Turtle
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Balanced
             };
         }
 
@@ -436,11 +367,6 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         public Strategy GetAdaptiveStrategy(int levelNum)
         {
             return GetStrategy(_adaptiveStrategies, levelNum);
-        }
-
-        public Strategy GetBasicStrategy(int levelNum)
-        {
-            return GetStrategy(_basicStrategies, levelNum);
         }
 
         private Strategy GetStrategy(IList<Strategy> strategies, int levelNum)

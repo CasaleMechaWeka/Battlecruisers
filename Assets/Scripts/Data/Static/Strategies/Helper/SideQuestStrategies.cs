@@ -8,16 +8,13 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
     public class SideQuestStrategies : ILevelStrategies
     {
         private IList<Strategy> _adaptiveStrategies;
-        private IList<Strategy> _basicStrategies;
 
         public SideQuestStrategies()
         {
             IList<IList<IPrefabKeyWrapper>> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
-            IList<IList<IPrefabKeyWrapper>> basicBaseStrategies = CreateBasicBaseStrategies();
             IList<OffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
-            _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
         }
 
         private IList<IList<IPrefabKeyWrapper>> CreateAdaptiveBaseStrategies()
@@ -25,84 +22,41 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             return new List<IList<IPrefabKeyWrapper>>()
             {
                 // Set 1: SideQuests 0 - 8
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Rush,
-                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Rush,
+                StaticBuildOrders.Balanced,
 
                 // Set 2: SideQuests 9 - 23
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.FortressPrime,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.FortressPrime,
 
                 // Set 3 for 6.5: SideQuests 24-30
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Balanced,
-                StaticBuildOrders.Adaptive.Boom,
-                StaticBuildOrders.Adaptive.Boom
-            };
-        }
-
-        private IList<IList<IPrefabKeyWrapper>> CreateBasicBaseStrategies()
-        {
-            return new List<IList<IPrefabKeyWrapper>>()
-            {
-                // Set 1: SideQuests 0 - 8
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Rush,
-                StaticBuildOrders.Basic.Turtle,
-
-                // Set 2: SideQuests 9 - 23
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.BOOM,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.BOOM,
-                StaticBuildOrders.Basic.FortressPrime,
-
-                 // Set 3 for 6.5: SideQuests 24-30
-                StaticBuildOrders.Basic.BoomAggressive,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.Turtle,
-                StaticBuildOrders.Basic.Balanced,
-                StaticBuildOrders.Basic.BoomDefensive,
-                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Balanced,
+                StaticBuildOrders.Boom,
+                StaticBuildOrders.Boom
             };
         }
 
@@ -390,11 +344,6 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         public Strategy GetAdaptiveStrategy(int levelNum)
         {
             return GetStrategy(_adaptiveStrategies, levelNum);
-        }
-
-        public Strategy GetBasicStrategy(int levelNum)
-        {
-            return GetStrategy(_basicStrategies, levelNum);
         }
 
         private Strategy GetStrategy(IList<Strategy> strategies, int levelNum)

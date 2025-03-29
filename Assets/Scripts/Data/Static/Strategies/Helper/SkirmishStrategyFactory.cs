@@ -29,45 +29,12 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
         {
             return strategyType switch
             {
-                StrategyType.Rush => StaticBuildOrders.Adaptive.Rush,
-                StrategyType.Balanced => StaticBuildOrders.Adaptive.Balanced,
-                StrategyType.Boom => StaticBuildOrders.Adaptive.Boom,
+                StrategyType.Rush => StaticBuildOrders.Rush,
+                StrategyType.Balanced => StaticBuildOrders.Balanced,
+                StrategyType.Boom => StaticBuildOrders.Boom,
                 _ => throw new InvalidOperationException($"Unknown strategy type: {strategyType}"),
             };
 
-        }
-
-        public Strategy GetBasicStrategy()
-        {
-            return
-                new Strategy(
-                    GetBasicBaseStrategy(_strategyType),
-                    GetOffensiveRequests(_strategyType));
-        }
-
-        private IList<IPrefabKeyWrapper> GetBasicBaseStrategy(StrategyType strategyType)
-        {
-            switch (strategyType)
-            {
-                case StrategyType.Rush:
-                    return StaticBuildOrders.Basic.Rush;
-
-                case StrategyType.Balanced:
-                    return StaticBuildOrders.Basic.Balanced;
-
-                case StrategyType.Boom:
-                    if (RandomGenerator.NextBool())
-                    {
-                        return StaticBuildOrders.Basic.BoomAggressive;
-                    }
-                    else
-                    {
-                        return StaticBuildOrders.Basic.BoomDefensive;
-                    }
-
-                default:
-                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
-            }
         }
 
         private OffensiveRequest[] GetOffensiveRequests(StrategyType strategyType)

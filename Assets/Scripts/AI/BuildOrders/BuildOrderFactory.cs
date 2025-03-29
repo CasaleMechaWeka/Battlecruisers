@@ -37,11 +37,6 @@ namespace BattleCruisers.AI.BuildOrders
         /// <summary>
         /// Gets the basic build order, which contains counters to threats.
         /// </summary>
-        public IDynamicBuildOrder CreateBasicBuildOrder(LevelInfo levelInfo)
-        {
-            Strategy strategy = _strategyFactory.GetBasicStrategy();
-            return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: true);
-        }
 
         /// <summary>
         /// Build orders do NOT contain counters to threats.  These counters
