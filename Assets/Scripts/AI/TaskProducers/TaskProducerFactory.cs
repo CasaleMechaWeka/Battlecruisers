@@ -9,7 +9,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    public class TaskProducerFactory : ITaskProducerFactory
+    public class TaskProducerFactory
     {
         private readonly ICruiserController _aiCruiser;
         private readonly ITaskFactory _taskFactory;

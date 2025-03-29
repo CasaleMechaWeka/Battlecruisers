@@ -15,34 +15,15 @@ namespace BattleCruisers.AI
     /// </summary>
     public class AIFactory
     {
-        private readonly ITaskProducerFactory _taskProducerFactory;
+        private readonly TaskProducerFactory _taskProducerFactory;
         private readonly BuildOrderFactory _buildOrderFactory;
 
-        public AIFactory(ITaskProducerFactory taskProducerFactory, BuildOrderFactory buildOrderFactory)
+        public AIFactory(TaskProducerFactory taskProducerFactory, BuildOrderFactory buildOrderFactory)
         {
             Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory);
 
             _taskProducerFactory = taskProducerFactory;
             _buildOrderFactory = buildOrderFactory;
-        }
-
-        /// <summary>
-        /// Creates a basic AI that:
-        /// 1. Follows a base strategy (eg:  balanced, boom or rush)
-        /// 2. Replaces destroyed buildings
-        /// </summary>
-        public IManagedDisposable CreateBasicAI(LevelInfo levelInfo)
-        {
-            TaskList tasks = new TaskList();
-
-            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
-
-            IDynamicBuildOrder basicBuildOrder = _buildOrderFactory.CreateBasicBuildOrder(levelInfo);
-            taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, basicBuildOrder));
-
-            taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
-
-            return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
         /// <summary>

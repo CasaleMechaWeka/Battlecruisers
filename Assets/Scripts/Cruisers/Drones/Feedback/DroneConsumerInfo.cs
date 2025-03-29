@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    public class DroneConsumerInfo : IDroneConsumerInfo
+    public class DroneConsumerInfo
     {
         public IDroneConsumer DroneConsumer { get; }
         public Vector2 Position { get; }

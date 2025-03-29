@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             _waterLine = waterLine;
         }
 
-        public Vector2 FindSpawnPosition(IDroneConsumerInfo droneConsumerInfo)
+        public Vector2 FindSpawnPosition(DroneConsumerInfo droneConsumerInfo)
         {
             Assert.IsNotNull(droneConsumerInfo);
 

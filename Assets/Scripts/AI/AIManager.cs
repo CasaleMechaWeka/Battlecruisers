@@ -44,29 +44,14 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
             ITaskFactory taskFactory = new TaskFactory(levelInfo.AICruiser, _deferrer);
-            ITaskProducerFactory taskProducerFactory
+            TaskProducerFactory taskProducerFactory
                 = new TaskProducerFactory(
                     levelInfo.AICruiser,
                     taskFactory,
                     _threatMonitorFactory);
             AIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
 
-            if (IsAdaptiveAI(difficulty))
-            {
-                return aiFactory.CreateAdaptiveAI(levelInfo);
-            }
-            else
-            {
-                return aiFactory.CreateBasicAI(levelInfo);
-            }
-        }
-
-        private bool IsAdaptiveAI(Difficulty difficulty)
-        {
-            return
-                difficulty == Difficulty.Hard
-                || difficulty == Difficulty.Harder
-                || difficulty == Difficulty.Normal;//add this condition 
+            return aiFactory.CreateAdaptiveAI(levelInfo);
         }
     }
 }

@@ -10,14 +10,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
     public class SpawnPositionFinderTests
     {
         private ISpawnPositionFinder _positionFinder;
-        private IDroneConsumerInfo _droneConsumerInfo;
+        private DroneConsumerInfo _droneConsumerInfo;
 
         [SetUp]
         public void TestSetup()
         {
             _positionFinder = new SpawnPositionFinder(Constants.WATER_LINE);
 
-            _droneConsumerInfo = Substitute.For<IDroneConsumerInfo>();
+            _droneConsumerInfo = Substitute.For<DroneConsumerInfo>();
         }
 
         [Test]
