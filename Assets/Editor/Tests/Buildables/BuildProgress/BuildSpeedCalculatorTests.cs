@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 {
     public class BuildSpeedCalculatorTests
     {
-        private IBuildSpeedCalculator _calculator;
+        private BuildSpeedCalculator _calculator;
 
         [SetUp]
         public void TestSetup()

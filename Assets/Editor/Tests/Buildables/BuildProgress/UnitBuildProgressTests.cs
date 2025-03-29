@@ -8,16 +8,16 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 {
     public class UnitBuildProgressTests
     {
-        private IUnitBuildProgress _unitBuildProgress;
+        private UnitBuildProgress _unitBuildProgress;
         private string _unitName = "Turtle";
-        private IBuildProgressFeedback _buildProgressFeedback;
+        private BuildProgressFeedback _buildProgressFeedback;
         private IUnit _unit;
         private IFactory _factory;
 
         [SetUp]
         public void TestSetup()
         {
-            _buildProgressFeedback = Substitute.For<IBuildProgressFeedback>();
+            _buildProgressFeedback = Substitute.For<BuildProgressFeedback>();
             _unitBuildProgress = new UnitBuildProgress(_unitName, _buildProgressFeedback);
 
             _unit = Substitute.For<IUnit>();

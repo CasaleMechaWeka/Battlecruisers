@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         // the factory can change
         private IPvPBuildableWrapper<IPvPUnit> _unitWrapper;
         private IPvPUnitClickHandler _unitClickHandler;
-        private IPvPUnitBuildProgressTrigger _unitBuildProgress;
+        private PvPUnitBuildProgressTrigger _unitBuildProgress;
 
         private IPvPFactory _currentFactory;
         private IPvPFactory CurrentFactory
@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             PvPBuildProgressFeedbackWrapper feedbackWrapper = GetComponentInChildren<PvPBuildProgressFeedbackWrapper>();
             Assert.IsNotNull(feedbackWrapper);
-            IPvPBuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
+            PvPBuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
 
             _unitBuildProgress = new PvPUnitBuildProgressTrigger(new PvPUnitBuildProgress(unitWrapper.Buildable.keyName, buildProgressFeedback));
         }

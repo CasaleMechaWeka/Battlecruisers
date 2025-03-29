@@ -9,7 +9,7 @@ namespace BattleCruisers.Buildables.BuildProgress
     public class BuildProgressFeedbackWrapper : MonoBehaviour
     {
         public Image unitImage;
-        public IBuildProgressFeedback CreateFeedback()
+        public BuildProgressFeedback CreateFeedback()
         {
             Image fillableImage = GetComponent<Image>();
             Assert.IsNotNull(fillableImage);

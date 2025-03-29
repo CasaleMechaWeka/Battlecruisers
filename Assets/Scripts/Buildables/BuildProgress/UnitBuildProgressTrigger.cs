@@ -6,13 +6,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    public class UnitBuildProgressTrigger : IUnitBuildProgressTrigger
+    public class UnitBuildProgressTrigger
     {
-        private readonly IUnitBuildProgress _unitBuildProgress;
+        private readonly UnitBuildProgress _unitBuildProgress;
 
         private IFactory _factory;
 
-        public UnitBuildProgressTrigger(IUnitBuildProgress unitBuildProgress)
+        public UnitBuildProgressTrigger(UnitBuildProgress unitBuildProgress)
         {
             Assert.IsNotNull(unitBuildProgress);
             _unitBuildProgress = unitBuildProgress;

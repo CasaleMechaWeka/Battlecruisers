@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    public class BuildProgressFeedback : IBuildProgressFeedback
+    public class BuildProgressFeedback
     {
         private readonly Image _buildProgressImage;
         private readonly IGameObject _pausedFeedback;

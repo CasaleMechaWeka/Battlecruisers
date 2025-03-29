@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
 {
-    public class PvPUnitBuildProgress : IPvPUnitBuildProgress
+    public class PvPUnitBuildProgress
     {
         private readonly string _unitName;
-        private readonly IPvPBuildProgressFeedback _buildProgressFeedback;
+        private readonly PvPBuildProgressFeedback _buildProgressFeedback;
 
-        public PvPUnitBuildProgress(string unitName, IPvPBuildProgressFeedback buildProgressFeedback)
+        public PvPUnitBuildProgress(string unitName, PvPBuildProgressFeedback buildProgressFeedback)
         {
             Assert.IsFalse(string.IsNullOrWhiteSpace(unitName));
             Assert.IsNotNull(buildProgressFeedback);

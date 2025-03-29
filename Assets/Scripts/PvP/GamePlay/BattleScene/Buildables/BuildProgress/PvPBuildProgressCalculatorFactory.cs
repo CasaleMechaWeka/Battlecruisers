@@ -4,16 +4,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
 {
-    public class PvPBuildProgressCalculatorFactory : IPvPBuildProgressCalculatorFactory
+    public class PvPBuildProgressCalculatorFactory
     {
-        private readonly IPvPBuildSpeedCalculator _buildSpeedCalculator;
+        private readonly PvPBuildSpeedCalculator _buildSpeedCalculator;
 
         // For cheating :)
         public static IPvPBuildSpeedController playerABuildSpeed, playerBBuildSpeed, aiBuildSpeed;
 
         public const float BOOST_PER_LEVEL = 0.01f;
 
-        public PvPBuildProgressCalculatorFactory(IPvPBuildSpeedCalculator buildSpeedCalculator)
+        public PvPBuildProgressCalculatorFactory(PvPBuildSpeedCalculator buildSpeedCalculator)
         {
             Assert.IsNotNull(buildSpeedCalculator);
             _buildSpeedCalculator = buildSpeedCalculator;

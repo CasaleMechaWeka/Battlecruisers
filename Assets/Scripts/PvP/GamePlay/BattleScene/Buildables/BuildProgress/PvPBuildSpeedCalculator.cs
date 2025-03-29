@@ -6,26 +6,20 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
 {
-    public class PvPBuildSpeedCalculator : IPvPBuildSpeedCalculator
+    public class PvPBuildSpeedCalculator
     {
         public const float BOOST_PER_LEVEL = 0.01f;
 
         public float FindAIBuildSpeed(Difficulty difficulty)
         {
-            switch (difficulty)
+            return difficulty switch
             {
-                case Difficulty.Normal:
-                    return BuildSpeedMultipliers.POINT_7_DEFAULT;
+                Difficulty.Normal => BuildSpeedMultipliers.POINT_7_DEFAULT,
+                Difficulty.Hard => BuildSpeedMultipliers.DEFAULT,
+                Difficulty.Harder => BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT,
+                _ => throw new ArgumentException($"Unkown difficulty: {difficulty}"),
+            };
 
-                case Difficulty.Hard:
-                    return BuildSpeedMultipliers.DEFAULT;
-
-                case Difficulty.Harder:
-                    return BuildSpeedMultipliers.ONE_AND_A_QUARTER_DEFAULT;
-
-                default:
-                    throw new ArgumentException($"Unkown difficulty: {difficulty}");
-            }
         }
 
         public float FindIncrementalAICruiserBuildSpeed(Difficulty difficulty, int levelNum)

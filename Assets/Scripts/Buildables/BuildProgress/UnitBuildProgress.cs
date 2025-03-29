@@ -4,12 +4,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    public class UnitBuildProgress : IUnitBuildProgress
+    public class UnitBuildProgress
     {
         private readonly string _unitName;
-        private readonly IBuildProgressFeedback _buildProgressFeedback;
+        private readonly BuildProgressFeedback _buildProgressFeedback;
 
-        public UnitBuildProgress(string unitName, IBuildProgressFeedback buildProgressFeedback)
+        public UnitBuildProgress(string unitName, BuildProgressFeedback buildProgressFeedback)
         {
             Assert.IsFalse(string.IsNullOrWhiteSpace(unitName));
             Assert.IsNotNull(buildProgressFeedback);

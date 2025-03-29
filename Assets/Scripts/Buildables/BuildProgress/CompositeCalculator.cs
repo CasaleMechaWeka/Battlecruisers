@@ -3,11 +3,18 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
+    public enum BuildSpeed
+    {
+        InfinitelySlow, // Buildables progress but never complete
+        Normal,         // Buildables complete as they should
+        VeryFast        // Buildables complete very quickly
+    }
+
     /// <summary>
     /// Forwards calculation to the appropriate calculator, depending on what
     /// build speed is set.
     /// </summary>
-    public class CompositeCalculator : IBuildProgressCalculator, IBuildSpeedController
+    public class CompositeCalculator : IBuildProgressCalculator
     {
         private readonly IBuildProgressCalculator _slowCalculator, _normalCalculator, _fastCalculator;
         private IBuildProgressCalculator _currentCalculator;
@@ -23,8 +30,8 @@ namespace BattleCruisers.Buildables.BuildProgress
         }
 
         public CompositeCalculator(
-            IBuildProgressCalculator slowCalculator, 
-            IBuildProgressCalculator normalCalculator, 
+            IBuildProgressCalculator slowCalculator,
+            IBuildProgressCalculator normalCalculator,
             IBuildProgressCalculator fastCalculator)
         {
             Helper.AssertIsNotNull(slowCalculator, normalCalculator, fastCalculator);
@@ -45,8 +52,8 @@ namespace BattleCruisers.Buildables.BuildProgress
         {
             switch (speed)
             {
-				case BuildSpeed.InfinitelySlow:
-					return _slowCalculator;
+                case BuildSpeed.InfinitelySlow:
+                    return _slowCalculator;
                 case BuildSpeed.Normal:
                     return _normalCalculator;
                 case BuildSpeed.VeryFast:

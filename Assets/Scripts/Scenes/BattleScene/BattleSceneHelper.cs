@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
-        protected readonly IBuildProgressCalculatorFactory _calculatorFactory;
+        protected readonly BuildProgressCalculatorFactory _calculatorFactory;
         private ITrashTalkProvider _trashTalkProvider;
 
 

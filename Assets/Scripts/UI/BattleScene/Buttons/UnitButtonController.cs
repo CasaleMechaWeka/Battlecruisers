@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         // the factory can change
         private IBuildableWrapper<IUnit> _unitWrapper;
         private IUnitClickHandler _unitClickHandler;
-        private IUnitBuildProgressTrigger _unitBuildProgress;
+        private UnitBuildProgressTrigger _unitBuildProgress;
 
         private IFactory _currentFactory;
         private IFactory CurrentFactory
@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
 
             BuildProgressFeedbackWrapper feedbackWrapper = GetComponentInChildren<BuildProgressFeedbackWrapper>();
             Assert.IsNotNull(feedbackWrapper);
-            IBuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
+            BuildProgressFeedback buildProgressFeedback = feedbackWrapper.CreateFeedback();
 
             _unitBuildProgress = new UnitBuildProgressTrigger(new UnitBuildProgress(unitWrapper.Buildable.keyName, buildProgressFeedback));
         }

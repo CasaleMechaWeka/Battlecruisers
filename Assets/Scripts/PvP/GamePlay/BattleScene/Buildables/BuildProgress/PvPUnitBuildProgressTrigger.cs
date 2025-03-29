@@ -6,13 +6,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
 {
-    public class PvPUnitBuildProgressTrigger : IPvPUnitBuildProgressTrigger
+    public class PvPUnitBuildProgressTrigger
     {
-        private readonly IPvPUnitBuildProgress _unitBuildProgress;
+        private readonly PvPUnitBuildProgress _unitBuildProgress;
 
         private IPvPFactory _factory;
 
-        public PvPUnitBuildProgressTrigger(IPvPUnitBuildProgress unitBuildProgress)
+        public PvPUnitBuildProgressTrigger(PvPUnitBuildProgress unitBuildProgress)
         {
             Assert.IsNotNull(unitBuildProgress);
             _unitBuildProgress = unitBuildProgress;

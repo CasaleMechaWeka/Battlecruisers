@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    public class BuildSpeedCalculator : IBuildSpeedCalculator
+    public class BuildSpeedCalculator
     {
         public const float BOOST_PER_LEVEL = 0.01f;
 

@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
     public class ChangeCruiserBuildSpeedStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-        private IBuildSpeedController _buildSpeedController;
+        private CompositeCalculator _buildSpeedController;
         private BuildSpeed _buildSpeed;
 
         [SetUp]
@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         {
             base.SetuUp();
 
-            _buildSpeedController = Substitute.For<IBuildSpeedController>();
+            _buildSpeedController = Substitute.For<CompositeCalculator>();
             _buildSpeed = BuildSpeed.VeryFast;
             _tutorialStep = new ChangeCruiserBuildSpeedStep(_args, _buildSpeedController, _buildSpeed);
         }

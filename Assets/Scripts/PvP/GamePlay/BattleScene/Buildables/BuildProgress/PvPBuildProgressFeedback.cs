@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress
 {
-    public class PvPBuildProgressFeedback : IPvPBuildProgressFeedback
+    public class PvPBuildProgressFeedback
     {
         private readonly Image _buildProgressImage;
         private readonly IGameObject _pausedFeedback;

@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPBuildProgressFeedbackWrapper : MonoBehaviour
     {
         public Image unitImage;
-        public IPvPBuildProgressFeedback CreateFeedback()
+        public PvPBuildProgressFeedback CreateFeedback()
         {
             Image fillableImage = GetComponent<Image>();
             Assert.IsNotNull(fillableImage);

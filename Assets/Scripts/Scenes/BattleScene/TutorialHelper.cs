@@ -44,8 +44,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public ISingleBuildableProvider SingleShipProvider { get; }
         public ISingleBuildableProvider SingleOffensiveProvider { get; }
 
-        public IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
-        public IBuildSpeedController AICruiserBuildSpeedController { get; }
+        public CompositeCalculator PlayerCruiserBuildSpeedController { get; }
+        public CompositeCalculator AICruiserBuildSpeedController { get; }
         public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(NavigationPermitters navigationPermitters)

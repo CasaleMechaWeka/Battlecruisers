@@ -13,8 +13,8 @@ namespace BattleCruisers.Tutorial
 {
     public interface ITutorialProvider
     {
-		ISlotPermitter SlotPermitter { get; }
-		IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        ISlotPermitter SlotPermitter { get; }
+        IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
         IUIManagerSettablePermissions UIManagerPermissions { get; }
@@ -22,11 +22,11 @@ namespace BattleCruisers.Tutorial
         IPermitter SpeedButtonsPermitter { get; }
         IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; }
 
-        IBuildSpeedController PlayerCruiserBuildSpeedController { get; }
-        IBuildSpeedController AICruiserBuildSpeedController { get; }
+        CompositeCalculator PlayerCruiserBuildSpeedController { get; }
+        CompositeCalculator AICruiserBuildSpeedController { get; }
 
         ISingleBuildableProvider SingleAircraftProvider { get; }
-		ISingleBuildableProvider SingleShipProvider { get; }
+        ISingleBuildableProvider SingleShipProvider { get; }
         ISingleBuildableProvider SingleOffensiveProvider { get; }
         ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser);
     }

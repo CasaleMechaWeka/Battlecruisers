@@ -4,16 +4,16 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.BuildProgress
 {
-    public class BuildProgressCalculatorFactory : IBuildProgressCalculatorFactory
+    public class BuildProgressCalculatorFactory
     {
-        private readonly IBuildSpeedCalculator _buildSpeedCalculator;
+        private readonly BuildSpeedCalculator _buildSpeedCalculator;
 
         // For cheating :)
-        public static IBuildSpeedController playerBuildSpeed, aiBuildSpeed;
+        public static CompositeCalculator playerBuildSpeed, aiBuildSpeed;
 
         public const float BOOST_PER_LEVEL = 0.01f;
 
-        public BuildProgressCalculatorFactory(IBuildSpeedCalculator buildSpeedCalculator)
+        public BuildProgressCalculatorFactory(BuildSpeedCalculator buildSpeedCalculator)
         {
             Assert.IsNotNull(buildSpeedCalculator);
             _buildSpeedCalculator = buildSpeedCalculator;

@@ -9,14 +9,14 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 {
     public class UnitBuildProgressTriggerTests
     {
-        private IUnitBuildProgressTrigger _unitBuildProgressTrigger;
-        private IUnitBuildProgress _unitBuildProgress;
+        private UnitBuildProgressTrigger _unitBuildProgressTrigger;
+        private UnitBuildProgress _unitBuildProgress;
         private IFactory _factory;
 
         [SetUp]
         public void TestSetup()
         {
-            _unitBuildProgress = Substitute.For<IUnitBuildProgress>();
+            _unitBuildProgress = Substitute.For<UnitBuildProgress>();
             _unitBuildProgressTrigger = new UnitBuildProgressTrigger(_unitBuildProgress);
 
             _factory = Substitute.For<IFactory>();
@@ -45,7 +45,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 
             // Unsubcribe from factory events
             _unitBuildProgressTrigger.Factory = null;
-            
+
             _factory.NewUnitChosen += Raise.Event();
 
             _unitBuildProgress.DidNotReceiveWithAnyArgs().ShowBuildProgressIfNecessary(default, default);

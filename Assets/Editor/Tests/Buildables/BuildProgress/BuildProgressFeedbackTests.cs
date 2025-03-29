@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Buildables.BuildProgress
 {
     public class BuildProgressFeedbackTests
     {
-        private IBuildProgressFeedback _buildProgress;
+        private BuildProgressFeedback _buildProgress;
         private Image _fillableImage;
         private IGameObject _pausedFeedback;
         private Image _unitImage;
