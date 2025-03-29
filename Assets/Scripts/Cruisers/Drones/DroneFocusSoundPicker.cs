@@ -4,68 +4,43 @@ using System;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    public class DroneFocusSoundPicker : IDroneFocusSoundPicker
+    public class DroneFocusSoundPicker
     {
         //TODO update tests
         public PrioritisedSoundKey PickSound(DroneConsumerState preFocusState, DroneConsumerState postFocusState)
         {
             //Debug.Log($"{preFocusState}>{postFocusState}");
 
-            switch (preFocusState)
+            return preFocusState switch
             {
-                case DroneConsumerState.Idle:
-                    switch (postFocusState)
-                    {
-                        case DroneConsumerState.Active:
-                        case DroneConsumerState.Focused:
-                            return PrioritisedSoundKeys.Events.Drones.Focusing;
-                        case DroneConsumerState.AllFocused:
-                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
-                        default:
-                            throw new ArgumentException();
-                    }
-
-                case DroneConsumerState.Active:
-                    switch (postFocusState)
-                    {
-                        case DroneConsumerState.Idle:
-                            return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
-                        case DroneConsumerState.Focused:
-                            return PrioritisedSoundKeys.Events.Drones.Focusing;
-                        case DroneConsumerState.AllFocused:
-                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
-                        default:
-                            throw new ArgumentException();
-                    }
-
-                case DroneConsumerState.Focused:
-                    switch (postFocusState)
-                    {
-                        case DroneConsumerState.Idle:
-                            return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
-                        case DroneConsumerState.Active:
-                            return PrioritisedSoundKeys.Events.Drones.Dispersing;
-                        case DroneConsumerState.AllFocused:
-                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
-                        default:
-                            throw new ArgumentException();
-                    }
-
-                case DroneConsumerState.AllFocused:
-                    switch (postFocusState)
-                    {
-                        case DroneConsumerState.Idle:
-                            return PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus;
-                        case DroneConsumerState.Active:
-                        case DroneConsumerState.Focused:
-                            return PrioritisedSoundKeys.Events.Drones.Dispersing;
-                        default:
-                            return PrioritisedSoundKeys.Events.Drones.AllFocused;
-                    }
-                default:
-                    throw new ArgumentException();
-            }
-
+                DroneConsumerState.Idle => postFocusState switch
+                {
+                    DroneConsumerState.Active or DroneConsumerState.Focused => PrioritisedSoundKeys.Events.Drones.Focusing,
+                    DroneConsumerState.AllFocused => PrioritisedSoundKeys.Events.Drones.AllFocused,
+                    _ => throw new ArgumentException(),
+                },
+                DroneConsumerState.Active => postFocusState switch
+                {
+                    DroneConsumerState.Idle => PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus,
+                    DroneConsumerState.Focused => PrioritisedSoundKeys.Events.Drones.Focusing,
+                    DroneConsumerState.AllFocused => PrioritisedSoundKeys.Events.Drones.AllFocused,
+                    _ => throw new ArgumentException(),
+                },
+                DroneConsumerState.Focused => postFocusState switch
+                {
+                    DroneConsumerState.Idle => PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus,
+                    DroneConsumerState.Active => PrioritisedSoundKeys.Events.Drones.Dispersing,
+                    DroneConsumerState.AllFocused => PrioritisedSoundKeys.Events.Drones.AllFocused,
+                    _ => throw new ArgumentException(),
+                },
+                DroneConsumerState.AllFocused => postFocusState switch
+                {
+                    DroneConsumerState.Idle => PrioritisedSoundKeys.Events.Drones.NotEnoughDronesToFocus,
+                    DroneConsumerState.Active or DroneConsumerState.Focused => PrioritisedSoundKeys.Events.Drones.Dispersing,
+                    _ => PrioritisedSoundKeys.Events.Drones.AllFocused,
+                },
+                _ => throw new ArgumentException(),
+            };
         }
     }
 }

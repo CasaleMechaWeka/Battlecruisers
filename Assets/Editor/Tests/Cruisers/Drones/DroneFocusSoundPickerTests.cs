@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         [Test]
         public void PickSound()
         {
-            IDroneFocusSoundPicker soundPicker = new DroneFocusSoundPicker();
+            DroneFocusSoundPicker soundPicker = new DroneFocusSoundPicker();
 
             IList<PickerTestCase> testCases = new List<PickerTestCase>()
             {
@@ -61,11 +61,11 @@ namespace BattleCruisers.Tests.Cruisers.Drones
                     PrioritisedSoundKey chosenSound = soundPicker.PickSound(testCase.PreFocusState, testCase.PostFocusState);
                     Assert.AreEqual(testCase.ExpectedSound, chosenSound);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     UnityEngine.Debug.Log(ex.Message);
                 }
-               
+
             }
         }
     }

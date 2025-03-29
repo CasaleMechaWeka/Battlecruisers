@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     {
         private IDroneFocuser _droneFocuser;
         private IDroneManager _droneManager;
-        private IDroneFocusSoundPicker _soundPicker;
+        private DroneFocusSoundPicker _soundPicker;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IDroneConsumer _droneConsumer;
         private PrioritisedSoundKey _soundToPlay;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         public void TestSetup()
         {
             _droneManager = Substitute.For<IDroneManager>();
-            _soundPicker = Substitute.For<IDroneFocusSoundPicker>();
+            _soundPicker = Substitute.For<DroneFocusSoundPicker>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 
             _droneFocuser = new PlayerCruiserDroneFocuser(_droneManager, _soundPicker, _soundPlayer);
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             {
                 UnityEngine.Debug.Log(ex.Message);
             }
-          
+
             _droneConsumer.State.Returns(DroneConsumerState.Idle, DroneConsumerState.Focused);
         }
 
@@ -66,7 +66,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
             {
                 UnityEngine.Debug.Log(ex.Message);
             }
-       
+
         }
 
         [Test]

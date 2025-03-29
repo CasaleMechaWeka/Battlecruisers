@@ -9,14 +9,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPDronesDisplayer
     {
         private readonly IDroneManager _droneManager;
-        private readonly IDroneManagerMonitor _droneManagerMonitor;
+        private readonly DroneManagerMonitor _droneManagerMonitor;
         private readonly INumberDisplay _numberDisplay;
         private readonly IGameObject _idleFeedback;
         private PvPCruiser _playerCruiser;
 
         public PvPDronesDisplayer(
             IDroneManager droneManager,
-            IDroneManagerMonitor droneManagerMonitor,
+            DroneManagerMonitor droneManagerMonitor,
             INumberDisplay numberDisplay,
             IGameObject idleFeedback)
         {

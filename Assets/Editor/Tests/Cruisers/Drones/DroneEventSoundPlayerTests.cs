@@ -13,14 +13,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 #pragma warning disable CS0414  // Variable is assigned but never used
         private DroneEventSoundPlayer _droneEventSoundPlayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private IDroneManagerMonitor _droneManagerMonitor;
+        private DroneManagerMonitor _droneManagerMonitor;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IDebouncer _debouncer;
 
         [SetUp]
         public void TestSetup()
         {
-            _droneManagerMonitor = Substitute.For<IDroneManagerMonitor>();
+            _droneManagerMonitor = Substitute.For<DroneManagerMonitor>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _debouncer = Substitute.For<IDebouncer>();
 

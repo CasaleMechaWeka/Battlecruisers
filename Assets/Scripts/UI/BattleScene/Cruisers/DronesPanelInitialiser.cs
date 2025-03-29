@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 
         public Image highlight;
 
-        public IHighlightable Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        public IHighlightable Initialise(IDroneManager droneManager, DroneManagerMonitor droneManagerMonitor)
         {
             Helper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 

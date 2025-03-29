@@ -8,11 +8,11 @@ namespace BattleCruisers.Cruisers.Drones
 {
     public class DroneEventSoundPlayer : IManagedDisposable
     {
-        private readonly IDroneManagerMonitor _droneManagerMonitor;
+        private readonly DroneManagerMonitor _droneManagerMonitor;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
         private readonly IDebouncer _idleDronesDebouncer;
 
-        public DroneEventSoundPlayer(IDroneManagerMonitor droneManagerMonitor, IPrioritisedSoundPlayer soundPlayer, IDebouncer idleDronesDebouncer)
+        public DroneEventSoundPlayer(DroneManagerMonitor droneManagerMonitor, IPrioritisedSoundPlayer soundPlayer, IDebouncer idleDronesDebouncer)
         {
             Helper.AssertIsNotNull(droneManagerMonitor, soundPlayer, idleDronesDebouncer);
 

@@ -11,12 +11,12 @@ namespace BattleCruisers.Cruisers.Drones
     public class PlayerCruiserDroneFocuser : IDroneFocuser
     {
         private readonly IDroneManager _droneManager;
-        private readonly IDroneFocusSoundPicker _soundPicker;
+        private readonly DroneFocusSoundPicker _soundPicker;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
 
         public event EventHandler PlayerTriggeredRepair;
 
-        public PlayerCruiserDroneFocuser(IDroneManager droneManager, IDroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
+        public PlayerCruiserDroneFocuser(IDroneManager droneManager, DroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(droneManager, soundPicker, soundPlayer);
 
@@ -46,10 +46,10 @@ namespace BattleCruisers.Cruisers.Drones
                         PlayerTriggeredRepair?.Invoke(this, EventArgs.Empty);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.Log(ex.Message);
-                }              
+                }
 
             }
         }

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
 {
     public class DroneManagerMonitorTests
     {
-        private IDroneManagerMonitor _monitor;
+        private DroneManagerMonitor _monitor;
         private IDroneManager _droneManager;
         private IDeferrer _deferrer;
         private ObservableCollection<IDroneConsumer> _droneConsumers;
@@ -67,7 +67,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         {
             _droneConsumers.Add(_idleDroneConsumer);
             _deferrer.ReceivedWithAnyArgs().Defer(null, default);
-            Assert.AreEqual(1, _idleDronesStartedEventCount);         
+            Assert.AreEqual(1, _idleDronesStartedEventCount);
         }
 
         [Test]

@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public Image highlight;
 
-        public IHighlightable Initialise(IDroneManager droneManager, IDroneManagerMonitor droneManagerMonitor)
+        public IHighlightable Initialise(IDroneManager droneManager, DroneManagerMonitor droneManagerMonitor)
         {
             PvPHelper.AssertIsNotNull(highlight, droneManager, droneManagerMonitor);
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace BattleCruisers.Cruisers.Drones
 {
-    public class DroneManagerMonitor : IDroneManagerMonitor, IManagedDisposable
+    public class DroneManagerMonitor : IManagedDisposable
     {
         private readonly IDroneManager _droneManager;
         private readonly IDeferrer _deferrer;
