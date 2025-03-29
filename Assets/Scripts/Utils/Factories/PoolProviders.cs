@@ -22,7 +22,7 @@ namespace BattleCruisers.Utils.Factories
         public IProjectilePoolProvider ProjectilePoolProvider => _projectilePoolProvider;
 
         private UnitPoolProvider _unitPoolProvider;
-        public IUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
+        public UnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
         private Pool<IDroneController, DroneActivationArgs> _dronePool;
         public Pool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Utils.Factories
         private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
         public Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
 
-        public IUnitToPoolMap UnitToPoolMap { get; }
+        public UnitToPoolMap UnitToPoolMap { get; }
 
         // 16 per cruiser
         private const int DRONES_INITIAL_CAPACITY = 32;

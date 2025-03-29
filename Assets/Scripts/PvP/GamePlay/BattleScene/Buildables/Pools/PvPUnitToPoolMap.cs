@@ -6,11 +6,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
-    public class PvPUnitToPoolMap : IPvPUnitToPoolMap
+    public class PvPUnitToPoolMap
     {
-        private readonly IPvPUnitPoolProvider _unitPoolProvider;
+        private readonly PvPUnitPoolProvider _unitPoolProvider;
 
-        public PvPUnitToPoolMap(IPvPUnitPoolProvider unitPoolProvider)
+        public PvPUnitToPoolMap(PvPUnitPoolProvider unitPoolProvider)
         {
             Assert.IsNotNull(unitPoolProvider);
             _unitPoolProvider = unitPoolProvider;

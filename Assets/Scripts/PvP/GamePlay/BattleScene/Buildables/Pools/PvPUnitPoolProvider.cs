@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools
 {
-    public class PvPUnitPoolProvider : IPvPUnitPoolProvider
+    public class PvPUnitPoolProvider
     {
         private readonly IPvPUIManager _uiManager;
         private readonly IPvPFactoryProvider _factoryProvider;

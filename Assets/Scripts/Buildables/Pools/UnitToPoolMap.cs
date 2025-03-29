@@ -5,11 +5,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Pools
 {
-    public class UnitToPoolMap : IUnitToPoolMap
+    public class UnitToPoolMap
     {
-        private readonly IUnitPoolProvider _unitPoolProvider;
+        private readonly UnitPoolProvider _unitPoolProvider;
 
-        public UnitToPoolMap(IUnitPoolProvider unitPoolProvider)
+        public UnitToPoolMap(UnitPoolProvider unitPoolProvider)
         {
             Assert.IsNotNull(unitPoolProvider);
             _unitPoolProvider = unitPoolProvider;

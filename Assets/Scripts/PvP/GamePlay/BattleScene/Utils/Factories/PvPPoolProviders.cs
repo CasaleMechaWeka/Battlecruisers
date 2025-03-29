@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPProjectilePoolProvider ProjectilePoolProvider => _projectilePoolProvider;
 
         private PvPUnitPoolProvider _unitPoolProvider;
-        public IPvPUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
+        public PvPUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
         private Pool<IDroneController, DroneActivationArgs> _dronePool;
         public Pool<IDroneController, DroneActivationArgs> DronePool => _dronePool;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
         public Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
 
-        public IPvPUnitToPoolMap UnitToPoolMap { get; }
+        public PvPUnitToPoolMap UnitToPoolMap { get; }
 
         // 16 per cruiser
         private const int DRONES_INITIAL_CAPACITY = 32;

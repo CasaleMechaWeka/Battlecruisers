@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Buildables.Pools
 {
-    public class UnitPoolProvider : IUnitPoolProvider
+    public class UnitPoolProvider
     {
         private readonly IUIManager _uiManager;
         private readonly FactoryProvider _factoryProvider;

@@ -9,14 +9,14 @@ namespace BattleCruisers.Tests.Buildables.Pools
 {
     public class UnitToPoolMapTests
     {
-        private IUnitToPoolMap _map;
-        private IUnitPoolProvider _unitPoolProvider;
+        private UnitToPoolMap _map;
+        private UnitPoolProvider _unitPoolProvider;
         private IUnit _invalid, _aircraft, _ship;
 
         [SetUp]
         public void TestSetup()
         {
-            _unitPoolProvider = Substitute.For<IUnitPoolProvider>();
+            _unitPoolProvider = Substitute.For<UnitPoolProvider>();
             _map = new UnitToPoolMap(_unitPoolProvider);
 
             //_invalid = Substitute.For<IUnit>();
