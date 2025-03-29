@@ -71,7 +71,7 @@ namespace BattleCruisers.Scenes.BattleScene
             LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
             AIManager aiManager = new AIManager(_deferrer, playerCruiser, strategyFactory);
-            return aiManager.CreateAI(levelInfo, FindDifficulty());
+            return aiManager.CreateAI(levelInfo);
         }
 
         public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()

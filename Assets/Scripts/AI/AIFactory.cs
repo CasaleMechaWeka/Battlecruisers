@@ -2,7 +2,11 @@
 using BattleCruisers.AI.Drones;
 using BattleCruisers.AI.Drones.BuildingMonitors;
 using BattleCruisers.AI.TaskProducers;
+using BattleCruisers.AI.Tasks;
+using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 
@@ -15,15 +19,25 @@ namespace BattleCruisers.AI
     /// </summary>
     public class AIFactory
     {
-        private readonly TaskProducerFactory _taskProducerFactory;
         private readonly BuildOrderFactory _buildOrderFactory;
+        private readonly ITaskFactory _taskFactory;
+        private readonly ThreatMonitorFactory _threatMonitorFactory;
 
-        public AIFactory(TaskProducerFactory taskProducerFactory, BuildOrderFactory buildOrderFactory)
+        // For spy satellite launcher and shields.  All cruisers have at least 6
+        // deck slots:
+        // + Anti-air: 2
+        // + Anti-ship: 2
+        // + Shields/spy satellite: 2
+        private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 2;
+
+
+        public AIFactory(BuildOrderFactory buildOrderFactory, ITaskFactory taskFactory, ThreatMonitorFactory threatMonitorFactory)
         {
-            Helper.AssertIsNotNull(taskProducerFactory, buildOrderFactory);
+            Helper.AssertIsNotNull(buildOrderFactory, taskFactory, threatMonitorFactory);
 
-            _taskProducerFactory = taskProducerFactory;
             _buildOrderFactory = buildOrderFactory;
+            _taskFactory = taskFactory;
+            _threatMonitorFactory = threatMonitorFactory;
         }
 
         /// <summary>
@@ -34,34 +48,48 @@ namespace BattleCruisers.AI
         /// </summary>
         public IManagedDisposable CreateAdaptiveAI(LevelInfo levelInfo)
         {
+            ICruiserController aiCruiser = levelInfo.AICruiser;
             TaskList tasks = new TaskList();
             IList<IManagedDisposable> taskProducers = new List<IManagedDisposable>();
 
             // Base build order, main strategy
             IDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
-            taskProducers.Add(_taskProducerFactory.CreateBasicTaskProducer(tasks, advancedBuildOrder));
+            taskProducers.Add(new BasicTaskProducer(tasks, aiCruiser, _taskFactory, advancedBuildOrder));
 
             // Anti air
             IDynamicBuildOrder antiAirBuildOrder = _buildOrderFactory.CreateAntiAirBuildOrder(levelInfo);
-            taskProducers.Add(_taskProducerFactory.CreateAntiAirTaskProducer(tasks, antiAirBuildOrder));
+            BaseThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
+            int maxNumOfDeckSlots = Helper.Half(aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
+            SlotNumCalculator slotNumCalculator = new SlotNumCalculator(maxNumOfDeckSlots, 0, 2, 4);
+
+            taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, _taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator));
 
             // Anti naval
             IDynamicBuildOrder antiNavalBuildOrder = _buildOrderFactory.CreateAntiNavalBuildOrder(levelInfo);
-            taskProducers.Add(_taskProducerFactory.CreateAntiNavalTaskProducer(tasks, antiNavalBuildOrder));
+            BaseThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
+            // keep the SlotNumCalculator
+            maxNumOfDeckSlots = Helper.Half(aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
+
+            taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, _taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator));
 
             // Anti rocket
             if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable())
             {
-                taskProducers.Add(_taskProducerFactory.CreateAntiRocketLauncherTaskProducer(tasks, _buildOrderFactory.CreateAntiRocketBuildOrder()));
+                BaseThreatMonitor rocketLauncherThreatMonitor = _threatMonitorFactory.CreateRocketThreatMonitor();
+                slotNumCalculator = new SlotNumCalculator(1, 0, 1, 1);
+
+                taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, _taskFactory, _buildOrderFactory.CreateAntiRocketBuildOrder(), rocketLauncherThreatMonitor, slotNumCalculator));
             }
 
             // Anti stealth
             if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable())
             {
-                taskProducers.Add(_taskProducerFactory.CreateAntiStealthTaskProducer(tasks, _buildOrderFactory.CreateAntiStealthBuildOrder()));
+                BaseThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor();
+                // keep the SlotNumCalculator
+                taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, _taskFactory, _buildOrderFactory.CreateAntiStealthBuildOrder(), stealthThreatMonitor, slotNumCalculator));
             }
 
-            taskProducers.Add(_taskProducerFactory.CreateReplaceDestroyedBuildingsTaskProducer(tasks));
+            taskProducers.Add(new ReplaceDestroyedBuildingsTaskProducer(tasks, aiCruiser, _taskFactory, StaticData.BuildingKeys));
 
             return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }

@@ -1,11 +1,9 @@
 ﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.FactoryManagers;
-using BattleCruisers.AI.TaskProducers;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -36,7 +34,7 @@ namespace BattleCruisers.AI
             _buildOrderFactory = new BuildOrderFactory(slotAssigner, DataProvider.GameModel, strategyFactory);
         }
 
-        public IManagedDisposable CreateAI(LevelInfo levelInfo, Difficulty difficulty)
+        public IManagedDisposable CreateAI(LevelInfo levelInfo)
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
@@ -44,12 +42,7 @@ namespace BattleCruisers.AI
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
             ITaskFactory taskFactory = new TaskFactory(levelInfo.AICruiser, _deferrer);
-            TaskProducerFactory taskProducerFactory
-                = new TaskProducerFactory(
-                    levelInfo.AICruiser,
-                    taskFactory,
-                    _threatMonitorFactory);
-            AIFactory aiFactory = new AIFactory(taskProducerFactory, _buildOrderFactory);
+            AIFactory aiFactory = new AIFactory(_buildOrderFactory, taskFactory, _threatMonitorFactory);
 
             return aiFactory.CreateAdaptiveAI(levelInfo);
         }
