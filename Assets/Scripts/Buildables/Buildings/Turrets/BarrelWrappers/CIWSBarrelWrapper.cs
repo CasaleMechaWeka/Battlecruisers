@@ -1,4 +1,4 @@
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {

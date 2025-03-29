@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
-
-namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
+﻿namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 {
     public class AntiAirTurretBarrelWrapper : LeadingDirectFireBarrelWrapper
     {

@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
+using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers

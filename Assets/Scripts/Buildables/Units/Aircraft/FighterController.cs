@@ -19,7 +19,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Buildables.Buildings.Turrets.AngleLimiters;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Buildables.Buildings.Turrets;

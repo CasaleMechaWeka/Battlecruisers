@@ -193,6 +193,7 @@ namespace BattleCruisers.Cruisers
             _clickHandler.SingleClick += _clickHandler_SingleClick;
             _clickHandler.DoubleClick += _clickHandler_DoubleClick;
 
+            Debug.Log("HealthGainPerDroneS: " + HealthGainPerDroneS);
 
 
             // RICH MODE FOR PREMIUM (ONLY FOR PVE!!!)
