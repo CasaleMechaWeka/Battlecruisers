@@ -55,7 +55,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual ILevel GetLevel()
         {
-            return StaticData.Levels[ApplicationModel.SelectedLevel];
+            return StaticData.Levels[ApplicationModel.SelectedLevel - 1];
         }
 
         public virtual ISideQuestData GetSideQuest()
@@ -108,7 +108,7 @@ namespace BattleCruisers.Scenes.BattleScene
             if (ApplicationModel.Mode == GameMode.SideQuest)
                 return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
             else
-                return StaticData.Levels[ApplicationModel.SelectedLevel].Hull;
+                return StaticData.Levels[ApplicationModel.SelectedLevel - 1].Hull;
         }
     }
 }
