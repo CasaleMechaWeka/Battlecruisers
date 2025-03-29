@@ -7,11 +7,11 @@ namespace BattleCruisers.Buildables.Colours
     public class UserTargetTracker
     {
         private readonly IBroadcastingProperty<ITarget> _itemShownInInformator;
-        private readonly IUserTargets _userTargets;
+        private readonly UserTargetsColourChanger _userTargets;
 
         public UserTargetTracker(
-            IBroadcastingProperty<ITarget> itemShownInInformator, 
-            IUserTargets userTargets)
+            IBroadcastingProperty<ITarget> itemShownInInformator,
+            UserTargetsColourChanger userTargets)
         {
             Helper.AssertIsNotNull(itemShownInInformator, userTargets);
 

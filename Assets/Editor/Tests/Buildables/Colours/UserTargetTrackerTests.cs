@@ -10,14 +10,14 @@ namespace BattleCruisers.Tests.Buildables.Colours
     {
         private UserTargetTracker _targetTracker;
         private IBroadcastingProperty<ITarget> _itemShownInInformator;
-        private IUserTargets _userTargets;
+        private UserTargetsColourChanger _userTargets;
         private ITarget _target;
 
         [SetUp]
         public void TestSetup()
         {
             _itemShownInInformator = Substitute.For<IBroadcastingProperty<ITarget>>();
-            _userTargets = Substitute.For<IUserTargets>();
+            _userTargets = Substitute.For<UserTargetsColourChanger>();
 
             _targetTracker = new UserTargetTracker(_itemShownInInformator, _userTargets);
 

@@ -2,12 +2,13 @@
 using BattleCruisers.Buildables.Colours;
 using NSubstitute;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace BattleCruisers.Tests.Buildables.Colours
 {
     public class UserTargetsColourChangerTests
     {
-        private IUserTargets _userTargets;
+        private UserTargetsColourChanger _userTargets;
         private ITarget _target1, _target2;
 
         [SetUp]
@@ -30,7 +31,7 @@ namespace BattleCruisers.Tests.Buildables.Colours
         public void SelectedTarget_Null_To_NotNull()
         {
             _userTargets.SelectedTarget = _target2;
-            _target2.Received().Color = TargetColours.Selected;
+            _target2.Received().Color = new UnityEngine.Color(186f / 255f, 56f / 255f, 32f / 255f);
         }
 
         [Test]
@@ -41,7 +42,7 @@ namespace BattleCruisers.Tests.Buildables.Colours
 
             _userTargets.SelectedTarget = null;
 
-            _target1.Received().Color = TargetColours.Default;
+            _target1.Received().Color = Color.black;
         }
         #endregion SelectedTarget
     }
