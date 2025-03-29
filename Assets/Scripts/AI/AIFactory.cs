@@ -35,7 +35,7 @@ namespace BattleCruisers.AI
         public IManagedDisposable CreateAdaptiveAI(LevelInfo levelInfo)
         {
             TaskList tasks = new TaskList();
-            IList<ITaskProducer> taskProducers = new List<ITaskProducer>();
+            IList<IManagedDisposable> taskProducers = new List<IManagedDisposable>();
 
             // Base build order, main strategy
             IDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
@@ -66,7 +66,7 @@ namespace BattleCruisers.AI
             return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
         }
 
-        private IManagedDisposable CreateAI(ICruiserController aiCruiser, TaskList tasks, IList<ITaskProducer> taskProducers)
+        private IManagedDisposable CreateAI(ICruiserController aiCruiser, TaskList tasks, IList<IManagedDisposable> taskProducers)
         {
             TaskConsumer taskConsumer = new TaskConsumer(tasks);
             DroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);

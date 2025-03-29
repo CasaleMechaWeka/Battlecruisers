@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.AI.TaskProducers
 {
-    public abstract class TaskProducer : ITaskProducer
+    public abstract class TaskProducer : IManagedDisposable
     {
         protected readonly TaskList _tasks;
         protected readonly ICruiserController _cruiser;
