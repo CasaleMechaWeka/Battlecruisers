@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleCruisers.AI.BuildOrders;
-using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
@@ -12,7 +11,7 @@ namespace BattleCruisers.AI.TaskProducers
     {
         private readonly IDynamicBuildOrder _antiThreatBuildOrder;
         private readonly BaseThreatMonitor _threatMonitor;
-        private readonly ISlotNumCalculator _slotNumCalculator;
+        private readonly SlotNumCalculator _slotNumCalculator;
 
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
@@ -24,7 +23,7 @@ namespace BattleCruisers.AI.TaskProducers
             ITaskFactory taskFactory,
             IDynamicBuildOrder antiThreatBuildOrder,
             BaseThreatMonitor threatMonitor,
-            ISlotNumCalculator slotNumCalculator)
+            SlotNumCalculator slotNumCalculator)
             : base(tasks, cruiser, taskFactory)
         {
             Helper.AssertIsNotNull(antiThreatBuildOrder, threatMonitor, slotNumCalculator);

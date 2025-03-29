@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.AI.BuildOrders;
 using BattleCruisers.AI.TaskProducers;
-using BattleCruisers.AI.TaskProducers.SlotNumber;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Buildables.Buildings;
@@ -16,7 +15,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
         private ISlotAccessor _slotAccessor;
         private IDynamicBuildOrder _buildOrder;
         private BaseThreatMonitor _threatMonitor;
-        private ISlotNumCalculator _slotNumCalculator;
+        private SlotNumCalculator _slotNumCalculator;
         private BuildingKey _buildingKey;
         private IPrioritisedTask _task;
 
@@ -26,7 +25,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             base.SetuUp();
 
             _task = Substitute.For<IPrioritisedTask>();
-            _slotNumCalculator = Substitute.For<ISlotNumCalculator>();
+            _slotNumCalculator = Substitute.For<SlotNumCalculator>();
 
             _threatMonitor = Substitute.For<BaseThreatMonitor>();
             _threatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
