@@ -285,7 +285,6 @@ namespace BattleCruisers.Data.Static
                 new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                 new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.ShieldGenerator),
                 new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation4),
-                new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.StealthGenerator),
                 new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.TeslaCoil),
                 new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
                 new StaticPrefabKeyWrapper(StaticPrefabKeys.Buildings.DroneStation8),
