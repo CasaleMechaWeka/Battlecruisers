@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft;
 
 namespace BattleCruisers.Scenes.Test.Balancing.Units
 {

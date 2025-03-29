@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;

@@ -3,7 +3,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using UnityEngine;
 
-namespace BattleCruisers.Buildables.Units.Aircraft.Providers
+namespace BattleCruisers.Buildables.Units.Aircraft
 {
 	public class AircraftProvider
 	{

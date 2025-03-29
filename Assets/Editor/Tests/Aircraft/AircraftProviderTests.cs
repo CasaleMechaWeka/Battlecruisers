@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using NSubstitute;

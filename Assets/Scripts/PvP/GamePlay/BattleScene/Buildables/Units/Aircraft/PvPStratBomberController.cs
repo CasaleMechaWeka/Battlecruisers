@@ -22,7 +22,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {

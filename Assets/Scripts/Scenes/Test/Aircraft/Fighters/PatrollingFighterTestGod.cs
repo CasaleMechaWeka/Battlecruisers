@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Buildables.Units.Aircraft;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
 using BattleCruisers.Scenes.Test.Utilities;
 using NSubstitute;
 using UnityEngine;

@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Data;

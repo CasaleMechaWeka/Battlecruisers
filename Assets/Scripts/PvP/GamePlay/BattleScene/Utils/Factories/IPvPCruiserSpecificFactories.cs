@@ -3,7 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Buildables.Units.Aircraft.Providers;
+using BattleCruisers.Buildables.Units.Aircraft;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
