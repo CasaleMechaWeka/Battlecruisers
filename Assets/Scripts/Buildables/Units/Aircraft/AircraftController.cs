@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private TrailRenderer _aircraftTrail;
         private bool _onSeabed;
 
-        protected ISpriteChooser _spriteChooser;
+        protected SpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
         public float seabedParkTimeInS = 10;
@@ -129,7 +129,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ActiveMovementController = DummyMovementController;
             ActiveMovementController.Velocity = Vector2.zero;
 
-            _spriteChooser = new DummySpriteChooser(_spriteRenderer.sprite);
+            _spriteChooser = new SpriteChooser(new List<Sprite> { _spriteRenderer.sprite }, null);
             _onSeabed = false;
 
             _kamikazeController.gameObject.SetActive(false);

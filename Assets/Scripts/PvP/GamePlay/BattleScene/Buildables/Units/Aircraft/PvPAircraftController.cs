@@ -5,7 +5,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -35,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected GameObject _aircraftTrailObj;
         private bool _onSeabed;
 
-        protected IPvPSpriteChooser _spriteChooser;
+        protected PvPSpriteChooser _spriteChooser;
 
         public float cruisingAltitudeInM;
         public float seabedParkTimeInS = 10;
@@ -141,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             ActiveMovementController = DummyMovementController;
             ActiveMovementController.Velocity = Vector2.zero;
-            _spriteChooser = new PvPDummySpriteChooser(_spriteRenderer.sprite);
+            _spriteChooser = new PvPSpriteChooser(new List<Sprite> { _spriteRenderer.sprite }, null);
             _onSeabed = false;
             _kamikazeController.gameObject.SetActive(false);
         }
@@ -149,7 +148,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Activate_PvPClient()
         {
             _aircraftTrail.Clear();
-            _spriteChooser = new PvPDummySpriteChooser(_spriteRenderer.sprite);
+            _spriteChooser = new PvPSpriteChooser(new List<Sprite> { _spriteRenderer.sprite }, null);
             PatrollingMovementController
                 = new PatrollingMovementController(
                         rigidBody,

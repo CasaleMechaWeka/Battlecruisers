@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft.SpriteChoosers
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
-    public class PvPSpriteChooser : IPvPSpriteChooser
+    public class PvPSpriteChooser
     {
         private readonly LinearProportionAssigner _assigner;
         private readonly IList<Sprite> _sprites;
@@ -17,17 +17,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IList<Sprite> sprites,
             IVelocityProvider maxVelocityProvider)
         {
-            PvPHelper.AssertIsNotNull(sprites, maxVelocityProvider);
+            PvPHelper.AssertIsNotNull(sprites);
             Assert.IsTrue(sprites.Count > 0);
 
             _sprites = sprites;
-            _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = new LinearProportionAssigner(sprites.Count);
+            if (sprites.Count > 1)
+            {
+                Assert.IsNotNull(maxVelocityProvider);
+                _maxVelocityProvider = maxVelocityProvider;
+
+                _assigner = new LinearProportionAssigner(sprites.Count);
+            }
         }
 
         public (Sprite, int) ChooseSprite(Vector2 velocity)
         {
+            if (_sprites.Count == 1)
+                return (_sprites[0], 0);
             float magnitude = velocity.magnitude;
 
             if (magnitude > _maxVelocityProvider.VelocityInMPerS)

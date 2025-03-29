@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Aircraft.SpriteChoosers
 {
     public class SpriteChooserTests
     {
-        private ISpriteChooser _chooser;
+        private SpriteChooser _chooser;
         private LinearProportionAssigner _assigner;
         private IList<Sprite> _sprites;
         private Sprite _sprite;

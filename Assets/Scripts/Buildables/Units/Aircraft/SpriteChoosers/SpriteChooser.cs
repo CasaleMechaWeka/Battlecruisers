@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
 {
-    public class SpriteChooser : ISpriteChooser
+    public class SpriteChooser
     {
         private readonly LinearProportionAssigner _assigner;
         private readonly IList<Sprite> _sprites;
@@ -16,17 +16,25 @@ namespace BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers
             IList<Sprite> sprites,
             IVelocityProvider maxVelocityProvider)
         {
-            Helper.AssertIsNotNull(sprites, maxVelocityProvider);
+            Helper.AssertIsNotNull(sprites);
             Assert.IsTrue(sprites.Count > 0);
 
             _sprites = sprites;
-            _maxVelocityProvider = maxVelocityProvider;
 
-            _assigner = new LinearProportionAssigner(sprites.Count);
+            if (sprites.Count > 1)
+            {
+                Helper.AssertIsNotNull(maxVelocityProvider);
+                _maxVelocityProvider = maxVelocityProvider;
+                _assigner = new LinearProportionAssigner(sprites.Count);
+            }
+
         }
 
         public Sprite ChooseSprite(Vector2 velocity)
         {
+            if (_sprites.Count == 1)
+                return _sprites[0];
+
             float magnitude = velocity.magnitude;
 
             if (magnitude > _maxVelocityProvider.VelocityInMPerS)
