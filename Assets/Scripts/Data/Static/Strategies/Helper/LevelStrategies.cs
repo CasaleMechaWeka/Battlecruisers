@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Static.Strategies.Requests;
+﻿using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -11,155 +12,155 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
         public LevelStrategies()
         {
-            IList<IBaseStrategy> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
-            IList<IBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
+            IList<IList<IPrefabKeyWrapper>> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
+            IList<IList<IPrefabKeyWrapper>> basicBaseStrategies = CreateBasicBaseStrategies();
             IList<OffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
             _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
         }
 
-        private IList<IBaseStrategy> CreateAdaptiveBaseStrategies()
+        private IList<IList<IPrefabKeyWrapper>> CreateAdaptiveBaseStrategies()
         {
-            return new List<IBaseStrategy>()
+            return new List<IList<IPrefabKeyWrapper>>()
             {
                 // Set 1:  Levels 1 - 3
-                new BalancedStrategy(),
-                new BalancedStrategy(),
-                new RushStrategy(),
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Rush,
 
                 // Set 2:  Levels 4 - 7
-				new BoomStrategy(),
-                new BoomStrategy(),
-                new RushStrategy(),
-                new BalancedStrategy(),
+				StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Balanced,
                 
                 // Set 3:  Levels 8 - 10
-				new RushStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy(),
+				StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
 
                 // Set 4:  Levels 11 - 14
-				new RushStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BalancedStrategy(),
+				StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Balanced,
 
                 //man o war
-                new BalancedStrategy(),
+                StaticBuildOrders.Adaptive.Balanced,
 
                 // Set 5:  Levels 15 - 17
-				new RushStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy(),
+				StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
 
                 // Set 6:  Levels 18 - 21
-				new BalancedStrategy(),
-                new RushStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
+				StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
 
                 // Set 7:  Levels 22 - 25
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new RushStrategy(),
-                new BoomStrategy(),
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
 
 
                 // Set 8: Levels 27-31
-                new BasicBOOMStrategy(),
-                new BasicBOOMStrategy(),
-                new RushStrategy(),
-                new BasicBOOMStrategy(),
-                new BalancedStrategy(),
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
 
                 // Set 9: Levels 32-40
                 /*new BasicTurtleStrategy()
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
+                (IBaseStrategy)StaticBuildOrders.Basic.BoomDefensive,
+                (IBaseStrategy)StaticBuildOrders.Basic.Rush,
+                (IBaseStrategy)StaticBuildOrders.Basic.BoomAggressive,
                 new BasicTurtleStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBoomDefensiveStrategy(),
+                (IBaseStrategy)StaticBuildOrders.Basic.BoomAggressive,
+                (IBaseStrategy)StaticBuildOrders.Basic.BoomDefensive,
                 new RushStrategy(),
                 new BasicTurtleStrategy()*/
 
                 //Temp Set 9, Please change accordingly
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new RushStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy(),
-                new RushStrategy(),
-                new BalancedStrategy()
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Balanced
             };
         }
 
-        private IList<IBaseStrategy> CreateBasicBaseStrategies()
+        private IList<IList<IPrefabKeyWrapper>> CreateBasicBaseStrategies()
         {
-            return new List<IBaseStrategy>()
+            return new List<IList<IPrefabKeyWrapper>>()
             {
                 // Set 1:  Levels 1 - 3
-                new BasicTurtleStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicRushStrategy(),
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.Rush,
 
                 // Set 2:  Levels 4 - 7
-                new BasicBoomDefensiveStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBalancedStrategy(),
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.Balanced,
 				
 				// Set 3:  Levels 8 - 10
-                new BasicRushStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicBoomAggressiveStrategy(),
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomAggressive,
 
                 // Set 4:  Levels 11 - 14
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicTurtleStrategy(),
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.Turtle,
 
                 //man o war
-               new BasicTurtleStrategy(),
+                StaticBuildOrders.Basic.Turtle,
 
                 // Set 5:  Levels 16 - 18
-				new BasicRushStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicBoomAggressiveStrategy(),
+				StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.BoomAggressive,
 
                 // Set 6:  Levels 19 - 22
-				new BasicBalancedStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBalancedStrategy(),
+				StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Balanced,
 
                 // Set 7: Levels 23 - 26
-                new BasicTurtleStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomAggressive,
 
                  // Set 8: Levels 27-31
-                new BasicTurtleStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicTurtleStrategy(),
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Turtle,
 
                 // Set 9: Levels 32-40
-                new BasicTurtleStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicTurtleStrategy()
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.Turtle
             };
         }
 
@@ -420,7 +421,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-        private IList<Strategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
+        private IList<Strategy> CreateStrategies(IList<IList<IPrefabKeyWrapper>> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 

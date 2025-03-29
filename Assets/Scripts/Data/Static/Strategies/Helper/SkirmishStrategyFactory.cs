@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Static.Strategies.Requests;
+﻿using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -24,22 +25,16 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     GetOffensiveRequests(_strategyType));
         }
 
-        private IBaseStrategy GetAdaptiveBaseStrategy(StrategyType strategyType)
+        private IList<IPrefabKeyWrapper> GetAdaptiveBaseStrategy(StrategyType strategyType)
         {
-            switch (strategyType)
+            return strategyType switch
             {
-                case StrategyType.Rush:
-                    return new RushStrategy();
+                StrategyType.Rush => StaticBuildOrders.Adaptive.Rush,
+                StrategyType.Balanced => StaticBuildOrders.Adaptive.Balanced,
+                StrategyType.Boom => StaticBuildOrders.Adaptive.Boom,
+                _ => throw new InvalidOperationException($"Unknown strategy type: {strategyType}"),
+            };
 
-                case StrategyType.Balanced:
-                    return new BalancedStrategy();
-
-                case StrategyType.Boom:
-                    return new BoomStrategy();
-
-                default:
-                    throw new InvalidOperationException($"Unknown strategy type: {strategyType}");
-            }
         }
 
         public Strategy GetBasicStrategy()
@@ -50,24 +45,24 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     GetOffensiveRequests(_strategyType));
         }
 
-        private IBaseStrategy GetBasicBaseStrategy(StrategyType strategyType)
+        private IList<IPrefabKeyWrapper> GetBasicBaseStrategy(StrategyType strategyType)
         {
             switch (strategyType)
             {
                 case StrategyType.Rush:
-                    return new BasicRushStrategy();
+                    return StaticBuildOrders.Basic.Rush;
 
                 case StrategyType.Balanced:
-                    return new BasicBalancedStrategy();
+                    return StaticBuildOrders.Basic.Balanced;
 
                 case StrategyType.Boom:
                     if (RandomGenerator.NextBool())
                     {
-                        return new BasicBoomAggressiveStrategy();
+                        return StaticBuildOrders.Basic.BoomAggressive;
                     }
                     else
                     {
-                        return new BasicBoomDefensiveStrategy();
+                        return StaticBuildOrders.Basic.BoomDefensive;
                     }
 
                 default:

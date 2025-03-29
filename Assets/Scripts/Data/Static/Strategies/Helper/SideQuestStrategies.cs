@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data.Static.Strategies.Requests;
+﻿using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+using BattleCruisers.Data.Static.Strategies.Requests;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -11,97 +12,97 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
         public SideQuestStrategies()
         {
-            IList<IBaseStrategy> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
-            IList<IBaseStrategy> basicBaseStrategies = CreateBasicBaseStrategies();
+            IList<IList<IPrefabKeyWrapper>> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
+            IList<IList<IPrefabKeyWrapper>> basicBaseStrategies = CreateBasicBaseStrategies();
             IList<OffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
             _basicStrategies = CreateStrategies(basicBaseStrategies, offensiveRequests);
         }
 
-        private IList<IBaseStrategy> CreateAdaptiveBaseStrategies()
+        private IList<IList<IPrefabKeyWrapper>> CreateAdaptiveBaseStrategies()
         {
-            return new List<IBaseStrategy>()
+            return new List<IList<IPrefabKeyWrapper>>()
             {
                 // Set 1: SideQuests 0 - 8
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new RushStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy(),
-                new RushStrategy(),
-                new BalancedStrategy(),
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Rush,
+                StaticBuildOrders.Adaptive.Balanced,
 
                 // Set 2: SideQuests 9 - 23
-                new BoomStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new FortressPrimeStrategy(),
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.FortressPrime,
 
                 // Set 3 for 6.5: SideQuests 24-30
-                new BoomStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BalancedStrategy(),
-                new BoomStrategy(),
-                new BoomStrategy()
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Balanced,
+                StaticBuildOrders.Adaptive.Boom,
+                StaticBuildOrders.Adaptive.Boom
             };
         }
 
-        private IList<IBaseStrategy> CreateBasicBaseStrategies()
+        private IList<IList<IPrefabKeyWrapper>> CreateBasicBaseStrategies()
         {
-            return new List<IBaseStrategy>()
+            return new List<IList<IPrefabKeyWrapper>>()
             {
                 // Set 1: SideQuests 0 - 8
-                new BasicTurtleStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicRushStrategy(),
-                new BasicTurtleStrategy(),
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Rush,
+                StaticBuildOrders.Basic.Turtle,
 
                 // Set 2: SideQuests 9 - 23
-                new BasicBoomAggressiveStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicBOOMStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicBoomAggressiveStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicBOOMStrategy(),
-                new BasicFortressPrimeStrategy(),
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.BOOM,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.BOOM,
+                StaticBuildOrders.Basic.FortressPrime,
 
                  // Set 3 for 6.5: SideQuests 24-30
-                new BasicBoomAggressiveStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicTurtleStrategy(),
-                new BasicBalancedStrategy(),
-                new BasicBoomDefensiveStrategy(),
-                new BasicBoomAggressiveStrategy(),
+                StaticBuildOrders.Basic.BoomAggressive,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.Turtle,
+                StaticBuildOrders.Basic.Balanced,
+                StaticBuildOrders.Basic.BoomDefensive,
+                StaticBuildOrders.Basic.BoomAggressive,
             };
         }
 
@@ -374,7 +375,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-        private IList<Strategy> CreateStrategies(IList<IBaseStrategy> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
+        private IList<Strategy> CreateStrategies(IList<IList<IPrefabKeyWrapper>> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 

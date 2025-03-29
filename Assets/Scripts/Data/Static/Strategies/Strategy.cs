@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -8,15 +9,15 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class Strategy
     {
-        public IBaseStrategy BaseStrategy { get; }
+        public IList<IPrefabKeyWrapper> BaseStrategy { get; }
         public IEnumerable<OffensiveRequest> Offensives { get; }
 
-        public Strategy(IBaseStrategy baseStrategy, OffensiveRequest[] offensives)
+        public Strategy(IList<IPrefabKeyWrapper> prefabKeys, OffensiveRequest[] offensives)
         {
-            Assert.IsNotNull(baseStrategy);
+            Assert.IsNotNull(prefabKeys);
             Assert.IsTrue(offensives.Length != 0);
 
-            BaseStrategy = baseStrategy;
+            BaseStrategy = prefabKeys;
             Offensives = offensives;
         }
 
