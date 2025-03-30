@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class SpecificSlotsFilter : ISlotFilter, ISlotPermitter
+    public class SpecificSlotsFilter : IFilter<ISlot>
     {
         public ISlot PermittedSlot { private get; set; }
 

@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 {
     public class SlotAccessorTests
     {
-        private ISlotAccessor _slotAccessor;
+        private SlotAccessor _slotAccessor;
         private IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
         private ISlot _platformSlot, _genericDeckSlot, _antiShipDeckSlot;
         private IBuilding _building;

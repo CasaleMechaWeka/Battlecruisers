@@ -8,13 +8,13 @@ using System;
 
 namespace BattleCruisers.Cruisers
 {
-	public interface ICruiserController
-	{
+    public interface ICruiserController
+    {
         bool IsAlive { get; }
-        ISlotAccessor SlotAccessor { get; }
-        ISlotHighlighter SlotHighlighter { get; }
+        SlotAccessor SlotAccessor { get; }
+        SlotHighlighter SlotHighlighter { get; }
         ISlotNumProvider SlotNumProvider { get; }
-		IDroneManager DroneManager { get; }
+        IDroneManager DroneManager { get; }
         IDroneFocuser DroneFocuser { get; }
         ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }
@@ -25,5 +25,5 @@ namespace BattleCruisers.Cruisers
         event EventHandler<BuildingStartedEventArgs> BuildingStarted;
 
         IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot);
-	}
+    }
 }

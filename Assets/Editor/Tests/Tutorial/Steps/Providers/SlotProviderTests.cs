@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         private IItemProvider<IHighlightable> _highlightableProvider;
         private IItemProvider<IClickableEmitter> _clickableProvider;
 
-        private ISlotAccessor _slotAccessor;
+        private SlotAccessor _slotAccessor;
         private ISlotSpecification _slotSpecification;
 
         private ISlot _slot;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
         public void SetuUp()
         {
             _slotSpecification = new SlotSpecification(SlotType.Platform, BuildingFunction.Generic, preferCruiserFront: true);
-            _slotAccessor = Substitute.For<ISlotAccessor>();
+            _slotAccessor = Substitute.For<SlotAccessor>();
 
             SlotProvider provider = new SlotProvider(_slotAccessor, _slotSpecification);
 

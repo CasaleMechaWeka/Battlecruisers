@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private IBuildProgressCalculator _playerBuildProgressCalculator, _aiBuildProgressCalculator;
 
         public override bool ShowInGameHints => false;
-        public ISlotPermitter SlotPermitter => _slotFilter;
+        public SpecificSlotsFilter SlotPermitter => _slotFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
         public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new DummyManagedDisposable();
         }
 
-        public override ISlotFilter CreateHighlightableSlotFilter()
+        public override IFilter<ISlot> CreateHighlightableSlotFilter()
         {
             return _slotFilter;
         }

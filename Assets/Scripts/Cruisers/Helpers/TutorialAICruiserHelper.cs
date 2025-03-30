@@ -7,17 +7,17 @@ namespace BattleCruisers.Cruisers.Helpers
 {
     public class TutorialAICruiserHelper : CruiserHelper
     {
-        public TutorialAICruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser) 
+        public TutorialAICruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser)
             : base(uIManager, cameraFocuser)
         {
         }
 
         public override void FocusCameraOnCruiser()
         {
-             // Disabled for tutorial
+            // Disabled for tutorial
         }
 
-        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)
+        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, SlotAccessor slotAccessor, SlotHighlighter slotHighlighter)
         {
             // Do nothing.  Buttons should only be shown for player cruiser :)
         }

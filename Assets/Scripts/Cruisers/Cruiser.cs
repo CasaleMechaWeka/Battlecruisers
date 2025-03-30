@@ -94,8 +94,8 @@ namespace BattleCruisers.Cruisers
 
         // ICruiserController
         public bool IsAlive => !IsDestroyed;
-        public ISlotAccessor SlotAccessor { get; private set; }
-        public ISlotHighlighter SlotHighlighter { get; private set; }
+        public SlotAccessor SlotAccessor { get; private set; }
+        public SlotHighlighter SlotHighlighter { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IDroneFocuser DroneFocuser { get; private set; }

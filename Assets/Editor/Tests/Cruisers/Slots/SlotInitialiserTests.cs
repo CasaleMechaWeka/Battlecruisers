@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
                 deckSlot1
             };
 
-            ISlotInitialiser slotInitialiser = new SlotInitialiser();
+            SlotInitialiser slotInitialiser = new SlotInitialiser();
 
             slotInitialiser.InitialiseSlots(parentCruiser, slots, buildingPlacer);
 

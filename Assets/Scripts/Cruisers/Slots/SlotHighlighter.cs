@@ -5,10 +5,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class SlotHighlighter : ISlotHighlighter
+    public class SlotHighlighter
     {
-        private readonly ISlotAccessor _slotAccessor;
-        private readonly ISlotFilter _highlightableFilter;
+        private readonly SlotAccessor _slotAccessor;
+        private readonly IFilter<ISlot> _highlightableFilter;
         private ISlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
         private ISlot _highlightedSlot;
@@ -32,8 +32,8 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         public SlotHighlighter(
-            ISlotAccessor slotAccessor,
-            ISlotFilter highlightableFilter,
+            SlotAccessor slotAccessor,
+            IFilter<ISlot> highlightableFilter,
             ICruiserBuildingMonitor parentCruiserBuildingMonitor)
         {
             Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);

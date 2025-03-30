@@ -29,7 +29,7 @@ namespace BattleCruisers.Cruisers
         IRepairManager RepairManager { get; }
         FogStrength FogStrength { get; }
         ICruiserHelper Helper { get; }
-        ISlotFilter HighlightableFilter { get; }
+        IFilter<ISlot> HighlightableFilter { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
         IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }

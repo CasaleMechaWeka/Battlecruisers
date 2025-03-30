@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Tests.Utils.Extensions;
+using BattleCruisers.Utils;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 {
     public class SlotHighlighterTests
     {
-        private ISlotHighlighter _slotHighlighter;
-        private ISlotAccessor _slotAccessor;
-        private ISlotFilter _highlightableFilter;
+        private SlotHighlighter _slotHighlighter;
+        private SlotAccessor _slotAccessor;
+        private IFilter<ISlot> _highlightableFilter;
         private ICruiserBuildingMonitor _parentCruiserBuildingMonitor;
         private ISlot _slot1, _slot2;
         private ISlotSpecification _slotSpec1, _slotSpec2;
@@ -25,8 +26,8 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [SetUp]
         public void SetuUp()
         {
-            _slotAccessor = Substitute.For<ISlotAccessor>();
-            _highlightableFilter = Substitute.For<ISlotFilter>();
+            _slotAccessor = Substitute.For<SlotAccessor>();
+            _highlightableFilter = Substitute.For<IFilter<ISlot>>();
             _parentCruiserBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
 
             _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, _parentCruiserBuildingMonitor);
@@ -55,7 +56,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _mutableSlotsToReturn2.Add(_slot2);
             _slotAccessor.GetSlots(_slotSpec2).Returns(_slotsToReturn2);
             _highlightableFilter.IsMatch(_slot2).Returns(true);
-            
+
             bool wasAnySlotHighlighted = _slotHighlighter.HighlightAvailableSlots(_slotSpec2);
 
             _slot2.Received().IsVisible = true;

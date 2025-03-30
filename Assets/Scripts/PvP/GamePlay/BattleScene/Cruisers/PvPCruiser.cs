@@ -132,8 +132,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         // ICruiserController
 
         public bool IsAlive => !IsDestroyed;
-        public IPvPSlotAccessor SlotAccessor { get; private set; }
-        public IPvPSlotHighlighter SlotHighlighter { get; private set; }
+        public PvPSlotAccessor SlotAccessor { get; private set; }
+        public PvPSlotHighlighter SlotHighlighter { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }
         public IDroneManager DroneManager { get; private set; }
         public IPvPDroneFocuser DroneFocuser { get; private set; }
@@ -461,7 +461,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return building;
         }
 
-        private void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, IPvPSlotAccessor slotAccessor, IPvPSlotHighlighter slotHighlighter)
+        private void OnBuildingConstructionStarted(IPvPBuilding buildingStarted, PvPSlotAccessor slotAccessor, PvPSlotHighlighter slotHighlighter)
         {
             if (!slotAccessor.IsSlotAvailableForPlayer(buildingStarted.SlotSpecification))
             {

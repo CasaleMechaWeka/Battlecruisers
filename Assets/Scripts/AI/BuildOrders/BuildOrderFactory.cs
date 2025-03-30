@@ -56,7 +56,7 @@ namespace BattleCruisers.AI.BuildOrders
             int numOfOffensiveSlots = FindNumOfOffensiveSlots(levelInfo);
 
             // What do we need?
-            // ISlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
+            // SlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
             IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
             //UnityEngine.Debug.Log(strategy.Offensives.ToList().Count + " " + strategy.Offensives);
@@ -81,18 +81,14 @@ namespace BattleCruisers.AI.BuildOrders
             // Reserve 2 mast slots for a stealth gen and teslacoil.
             int numOfMastSlotsToReserve = 2;
 
-            ISlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
+            SlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
             int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
 
-            if (levelInfo.HasMastOffensive())
-            {
+            if (levelInfo.HasSlotType(SlotType.Mast))
                 numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Mast) - numOfMastSlotsToReserve;
-            }
 
-            if (levelInfo.HasBowOffensive())
-            {
+            if (levelInfo.HasSlotType(SlotType.Bow))
                 numOfOffensiveSlots += slotAccessor.GetSlotCount(SlotType.Bow);
-            }
 
             return numOfOffensiveSlots;
         }

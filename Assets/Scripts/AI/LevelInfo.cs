@@ -34,18 +34,7 @@ namespace BattleCruisers.AI
                 && building.NumOfDronesRequired <= AICruiser.DroneManager.NumOfDrones;
         }
 
-        // TODO: Add test
-        public bool HasMastOffensive()
-        {
-            return HasSlotType(SlotType.Mast);
-        }
-
-        public bool HasBowOffensive()
-        {
-            return HasSlotType(SlotType.Bow);
-        }
-
-        private bool HasSlotType(SlotType slotType)
+        public bool HasSlotType(SlotType slotType)
         {
             IList<BuildingKey> offensives = GetAvailableBuildings(BuildingCategory.Offence);
 

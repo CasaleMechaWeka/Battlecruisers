@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
 {
     public class AntiThreatTaskProducerTests : TaskProducerTestsBase
     {
-        private ISlotAccessor _slotAccessor;
+        private SlotAccessor _slotAccessor;
         private IDynamicBuildOrder _buildOrder;
         private BaseThreatMonitor _threatMonitor;
         private SlotNumCalculator _slotNumCalculator;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _threatMonitor = Substitute.For<BaseThreatMonitor>();
             _threatMonitor.CurrentThreatLevel.Returns(ThreatLevel.High);
 
-            _slotAccessor = Substitute.For<ISlotAccessor>();
+            _slotAccessor = Substitute.For<SlotAccessor>();
             _slotAccessor.GetSlotCount(SlotType.Deck).Returns(5);
             _cruiser.SlotAccessor.Returns(_slotAccessor);
 

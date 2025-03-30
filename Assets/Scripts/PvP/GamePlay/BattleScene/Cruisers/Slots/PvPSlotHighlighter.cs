@@ -6,9 +6,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlotHighlighter : IPvPSlotHighlighter
+    public class PvPSlotHighlighter
     {
-        private readonly IPvPSlotAccessor _slotAccessor;
+        private readonly PvPSlotAccessor _slotAccessor;
         private readonly IFilter<IPvPSlot> _highlightableFilter;
         private ISlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         public PvPSlotHighlighter(
-            IPvPSlotAccessor slotAccessor,
+            PvPSlotAccessor slotAccessor,
             IFilter<IPvPSlot> highlightableFilter,
             IPvPCruiserBuildingMonitor parentCruiserBuildingMonitor)
         {

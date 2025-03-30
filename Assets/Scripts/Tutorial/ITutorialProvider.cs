@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial
 {
     public interface ITutorialProvider
     {
-        ISlotPermitter SlotPermitter { get; }
+        SpecificSlotsFilter SlotPermitter { get; }
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }

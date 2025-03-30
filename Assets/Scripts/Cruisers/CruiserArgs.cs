@@ -30,7 +30,7 @@ namespace BattleCruisers.Cruisers
         public IRepairManager RepairManager { get; }
         public FogStrength FogStrength { get; }
         public ICruiserHelper Helper { get; }
-        public ISlotFilter HighlightableFilter { get; }
+        public IFilter<ISlot> HighlightableFilter { get; }
         public IBuildProgressCalculator BuildProgressCalculator { get; }
         public IDoubleClickHandler<IBuilding> BuildingDoubleClickHandler { get; }
         public IDoubleClickHandler<ICruiser> CruiserDoubleClickHandler { get; }
@@ -50,7 +50,7 @@ namespace BattleCruisers.Cruisers
             IRepairManager repairManager,
             FogStrength fogStrength,
             ICruiserHelper helper,
-            ISlotFilter highlightableFilter,
+            IFilter<ISlot> highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<ICruiser> cruiserDoubleClickHandler,

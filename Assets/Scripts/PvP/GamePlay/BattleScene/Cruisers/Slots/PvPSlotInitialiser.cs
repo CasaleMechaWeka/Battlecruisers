@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlotInitialiser : IPvPSlotInitialiser
+    public class PvPSlotInitialiser
     {
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 

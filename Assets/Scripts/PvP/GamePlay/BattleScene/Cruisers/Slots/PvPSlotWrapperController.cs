@@ -19,13 +19,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
         // For in battle scene use
-        public IPvPSlotAccessor Initialise(IPvPCruiser parentCruiser)
+        public PvPSlotAccessor Initialise(IPvPCruiser parentCruiser)
         {
             Assert.IsNotNull(parentCruiser);
             IPvPBuildingPlacer buildingPlacer
                 = new PvPBuildingPlacer(
                     new PvPBuildingPlacerCalculator());
-            IPvPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
+            PvPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
             for (int i = 0; i < _slots.Count; ++i)
             {
                 if (!_slotsByName.ContainsKey(_slots[i].gameObject.name))

@@ -9,11 +9,11 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// </summary>
     public class SlotStep : ExplanationClickStep
     {
-        private readonly ISlotPermitter _highlightableSlotPermitter;
+        private readonly SpecificSlotsFilter _highlightableSlotPermitter;
 
         public SlotStep(
-            ITutorialStepArgs args, 
-			ISlotPermitter highlightableSlotPermitter,
+            ITutorialStepArgs args,
+            SpecificSlotsFilter highlightableSlotPermitter,
             ISlotProvider slotProvider)
             : base(args, slotProvider)
         {
@@ -21,11 +21,11 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             _highlightableSlotPermitter = highlightableSlotPermitter;
         }
 
-		protected override void OnCompleted()
-		{
+        protected override void OnCompleted()
+        {
             _highlightableSlotPermitter.PermittedSlot = null;
 
-			base.OnCompleted();
-		}
-	}
+            base.OnCompleted();
+        }
+    }
 }

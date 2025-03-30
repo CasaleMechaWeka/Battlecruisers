@@ -61,7 +61,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         {
             ICruiser cruiser = Substitute.For<ICruiser>();
 
-			ISlotHighlighter slotHighlighter = Substitute.For<ISlotHighlighter>();
+            SlotHighlighter slotHighlighter = Substitute.For<SlotHighlighter>();
             cruiser.SlotHighlighter.Returns(slotHighlighter);
 
             return cruiser;
@@ -163,7 +163,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Manager
         public void ShowFactoryUnits_NotPlayerCruiserFactory_DoesNothing()
         {
             _factory.ParentCruiser.Returns(_aiCruiser);
-            
+
             _uiManager.ShowFactoryUnits(_factory);
 
             _buildMenu.DidNotReceive().ShowUnitsMenu(_factory);

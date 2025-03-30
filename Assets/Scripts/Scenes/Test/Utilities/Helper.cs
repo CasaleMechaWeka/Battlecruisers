@@ -477,7 +477,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     repairManager: Substitute.For<IRepairManager>(),
                     fogStrength: BattleCruisers.Cruisers.Fog.FogStrength.Weak,
                     helper: Substitute.For<ICruiserHelper>(),
-                    highlightableFilter: Substitute.For<ISlotFilter>(),
+                    highlightableFilter: Substitute.For<IFilter<ISlot>>(),
                     buildProgressCalculator: new LinearCalculator(_buildSpeedMultiplier),
                     buildingDoubleClickHandler: Substitute.For<IDoubleClickHandler<IBuilding>>(),
                     cruiserDoubleClickHandler: Substitute.For<IDoubleClickHandler<ICruiser>>(),

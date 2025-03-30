@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers.Helpers
             _cameraFocuser.FocusOnRightCruiser();
         }
 
-        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)
+        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, SlotAccessor slotAccessor, SlotHighlighter slotHighlighter)
         {
             // Do nothing.  Buttons should only be shown for player cruiser :)
         }

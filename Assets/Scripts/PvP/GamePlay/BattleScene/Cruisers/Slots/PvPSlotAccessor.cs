@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlotAccessor : IPvPSlotAccessor
+    public class PvPSlotAccessor
     {
         private readonly IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> _slots;
         private readonly ReadOnlyCollection<PvPSlot> _antiShipSlots;

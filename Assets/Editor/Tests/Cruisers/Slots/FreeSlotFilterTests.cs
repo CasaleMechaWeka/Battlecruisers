@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Utils;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -6,7 +7,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 {
     public class FreeSlotFilterTests
     {
-        private ISlotFilter _filter;
+        private IFilter<ISlot> _filter;
         private ISlot _slot;
 
         [SetUp]

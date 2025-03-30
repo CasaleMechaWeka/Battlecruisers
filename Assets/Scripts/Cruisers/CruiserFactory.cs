@@ -29,7 +29,7 @@ namespace BattleCruisers.Cruisers
     {
         private readonly FactoryProvider _factoryProvider;
         private readonly IBattleSceneHelper _helper;
-        private readonly ISlotFilter _highlightableSlotFilter;
+        private readonly IFilter<ISlot> _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
@@ -147,7 +147,7 @@ namespace BattleCruisers.Cruisers
             Faction faction,
             Direction facingDirection,
             FogStrength fogStrength,
-            ISlotFilter highlightableFilter,
+            IFilter<ISlot> highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,

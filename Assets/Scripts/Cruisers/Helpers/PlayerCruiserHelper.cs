@@ -17,7 +17,7 @@ namespace BattleCruisers.Cruisers.Helpers
             _cameraFocuser.FocusOnLeftCruiser();
         }
 
-        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter)
+        public override void OnBuildingConstructionStarted(IBuilding buildingStarted, SlotAccessor slotAccessor, SlotHighlighter slotHighlighter)
         {
             if (!slotAccessor.IsSlotAvailableForPlayer(buildingStarted.SlotSpecification))
             {

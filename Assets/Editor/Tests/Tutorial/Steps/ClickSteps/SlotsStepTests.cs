@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     public class SlotsStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _clickStep;
-        private ISlotPermitter _permitter;
+        private SpecificSlotsFilter _permitter;
         private ISlot _slot;
         private ISlotProvider _slotProvider;
         private IItemProvider<IClickableEmitter> _clickableProvider;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         {
             base.SetuUp();
 
-            _permitter = Substitute.For<ISlotPermitter>();
+            _permitter = Substitute.For<SpecificSlotsFilter>();
 
             _slot = Substitute.For<ISlot>();
             _slotProvider = Substitute.For<ISlotProvider>();

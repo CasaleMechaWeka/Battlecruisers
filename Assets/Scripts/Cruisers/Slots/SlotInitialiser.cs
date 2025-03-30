@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class SlotInitialiser : ISlotInitialiser
+    public class SlotInitialiser
     {
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 

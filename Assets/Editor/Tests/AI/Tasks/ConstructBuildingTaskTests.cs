@@ -18,7 +18,7 @@ namespace BattleCruisers.Tests.AI.Tasks
 
         private IPrefabKey _key;
         private ICruiserController _cruiser;
-        private ISlotAccessor _slotAccessor;
+        private SlotAccessor _slotAccessor;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
         private ISlot _slot;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         public void SetuUp()
         {
             _key = Substitute.For<IPrefabKey>();
-            _slotAccessor = Substitute.For<ISlotAccessor>();
+            _slotAccessor = Substitute.For<SlotAccessor>();
             _cruiser = Substitute.For<ICruiserController>();
             _cruiser.IsAlive.Returns(true);
             _cruiser.SlotAccessor.Returns(_slotAccessor);

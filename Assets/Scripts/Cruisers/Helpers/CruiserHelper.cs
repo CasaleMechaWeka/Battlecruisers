@@ -20,6 +20,6 @@ namespace BattleCruisers.Cruisers.Helpers
         }
 
         public abstract void FocusCameraOnCruiser();
-        public abstract void OnBuildingConstructionStarted(IBuilding buildingStarted, ISlotAccessor slotAccessor, ISlotHighlighter slotHighlighter);
+        public abstract void OnBuildingConstructionStarted(IBuilding buildingStarted, SlotAccessor slotAccessor, SlotHighlighter slotHighlighter);
     }
 }

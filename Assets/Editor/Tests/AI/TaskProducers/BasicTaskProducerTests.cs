@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
     public class BasicTaskProducerTests : TaskProducerTestsBase
     {
         private BasicTaskProducer _taskProducer;
-        private ISlotAccessor _slotAccessor;
+        private SlotAccessor _slotAccessor;
         private IDynamicBuildOrder _buildOrder;
         private IBuildableWrapper<IBuilding> _platformSlotBuildingWrapper, _deckSlotBuildingWrapper;
         private IBuilding _platformSlotBuilding, _deckSlotBuilding;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.AI.TaskProducers
             _deckBuildingTask = Substitute.For<IPrioritisedTask>();
             _taskFactory.CreateConstructBuildingTask(TaskPriority.Low, _deckBuildingKey).Returns(_deckBuildingTask);
 
-            _slotAccessor = Substitute.For<ISlotAccessor>();
+            _slotAccessor = Substitute.For<SlotAccessor>();
             _slotAccessor.IsSlotAvailable(_platformSlotBuilding.SlotSpecification).Returns(true);
             _slotAccessor.IsSlotAvailable(_deckSlotBuilding.SlotSpecification).Returns(false);
 

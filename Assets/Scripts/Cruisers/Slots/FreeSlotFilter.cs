@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class FreeSlotFilter : ISlotFilter
+    public class FreeSlotFilter : IFilter<ISlot>
     {
         public bool IsMatch(ISlot slot)
         {

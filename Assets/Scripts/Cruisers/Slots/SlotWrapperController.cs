@@ -18,14 +18,14 @@ namespace BattleCruisers.Cruisers.Slots
         }
 
         // For in battle scene use
-        public ISlotAccessor Initialise(ICruiser parentCruiser)
+        public SlotAccessor Initialise(ICruiser parentCruiser)
         {
             Assert.IsNotNull(parentCruiser);
 
-            IBuildingPlacer buildingPlacer 
+            IBuildingPlacer buildingPlacer
                 = new BuildingPlacer(
                     new BuildingPlacerCalculator());
-            ISlotInitialiser slotInitialiser = new SlotInitialiser();
+            SlotInitialiser slotInitialiser = new SlotInitialiser();
             IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
 
             return new SlotAccessor(typeToSlots);
