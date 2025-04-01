@@ -1,12 +1,10 @@
-﻿using BattleCruisers.AI.BuildOrders;
-
-namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
+﻿namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
     public class OffensivePrefabKeyWrapper : BasePrefabKeyWrapper
     {
-        protected override IDynamicBuildOrder GetBuildOrder(IDynamicBuildOrder offensiveBuildOrder,
-                                                                IDynamicBuildOrder antiAirBuildOrder,
-                                                                IDynamicBuildOrder antiNavalBuildOrder)
+        protected override BuildingKey[] GetBuildOrder(BuildingKey[] offensiveBuildOrder,
+                                                        BuildingKey[] antiAirBuildOrder,
+                                                        BuildingKey[] antiNavalBuildOrder)
         {
             return offensiveBuildOrder;
         }

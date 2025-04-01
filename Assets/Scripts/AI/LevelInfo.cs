@@ -49,7 +49,7 @@ namespace BattleCruisers.AI
             return false;
         }
 
-        public IList<BuildingKey> GetAvailableBuildings(BuildingCategory category)
+        public List<BuildingKey> GetAvailableBuildings(BuildingCategory category)
         {
             return DataProvider.GameModel.GetUnlockedBuildings(category);
         }

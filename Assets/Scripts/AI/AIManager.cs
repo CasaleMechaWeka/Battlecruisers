@@ -9,6 +9,7 @@ using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils;
@@ -62,53 +63,62 @@ namespace BattleCruisers.AI
             IList<IManagedDisposable> taskProducers = new List<IManagedDisposable>();
 
             // Base build order, main strategy
-            IDynamicBuildOrder advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
+            BuildingKey[] advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
             taskProducers.Add(new BasicTaskProducer(tasks, aiCruiser, taskFactory, advancedBuildOrder));
 
             // Anti air
-            IDynamicBuildOrder antiAirBuildOrder = _buildOrderFactory.CreateAntiAirBuildOrder(levelInfo);
+            BuildingKey[] antiAirBuildOrder = _buildOrderFactory.CreateAntiAirBuildOrder(levelInfo);
             BaseThreatMonitor airThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
             int maxNumOfDeckSlots = Helper.Half(aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
             SlotNumCalculator slotNumCalculator = new SlotNumCalculator(maxNumOfDeckSlots, 0, 2, 4);
 
-            taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator));
+            taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, taskFactory, antiAirBuildOrder, airThreatMonitor, slotNumCalculator, levelInfo));
 
             // Anti naval
-            IDynamicBuildOrder antiNavalBuildOrder = _buildOrderFactory.CreateAntiNavalBuildOrder(levelInfo);
+            BuildingKey[] antiNavalBuildOrder = _buildOrderFactory.CreateAntiNavalBuildOrder(levelInfo);
             BaseThreatMonitor navalThreatMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
             // keep the SlotNumCalculator
             maxNumOfDeckSlots = Helper.Half(aiCruiser.SlotAccessor.GetSlotCount(SlotType.Deck) - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
 
-            taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator));
+            taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, taskFactory, antiNavalBuildOrder, navalThreatMonitor, slotNumCalculator, levelInfo));
 
             // Anti rocket
-            if (_buildOrderFactory.IsAntiRocketBuildOrderAvailable())
+            if (DataProvider.GameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.TeslaCoil))
             {
                 BaseThreatMonitor rocketLauncherThreatMonitor = _threatMonitorFactory.CreateRocketThreatMonitor();
                 slotNumCalculator = new SlotNumCalculator(1, 0, 1, 1);
 
-                taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, taskFactory, _buildOrderFactory.CreateAntiRocketBuildOrder(), rocketLauncherThreatMonitor, slotNumCalculator));
+                taskProducers.Add(new AntiThreatTaskProducer(tasks,
+                                                             aiCruiser,
+                                                             taskFactory,
+                                                             new BuildingKey[] { StaticPrefabKeys.Buildings.TeslaCoil },
+                                                             rocketLauncherThreatMonitor,
+                                                             slotNumCalculator,
+                                                             levelInfo));
             }
 
             // Anti stealth
-            if (_buildOrderFactory.IsAntiStealthBuildOrderAvailable())
+            if (DataProvider.GameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.StealthGenerator))
             {
                 BaseThreatMonitor stealthThreatMonitor = _threatMonitorFactory.CreateStealthThreatMonitor();
                 // keep the SlotNumCalculator
-                taskProducers.Add(new AntiThreatTaskProducer(tasks, aiCruiser, taskFactory, _buildOrderFactory.CreateAntiStealthBuildOrder(), stealthThreatMonitor, slotNumCalculator));
+                taskProducers.Add(new AntiThreatTaskProducer(tasks,
+                                                             aiCruiser,
+                                                             taskFactory,
+                                                             new BuildingKey[] { StaticPrefabKeys.Buildings.SpySatelliteLauncher },
+                                                             stealthThreatMonitor,
+                                                             slotNumCalculator,
+                                                             levelInfo));
             }
 
             taskProducers.Add(new ReplaceDestroyedBuildingsTaskProducer(tasks, aiCruiser, taskFactory, StaticData.BuildingKeys));
 
-            return CreateAI(levelInfo.AICruiser, tasks, taskProducers);
-        }
-
-        private IManagedDisposable CreateAI(ICruiserController aiCruiser, TaskList tasks, IList<IManagedDisposable> taskProducers)
-        {
             TaskConsumer taskConsumer = new TaskConsumer(tasks);
             DroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);
+
             return new ArtificialIntelligence(taskConsumer, taskProducers, focusManager);
         }
+
         private DroneConsumerFocusManager CreateDroneFocusManager(ICruiserController aiCruiser)
         {
             FactoryAnalyzer factoryAnalyzer

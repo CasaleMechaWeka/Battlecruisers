@@ -1,14 +1,12 @@
-﻿using BattleCruisers.AI.BuildOrders;
-
-namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
+﻿namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
     public interface IPrefabKeyWrapper
     {
         bool HasKey { get; }
         BuildingKey Key { get; }
 
-        void Initialise(IDynamicBuildOrder offensiveBuildOrder,
-                        IDynamicBuildOrder antiAirBuildOrder,
-                        IDynamicBuildOrder antiNavalBuildOrder);
+        void Initialise(BuildingKey[] offensiveBuildOrder,
+                        BuildingKey[] antiAirBuildOrder,
+                        BuildingKey[] antiNavalBuildOrder);
     }
 }

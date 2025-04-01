@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI.BuildOrders;
-using UnityEngine.Assertions;
+﻿using UnityEngine.Assertions;
 
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
@@ -14,9 +13,9 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
             Key = key;
         }
 
-        public void Initialise(IDynamicBuildOrder offensiveBuildOrder,
-                                IDynamicBuildOrder antiAirBuildOrder,
-                                IDynamicBuildOrder antiNavalBuildOrder)
+        public void Initialise(BuildingKey[] offensiveBuildOrder,
+                                BuildingKey[] antiAirBuildOrder,
+                                BuildingKey[] antiNavalBuildOrder)
         {
             // Do nothing
         }

@@ -485,7 +485,7 @@ namespace BattleCruisers.Data.Models
                 return _completedSideQuestIDs.Contains(sideQuestID);
         }
 
-        public IList<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)
+        public List<BuildingKey> GetUnlockedBuildings(BuildingCategory buildingCategory)
         {
             return _unlockedBuildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
         }

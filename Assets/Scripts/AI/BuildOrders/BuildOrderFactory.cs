@@ -1,8 +1,8 @@
-﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -11,6 +11,7 @@ using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace BattleCruisers.AI.BuildOrders
 {
@@ -42,13 +43,13 @@ namespace BattleCruisers.AI.BuildOrders
         /// Build orders do NOT contain counters to threats.  These counters
         /// get created on the fly in response to threats.
         /// </summary>
-        public IDynamicBuildOrder CreateAdaptiveBuildOrder(LevelInfo levelInfo)
+        public BuildingKey[] CreateAdaptiveBuildOrder(LevelInfo levelInfo)
         {
             Strategy strategy = _strategyFactory.GetAdaptiveStrategy();
-            return GetBuildOrder(strategy, levelInfo, hasDefensivePlaceholders: false);
+            return GetBuildOrder(strategy, levelInfo);
         }
 
-        private IDynamicBuildOrder GetBuildOrder(Strategy strategy, LevelInfo levelInfo, bool hasDefensivePlaceholders)
+        private BuildingKey[] GetBuildOrder(Strategy strategy, LevelInfo levelInfo)
         {
             // Create offensive build order
             //int numOfPlatformSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Platform);
@@ -58,21 +59,25 @@ namespace BattleCruisers.AI.BuildOrders
             // What do we need?
             // SlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
-            IDynamicBuildOrder offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo);
-            //UnityEngine.Debug.Log(strategy.Offensives.ToList().Count + " " + strategy.Offensives);
+            List<BuildingKey> offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo).ToList();
+            UnityEngine.Debug.Log(offensiveBuildOrder.Count + " " + strategy.Offensives);
+            List<BuildingKey> baseBuildOrder = strategy.BaseStrategy.Select(t => t.Key).ToList();
+            for (int i = 0; i < baseBuildOrder.Count; i++)
+                if (baseBuildOrder[i] == null)
+                {
+                    if (offensiveBuildOrder.Count > 0)
+                    {
+                        baseBuildOrder[i] = offensiveBuildOrder[0];
+                        offensiveBuildOrder.RemoveAt(0);
+                    }
+                }
 
-            // Create defensive build orders (only for basic AI)
-            IDynamicBuildOrder antiAirBuildOrder = hasDefensivePlaceholders ? CreateAntiAirBuildOrder(levelInfo) : null;
-            IDynamicBuildOrder antiNavalBuildOrder = hasDefensivePlaceholders ? CreateAntiNavalBuildOrder(levelInfo) : null;
+            offensiveBuildOrder = offensiveBuildOrder.Where(x => x != null).ToList();
+            for (int i = 0; i < offensiveBuildOrder.Count; i++)
+                if (offensiveBuildOrder[i] == null)
+                    Debug.Log("RAAAAA");
 
-            IList<IPrefabKeyWrapper> baseBuildOrder = strategy.BaseStrategy;
-
-            foreach (IPrefabKeyWrapper keyWrapper in baseBuildOrder)
-            {
-                keyWrapper.Initialise(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
-            }
-
-            return new StrategyBuildOrder(baseBuildOrder.GetEnumerator(), levelInfo);
+            return baseBuildOrder.ToArray();
         }
 
         // TODO: Find a better class to move this to. Make the method public to add unit test!
@@ -92,26 +97,17 @@ namespace BattleCruisers.AI.BuildOrders
 
             return numOfOffensiveSlots;
         }
-        /// <summary>
-        /// NOTE:  Must use IList as a parateter instead if IEnumerable.  Initially I used
-        /// IEnumerable from a LINQ Select query, but every time I looped through this
-        /// IEnumerable I would get a fresh copy of the object, so any changes I made to
-        /// those objects were lost!!!
-        /// </summary>
-        private IDynamicBuildOrder CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots, LevelInfo levelInfo)
+
+        private BuildingKey[] CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots, LevelInfo levelInfo)
         {
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
             // Create individual build orders
-            IList<IDynamicBuildOrder> buildOrders = new List<IDynamicBuildOrder>();
+            List<BuildingKey> buildOrders = new List<BuildingKey>();
             foreach (OffensiveRequest request in requests)
-            {
-                UnityEngine.Debug.Log(request);
-                buildOrders.Add(CreateBuildOrder(request, levelInfo));
-            }
+                buildOrders.AddRange(CreateBuildOrder(request, levelInfo));
 
-            // Create combined build order
-            return new CombinedBuildOrders(buildOrders);
+            return buildOrders.ToArray();
         }
 
         private void AssignSlots(SlotAssigner slotAssigner, IList<OffensiveRequest> requests, int numOfPlatformSlots)
@@ -137,93 +133,86 @@ namespace BattleCruisers.AI.BuildOrders
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
-        private IDynamicBuildOrder CreateBuildOrder(OffensiveRequest request, LevelInfo levelInfo)
+        private BuildingKey[] CreateBuildOrder(OffensiveRequest request, LevelInfo levelInfo)
         {
             Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
-            switch (request.Type)
+            return request.Type switch
             {
-                case OffensiveType.Air:
-                    return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.AirFactory, request.NumOfSlotsToUse);
-
-                case OffensiveType.Naval:
-                    return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.NavalFactory, request.NumOfSlotsToUse);
-
-                case OffensiveType.Buildings:
-                    return CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo);
-
-                case OffensiveType.Ultras:
-                    return CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, StaticData.AIBannedUltrakeys);
-
-                default:
-                    throw new ArgumentException();
-            }
+                OffensiveType.Air => CreateStaticBuildOrder(StaticPrefabKeys.Buildings.AirFactory, request.NumOfSlotsToUse),
+                OffensiveType.Naval => CreateStaticBuildOrder(StaticPrefabKeys.Buildings.NavalFactory, request.NumOfSlotsToUse),
+                OffensiveType.Buildings => CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo),
+                OffensiveType.Ultras => CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, StaticData.AIBannedUltrakeys),
+                _ => throw new ArgumentException(),
+            };
         }
 
-        public IDynamicBuildOrder CreateAntiAirBuildOrder(LevelInfo levelInfo)
+        public BuildingKey[] CreateAntiAirBuildOrder(LevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
 
-            return
-                new AntiUnitBuildOrder(
-                    basicDefenceKey: StaticPrefabKeys.Buildings.AntiAirTurret,
-                    advancedDefenceKey: StaticPrefabKeys.Buildings.SamSite,
-                    levelInfo: levelInfo,
-                    numOfSlotsToUse: numOfSlotsToUse);
+            BuildingKey[] buildOrder = new BuildingKey[numOfSlotsToUse];
+            buildOrder[0] = StaticPrefabKeys.Buildings.AntiAirTurret;
+
+            BuildingKey filler = DataProvider.GameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.SamSite) ?
+                                 StaticPrefabKeys.Buildings.SamSite :
+                                 StaticPrefabKeys.Buildings.AntiAirTurret;
+
+            for (int i = 1; i < buildOrder.Length; i++)
+                buildOrder[i] = filler;
+
+            return buildOrder;
         }
 
-        public IDynamicBuildOrder CreateAntiNavalBuildOrder(LevelInfo levelInfo)
+        public BuildingKey[] CreateAntiNavalBuildOrder(LevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
             int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
 
-            return
-                new AntiUnitBuildOrder(
-                    basicDefenceKey: StaticPrefabKeys.Buildings.AntiShipTurret,
-                    advancedDefenceKey: StaticPrefabKeys.Buildings.Mortar,
-                    levelInfo: levelInfo,
-                    numOfSlotsToUse: numOfSlotsToUse);
+            BuildingKey[] buildOrder = new BuildingKey[numOfSlotsToUse];
+            buildOrder[0] = StaticPrefabKeys.Buildings.AntiShipTurret;
+
+            BuildingKey filler = DataProvider.GameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.Mortar) ?
+                                 StaticPrefabKeys.Buildings.Mortar :
+                                 StaticPrefabKeys.Buildings.AntiShipTurret;
+
+            for (int i = 1; i < buildOrder.Length; i++)
+                buildOrder[i] = filler;
+
+            return buildOrder;
         }
 
-        public bool IsAntiRocketBuildOrderAvailable()
+        private BuildingKey[] CreateStaticBuildOrder(BuildingKey buildingKey, int size)
         {
-            return _gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.TeslaCoil);
+            BuildingKey[] buildOrder = new BuildingKey[size];
+            for (int i = 0; i < buildOrder.Length; i++)
+                buildOrder[i] = buildingKey;
+            return buildOrder;
         }
 
-        public IDynamicBuildOrder CreateAntiRocketBuildOrder()
-        {
-            return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.TeslaCoil, size: 1);
-        }
-
-        public bool IsAntiStealthBuildOrderAvailable()
-        {
-            return _gameModel.IsBuildingUnlocked(StaticPrefabKeys.Buildings.SpySatelliteLauncher);
-        }
-
-        public IDynamicBuildOrder CreateAntiStealthBuildOrder()
-        {
-            return CreateStaticBuildOrder(StaticPrefabKeys.Buildings.SpySatelliteLauncher, size: 1);
-        }
-
-        private IDynamicBuildOrder CreateStaticBuildOrder(BuildingKey buildingKey, int size)
-        {
-            return
-                new FiniteBuildOrder(
-                    new InfiniteStaticBuildOrder(buildingKey),
-                    size);
-        }
-
-        private IDynamicBuildOrder CreateDynamicBuildOrder(
+        private BuildingKey[] CreateDynamicBuildOrder(
             BuildingCategory buildingCategory,
             int size,
             LevelInfo levelInfo,
             IList<BuildingKey> bannedBuildings = null)
         {
-            return
-                new FiniteBuildOrder(
-                    new InfiniteBuildOrder(buildingCategory, levelInfo, bannedBuildings),
-                    size);
+            List<BuildingKey> buildOrder = new List<BuildingKey>();
+            List<BuildingKey> availableBuildings = levelInfo.GetAvailableBuildings(buildingCategory);
+
+            if (bannedBuildings != null)
+                foreach (BuildingKey key in bannedBuildings)
+                    availableBuildings.Remove(key);
+
+            for (int i = 0; i < size; i++)
+            {
+                buildOrder.Add(availableBuildings
+                                .Where(DataProvider.GameModel.IsBuildingUnlocked)
+                                .Shuffle()
+                                .FirstOrDefault());
+            }
+
+            return buildOrder.ToArray();
         }
     }
 }

@@ -5,6 +5,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Tactical;
 
 namespace BattleCruisers.AI.ThreatMonitors
 {
@@ -49,7 +50,7 @@ namespace BattleCruisers.AI.ThreatMonitors
         public BaseThreatMonitor CreateStealthThreatMonitor()
         {
             ThreatEvaluator threatEvaluator = new ThreatEvaluator(STEALTH_GENERATOR_HIGH_THREAT_BUILDING_NUM);
-            return new BuildingThreatMonitor<IBuilding>(_playerCruiser, threatEvaluator);
+            return new BuildingThreatMonitor<StealthGenerator>(_playerCruiser, threatEvaluator);
         }
 
         public BaseThreatMonitor CreateDelayedThreatMonitor(BaseThreatMonitor coreMonitor)

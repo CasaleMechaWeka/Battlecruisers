@@ -1,11 +1,13 @@
 ﻿using System;
-using BattleCruisers.AI.BuildOrders;
+using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Fetchers;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.AI.TaskProducers
@@ -15,18 +17,17 @@ namespace BattleCruisers.AI.TaskProducers
     /// </summary>
     public class BasicTaskProducer : TaskProducer
     {
-        private readonly IDynamicBuildOrder _buildOrder;
+        private List<BuildingKey> _buildOrder;
 
         public BasicTaskProducer(
             TaskList tasks,
             ICruiserController cruiser,
             ITaskFactory taskFactory,
-            IDynamicBuildOrder buildOrder)
+            BuildingKey[] buildOrder)
             : base(tasks, cruiser, taskFactory)
         {
             Assert.IsNotNull(buildOrder);
-
-            _buildOrder = buildOrder;
+            _buildOrder = buildOrder.ToList();
 
             _tasks.IsEmptyChanged += _tasks_IsEmptyChanged;
 
@@ -57,9 +58,13 @@ namespace BattleCruisers.AI.TaskProducers
         /// </returns>
         private IPrioritisedTask CreateTask()
         {
-            while (_buildOrder.MoveNext())
+            while (_buildOrder.Count > 0)
             {
-                IPrefabKey buildingKey = _buildOrder.Current;
+                BuildingKey buildingKey = _buildOrder[0];
+                _buildOrder.RemoveAt(0);
+                if (buildingKey == null)
+                    continue;
+
                 IBuildableWrapper<IBuilding> buildingWrapper = PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
                 if (CanConstructBuilding(buildingWrapper.Buildable))

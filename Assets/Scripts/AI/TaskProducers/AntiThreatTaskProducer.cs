@@ -1,36 +1,45 @@
 ﻿using System;
-using BattleCruisers.AI.BuildOrders;
+using System.Collections.Generic;
+using System.Linq;
 using BattleCruisers.AI.Tasks;
 using BattleCruisers.AI.ThreatMonitors;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
+using UnityEngine;
 
 namespace BattleCruisers.AI.TaskProducers
 {
     public class AntiThreatTaskProducer : TaskProducer
     {
-        private readonly IDynamicBuildOrder _antiThreatBuildOrder;
+        private List<BuildingKey> _antiThreatBuildOrder;
+        private readonly List<BuildingKey> _buildOrderOriginal;
         private readonly BaseThreatMonitor _threatMonitor;
         private readonly SlotNumCalculator _slotNumCalculator;
 
         private int _targetNumOfSlotsToUse;
         private int _numOfTasksCompleted;
         private IPrioritisedTask _currentTask;
+        private LevelInfo _levelInfo;
 
         public AntiThreatTaskProducer(
             TaskList tasks,
             ICruiserController cruiser,
             ITaskFactory taskFactory,
-            IDynamicBuildOrder antiThreatBuildOrder,
+            BuildingKey[] antiThreatBuildOrder,
             BaseThreatMonitor threatMonitor,
-            SlotNumCalculator slotNumCalculator)
+            SlotNumCalculator slotNumCalculator,
+            LevelInfo levelInfo)
             : base(tasks, cruiser, taskFactory)
         {
             Helper.AssertIsNotNull(antiThreatBuildOrder, threatMonitor, slotNumCalculator);
 
-            _antiThreatBuildOrder = antiThreatBuildOrder;
+            _antiThreatBuildOrder = antiThreatBuildOrder.ToList();
+            _buildOrderOriginal = _antiThreatBuildOrder;
             _threatMonitor = threatMonitor;
             _slotNumCalculator = slotNumCalculator;
+
+            _levelInfo = levelInfo;
 
             _targetNumOfSlotsToUse = 0;
             _numOfTasksCompleted = 0;
@@ -49,9 +58,14 @@ namespace BattleCruisers.AI.TaskProducers
         {
             if (_currentTask == null
                 && _targetNumOfSlotsToUse > _numOfTasksCompleted
-                && _antiThreatBuildOrder.MoveNext())
+                && _antiThreatBuildOrder.Count > 0)
             {
-                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, _antiThreatBuildOrder.Current);
+                BuildingKey buildingToConstruct = _levelInfo.CanConstructBuilding(_antiThreatBuildOrder[0]) ?
+                                                  _antiThreatBuildOrder[0] :
+                                                  _buildOrderOriginal[0];
+
+                _currentTask = _taskFactory.CreateConstructBuildingTask(TaskPriority.Normal, buildingToConstruct);
+                _antiThreatBuildOrder.RemoveAt(0);
                 _currentTask.Completed += _currentTask_Completed;
                 _tasks.Add(_currentTask);
             }

@@ -1,37 +1,18 @@
-﻿using BattleCruisers.AI.BuildOrders;
-using BattleCruisers.Utils;
-using UnityEngine.Assertions;
+﻿using BattleCruisers.Utils;
 
 namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 {
     public abstract class BasePrefabKeyWrapper : IPrefabKeyWrapper
     {
-        private IDynamicBuildOrder _buildOrder;
+        private BuildingKey[] _buildOrder;
 
-        private bool _haveAskedBuildOrder;
-        private bool _hasKey;
+
         public bool HasKey
         {
             get
             {
-                if (!_haveAskedBuildOrder)
-                {
-                    // Evaluate lazily, to take advantage of dynamic build order :)
-                    _haveAskedBuildOrder = true;
-
-                    Assert.IsNotNull(_buildOrder, "Should call Initialise() before accessing this property :/");
-                    _hasKey = _buildOrder.MoveNext();
-
-                    if (_hasKey)
-                    {
-                        Key = _buildOrder.Current;
-                        Assert.IsNotNull(Key);
-                    }
-                }
-
-                Logging.Log(Tags.AI_BUILD_ORDERS, $"HasKey: {_hasKey}  Key: {Key}");
-
-                return _hasKey;
+                Logging.Log(Tags.AI_BUILD_ORDERS, $"HasKey: {_buildOrder.Length > 0}  Key: {Key}");
+                return _buildOrder.Length > 0;
             }
         }
 
@@ -39,20 +20,18 @@ namespace BattleCruisers.Data.Models.PrefabKeys.Wrappers
 
         protected BasePrefabKeyWrapper()
         {
-            _haveAskedBuildOrder = false;
-            _hasKey = false;
             Key = null;
         }
 
-        public void Initialise(IDynamicBuildOrder offensiveBuildOrder,
-                                IDynamicBuildOrder antiAirBuildOrder,
-                                IDynamicBuildOrder antiNavalBuildOrder)
+        public void Initialise(BuildingKey[] offensiveBuildOrder,
+                                BuildingKey[] antiAirBuildOrder,
+                                BuildingKey[] antiNavalBuildOrder)
         {
             _buildOrder = GetBuildOrder(offensiveBuildOrder, antiAirBuildOrder, antiNavalBuildOrder);
         }
 
-        protected abstract IDynamicBuildOrder GetBuildOrder(IDynamicBuildOrder offensiveBuildOrder,
-                                                                IDynamicBuildOrder antiAirBuildOrder,
-                                                                IDynamicBuildOrder antiNavalBuildOrder);
+        protected abstract BuildingKey[] GetBuildOrder(BuildingKey[] offensiveBuildOrder,
+                                                        BuildingKey[] antiAirBuildOrder,
+                                                        BuildingKey[] antiNavalBuildOrder);
     }
 }
