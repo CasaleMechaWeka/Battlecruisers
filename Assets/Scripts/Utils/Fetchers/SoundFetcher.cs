@@ -22,14 +22,14 @@ namespace BattleCruisers.Utils.Fetchers
             {
                 var validateAddress = Addressables.LoadResourceLocationsAsync(soundPath);
                 await validateAddress.Task;
-                Debug.Log("[SoundFetcher] ValidateAddress completed. Status: " + validateAddress.Status + ", Resource count: " + (validateAddress.Result != null ? validateAddress.Result.Count.ToString() : "null"));
+                //          Debug.Log("[SoundFetcher] ValidateAddress completed. Status: " + validateAddress.Status + ", Resource count: " + (validateAddress.Result != null ? validateAddress.Result.Count.ToString() : "null"));
                 if (validateAddress.Status == AsyncOperationStatus.Succeeded)
                 {
                     if (validateAddress.Result.Count > 0)
                     {
                         handle = Addressables.LoadAssetAsync<AudioClip>(soundPath);
                         await handle.Task;
-                        Debug.Log("[SoundFetcher] LoadAssetAsync completed. Status: " + handle.Status + ", AudioClip is " + (handle.Result == null ? "null" : "valid"));
+                        //                        Debug.Log("[SoundFetcher] LoadAssetAsync completed. Status: " + handle.Status + ", AudioClip is " + (handle.Result == null ? "null" : "valid"));
 
                         if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
                         {
@@ -47,7 +47,7 @@ namespace BattleCruisers.Utils.Fetchers
                 Debug.Log(ex.Message + " === " + soundPath);
             }
 
-            Debug.Log("[SoundFetcher] Returning AudioClipWrapper for sound: " + soundKey.Type + "/" + soundKey.Name);
+            //            Debug.Log("[SoundFetcher] Returning AudioClipWrapper for sound: " + soundKey.Type + "/" + soundKey.Name);
             return new AudioClipWrapper(handle.Result, handle);
         }
 
