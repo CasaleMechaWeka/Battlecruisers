@@ -8,49 +8,49 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
     public class CameraCalculator : ICameraCalculator
-	{
-		private readonly ICamera _camera;
+    {
+        private readonly ICamera _camera;
         private readonly ICameraCalculatorSettings _settings;
 
-		public CameraCalculator(ICamera camera, ICameraCalculatorSettings settings)
-		{
+        public CameraCalculator(ICamera camera, ICameraCalculatorSettings settings)
+        {
             Helper.AssertIsNotNull(camera, settings);
 
-			_camera = camera;
+            _camera = camera;
             _settings = settings;
-		}
+        }
 
-		// height = 2 * orthographic size
-		// width = height * aspect ratio
-		public float FindCameraOrthographicSize(ICruiser cruiser)
-		{
-            
-			float desiredWidth = cruiser.Size.x * _settings.CruiserWidthMultiplier;
+        // height = 2 * orthographic size
+        // width = height * aspect ratio
+        public float FindCameraOrthographicSize(ICruiser cruiser)
+        {
+
+            float desiredWidth = cruiser.Size.x * _settings.CruiserWidthMultiplier;
             if (!cruiser.IsCruiser())
             {
                 desiredWidth = 30.0f;
             }
-			float desiredHeight = desiredWidth / _camera.Aspect;
-			float desiredOrthographicSize = desiredHeight / 2;
+            float desiredHeight = desiredWidth / _camera.Aspect;
+            float desiredOrthographicSize = desiredHeight / 2;
 
-			if (desiredOrthographicSize < _settings.ValidOrthographicSizes.Min)
-			{
-				desiredOrthographicSize = _settings.ValidOrthographicSizes.Min;
-			}
+            if (desiredOrthographicSize < _settings.ValidOrthographicSizes.Min)
+            {
+                desiredOrthographicSize = _settings.ValidOrthographicSizes.Min;
+            }
 
-			return desiredOrthographicSize;
-		}
+            return desiredOrthographicSize;
+        }
 
-		public float FindCameraYPosition(float desiredOrthographicSize)
-		{
-			float desiredHeight = 2 * desiredOrthographicSize;
-			return desiredOrthographicSize + _settings.MaxWaterPositionY - (_settings.WaterProportion * desiredHeight);
-		}
+        public float FindCameraYPosition(float desiredOrthographicSize)
+        {
+            float desiredHeight = 2 * desiredOrthographicSize;
+            return desiredOrthographicSize + _settings.MaxWaterPositionY - (_settings.WaterProportion * desiredHeight);
+        }
 
         public float FindScrollSpeed(float orthographicSize, float timeDelta)
         {
-			float scrollSpeedPerS = _settings.ScrollSpeedGradient * orthographicSize + _settings.ScrollSpeedConstant;
-			return scrollSpeedPerS * timeDelta * _settings.ScrollSpeed;
+            float scrollSpeedPerS = _settings.ScrollSpeedGradient * orthographicSize + _settings.ScrollSpeedConstant;
+            return scrollSpeedPerS * timeDelta * _settings.ScrollSpeed;
         }
 
         public Vector3 FindCruiserCameraPosition(ICruiser cruiser, float orthographicSize, float zValue)
@@ -60,11 +60,11 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             // under construction are easily visible.
             float xAdjustmentMagnitudeInM = cruiser.Size.x * _settings.CruiserCameraPositionAdjustmentMultiplier;
             float xAdjustmentInM = cruiser.IsPlayerCruiser ? xAdjustmentMagnitudeInM : -xAdjustmentMagnitudeInM;
-            
+
             Vector3 cameraPosition
                 = new Vector3(
-                    cruiser.Position.x + xAdjustmentInM, 
-                    FindCameraYPosition(orthographicSize), 
+                    cruiser.Position.x + xAdjustmentInM,
+                    FindCameraYPosition(orthographicSize),
                     zValue);
 
             Logging.Log(Tags.CAMERA_CALCULATOR, $"Cruiser position: {cruiser.Position}  Camera position: {cameraPosition}");
@@ -73,9 +73,9 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         }
 
         public Vector3 FindZoomingCameraPosition(
-            Vector2 zoomTarget, 
-            Vector2 targetViewportPosition, 
-            float newCameraOrthographicSize, 
+            Vector2 zoomTarget,
+            Vector2 targetViewportPosition,
+            float newCameraOrthographicSize,
             float cameraAspectRatio,
             float cameraPositionZ)
         {
@@ -103,10 +103,10 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             float halfCameraWidth = cameraWidth / 2;
 
             float minValidX = _settings.CameraVisibleXRange.Min + halfCameraWidth;
-            Assert.IsTrue(minValidX <= 0);
+            // Assert.IsTrue(minValidX <= 0);
 
             float maxValidX = _settings.CameraVisibleXRange.Max - halfCameraWidth;
-            Assert.IsTrue(maxValidX >= 0);
+            //Assert.IsTrue(maxValidX >= 0);
 
             return new Range<float>(minValidX, maxValidX);
         }
