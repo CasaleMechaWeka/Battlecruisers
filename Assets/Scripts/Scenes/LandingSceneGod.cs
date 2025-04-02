@@ -41,6 +41,7 @@ using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 #if UNITY_EDITOR
 using System.Security.Cryptography;
+using BattleCruisers.Utils.Fetchers.Cache;
 #endif
 
 namespace BattleCruisers.Scenes
@@ -148,6 +149,8 @@ namespace BattleCruisers.Scenes
             _ = LocTableCache.LoadTableAsync(TableName.COMMON);
             _ = LocTableCache.LoadTableAsync(TableName.HECKLES);
             _ = LocTableCache.LoadTableAsync(TableName.SCREENS_SCENE);
+
+            _ = PrefabCache.CreatePrefabCacheAsync();       //starting this here instead of in ScreensSceneGod saves ~2s
 
             bool startingState = await CheckForInternetConnection();
 
