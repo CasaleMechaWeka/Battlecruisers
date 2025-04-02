@@ -28,7 +28,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private readonly IDeferrer _deferrer;
 
         private UIManager _uiManager;
-        private const int IN_GAME_HINTS_CUTOFF = 3;
+        private const int IN_GAME_HINTS_CUTOFF = 4;
 
         public override bool ShowInGameHints { get; }
 
@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             ShowInGameHints =
                 DataProvider.SettingsManager.ShowInGameHints
-                && ApplicationModel.SelectedLevel <= IN_GAME_HINTS_CUTOFF;
+                && DataProvider.GameModel.NumOfLevelsCompleted <= IN_GAME_HINTS_CUTOFF;
 
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();
