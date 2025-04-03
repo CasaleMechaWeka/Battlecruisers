@@ -46,6 +46,15 @@ namespace BattleCruisers.AI.BuildOrders
         public BuildingKey[] CreateAdaptiveBuildOrder(LevelInfo levelInfo)
         {
             Strategy strategy = _strategyFactory.GetAdaptiveStrategy();
+
+            // we do not want the AI to build a StealthGen when they only have 1 mast because that makes
+            // it very vulnerable to MissileRevolver
+            if (DataProvider.SettingsManager.AIDifficulty == Data.Settings.Difficulty.Harder
+                && levelInfo.AICruiser.SlotNumProvider.GetSlotCount(SlotType.Mast) <= 1)
+                for (int i = 0; i < strategy.BaseStrategy.Count; i++)
+                    if (strategy.BaseStrategy[i].Key == StaticPrefabKeys.Buildings.StealthGenerator)
+                        strategy.BaseStrategy.RemoveAt(i);
+
             return GetBuildOrder(strategy, levelInfo);
         }
 

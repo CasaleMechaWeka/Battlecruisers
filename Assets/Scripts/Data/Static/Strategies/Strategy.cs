@@ -9,7 +9,7 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class Strategy
     {
-        public IList<IPrefabKeyWrapper> BaseStrategy { get; }
+        public IList<IPrefabKeyWrapper> BaseStrategy;
         public IEnumerable<OffensiveRequest> Offensives { get; }
 
         public Strategy(IList<IPrefabKeyWrapper> prefabKeys, OffensiveRequest[] offensives)
@@ -17,7 +17,9 @@ namespace BattleCruisers.Data.Static.Strategies
             Assert.IsNotNull(prefabKeys);
             Assert.IsTrue(offensives.Length != 0);
 
-            BaseStrategy = prefabKeys;
+            // we do this so we can later modify the stragegy, e.g. based on cruiser type and not get
+            // exceptions if a readonly collection was passed as argument
+            BaseStrategy = new List<IPrefabKeyWrapper>(prefabKeys);
             Offensives = offensives;
         }
 
