@@ -25,6 +25,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -80,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        public override void Initialise(/*IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
+        public override void Initialise(/*IPvPUIManager uiManager,*/ PvPFactoryProvider factoryProvider)
         {
             base.Initialise(/*uiManager,*/ factoryProvider);
 
@@ -93,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
             _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
@@ -179,7 +180,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPTargetProcessorArgs args
                 = new PvPTargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.Targets,
                     EnemyCruiser.Faction,
                     AttackCapabilities,
                     enemyFollowRangeInM,
@@ -193,8 +193,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,
                     enemyHoverRangeInM,
-                    _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
+                    PvPTargetFactoriesProvider.RangeCalculatorProvider.BasicCalculator);
+            ITargetFilter enemyDetectionFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(EnemyCruiser.Faction, AttackCapabilities);
             _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);
             _inRangeTargetTracker.TargetsChanged += _hoverRangeTargetTracker_TargetsChanged;

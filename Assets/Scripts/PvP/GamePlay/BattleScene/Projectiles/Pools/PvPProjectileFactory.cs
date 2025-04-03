@@ -12,10 +12,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         where TProjectile : PvPProjectileControllerBase<TActivationArgs, TStats>
         where TStats : IProjectileStats
     {
-        private readonly IPvPFactoryProvider _factoryProvider;
+        private readonly PvPFactoryProvider _factoryProvider;
         private readonly PvPProjectileKey _projectileKey;
 
-        public PvPProjectileFactory(IPvPFactoryProvider factoryProvider, PvPProjectileKey projectileKey)
+        public PvPProjectileFactory(PvPFactoryProvider factoryProvider, PvPProjectileKey projectileKey)
         {
             PvPHelper.AssertIsNotNull(factoryProvider, projectileKey);
 

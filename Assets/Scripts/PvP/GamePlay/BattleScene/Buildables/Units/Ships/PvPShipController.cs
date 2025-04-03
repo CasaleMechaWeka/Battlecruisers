@@ -23,6 +23,7 @@ using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -117,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     .ToList();
         }
 
-        public override void Initialise(/* IPvPUIManager uiManager, */ IPvPFactoryProvider factoryProvider)
+        public override void Initialise(/* IPvPUIManager uiManager, */ PvPFactoryProvider factoryProvider)
         {
             base.Initialise(/* uiManager ,*/ factoryProvider);
 
@@ -176,7 +177,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPTargetProcessorArgs args
                 = new PvPTargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.Targets,
                     enemyFaction,
                     targetProcessorTargetTypes,
                     OptimalArmamentRangeInM,
@@ -187,7 +187,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
-            IRangeCalculator rangeCalculator = _factoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
+            IRangeCalculator rangeCalculator = PvPTargetFactoriesProvider.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,
@@ -206,7 +206,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
                     EnemyCruiser.BlockedShipsTracker,
-                    _targetFactories.HelperFactory.CreateShipRangeHelper(this));
+                    PvPTargetFactoriesProvider.HelperFactory.CreateShipRangeHelper(this));
         }
 
         public void StartMoving()

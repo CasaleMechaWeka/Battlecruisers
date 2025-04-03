@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPBuilding CreateBuilding(
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab,
             IPvPUIManager uiManager,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             ulong clientID)
         {
             return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, factoryProvider, clientID);
@@ -70,7 +70,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPUnit CreateUnit(
             IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab,
             /* IPvPUIManager uiManager , */
-            IPvPFactoryProvider factoryProvider)
+            PvPFactoryProvider factoryProvider)
         {
             var _unitBuildable = CreateUnitBuildable(unitWrapperPrefab.UnityObject, factoryProvider);
             return _unitBuildable;
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private TBuildable CreateBuildingBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             ulong clientID) where TBuildable : class, IPvPBuilding
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private TBuildable CreateUnitBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
-            IPvPFactoryProvider factoryProvider) where TBuildable : class, IPvPUnit
+            PvPFactoryProvider factoryProvider) where TBuildable : class, IPvPUnit
         {
             PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
@@ -157,7 +157,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newShipDeath.CreateShipDeath();
         }
 
-        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, IPvPFactoryProvider factoryProvider)
+        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, PvPFactoryProvider factoryProvider)
             where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats

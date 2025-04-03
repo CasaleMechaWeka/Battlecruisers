@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -25,13 +26,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private ITarget _targetToDamage;
         private IDamageStats kamikazeDamageStats;
-        private IPvPFactoryProvider _factoryProvider;
+        private PvPFactoryProvider _factoryProvider;
 
         private float remainingPotentialDamage;
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1;
 
-        public void Initialise(IPvPUnit parentAircraft, IPvPFactoryProvider factoryProvider, ITarget target)
+        public void Initialise(IPvPUnit parentAircraft, PvPFactoryProvider factoryProvider, ITarget target)
         {
             PvPHelper.AssertIsNotNull(parentAircraft, factoryProvider);
 
@@ -43,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             remainingPotentialDamage = parentAircraft.MaxHealth * KAMIKAZE_DAMAGE_MULTIPLIER;
 
             List<TargetType> targetTypes = new List<TargetType>() { TargetType.Buildings, TargetType.Cruiser, TargetType.Ships };
-            _targetFilter = factoryProvider.Targets.FilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
+            _targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(_initialTarget.Faction, targetTypes);
 
             kamikazeDamageStats = new DamageStats(remainingPotentialDamage, parentAircraft.Size.x);
             _damageApplier = new PvPAreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));

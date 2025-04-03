@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
 
         public PvPPoolProviders(
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             // IPvPUIManager uiManager,
             IDroneFactory droneFactory)
         {
@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
 
         public PvPPoolProviders(
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPUIManager uiManager,
             IDroneFactory droneFactory)
         {

@@ -23,6 +23,7 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Buildables.Units.Aircraft;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -91,13 +92,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(new PvPDamageCapability(damagePerS, attackCapabilities));
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager, */ IPvPFactoryProvider factoryProvider)
+        public override void Initialise( /* IPvPUIManager uiManager, */ PvPFactoryProvider factoryProvider)
         {
             base.Initialise(/* uiManager,*/ factoryProvider);
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
@@ -110,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _haveDroppedBombOnRun = false;
             _isAtCruisingHeight = false;
             Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
-            ITargetFilter targetFilter = _targetFactories.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
+            ITargetFilter targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities);
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();

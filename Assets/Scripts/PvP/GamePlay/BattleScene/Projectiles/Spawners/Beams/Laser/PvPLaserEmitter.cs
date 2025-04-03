@@ -70,6 +70,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (IsClient)
             {
                 _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
+                Assert.IsNotNull(PvPBattleSceneGodClient.Instance.factoryProvider);
+                Assert.IsNotNull(PvPBattleSceneGodClient.Instance.factoryProvider.DeferrerProvider);
                 _laserImpact.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider.DeferrerProvider.Deferrer);
             }
         }

@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public IDroneManager DroneManager { get; }
         public IPvPDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
-        public IPvPFactoryProvider FactoryProvider { get; }
+        public PvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IDroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
            Direction facingDirection,
             IRepairManager repairManager,
@@ -103,7 +103,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             IDroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             Direction facingDirection,
             IRepairManager repairManager,

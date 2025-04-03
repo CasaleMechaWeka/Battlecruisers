@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPUnitPoolProvider
     {
         private readonly IPvPUIManager _uiManager;
-        private readonly IPvPFactoryProvider _factoryProvider;
+        private readonly PvPFactoryProvider _factoryProvider;
         private readonly IList<Pool<PvPUnit, PvPBuildableActivationArgs>> _pools;
 
         // Don't want more than 1 because unit may never be built.  Want at least 1
@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public Pool<PvPUnit, PvPBuildableActivationArgs> RocketTurtlePool { get; }
         public Pool<PvPUnit, PvPBuildableActivationArgs> FlakTurtlePool { get; }
 
-        public PvPUnitPoolProvider(IPvPFactoryProvider factoryProvider)
+        public PvPUnitPoolProvider(PvPFactoryProvider factoryProvider)
         {
             PvPHelper.AssertIsNotNull(factoryProvider);
 
@@ -77,7 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        public PvPUnitPoolProvider(IPvPUIManager uiManager, IPvPFactoryProvider factoryProvider)
+        public PvPUnitPoolProvider(IPvPUIManager uiManager, PvPFactoryProvider factoryProvider)
         {
             PvPHelper.AssertIsNotNull(uiManager, factoryProvider);
 

@@ -26,6 +26,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -35,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected PvPBarrelController[] _barrels;
         private PvPTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
-        protected IPvPFactoryProvider _factoryProvider;
+        protected PvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
@@ -130,7 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by server
         public void Initialise(
             IPvPBuildable parent,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
@@ -166,7 +167,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPTargetProcessorArgs args
                 = new PvPTargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.Targets,
                     _enemyFaction,
                     DamageCapability.AttackCapabilities,
                     RangeInM,
@@ -183,7 +183,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by client
         public void Initialise(
             IPvPBuildable parent,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             ISoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)
         {
@@ -266,7 +266,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.Targets.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
+            return PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()

@@ -57,8 +57,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         void StaticInitialise(GameObject parent, PvPHealthBarController healthBar);
-        void Initialise(IPvPFactoryProvider factoryProvider);
-        void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager);
+        void Initialise(PvPFactoryProvider factoryProvider);
+        void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager);
         void StartConstruction();
 
     }

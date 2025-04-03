@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IAngleCalculator AngleCalculator { get; }
         public AccuracyAdjuster AccuracyAdjuster { get; }
         public IRotationMovementController RotationMovementController { get; }
-        public IPvPFactoryProvider FactoryProvider { get; }
+        public PvPFactoryProvider FactoryProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public FacingMinRangePositionValidator TargetPositionValidator { get; }
         public AngleLimiter AngleLimiter { get; }
@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IRotationMovementController rotationMovementController,
             FacingMinRangePositionValidator targetPositionValidator,
             AngleLimiter angleLimiter,
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ITarget parent,
             ObservableCollection<IBoostProvider> localBoostProviders,
@@ -92,7 +92,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by client
 
         public PvPBarrelControllerArgs(
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             ITarget parent,
             ISoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)

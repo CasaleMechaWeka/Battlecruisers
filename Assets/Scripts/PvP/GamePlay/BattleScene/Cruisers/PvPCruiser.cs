@@ -117,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Direction Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public IPvPFactoryProvider FactoryProvider { get; private set; }
+        public PvPFactoryProvider FactoryProvider { get; private set; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private PvPFogOfWar _fog;
         public IGameObject Fog => _fog;
@@ -209,7 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public async void Initialise_Client_PvP(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
+        public async void Initialise_Client_PvP(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
             if (!IsHost)
                 FactoryProvider = factoryProvider;
@@ -352,7 +352,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Assert.IsNotNull(enemyShipBlockerInitialiser);
             BlockedShipsTracker
                 = enemyShipBlockerInitialiser.Initialise(
-                    args.FactoryProvider.Targets,
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     PvPHelper.GetOppositeFaction(Faction));
 

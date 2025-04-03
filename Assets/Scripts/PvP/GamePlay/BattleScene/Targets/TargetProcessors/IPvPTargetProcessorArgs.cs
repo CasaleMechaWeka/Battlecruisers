@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using System.Collections.Generic;
 
@@ -8,7 +7,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetProcessorArgs
     {
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
-        PvPTargetFactoriesProvider TargetFactories { get; }
         Faction EnemyFaction { get; }
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }

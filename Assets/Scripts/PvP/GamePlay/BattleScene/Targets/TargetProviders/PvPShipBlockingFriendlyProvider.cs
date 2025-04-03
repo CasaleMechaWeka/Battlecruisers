@@ -25,16 +25,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         private readonly ITargetFilter _isInFrontFilter;
 
         public PvPShipBlockingFriendlyProvider(
-            PvPTargetFactoriesProvider targetsFactories,
             ITargetDetector friendDetector,
             IPvPUnit parentUnit)
         {
-            PvPHelper.AssertIsNotNull(targetsFactories, friendDetector, parentUnit);
+            PvPHelper.AssertIsNotNull(friendDetector, parentUnit);
 
-            _isInFrontFilter = targetsFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
-            ITargetFilter friendFilter = targetsFactories.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
+            ITargetFilter friendFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
             _friendFinder = new RangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;

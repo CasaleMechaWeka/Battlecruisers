@@ -105,14 +105,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 pvp_variantIndex.OnValueChanged -= ApplyVariantIconOnClient;
         }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider)
+        public override void Initialise(PvPFactoryProvider factoryProvider)
         {
             base.Initialise(factoryProvider);
 
             // _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
             _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, 2);

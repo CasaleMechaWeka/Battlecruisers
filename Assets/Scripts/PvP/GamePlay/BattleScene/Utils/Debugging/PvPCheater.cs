@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPCheater : CheaterBase, ICheater
     {
-        private IPvPFactoryProvider _factoryProvider;
+        private PvPFactoryProvider _factoryProvider;
         private IPvPCruiser _playerCruiser, _aiCruiser;
         private float _lastGameSpeed;
 
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
-        public void Initialise(IPvPFactoryProvider factoryProvider, IPvPCruiser playerCruiser, IPvPCruiser aiCruiser)
+        public void Initialise(PvPFactoryProvider factoryProvider, IPvPCruiser playerCruiser, IPvPCruiser aiCruiser)
         {
             Assert.IsNotNull(hudCanvas);
             PvPHelper.AssertIsNotNull(hudCanvas, playerCruiser, aiCruiser);

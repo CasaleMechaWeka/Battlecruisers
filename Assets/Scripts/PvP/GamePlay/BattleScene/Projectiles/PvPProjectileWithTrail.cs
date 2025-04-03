@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected virtual float timeToActiveTrail { get => 0.05f; }
         protected virtual float TrailLifetimeInS { get => 10; }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider)
+        public override void Initialise(PvPFactoryProvider factoryProvider)
         {
             base.Initialise(factoryProvider);
             _deferrer = factoryProvider.DeferrerProvider.Deferrer;

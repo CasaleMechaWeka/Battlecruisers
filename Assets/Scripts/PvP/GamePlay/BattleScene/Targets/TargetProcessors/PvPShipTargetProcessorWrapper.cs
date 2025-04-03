@@ -1,4 +1,4 @@
-using BattleCruisers.Targets.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
@@ -20,14 +20,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
             // In range targets
             InRangeTargetFinder = CreateTargetFinder(args);
-            ITargetRanker inRangeTargetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
+            ITargetRanker inRangeTargetRanker = CreateTargetRanker(PvPTargetFactoriesProvider.RankerFactory);
             IRankedTargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
-            ITargetFilter attackingTargetFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter attackingTargetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = new AttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
-            ITargetRanker baseRanker = args.TargetFactories.RankerFactory.ShipTargetRanker;
-            ITargetRanker attackingTargetRanker = args.TargetFactories.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
+            ITargetRanker baseRanker = PvPTargetFactoriesProvider.RankerFactory.ShipTargetRanker;
+            ITargetRanker attackingTargetRanker = PvPTargetFactoriesProvider.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
             IRankedTargetTracker attackingTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(attackingTargetFinder, attackingTargetRanker);
 
             IRankedTargetTracker compositeTracker

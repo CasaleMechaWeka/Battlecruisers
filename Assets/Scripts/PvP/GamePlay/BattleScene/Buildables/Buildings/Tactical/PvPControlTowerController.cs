@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public float boostMultiplier;
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider)
+        public override void Initialise(PvPFactoryProvider factoryProvider)
         {
             base.Initialise(/*uiManager,*/ factoryProvider);
             _boostProvider = new BoostProvider(boostMultiplier);

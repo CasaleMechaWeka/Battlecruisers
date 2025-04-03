@@ -1,3 +1,4 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         protected override ITargetProcessor CreateTargetProcessorInternal(IPvPTargetProcessorArgs args)
         {
             _targetFinder = CreateTargetFinder(args);
-            ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
+            ITargetRanker targetRanker = CreateTargetRanker(PvPTargetFactoriesProvider.RankerFactory);
             _targetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
 
             if (considerUserChosenTarget)
@@ -49,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             enemyDetector.Initialise(args.MaxRangeInM);
 
             // Create target finder
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
 

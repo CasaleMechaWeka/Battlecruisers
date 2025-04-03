@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Smoke;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
@@ -47,9 +46,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected IPvPUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
-        protected PvPTargetFactoriesProvider _targetFactories;
         protected AircraftProvider _aircraftProvider;
-        protected IPvPFactoryProvider _factoryProvider;
+        protected PvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
@@ -292,7 +290,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        public virtual void Initialise(IPvPFactoryProvider factoryProvider)
+        public virtual void Initialise(PvPFactoryProvider factoryProvider)
         {
             Logging.Log(Tags.BUILDABLE, this);
 
@@ -301,7 +299,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // _uiManager = uiManager;
             _factoryProvider = factoryProvider;
-            _targetFactories = _factoryProvider.Targets;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = new Boostable(1);
@@ -324,14 +321,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public virtual void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public virtual void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             Logging.Log(Tags.BUILDABLE, this);
 
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
             Helper.AssertIsNotNull(factoryProvider);
             _factoryProvider = factoryProvider;
-            _targetFactories = _factoryProvider.Targets;
             _uiManager = uiManager;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;

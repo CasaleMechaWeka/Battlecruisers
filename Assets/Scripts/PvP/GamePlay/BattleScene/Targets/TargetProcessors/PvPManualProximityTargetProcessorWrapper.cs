@@ -1,4 +1,4 @@
-using BattleCruisers.Targets.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -18,8 +18,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                 = args.CruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     args.ParentTarget.Transform,
                     args.MaxRangeInM,
-                    args.TargetFactories.RangeCalculatorProvider.BasicCalculator);
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+                    PvPTargetFactoriesProvider.RangeCalculatorProvider.BasicCalculator);
+            ITargetFilter enemyDetectionFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(_manualDetectorProvider.TargetDetector, enemyDetectionFilter);
         }
 

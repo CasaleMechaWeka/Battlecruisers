@@ -1,5 +1,5 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine.Assertions;
@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             PvPTargetDetectorController enemyDetector = GetComponentInChildren<PvPTargetDetectorController>();
             Assert.IsNotNull(enemyDetector);
 
-            ITargetFilter enemyDetectionFilter = args.TargetFactories.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter enemyDetectionFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
             return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
         }
     }

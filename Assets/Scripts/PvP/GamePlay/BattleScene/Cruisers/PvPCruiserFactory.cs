@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiserFactory : IPvPCruiserFactory
     {
-        private readonly IPvPFactoryProvider _factoryProvider;
+        private readonly PvPFactoryProvider _factoryProvider;
         private readonly IPvPBattleSceneHelper _helper;
         private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
         private readonly IPvPUIManager _uiManager;
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public PvPCruiserFactory(
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPBattleSceneHelper helper
          /*   IPvPUIManager uiManager*/)
         {

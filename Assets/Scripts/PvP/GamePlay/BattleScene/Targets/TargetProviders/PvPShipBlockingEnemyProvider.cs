@@ -43,20 +43,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPShipBlockingEnemyProvider(
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            PvPTargetFactoriesProvider targetsFactories,
             ITargetDetector enemyDetector,
             IPvPUnit parentUnit)
         {
-            PvPHelper.AssertIsNotNull(cruiserSpecificFactories, targetsFactories, enemyDetector, parentUnit);
+            PvPHelper.AssertIsNotNull(cruiserSpecificFactories, enemyDetector, parentUnit);
 
-            _isInFrontFilter = targetsFactories.FilterFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = PvPHelper.GetOppositeFaction(parentUnit.Faction);
-            ITargetFilter enemyDetectionFilter = targetsFactories.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
+            ITargetFilter enemyDetectionFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
             ITargetFinder enemyFinder = new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
-            ITargetRanker targetRanker = targetsFactories.RankerFactory.EqualTargetRanker;
+            ITargetRanker targetRanker = PvPTargetFactoriesProvider.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker targetTracker = cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);
             _targetProcessor = cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(targetTracker);
 

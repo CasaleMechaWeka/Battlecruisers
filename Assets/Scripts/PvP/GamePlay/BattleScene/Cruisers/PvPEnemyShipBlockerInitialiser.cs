@@ -14,11 +14,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPEnemyShipBlockerInitialiser : MonoBehaviour
     {
         public ITargetTracker Initialise(
-            PvPTargetFactoriesProvider targetFactoriesProvider,
             TargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {
-            Helper.AssertIsNotNull(targetFactoriesProvider, targetTrackerFactory);
+            Helper.AssertIsNotNull(targetTrackerFactory);
 
             PvPTargetDetectorController targetDetectorController = GetComponent<PvPTargetDetectorController>();
             Assert.IsNotNull(targetDetectorController);
@@ -31,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             ITargetFinder targetFinder
                 = new RangedTargetFinder(
                     targetDetectorController,
-                    targetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
+                    PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
 
             return targetTrackerFactory.CreateTargetTracker(targetFinder);
         }

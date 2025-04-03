@@ -2,19 +2,11 @@ using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
-    public class PvPTargetFactoriesProvider
+    public static class PvPTargetFactoriesProvider
     {
-        public IPvPTargetFilterFactory FilterFactory { get; }
-        public TargetRankerFactory RankerFactory { get; }
-        public IPvPTargetHelperFactory HelperFactory { get; }
-        public RangeCalculatorProvider RangeCalculatorProvider { get; }
-
-        public PvPTargetFactoriesProvider()
-        {
-            FilterFactory = new PvPTargetFilterFactory();
-            RankerFactory = new TargetRankerFactory();
-            HelperFactory = new PvPTargetHelperFactory();
-            RangeCalculatorProvider = new RangeCalculatorProvider();
-        }
+        public static IPvPTargetFilterFactory FilterFactory = new PvPTargetFilterFactory();
+        public static TargetRankerFactory RankerFactory = new TargetRankerFactory();
+        public static IPvPTargetHelperFactory HelperFactory = new PvPTargetHelperFactory();
+        public static RangeCalculatorProvider RangeCalculatorProvider = new RangeCalculatorProvider();
     }
 }

@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation
 
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider)
+        public override void Initialise(PvPFactoryProvider factoryProvider)
         {
             base.Initialise(factoryProvider);
 

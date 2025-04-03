@@ -102,7 +102,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftTrailObj = transform.FindNamedComponent<TrailRenderer>("AircraftTrail").gameObject;
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager, */IPvPFactoryProvider factoryProvider)
+        public override void Initialise( /* IPvPUIManager uiManager, */PvPFactoryProvider factoryProvider)
         {
             base.Initialise( /* uiManager, */ factoryProvider);
             _velocityBoostable = new Boostable(1);
@@ -110,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             DummyMovementController = new DummyMovementController();
         }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
         {
             base.Initialise(factoryProvider, uiManager);
             _velocityBoostable = new Boostable(1);

@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 
@@ -16,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override ITargetFilter CreateTargetFilter()
         {
-            return _factoryProvider.Targets.FilterFactory.CreateExactMatchTargetFilter();
+            return PvPTargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter();
         }
 
         protected override AngleLimiter CreateAngleLimiter()

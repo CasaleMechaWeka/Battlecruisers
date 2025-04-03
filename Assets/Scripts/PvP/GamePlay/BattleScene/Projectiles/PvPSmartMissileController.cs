@@ -20,6 +20,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
@@ -87,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public override void Initialise(IPvPFactoryProvider factoryProvider)
+        public override void Initialise(PvPFactoryProvider factoryProvider)
         {
             base.Initialise(factoryProvider);
 
@@ -136,17 +137,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private void SetupTargetProcessor(PvPSmartMissileActivationArgs<ISmartProjectileStats> activationArgs)
         {
             ITargetFilter targetFilter
-                = _factoryProvider.Targets.FilterFactory.CreateTargetFilter(
+                = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(
                     activationArgs.EnempCruiser.Faction,
                     activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider
                 = activationArgs.TargetFactories.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
-                    _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
+                    PvPTargetFactoriesProvider.RangeCalculatorProvider.BasicCalculator);
             _targetFinder = new RangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
-            ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
+            ITargetRanker targetRanker = PvPTargetFactoriesProvider.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
             _targetProcessor = activationArgs.TargetFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
             _targetProcessor.AddTargetConsumer(this);

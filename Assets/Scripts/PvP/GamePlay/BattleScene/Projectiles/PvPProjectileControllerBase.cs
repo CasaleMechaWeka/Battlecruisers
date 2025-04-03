@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private Pool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         protected bool _isActiveAndAlive;
-        protected IPvPFactoryProvider _factoryProvider;
+        protected PvPFactoryProvider _factoryProvider;
         protected virtual bool needToTeleport { get => false; }
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
 
         // should be called by server
-        public virtual void Initialise(IPvPFactoryProvider factoryProvider)
+        public virtual void Initialise(PvPFactoryProvider factoryProvider)
         {
             Logging.LogMethod(Tags.SHELLS);
             Helper.AssertIsNotNull(factoryProvider);

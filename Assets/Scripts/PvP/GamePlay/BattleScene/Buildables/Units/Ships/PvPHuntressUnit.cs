@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager,*/ IPvPFactoryProvider factoryProvider)
+        public override void Initialise( /* IPvPUIManager uiManager,*/ PvPFactoryProvider factoryProvider)
         {
             base.Initialise(/* uiManager,*/ factoryProvider);
             AudioSourceBC[] sources = new AudioSourceBC[audioSources.Length];

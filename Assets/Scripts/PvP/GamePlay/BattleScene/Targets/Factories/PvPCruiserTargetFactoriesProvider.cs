@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public IPvPTargetProviderFactory ProviderFactory { get; }
 
         public PvPCruiserTargetFactoriesProvider(
-            IPvPFactoryProvider factoryProvider,
+            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             ProcessorFactory = new PvPTargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, factoryProvider.UpdaterProvider);
-            ProviderFactory = new PvPTargetProviderFactory(cruiserSpecificFactories, factoryProvider.Targets);
+            ProviderFactory = new PvPTargetProviderFactory(cruiserSpecificFactories);
         }
     }
 }

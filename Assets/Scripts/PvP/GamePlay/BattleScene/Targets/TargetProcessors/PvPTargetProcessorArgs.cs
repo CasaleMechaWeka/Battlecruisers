@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public class PvPTargetProcessorArgs : IPvPTargetProcessorArgs
     {
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
-        public PvPTargetFactoriesProvider TargetFactories { get; }
         public Faction EnemyFaction { get; }
         public IList<TargetType> AttackCapabilities { get; }
         public float MaxRangeInM { get; }
@@ -19,19 +17,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPTargetProcessorArgs(
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            PvPTargetFactoriesProvider targetFactories,
             Faction enemyFaction,
             IList<TargetType> attackCapabilities,
             float maxRangeInM,
             float minRangeInM = 0,
             ITarget parentTarget = null)
         {
-            PvPHelper.AssertIsNotNull(cruiserSpecificFactories, targetFactories, attackCapabilities);
+            PvPHelper.AssertIsNotNull(cruiserSpecificFactories, attackCapabilities);
             Assert.IsTrue(maxRangeInM > minRangeInM,
             "maxRange is not higher than minRange; expected: <" + minRangeInM.ToString() + " actual: " + maxRangeInM.ToString());
 
             CruiserSpecificFactories = cruiserSpecificFactories;
-            TargetFactories = targetFactories;
             EnemyFaction = enemyFaction;
             AttackCapabilities = attackCapabilities;
             MaxRangeInM = maxRangeInM;

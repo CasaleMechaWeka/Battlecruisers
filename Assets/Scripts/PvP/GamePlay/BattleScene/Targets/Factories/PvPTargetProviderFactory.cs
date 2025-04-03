@@ -10,15 +10,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPTargetProviderFactory : IPvPTargetProviderFactory
     {
-        private readonly PvPTargetFactoriesProvider _targetFactoriesProvider;
         private readonly IPvPCruiserSpecificFactories _cruiserSpecificFactories;
 
-        public PvPTargetProviderFactory(IPvPCruiserSpecificFactories cruiserSpecificFactories, PvPTargetFactoriesProvider targetFactoriesProvider)
+        public PvPTargetProviderFactory(IPvPCruiserSpecificFactories cruiserSpecificFactories)
         {
-            PvPHelper.AssertIsNotNull(cruiserSpecificFactories, targetFactoriesProvider);
+            PvPHelper.AssertIsNotNull(cruiserSpecificFactories);
 
             _cruiserSpecificFactories = cruiserSpecificFactories;
-            _targetFactoriesProvider = targetFactoriesProvider;
         }
 
         public ITargetProvider CreateStaticTargetProvider(ITarget target)
@@ -28,12 +26,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IPvPUnit parentUnit)
         {
-            return new PvPShipBlockingEnemyProvider(_cruiserSpecificFactories, _targetFactoriesProvider, enemyDetector, parentUnit);
+            return new PvPShipBlockingEnemyProvider(_cruiserSpecificFactories, enemyDetector, parentUnit);
         }
 
         public IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IPvPUnit parentUnit)
         {
-            return new PvPShipBlockingFriendlyProvider(_targetFactoriesProvider, friendlyDetector, parentUnit);
+            return new PvPShipBlockingFriendlyProvider(friendlyDetector, parentUnit);
         }
     }
 }
