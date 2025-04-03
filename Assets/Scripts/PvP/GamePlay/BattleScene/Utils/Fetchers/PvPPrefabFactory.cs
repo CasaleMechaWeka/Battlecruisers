@@ -33,15 +33,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPPrefabFactory
     {
-        private readonly SettingsManager _settingsManager;
-
-        public PvPPrefabFactory(SettingsManager settingsManager)
-        {
-            PvPHelper.AssertIsNotNull(settingsManager);
-
-            _settingsManager = settingsManager;
-        }
-
         public IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return PvPPrefabCache.GetBuilding(buildingKey);

@@ -152,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private async Task _Initialise()
         {
             await PvPPrefabCache.CreatePvPPrefabCacheAsync();
-            prefabFactory = new PvPPrefabFactory(null);
+            prefabFactory = new PvPPrefabFactory();
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
