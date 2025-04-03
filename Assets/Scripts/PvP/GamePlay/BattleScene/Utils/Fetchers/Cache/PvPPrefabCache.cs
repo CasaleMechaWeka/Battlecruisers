@@ -8,21 +8,20 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
 {
-    public class PvPPrefabCache : IPvPPrefabCache
+    public class PvPPrefabCache
     {
-        private readonly IPvPMultiCache<PvPBuildableWrapper<IPvPBuilding>> _buildings;
-        private readonly IPvPMultiCache<PvPBuildableWrapper<IPvPUnit>> _units;
-        private readonly IPvPMultiCache<PvPCruiser> _cruisers;
-        private readonly IPvPMultiCache<PvPExplosionController> _explosions;
-        private readonly IPvPMultiCache<PvPShipDeathInitialiser> _shipDeaths;
-        private readonly IPvPUntypedMultiCache<PvPProjectile> _projectiles;
-        private readonly IPvPMultiCache<PvPBuildableOutlineController> _outlines;
+        private readonly PvPMultiCache<PvPBuildableWrapper<IPvPBuilding>> _buildings;
+        private readonly PvPMultiCache<PvPBuildableWrapper<IPvPUnit>> _units;
+        private readonly PvPMultiCache<PvPCruiser> _cruisers;
+        private readonly PvPMultiCache<PvPExplosionController> _explosions;
+        private readonly PvPMultiCache<PvPShipDeathInitialiser> _shipDeaths;
+        private readonly PvPMultiCache<PvPPrefab> _projectiles;
+        private readonly PvPMultiCache<PvPBuildableOutlineController> _outlines;
 
         IDictionary<string, PvPPrefab> _allPrefabs = new Dictionary<string, PvPPrefab>();
 
@@ -30,15 +29,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPAudioSourceInitialiser AudioSource { get; }
 
         public PvPPrefabCache(
-            IPvPMultiCache<PvPBuildableWrapper<IPvPBuilding>> buildings,
-            IPvPMultiCache<PvPBuildableWrapper<IPvPUnit>> units,
-            IPvPMultiCache<PvPCruiser> cruisers,
-            IPvPMultiCache<PvPExplosionController> explosions,
-            IPvPMultiCache<PvPShipDeathInitialiser> shipDeaths,
-            IPvPUntypedMultiCache<PvPProjectile> projectiles,
+            PvPMultiCache<PvPBuildableWrapper<IPvPBuilding>> buildings,
+            PvPMultiCache<PvPBuildableWrapper<IPvPUnit>> units,
+            PvPMultiCache<PvPCruiser> cruisers,
+            PvPMultiCache<PvPExplosionController> explosions,
+            PvPMultiCache<PvPShipDeathInitialiser> shipDeaths,
+            PvPMultiCache<PvPPrefab> projectiles,
             PvPDroneController drone,
             PvPAudioSourceInitialiser audioSource,
-            IPvPMultiCache<PvPBuildableOutlineController> outlines)
+            PvPMultiCache<PvPBuildableOutlineController> outlines)
         {
             PvPHelper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource);
 
@@ -79,15 +78,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             foreach (IPrefabKey key in _projectiles.GetKeys())
             {
-                _allPrefabs.Add(key.PrefabPath, _projectiles.GetPrefab<PvPProjectile>(key));
+                _allPrefabs.Add(key.PrefabPath, _projectiles.GetPrefab(key));
             }
 
             _allPrefabs.Add(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone.PrefabPath, Drone);
             _allPrefabs.Add(PvPStaticPrefabKeys.AudioSource.PrefabPath, AudioSource);
         }
-
-
-
 
         public PvPBuildableWrapper<IPvPBuilding> GetBuilding(IPrefabKey key)
         {
@@ -118,9 +114,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _shipDeaths.GetPrefab(key);
         }
 
-        public TProjectile GetProjectile<TProjectile>(IPrefabKey prefabKey) where TProjectile : PvPProjectile
+        public PvPPrefab GetProjectile(IPrefabKey prefabKey)
         {
-            return _projectiles.GetPrefab<TProjectile>(prefabKey);
+            return _projectiles.GetPrefab(prefabKey);
         }
 
         public PvPPrefab GetPrefab(string _prefabPath)

@@ -34,10 +34,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPPrefabFactory
     {
-        private readonly IPvPPrefabCache _prefabCache;
+        private readonly PvPPrefabCache _prefabCache;
         private readonly SettingsManager _settingsManager;
 
-        public PvPPrefabFactory(IPvPPrefabCache prefabCache, SettingsManager settingsManager)
+        public PvPPrefabFactory(PvPPrefabCache prefabCache, SettingsManager settingsManager)
         {
             PvPHelper.AssertIsNotNull(prefabCache, settingsManager);
 
@@ -165,8 +165,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             where TStats : IProjectileStats
         {
             Assert.IsNotNull(factoryProvider);
-            TProjectile prefab = _prefabCache.GetProjectile<TProjectile>(prefabKey);
-            TProjectile projectile = Object.Instantiate(prefab);
+            PvPPrefab prefab = _prefabCache.GetProjectile(prefabKey);
+            TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.GetComponent<NetworkObject>().Spawn();
             projectile.Initialise(factoryProvider);
             return projectile;

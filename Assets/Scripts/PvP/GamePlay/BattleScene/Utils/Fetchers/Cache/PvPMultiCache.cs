@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
 {
-    public class PvPMultiCache<TPrefab> : IPvPMultiCache<TPrefab> where TPrefab : class
+    public class PvPMultiCache<TPrefab> where TPrefab : class
     {
         private readonly IDictionary<IPrefabKey, TPrefab> _prefabs;
 

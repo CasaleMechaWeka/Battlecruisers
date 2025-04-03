@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
@@ -25,9 +24,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// consuming code can remain synchronous.  Loading all prefabs takes about 1 seconds.
     /// </summary>
     /// PERF:  Only load prefabs required for level (ie, only 2 hulls, only unlocked buildables)
-    public class PvPPrefabCacheFactory : IPvPPrefabCacheFactory
+    public class PvPPrefabCacheFactory
     {
-        public async Task<IPvPPrefabCache> CreatePrefabCacheAsync()
+        public async Task<PvPPrefabCache> CreatePrefabCacheAsync()
         {
             IList<Task> retrievePrefabsTasks = new List<Task>();
 
@@ -46,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             IDictionary<IPrefabKey, PvPShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, PvPShipDeathInitialiser>();
             retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPShipDeaths.AllKeys, keyToDeath));
 
-            IDictionary<IPrefabKey, PvPProjectile> keyToProjectile = new ConcurrentDictionary<IPrefabKey, PvPProjectile>();
+            IDictionary<IPrefabKey, PvPPrefab> keyToProjectile = new ConcurrentDictionary<IPrefabKey, PvPPrefab>();
             retrievePrefabsTasks.Add(GetPrefabs(PvPStaticPrefabKeys.PvPProjectiles.AllKeys, keyToProjectile));
 
             Container<PvPDroneController> droneContainer = new Container<PvPDroneController>();
@@ -69,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                     new PvPMultiCache<PvPCruiser>(keyToCruiser),
                     new PvPMultiCache<PvPExplosionController>(keyToExplosion),
                     new PvPMultiCache<PvPShipDeathInitialiser>(keyToDeath),
-                    new PvPUntypedMultiCache<PvPProjectile>(keyToProjectile),
+                    new PvPMultiCache<PvPPrefab>(keyToProjectile),
                     droneContainer.Value,
                     audioSourceContainer.Value,
                     new PvPMultiCache<PvPBuildableOutlineController>(keyToOutline));

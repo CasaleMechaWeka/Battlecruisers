@@ -152,8 +152,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async Task _Initialise()
         {
-            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
-            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
+            PvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
+            PvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             prefabFactory = new PvPPrefabFactory(prefabCache, null);
 
             components = GetComponent<PvPBattleSceneGodComponents>();

@@ -21,7 +21,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public abstract class PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats> : PvPProjectile,
+    public abstract class PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats> : PvPPrefab,
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>

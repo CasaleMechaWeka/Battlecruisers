@@ -345,8 +345,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(DataProvider.SettingsManager);
 
-            IPvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
-            IPvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
+            PvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
+            PvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
             prefabFactory = new PvPPrefabFactory(prefabCache, DataProvider.SettingsManager);
 
             navigationPermitters = new NavigationPermitters();
