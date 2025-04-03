@@ -21,6 +21,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI;
 using Unity.Services.Core;
 using System.Net;
+using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Network;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.UI;
@@ -39,10 +40,7 @@ using AppleAuth.Native;
 #endif
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
-#if UNITY_EDITOR
 using System.Security.Cryptography;
-using BattleCruisers.Utils.Fetchers.Cache;
-#endif
 
 namespace BattleCruisers.Scenes
 {
