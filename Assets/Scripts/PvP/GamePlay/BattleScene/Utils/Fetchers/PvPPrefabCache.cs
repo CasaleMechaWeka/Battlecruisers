@@ -18,7 +18,7 @@ using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
     public static class PvPPrefabCache
     {
