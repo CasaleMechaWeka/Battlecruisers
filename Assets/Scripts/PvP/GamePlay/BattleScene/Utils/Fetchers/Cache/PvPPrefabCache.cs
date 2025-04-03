@@ -4,40 +4,37 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
-using System.Collections.Generic;
+using BattleCruisers.Utils.Fetchers.Cache;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache
 {
     public class PvPPrefabCache
     {
-        private readonly PvPMultiCache<PvPBuildableWrapper<IPvPBuilding>> _buildings;
-        private readonly PvPMultiCache<PvPBuildableWrapper<IPvPUnit>> _units;
-        private readonly PvPMultiCache<PvPCruiser> _cruisers;
-        private readonly PvPMultiCache<PvPExplosionController> _explosions;
-        private readonly PvPMultiCache<PvPShipDeathInitialiser> _shipDeaths;
-        private readonly PvPMultiCache<PvPPrefab> _projectiles;
-        private readonly PvPMultiCache<PvPBuildableOutlineController> _outlines;
-
-        IDictionary<string, PvPPrefab> _allPrefabs = new Dictionary<string, PvPPrefab>();
+        private readonly MultiCache<PvPBuildableWrapper<IPvPBuilding>> _buildings;
+        private readonly MultiCache<PvPBuildableWrapper<IPvPUnit>> _units;
+        private readonly MultiCache<PvPCruiser> _cruisers;
+        private readonly MultiCache<PvPExplosionController> _explosions;
+        private readonly MultiCache<PvPShipDeathInitialiser> _shipDeaths;
+        private readonly MultiCache<PvPPrefab> _projectiles;
+        private readonly MultiCache<PvPBuildableOutlineController> _outlines;
 
         public PvPDroneController Drone { get; }
         public PvPAudioSourceInitialiser AudioSource { get; }
 
         public PvPPrefabCache(
-            PvPMultiCache<PvPBuildableWrapper<IPvPBuilding>> buildings,
-            PvPMultiCache<PvPBuildableWrapper<IPvPUnit>> units,
-            PvPMultiCache<PvPCruiser> cruisers,
-            PvPMultiCache<PvPExplosionController> explosions,
-            PvPMultiCache<PvPShipDeathInitialiser> shipDeaths,
-            PvPMultiCache<PvPPrefab> projectiles,
+            MultiCache<PvPBuildableWrapper<IPvPBuilding>> buildings,
+            MultiCache<PvPBuildableWrapper<IPvPUnit>> units,
+            MultiCache<PvPCruiser> cruisers,
+            MultiCache<PvPExplosionController> explosions,
+            MultiCache<PvPShipDeathInitialiser> shipDeaths,
+            MultiCache<PvPPrefab> projectiles,
             PvPDroneController drone,
             PvPAudioSourceInitialiser audioSource,
-            PvPMultiCache<PvPBuildableOutlineController> outlines)
+            MultiCache<PvPBuildableOutlineController> outlines)
         {
             PvPHelper.AssertIsNotNull(buildings, units, cruisers, explosions, shipDeaths, projectiles, drone, audioSource);
 
@@ -50,39 +47,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Drone = drone;
             AudioSource = audioSource;
             _outlines = outlines;
-
-            foreach (IPrefabKey key in _buildings.GetKeys())
-            {
-                _allPrefabs.Add(key.PrefabPath, _buildings.GetPrefab(key));
-            }
-
-            foreach (IPrefabKey key in _units.GetKeys())
-            {
-                _allPrefabs.Add(key.PrefabPath, _units.GetPrefab(key));
-            }
-
-            foreach (IPrefabKey key in _cruisers.GetKeys())
-            {
-                _allPrefabs.Add(key.PrefabPath, _cruisers.GetPrefab(key));
-            }
-
-            foreach (IPrefabKey key in _explosions.GetKeys())
-            {
-                _allPrefabs.Add(key.PrefabPath, _explosions.GetPrefab(key));
-            }
-
-            foreach (IPrefabKey key in _shipDeaths.GetKeys())
-            {
-                _allPrefabs.Add(key.PrefabPath, _shipDeaths.GetPrefab(key));
-            }
-
-            foreach (IPrefabKey key in _projectiles.GetKeys())
-            {
-                _allPrefabs.Add(key.PrefabPath, _projectiles.GetPrefab(key));
-            }
-
-            _allPrefabs.Add(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone.PrefabPath, Drone);
-            _allPrefabs.Add(PvPStaticPrefabKeys.AudioSource.PrefabPath, AudioSource);
         }
 
         public PvPBuildableWrapper<IPvPBuilding> GetBuilding(IPrefabKey key)
@@ -117,11 +81,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public PvPPrefab GetProjectile(IPrefabKey prefabKey)
         {
             return _projectiles.GetPrefab(prefabKey);
-        }
-
-        public PvPPrefab GetPrefab(string _prefabPath)
-        {
-            return _allPrefabs[_prefabPath];
         }
     }
 }

@@ -11,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Ex
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,15 +64,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             return
                 new PvPPrefabCache(
-                    new PvPMultiCache<PvPBuildableWrapper<IPvPBuilding>>(keyToBuilding),
-                    new PvPMultiCache<PvPBuildableWrapper<IPvPUnit>>(keyToUnit),
-                    new PvPMultiCache<PvPCruiser>(keyToCruiser),
-                    new PvPMultiCache<PvPExplosionController>(keyToExplosion),
-                    new PvPMultiCache<PvPShipDeathInitialiser>(keyToDeath),
-                    new PvPMultiCache<PvPPrefab>(keyToProjectile),
+                    new MultiCache<PvPBuildableWrapper<IPvPBuilding>>(keyToBuilding),
+                    new MultiCache<PvPBuildableWrapper<IPvPUnit>>(keyToUnit),
+                    new MultiCache<PvPCruiser>(keyToCruiser),
+                    new MultiCache<PvPExplosionController>(keyToExplosion),
+                    new MultiCache<PvPShipDeathInitialiser>(keyToDeath),
+                    new MultiCache<PvPPrefab>(keyToProjectile),
                     droneContainer.Value,
                     audioSourceContainer.Value,
-                    new PvPMultiCache<PvPBuildableOutlineController>(keyToOutline));
+                    new MultiCache<PvPBuildableOutlineController>(keyToOutline));
         }
 
         private async Task GetPrefabs<TPrefab>(

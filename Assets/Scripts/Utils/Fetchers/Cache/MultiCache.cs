@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Fetchers.Cache
@@ -14,11 +15,6 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             _prefabs = prefabs;
         }
 
-        public bool ContainsKey(IPrefabKey prefabKey)
-        {
-            return _prefabs.ContainsKey(prefabKey);
-        }
-
         public TPrefab GetPrefab(IPrefabKey prefabKey)
         {
             Assert.IsNotNull(prefabKey);
@@ -26,7 +22,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             if (_prefabs.ContainsKey(prefabKey))
                 return _prefabs[prefabKey];
             else
+            {
+                Debug.LogWarning("PrefabKey ----------------> " + prefabKey.PrefabName + " is missing!");
                 return null;
+            }
         }
     }
 }

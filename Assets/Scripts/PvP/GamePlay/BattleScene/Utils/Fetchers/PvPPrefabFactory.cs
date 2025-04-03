@@ -187,11 +187,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
 
-        public PvPPrefab GetPrefab(string prefabPath)
-        {
-            return _prefabCache.GetPrefab(prefabPath);
-        }
-
         public async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
         {
             string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
