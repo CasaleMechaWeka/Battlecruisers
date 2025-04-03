@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
@@ -26,20 +25,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
     public class PvPBattleHelper : PvPBattleSceneHelper
     {
-
-        private readonly IDeferrer _deferrer;
-
         private PvPUIManager _uiManager;
-
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
 
-        public PvPBattleHelper(IDeferrer deferrer) : base()
+        public PvPBattleHelper() : base()
         {
             // _appModel = appModel;
-            _deferrer = deferrer;
-
 
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();

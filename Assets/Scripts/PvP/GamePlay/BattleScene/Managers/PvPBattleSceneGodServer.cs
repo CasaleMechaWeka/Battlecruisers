@@ -156,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(DataProvider.SettingsManager);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
-            pvpBattleHelper = CreatePvPBattleHelper(components.Deferrer);
+            pvpBattleHelper = new PvPBattleHelper();
 
             playerACruiserUserChosenTargetManager = new UserChosenTargetManager();
             playerACruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
@@ -243,12 +243,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     }
                 }*/
 
-        public async void Initialise_Rest()
+        public void Initialise_Rest()
         {
             factoryProvider.Initialise_Rest();
             Debug.Log("====> All initialized");
         }
-
 
         private void RegisteredAllBuildalbesToServer()
         {
@@ -295,6 +294,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
             GameOver = false;
         }
+
         public static void AddDeadBuildable_Left(TargetType type, int value)
         {
             if (!GameOver)
@@ -322,7 +322,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 deadBuildables_left?[type]?.AddPlayedTime(dt);
             }
         }
-
 
         public static void AddDeadBuildable_Right(TargetType type, int value)
         {
@@ -388,10 +387,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private void _droneManagerMonitorB_DroneNumIncreased(object sender, EventArgs e)
         {
             playerBCruiser.pvp_DroneNumIncreased.Value = !playerBCruiser.pvp_DroneNumIncreased.Value;
-        }
-        private IPvPBattleSceneHelper CreatePvPBattleHelper(IDeferrer deferrer)
-        {
-            return new PvPBattleHelper(deferrer);
         }
     }
 }

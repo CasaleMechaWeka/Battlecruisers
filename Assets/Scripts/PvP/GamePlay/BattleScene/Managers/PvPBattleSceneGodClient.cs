@@ -40,7 +40,6 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.Wind;
@@ -318,7 +317,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise(DataProvider.SettingsManager);
             navigationPermitters = new NavigationPermitters();
-            pvpBattleHelper = CreatePvPBattleHelper(null);
+            pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
@@ -346,7 +345,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             navigationPermitters = new NavigationPermitters();
 
-            pvpBattleHelper = CreatePvPBattleHelper(null);
+            pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
             factoryProvider = new PvPFactoryProvider(components, DataProvider.SettingsManager);
             factoryProvider.Initialise(uiManager);
@@ -879,9 +878,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        private IPvPBattleSceneHelper CreatePvPBattleHelper(IDeferrer deferrer)
+        private IPvPBattleSceneHelper CreatePvPBattleHelper()
         {
-            return new PvPBattleHelper(deferrer);
+            return new PvPBattleHelper();
         }
         private void PlayCountDownAnimation()
         {
