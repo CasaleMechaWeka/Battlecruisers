@@ -8,20 +8,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 {
     public class PvPShipDeathFactory : IPoolableFactory<IPoolable<Vector3>, Vector3>
     {
-        private readonly PvPPrefabFactory _prefabFactory;
         private readonly PvPShipDeathKey _shipDeathKey;
 
-        public PvPShipDeathFactory(PvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
+        public PvPShipDeathFactory(PvPShipDeathKey shipDeathKey)
         {
-            PvPHelper.AssertIsNotNull(prefabFactory, shipDeathKey);
+            PvPHelper.AssertIsNotNull(shipDeathKey);
 
-            _prefabFactory = prefabFactory;
             _shipDeathKey = shipDeathKey;
         }
 
         public IPoolable<Vector3> CreateItem()
         {
-            return _prefabFactory.CreateShipDeath(_shipDeathKey);
+            return PvPPrefabFactory.CreateShipDeath(_shipDeathKey);
         }
 
         public override string ToString()

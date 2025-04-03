@@ -57,14 +57,8 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         }
 
 
-        public IPvPBuilding GetBuilding(PvPPrefabFactory prefabFactory)
+        public IPvPBuilding GetPvPBuilding()
         {
-            if (prefabFactory == null)
-            {
-                Debug.LogError("PrefabFactory is null");
-                return null;
-            }
-
             IPrefabKey buildingKey = GetPvPPrefabKey();
             if (buildingKey == null)
             {
@@ -72,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
                 return null;
             }
 
-            var buildingWrapperPrefab = prefabFactory.GetBuildingWrapperPrefab(buildingKey);
+            var buildingWrapperPrefab = PvPPrefabFactory.GetBuildingWrapperPrefab(buildingKey);
             if (buildingWrapperPrefab == null)
             {
                 Debug.LogError($"PvP Building wrapper prefab is null for key: {buildingKey}");
@@ -88,13 +82,9 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             return PrefabFactory.GetUnitWrapperPrefab(GetPrefabKey()).Buildable;
         }
 
-        public IPvPUnit GetUnit(PvPPrefabFactory prefabFactory)
+        public IPvPUnit GetPvPUnit()
         {
-            IPvPUnit unit = null;
-            if (prefabFactory != null)
-                unit = prefabFactory.GetUnitWrapperPrefab(GetPvPPrefabKey()).Buildable;
-
-            return unit;
+            return PvPPrefabFactory.GetUnitWrapperPrefab(GetPvPPrefabKey()).Buildable;
         }
 
         public IPrefabKey GetPrefabKey()

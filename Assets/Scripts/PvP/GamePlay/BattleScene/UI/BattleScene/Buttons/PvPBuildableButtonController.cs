@@ -139,12 +139,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public async void ApplyVariantIfExist(IPvPBuilding building)
         {
-            PvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
-
-            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(prefabFactory, building);
+            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(building);
             if (index != -1)
             {
-                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;
@@ -170,11 +168,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public async void ApplyVariantIfExist(IPvPUnit unit)
         {
-            PvPPrefabFactory prefabFactory = PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory;
-            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(prefabFactory, unit);
+            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(unit);
             if (index != -1)
             {
-                VariantPrefab variant = await prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
                 if (variant != null)
                 {
                     current_variant = variant;

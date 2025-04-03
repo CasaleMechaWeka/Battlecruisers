@@ -19,20 +19,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private readonly IPvPComparableItemDetails<IPvPUnit> _unitDetails;
         private readonly IPvPComparableItemDetails<IPvPCruiser> _cruiserDetails;
 
-        private readonly PvPPrefabFactory _prefabFactory;
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public PvPItemDetailsManager(IPvPInformatorPanel informator, PvPPrefabFactory prefabFactory)
+        public PvPItemDetailsManager(IPvPInformatorPanel informator)
         {
-            PvPHelper.AssertIsNotNull(informator, prefabFactory);
+            PvPHelper.AssertIsNotNull(informator);
 
             _informatorPanel = informator;
             _buildingDetails = informator.BuildingDetails;
             _unitDetails = informator.UnitDetails;
             _cruiserDetails = informator.CruiserDetails;
-
-            _prefabFactory = prefabFactory;
 
             _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
             SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
@@ -50,12 +47,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPBuilding building)
         {
-            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(_prefabFactory, building);
+            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(building);
 
             if (index != -1)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-                IPvPBuilding staticBuilding = variant.GetBuilding(_prefabFactory);
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                IPvPBuilding staticBuilding = variant.GetPvPBuilding();
                 _buildingDetails.ShowItemDetails(staticBuilding, variant);
                 _buildingDetails.GetBuildingVariantDetailController().variantName.text =
                     LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
@@ -90,11 +87,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         private async void ShowItemDetailsV2(IPvPUnit unit)
         {
-            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_prefabFactory, unit);
+            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(unit);
             if (index != -1)
             {
-                VariantPrefab variant = await _prefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-                IPvPUnit staticUnit = variant.GetUnit(_prefabFactory);
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                IPvPUnit staticUnit = variant.GetPvPUnit();
                 _unitDetails.ShowItemDetails(staticUnit, variant);
                 _unitDetails.GetUnitVariantDetailController().variantName.text =
                     LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)

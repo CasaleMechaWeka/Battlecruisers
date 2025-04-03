@@ -1,10 +1,8 @@
 using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths.Pools
 {
@@ -20,28 +18,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public Pool<IPoolable<Vector3>, Vector3> GunBoatPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> TurtlePool { get; }
 
-        public PvPShipDeathPoolProvider(PvPPrefabFactory prefabFactory)
+        public PvPShipDeathPoolProvider()
         {
-            Assert.IsNotNull(prefabFactory);
-
-            AttackBoatPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPAttackBoat);
-            AttackRIBPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPAttackRIB);
-            FrigatePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPFrigate);
-            DestroyerPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPDestroyer);
-            SiegeDestroyerPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPSiegeDestroyer);
-            ArchonPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPArchon);
-            GlassCannoneerPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPGlassCannoneer);
-            GunBoatPool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPGunBoat);
-            TurtlePool = CreateShipDeathPool(prefabFactory, PvPStaticPrefabKeys.PvPShipDeaths.PvPTurtle);
+            AttackBoatPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPAttackBoat);
+            AttackRIBPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPAttackRIB);
+            FrigatePool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPFrigate);
+            DestroyerPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPDestroyer);
+            SiegeDestroyerPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPSiegeDestroyer);
+            ArchonPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPArchon);
+            GlassCannoneerPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPGlassCannoneer);
+            GunBoatPool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPGunBoat);
+            TurtlePool = CreateShipDeathPool(PvPStaticPrefabKeys.PvPShipDeaths.PvPTurtle);
         }
 
-        private Pool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(PvPPrefabFactory prefabFactory, PvPShipDeathKey shipDeathKey)
+        private Pool<IPoolable<Vector3>, Vector3> CreateShipDeathPool(PvPShipDeathKey shipDeathKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(
-                    new PvPShipDeathFactory(
-                        prefabFactory,
-                        shipDeathKey));
+                    new PvPShipDeathFactory(shipDeathKey));
         }
 
         public void SetInitialCapacity()

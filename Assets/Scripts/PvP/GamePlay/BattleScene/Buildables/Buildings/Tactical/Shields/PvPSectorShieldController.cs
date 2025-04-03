@@ -12,6 +12,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -185,7 +186,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Debug.Log(variantIndex);
             if (variantIndex != -1)
             {
-                VariantPrefab variant = await PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 StatVariant statVariant = variant.statVariant;
                 maxHealth += statVariant.shield_health;
                 Stats.shieldRechargeDelayModifier += statVariant.shield_recharge_delay;

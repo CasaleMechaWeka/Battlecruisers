@@ -1,10 +1,8 @@
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools
 {
@@ -26,34 +24,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
         public Pool<IPoolable<Vector3>, Vector3> HugeExplosionsPool { get; }
         public Pool<IPoolable<Vector3>, Vector3> FiveShellClusterExplosionsPool { get; }
 
-        public PvPExplosionPoolProvider(PvPPrefabFactory prefabFactory)
+        public PvPExplosionPoolProvider()
         {
-            Assert.IsNotNull(prefabFactory);
-
-            BulletImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPBulletImpact);
-            HighCalibreBulletImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPHighCalibreBulletImpact);
-            TinyBulletImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPTinyBulletImpact);
-            RailSlugImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPRailSlugImpact);
-            NovaShellImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPNovaShellImpact);
-            RocketShellImpactPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPRocketShellImpact);
-            BombExplosionPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPBombExplosion);
-            FlakExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPFlakExplosion);
-            SmallExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion75);
-            MediumExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion100);
-            MFExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionMF);
-            FirecrackerExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFirecracker);
-            LargeExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion150);
-            HugeExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosion500);
-            FiveShellClusterExplosionsPool = CreateExplosionPool(prefabFactory, PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFiveShellCluster);
+            BulletImpactPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPBulletImpact);
+            HighCalibreBulletImpactPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPHighCalibreBulletImpact);
+            TinyBulletImpactPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPTinyBulletImpact);
+            RailSlugImpactPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPRailSlugImpact);
+            NovaShellImpactPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPNovaShellImpact);
+            RocketShellImpactPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPRocketShellImpact);
+            BombExplosionPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPBombExplosion);
+            FlakExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPFlakExplosion);
+            SmallExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosion75);
+            MediumExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosion100);
+            MFExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosionMF);
+            FirecrackerExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFirecracker);
+            LargeExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosion150);
+            HugeExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosion500);
+            FiveShellClusterExplosionsPool = CreateExplosionPool(PvPStaticPrefabKeys.PvPExplosions.PvPExplosionFiveShellCluster);
         }
 
-        private Pool<IPoolable<Vector3>, Vector3> CreateExplosionPool(PvPPrefabFactory prefabFactory, PvPExplosionKey explosionKey)
+        private Pool<IPoolable<Vector3>, Vector3> CreateExplosionPool(PvPExplosionKey explosionKey)
         {
             return
                 new Pool<IPoolable<Vector3>, Vector3>(
-                    new PvPExplosionFactory(
-                        prefabFactory,
-                        explosionKey));
+                    new PvPExplosionFactory(explosionKey));
         }
 
         public void SetInitialCapacity()

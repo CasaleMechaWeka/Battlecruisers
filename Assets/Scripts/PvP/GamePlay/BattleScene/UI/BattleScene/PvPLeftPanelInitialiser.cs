@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Data.Models;
 using System.Collections.Generic;
 using UnityEngine;
@@ -88,7 +87,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
-            PvPPrefabFactory prefabFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -100,7 +98,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 playerCruiser,
                 uiManager,
                 playerLoadout,
-                prefabFactory,
                 buttonVisibilityFilters,
                 playerCruiserFocusHelper,
                 eventSoundPlayer,
@@ -114,7 +111,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     playerCruiser,
                     uiManager,
                     playerLoadout,
-                    prefabFactory,
                     buttonVisibilityFilters,
                     playerCruiserFocusHelper,
                     eventSoundPlayer,
@@ -141,7 +137,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPCruiser playerCruiser,
             IPvPUIManager uiManager,
             ILoadout playerLoadout,
-            PvPPrefabFactory prefabFactory,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -149,7 +144,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPopulationLimitMonitor populationLimitMonitor,
             bool flipClickAndDragIcon)
         {
-            IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout, prefabFactory);
+            IPvPPrefabOrganiser prefabOrganiser = new PvPPrefabOrganiser(playerLoadout);
             IList<IPvPBuildingGroup> buildingGroups = prefabOrganiser.GetBuildingGroups();
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units = prefabOrganiser.GetUnits();
 

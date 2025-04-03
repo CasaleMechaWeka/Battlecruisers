@@ -3,7 +3,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
@@ -31,14 +30,14 @@ using BattleCruisers.Effects.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
-    public class PvPPrefabFactory
+    public static class PvPPrefabFactory
     {
-        public IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
+        public static IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return PvPPrefabCache.GetBuilding(buildingKey);
         }
 
-        public IPvPBuilding CreateBuilding(
+        public static IPvPBuilding CreateBuilding(
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab,
             PvPFactoryProvider factoryProvider,
             ulong clientID)
@@ -46,17 +45,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, factoryProvider, clientID);
         }
 
-        public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
+        public static IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
         {
             return PvPPrefabCache.GetUnit(unitKey);
         }
 
-        public PvPBuildableOutlineController GetOutline(IPrefabKey outlineKey)
+        public static PvPBuildableOutlineController GetOutline(IPrefabKey outlineKey)
         {
             return PvPPrefabCache.GetOutline(outlineKey);
         }
 
-        public IPvPUnit CreateUnit(
+        public static IPvPUnit CreateUnit(
             IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab,
             /* IPvPUIManager uiManager , */
             PvPFactoryProvider factoryProvider)
@@ -65,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return _unitBuildable;
         }
 
-        private TBuildable CreateBuildingBuildable<TBuildable>(
+        private static TBuildable CreateBuildingBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
             PvPFactoryProvider factoryProvider,
             ulong clientID) where TBuildable : class, IPvPBuilding
@@ -79,14 +78,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             buildableWrapper.Buildable.Initialise(factoryProvider);
             return buildableWrapper.Buildable;
         }
-        public PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab)
+        public static PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab)
         {
             PvPBuildableOutlineController outline = Object.Instantiate(outlinePrefab);
             outline.StaticInitialise();
             return outline;
         }
 
-        private TBuildable CreateUnitBuildable<TBuildable>(
+        private static TBuildable CreateUnitBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
             PvPFactoryProvider factoryProvider) where TBuildable : class, IPvPUnit
         {
@@ -99,12 +98,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return buildableWrapper.Buildable;
         }
 
-        public PvPCruiser GetCruiserPrefab(IPrefabKey hullKey)
+        public static PvPCruiser GetCruiserPrefab(IPrefabKey hullKey)
         {
             return PvPPrefabCache.GetCruiser(hullKey);
         }
 
-        public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x)
+        public static PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x)
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
             cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId, true);
@@ -112,7 +111,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             cruiser.StaticInitialise();
             return cruiser;
         }
-        public PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x)
+        public static PvPCruiser CreateAIBotCruiser(PvPCruiser cruiserPrefab, float x)
         {
             PvPCruiser cruiser = Object.Instantiate(cruiserPrefab, new Vector3(x, 0f, 0f), Quaternion.identity);
             cruiser.GetComponent<NetworkObject>().Spawn();
@@ -121,7 +120,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             cruiser.SetAIBotMode();
             return cruiser;
         }
-        public PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x)
+        public static PvPCruiser CreateCruiser(string prefabName, ulong ClientNetworkId, float x)
         {
             PvPCruiser cruiser = GameObject.Instantiate(Resources.Load<PvPCruiser>("Hulls/" + prefabName), new Vector3(x, 0f, 0f), Quaternion.identity);
             cruiser.GetComponent<NetworkObject>().SpawnWithOwnership(ClientNetworkId, true);
@@ -130,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return cruiser;
         }
 
-        public IPoolable<Vector3> CreateExplosion(PvPExplosionKey explosionKey)
+        public static IPoolable<Vector3> CreateExplosion(PvPExplosionKey explosionKey)
         {
             PvPExplosionController explosionPrefab = PvPPrefabCache.GetExplosion(explosionKey);
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
@@ -138,7 +137,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newExplosion.Initialise();
         }
 
-        public IPoolable<Vector3> CreateShipDeath(PvPShipDeathKey shipDeathKey)
+        public static IPoolable<Vector3> CreateShipDeath(PvPShipDeathKey shipDeathKey)
         {
             PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(shipDeathKey);
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
@@ -146,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newShipDeath.CreateShipDeath();
         }
 
-        public TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, PvPFactoryProvider factoryProvider)
+        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, PvPFactoryProvider factoryProvider)
             where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
@@ -159,7 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return projectile;
         }
 
-        public IDroneController CreateDrone()
+        public static IDroneController CreateDrone()
         {
             PvPDroneController newDrone = Object.Instantiate(PvPPrefabCache.Drone);
             newDrone.GetComponent<NetworkObject>().Spawn();
@@ -167,14 +166,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newDrone;
         }
 
-        public IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
+        public static IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
             PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PvPPrefabCache.AudioSource);
             return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
 
-        public async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
+        public static async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
         {
             string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
@@ -187,7 +186,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return handle.Result.GetComponent<Bodykit>();
         }
 
-        public async Task<VariantPrefab> GetVariant(IPrefabKey prefabKey)
+        public static async Task<VariantPrefab> GetVariant(IPrefabKey prefabKey)
         {
             string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);

@@ -14,6 +14,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.Click;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -50,8 +51,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPCruiser CreatePlayerACruiser(Team team)
         {
-            PvPCruiser playerACruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
-            PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerACruiserPrefab, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
+            PvPCruiser playerACruiserPrefab = PvPPrefabFactory.GetCruiserPrefab(_helper.PlayerACruiser);
+            PvPCruiser playerACruiser = PvPPrefabFactory.CreateCruiser(playerACruiserPrefab, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
 
             //   PvPCruiser playerACruiser = _factoryProvider.PrefabFactory.CreateCruiser(_helper.PlayerACruiser.PrefabName, SynchedServerData.Instance.playerAClientNetworkId.Value, -CRUISER_OFFSET_IN_M);
             playerACruiser.Position = new Vector3(-CRUISER_OFFSET_IN_M, playerACruiser.YAdjustmentInM, 0);
@@ -61,8 +62,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPCruiser CreatePlayerBCruiser(Team team)
         {
-            PvPCruiser playerBCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
-            PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(playerBCruiserPrefab, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
+            PvPCruiser playerBCruiserPrefab = PvPPrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
+            PvPCruiser playerBCruiser = PvPPrefabFactory.CreateCruiser(playerBCruiserPrefab, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
             // PvPCruiser playerBCruiser = _factoryProvider.PrefabFactory.CreateCruiser(_helper.PlayerBCruiser.PrefabName, SynchedServerData.Instance.playerBClientNetworkId.Value, CRUISER_OFFSET_IN_M);
             playerBCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, playerBCruiser.YAdjustmentInM, 0);
             Quaternion rotation = playerBCruiser.Rotation;
@@ -73,8 +74,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPCruiser CreateAIBotCruiser(Team team)
         {
-            PvPCruiser aiBotCruiserPrefab = _factoryProvider.PrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
-            PvPCruiser aiBotCruiser = _factoryProvider.PrefabFactory.CreateAIBotCruiser(aiBotCruiserPrefab, CRUISER_OFFSET_IN_M);
+            PvPCruiser aiBotCruiserPrefab = PvPPrefabFactory.GetCruiserPrefab(_helper.PlayerBCruiser);
+            PvPCruiser aiBotCruiser = PvPPrefabFactory.CreateAIBotCruiser(aiBotCruiserPrefab, CRUISER_OFFSET_IN_M);
             aiBotCruiser.Position = new Vector3(CRUISER_OFFSET_IN_M, aiBotCruiser.YAdjustmentInM, 0);
             Quaternion rotation = aiBotCruiser.Rotation;
             rotation.eulerAngles = new Vector3(0, 180, 0);

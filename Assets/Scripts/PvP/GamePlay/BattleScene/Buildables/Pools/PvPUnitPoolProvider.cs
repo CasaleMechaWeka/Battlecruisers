@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -11,7 +10,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPUnitPoolProvider
     {
-        private readonly IPvPUIManager _uiManager;
         private readonly PvPFactoryProvider _factoryProvider;
         private readonly IList<Pool<PvPUnit, PvPBuildableActivationArgs>> _pools;
 
@@ -76,45 +74,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             FlakTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFlakTurtle);
         }
 
-
-        public PvPUnitPoolProvider(IPvPUIManager uiManager, PvPFactoryProvider factoryProvider)
-        {
-            PvPHelper.AssertIsNotNull(uiManager, factoryProvider);
-
-            _uiManager = uiManager;
-            _factoryProvider = factoryProvider;
-            _pools = new List<Pool<PvPUnit, PvPBuildableActivationArgs>>();
-
-            // Aircraft
-            BomberPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBomber);
-            FighterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFighter);
-            GunshipPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGunship);
-            SteamCopterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSteamCopter);
-            BroadswordPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPBroadsword);
-            StratBomberPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPStratBomber);
-            SpyPlanePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSpyPlane);
-            MissileFighterPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPMissileFighter);
-            TestAircraftPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPTestAircraft);
-
-            // Ship
-            AttackBoatPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPAttackBoat);
-            AttackRIBPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPAttackRIB);
-            FrigatePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFrigate);
-            DestroyerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPDestroyer);
-            SiegeDestroyerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPSiegeDestroyer);
-            ArchonPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPArchonBattleship);
-            GlassCannoneerPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGlassCannoneer);
-            GunBoatPool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPGunBoat);
-            RocketTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPRocketTurtle);
-            FlakTurtlePool = CreatePool(PvPStaticPrefabKeys.PvPUnits.PvPFlakTurtle);
-        }
-
         private Pool<PvPUnit, PvPBuildableActivationArgs> CreatePool(IPrefabKey unitKey)
         {
             Pool<PvPUnit, PvPBuildableActivationArgs> pool
                 = new Pool<PvPUnit, PvPBuildableActivationArgs>(
                     new PvPUnitFactory(
-                        _factoryProvider.PrefabFactory,
                         unitKey,
                         // _uiManager,
                         _factoryProvider));

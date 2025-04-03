@@ -47,8 +47,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, droneFactory);
 
-            _explosionPoolProvider = new PvPExplosionPoolProvider(factoryProvider.PrefabFactory);
-            _shipDeathPoolProvider = new PvPShipDeathPoolProvider(factoryProvider.PrefabFactory);
+            _explosionPoolProvider = new PvPExplosionPoolProvider();
+            _shipDeathPoolProvider = new PvPShipDeathPoolProvider();
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
             _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
@@ -67,14 +67,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             PvPHelper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
 
-            _explosionPoolProvider = new PvPExplosionPoolProvider(factoryProvider.PrefabFactory);
-            _shipDeathPoolProvider = new PvPShipDeathPoolProvider(factoryProvider.PrefabFactory);
+            _explosionPoolProvider = new PvPExplosionPoolProvider();
+            _shipDeathPoolProvider = new PvPShipDeathPoolProvider();
             _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
-            _unitPoolProvider = new PvPUnitPoolProvider(uiManager, factoryProvider);
+            _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
 
             IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory
-                = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
+                = new PvPAudioSourcePoolableFactory(factoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);

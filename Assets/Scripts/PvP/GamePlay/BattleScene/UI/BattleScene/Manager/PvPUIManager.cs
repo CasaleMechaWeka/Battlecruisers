@@ -124,7 +124,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             // Logging.LogMethod(Tags.UI_MANAGER);
             _playerCruiser.SelectedBuildingPrefab = buildingWrapper;
-            int variant_index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(PvPBattleSceneGodClient.Instance.factoryProvider.PrefabFactory, buildingWrapper.Buildable);
+            int variant_index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(buildingWrapper.Buildable);
             _playerCruiser.VariantIndexOfSelectedBuilding = variant_index;
             // ServerRpc call
             _playerCruiser.PvP_SelectedBuildingPrefabServerRpc(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName, variant_index);

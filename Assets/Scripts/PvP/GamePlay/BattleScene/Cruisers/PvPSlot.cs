@@ -21,6 +21,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Properties;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -299,7 +300,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 if (IsVisibleRederer && pvp_IsFree.Value)
                 {
                     //  _parentCruiser.ConstructSelectedBuilding(this);
-                    _outline = _parentCruiser.FactoryProvider.PrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
+                    _outline = PvPPrefabFactory.CreateOutline(_parentCruiser.SelectedBuildableOutlinePrefab);
                     SetSlotBuildingOutline(_outline);
                     controlBuildingPlacementFeedback(true);
                     AudioClipWrapper _placementSound = new AudioClipWrapper(_outline.placementSound);

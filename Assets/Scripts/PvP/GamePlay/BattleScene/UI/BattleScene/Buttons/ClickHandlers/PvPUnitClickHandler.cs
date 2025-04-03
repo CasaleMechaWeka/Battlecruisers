@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             if (canAffordBuildable)
             {
                 //   _uiManager.ShowUnitDetails(unitClicked.Buildable);//added
-                int variantIndex = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(PvPBattleSceneGodClient.Instance.prefabFactory, unitClicked.Buildable);
+                int variantIndex = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(unitClicked.Buildable);
                 HandleFactory(unitClicked, unitFactory, variantIndex);
 
                 if (_populationLimitReachedDecider.ShouldPlayPopulationLimitReachedWarning(_playerCruiser, unitFactory))

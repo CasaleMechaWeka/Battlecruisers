@@ -44,6 +44,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -97,7 +98,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             set
             {
                 _selectedBuildingPrefab = value;
-                SelectedBuildableOutlinePrefab = FactoryProvider.PrefabFactory.GetOutline(new PvPBuildableOutlineKey(value.Buildable.PrefabName + "Outline"));
+                SelectedBuildableOutlinePrefab = PvPPrefabFactory.GetOutline(new PvPBuildableOutlineKey(value.Buildable.PrefabName + "Outline"));
             }
         }
 
@@ -199,7 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private async Task LoadBodykit(int index)
         {
-            Bodykit bodykit = await FactoryProvider.PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+            Bodykit bodykit = await PvPPrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
             if (bodykit != null)
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
@@ -409,7 +410,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, FactoryProvider, OwnerClientId);
+            IPvPBuilding building = PvPPrefabFactory.CreateBuilding(SelectedBuildingPrefab, FactoryProvider, OwnerClientId);
 
             Assert.IsNotNull(building);
 
@@ -692,7 +693,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             if (NetworkManager.ConnectedClientsIds.Contains(clientId))
             {
                 PvPBuildingKey buildingKey = new PvPBuildingKey(category, prefabName);
-                SelectedBuildingPrefab = FactoryProvider.PrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                SelectedBuildingPrefab = PvPPrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
                 VariantIndexOfSelectedBuilding = variantIndex;
             }
         }

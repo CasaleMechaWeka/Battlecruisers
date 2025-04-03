@@ -16,24 +16,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPPrefabOrganiser : IPvPPrefabOrganiser
     {
         private readonly ILoadout _playerLoadout;
-        private readonly PvPPrefabFactory _prefabFactory;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PvPPrefabOrganiser(ILoadout playerLoadout, PvPPrefabFactory prefabFactory)
+        public PvPPrefabOrganiser(ILoadout playerLoadout)
         {
-            PvPHelper.AssertIsNotNull(playerLoadout, prefabFactory);
+            PvPHelper.AssertIsNotNull(playerLoadout);
 
             _playerLoadout = playerLoadout;
-            _prefabFactory = prefabFactory;
         }
 
         public IList<IPvPBuildingGroup> GetBuildingGroups()
         {
-            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout, _prefabFactory);
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout);
             return CreateBuildingGroups(buildings);
         }
 
@@ -75,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout, PvPPrefabFactory prefabFactory)
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout)
         {
             IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
 
@@ -93,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
                 foreach (PvPBuildingKey buildingKey in pvp_buildingKeys)
                 {
-                    IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = prefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                    IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = PvPPrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
                     //    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
                     categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
                 }
@@ -173,20 +171,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
                 if (pvp_unitKeys.Count != 0)
                 {
-                    categoryToUnits[ConvertToPvP(unitCategory)] = GetUnits(pvp_unitKeys, _prefabFactory);
+                    categoryToUnits[ConvertToPvP(unitCategory)] = GetUnits(pvp_unitKeys);
                 }
             }
 
             return categoryToUnits;
         }
 
-        private IList<IPvPBuildableWrapper<IPvPUnit>> GetUnits(IList<PvPUnitKey> unitKeys, PvPPrefabFactory prefabFactory)
+        private IList<IPvPBuildableWrapper<IPvPUnit>> GetUnits(IList<PvPUnitKey> unitKeys)
         {
             IList<IPvPBuildableWrapper<IPvPUnit>> unitWrappers = new List<IPvPBuildableWrapper<IPvPUnit>>(unitKeys.Count);
 
             foreach (PvPUnitKey unitKey in unitKeys)
             {
-                IPvPBuildableWrapper<IPvPUnit> unitWrapper = prefabFactory.GetUnitWrapperPrefab(unitKey);
+                IPvPBuildableWrapper<IPvPUnit> unitWrapper = PvPPrefabFactory.GetUnitWrapperPrefab(unitKey);
                 unitWrappers.Add(unitWrapper);
             }
 
