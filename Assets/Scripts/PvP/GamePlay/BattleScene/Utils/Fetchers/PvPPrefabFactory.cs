@@ -34,20 +34,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPPrefabFactory
     {
-        private readonly PvPPrefabCache _prefabCache;
         private readonly SettingsManager _settingsManager;
 
-        public PvPPrefabFactory(PvPPrefabCache prefabCache, SettingsManager settingsManager)
+        public PvPPrefabFactory(SettingsManager settingsManager)
         {
-            PvPHelper.AssertIsNotNull(prefabCache, settingsManager);
+            PvPHelper.AssertIsNotNull(settingsManager);
 
-            _prefabCache = prefabCache;
             _settingsManager = settingsManager;
         }
 
         public IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
-            return _prefabCache.GetBuilding(buildingKey);
+            return PvPPrefabCache.GetBuilding(buildingKey);
         }
 
         public IPvPBuilding CreateBuilding(
@@ -61,12 +59,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
         {
-            return _prefabCache.GetUnit(unitKey);
+            return PvPPrefabCache.GetUnit(unitKey);
         }
 
         public PvPBuildableOutlineController GetOutline(IPrefabKey outlineKey)
         {
-            return _prefabCache.GetOutline(outlineKey);
+            return PvPPrefabCache.GetOutline(outlineKey);
         }
 
         public IPvPUnit CreateUnit(
@@ -114,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public PvPCruiser GetCruiserPrefab(IPrefabKey hullKey)
         {
-            return _prefabCache.GetCruiser(hullKey);
+            return PvPPrefabCache.GetCruiser(hullKey);
         }
 
         public PvPCruiser CreateCruiser(PvPCruiser cruiserPrefab, ulong ClientNetworkId, float x)
@@ -145,7 +143,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IPoolable<Vector3> CreateExplosion(PvPExplosionKey explosionKey)
         {
-            PvPExplosionController explosionPrefab = _prefabCache.GetExplosion(explosionKey);
+            PvPExplosionController explosionPrefab = PvPPrefabCache.GetExplosion(explosionKey);
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             newExplosion.GetComponent<NetworkObject>().Spawn();
             return newExplosion.Initialise();
@@ -153,7 +151,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IPoolable<Vector3> CreateShipDeath(PvPShipDeathKey shipDeathKey)
         {
-            PvPShipDeathInitialiser shipDeathPrefab = _prefabCache.GetShipDeath(shipDeathKey);
+            PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(shipDeathKey);
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             newShipDeath.GetComponent<NetworkObject>().Spawn();
             return newShipDeath.CreateShipDeath();
@@ -165,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             where TStats : IProjectileStats
         {
             Assert.IsNotNull(factoryProvider);
-            PvPPrefab prefab = _prefabCache.GetProjectile(prefabKey);
+            PvPPrefab prefab = PvPPrefabCache.GetProjectile(prefabKey);
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.GetComponent<NetworkObject>().Spawn();
             projectile.Initialise(factoryProvider);
@@ -174,7 +172,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public IDroneController CreateDrone()
         {
-            PvPDroneController newDrone = Object.Instantiate(_prefabCache.Drone);
+            PvPDroneController newDrone = Object.Instantiate(PvPPrefabCache.Drone);
             newDrone.GetComponent<NetworkObject>().Spawn();
             newDrone.StaticInitialise();
             return newDrone;
@@ -183,7 +181,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
         {
             Assert.IsNotNull(realTimeDeferrer);
-            PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(_prefabCache.AudioSource);
+            PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PvPPrefabCache.AudioSource);
             return audioSourceInitialiser.Initialise(realTimeDeferrer);
         }
 

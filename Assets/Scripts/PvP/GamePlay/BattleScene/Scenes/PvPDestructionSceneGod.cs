@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers.Cache;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
@@ -148,6 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         void Start()
         {
+            PvPPrefabCache.Clear();
             _sceneNavigator = LandingSceneGod.SceneNavigator;
 
             if (_sceneNavigator != null)

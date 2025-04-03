@@ -134,7 +134,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-
         void OnDestroy()
         {
             if (m_NetcodeHooks)
@@ -152,9 +151,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async Task _Initialise()
         {
-            PvPPrefabCacheFactory prefabCacheFactory = new PvPPrefabCacheFactory();
-            PvPPrefabCache prefabCache = await prefabCacheFactory.CreatePrefabCacheAsync();
-            prefabFactory = new PvPPrefabFactory(prefabCache, null);
+            await PvPPrefabCache.CreatePvPPrefabCacheAsync();
+            prefabFactory = new PvPPrefabFactory(null);
 
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();

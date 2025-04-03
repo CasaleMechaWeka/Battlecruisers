@@ -12,6 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPHeckleMessage leftMessage, rightMessage;
         public static PvPHeckleMessageManager Instance;
         private int botHecklesCount = 3;
+        float[] floats;
         public void ShowAIBotHeckle()
         {
             if (botHecklesCount > 0)
