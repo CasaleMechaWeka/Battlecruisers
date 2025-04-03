@@ -2,7 +2,7 @@ using BattleCruisers.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories
 {
-    public class PvPTargetFactoriesProvider : IPvPTargetFactoriesProvider
+    public class PvPTargetFactoriesProvider
     {
         public IPvPTargetFilterFactory FilterFactory { get; }
         public TargetRankerFactory RankerFactory { get; }

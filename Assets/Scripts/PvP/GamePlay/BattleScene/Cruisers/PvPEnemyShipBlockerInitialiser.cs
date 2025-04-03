@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPEnemyShipBlockerInitialiser : MonoBehaviour
     {
         public ITargetTracker Initialise(
-            IPvPTargetFactoriesProvider targetFactoriesProvider,
+            PvPTargetFactoriesProvider targetFactoriesProvider,
             TargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)
         {

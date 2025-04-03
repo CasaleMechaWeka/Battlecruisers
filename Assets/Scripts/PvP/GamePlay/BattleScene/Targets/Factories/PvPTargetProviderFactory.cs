@@ -10,10 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPTargetProviderFactory : IPvPTargetProviderFactory
     {
-        private readonly IPvPTargetFactoriesProvider _targetFactoriesProvider;
+        private readonly PvPTargetFactoriesProvider _targetFactoriesProvider;
         private readonly IPvPCruiserSpecificFactories _cruiserSpecificFactories;
 
-        public PvPTargetProviderFactory(IPvPCruiserSpecificFactories cruiserSpecificFactories, IPvPTargetFactoriesProvider targetFactoriesProvider)
+        public PvPTargetProviderFactory(IPvPCruiserSpecificFactories cruiserSpecificFactories, PvPTargetFactoriesProvider targetFactoriesProvider)
         {
             PvPHelper.AssertIsNotNull(cruiserSpecificFactories, targetFactoriesProvider);
 

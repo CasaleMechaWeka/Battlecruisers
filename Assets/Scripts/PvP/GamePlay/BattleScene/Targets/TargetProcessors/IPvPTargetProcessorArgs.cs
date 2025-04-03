@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public interface IPvPTargetProcessorArgs
     {
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
-        IPvPTargetFactoriesProvider TargetFactories { get; }
+        PvPTargetFactoriesProvider TargetFactories { get; }
         Faction EnemyFaction { get; }
         IList<TargetType> AttackCapabilities { get; }
         float MaxRangeInM { get; }

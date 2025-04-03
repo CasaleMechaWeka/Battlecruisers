@@ -28,7 +28,6 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
     public abstract class PvPBuildable<TPvPActivationArgs> : PvPTarget, IPvPBuildable, IPoolable<TPvPActivationArgs>
@@ -48,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected IPvPUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
-        protected IPvPTargetFactoriesProvider _targetFactories;
+        protected PvPTargetFactoriesProvider _targetFactories;
         protected AircraftProvider _aircraftProvider;
         protected IPvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;

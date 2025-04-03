@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets;
-using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -44,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 
         public PvPShipBlockingEnemyProvider(
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            IPvPTargetFactoriesProvider targetsFactories,
+            PvPTargetFactoriesProvider targetsFactories,
             ITargetDetector enemyDetector,
             IPvPUnit parentUnit)
         {
