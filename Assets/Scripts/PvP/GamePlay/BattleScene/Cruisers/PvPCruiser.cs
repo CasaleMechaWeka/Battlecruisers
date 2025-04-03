@@ -409,7 +409,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider, OwnerClientId);
+            IPvPBuilding building = FactoryProvider.PrefabFactory.CreateBuilding(SelectedBuildingPrefab, FactoryProvider, OwnerClientId);
 
             Assert.IsNotNull(building);
 
