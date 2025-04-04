@@ -17,7 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
-    public class BattleSceneGodComponents : MonoBehaviour, IBattleSceneGodComponents
+    public class BattleSceneGodComponents : MonoBehaviour
     {
         public IDeferrer Deferrer { get; private set; }
         public IDeferrer RealTimeDeferrer { get; private set; }

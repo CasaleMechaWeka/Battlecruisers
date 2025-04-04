@@ -12,7 +12,7 @@ namespace BattleCruisers.Utils.Factories
 {
     public static class FactoryProvider
     {
-        private static IBattleSceneGodComponents _components;
+        private static BattleSceneGodComponents _components;
 
         public static DeferrerProvider DeferrerProvider { get; private set; }
         public static IDroneMonitor DroneMonitor { get; private set; }
@@ -26,7 +26,7 @@ namespace BattleCruisers.Utils.Factories
         public static ISoundFactoryProvider Sound { get; private set; }
 
         public static void Initialise(
-            IBattleSceneGodComponents components,
+            BattleSceneGodComponents components,
             SettingsManager settingsManager,
             IUIManager uiManager)
         {

@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public static class PvPFactoryProvider
     {
         // private readonly IPvPBattleSceneGodComponentsServer _components;
-        private static IPvPBattleSceneGodComponents _components;
+        private static PvPBattleSceneGodComponents _components;
 
         public static DeferrerProvider DeferrerProvider { get; private set; }
         public static IDroneMonitor DroneMonitor { get; private set; }
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private static PvPPoolProviders poolProviders;
 
-        public static void Initialise(IPvPBattleSceneGodComponents components)
+        public static void Initialise(PvPBattleSceneGodComponents components)
         {
             PvPHelper.AssertIsNotNull(components);
 

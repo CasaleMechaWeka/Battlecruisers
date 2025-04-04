@@ -1,10 +1,8 @@
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.Sound.Wind;
@@ -21,7 +19,7 @@ using BattleCruisers.UI.Music;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     [RequireComponent(typeof(NetcodeHooks))]
-    public class PvPBattleSceneGodComponents : MonoBehaviour, IPvPBattleSceneGodComponents
+    public class PvPBattleSceneGodComponents : MonoBehaviour
     {
         public AudioSource prioritisedSoundPlayerAudioSource;
         public IAudioSource PrioritisedSoundPlayerAudioSource { get; private set; }

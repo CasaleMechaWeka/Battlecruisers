@@ -12,7 +12,7 @@ namespace BattleCruisers.Utils.Factories
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 
-        public SoundFactoryProvider(IBattleSceneGodComponents components, PoolProviders poolProviders)
+        public SoundFactoryProvider(BattleSceneGodComponents components, PoolProviders poolProviders)
         {
             Helper.AssertIsNotNull(components, poolProviders);
 
