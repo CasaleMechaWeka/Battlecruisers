@@ -20,6 +20,7 @@ using BattleCruisers.Buildables;
 
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -239,7 +240,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient && IsOwner)
             {
-                _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+                PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
             }
         }
 

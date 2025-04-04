@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
@@ -16,6 +15,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -37,9 +37,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected override float TrailLifetimeInS => 3;
         public ITarget Target { get; private set; }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
             //---> CODE BY ANUJ
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             //Debug.Log("[PvPMissileController] Activate() called. Rotation: " + transform.rotation.eulerAngles + ", Target: " + activationArgs.Target);
 
             Target = activationArgs.Target;
-            _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
+            _deferrer = PvPFactoryProvider.DeferrerProvider.Deferrer;
 
             if (Target.GameObject.GetComponent<PvPBuilding>() != null)
             {
@@ -135,8 +135,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (IsClient)
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
-            if (!IsHost)
-                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
         }
         public override void OnNetworkDespawn()
         {
@@ -164,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private async void PlayExplosionSound()
         {
             Debug.Log("[PvPMissileController] PlayExplosionSound invoked with Type: " + _type + ", Name: " + _name + ", Position: " + _pos);
-            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
+            await PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
         // should be called by client

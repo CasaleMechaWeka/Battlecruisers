@@ -27,7 +27,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiserFactory : IPvPCruiserFactory
     {
-        private readonly PvPFactoryProvider _factoryProvider;
         private readonly IPvPBattleSceneHelper _helper;
         private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
         private readonly IPvPUIManager _uiManager;
@@ -35,14 +34,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
-        public PvPCruiserFactory(
-            PvPFactoryProvider factoryProvider,
-            IPvPBattleSceneHelper helper
-         /*   IPvPUIManager uiManager*/)
+        public PvPCruiserFactory(IPvPBattleSceneHelper helper)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, helper/*, uiManager*/);
+            PvPHelper.AssertIsNotNull(helper/*, uiManager*/);
 
-            _factoryProvider = factoryProvider;
             _helper = helper;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             // _uiManager = uiManager;
@@ -113,7 +108,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.LeftCruiserHasActiveDrones,
+                PvPFactoryProvider.DroneMonitor.LeftCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -147,7 +142,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.RightCruiserHasActiveDrones,
+                PvPFactoryProvider.DroneMonitor.RightCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -170,11 +165,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             IPvPCruiserSpecificFactories cruiserSpecificFactories
                 = new PvPCruiserSpecificFactories(
-                    _factoryProvider,
                     cruiser,
                     enemyCruiser,
                     userChosenTargetTracker,
-                    _factoryProvider.UpdaterProvider,
+                    PvPFactoryProvider.UpdaterProvider,
                     faction);
 
             IDroneManager droneManager = new DroneManager();
@@ -196,7 +190,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     droneManager,
                     droneFocuser,
                     droneConsumerProvider,
-                    _factoryProvider,
                     cruiserSpecificFactories,
                     facingDirection,
                     repairManager,

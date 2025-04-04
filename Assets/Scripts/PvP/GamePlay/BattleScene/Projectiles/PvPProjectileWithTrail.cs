@@ -27,10 +27,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected virtual float timeToActiveTrail { get => 0.05f; }
         protected virtual float TrailLifetimeInS { get => 10; }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
-            _deferrer = factoryProvider.DeferrerProvider.Deferrer;
+            base.Initialise();
+            _deferrer = PvPFactoryProvider.DeferrerProvider.Deferrer;
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
             _trail = GetComponentInChildren<IPvPProjectileTrail>();
@@ -55,12 +55,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 _trail.ShowAllEffects();
             }
         }
-        public override void Initialise()
+        /*public override void Initialise()
         {
             base.Initialise();
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
-        }
+        }*/
 
         public void InitialiseTril()
         {

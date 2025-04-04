@@ -102,17 +102,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftTrailObj = transform.FindNamedComponent<TrailRenderer>("AircraftTrail").gameObject;
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager, */PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise( /* uiManager, */ factoryProvider);
+            base.Initialise();
             _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = new DummyMovementController();
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPUIManager uiManager)
         {
-            base.Initialise(factoryProvider, uiManager);
+            base.Initialise(uiManager);
             _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
             DummyMovementController = new DummyMovementController();
@@ -244,7 +244,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _collider.enabled = false;
             _collider.enabled = true;
 
-            _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
+            _kamikazeController.Initialise(this, kamikazeTarget);
             _kamikazeController.gameObject.SetActive(true);
         }
 
@@ -342,7 +342,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Vector3 currentPosition = rigidBody.position;
             rigidBody.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
-            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
+            PvPFactoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
         }
 
     }

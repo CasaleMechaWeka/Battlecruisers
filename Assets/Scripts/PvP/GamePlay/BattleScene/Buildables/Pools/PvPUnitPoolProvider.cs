@@ -1,8 +1,6 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 
@@ -10,7 +8,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPUnitPoolProvider
     {
-        private readonly PvPFactoryProvider _factoryProvider;
         private readonly IList<Pool<PvPUnit, PvPBuildableActivationArgs>> _pools;
 
         // Don't want more than 1 because unit may never be built.  Want at least 1
@@ -41,12 +38,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public Pool<PvPUnit, PvPBuildableActivationArgs> RocketTurtlePool { get; }
         public Pool<PvPUnit, PvPBuildableActivationArgs> FlakTurtlePool { get; }
 
-        public PvPUnitPoolProvider(PvPFactoryProvider factoryProvider)
+        public PvPUnitPoolProvider()
         {
-            PvPHelper.AssertIsNotNull(factoryProvider);
-
             // _uiManager = uiManager;
-            _factoryProvider = factoryProvider;
             _pools = new List<Pool<PvPUnit, PvPBuildableActivationArgs>>();
 
             // Aircraft
@@ -78,10 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Pool<PvPUnit, PvPBuildableActivationArgs> pool
                 = new Pool<PvPUnit, PvPBuildableActivationArgs>(
-                    new PvPUnitFactory(
-                        unitKey,
-                        // _uiManager,
-                        _factoryProvider));
+                    new PvPUnitFactory(unitKey));
             _pools.Add(pool);
             return pool;
         }

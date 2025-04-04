@@ -16,6 +16,7 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
@@ -68,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     {
                         SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         EnsureDroneConsumerHasHighestPriority();
-                        _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
+                        _unitPool = PvPFactoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
                         Assert.IsNotNull(_unitPool);
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
                         OnNewUnitChosen();

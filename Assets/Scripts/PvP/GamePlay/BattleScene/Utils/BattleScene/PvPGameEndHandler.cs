@@ -3,6 +3,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //---> Code by ANUJ
             ClearProjectiles();
             //<---
-            _playerACruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            PvPFactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
 
             if (_ai_LeftPlayer != null)
                 _ai_LeftPlayer.DisposeManagedState();

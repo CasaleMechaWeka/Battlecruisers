@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using Unity.Netcode;
 using UnityEngine;
 using BattleCruisers.Cruisers.Drones;
@@ -29,9 +28,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public float boostMultiplier;
 
-        public override void Initialise(PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/*uiManager,*/ factoryProvider);
+            base.Initialise();
             _boostProvider = new BoostProvider(boostMultiplier);
         }
 

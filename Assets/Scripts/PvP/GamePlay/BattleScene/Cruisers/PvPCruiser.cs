@@ -118,7 +118,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Direction Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public PvPFactoryProvider FactoryProvider { get; private set; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private PvPFogOfWar _fog;
         public IGameObject Fog => _fog;
@@ -210,10 +209,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public async void Initialise_Client_PvP(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager, IPvPCruiserHelper helper)
+        public async void Initialise_Client_PvP(IPvPUIManager uiManager, IPvPCruiserHelper helper)
         {
-            if (!IsHost)
-                FactoryProvider = factoryProvider;
             _uiManager = uiManager;
             _helper = helper;
             SlotAccessor = _slotWrapperController.Initialise(this);
@@ -334,7 +331,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             //......
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
-            FactoryProvider = args.FactoryProvider;
             CruiserSpecificFactories = args.CruiserSpecificFactories;
             Direction = args.FacingDirection;
             _helper = args.Helper;
@@ -391,7 +387,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _uiManager.ShowCruiserDetails(this);
             if (!IsAIBotMode)
                 _helper.FocusCameraOnCruiser(IsOwner, SynchedServerData.Instance.GetTeam());
-            FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
+            PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
             Clicked?.Invoke(this, EventArgs.Empty);
         }
 
@@ -410,7 +406,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IPvPBuilding building = PvPPrefabFactory.CreateBuilding(SelectedBuildingPrefab, FactoryProvider, OwnerClientId);
+            IPvPBuilding building = PvPPrefabFactory.CreateBuilding(SelectedBuildingPrefab, OwnerClientId);
 
             Assert.IsNotNull(building);
 
@@ -675,7 +671,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_PrioritisedSoundClientRpc(SoundType soundType, string name, SoundPriority priority)
         {
 
-            FactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PrioritisedSoundKey(new SoundKey(soundType, name), priority));
+            PvPFactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PrioritisedSoundKey(new SoundKey(soundType, name), priority));
         }
 
         [ServerRpc(RequireOwnership = true)]

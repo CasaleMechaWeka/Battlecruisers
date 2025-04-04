@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectile
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -93,15 +92,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(new PvPDamageCapability(damagePerS, attackCapabilities));
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager, */ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/* uiManager,*/ factoryProvider);
+            base.Initialise();
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPUIManager uiManager)
         {
-            base.Initialise(factoryProvider, uiManager);
+            base.Initialise(uiManager);
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
@@ -116,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
+            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _cruiserSpecificFactories, EnemyCruiser);
             _ = _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 

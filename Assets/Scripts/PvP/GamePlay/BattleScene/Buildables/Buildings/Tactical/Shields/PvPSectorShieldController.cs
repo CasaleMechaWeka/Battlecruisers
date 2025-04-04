@@ -13,6 +13,7 @@ using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
@@ -202,7 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnPlaySoundClientRpc(SoundType soundType, string soundName, Vector3 position)
         {
             if (IsClient)
-                PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(soundType, soundName), position);
+                PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(soundType, soundName), position);
         }
 
         [ClientRpc]

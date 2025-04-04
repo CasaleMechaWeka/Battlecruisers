@@ -11,7 +11,6 @@ using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -71,9 +70,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager,*/ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/* uiManager,*/ factoryProvider);
+            base.Initialise();
             AudioSourceBC[] sources = new AudioSourceBC[audioSources.Length];
             for (int i = 0; i < sources.Length; i++)
             {
@@ -152,8 +151,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void InitialiseTurrets()
         {
-            minigun.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-            _samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
+            minigun.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+            _samSite.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

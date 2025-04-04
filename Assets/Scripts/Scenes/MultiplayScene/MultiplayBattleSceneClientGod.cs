@@ -1,4 +1,3 @@
-using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
@@ -74,7 +73,6 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
-        private PvPFactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
@@ -184,7 +182,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     aiCruiser,
                     navigationPermitters,
                     components.UpdaterProvider.SwitchableUpdater,
-                    factoryProvider.Sound.UISoundPlayer);
+                    PvPFactoryProvider.Sound.UISoundPlayer);
             cameraComponents.CameraFocuser.FocusOnLeftCruiser();
 
             // Initialise player cruiser
@@ -222,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
-                    factoryProvider.Sound.UISoundPlayer,
+                    PvPFactoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
 
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
@@ -234,7 +232,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     buttonVisibilityFilters,
                     pauseGameManager,
                     battleCompletionHandler,
-                    factoryProvider.Sound.UISoundPlayer,
+                    PvPFactoryProvider.Sound.UISoundPlayer,
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
@@ -248,8 +246,8 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
                     aiCruiser,
                     leftPanelComponents.BuildMenu,
                     itemDetailsManager,
-                    factoryProvider.Sound.PrioritisedSoundPlayer,
-                    factoryProvider.Sound.UISoundPlayer);
+                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.UISoundPlayer);
             helper.InitialiseUIManager(args);
 
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);

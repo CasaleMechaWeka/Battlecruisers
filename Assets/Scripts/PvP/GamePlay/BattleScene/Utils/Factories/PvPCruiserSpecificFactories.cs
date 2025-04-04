@@ -23,7 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public IPvPCruiserTargetFactoriesProvider Targets { get; }
 
         public PvPCruiserSpecificFactories(
-            PvPFactoryProvider factoryProvider,
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker,
@@ -31,41 +30,40 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Faction faction,
             bool isTutorial)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
+            PvPHelper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
             AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(GlobalBoostProviders);
             //   BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
             //  BuildableEffectsSoundPlayer = factoryProvider.Sound.PrioritisedSoundPlayer;
-            Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
+            Targets = new PvPCruiserTargetFactoriesProvider(this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
-                    factoryProvider.PoolProviders.DronePool,
+                    PvPFactoryProvider.PoolProviders.DronePool,
                     new SpawnPositionFinder(Constants.WATER_LINE),
                     faction);
         }
 
         public PvPCruiserSpecificFactories(
-            PvPFactoryProvider factoryProvider,
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker,
             IUpdaterProvider updaterProvider,
             Faction faction)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
+            PvPHelper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
             AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new PvPTurretStatsFactory(GlobalBoostProviders);
             //    BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
-            Targets = new PvPCruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
+            Targets = new PvPCruiserTargetFactoriesProvider(this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
-                    factoryProvider.PoolProviders.DronePool,
+                    PvPFactoryProvider.PoolProviders.DronePool,
                     new SpawnPositionFinder(Constants.WATER_LINE),
                     faction);
         }

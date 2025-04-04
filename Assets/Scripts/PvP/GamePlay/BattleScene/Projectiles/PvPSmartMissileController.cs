@@ -88,9 +88,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
             //---> CODE BY ANUJ
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
@@ -109,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             Target = activationArgs.EnempCruiser;
 
-            _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
+            _deferrer = PvPFactoryProvider.DeferrerProvider.Deferrer;
 
             IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
@@ -256,7 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private async void PlayExplosionSound()
         {
-            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
+            await PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
         // should be called by client

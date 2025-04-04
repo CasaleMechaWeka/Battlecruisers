@@ -35,7 +35,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private Pool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         protected bool _isActiveAndAlive;
-        protected PvPFactoryProvider _factoryProvider;
         protected virtual bool needToTeleport { get => false; }
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -76,29 +75,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public Vector3 Position => transform.position;
 
-
-        // should be called by server
-        public virtual void Initialise(PvPFactoryProvider factoryProvider)
-        {
-            Logging.LogMethod(Tags.SHELLS);
-            Helper.AssertIsNotNull(factoryProvider);
-
-            _factoryProvider = factoryProvider;
-
-            //Debug.Log("[PvPProjectileControllerBase] Initialise() started.");
-            _rigidBody = GetComponent<Rigidbody2D>();
-            //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
-            Assert.IsNotNull(_rigidBody);
-
-            IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
-            Assert.IsNotNull(explosionPoolChooser);
-            _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
-            _isActiveAndAlive = false;
-            OnSetPosition_Visible(Position, false);
-            gameObject.SetActive(false);
-        }
-
-        // should be called by client
         public virtual void Initialise()
         {
             if (!IsHost)
@@ -106,6 +82,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 _rigidBody = GetComponent<Rigidbody2D>();
                 Assert.IsNotNull(_rigidBody);
                 _isActiveAndAlive = false;
+            }
+            else
+            {
+                Logging.LogMethod(Tags.SHELLS);
+
+                //Debug.Log("[PvPProjectileControllerBase] Initialise() started.");
+                _rigidBody = GetComponent<Rigidbody2D>();
+                //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
+                Assert.IsNotNull(_rigidBody);
+
+                IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
+                Assert.IsNotNull(explosionPoolChooser);
+                _explosionPool = explosionPoolChooser.ChoosePool(PvPFactoryProvider.PoolProviders.ExplosionPoolProvider);
+                _isActiveAndAlive = false;
+                OnSetPosition_Visible(Position, false);
+                gameObject.SetActive(false);
             }
         }
 
@@ -228,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected void ShowExplosion()
         {
             if (_explosionPool == null)
-                _explosionPool = GetComponent<IExplosionPoolChooser>().ChoosePool(_factoryProvider.PoolProviders.ExplosionPoolProvider);
+                _explosionPool = GetComponent<IExplosionPoolChooser>().ChoosePool(PvPFactoryProvider.PoolProviders.ExplosionPoolProvider);
             _explosionPool.GetItem(transform.position);
             OnPlayExplosionSound(SoundType.Explosions, _impactSound.AudioClip.name, transform.position);
 

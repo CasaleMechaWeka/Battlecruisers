@@ -7,7 +7,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -70,9 +69,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(_barrelWrapper.DamageCapability);
         }
 
-        public override void Initialise(/* IPvPUIManager uiManager,*/ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/* uiManager, */ factoryProvider);
+            base.Initialise();
 
             _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
@@ -83,9 +82,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPUIManager uiManager)
         {
-            base.Initialise(factoryProvider, uiManager);
+            base.Initialise(uiManager);
             _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
             IVelocityProvider inRangeVelocityProvider
@@ -110,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
                 SetupTargetDetection();
-                _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.PneumaticSlug);
+                _barrelWrapper.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.PneumaticSlug);
                 List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {

@@ -13,6 +13,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             base.Activate(activationArgs);
             _nukeStats = activationArgs.ProjectileStats;
-            _flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
+            _flightPointsProvider = PvPFactoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
             Target = activationArgs.Target;
         }
 
@@ -76,8 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
             }
-            if (!IsHost)
-                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
         }
 
         public override void OnNetworkDespawn()
@@ -101,7 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private async void PlayExplosionSound()
         {
-            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new BattleCruisers.UI.Sound.SoundKey(_type, _name), _pos);
+            await PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new BattleCruisers.UI.Sound.SoundKey(_type, _name), _pos);
         }
 
         private void Awake()
@@ -194,7 +193,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                             maxVelocityProvider,
                             targetProvider,
                             CruisingAltitudeInM,
-                            _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider);
+                            PvPFactoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider);
                 }
             }
         }

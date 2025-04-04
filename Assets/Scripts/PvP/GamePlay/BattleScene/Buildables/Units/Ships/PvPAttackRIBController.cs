@@ -26,8 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void InitialiseTurrets()
         {
             AddExtraFriendDetectionRange(1);
-            ak1.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-            ak2.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+            ak1.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+            ak2.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

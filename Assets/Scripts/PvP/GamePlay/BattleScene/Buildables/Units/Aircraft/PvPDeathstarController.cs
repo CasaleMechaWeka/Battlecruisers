@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.R
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -41,16 +40,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(_barrelWrapper.DamageCapability);
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager, */ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/* uiManager, */ factoryProvider);
+            base.Initialise();
             leftWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
             rightWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPUIManager uiManager)
         {
-            base.Initialise(factoryProvider, uiManager);
+            base.Initialise(uiManager);
             // sava added
             leftWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
             rightWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
@@ -62,13 +61,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
                 Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
-                _barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
+                _barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                 OnBuildableCompletedClientRpc();
             }
             else
             {
                 OnBuildableCompleted_PvPClient();
-                _barrelWrapper.Initialise(this, _factoryProvider);
+                _barrelWrapper.Initialise(this);
             }
         }
 

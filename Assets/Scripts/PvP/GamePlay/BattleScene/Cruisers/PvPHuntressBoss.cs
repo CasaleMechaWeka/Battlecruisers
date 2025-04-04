@@ -1,4 +1,3 @@
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -21,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             isPvPCruiser = false;
             base.Initialise(args);
-            unit.Initialise(/* _uiManager,*/ FactoryProvider);
+            unit.Initialise();
             unit.Activate(this, _enemyCruiser, CruiserSpecificFactories);
             started = true;
             maxHealth = 0 + unit.maxHealth;

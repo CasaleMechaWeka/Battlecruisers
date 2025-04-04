@@ -10,19 +10,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPCheater : CheaterBase, ICheater
     {
-        private PvPFactoryProvider _factoryProvider;
         private IPvPCruiser _playerCruiser, _aiCruiser;
         private float _lastGameSpeed;
 
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
-        public void Initialise(PvPFactoryProvider factoryProvider, IPvPCruiser playerCruiser, IPvPCruiser aiCruiser)
+        public void Initialise(IPvPCruiser playerCruiser, IPvPCruiser aiCruiser)
         {
             Assert.IsNotNull(hudCanvas);
             PvPHelper.AssertIsNotNull(hudCanvas, playerCruiser, aiCruiser);
 
-            _factoryProvider = factoryProvider;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _lastGameSpeed = 0;
@@ -60,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public void ShowNuke()
         {
             Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
+            PvPFactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
         }
 
         public void TogglePause()

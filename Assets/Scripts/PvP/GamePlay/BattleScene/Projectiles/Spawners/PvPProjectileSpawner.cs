@@ -26,7 +26,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
-        protected PvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected IPvPCruiser _enemyCruiser;
 
@@ -44,7 +43,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _impactSound = new AudioClipWrapper(impactSound);
             _parent = args.Parent;
             _projectileStats = args.ProjectileStats;
-            _factoryProvider = args.FactoryProvider;
             _cruiserSpecificFactories = args.CruiserSpecificFactories;
             _enemyCruiser = args.EnempCruiser;
 
@@ -52,16 +50,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             Assert.IsNotNull(poolChooser);
 
-            _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
+            _projectilePool = poolChooser.ChoosePool(PvPFactoryProvider.PoolProviders.ProjectilePoolProvider);
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
             _soundPlayer
                 = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-                    args.FactoryProvider.Sound.SoundPlayerFactory,
+                    PvPFactoryProvider.Sound.SoundPlayerFactory,
                     firingSound,
                     args.BurstSize,
-                    args.FactoryProvider.SettingsManager);
+                    PvPFactoryProvider.SettingsManager);
             _firingSound = firingSound;
             _burstSize = args.BurstSize;
 

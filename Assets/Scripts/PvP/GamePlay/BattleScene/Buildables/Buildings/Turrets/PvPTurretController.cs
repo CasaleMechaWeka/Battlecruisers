@@ -2,7 +2,6 @@ using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -42,7 +41,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelWrapper
                 .Initialise(
                     this,
-                    _factoryProvider,
                     _cruiserSpecificFactories,
                     FiringSound,
                     _parentSlot.BoostProviders,
@@ -58,7 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelWrapper
             .Initialise(
                 this,
-                _factoryProvider,
                 FiringSound,
                 _barrelAnimation);
             _barrelWrapper.ApplyVariantStats(this);

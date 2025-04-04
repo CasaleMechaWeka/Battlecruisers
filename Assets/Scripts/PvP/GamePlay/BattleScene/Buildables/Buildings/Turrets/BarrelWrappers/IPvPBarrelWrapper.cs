@@ -23,7 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         void Initialise(
             IPvPBuildable parent,
-            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
@@ -32,7 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         void Initialise(
             IPvPBuildable parent,
-            PvPFactoryProvider factoryProvider,
             ISoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null);
 

@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted();
 
-            _satellite = PvPPrefabFactory.CreateUnit(satellitePrefab, /*_uiManager, */_factoryProvider);
+            _satellite = PvPPrefabFactory.CreateUnit(satellitePrefab);
             _satellite.Position = transform.position + SpawnPositionAdjustment;
             // pvp
             _satellite.GameObject.GetComponent<NetworkTransform>().Teleport(transform.position + SpawnPositionAdjustment, transform.rotation, transform.localScale);

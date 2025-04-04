@@ -20,6 +20,7 @@ using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -104,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser)
         {
-            return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
+            return PvPFactoryProvider.Sound.PrioritisedSoundPlayer;
         }
 
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
@@ -131,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
     }

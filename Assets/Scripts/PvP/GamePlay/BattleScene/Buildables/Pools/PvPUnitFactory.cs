@@ -1,7 +1,6 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -12,16 +11,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private readonly IPrefabKey _unitKey;
         // private readonly IPvPUIManager _uiManager;
-        private readonly PvPFactoryProvider _factoryProvider;
         private readonly IPvPBuildableWrapper<IPvPUnit> _unitPrefab;
 
-        public PvPUnitFactory(IPrefabKey unitKey, /* IPvPUIManager uiManager, */PvPFactoryProvider factoryProvider)
+        public PvPUnitFactory(IPrefabKey unitKey /* IPvPUIManager uiManager, */)
         {
-            PvPHelper.AssertIsNotNull(unitKey, factoryProvider);
+            PvPHelper.AssertIsNotNull(unitKey);
 
             _unitKey = unitKey;
             // _uiManager = uiManager;
-            _factoryProvider = factoryProvider;
 
             _unitPrefab = PvPPrefabFactory.GetUnitWrapperPrefab(unitKey);
         }
@@ -29,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPUnit CreateItem()
         {
             var unit = PvPPrefabFactory
-                    .CreateUnit(_unitPrefab, /* _uiManager */ _factoryProvider);
+                    .CreateUnit(_unitPrefab /* _uiManager */ );
             return unit.Parse<PvPUnit>();
             /*        _prefabFactory
                         .CreateUnit(_unitPrefab, *//* _uiManager *//* _factoryProvider)

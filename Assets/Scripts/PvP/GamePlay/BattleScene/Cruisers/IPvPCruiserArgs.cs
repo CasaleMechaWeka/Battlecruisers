@@ -24,7 +24,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IDroneManager DroneManager { get; }
         IPvPDroneFocuser DroneFocuser { get; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
-        PvPFactoryProvider FactoryProvider { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         Direction FacingDirection { get; }
         IRepairManager RepairManager { get; }

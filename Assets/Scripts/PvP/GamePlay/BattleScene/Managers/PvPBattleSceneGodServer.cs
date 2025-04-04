@@ -14,7 +14,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Batt
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
-using BattleCruisers.Utils.Threading;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
@@ -30,7 +29,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static IPvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private PvPBattleSceneGodComponents components;
-        public PvPFactoryProvider factoryProvider;
         private PvPCruiser playerACruiser;
         private PvPCruiser playerBCruiser;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerA;
@@ -166,14 +164,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
-            factoryProvider = new PvPFactoryProvider(components, DataProvider.SettingsManager);
-            factoryProvider.Initialise();
+            PvPFactoryProvider.Initialise(components, DataProvider.SettingsManager);
             GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             _Initialise_Rest();
         }
         public void _Initialise_Rest()
         {
-            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(factoryProvider, pvpBattleHelper /*, uiManager */);
+            IPvPCruiserFactory cruiserFactory = new PvPCruiserFactory(pvpBattleHelper /*, uiManager */);
             //await Task.Delay(500);
             playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
             //await Task.Delay(500);
@@ -245,7 +242,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public void Initialise_Rest()
         {
-            factoryProvider.Initialise_Rest();
             Debug.Log("====> All initialized");
         }
 

@@ -11,6 +11,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.UI.Music;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -77,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 new CruiserEventMonitor(
                     new PvPHealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -86,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new PvPUltrasConstructionMonitor(
                     aiCruiser,
-                    aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -106,7 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new PvPPopulationLimitAnnouncer(
                     playerCruiser.PopulationLimitMonitor,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                     popLimitReachedFeedback);
         }

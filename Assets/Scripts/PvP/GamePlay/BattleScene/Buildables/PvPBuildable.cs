@@ -47,7 +47,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected AircraftProvider _aircraftProvider;
-        protected PvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
@@ -290,15 +289,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        public virtual void Initialise(PvPFactoryProvider factoryProvider)
+        public virtual void Initialise()
         {
             Logging.Log(Tags.BUILDABLE, this);
 
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
-            Helper.AssertIsNotNull(factoryProvider);
 
             // _uiManager = uiManager;
-            _factoryProvider = factoryProvider;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = new Boostable(1);
@@ -321,13 +318,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public virtual void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public virtual void Initialise(IPvPUIManager uiManager)
         {
             Logging.Log(Tags.BUILDABLE, this);
 
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
-            Helper.AssertIsNotNull(factoryProvider);
-            _factoryProvider = factoryProvider;
             _uiManager = uiManager;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
@@ -587,7 +582,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (ConstructionCompletedSoundKey != null)
             {
                 if (IsClient && IsOwner)
-                    _factoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
             }
         }
 
@@ -713,7 +708,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+                PvPFactoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
                 //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
 

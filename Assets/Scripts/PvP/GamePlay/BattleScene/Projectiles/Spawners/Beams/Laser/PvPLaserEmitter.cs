@@ -13,6 +13,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Projectiles.Spawners.Beams;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser
 {
@@ -70,9 +71,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (IsClient)
             {
                 _laserSoundPlayer = new LaserSoundPlayer(_laserRenderer, _audioSource);
-                Assert.IsNotNull(PvPBattleSceneGodClient.Instance.factoryProvider);
-                Assert.IsNotNull(PvPBattleSceneGodClient.Instance.factoryProvider.DeferrerProvider);
-                _laserImpact.Initialise(PvPBattleSceneGodClient.Instance.factoryProvider.DeferrerProvider.Deferrer);
+                Assert.IsNotNull(PvPFactoryProvider.DeferrerProvider);
+                _laserImpact.Initialise(PvPFactoryProvider.DeferrerProvider.Deferrer);
             }
         }
         protected override void PlaySparks_PvP()

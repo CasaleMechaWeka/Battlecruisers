@@ -11,24 +11,23 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
-    public class PvPFactoryProvider
+    public static class PvPFactoryProvider
     {
         // private readonly IPvPBattleSceneGodComponentsServer _components;
-        private readonly IPvPBattleSceneGodComponents _components;
+        private static IPvPBattleSceneGodComponents _components;
 
-        public DeferrerProvider DeferrerProvider { get; }
-        public IDroneMonitor DroneMonitor { get; private set; }
-        public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        public IUpdaterProvider UpdaterProvider { get; }
-        public SettingsManager SettingsManager { get; }
+        public static DeferrerProvider DeferrerProvider { get; private set; }
+        public static IDroneMonitor DroneMonitor { get; private set; }
+        public static FlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
+        public static IUpdaterProvider UpdaterProvider { get; private set; }
+        public static SettingsManager SettingsManager { get; private set; }
 
-        // Circular dependencies :/
-        public IPvPPoolProviders PoolProviders { get; private set; }
-        public ISoundFactoryProvider Sound { get; private set; }
+        public static IPvPPoolProviders PoolProviders { get; private set; }
+        public static ISoundFactoryProvider Sound { get; private set; }
 
 
-        private PvPPoolProviders poolProviders;
-        public PvPFactoryProvider(
+        private static PvPPoolProviders poolProviders;
+        public static void Initialise(
             IPvPBattleSceneGodComponents components,
             SettingsManager settingsManager
             )
@@ -40,27 +39,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;
-        }
-        // Not in constructor because of circular dependency
-        public void Initialise( /* IPvPUIManager uiManager */)
-        {
+
             IDroneFactory droneFactory = new PvPDroneFactory();
             DroneMonitor = new DroneMonitor(droneFactory);
-            Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
-            poolProviders = new PvPPoolProviders(this, droneFactory);
+            Sound = new PvPSoundFactoryProvider(_components /*, poolProviders */);
+            poolProviders = new PvPPoolProviders(droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
         }
 
-        public void Initialise_Rest()
+        public static void Initialise_Rest()
         {
             poolProviders.SetInitialCapacities_Rest();
         }
 
-        public void Initialise(IPvPUIManager uiManager)
+        public static void Initialise(IPvPUIManager uiManager)
         {
             Assert.IsNotNull(uiManager);
-            Sound = new PvPSoundFactoryProvider(_components, this /*, poolProviders */);
+            Sound = new PvPSoundFactoryProvider(_components /*, poolProviders */);
         }
     }
 }

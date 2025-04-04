@@ -6,9 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,14 +55,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void Initialise(/* IPvPUIManager uiManager,*/ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/* uiManager,*/ factoryProvider);
+            base.Initialise();
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPUIManager uiManager)
         {
-            base.Initialise(factoryProvider, uiManager);
+            base.Initialise(uiManager);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)
@@ -138,7 +136,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void InitialiseTurrets()
         {
-            laser.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
+            laser.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

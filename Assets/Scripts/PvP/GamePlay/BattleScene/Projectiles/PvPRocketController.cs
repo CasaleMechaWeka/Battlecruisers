@@ -36,9 +36,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation
 
 
-        public override void Initialise(PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
             _rocketTarget = GetComponentInChildren<PvPRocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -74,8 +74,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             ITargetProvider targetProvider = this;
             IFlightPointsProvider flightPointsProvider
                 = activationArgs.ProjectileStats.IsAccurate ?
-                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
-                    _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
+                    PvPFactoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
+                    PvPFactoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
 
             MovementController
                 = new RocketMovementController(
@@ -144,8 +144,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 PvPBattleSceneGodClient.Instance.AddNetworkObject(GetComponent<NetworkObject>());
             }
-            if (!IsHost)
-                _factoryProvider = PvPBattleSceneGodClient.Instance.factoryProvider;
         }
 
         public override void OnNetworkDespawn()
@@ -173,7 +171,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private async void PlayExplosionSound()
         {
-            await PvPBattleSceneGodClient.Instance.factoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
+            await PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
         private void Update()
@@ -285,8 +283,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
                     IFlightPointsProvider flightPointsProvider
                         = IsAccurate ?
-                            _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
-                            _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
+                            PvPFactoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
+                            PvPFactoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
                     MovementController
                         = new RocketMovementController(
                             _rigidBody,

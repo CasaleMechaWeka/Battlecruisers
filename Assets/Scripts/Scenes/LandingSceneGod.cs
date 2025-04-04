@@ -306,6 +306,7 @@ namespace BattleCruisers.Scenes
 
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
+            // we probably want to await the task to finish for performance reasons
             guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
 
             if (CurrentInternetConnectivity.IsConnected)

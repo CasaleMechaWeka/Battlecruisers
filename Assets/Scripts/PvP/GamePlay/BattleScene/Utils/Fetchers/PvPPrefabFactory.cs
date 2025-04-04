@@ -8,7 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Dr
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
@@ -38,10 +37,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static IPvPBuilding CreateBuilding(
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapperPrefab,
-            PvPFactoryProvider factoryProvider,
             ulong clientID)
         {
-            return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, factoryProvider, clientID);
+            return CreateBuildingBuildable(buildingWrapperPrefab.UnityObject, clientID);
         }
 
         public static IPvPBuildableWrapper<IPvPUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
@@ -55,26 +53,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         public static IPvPUnit CreateUnit(
-            IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab,
-            /* IPvPUIManager uiManager , */
-            PvPFactoryProvider factoryProvider)
+            IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab
+            /* IPvPUIManager uiManager , */)
         {
-            var _unitBuildable = CreateUnitBuildable(unitWrapperPrefab.UnityObject, factoryProvider);
+            var _unitBuildable = CreateUnitBuildable(unitWrapperPrefab.UnityObject);
             return _unitBuildable;
         }
 
         private static TBuildable CreateBuildingBuildable<TBuildable>(
             PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
-            PvPFactoryProvider factoryProvider,
             ulong clientID) where TBuildable : class, IPvPBuilding
         {
-            PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
+            PvPHelper.AssertIsNotNull(buildableWrapperPrefab);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.GetComponent<NetworkObject>().SpawnWithOwnership(clientID);
             buildableWrapper.GetComponent<NetworkObject>().DontDestroyWithOwner = false;
             buildableWrapper.StaticInitialise();
-            buildableWrapper.Buildable.Initialise(factoryProvider);
+            buildableWrapper.Buildable.Initialise();
             return buildableWrapper.Buildable;
         }
         public static PvPBuildableOutlineController CreateOutline(PvPBuildableOutlineController outlinePrefab)
@@ -85,15 +81,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         private static TBuildable CreateUnitBuildable<TBuildable>(
-            PvPBuildableWrapper<TBuildable> buildableWrapperPrefab,
-            PvPFactoryProvider factoryProvider) where TBuildable : class, IPvPUnit
+            PvPBuildableWrapper<TBuildable> buildableWrapperPrefab) where TBuildable : class, IPvPUnit
         {
-            PvPHelper.AssertIsNotNull(buildableWrapperPrefab, factoryProvider);
+            PvPHelper.AssertIsNotNull(buildableWrapperPrefab);
             PvPBuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.GetComponent<NetworkObject>().Spawn();
             buildableWrapper.StaticInitialise();
-            buildableWrapper.Buildable.Initialise(factoryProvider);
+            buildableWrapper.Buildable.Initialise();
             return buildableWrapper.Buildable;
         }
 
@@ -144,16 +139,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newShipDeath.CreateShipDeath();
         }
 
-        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey, PvPFactoryProvider factoryProvider)
+        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey)
             where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
             where TStats : IProjectileStats
         {
-            Assert.IsNotNull(factoryProvider);
             PvPPrefab prefab = PvPPrefabCache.GetProjectile(prefabKey);
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.GetComponent<NetworkObject>().Spawn();
-            projectile.Initialise(factoryProvider);
+            projectile.Initialise();
             return projectile;
         }
 

@@ -22,6 +22,7 @@ using BattleCruisers.Utils.Properties;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
@@ -304,7 +305,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     SetSlotBuildingOutline(_outline);
                     controlBuildingPlacementFeedback(true);
                     AudioClipWrapper _placementSound = new AudioClipWrapper(_outline.placementSound);
-                    _parentCruiser.FactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+                    PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
 
                     //  ServerRpc call
                     OnPointerClickServerRpc(gameObject.name);

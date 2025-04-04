@@ -118,13 +118,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     .ToList();
         }
 
-        public override void Initialise(/* IPvPUIManager uiManager, */ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(/* uiManager ,*/ factoryProvider);
+            base.Initialise();
 
             IShipDeathPoolChooser shipDeathPoolChooser = GetComponent<IShipDeathPoolChooser>();
             Assert.IsNotNull(shipDeathPoolChooser);
-            _deathPool = shipDeathPoolChooser.ChoosePool(factoryProvider.PoolProviders.ShipDeathPoolProvider);
+            _deathPool = shipDeathPoolChooser.ChoosePool(PvPFactoryProvider.PoolProviders.ShipDeathPoolProvider);
         }
 
         protected override void OnBuildableCompleted()

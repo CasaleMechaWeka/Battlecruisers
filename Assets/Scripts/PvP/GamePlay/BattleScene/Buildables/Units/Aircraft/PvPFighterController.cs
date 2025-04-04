@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Targets;
@@ -32,6 +31,7 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -82,14 +82,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(_barrelController.DamageCapability);
         }
 
-        public override void Initialise( /* IPvPUIManager uiManager,*/ PvPFactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise( /* uiManager,*/ factoryProvider);
+            base.Initialise();
         }
 
-        public override void Initialise(PvPFactoryProvider factoryProvider, IPvPUIManager uiManager)
+        public override void Initialise(IPvPUIManager uiManager)
         {
-            base.Initialise(factoryProvider, uiManager);
+            base.Initialise(uiManager);
         }
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
@@ -117,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
                 ITarget parent = this;
-                IUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
+                IUpdater updater = PvPFactoryProvider.UpdaterProvider.PerFrameUpdater;
 
                 IPvPBarrelControllerArgs args
                     = new PvPBarrelControllerArgs(
@@ -129,7 +129,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         new RotationMovementController(new TransformBC(_barrelController.transform), updater, _barrelController.TurretStats.TurretRotateSpeedInDegrees),
                         new FacingMinRangePositionValidator(0, true),
                         new AngleLimiter(-30, 30),
-                        _factoryProvider,
                         _cruiserSpecificFactories,
                         parent,
                         _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,

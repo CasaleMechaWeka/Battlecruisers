@@ -36,7 +36,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected PvPBarrelController[] _barrels;
         private PvPTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
-        protected PvPFactoryProvider _factoryProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
@@ -131,18 +130,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by server
         public void Initialise(
             IPvPBuildable parent,
-            PvPFactoryProvider factoryProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
         {
-            PvPHelper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
+            PvPHelper.AssertIsNotNull(parent, cruiserSpecificFactories);
 
             _parent = parent;
             _enemyFaction = _parent.EnemyCruiser.Faction;
-            _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;
             //Debug.Log(_enemyFaction);
             // Shared by all barrels
@@ -183,15 +180,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by client
         public void Initialise(
             IPvPBuildable parent,
-            PvPFactoryProvider factoryProvider,
             ISoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)
         {
-            PvPHelper.AssertIsNotNull(parent, factoryProvider);
+            PvPHelper.AssertIsNotNull(parent);
 
             _parent = parent;
             //    _enemyFaction = _parent.EnemyCruiser.Faction;
-            _factoryProvider = factoryProvider;
             foreach (PvPBarrelController barrel in _barrels)
             {
                 IPvPBarrelControllerArgs barrelArgs
@@ -217,7 +212,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IAnimation barrelFiringAnimation)
         {
-            IUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
+            IUpdater updater = ChooseUpdater(PvPFactoryProvider.UpdaterProvider);
 
             return new PvPBarrelControllerArgs(
                 updater,
@@ -228,7 +223,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CreateRotationMovementController(barrel, updater),
                 CreatePositionValidator(),
                 CreateAngleLimiter(),
-                _factoryProvider,
                 _cruiserSpecificFactories,
                 parent,
                 localBoostProviders,
@@ -246,7 +240,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IAnimation barrelFiringAnimation)
         {
             return new PvPBarrelControllerArgs(
-                _factoryProvider,
                 parent,
                 firingSound,
                 barrelFiringAnimation);

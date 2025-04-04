@@ -26,18 +26,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Unity so *hopefully* this is fixed one day and I can remove this deferral :)
         private ITarget _targetToDamage;
         private IDamageStats kamikazeDamageStats;
-        private PvPFactoryProvider _factoryProvider;
 
         private float remainingPotentialDamage;
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1;
 
-        public void Initialise(IPvPUnit parentAircraft, PvPFactoryProvider factoryProvider, ITarget target)
+        public void Initialise(IPvPUnit parentAircraft, ITarget target)
         {
-            PvPHelper.AssertIsNotNull(parentAircraft, factoryProvider);
+            PvPHelper.AssertIsNotNull(parentAircraft);
 
             _parentAircraft = parentAircraft;
-            _factoryProvider = factoryProvider;
             _initialTarget = target;
             _targetToDamage = null;
 
@@ -49,7 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             kamikazeDamageStats = new DamageStats(remainingPotentialDamage, parentAircraft.Size.x);
             _damageApplier = new PvPAreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
-            _explosionPoolProvider = _factoryProvider.PoolProviders.ExplosionPoolProvider;
+            _explosionPoolProvider = PvPFactoryProvider.PoolProviders.ExplosionPoolProvider;
 
             _initialTarget.Destroyed += Target_Destroyed;
         }

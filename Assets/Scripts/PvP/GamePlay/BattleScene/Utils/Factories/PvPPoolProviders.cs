@@ -40,17 +40,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
 
-        public PvPPoolProviders(
-            PvPFactoryProvider factoryProvider,
-            // IPvPUIManager uiManager,
-            IDroneFactory droneFactory)
+        public PvPPoolProviders(IDroneFactory droneFactory)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, droneFactory);
+            PvPHelper.AssertIsNotNull(droneFactory);
 
             _explosionPoolProvider = new PvPExplosionPoolProvider();
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider();
-            _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
-            _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
+            _projectilePoolProvider = new PvPProjectilePoolProvider();
+            _unitPoolProvider = new PvPUnitPoolProvider();
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
             /*
                         IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
@@ -61,20 +58,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
 
         public PvPPoolProviders(
-            PvPFactoryProvider factoryProvider,
             IPvPUIManager uiManager,
             IDroneFactory droneFactory)
         {
-            PvPHelper.AssertIsNotNull(factoryProvider, uiManager, droneFactory);
+            PvPHelper.AssertIsNotNull(uiManager, droneFactory);
 
             _explosionPoolProvider = new PvPExplosionPoolProvider();
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider();
-            _projectilePoolProvider = new PvPProjectilePoolProvider(factoryProvider);
-            _unitPoolProvider = new PvPUnitPoolProvider(factoryProvider);
+            _projectilePoolProvider = new PvPProjectilePoolProvider();
+            _unitPoolProvider = new PvPUnitPoolProvider();
             _dronePool = new Pool<IDroneController, DroneActivationArgs>(droneFactory);
 
             IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory
-                = new PvPAudioSourcePoolableFactory(factoryProvider.DeferrerProvider.RealTimeDeferrer);
+                = new PvPAudioSourcePoolableFactory(PvPFactoryProvider.DeferrerProvider.RealTimeDeferrer);
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
