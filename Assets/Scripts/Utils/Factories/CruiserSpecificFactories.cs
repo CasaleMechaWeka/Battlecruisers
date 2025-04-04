@@ -21,7 +21,6 @@ namespace BattleCruisers.Utils.Factories
         public CruiserTargetFactoriesProvider Targets { get; }
 
         public CruiserSpecificFactories(
-            FactoryProvider factoryProvider,
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker,
@@ -29,17 +28,17 @@ namespace BattleCruisers.Utils.Factories
             Faction faction,
             bool isTutorial)
         {
-            Helper.AssertIsNotNull(factoryProvider, parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
+            Helper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
             AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new TurretStatsFactory(GlobalBoostProviders);
-            BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? factoryProvider.Sound.PrioritisedSoundPlayer : factoryProvider.Sound.DummySoundPlayer;
-            Targets = new CruiserTargetFactoriesProvider(factoryProvider, this, parentCruiser, enemyCruiser, userChosenTargetTracker);
+            BuildableEffectsSoundPlayer = parentCruiser.IsPlayerCruiser ? FactoryProvider.Sound.PrioritisedSoundPlayer : FactoryProvider.Sound.DummySoundPlayer;
+            Targets = new CruiserTargetFactoriesProvider(this, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
-                    factoryProvider.PoolProviders.DronePool,
+                    FactoryProvider.PoolProviders.DronePool,
                     new SpawnPositionFinder(Constants.WATER_LINE),
                     faction);
         }

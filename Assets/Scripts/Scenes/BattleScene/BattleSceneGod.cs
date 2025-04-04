@@ -1,4 +1,3 @@
-using BattleCruisers.AI;
 using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Damage;
@@ -78,7 +77,6 @@ namespace BattleCruisers.Scenes.BattleScene
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
-        public FactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
@@ -159,9 +157,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, DataProvider.SettingsManager);
-            factoryProvider.Initialise(uiManager);
-            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, uiManager);
+            FactoryProvider.Initialise(components, DataProvider.SettingsManager, uiManager);
+            ICruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
@@ -177,7 +174,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     navigationPermitters,
                     components.UpdaterProvider.SwitchableUpdater,
-                    factoryProvider.Sound.UISoundPlayer);
+                    FactoryProvider.Sound.UISoundPlayer);
             cameraComponents.CameraFocuser.FocusOnLeftCruiser();
 
             // Initialise player cruiser
@@ -187,7 +184,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetHelper userChosenTargetHelper
                 = helper.CreateUserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
                     components.TargetIndicator);
             cruiserFactory
                 .InitialiseAICruiser(
@@ -270,7 +267,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     new PlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
                     helper.GetBuildableButtonSoundPlayer(playerCruiser),
-                    factoryProvider.Sound.UISoundPlayer,
+                    FactoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor);
 
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
@@ -282,7 +279,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     buttonVisibilityFilters,
                     pauseGameManager,
                     battleCompletionHandler,
-                    factoryProvider.Sound.UISoundPlayer,
+                    FactoryProvider.Sound.UISoundPlayer,
                     navigationPermitterManager);
             _lifetimeManager = new LifetimeManager(components.LifetimeEvents, rightPanelComponents.MainMenuManager);
 
@@ -296,8 +293,8 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiser,
                     leftPanelComponents.BuildMenu,
                     itemDetailsManager,
-                    factoryProvider.Sound.PrioritisedSoundPlayer,
-                    factoryProvider.Sound.UISoundPlayer);
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.UISoundPlayer);
             helper.InitialiseUIManager(args);
 
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);
@@ -387,7 +384,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>(includeInactive: true);
-            cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
+            cheater?.Initialise(playerCruiser, aiCruiser);
 
             // Tutorial
             ITutorialArgsBase tutorialArgs

@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects.Laser;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -63,7 +64,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 _laserTurretStats.damagePerS,
                 args.Parent,
                 args.Updater,
-                args.FactoryProvider.DeferrerProvider.Deferrer);
+                FactoryProvider.DeferrerProvider.Deferrer);
 
             ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
             Assert.IsNotNull(laserCooldownEffectInitialiser);

@@ -10,24 +10,25 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
-    public class FactoryProvider
+    public static class FactoryProvider
     {
-        private readonly IBattleSceneGodComponents _components;
+        private static IBattleSceneGodComponents _components;
 
-        public DeferrerProvider DeferrerProvider { get; }
-        public IDroneMonitor DroneMonitor { get; private set; }
-        public FlightPointsProviderFactory FlightPointsProviderFactory { get; }
-        public TargetFactoriesProvider Targets { get; }
-        public IUpdaterProvider UpdaterProvider { get; }
-        public SettingsManager SettingsManager { get; }
+        public static DeferrerProvider DeferrerProvider { get; private set; }
+        public static IDroneMonitor DroneMonitor { get; private set; }
+        public static FlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
+        public static TargetFactoriesProvider Targets { get; private set; }
+        public static IUpdaterProvider UpdaterProvider { get; private set; }
+        public static SettingsManager SettingsManager { get; private set; }
 
         // Circular dependencies :/
-        public PoolProviders PoolProviders { get; private set; }
-        public ISoundFactoryProvider Sound { get; private set; }
+        public static PoolProviders PoolProviders { get; private set; }
+        public static ISoundFactoryProvider Sound { get; private set; }
 
-        public FactoryProvider(
+        public static void Initialise(
             IBattleSceneGodComponents components,
-            SettingsManager settingsManager)
+            SettingsManager settingsManager,
+            IUIManager uiManager)
         {
             Helper.AssertIsNotNull(components, settingsManager);
 
@@ -37,21 +38,29 @@ namespace BattleCruisers.Utils.Factories
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;
-        }
 
-        // Not in constructor because of circular dependency
-        public void Initialise(IUIManager uiManager)
-        {
             Assert.IsNotNull(uiManager);
 
             IDroneFactory droneFactory = new DroneFactory();
             DroneMonitor = new DroneMonitor(droneFactory);
 
-            PoolProviders poolProviders = new PoolProviders(this, uiManager, droneFactory);
+            PoolProviders poolProviders = new PoolProviders(uiManager, droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
 
             Sound = new SoundFactoryProvider(_components, poolProviders);
+        }
+
+        public static void Clear()
+        {
+            DeferrerProvider = null;
+            DroneMonitor = null;
+            FlightPointsProviderFactory = null;
+            Targets = null;
+            UpdaterProvider = null;
+            SettingsManager = null;
+            PoolProviders = null;
+            Sound = null;
         }
     }
 }

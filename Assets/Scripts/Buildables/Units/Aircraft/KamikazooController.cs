@@ -15,7 +15,6 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -73,11 +72,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
         }
 
-
-
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);
 
@@ -116,7 +113,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         soundKey = SoundKeys.Firing.AttackBoat; // default sound key if no match is found
                         break;
                 }
-                barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories, soundKey);
+                barrelWrapper.Initialise(this, _cruiserSpecificFactories, soundKey);
                 barrelWrapper.ApplyVariantStats(this);
             }
             List<Sprite> allSpriteWrappers = new List<Sprite>();
@@ -134,7 +131,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.Targets,
+                    FactoryProvider.Targets,
                     EnemyCruiser.Faction,
                     AttackCapabilities,
                     enemyFollowRangeInM,
@@ -148,7 +145,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,
                     enemyHoverRangeInM,
-                    _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
+                    FactoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
             ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(EnemyCruiser.Faction, AttackCapabilities);
             _inRangeTargetFinder = new RangedTargetFinder(_hoverTargetDetectorProvider.TargetDetector, enemyDetectionFilter);
             _inRangeTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(_inRangeTargetFinder);

@@ -5,6 +5,7 @@ using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.InGameHints;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 
 namespace BattleCruisers.Tutorial
@@ -34,7 +35,7 @@ namespace BattleCruisers.Tutorial
                 return;
             }
 
-            explanationPanel.Initialise(baseArgs.PlayerCruiser.FactoryProvider.Sound.UISoundPlayer);
+            explanationPanel.Initialise(FactoryProvider.Sound.UISoundPlayer);
             _explanationPanelHeightManager
                 = new ExplanationPanelHeightManager(
                     explanationPanel,

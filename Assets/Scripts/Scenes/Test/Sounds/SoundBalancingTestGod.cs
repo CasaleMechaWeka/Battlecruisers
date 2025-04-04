@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             AudioSource singleSoundPlayerSource = transform.FindNamedComponent<AudioSource>("SingleSoundPlayer");
             BuildableInitialisationArgs initialisationArgs = helper.CreateBuildableInitialisationArgs();
-            SetupSoundPlayerObjects(singleSoundPlayerSource, initialisationArgs.FactoryProvider.PoolProviders);
+            SetupSoundPlayerObjects(singleSoundPlayerSource, FactoryProvider.PoolProviders);
 
             windButtonsPanelController.Initialise(_camera, _cameraCalculatorSettings);
         }

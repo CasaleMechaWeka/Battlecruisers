@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -28,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
                 GameObject deathInstance = Instantiate(deathPrefab);
                 deathInstance.transform.position = cruiser.Position;
-            }, 
+            },
             delayInS: deathTimeInS);
         }
 
@@ -38,12 +39,12 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
             if (showArtilleryExplosion)
             {
-                initialisationArgs.FactoryProvider.PoolProviders.ExplosionPoolProvider.LargeExplosionsPool.GetItem(explosionPosition);
+                FactoryProvider.PoolProviders.ExplosionPoolProvider.LargeExplosionsPool.GetItem(explosionPosition);
             }
 
             if (showNukeExplosion)
             {
-                initialisationArgs.FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(explosionPosition);
+                FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(explosionPosition);
             }
         }
     }

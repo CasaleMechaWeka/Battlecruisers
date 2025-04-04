@@ -10,7 +10,6 @@ namespace BattleCruisers.Utils.Debugging
 {
     public class Cheater : CheaterBase, ICheater
     {
-        private FactoryProvider _factoryProvider;
         private ICruiser _playerCruiser, _aiCruiser;
         private float _lastGameSpeed;
 
@@ -20,12 +19,11 @@ namespace BattleCruisers.Utils.Debugging
         public int droneBoostNumber;
         public Canvas hudCanvas;
 
-        public void Initialise(FactoryProvider factoryProvider, ICruiser playerCruiser, ICruiser aiCruiser)
+        public void Initialise(ICruiser playerCruiser, ICruiser aiCruiser)
         {
             Assert.IsNotNull(hudCanvas);
             Helper.AssertIsNotNull(hudCanvas, playerCruiser, aiCruiser);
 
-            _factoryProvider = factoryProvider;
             _playerCruiser = playerCruiser;
             _aiCruiser = aiCruiser;
             _lastGameSpeed = 0;
@@ -63,7 +61,7 @@ namespace BattleCruisers.Utils.Debugging
         public void ShowNuke()
         {
             Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
+            FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
         }
 
         public void TogglePause()

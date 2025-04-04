@@ -15,6 +15,7 @@ using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Buildings
 {
@@ -209,7 +210,7 @@ namespace BattleCruisers.Buildables.Buildings
 
             if (ParentCruiser.IsPlayerCruiser)
             {
-                _factoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+                FactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
             }
 
             foreach (var renderer in additionalRenderers)

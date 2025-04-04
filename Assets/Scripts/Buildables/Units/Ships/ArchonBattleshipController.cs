@@ -10,7 +10,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -55,13 +54,13 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             _unfurlAudioGroup
                 = new AudioSourceGroup(
-                    factoryProvider.SettingsManager,
+                    FactoryProvider.SettingsManager,
                     new AudioSourceBC(bellowAudioSource),
                     new AudioSourceBC(crankAudioSource),
                     new AudioSourceBC(chainAudioSource),
@@ -116,7 +115,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            laser.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
+            laser.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

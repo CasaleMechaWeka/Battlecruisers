@@ -32,9 +32,9 @@ namespace BattleCruisers.Projectiles
 
         private TargetProviderActivationArgs<IProjectileStats> _activationArgs;
 
-        public override void Initialise(FactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -50,7 +50,7 @@ namespace BattleCruisers.Projectiles
             Logging.Log(Tags.MISSILE, $"Rotation: {transform.rotation.eulerAngles}");
 
             Target = _activationArgs.Target;
-            _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
+            _deferrer = FactoryProvider.DeferrerProvider.Deferrer;
 
             IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;

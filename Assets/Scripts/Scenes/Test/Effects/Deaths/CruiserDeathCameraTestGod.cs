@@ -16,7 +16,6 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
     public class CruiserDeathCameraTestGod : TestGodBase
     {
         private ICameraFocuser _cameraFocuser;
-        private FactoryProvider _factoryProvider;
 
         public Cruiser playerCruiser, aiCruiser;
 
@@ -51,12 +50,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
             _cameraFocuser = cameraComponents.CameraFocuser;
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
-            _factoryProvider = args.FactoryProvider;
         }
 
         public void PlayerNuke()
         {
-            _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(playerCruiser.Position);
+            FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(playerCruiser.Position);
 
         }
 
@@ -72,7 +70,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         public void AINuke()
         {
-            _factoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(aiCruiser.Position);
+            FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(aiCruiser.Position);
         }
 
         public void AICruiser()

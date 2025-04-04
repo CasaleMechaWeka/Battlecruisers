@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.Test
 
             ITarget parent = Substitute.For<ITarget>();
 
-            _nuke.Initialise(args.FactoryProvider);
+            _nuke.Initialise();
             _nuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     _nuke.Position,

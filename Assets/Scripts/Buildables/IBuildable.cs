@@ -56,7 +56,7 @@ namespace BattleCruisers.Buildables
         event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 
         void StaticInitialise(GameObject parent, HealthBarController healthBar);
-        void Initialise(IUIManager uiManager, FactoryProvider factoryProvider);
+        void Initialise(IUIManager uiManager);
         void StartConstruction();
     }
 }

@@ -31,7 +31,6 @@ namespace BattleCruisers.Projectiles
         private Pool<IPoolable<Vector3>, Vector3> _explosionPool;
 
         private bool _isActiveAndAlive;
-        protected FactoryProvider _factoryProvider;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
         // there is a bug in Unity that if the target is destroyed from OnTriggerEnter2D()
@@ -70,19 +69,16 @@ namespace BattleCruisers.Projectiles
 
         public Vector3 Position => transform.position;
 
-        public virtual void Initialise(FactoryProvider factoryProvider)
+        public virtual void Initialise()
         {
             Logging.LogMethod(Tags.SHELLS);
-            Helper.AssertIsNotNull(factoryProvider);
-
-            _factoryProvider = factoryProvider;
 
             _rigidBody = GetComponent<Rigidbody2D>();
             Assert.IsNotNull(_rigidBody);
 
             IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
             Assert.IsNotNull(explosionPoolChooser);
-            _explosionPool = explosionPoolChooser.ChoosePool(factoryProvider.PoolProviders.ExplosionPoolProvider);
+            _explosionPool = explosionPoolChooser.ChoosePool(FactoryProvider.PoolProviders.ExplosionPoolProvider);
 
             _isActiveAndAlive = false;
             gameObject.SetActive(false);
@@ -184,7 +180,7 @@ namespace BattleCruisers.Projectiles
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            _factoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
+            FactoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
         }
 
         private void AdjustGameObjectDirection()

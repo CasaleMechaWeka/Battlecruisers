@@ -9,7 +9,6 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -84,9 +83,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                         AddDamageStats(new DamageCapability(damagePerS, attackCapabilities));*/
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
@@ -102,7 +101,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();
-            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _factoryProvider, _cruiserSpecificFactories, EnemyCruiser);
+            IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(this, _bombStats, burstSize, _cruiserSpecificFactories, EnemyCruiser);
             _ = _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 

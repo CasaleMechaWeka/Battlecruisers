@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles
@@ -24,7 +25,7 @@ namespace BattleCruisers.Projectiles
             base.Activate(activationArgs);
 
             _nukeStats = activationArgs.ProjectileStats;
-            _flightPointsProvider = _factoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
+            _flightPointsProvider = FactoryProvider.FlightPointsProviderFactory.NukeFlightPointsProvider;
 
             Target = activationArgs.Target;
 

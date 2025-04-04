@@ -13,18 +13,17 @@ namespace BattleCruisers.Targets.Factories
         public TargetProviderFactory ProviderFactory { get; }
 
         public CruiserTargetFactoriesProvider(
-            FactoryProvider factoryProvider,
             CruiserSpecificFactories cruiserSpecificFactories,
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
             IRankedTargetTracker userChosenTargetTracker)
         {
-            Helper.AssertIsNotNull(factoryProvider, cruiserSpecificFactories, parentCruiser, enemyCruiser, userChosenTargetTracker);
+            Helper.AssertIsNotNull(cruiserSpecificFactories, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
-            DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, factoryProvider.UpdaterProvider);
-            ProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, factoryProvider.Targets);
+            DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, FactoryProvider.UpdaterProvider);
+            ProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, FactoryProvider.Targets);
         }
     }
 }

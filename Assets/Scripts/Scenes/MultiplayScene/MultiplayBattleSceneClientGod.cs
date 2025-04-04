@@ -43,6 +43,7 @@ using BattleCruisers.Scenes;
 using BattleCruisers.Network.Multiplay.Gameplay.GameState;
 using Unity.Netcode;
 using Unity.Multiplayer.Samples.Utilities;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 
 namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
@@ -73,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
-        private FactoryProvider factoryProvider;
+        private PvPFactoryProvider factoryProvider;
         private ICameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
@@ -167,9 +168,8 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            factoryProvider = new FactoryProvider(components, DataProvider.SettingsManager);
-            factoryProvider.Initialise(uiManager);
-            ICruiserFactory cruiserFactory = new CruiserFactory(factoryProvider, helper, uiManager);
+            FactoryProvider.Initialise(components, DataProvider.SettingsManager, uiManager);
+            ICruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
@@ -194,7 +194,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
             IUserChosenTargetHelper userChosenTargetHelper
                 = helper.CreateUserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
                     components.TargetIndicator);
             cruiserFactory
                 .InitialiseAICruiser(
@@ -325,7 +325,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>(includeInactive: true);
-            cheater?.Initialise(factoryProvider, playerCruiser, aiCruiser);
+            cheater?.Initialise(playerCruiser, aiCruiser);
 
             // Tutorial
             // ITutorialArgsBase tutorialArgs

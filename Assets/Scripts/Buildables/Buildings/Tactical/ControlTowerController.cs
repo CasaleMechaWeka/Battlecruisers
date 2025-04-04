@@ -2,7 +2,6 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,9 +23,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 			buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
 		}
 
-		public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+		public override void Initialise(IUIManager uiManager)
 		{
-			base.Initialise(uiManager, factoryProvider);
+			base.Initialise(uiManager);
 			_boostProvider = new BoostProvider(boostMultiplier);
 		}
 

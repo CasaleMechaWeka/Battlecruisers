@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,7 +49,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            _directFireFlame.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _directFireFlame.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
         }
     }
 }

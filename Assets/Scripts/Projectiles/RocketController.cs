@@ -27,9 +27,9 @@ namespace BattleCruisers.Projectiles
 
         public ITarget Target { get; private set; }
 
-        public override void Initialise(FactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -50,8 +50,8 @@ namespace BattleCruisers.Projectiles
             ITargetProvider targetProvider = this;
             IFlightPointsProvider flightPointsProvider
                 = activationArgs.ProjectileStats.IsAccurate ?
-                    _factoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
-                    _factoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
+                    FactoryProvider.FlightPointsProviderFactory.RocketFlightPointsProvider :
+                    FactoryProvider.FlightPointsProviderFactory.InaccurateRocketFlightPointsProvider;
 
             MovementController
                 = new RocketMovementController(

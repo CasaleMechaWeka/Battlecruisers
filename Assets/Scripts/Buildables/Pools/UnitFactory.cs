@@ -3,7 +3,6 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Buildables.Pools
@@ -12,16 +11,14 @@ namespace BattleCruisers.Buildables.Pools
     {
         private readonly IPrefabKey _unitKey;
         private readonly IUIManager _uiManager;
-        private readonly FactoryProvider _factoryProvider;
         private readonly IBuildableWrapper<IUnit> _unitPrefab;
 
-        public UnitFactory(IPrefabKey unitKey, IUIManager uiManager, FactoryProvider factoryProvider)
+        public UnitFactory(IPrefabKey unitKey, IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(unitKey, uiManager, factoryProvider);
+            Helper.AssertIsNotNull(unitKey, uiManager);
 
             _unitKey = unitKey;
             _uiManager = uiManager;
-            _factoryProvider = factoryProvider;
 
             _unitPrefab = PrefabFactory.GetUnitWrapperPrefab(unitKey);
         }
@@ -30,7 +27,7 @@ namespace BattleCruisers.Buildables.Pools
         {
             return
                 PrefabFactory
-                    .CreateUnit(_unitPrefab, _uiManager, _factoryProvider)
+                    .CreateUnit(_unitPrefab, _uiManager)
                     .Parse<Unit>();
         }
 

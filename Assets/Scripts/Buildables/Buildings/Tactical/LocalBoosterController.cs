@@ -4,7 +4,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
@@ -19,9 +18,9 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
         public float boostMultiplier;
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             _boostProvider = new BoostProvider(boostMultiplier);
 

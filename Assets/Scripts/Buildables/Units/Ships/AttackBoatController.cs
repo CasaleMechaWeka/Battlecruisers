@@ -38,7 +38,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            _antiSeaTurret.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+            _antiSeaTurret.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

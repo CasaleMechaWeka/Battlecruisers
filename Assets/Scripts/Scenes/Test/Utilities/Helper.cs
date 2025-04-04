@@ -125,7 +125,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             BuildingWrapper buildingWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
             HealthBarController healthBar = buildingWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
             building.StaticInitialise(buildingWrapper.gameObject, healthBar);
-            building.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
+            building.Initialise(initialisationArgs.UiManager);
             building.Activate(
                 new BuildingActivationArgs(
                     initialisationArgs.ParentCruiser,
@@ -176,7 +176,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             UnitWrapper unitWrapper = unit.GameObject.GetComponentInInactiveParent<UnitWrapper>();
             HealthBarController healthBar = unitWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
             unit.StaticInitialise(unitWrapper.gameObject, healthBar);
-            unit.Initialise(initialisationArgs.UiManager, initialisationArgs.FactoryProvider);
+            unit.Initialise(initialisationArgs.UiManager);
             unit.Activate(
                 new BuildableActivationArgs(
                     initialisationArgs.ParentCruiser,
@@ -375,7 +375,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             IRotationMovementController rotationMovementController = null,
             FacingMinRangePositionValidator targetPositionValidator = null,
             AngleLimiter angleLimiter = null,
-            FactoryProvider factoryProvider = null,
             CruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ICruiser enemyCruiser = null,
@@ -394,7 +393,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     rotationMovementController ?? CreateRotationMovementController(barrel, updater),
                     targetPositionValidator ?? new FacingMinRangePositionValidator(0, true),
                     angleLimiter ?? new AngleLimiter(-180, 180),
-                    factoryProvider ?? initialisationArgs.FactoryProvider,
                     cruiserSpecificFactories ?? initialisationArgs.CruiserSpecificFactories,
                     parent ?? Substitute.For<ITarget>(),
                     localBoostProviders ?? new ObservableCollection<IBoostProvider>(),
@@ -471,7 +469,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     droneManager: new DroneManager(),
                     droneFocuser: Substitute.For<IDroneFocuser>(),
                     droneConsumerProvider: CreateDroneConsumerProvider(),
-                    factoryProvider: initialisationArgs.FactoryProvider,
                     cruiserSpecificFactories: cruiserSpecificFactories,
                     facingDirection: Direction.Right,
                     repairManager: Substitute.For<IRepairManager>(),

@@ -16,6 +16,7 @@ using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
@@ -107,13 +108,13 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
 
         public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
         {
-            return playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer;
+            return FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
 
         public override IUIManager CreateUIManager()

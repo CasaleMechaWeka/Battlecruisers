@@ -83,9 +83,9 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-        public override void Initialise(FactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
             _rocketTarget = GetComponentInChildren<RocketTarget>();
             Assert.IsNotNull(_rocketTarget);
@@ -102,7 +102,7 @@ namespace BattleCruisers.Projectiles
 
             Target = activationArgs.EnemyCruiser;
 
-            _deferrer = _factoryProvider.DeferrerProvider.Deferrer;
+            _deferrer = FactoryProvider.DeferrerProvider.Deferrer;
 
             IVelocityProvider maxVelocityProvider = new StaticVelocityProvider(activationArgs.ProjectileStats.MaxVelocityInMPerS);
             ITargetProvider targetProvider = this;
@@ -135,10 +135,10 @@ namespace BattleCruisers.Projectiles
                 = activationArgs.TargetFactories.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                     _transform,
                     activationArgs.ProjectileStats.DetectionRangeM,
-                    _factoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
+                    FactoryProvider.Targets.RangeCalculatorProvider.BasicCalculator);
             _targetFinder = new RangedTargetFinder(_enemyDetectorProvider.TargetDetector, targetFilter);
 
-            ITargetRanker targetRanker = _factoryProvider.Targets.RankerFactory.EqualTargetRanker;
+            ITargetRanker targetRanker = FactoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
             _targetProcessor = activationArgs.TargetFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
             _targetProcessor.AddTargetConsumer(this);

@@ -4,7 +4,6 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using NSubstitute;
 using System;
@@ -51,7 +50,6 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
             _aircraft.StartConstruction();
             _aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
 
-            FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
             IProjectileStats projectileStats = Substitute.For<IProjectileStats>();
             projectileStats.GravityScale.Returns(1);
             ITarget parent = Substitute.For<ITarget>();
@@ -59,7 +57,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
 
             foreach (ProjectileController projectile in _projectiles)
             {
-                projectile.Initialise(factoryProvider);
+                projectile.Initialise();
                 projectile.Activate(
                     new ProjectileActivationArgs<IProjectileStats>(
                         projectile.Position,

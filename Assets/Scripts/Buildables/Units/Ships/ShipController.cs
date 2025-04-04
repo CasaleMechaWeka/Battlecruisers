@@ -112,13 +112,13 @@ namespace BattleCruisers.Buildables.Units.Ships
                     .ToList();
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             IShipDeathPoolChooser shipDeathPoolChooser = GetComponent<IShipDeathPoolChooser>();
             Assert.IsNotNull(shipDeathPoolChooser);
-            _deathPool = shipDeathPoolChooser.ChoosePool(factoryProvider.PoolProviders.ShipDeathPoolProvider);
+            _deathPool = shipDeathPoolChooser.ChoosePool(FactoryProvider.PoolProviders.ShipDeathPoolProvider);
         }
 
         protected override void OnBuildableCompleted()
@@ -166,7 +166,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.Targets,
+                    FactoryProvider.Targets,
                     enemyFaction,
                     targetProcessorTargetTypes,
                     OptimalArmamentRangeInM,
@@ -177,7 +177,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         private IMovementDecider SetupMovementDecider(ITargetFinder inRangeTargetFinder)
         {
-            IRangeCalculator rangeCalculator = _factoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
+            IRangeCalculator rangeCalculator = FactoryProvider.Targets.RangeCalculatorProvider.SizeInclusiveCalculator;
             _enemyDetectorProvider
                 = _cruiserSpecificFactories.Targets.DetectorFactory.CreateEnemyShipTargetDetector(
                     Transform,

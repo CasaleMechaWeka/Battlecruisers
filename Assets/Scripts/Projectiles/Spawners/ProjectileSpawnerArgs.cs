@@ -12,7 +12,6 @@ namespace BattleCruisers.Projectiles.Spawners
         public ITarget Parent { get; }
         public IProjectileStats ProjectileStats { get; }
         public int BurstSize { get; }
-        public FactoryProvider FactoryProvider { get; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public ICruiser EnempCruiser { get; }
 
@@ -24,7 +23,6 @@ namespace BattleCruisers.Projectiles.Spawners
                   barrelControllerArgs.Parent,
                   projectileStats,
                   burstSize,
-                  barrelControllerArgs.FactoryProvider,
                   barrelControllerArgs.CruiserSpecificFactories,
                   barrelControllerArgs.EnemyCruiser)
         { }
@@ -33,16 +31,14 @@ namespace BattleCruisers.Projectiles.Spawners
             ITarget parent,
             IProjectileStats projectileStats,
             int burstSize,
-            FactoryProvider factoryProvider,
             CruiserSpecificFactories cruiserSpecificFactories,
             ICruiser enemyCruiser)
         {
-            Helper.AssertIsNotNull(parent, projectileStats, factoryProvider, cruiserSpecificFactories, enemyCruiser);
+            Helper.AssertIsNotNull(parent, projectileStats, cruiserSpecificFactories, enemyCruiser);
 
             Parent = parent;
             ProjectileStats = projectileStats;
             BurstSize = burstSize;
-            FactoryProvider = factoryProvider;
             CruiserSpecificFactories = cruiserSpecificFactories;
             EnempCruiser = enemyCruiser;
         }

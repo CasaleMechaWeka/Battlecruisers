@@ -10,21 +10,21 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.Test.Turrets
 {
-    public class SmartMissileSpawnerTestGod : SmartMissileTestGod
+	public class SmartMissileSpawnerTestGod : SmartMissileTestGod
 	{
 		private ITargetFilter _targetFilter;
 
 		public SmartMissileSpawner missileSpawner;
 
-        protected override async Task InitialiseMissileAsync(Helper helper, ICruiser redCruiser)
-        {
+		protected override async Task InitialiseMissileAsync(Helper helper, ICruiser redCruiser)
+		{
 			Assert.IsNotNull(missileSpawner);
 			_targetFilter = new FactionAndTargetTypeFilter(Faction.Reds, projectileStats.AttackCapabilities);
 
 			ITarget parent = Substitute.For<ITarget>();
 			int burstSize = 1;
 			BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs(enemyCruiser: redCruiser);
-			IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, projectileStats, burstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser);
+			IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, projectileStats, burstSize, args.CruiserSpecificFactories, args.EnemyCruiser);
 
 			await missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, projectileStats);
 

@@ -8,6 +8,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -73,7 +74,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 new CruiserEventMonitor(
                     new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -82,7 +83,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new UltrasConstructionMonitor(
                     aiCruiser,
-                    aiCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -91,7 +92,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new PopulationLimitAnnouncer(
                     playerCruiser.PopulationLimitMonitor,
-                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.PrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                     popLimitReachedFeedback);
         }

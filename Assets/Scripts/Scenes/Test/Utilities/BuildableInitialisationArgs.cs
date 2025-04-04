@@ -5,13 +5,10 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Data;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
@@ -30,7 +27,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public IUIManager UiManager { get; }
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
-        public FactoryProvider FactoryProvider { get; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction ParentCruiserFacingDirection { get; }
 
@@ -65,15 +61,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
 
-            FactoryProvider
-                = CreateFactoryProvider(
-                    flightPointsProviderFactory ?? new FlightPointsProviderFactory(),
-                    new SoundPlayerFactory(deferrer),
-                    new DeferrerProvider(deferrer, realTimeDeferrer),
-                    targetFactoriesProvider,
-                    updaterProvider,
-                    UiManager);
-
             IDroneFeedbackFactory droneFeedbackFactory = Substitute.For<IDroneFeedbackFactory>();
             if (showDroneFeedback)
             {
@@ -97,36 +84,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 droneFeedbackFactory);
         }
 
-        private FactoryProvider CreateFactoryProvider(
-            FlightPointsProviderFactory flightPointsProviderFactory,
-            ISoundPlayerFactory soundPlayerFactory,
-            DeferrerProvider deferrerProvider,
-            TargetFactoriesProvider targetFactories,
-            IUpdaterProvider updaterProvider,
-            IUIManager uiManager)
-        {
-            FactoryProvider factoryProvider = Substitute.For<FactoryProvider>();
-
-            factoryProvider.DeferrerProvider.Returns(deferrerProvider);
-            factoryProvider.FlightPointsProviderFactory.Returns(flightPointsProviderFactory);
-            factoryProvider.Targets.Returns(targetFactories);
-            factoryProvider.UpdaterProvider.Returns(updaterProvider);
-            factoryProvider.SettingsManager.Returns(DataProvider.SettingsManager);
-
-            // Pools
-            PoolProviders poolProviders = GetPoolProviders(factoryProvider, uiManager);
-            factoryProvider.PoolProviders.Returns(poolProviders);
-
-            // Sound
-            ISoundFactoryProvider soundFactoryProvider = Substitute.For<ISoundFactoryProvider>();
-            ISoundPlayer soundPlayer = new SoundPlayer(poolProviders.AudioSourcePool);
-            soundFactoryProvider.SoundPlayer.Returns(soundPlayer);
-            soundFactoryProvider.SoundPlayerFactory.Returns(soundPlayerFactory);
-            factoryProvider.Sound.Returns(soundFactoryProvider);
-
-            return factoryProvider;
-        }
-
         private void SetupCruiserSpecificFactories(
             CruiserSpecificFactories cruiserSpecificFactories,
             AircraftProvider aircraftProvider,
@@ -148,13 +105,13 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.DroneFeedbackFactory.Returns(droneFeedbackFactory);
         }
 
-        private static PoolProviders GetPoolProviders(FactoryProvider factoryProvider, IUIManager uiManager)
+        private static PoolProviders GetPoolProviders(IUIManager uiManager)
         {
             if (_poolProviders == null)
             {
                 IDroneFactory droneFactory = new DroneFactory();
-                PoolProviders poolProviders = new PoolProviders(factoryProvider, uiManager, droneFactory);
-                factoryProvider.PoolProviders.Returns(poolProviders);
+                PoolProviders poolProviders = new PoolProviders(uiManager, droneFactory);
+                FactoryProvider.PoolProviders.Returns(poolProviders);
                 poolProviders.SetInitialCapacities();
                 _poolProviders = poolProviders;
             }

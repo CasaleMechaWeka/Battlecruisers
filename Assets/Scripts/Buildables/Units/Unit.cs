@@ -78,9 +78,9 @@ namespace BattleCruisers.Buildables.Units
             Description = description;
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, 2);
         }

@@ -77,9 +77,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             AddDamageStats(_barrelController.DamageCapability);
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
         }
 
         public override void Activate(BuildableActivationArgs activationArgs)
@@ -106,7 +106,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             Faction enemyFaction = Helper.GetOppositeFaction(Faction);
             ITarget parent = this;
-            IUpdater updater = _factoryProvider.UpdaterProvider.PerFrameUpdater;
+            IUpdater updater = FactoryProvider.UpdaterProvider.PerFrameUpdater;
 
             BarrelControllerArgs args = new BarrelControllerArgs(
                 updater,
@@ -117,7 +117,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 new RotationMovementController(new TransformBC(_barrelController.transform), updater, _barrelController.TurretStats.TurretRotateSpeedInDegrees),
                 new FacingMinRangePositionValidator(0, true),
                 new AngleLimiter(-180, 180),
-                _factoryProvider,
                 _cruiserSpecificFactories,
                 parent,
                 _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,

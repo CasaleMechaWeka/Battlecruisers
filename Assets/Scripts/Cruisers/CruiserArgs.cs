@@ -24,7 +24,6 @@ namespace BattleCruisers.Cruisers
         public IDroneManager DroneManager { get; }
         public IDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
-        public FactoryProvider FactoryProvider { get; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
@@ -44,7 +43,6 @@ namespace BattleCruisers.Cruisers
             IDroneManager droneManager,
             IDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            FactoryProvider factoryProvider,
             CruiserSpecificFactories cruiserSpecificFactories,
             Direction facingDirection,
             IRepairManager repairManager,
@@ -63,7 +61,6 @@ namespace BattleCruisers.Cruisers
                 droneManager,
                 droneFocuser,
                 droneConsumerProvider,
-                factoryProvider,
                 cruiserSpecificFactories,
                 repairManager,
                 helper,
@@ -80,7 +77,6 @@ namespace BattleCruisers.Cruisers
             DroneManager = droneManager;
             DroneFocuser = droneFocuser;
             DroneConsumerProvider = droneConsumerProvider;
-            FactoryProvider = factoryProvider;
             CruiserSpecificFactories = cruiserSpecificFactories;
             FacingDirection = facingDirection;
             RepairManager = repairManager;

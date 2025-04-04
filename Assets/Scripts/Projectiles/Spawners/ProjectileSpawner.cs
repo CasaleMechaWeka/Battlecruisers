@@ -26,7 +26,6 @@ namespace BattleCruisers.Projectiles.Spawners
 
         protected ITarget _parent;
         protected IProjectileStats _projectileStats;
-        protected FactoryProvider _factoryProvider;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected ICruiser _enemyCruiser;
 
@@ -42,22 +41,21 @@ namespace BattleCruisers.Projectiles.Spawners
             _impactSound = new AudioClipWrapper(impactSound);
             _parent = args.Parent;
             _projectileStats = args.ProjectileStats;
-            _factoryProvider = args.FactoryProvider;
             _cruiserSpecificFactories = args.CruiserSpecificFactories;
             _enemyCruiser = args.EnempCruiser;
 
             IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats>>();
             Assert.IsNotNull(poolChooser);
-            _projectilePool = poolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ProjectilePoolProvider);
+            _projectilePool = poolChooser.ChoosePool(FactoryProvider.PoolProviders.ProjectilePoolProvider);
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
             _soundPlayer
                 = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-                    args.FactoryProvider.Sound.SoundPlayerFactory,
+                    FactoryProvider.Sound.SoundPlayerFactory,
                     firingSound,
                     args.BurstSize,
-                    args.FactoryProvider.SettingsManager);
+                    FactoryProvider.SettingsManager);
         }
 
         protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
@@ -90,6 +88,5 @@ namespace BattleCruisers.Projectiles.Spawners
 
             return projectile;
         }
-
     }
 }

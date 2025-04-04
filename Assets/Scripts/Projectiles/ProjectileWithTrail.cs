@@ -28,11 +28,11 @@ namespace BattleCruisers.Projectiles
 
         protected virtual float TrailLifetimeInS { get => 10; }
 
-        public override void Initialise(FactoryProvider factoryProvider)
+        public override void Initialise()
         {
-            base.Initialise(factoryProvider);
+            base.Initialise();
 
-            _deferrer = factoryProvider.DeferrerProvider.Deferrer;
+            _deferrer = FactoryProvider.DeferrerProvider.Deferrer;
 
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);

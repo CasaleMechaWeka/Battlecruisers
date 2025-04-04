@@ -1,4 +1,3 @@
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -21,7 +20,7 @@ namespace BattleCruisers.Cruisers
         {
             isCruiser = false;
             base.Initialise(args);
-            unit.Initialise(_uiManager, FactoryProvider);
+            unit.Initialise(_uiManager);
             unit.Activate(this, _enemyCruiser, CruiserSpecificFactories);
             started = true;
             maxHealth = 0 + unit.maxHealth;

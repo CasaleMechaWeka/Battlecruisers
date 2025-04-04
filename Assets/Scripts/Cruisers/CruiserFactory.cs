@@ -27,7 +27,6 @@ namespace BattleCruisers.Cruisers
 {
     public class CruiserFactory : ICruiserFactory
     {
-        private readonly FactoryProvider _factoryProvider;
         private readonly IBattleSceneHelper _helper;
         private readonly IFilter<ISlot> _highlightableSlotFilter;
         private readonly IUIManager _uiManager;
@@ -36,13 +35,11 @@ namespace BattleCruisers.Cruisers
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public CruiserFactory(
-            FactoryProvider factoryProvider,
             IBattleSceneHelper helper,
             IUIManager uiManager)
         {
-            Helper.AssertIsNotNull(factoryProvider, helper, uiManager);
+            Helper.AssertIsNotNull(helper, uiManager);
 
-            _factoryProvider = factoryProvider;
             _helper = helper;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
@@ -101,7 +98,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.LeftCruiserHasActiveDrones,
+                FactoryProvider.DroneMonitor.LeftCruiserHasActiveDrones,
                 isPlayerCruiser: true);
         }
 
@@ -135,7 +132,7 @@ namespace BattleCruisers.Cruisers
                 userChosenTargetTracker,
                 buildingDoubleClickHandler,
                 cruiserDoubleClickHandler,
-                _factoryProvider.DroneMonitor.RightCruiserHasActiveDrones,
+                FactoryProvider.DroneMonitor.RightCruiserHasActiveDrones,
                 isPlayerCruiser: false);
         }
 
@@ -157,16 +154,15 @@ namespace BattleCruisers.Cruisers
         {
             CruiserSpecificFactories cruiserSpecificFactories
                 = new CruiserSpecificFactories(
-                    _factoryProvider,
                     cruiser,
                     enemyCruiser,
                     userChosenTargetTracker,
-                    _factoryProvider.UpdaterProvider,
+                    FactoryProvider.UpdaterProvider,
                     faction,
                     ApplicationModel.IsTutorial);
 
             IDroneManager droneManager = new DroneManager();
-            IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, _factoryProvider.Sound.PrioritisedSoundPlayer);
+            IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, FactoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
 
@@ -184,7 +180,6 @@ namespace BattleCruisers.Cruisers
                     droneManager,
                     droneFocuser,
                     droneConsumerProvider,
-                    _factoryProvider,
                     cruiserSpecificFactories,
                     facingDirection,
                     repairManager,

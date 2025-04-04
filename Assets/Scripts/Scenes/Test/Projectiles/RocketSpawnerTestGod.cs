@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Scenes.Test
 {
-    public class RocketSpawnerTestGod : TestGodBase
+	public class RocketSpawnerTestGod : TestGodBase
 	{
 		private RocketSpawner _rocketSpawner;
 		private IBuilding _target;
@@ -22,46 +22,45 @@ namespace BattleCruisers.Scenes.Test
 		public RocketController rocketPrefab;
 		public float fireIntervalInS = 0.5f;
 
-        protected override List<GameObject> GetGameObjects()
-        {
+		protected override List<GameObject> GetGameObjects()
+		{
 			_target = FindObjectOfType<Building>();
 
-            return new List<GameObject>()
-            {
-                _target.GameObject
-            };
-        }
+			return new List<GameObject>()
+			{
+				_target.GameObject
+			};
+		}
 
-        protected override async Task SetupAsync(Helper helper)
-        {
-            // Setup target
-            helper.InitialiseBuilding(_target, Faction.Blues);
+		protected override async Task SetupAsync(Helper helper)
+		{
+			// Setup target
+			helper.InitialiseBuilding(_target, Faction.Blues);
 			_target.StartConstruction();
 			_target.Destroyed += (sender, e) => CancelInvoke("FireRocket");
 
 
 			// Setup rocket spawner
 			_rocketSpawner = FindObjectOfType<RocketSpawner>();
-			_targetFilter = new ExactMatchTargetFilter() 
+			_targetFilter = new ExactMatchTargetFilter()
 			{
 				Target = _target
 			};
 
 			ITarget parent = Substitute.For<ITarget>();
-            parent.Faction.Returns(Faction.Reds);
-            ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
-            int burstSize = 1;
+			parent.Faction.Returns(Faction.Reds);
+			ICruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
+			int burstSize = 1;
 			BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs();
 			IProjectileSpawnerArgs spawnerArgs
 				= new ProjectileSpawnerArgs(
 					parent,
 					rocketStats,
 					burstSize,
-					args.FactoryProvider,
 					args.CruiserSpecificFactories,
 					args.EnemyCruiser);
 
-            await _rocketSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.RocketLauncher, rocketStats);
+			await _rocketSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.RocketLauncher, rocketStats);
 
 			InvokeRepeating("FireRocket", time: 0.5f, repeatRate: fireIntervalInS);
 		}

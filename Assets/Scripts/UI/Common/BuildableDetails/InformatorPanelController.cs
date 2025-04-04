@@ -10,6 +10,7 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Panels;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
@@ -48,13 +49,13 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             informatorPanelExtended.Initialise();
             buttons
                 .Initialise(
-                    playerCruiser.DroneFocuser, 
-                    playerCruiser.RepairManager, 
-                    userChosenTargetHelper, 
-                    visibilityFilters, 
-                    soundPlayer, 
+                    playerCruiser.DroneFocuser,
+                    playerCruiser.RepairManager,
+                    userChosenTargetHelper,
+                    visibilityFilters,
+                    soundPlayer,
                     informatorPanelExtended,
-                    playerCruiser.FactoryProvider.UpdaterProvider.PerFrameUpdater,
+                    FactoryProvider.UpdaterProvider.PerFrameUpdater,
                     uiManager);
 
             buildingDetails.Initialise();

@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Effects;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
 
@@ -37,7 +38,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             return
                 new DeferredBarrelFirer(
                     base.CreateFirer(args),
-                    new ConstantDeferrer(args.FactoryProvider.DeferrerProvider.Deferrer, delayInS));
+                    new ConstantDeferrer(FactoryProvider.DeferrerProvider.Deferrer, delayInS));
         }
     }
 }

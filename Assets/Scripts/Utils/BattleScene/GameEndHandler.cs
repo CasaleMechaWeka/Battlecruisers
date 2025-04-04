@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Wind;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using UnityEngine;
@@ -90,7 +91,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
             ClearProjectiles();
-            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;
@@ -118,7 +119,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
             ClearProjectiles();
-            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;

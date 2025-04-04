@@ -12,6 +12,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
 using NSubstitute;
 using NUnit.Framework;
@@ -62,7 +63,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _speedButtonGroup = Substitute.For<IToggleButtonGroup>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            _playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
+            FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
 
             _gameEndHandler
                 = new GameEndHandler(

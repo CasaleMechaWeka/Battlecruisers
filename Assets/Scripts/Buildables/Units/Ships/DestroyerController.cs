@@ -2,7 +2,6 @@
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -63,10 +62,10 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            _directFireAntiSea.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-            _mortar.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-            _missileLauncher.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.RocketLauncher);
-            _directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
+            _directFireAntiSea.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _mortar.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _missileLauncher.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.RocketLauncher);
+            _directFireAntiAir.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
             //_samSite.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
         }
 

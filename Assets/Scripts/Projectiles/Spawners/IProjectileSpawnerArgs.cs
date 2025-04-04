@@ -10,7 +10,6 @@ namespace BattleCruisers.Projectiles.Spawners
         ITarget Parent { get; }
         IProjectileStats ProjectileStats { get; }
         int BurstSize { get; }
-        FactoryProvider FactoryProvider { get; }
         CruiserSpecificFactories CruiserSpecificFactories { get; }
         ICruiser EnempCruiser { get; }
     }

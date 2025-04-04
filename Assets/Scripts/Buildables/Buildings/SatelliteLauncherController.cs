@@ -25,7 +25,7 @@ namespace BattleCruisers.Buildables.Buildings
 		{
 			base.OnBuildableCompleted();
 
-			_satellite = PrefabFactory.CreateUnit(satellitePrefab, _uiManager, _factoryProvider);
+			_satellite = PrefabFactory.CreateUnit(satellitePrefab, _uiManager);
 			_satellite.Position = transform.position + SpawnPositionAdjustment;
 
 			_satellite.Activate(

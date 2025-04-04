@@ -3,7 +3,6 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Projectiles.Pools
@@ -13,20 +12,18 @@ namespace BattleCruisers.Projectiles.Pools
         where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
         where TStats : IProjectileStats
     {
-        private readonly FactoryProvider _factoryProvider;
         private readonly ProjectileKey _projectileKey;
 
-        public ProjectileFactory(FactoryProvider factoryProvider, ProjectileKey projectileKey)
+        public ProjectileFactory(ProjectileKey projectileKey)
         {
-            Helper.AssertIsNotNull(factoryProvider, projectileKey);
+            Helper.AssertIsNotNull(projectileKey);
 
-            _factoryProvider = factoryProvider;
             _projectileKey = projectileKey;
         }
 
         public TProjectile CreateItem()
         {
-            return PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey, _factoryProvider);
+            return PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey);
         }
 
         public override string ToString()

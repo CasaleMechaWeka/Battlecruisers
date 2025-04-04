@@ -10,7 +10,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
@@ -69,9 +68,9 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             _nukeImpactSound = new AudioClipWrapper(nukeImpactSound);
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             leftSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
             rightSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);
@@ -100,7 +99,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             _launchedNuke = Instantiate(nukeMissilePrefab);
 
             ITargetFilter targetFilter = new ExactMatchTargetFilter { Target = EnemyCruiser };
-            _launchedNuke.Initialise(_factoryProvider);
+            _launchedNuke.Initialise();
             _launchedNuke.Activate(
                 new TargetProviderActivationArgs<INukeStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,

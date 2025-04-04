@@ -80,7 +80,6 @@ namespace BattleCruisers.Cruisers
         public Direction Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public FactoryProvider FactoryProvider { get; private set; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private FogOfWar _fog;
         public IGameObject Fog => _fog;
@@ -156,7 +155,6 @@ namespace BattleCruisers.Cruisers
             DroneFocuser = args.DroneFocuser;
             DroneManager.NumOfDrones = numOfDrones;
             DroneConsumerProvider = args.DroneConsumerProvider;
-            FactoryProvider = args.FactoryProvider;
             CruiserSpecificFactories = args.CruiserSpecificFactories;
             Direction = args.FacingDirection;
             _helper = args.Helper;
@@ -175,7 +173,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(enemyShipBlockerInitialiser);
             BlockedShipsTracker
                 = enemyShipBlockerInitialiser.Initialise(
-                    args.FactoryProvider.Targets,
+                    FactoryProvider.Targets,
                     args.CruiserSpecificFactories.Targets.TrackerFactory,
                     Helper.GetOppositeFaction(Faction));
 
@@ -283,7 +281,7 @@ namespace BattleCruisers.Cruisers
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager, FactoryProvider);
+            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager);
             /*       SetVariantIcon(building);*/
             building.Activate(
                 new BuildingActivationArgs(

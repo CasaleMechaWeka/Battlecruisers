@@ -3,8 +3,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Factories;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Pools
 {
@@ -31,144 +29,118 @@ namespace BattleCruisers.Projectiles.Pools
         public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
         public Pool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
 
-        public ProjectilePoolProvider(FactoryProvider factoryProvider)
+        public ProjectilePoolProvider()
         {
-            Assert.IsNotNull(factoryProvider);
-
             BulletsPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.Bullet,
                     InitialCapacity.BULLET);
 
             HighCalibreBulletsPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.HighCalibreBullet,
                     InitialCapacity.BULLET);
 
             TinyBulletsPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.TinyBullet,
                     InitialCapacity.BULLET);
 
             FlakBulletsPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.FlakBullet,
                     InitialCapacity.BULLET);
 
             ShellsSmallPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.ShellSmall,
                     InitialCapacity.SHELL_SMALL);
 
             ShellsLargePool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.ShellLarge,
                     InitialCapacity.SHELL_LARGE);
 
             NovaShellPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.NovaShell,
                     InitialCapacity.SHELL_LARGE);
 
             FiveShellCluster
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.FiveShellCluster,
                     InitialCapacity.SHELL_LARGE);
 
             RocketShellPool
                 = CreatePool<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.RocketShell,
                     InitialCapacity.SHELL_LARGE);
 
             BombsPool
                 = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.Bomb,
                     InitialCapacity.BOMB);
 
             StratBombsPool
                 = CreatePool<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.StratBomb,
                     InitialCapacity.BOMB);
 
             RocketsPool
                 = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.Rocket,
                     InitialCapacity.ROCKET);
 
             RocketsSmallPool
                 = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.RocketSmall,
                     InitialCapacity.ROCKET);
 
             MissilesSmallPool
                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileSmall,
                     InitialCapacity.MISSILE_SMALL);
 
             MissilesMediumPool
                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileMedium,
                     InitialCapacity.MISSILE_MEDIUM);
 
             MissilesMFPool
                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileMF,
                     InitialCapacity.MISSILE_MEDIUM);
-                    
+
 
             RailSlugsPool
                  = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.RailSlug,
                     InitialCapacity.MISSILE_MEDIUM);
 
             MissilesFirecrackerPool
                 = CreatePool<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileFirecracker,
                     InitialCapacity.MISSILE_MEDIUM);
 
             MissilesLargePool
                 = CreatePool<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileLarge,
                     InitialCapacity.MISSILE_LARGE);
 
             MissilesSmartPool
                 = CreatePool<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>(
-                    factoryProvider,
                     StaticPrefabKeys.Projectiles.MissileSmart,
                     InitialCapacity.MISSILE_SMART);
-
-
         }
 
-        private Pool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(FactoryProvider factoryProvider, ProjectileKey projectileKey, int initialCapacity)
+        private Pool<TProjectile, TArgs> CreatePool<TProjectile, TArgs, TStats>(ProjectileKey projectileKey, int initialCapacity)
             where TArgs : ProjectileActivationArgs<TStats>
             where TProjectile : ProjectileControllerBase<TArgs, TStats>
             where TStats : IProjectileStats
         {
             return
                 new Pool<TProjectile, TArgs>(
-                    new ProjectileFactory<TProjectile, TArgs, TStats>(
-                        factoryProvider,
-                        projectileKey));
+                    new ProjectileFactory<TProjectile, TArgs, TStats>(projectileKey));
         }
 
         public void SetInitialCapacity()

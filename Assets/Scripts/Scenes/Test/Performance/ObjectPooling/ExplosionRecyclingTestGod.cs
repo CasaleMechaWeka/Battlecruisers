@@ -1,7 +1,7 @@
-﻿using BattleCruisers.Effects.Explosions;
-using BattleCruisers.Effects.Explosions.Pools;
+﻿using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Factories;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BCUtils = BattleCruisers.Utils;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
             Assert.IsNotNull(explosionPoolChooser);
 
             BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs();
-            _pool = explosionPoolChooser.ChoosePool(args.FactoryProvider.PoolProviders.ExplosionPoolProvider);
+            _pool = explosionPoolChooser.ChoosePool(FactoryProvider.PoolProviders.ExplosionPoolProvider);
 
             InvokeRepeating(nameof(ShowExplosion), time: 0, repeatRate: delayInS);
         }

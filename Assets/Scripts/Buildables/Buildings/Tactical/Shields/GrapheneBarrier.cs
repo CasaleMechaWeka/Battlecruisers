@@ -4,7 +4,7 @@ using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,7 +53,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             base.Activate(activationArgs);
 
-            _shieldController.Initialise(Faction, _factoryProvider.Sound.SoundPlayer);
+            _shieldController.Initialise(Faction, FactoryProvider.Sound.SoundPlayer);
             _shieldController.gameObject.SetActive(false);
 
             _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);

@@ -29,7 +29,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         protected BarrelController[] _barrels;
         private TargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
-        protected FactoryProvider _factoryProvider;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
@@ -119,18 +118,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
 
         public void Initialise(
             IBuildable parent,
-            FactoryProvider factoryProvider,
             CruiserSpecificFactories cruiserSpecificFactories,
             ISoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
         {
-            Helper.AssertIsNotNull(parent, factoryProvider, cruiserSpecificFactories);
+            Helper.AssertIsNotNull(parent, cruiserSpecificFactories);
 
             _parent = parent;
             _enemyFaction = _parent.EnemyCruiser.Faction;
-            _factoryProvider = factoryProvider;
             _cruiserSpecificFactories = cruiserSpecificFactories;
             //Debug.Log(_enemyFaction);
             // Shared by all barrels
@@ -155,7 +152,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
-                    _factoryProvider.Targets,
+                    FactoryProvider.Targets,
                     _enemyFaction,
                     DamageCapability.AttackCapabilities,
                     RangeInM,
@@ -178,7 +175,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IAnimation barrelFiringAnimation)
         {
-            IUpdater updater = ChooseUpdater(_factoryProvider.UpdaterProvider);
+            IUpdater updater = ChooseUpdater(FactoryProvider.UpdaterProvider);
 
             return new BarrelControllerArgs(
                 updater,
@@ -189,7 +186,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 CreateRotationMovementController(barrel, updater),
                 CreatePositionValidator(),
                 CreateAngleLimiter(),
-                _factoryProvider,
                 _cruiserSpecificFactories,
                 parent,
                 localBoostProviders,

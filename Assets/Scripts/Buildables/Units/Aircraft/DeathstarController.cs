@@ -4,7 +4,6 @@ using BattleCruisers.Movement.Velocity;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,9 +35,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			AddDamageStats(_barrelWrapper.DamageCapability);
 		}
 
-		public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+		public override void Initialise(IUIManager uiManager)
 		{
-			base.Initialise(uiManager, factoryProvider);
+			base.Initialise(uiManager);
 
 			leftWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, LEFT_WING_TARGET_ANGLE_IN_DEGREES);
 			rightWing.Initialise(WING_ROTATE_SPEED_IN_M_DEGREES_S, RIGHT_WING_TARGET_ANGLE_IN_DEGREES);
@@ -50,7 +49,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 			Assert.IsTrue(cruisingAltitudeInM > transform.position.y);
 
-			_barrelWrapper.Initialise(this, _factoryProvider, _cruiserSpecificFactories);
+			_barrelWrapper.Initialise(this, _cruiserSpecificFactories);
 		}
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()

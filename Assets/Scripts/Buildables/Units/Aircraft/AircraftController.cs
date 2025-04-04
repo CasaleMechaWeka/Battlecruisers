@@ -97,9 +97,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _aircraftTrail = transform.FindNamedComponent<TrailRenderer>("AircraftTrail");
         }
 
-        public override void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public override void Initialise(IUIManager uiManager)
         {
-            base.Initialise(uiManager, factoryProvider);
+            base.Initialise(uiManager);
 
             _velocityBoostable = new Boostable(1);
             _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
@@ -197,7 +197,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _collider.enabled = false;
             _collider.enabled = true;
 
-            _kamikazeController.Initialise(this, _factoryProvider, kamikazeTarget);
+            _kamikazeController.Initialise(this, kamikazeTarget);
             _kamikazeController.gameObject.SetActive(true);
         }
 
@@ -289,7 +289,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             Vector3 currentPosition = rigidBody.position;
             rigidBody.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
-            _factoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
+            FactoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
         }
     }
 }

@@ -9,6 +9,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System;
@@ -66,7 +67,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
                         //    SetupDroneConsumer(_unitWrapper.Buildable.NumOfDronesRequired, showDroneFeedback: false);
                         ApplyVariantIfExist(_unitWrapper.Buildable);
                         EnsureDroneConsumerHasHighestPriority();
-                        _unitPool = _factoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
+                        _unitPool = FactoryProvider.PoolProviders.UnitToPoolMap.GetPool(_unitWrapper.Buildable);
 
                         NewUnitChosen?.Invoke(this, EventArgs.Empty);
                     }

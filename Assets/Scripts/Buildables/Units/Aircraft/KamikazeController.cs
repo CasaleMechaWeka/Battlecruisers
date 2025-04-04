@@ -25,15 +25,13 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private const float KAMIKAZE_DAMAGE_MULTIPLIER = 1;
         private IDamageStats kamikazeDamageStats;
-        private FactoryProvider _factoryProvider;
         private float remainingPotentialDamage;
 
-        public void Initialise(IUnit parentAircraft, FactoryProvider factoryProvider, ITarget target)
+        public void Initialise(IUnit parentAircraft, ITarget target)
         {
-            Helper.AssertIsNotNull(parentAircraft, factoryProvider);
+            Helper.AssertIsNotNull(parentAircraft);
 
             _parentAircraft = parentAircraft;
-            _factoryProvider = factoryProvider;
             _initialTarget = target;
             _targetToDamage = null;
 
@@ -45,7 +43,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             kamikazeDamageStats = new DamageStats(remainingPotentialDamage, parentAircraft.Size.x);
 
             _damageApplier = new AreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
-            _explosionPoolProvider = _factoryProvider.PoolProviders.ExplosionPoolProvider;
+            _explosionPoolProvider = FactoryProvider.PoolProviders.ExplosionPoolProvider;
 
             _initialTarget.Destroyed += Target_Destroyed;
         }

@@ -5,6 +5,7 @@ using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetTrackers;
+using BattleCruisers.Utils.Factories;
 using NSubstitute;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +40,7 @@ namespace BattleCruisers.Scenes.Test.Naval
             Assert.IsNotNull(enemyShipBlockerInitialiser);
             ITargetTracker enemyShipBlockerTargetTracker
                 = enemyShipBlockerInitialiser.Initialise(
-                    redArgs.FactoryProvider.Targets,
+                    FactoryProvider.Targets,
                     redArgs.CruiserSpecificFactories.Targets.TrackerFactory,
                     Faction.Blues);
 

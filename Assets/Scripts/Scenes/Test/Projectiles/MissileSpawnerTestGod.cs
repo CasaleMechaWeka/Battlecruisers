@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes.Test
 			ProjectileStats stats = GetComponent<ProjectileStats>();
 			int burstSize = 1;
 			BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs();
-			IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.FactoryProvider, args.CruiserSpecificFactories, args.EnemyCruiser);
+			IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(parent, stats, burstSize, args.CruiserSpecificFactories, args.EnemyCruiser);
 
 			await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile);
 

@@ -26,7 +26,6 @@ namespace BattleCruisers.Cruisers
         IRepairManager RepairManager { get; }
         int NumOfDrones { get; }
         IBuildProgressCalculator BuildProgressCalculator { get; }
-        FactoryProvider FactoryProvider { get; }
         CruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
         CruiserDeathExplosion DeathPrefab { get; }

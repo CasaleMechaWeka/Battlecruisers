@@ -46,7 +46,6 @@ namespace BattleCruisers.Buildables
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected TargetFactoriesProvider _targetFactories;
         protected AircraftProvider _aircraftProvider;
-        protected FactoryProvider _factoryProvider;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
@@ -240,16 +239,15 @@ namespace BattleCruisers.Buildables
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        public virtual void Initialise(IUIManager uiManager, FactoryProvider factoryProvider)
+        public virtual void Initialise(IUIManager uiManager)
         {
             Logging.Log(Tags.BUILDABLE, this);
 
             Assert.IsNotNull(_parent, "Must call StaticInitialise() before Initialise(...)");
-            Helper.AssertIsNotNull(uiManager, factoryProvider);
+            Helper.AssertIsNotNull(uiManager);
 
             _uiManager = uiManager;
-            _factoryProvider = factoryProvider;
-            _targetFactories = _factoryProvider.Targets;
+            _targetFactories = FactoryProvider.Targets;
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = new Boostable(1);
@@ -519,7 +517,7 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup.CleanUp();
             _healthBoostableGroup.CleanUp();
 
-            _factoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+            FactoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
 
             if (Faction == Faction.Reds)
             {

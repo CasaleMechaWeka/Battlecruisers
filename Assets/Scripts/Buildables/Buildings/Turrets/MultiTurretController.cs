@@ -2,7 +2,6 @@
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,7 +48,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                 _barrelWrappers[i]
                     .Initialise(
                         this,
-                        _factoryProvider,
                         _cruiserSpecificFactories,
                         FiringSounds[i],
                         _parentSlot.BoostProviders,
