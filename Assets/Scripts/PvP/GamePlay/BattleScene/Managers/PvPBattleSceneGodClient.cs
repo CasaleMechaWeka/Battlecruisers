@@ -318,7 +318,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
-            PvPFactoryProvider.Initialise(components, DataProvider.SettingsManager);
+            PvPFactoryProvider.Initialise(components);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
             MatchmakingScreenController.Instance.isProcessing = false;
@@ -345,7 +345,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
-            PvPFactoryProvider.Initialise(components, DataProvider.SettingsManager);
+            PvPFactoryProvider.Initialise(components);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
             MatchmakingScreenController.Instance.isProcessing = false;

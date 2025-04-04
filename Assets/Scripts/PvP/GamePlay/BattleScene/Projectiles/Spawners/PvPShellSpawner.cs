@@ -1,3 +1,4 @@
+using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.ActivationArgs;
@@ -71,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPFactoryProvider.Sound.SoundPlayerFactory,
                     new SoundKey(_type, _name),
                     _burstSize,
-                    PvPFactoryProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             soundPlayer?.OnProjectileFired();
         }
     }

@@ -1,4 +1,5 @@
 using BattleCruisers.Buildables;
+using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -59,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPFactoryProvider.Sound.SoundPlayerFactory,
                     firingSound,
                     args.BurstSize,
-                    PvPFactoryProvider.SettingsManager);
+                    DataProvider.SettingsManager);
             _firingSound = firingSound;
             _burstSize = args.BurstSize;
 

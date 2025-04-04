@@ -1,5 +1,4 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
@@ -20,22 +19,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public static IDroneMonitor DroneMonitor { get; private set; }
         public static FlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
         public static IUpdaterProvider UpdaterProvider { get; private set; }
-        public static SettingsManager SettingsManager { get; private set; }
 
         public static IPvPPoolProviders PoolProviders { get; private set; }
         public static ISoundFactoryProvider Sound { get; private set; }
 
 
         private static PvPPoolProviders poolProviders;
-        public static void Initialise(
-            IPvPBattleSceneGodComponents components,
-            SettingsManager settingsManager
-            )
+        public static void Initialise(IPvPBattleSceneGodComponents components)
         {
-            PvPHelper.AssertIsNotNull(components, settingsManager);
+            PvPHelper.AssertIsNotNull(components);
 
             _components = components;
-            SettingsManager = settingsManager;
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;
@@ -46,6 +40,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             poolProviders = new PvPPoolProviders(droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
+        }
+
+        public static void Clear()
+        {
+            DeferrerProvider = null;
+            DroneMonitor = null;
+            FlightPointsProviderFactory = null;
+            UpdaterProvider = null;
+            PoolProviders = null;
+            Sound = null;
         }
 
         public static void Initialise_Rest()
