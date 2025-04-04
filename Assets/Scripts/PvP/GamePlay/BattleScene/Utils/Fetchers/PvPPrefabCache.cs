@@ -40,88 +40,56 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static PvPBuildableWrapper<IPvPBuilding> GetBuilding(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[0] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[0].GetAwaiter().GetResult();
-
+            if (_buildings != null)
                 return _buildings.GetPrefab(key);
-            }
+
+            return PrefabFetcher.GetPrefabSync<PvPBuildableWrapper<IPvPBuilding>>(key);
         }
 
         public static PvPBuildableWrapper<IPvPUnit> GetUnit(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[1] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[1].GetAwaiter().GetResult();
+            if (_units != null)
                 return _units.GetPrefab(key);
-            }
+
+            return PrefabFetcher.GetPrefabSync<PvPBuildableWrapper<IPvPUnit>>(key);
+
         }
         public static PvPCruiser GetCruiser(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[2] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[2].GetAwaiter().GetResult();
+            if (_cruisers != null)
                 return _cruisers.GetPrefab(key);
-            }
+
+            return PrefabFetcher.GetPrefabSync<PvPCruiser>(key);
         }
 
         public static PvPExplosionController GetExplosion(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[3] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[3].GetAwaiter().GetResult();
+            if (_explosions != null)
                 return _explosions.GetPrefab(key);
-            }
+            return PrefabFetcher.GetPrefabSync<PvPExplosionController>(key);
         }
 
         public static PvPShipDeathInitialiser GetShipDeath(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[4] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[4].GetAwaiter().GetResult();
+            if (_shipDeaths != null)
                 return _shipDeaths.GetPrefab(key);
-            }
+            return PrefabFetcher.GetPrefabSync<PvPShipDeathInitialiser>(key);
         }
 
-        public static PvPPrefab GetProjectile(IPrefabKey prefabKey)
+        public static PvPPrefab GetProjectile(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[5] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[5].GetAwaiter().GetResult();
-                return _projectiles.GetPrefab(prefabKey);
-            }
+            if (_shipDeaths != null)
+                return _projectiles.GetPrefab(key);
+            return PrefabFetcher.GetPrefabSync<PvPPrefab>(key);
         }
 
         public static PvPDroneController Drone
         {
             get
             {
-                lock (_cacheInitLock)
-                {
-                    if (retrievePrefabsTasks[6] == null)
-                        CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                    else
-                        retrievePrefabsTasks[6].GetAwaiter().GetResult();
+                if (_drone != null)
                     return _drone;
-                }
+                return PrefabFetcher.GetPrefabSync<PvPDroneController>(PvPStaticPrefabKeys.PvPEffects.PvPBuilderDrone);
             }
         }
 
@@ -129,45 +97,52 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             get
             {
-                lock (_cacheInitLock)
-                {
-                    if (retrievePrefabsTasks[7] == null)
-                        CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                    else
-                        retrievePrefabsTasks[7].GetAwaiter().GetResult();
+                if (_audioSource != null)
                     return _audioSource;
-                }
+                return PrefabFetcher.GetPrefabSync<PvPAudioSourceInitialiser>(PvPStaticPrefabKeys.AudioSource);
             }
         }
 
         public static PvPBuildableOutlineController GetOutline(IPrefabKey key)
         {
-            lock (_cacheInitLock)
-            {
-                if (retrievePrefabsTasks[8] == null)
-                    CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
-                else
-                    retrievePrefabsTasks[8].GetAwaiter().GetResult();
-                return _outlines.GetPrefab(key);
-            }
+            if (retrievePrefabsTasks[8] == null)
+                CreatePvPPrefabCacheAsync().GetAwaiter().GetResult();
+            else
+                retrievePrefabsTasks[8].GetAwaiter().GetResult();
+            return _outlines.GetPrefab(key);
         }
 
         private static Task[] retrievePrefabsTasks = new Task[9];
 
         public static async Task CreatePvPPrefabCacheAsync()
         {
-            IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>> keyToBuilding = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>>();
-            IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>> keyToUnit = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>>();
-            IDictionary<IPrefabKey, PvPCruiser> keyToCruiser = new ConcurrentDictionary<IPrefabKey, PvPCruiser>();
-            IDictionary<IPrefabKey, PvPExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, PvPExplosionController>();
-            IDictionary<IPrefabKey, PvPShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, PvPShipDeathInitialiser>();
-            IDictionary<IPrefabKey, PvPPrefab> keyToProjectile = new ConcurrentDictionary<IPrefabKey, PvPPrefab>();
-            Container<PvPDroneController> droneContainer = new Container<PvPDroneController>();
-            Container<PvPAudioSourceInitialiser> audioSourceContainer = new Container<PvPAudioSourceInitialiser>();
-            IDictionary<IPrefabKey, PvPBuildableOutlineController> keyToOutline = new ConcurrentDictionary<IPrefabKey, PvPBuildableOutlineController>();
+            lock (_cacheInitLock)
+            {
+                if (retrievePrefabsTasks.Any(t => t != null)) return; // Already started
+            }
+
+            IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>> keyToBuilding;
+            IDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>> keyToUnit;
+            IDictionary<IPrefabKey, PvPCruiser> keyToCruiser;
+            IDictionary<IPrefabKey, PvPExplosionController> keyToExplosion;
+            IDictionary<IPrefabKey, PvPShipDeathInitialiser> keyToDeath;
+            IDictionary<IPrefabKey, PvPPrefab> keyToProjectile;
+            Container<PvPDroneController> droneContainer;
+            Container<PvPAudioSourceInitialiser> audioSourceContainer;
+            IDictionary<IPrefabKey, PvPBuildableOutlineController> keyToOutline;
 
             lock (_cacheInitLock)
             {
+                keyToBuilding = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPBuilding>>();
+                keyToUnit = new ConcurrentDictionary<IPrefabKey, PvPBuildableWrapper<IPvPUnit>>();
+                keyToCruiser = new ConcurrentDictionary<IPrefabKey, PvPCruiser>();
+                keyToExplosion = new ConcurrentDictionary<IPrefabKey, PvPExplosionController>();
+                keyToDeath = new ConcurrentDictionary<IPrefabKey, PvPShipDeathInitialiser>();
+                keyToProjectile = new ConcurrentDictionary<IPrefabKey, PvPPrefab>();
+                droneContainer = new Container<PvPDroneController>();
+                audioSourceContainer = new Container<PvPAudioSourceInitialiser>();
+                keyToOutline = new ConcurrentDictionary<IPrefabKey, PvPBuildableOutlineController>();
+
                 retrievePrefabsTasks = new Task[9];
                 retrievePrefabsTasks[0] = GetPrefabs(PvPStaticPrefabKeys.PvPBuildings.AllKeys, keyToBuilding);
                 retrievePrefabsTasks[1] = GetPrefabs(PvPStaticPrefabKeys.PvPUnits.AllKeys, keyToUnit);

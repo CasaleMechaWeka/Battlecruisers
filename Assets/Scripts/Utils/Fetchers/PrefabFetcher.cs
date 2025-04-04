@@ -17,7 +17,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             // 1) Start the async load
             string addressableKey = PREFAB_ROOT_DIR + prefabKey.PrefabPath + PREFAB_FILE_EXTENSION;
-            var handle = Addressables.LoadAssetAsync<TPrefab>(addressableKey);
+            var handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
 
             // 2) Safely block the main thread while letting Unity pump the async calls
             handle.WaitForCompletion();
@@ -29,10 +29,11 @@ namespace BattleCruisers.Utils.Fetchers
             }
 
             // 3) Perform any static initialisation
-            handle.Result.StaticInitialise();
+            TPrefab prefabObject = handle.Result.GetComponent<TPrefab>();
+            //handle.Result.StaticInitialise();
 
             // 4) Return the loaded prefab
-            return handle.Result;
+            return prefabObject;
         }
 
         public static async Task<PrefabContainer<TPrefab>> GetPrefabAsync<TPrefab>(IPrefabKey prefabKey) where TPrefab : class

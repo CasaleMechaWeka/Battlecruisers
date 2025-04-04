@@ -50,6 +50,7 @@ using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -157,6 +158,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void Awake()
         {
             s_pvpBattleSceneGodClient = this;
+
+            _ = PvPPrefabCache.CreatePvPPrefabCacheAsync();
+            components = GetComponent<PvPBattleSceneGodComponents>();
+            components.Initialise();
+            components.UpdaterProvider.SwitchableUpdater.Enabled = false;
+            PvPFactoryProvider.Setup(components);
+
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -303,7 +311,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public void StaticInitialiseAsync_Host()
         {
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
-            components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -313,12 +320,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             messageBox.Initialize();
             messageBox.HideMessage();
 
-            Assert.IsNotNull(components);
-            components.Initialise();
             navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
-            PvPFactoryProvider.Initialise(components);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
             MatchmakingScreenController.Instance.isProcessing = false;
@@ -326,7 +330,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private async Task StaticInitialiseAsync_Client()
         {
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
-            components = GetComponent<PvPBattleSceneGodComponents>();
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             sceneNavigator = LandingSceneGod.SceneNavigator;
@@ -335,17 +338,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize();
             messageBox.HideMessage();
-
-            Assert.IsNotNull(components);
-            components.Initialise();
-
-            await PvPPrefabCache.CreatePvPPrefabCacheAsync();
-
+            PvPFactoryProvider.Initialise_Sound();
             navigationPermitters = new NavigationPermitters();
 
             pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
-            PvPFactoryProvider.Initialise(components);
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             captainController = GetComponent<PvPCaptainExoHUDController>();
             MatchmakingScreenController.Instance.isProcessing = false;
@@ -365,6 +362,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             MatchmakingScreenController.Instance.AddProgress(1000);
             playerCruiser.StaticInitialise();
             enemyCruiser.StaticInitialise();
+
             cameraComponents = cameraInitialiser.Initialise(
                 DataProvider.SettingsManager,
                 playerCruiser,

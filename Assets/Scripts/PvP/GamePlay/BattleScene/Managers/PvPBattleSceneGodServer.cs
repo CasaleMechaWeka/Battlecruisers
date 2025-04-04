@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -84,6 +85,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         static PvPBattleSceneGodServer s_pvpBattleSceneGodServer;
         void Awake()
         {
+            _ = PvPPrefabCache.CreatePvPPrefabCacheAsync();
+            components = GetComponent<PvPBattleSceneGodComponents>();
+            Assert.IsNotNull(components);
+            components.Initialise();
+            PvPFactoryProvider.Setup(components);
+
             if (m_NetcodeHooks)
             {
                 m_NetcodeHooks.OnNetworkSpawnHook += OnNetworkSpawn;
@@ -124,7 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     if (NetworkManager.Singleton.IsHost)
                     {
                         if (this != null)
-                            await Initialise();
+                            Initialise();
                     }
                     break;
             }
@@ -138,21 +145,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
         }
-        private async Task Initialise()
+        private void Initialise()
         {
             if (isInitializingServer)
                 return;
             isInitializingServer = true;
-            await _Initialise();
+            _Initialise();
         }
-        private async Task _Initialise()
-        {
-            await PvPPrefabCache.CreatePvPPrefabCacheAsync();
 
-            components = GetComponent<PvPBattleSceneGodComponents>();
+        private void _Initialise()
+        {
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            Assert.IsNotNull(components);
-            components.Initialise();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = new PvPBattleHelper();
 
@@ -164,7 +167,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             playerBCruiseruserChosenTargetHelper = pvpBattleHelper.CreateUserChosenTargetHelper(
                 playerBCruiserUserChosenTargetManager);
 
-            PvPFactoryProvider.Initialise(components);
+            PvPFactoryProvider.Initialise();
             GetComponent<PvPBattleSceneGodClient>().StaticInitialiseAsync_Host();
             _Initialise_Rest();
         }
@@ -242,6 +245,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public void Initialise_Rest()
         {
+            PvPFactoryProvider.Initialise_Rest();
             Debug.Log("====> All initialized");
         }
 

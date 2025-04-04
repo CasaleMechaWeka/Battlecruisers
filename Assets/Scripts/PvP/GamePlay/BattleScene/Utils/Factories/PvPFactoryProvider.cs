@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         private static PvPPoolProviders poolProviders;
 
-        public static void Initialise(PvPBattleSceneGodComponents components)
+        public static void Setup(PvPBattleSceneGodComponents components)
         {
             PvPHelper.AssertIsNotNull(components);
 
@@ -33,13 +33,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             FlightPointsProviderFactory = new FlightPointsProviderFactory();
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;
+        }
 
+        public static void Initialise()
+        {
             IDroneFactory droneFactory = new PvPDroneFactory();
             DroneMonitor = new DroneMonitor(droneFactory);
             Sound = new PvPSoundFactoryProvider(_components /*, poolProviders */);
             poolProviders = new PvPPoolProviders(droneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
+        }
+        public static void Initialise_Rest()
+        {
+            poolProviders.SetInitialCapacities_Rest();
         }
 
         public static void Clear()
@@ -52,14 +59,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Sound = null;
         }
 
-        public static void Initialise_Rest()
-        {
-            poolProviders.SetInitialCapacities_Rest();
-        }
 
-        public static void Initialise(IPvPUIManager uiManager)
+        public static void Initialise_Sound()
         {
-            Assert.IsNotNull(uiManager);
             Sound = new PvPSoundFactoryProvider(_components /*, poolProviders */);
         }
     }

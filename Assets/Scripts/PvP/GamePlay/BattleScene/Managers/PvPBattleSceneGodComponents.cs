@@ -54,43 +54,48 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private UpdaterProvider _updaterProvider;
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
+        public static readonly object initLock = new();
+
         //        public void Initialise_Client(SettingsManager settingsManager)
         public void Initialise()
         {
-            PvPHelper.AssertIsNotNull(
-                backgroundClickableEmitter,
-                targetIndicator,
-                prioritisedSoundPlayerAudioSource,
-                uiSoundsAudioSource,
-                musicPlayerInitialiser,
-                windInitialiser,
-                cloudInitialiser,
-                hotkeyInitialiser);
+            lock (initLock)
+            {
+                PvPHelper.AssertIsNotNull(
+                    backgroundClickableEmitter,
+                    targetIndicator,
+                    prioritisedSoundPlayerAudioSource,
+                    uiSoundsAudioSource,
+                    musicPlayerInitialiser,
+                    windInitialiser,
+                    cloudInitialiser,
+                    hotkeyInitialiser);
 
-            PrioritisedSoundPlayerAudioSource
-                = new EffectVolumeAudioSource(
-                    new AudioSourceBC(prioritisedSoundPlayerAudioSource), 0);
-            UISoundsAudioSource
-                = new EffectVolumeAudioSource(
-                    new AudioSourceBC(uiSoundsAudioSource), 1);
+                PrioritisedSoundPlayerAudioSource
+                    = new EffectVolumeAudioSource(
+                        new AudioSourceBC(prioritisedSoundPlayerAudioSource), 0);
+                UISoundsAudioSource
+                    = new EffectVolumeAudioSource(
+                        new AudioSourceBC(uiSoundsAudioSource), 1);
 
-            SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
-            Assert.IsNotNull(SkyboxInitialiser);
+                SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
+                Assert.IsNotNull(SkyboxInitialiser);
 
-            LifetimeEventBroadcaster lifetimeEvents = GetComponent<LifetimeEventBroadcaster>();
-            Assert.IsNotNull(lifetimeEvents);
-            LifetimeEvents = lifetimeEvents;
-            targetIndicator.Initialise();
+                LifetimeEventBroadcaster lifetimeEvents = GetComponent<LifetimeEventBroadcaster>();
+                Assert.IsNotNull(lifetimeEvents);
+                LifetimeEvents = lifetimeEvents;
+                targetIndicator.Initialise();
 
-            Deferrer = GetComponent<TimeScaleDeferrer>();
-            Assert.IsNotNull(Deferrer);
+                Deferrer = GetComponent<TimeScaleDeferrer>();
+                Assert.IsNotNull(Deferrer);
 
-            RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
-            Assert.IsNotNull(RealTimeDeferrer);
+                RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
+                Assert.IsNotNull(RealTimeDeferrer);
 
-            _updaterProvider = GetComponentInChildren<UpdaterProvider>();
-            Assert.IsNotNull(_updaterProvider);
-            _updaterProvider.Initialise();
+                _updaterProvider = GetComponentInChildren<UpdaterProvider>();
+                Assert.IsNotNull(_updaterProvider);
+                _updaterProvider.Initialise();
+            }
         }
 
 
