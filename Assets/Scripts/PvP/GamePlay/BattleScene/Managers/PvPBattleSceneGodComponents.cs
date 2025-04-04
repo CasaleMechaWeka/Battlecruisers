@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IUpdaterProvider UpdaterProvider => _updaterProvider;
 
         //        public void Initialise_Client(SettingsManager settingsManager)
-        public void Initialise(SettingsManager settingsManager)
+        public void Initialise()
         {
             PvPHelper.AssertIsNotNull(
                 backgroundClickableEmitter,
@@ -68,7 +68,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 windInitialiser,
                 cloudInitialiser,
                 hotkeyInitialiser);
-            Assert.IsNotNull(settingsManager);
 
             PrioritisedSoundPlayerAudioSource
                 = new EffectVolumeAudioSource(

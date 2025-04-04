@@ -23,8 +23,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public static IPvPPoolProviders PoolProviders { get; private set; }
         public static ISoundFactoryProvider Sound { get; private set; }
 
-
         private static PvPPoolProviders poolProviders;
+
         public static void Initialise(IPvPBattleSceneGodComponents components)
         {
             PvPHelper.AssertIsNotNull(components);

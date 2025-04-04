@@ -152,7 +152,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components = GetComponent<PvPBattleSceneGodComponents>();
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
             Assert.IsNotNull(components);
-            components.Initialise(DataProvider.SettingsManager);
+            components.Initialise();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
             pvpBattleHelper = new PvPBattleHelper();
 

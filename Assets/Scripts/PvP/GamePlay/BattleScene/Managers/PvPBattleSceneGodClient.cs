@@ -314,7 +314,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             messageBox.HideMessage();
 
             Assert.IsNotNull(components);
-            components.Initialise(DataProvider.SettingsManager);
+            components.Initialise();
             navigationPermitters = new NavigationPermitters();
             pvpBattleHelper = CreatePvPBattleHelper();
             uiManager = pvpBattleHelper.CreateUIManager();
@@ -337,7 +337,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             messageBox.HideMessage();
 
             Assert.IsNotNull(components);
-            components.Initialise(DataProvider.SettingsManager);
+            components.Initialise();
 
             await PvPPrefabCache.CreatePvPPrefabCacheAsync();
 

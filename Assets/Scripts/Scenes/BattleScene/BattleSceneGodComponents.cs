@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public HotkeyInitialiser hotkeyInitialiser;
         public HotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;
 
-        public void Initialise(SettingsManager settingsManager)
+        public void Initialise()
         {
             Helper.AssertIsNotNull(
                 backgroundClickableEmitter,
@@ -63,7 +63,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 windInitialiser,
                 cloudInitialiser,
                 hotkeyInitialiser);
-            Assert.IsNotNull(settingsManager);
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);

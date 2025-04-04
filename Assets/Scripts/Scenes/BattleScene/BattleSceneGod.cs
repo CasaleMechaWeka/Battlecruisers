@@ -125,7 +125,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
-            components.Initialise(DataProvider.SettingsManager);
+            components.Initialise();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
             // TEMP  Force  tutorial

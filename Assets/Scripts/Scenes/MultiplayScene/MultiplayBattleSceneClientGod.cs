@@ -140,7 +140,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
-            components.Initialise(DataProvider.SettingsManager);
+            components.Initialise();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
 
