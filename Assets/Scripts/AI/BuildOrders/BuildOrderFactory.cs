@@ -62,8 +62,10 @@ namespace BattleCruisers.AI.BuildOrders
                 for (int i = 0; i < strategy.BaseStrategy.Count; i++)
                     if (strategy.BaseStrategy[i].Key == StaticPrefabKeys.Buildings.StealthGenerator)
                         strategy.BaseStrategy.RemoveAt(i);
-                numOfMastSlotsToReserve--;
             }
+
+            if (!strategy.BaseStrategy.Select(x => x.Key).ToList().Contains(StaticPrefabKeys.Buildings.StealthGenerator))
+                numOfMastSlotsToReserve--;
 
             return GetBuildOrder(strategy, levelInfo);
         }
