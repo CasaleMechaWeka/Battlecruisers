@@ -67,7 +67,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(key);
         }
 
-        public override IManagedDisposable CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public override IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum)
         {
             LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);

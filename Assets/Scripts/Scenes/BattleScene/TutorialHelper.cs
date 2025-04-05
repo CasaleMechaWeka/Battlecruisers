@@ -80,7 +80,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return StaticData.InitialGameModel.PlayerLoadout;
         }
 
-        public override IManagedDisposable CreateAI(ICruiserController aiCruiser, ICruiserController playerCruiser, int currentLevelNum)
+        public override IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum)
         {
             // There is no AI for the tutorial :)
             return new DummyManagedDisposable();

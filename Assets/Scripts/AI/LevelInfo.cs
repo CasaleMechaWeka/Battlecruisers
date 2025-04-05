@@ -12,12 +12,12 @@ namespace BattleCruisers.AI
     public class LevelInfo
     {
 
-        public ICruiserController AICruiser { get; }
-        public ICruiserController PlayerCruiser { get; }
+        public Cruiser AICruiser { get; }
+        public Cruiser PlayerCruiser { get; }
 
         public LevelInfo(
-            ICruiserController aiCruiser,
-            ICruiserController playerCruiser)
+            Cruiser aiCruiser,
+            Cruiser playerCruiser)
         {
             Helper.AssertIsNotNull(aiCruiser, playerCruiser);
 
