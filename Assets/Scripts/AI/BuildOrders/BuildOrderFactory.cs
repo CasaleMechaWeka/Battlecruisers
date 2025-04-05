@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
-using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
@@ -18,7 +17,6 @@ namespace BattleCruisers.AI.BuildOrders
     public class BuildOrderFactory
     {
         private readonly SlotAssigner _slotAssigner;
-        private readonly GameModel _gameModel;
         private readonly IStrategyFactory _strategyFactory;
 
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
@@ -26,12 +24,11 @@ namespace BattleCruisers.AI.BuildOrders
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
 
-        public BuildOrderFactory(SlotAssigner slotAssigner, GameModel gameModel, IStrategyFactory strategyFactory)
+        public BuildOrderFactory(SlotAssigner slotAssigner, IStrategyFactory strategyFactory)
         {
-            Helper.AssertIsNotNull(slotAssigner, gameModel, strategyFactory);
+            Helper.AssertIsNotNull(slotAssigner, strategyFactory);
 
             _slotAssigner = slotAssigner;
-            _gameModel = gameModel;
             _strategyFactory = strategyFactory;
         }
 
