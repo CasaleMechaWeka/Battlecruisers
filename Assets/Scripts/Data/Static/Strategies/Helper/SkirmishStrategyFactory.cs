@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using System;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     GetOffensiveRequests(_strategyType));
         }
 
-        private IList<IPrefabKeyWrapper> GetAdaptiveBaseStrategy(StrategyType strategyType)
+        private IList<BuildingKey> GetAdaptiveBaseStrategy(StrategyType strategyType)
         {
             return strategyType switch
             {
@@ -62,7 +62,6 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 StrategyType.Boom => OffensiveRequestsProvider.Boom.All,
                 _ => throw new InvalidOperationException($"Unknown strategy type: {strategyType}"),
             };
-
         }
 
         private IList<OffensiveRequest[]> GetOffensiveRequestsListNoUltras(StrategyType strategyType)
@@ -74,7 +73,6 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 StrategyType.Boom => OffensiveRequestsProvider.Boom.NoUltras,
                 _ => throw new InvalidOperationException($"Unknown strategy type: {strategyType}"),
             };
-
         }
     }
 }

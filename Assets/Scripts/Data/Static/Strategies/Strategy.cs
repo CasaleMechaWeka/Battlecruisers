@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
@@ -9,17 +9,17 @@ namespace BattleCruisers.Data.Static.Strategies
 {
     public class Strategy
     {
-        public IList<IPrefabKeyWrapper> BaseStrategy;
+        public IList<BuildingKey> BaseStrategy;
         public IEnumerable<OffensiveRequest> Offensives { get; }
 
-        public Strategy(IList<IPrefabKeyWrapper> prefabKeys, OffensiveRequest[] offensives)
+        public Strategy(IList<BuildingKey> prefabKeys, OffensiveRequest[] offensives)
         {
             Assert.IsNotNull(prefabKeys);
             Assert.IsTrue(offensives.Length != 0);
 
             // we do this so we can later modify the stragegy, e.g. based on cruiser type and not get
             // exceptions if a readonly collection was passed as argument
-            BaseStrategy = new List<IPrefabKeyWrapper>(prefabKeys);
+            BaseStrategy = new List<BuildingKey>(prefabKeys);
             Offensives = offensives;
         }
 

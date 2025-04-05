@@ -60,11 +60,11 @@ namespace BattleCruisers.AI.BuildOrders
                         && !goodStealthCruisers.Contains(levelInfo.AICruiser.hullType)))
             {
                 for (int i = 0; i < strategy.BaseStrategy.Count; i++)
-                    if (strategy.BaseStrategy[i].Key == StaticPrefabKeys.Buildings.StealthGenerator)
+                    if (strategy.BaseStrategy[i] == StaticPrefabKeys.Buildings.StealthGenerator)
                         strategy.BaseStrategy.RemoveAt(i);
             }
 
-            if (!strategy.BaseStrategy.Select(x => x.Key).ToList().Contains(StaticPrefabKeys.Buildings.StealthGenerator))
+            if (!strategy.BaseStrategy.Contains(StaticPrefabKeys.Buildings.StealthGenerator))
                 numOfMastSlotsToReserve--;
 
             return GetBuildOrder(strategy, levelInfo);
@@ -81,14 +81,13 @@ namespace BattleCruisers.AI.BuildOrders
             // SlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
             List<BuildingKey> offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo).ToList();
-            UnityEngine.Debug.Log(offensiveBuildOrder.Count + " " + strategy.Offensives);
-            List<BuildingKey> baseBuildOrder = strategy.BaseStrategy.Select(t => t.Key).ToList();
-            for (int i = 0; i < baseBuildOrder.Count; i++)
-                if (baseBuildOrder[i] == null)
+            Debug.Log(offensiveBuildOrder.Count + " " + strategy.Offensives);
+            for (int i = 0; i < strategy.BaseStrategy.Count; i++)
+                if (strategy.BaseStrategy[i] == null)
                 {
                     if (offensiveBuildOrder.Count > 0)
                     {
-                        baseBuildOrder[i] = offensiveBuildOrder[0];
+                        strategy.BaseStrategy[i] = offensiveBuildOrder[0];
                         offensiveBuildOrder.RemoveAt(0);
                     }
                 }
@@ -98,7 +97,7 @@ namespace BattleCruisers.AI.BuildOrders
                 if (offensiveBuildOrder[i] == null)
                     Debug.Log("RAAAAA");
 
-            return baseBuildOrder.ToArray();
+            return strategy.BaseStrategy.ToArray();
         }
 
         // TODO: Find a better class to move this to. Make the method public to add unit test!

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
@@ -11,15 +11,15 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
         public LevelStrategies()
         {
-            IList<IList<IPrefabKeyWrapper>> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
+            IList<IList<BuildingKey>> adaptiveBaseStrategies = CreateAdaptiveBaseStrategies();
             IList<OffensiveRequest[]> offensiveRequests = CreateOffensiveRequests();
 
             _adaptiveStrategies = CreateStrategies(adaptiveBaseStrategies, offensiveRequests);
         }
 
-        private IList<IList<IPrefabKeyWrapper>> CreateAdaptiveBaseStrategies()
+        private IList<IList<BuildingKey>> CreateAdaptiveBaseStrategies()
         {
-            return new List<IList<IPrefabKeyWrapper>>()
+            return new List<IList<BuildingKey>>()
             {
                 // Set 1:  Levels 1 - 3
                 StaticBuildOrders.Balanced,
@@ -352,7 +352,7 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
             };
         }
 
-        private IList<Strategy> CreateStrategies(IList<IList<IPrefabKeyWrapper>> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
+        private IList<Strategy> CreateStrategies(IList<IList<BuildingKey>> baseStrategies, IList<OffensiveRequest[]> offensiveRequests)
         {
             Assert.AreEqual(baseStrategies.Count, offensiveRequests.Count);
 

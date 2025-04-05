@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BattleCruisers.Data.Models.PrefabKeys.Wrappers;
+﻿using System.Collections.Generic;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Requests;
 using NSubstitute;
@@ -13,7 +12,7 @@ namespace BattleCruisers.Tests.Data.Static.Strategies
         [Test]
         public void CopyConstructor()
         {
-            IList<IPrefabKeyWrapper> baseStrategy = Substitute.For<IList<IPrefabKeyWrapper>>();
+            IList<BuildingKey> baseStrategy = Substitute.For<IList<BuildingKey>>();
             OffensiveRequest offensiveRequest = new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low)
             {
                 NumOfSlotsToUse = 1

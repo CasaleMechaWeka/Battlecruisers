@@ -60,7 +60,7 @@ namespace BattleCruisers.AI
 
             ICruiserController aiCruiser = levelInfo.AICruiser;
             TaskList tasks = new TaskList();
-            IList<IManagedDisposable> taskProducers = new List<IManagedDisposable>();
+            List<IManagedDisposable> taskProducers = new List<IManagedDisposable>();
 
             // Base build order, main strategy
             BuildingKey[] advancedBuildOrder = _buildOrderFactory.CreateAdaptiveBuildOrder(levelInfo);
