@@ -6,6 +6,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Data.Static.Strategies.Requests;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace BattleCruisers.AI.BuildOrders
         private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
+
+        List<HullType> goodStealthCruisers = new List<HullType>
+        {
+            HullType.Trident,
+            HullType.Rickshaw
+        };
 
         public BuildOrderFactory(SlotAssigner slotAssigner, IStrategyFactory strategyFactory)
         {
@@ -47,10 +54,14 @@ namespace BattleCruisers.AI.BuildOrders
             // we do not want the AI to build a StealthGen when they only have 1 mast because that makes
             // it very vulnerable to MissileRevolver
             if (DataProvider.SettingsManager.AIDifficulty == Data.Settings.Difficulty.Harder
-                && levelInfo.AICruiser.SlotNumProvider.GetSlotCount(SlotType.Mast) <= 1)
+                && (levelInfo.AICruiser.SlotNumProvider.GetSlotCount(SlotType.Mast) <= 1)
+                    || (goodStealthCruisers.Contains(levelInfo.PlayerCruiser.hullType)
+                        && !goodStealthCruisers.Contains(levelInfo.AICruiser.hullType)))
+            {
                 for (int i = 0; i < strategy.BaseStrategy.Count; i++)
                     if (strategy.BaseStrategy[i].Key == StaticPrefabKeys.Buildings.StealthGenerator)
                         strategy.BaseStrategy.RemoveAt(i);
+            }
 
             return GetBuildOrder(strategy, levelInfo);
         }
