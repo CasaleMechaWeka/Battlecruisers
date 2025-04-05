@@ -37,6 +37,12 @@ namespace BattleCruisers.Data.Models
             get => _battleWinScore;
             set { _battleWinScore = value; if (_battleWinScore < 0) _battleWinScore = 0; }
         }
+        private int _timesLostOnLastLevel;
+        public int TimesLostOnLastLevel
+        {
+            get => _timesLostOnLastLevel;
+            set { _timesLostOnLastLevel = value; if (_timesLostOnLastLevel < 0) _timesLostOnLastLevel = 0; }
+        }
 
         public List<HeckleData> _outstandingHeckleTransactions;
         public List<HeckleData> OutstandingHeckleTransactions
@@ -347,6 +353,7 @@ namespace BattleCruisers.Data.Models
 
             _queueName = "bc-1vs1-queue";
             _battleWinScore = 0;
+            _timesLostOnLastLevel = 0;
         }
 
         public GameModel(

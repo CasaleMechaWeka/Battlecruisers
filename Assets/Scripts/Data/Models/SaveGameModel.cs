@@ -23,6 +23,9 @@ namespace BattleCruisers.Data.Models
         public long _lifetimeDestructionScore;
         public float _battleWinScore;
 
+        // Number of times lost in the most recent level
+        public int _timesLostOnLastLevel;
+
         // My callsign.
         public string _playerName;
 
@@ -83,6 +86,7 @@ namespace BattleCruisers.Data.Models
             _lifetimeDestructionScore = game.LifetimeDestructionScore;
             _battleWinScore = game.BattleWinScore;
             _playerName = game.PlayerName;
+            _timesLostOnLastLevel = game.TimesLostOnLastLevel;
             _levelsCompleted = ComputeCompletedLevels(game.CompletedLevels);
             _sideQuestsCompleted = ComputeCompletedSideQuests(game.CompletedSideQuests);
             _unlockedHulls = ComputeUnlockedHulls(game.UnlockedHulls);
@@ -121,6 +125,9 @@ namespace BattleCruisers.Data.Models
 
             game.BattleWinScore = _battleWinScore;
             Debug.Log($"BattleWinScore: {_battleWinScore}");
+
+            game.TimesLostOnLastLevel = _timesLostOnLastLevel;
+            Debug.Log($"Times lost on last level: {_timesLostOnLastLevel}");
 
             if (game.PlayerName == "Charlie")
             {
