@@ -24,6 +24,7 @@ namespace BattleCruisers.AI.BuildOrders
         private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
         // For spy satellite launcher
         private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
+        private int numOfMastSlotsToReserve = 2;    // not constant because we don't always want to build a StealthGen
 
         List<HullType> goodStealthCruisers = new List<HullType>
         {
@@ -61,6 +62,7 @@ namespace BattleCruisers.AI.BuildOrders
                 for (int i = 0; i < strategy.BaseStrategy.Count; i++)
                     if (strategy.BaseStrategy[i].Key == StaticPrefabKeys.Buildings.StealthGenerator)
                         strategy.BaseStrategy.RemoveAt(i);
+                numOfMastSlotsToReserve--;
             }
 
             return GetBuildOrder(strategy, levelInfo);
@@ -100,9 +102,6 @@ namespace BattleCruisers.AI.BuildOrders
         // TODO: Find a better class to move this to. Make the method public to add unit test!
         private int FindNumOfOffensiveSlots(LevelInfo levelInfo)
         {
-            // Reserve 2 mast slots for a stealth gen and teslacoil.
-            int numOfMastSlotsToReserve = 2;
-
             SlotAccessor slotAccessor = levelInfo.AICruiser.SlotAccessor;
             int numOfOffensiveSlots = slotAccessor.GetSlotCount(SlotType.Platform);
 
