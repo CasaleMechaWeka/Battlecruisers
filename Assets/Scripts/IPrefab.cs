@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Utils.Localisation;
-
-namespace BattleCruisers
+﻿namespace BattleCruisers
 {
     public interface IPrefab
     {

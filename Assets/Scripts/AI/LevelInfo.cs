@@ -11,7 +11,6 @@ namespace BattleCruisers.AI
 {
     public class LevelInfo
     {
-
         public Cruiser AICruiser { get; }
         public Cruiser PlayerCruiser { get; }
 
@@ -36,7 +35,7 @@ namespace BattleCruisers.AI
 
         public bool HasSlotType(SlotType slotType)
         {
-            IList<BuildingKey> offensives = GetAvailableBuildings(BuildingCategory.Offence);
+            IList<BuildingKey> offensives = DataProvider.GameModel.GetUnlockedBuildings(BuildingCategory.Offence);
 
             foreach (BuildingKey offensive in offensives)
             {
@@ -47,11 +46,6 @@ namespace BattleCruisers.AI
                 }
             }
             return false;
-        }
-
-        public List<BuildingKey> GetAvailableBuildings(BuildingCategory category)
-        {
-            return DataProvider.GameModel.GetUnlockedBuildings(category);
         }
     }
 }

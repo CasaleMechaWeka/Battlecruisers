@@ -80,7 +80,7 @@ namespace BattleCruisers.AI.BuildOrders
             // What do we need?
             // SlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
-            List<BuildingKey> offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots, levelInfo).ToList();
+            List<BuildingKey> offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots).ToList();
             Debug.Log(offensiveBuildOrder.Count + " " + strategy.Offensives);
             for (int i = 0; i < strategy.BaseStrategy.Count; i++)
                 if (strategy.BaseStrategy[i] == null)
@@ -115,14 +115,14 @@ namespace BattleCruisers.AI.BuildOrders
             return numOfOffensiveSlots;
         }
 
-        private BuildingKey[] CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots, LevelInfo levelInfo)
+        private BuildingKey[] CreateOffensiveBuildOrder(IList<OffensiveRequest> requests, int numOfPlatformSlots)
         {
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
             // Create individual build orders
             List<BuildingKey> buildOrders = new List<BuildingKey>();
             foreach (OffensiveRequest request in requests)
-                buildOrders.AddRange(CreateBuildOrder(request, levelInfo));
+                buildOrders.AddRange(CreateBuildOrder(request));
 
             return buildOrders.ToArray();
         }
@@ -150,7 +150,7 @@ namespace BattleCruisers.AI.BuildOrders
             slotAssigner.AssignSlots(platformRequests, numOfPlatformSlots);
         }
 
-        private BuildingKey[] CreateBuildOrder(OffensiveRequest request, LevelInfo levelInfo)
+        private BuildingKey[] CreateBuildOrder(OffensiveRequest request)
         {
             Logging.Log(Tags.AI_BUILD_ORDERS, request.ToString());
 
@@ -158,8 +158,8 @@ namespace BattleCruisers.AI.BuildOrders
             {
                 OffensiveType.Air => CreateStaticBuildOrder(StaticPrefabKeys.Buildings.AirFactory, request.NumOfSlotsToUse),
                 OffensiveType.Naval => CreateStaticBuildOrder(StaticPrefabKeys.Buildings.NavalFactory, request.NumOfSlotsToUse),
-                OffensiveType.Buildings => CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse, levelInfo),
-                OffensiveType.Ultras => CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, levelInfo, StaticData.AIBannedUltrakeys),
+                OffensiveType.Buildings => CreateDynamicBuildOrder(BuildingCategory.Offence, request.NumOfSlotsToUse),
+                OffensiveType.Ultras => CreateDynamicBuildOrder(BuildingCategory.Ultra, request.NumOfSlotsToUse, StaticData.AIBannedUltrakeys),
                 _ => throw new ArgumentException(),
             };
         }
@@ -211,11 +211,10 @@ namespace BattleCruisers.AI.BuildOrders
         private BuildingKey[] CreateDynamicBuildOrder(
             BuildingCategory buildingCategory,
             int size,
-            LevelInfo levelInfo,
             IList<BuildingKey> bannedBuildings = null)
         {
             List<BuildingKey> buildOrder = new List<BuildingKey>();
-            List<BuildingKey> availableBuildings = levelInfo.GetAvailableBuildings(buildingCategory);
+            List<BuildingKey> availableBuildings = DataProvider.GameModel.GetUnlockedBuildings(buildingCategory);
 
             if (bannedBuildings != null)
                 foreach (BuildingKey key in bannedBuildings)
