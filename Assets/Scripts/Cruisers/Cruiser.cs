@@ -43,7 +43,7 @@ namespace BattleCruisers.Cruisers
         protected Collider2D _collider;
         private ICruiserHelper _helper;
         private SlotWrapperController _slotWrapperController;
-        private IClickHandler _clickHandler;
+        private ClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         private AudioClipWrapper _selectedSound;

@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.Click
 {
-    public class ClickHandler : IClickHandler
+    public class ClickHandler
     {
         private readonly float _doubleClickThresholdInS;
         private float _lastClickTime;

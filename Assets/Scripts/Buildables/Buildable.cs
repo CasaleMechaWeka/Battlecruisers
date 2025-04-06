@@ -32,7 +32,7 @@ namespace BattleCruisers.Buildables
     {
         private float _cumulativeBuildProgressInDroneS;
         protected float _buildTimeInDroneSeconds;
-        private IClickHandler _clickHandler;
+        private ClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         private SmokeInitialiser _smokeInitialiser;

@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private float _cumulativeBuildProgressInDroneS;
         protected float _buildTimeInDroneSeconds;
-        private IClickHandler _clickHandler;
+        private ClickHandler _clickHandler;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         protected PvPSmokeInitialiser _smokeInitialiser;

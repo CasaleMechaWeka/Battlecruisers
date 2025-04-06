@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.Common.Click
     {
         private ClickHandler _clickHandler;
 
-        public IClickHandler GetClickHandler(float doubleClickThresholdInS = Constants.DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S)
+        public ClickHandler GetClickHandler(float doubleClickThresholdInS = Constants.DEFAULT_DOUBLE_CLICK_THRESHOLD_IN_S)
         {
             if (_clickHandler == null)
             {

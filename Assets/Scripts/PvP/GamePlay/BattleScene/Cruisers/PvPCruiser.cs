@@ -56,7 +56,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected Collider2D _collider;
         private IPvPCruiserHelper _helper;
         private PvPSlotWrapperController _slotWrapperController;
-        private IClickHandler _clickHandler;
+        private ClickHandler _clickHandler;
         private IDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<IPvPCruiser> _cruiserDoubleClickHandler;
         private AudioClipWrapper _selectedSound;
