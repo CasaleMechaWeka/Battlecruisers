@@ -121,7 +121,8 @@ public class MissingScriptsFinder : EditorWindow
                 EditorGUIUtility.IconContent("SceneAsset Icon").image,
                 "Toggle scene filtering on/off"
             );
-            bool newFilterScenes = GUILayout.Toggle(filterScenes, sceneButtonContent, "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
+            bool newFilterScenes = GUILayout.Toggle(filterScenes, sceneButtonContent,
+                "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
             if (newFilterScenes != filterScenes)
             {
                 filterScenes = newFilterScenes;
@@ -137,7 +138,8 @@ public class MissingScriptsFinder : EditorWindow
                 EditorGUIUtility.IconContent("Prefab Icon").image,
                 "Toggle prefab filtering on/off"
             );
-            bool newFilterPrefabs = GUILayout.Toggle(filterPrefabs, prefabButtonContent, "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
+            bool newFilterPrefabs = GUILayout.Toggle(filterPrefabs, prefabButtonContent,
+                "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
             if (newFilterPrefabs != filterPrefabs)
             {
                 filterPrefabs = newFilterPrefabs;
@@ -148,7 +150,8 @@ public class MissingScriptsFinder : EditorWindow
         // Missing Components button
         {
             GUIContent compButtonContent = new GUIContent("Missing Components");
-            bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent, "Button", GUILayout.Width(130));
+            bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent,
+                "Button", GUILayout.Width(130));
             if (newFilterMissingComponents != filterMissingComponents)
             {
                 filterMissingComponents = newFilterMissingComponents;
@@ -159,11 +162,35 @@ public class MissingScriptsFinder : EditorWindow
         // Missing References button
         {
             GUIContent refsButtonContent = new GUIContent("Missing References");
-            bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent, "Button", GUILayout.Width(130));
+            bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent,
+                "Button", GUILayout.Width(130));
             if (newFilterMissingReferences != filterMissingReferences)
             {
                 filterMissingReferences = newFilterMissingReferences;
                 Repaint();
+            }
+        }
+
+        // Script field (MonoScript)
+        // Note: You can choose to show a label or not. For example, "Replacement Script" or just the field
+        replacementScript = (MonoScript)EditorGUILayout.ObjectField(
+            replacementScript,             // current value
+            typeof(MonoScript),            // type filter
+            false,                         // allowSceneObjects?
+            GUILayout.Width(150)           // adjust as you like
+        );
+
+        // "Replace All" button
+        if (GUILayout.Button("Replace All", GUILayout.Width(80)))
+        {
+            // Only do the replacement if a script is assigned
+            if (replacementScript != null)
+            {
+                ReplaceAllMissing(replacementScript);
+            }
+            else
+            {
+                Debug.LogWarning("No replacement script selected.");
             }
         }
 
