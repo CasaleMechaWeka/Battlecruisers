@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers
         public float tacticalsBuildRateBoost;
         public float tacticalUltrasBuildRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             if (ApplicationModel.SelectedLevel == 32) //This is where UltraCruiser Level is designated
             {

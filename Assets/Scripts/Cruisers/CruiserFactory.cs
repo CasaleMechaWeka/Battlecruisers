@@ -172,7 +172,7 @@ namespace BattleCruisers.Cruisers
                 repairManager.RemoveCruiser();
             }
 
-            ICruiserArgs cruiserArgs
+            CruiserArgs cruiserArgs
                 = new CruiserArgs(
                     faction,
                     enemyCruiser,

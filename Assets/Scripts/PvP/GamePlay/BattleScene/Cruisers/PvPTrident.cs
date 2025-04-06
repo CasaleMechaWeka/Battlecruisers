@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public float tacticalsBuildRateBoost;
         public float tacticalUltrasBuildRateBoost;
 
-        public override void Initialise(IPvPCruiserArgs args)
+        public override void Initialise(PvPCruiserArgs args)
         {
             base.Initialise(args);
 

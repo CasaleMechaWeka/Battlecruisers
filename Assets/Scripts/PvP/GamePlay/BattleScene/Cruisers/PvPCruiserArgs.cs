@@ -17,7 +17,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public class PvPCruiserArgs : IPvPCruiserArgs
+    public class PvPCruiserArgs
     {
         public Faction Faction { get; }
         public IPvPCruiser EnemyCruiser { get; }

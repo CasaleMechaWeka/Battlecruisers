@@ -146,7 +146,7 @@ namespace BattleCruisers.Cruisers
             _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
         }
 
-        public async virtual void Initialise(ICruiserArgs args)
+        public async virtual void Initialise(CruiserArgs args)
         {
             Faction = args.Faction;
             _enemyCruiser = args.EnemyCruiser;
@@ -396,7 +396,7 @@ namespace BattleCruisers.Cruisers
         /// <summary>
         /// 
         /// </summary>
-        protected void SetUltraCruiserHealth(ICruiserArgs args)
+        protected void SetUltraCruiserHealth(CruiserArgs args)
         {
             if (args.Faction == Faction.Reds)
             {
@@ -411,7 +411,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        protected float SetUltraCruiserUtility(ICruiserArgs args, float cruiserBaseUtility)
+        protected float SetUltraCruiserUtility(CruiserArgs args, float cruiserBaseUtility)
         {
             if (args.Faction == Faction.Reds)
             {

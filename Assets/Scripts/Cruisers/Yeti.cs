@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers
     {
         public float buildRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             base.Initialise(args);
 

@@ -16,7 +16,7 @@ using BCUtils = BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers
 {
-    public class CruiserArgs : ICruiserArgs
+    public class CruiserArgs
     {
         public Faction Faction { get; }
         public ICruiser EnemyCruiser { get; }

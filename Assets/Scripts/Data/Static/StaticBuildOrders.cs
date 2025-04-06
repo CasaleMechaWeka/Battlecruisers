@@ -12,7 +12,7 @@ namespace BattleCruisers.Data.Static
             StaticPrefabKeys.Buildings.DroneStation,
             StaticPrefabKeys.Buildings.DroneStation,
             StaticPrefabKeys.Buildings.ShieldGenerator,
-            null,
+            null,   //here we can insert offensives or other builidngs in BuildOrderFactory
             StaticPrefabKeys.Buildings.DroneStation,
             StaticPrefabKeys.Buildings.ShieldGenerator,
             StaticPrefabKeys.Buildings.StealthGenerator,

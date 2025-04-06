@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPMegalith : PvPCruiser
     {
         public float buildingHealthBoost;
-        public override void Initialise(IPvPCruiserArgs args)
+        public override void Initialise(PvPCruiserArgs args)
         {
             base.Initialise(args);
 

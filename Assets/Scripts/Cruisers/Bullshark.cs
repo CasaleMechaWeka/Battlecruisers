@@ -16,7 +16,7 @@ namespace BattleCruisers.Cruisers
         public float defensivesBuildRateBoost;
         public float shieldBuildRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             if (args.Faction == Faction.Reds && ApplicationModel.SelectedLevel == 2) //Level #2 "Jimmo" would be too hard otherwise
                 shieldBuildRateBoost = 1f;

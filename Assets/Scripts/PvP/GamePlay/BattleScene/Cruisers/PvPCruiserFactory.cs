@@ -182,7 +182,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 repairManager.RemoveCruiser();
             }
 
-            IPvPCruiserArgs cruiserArgs
+            PvPCruiserArgs cruiserArgs
                 = new PvPCruiserArgs(
                     faction,
                     enemyCruiser,

@@ -19,7 +19,7 @@ namespace BattleCruisers.Cruisers
         public float airFactoryBuildRateBoost;
         [FormerlySerializedAs("aircarftBuildRateBoost")] public float aircraftBuildRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             if (ApplicationModel.SelectedLevel == 37) //This is where UltraCruiser Level is designated
             {

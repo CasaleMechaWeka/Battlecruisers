@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers
         public float offensivesFireRateBoost;
         public float offensivesBuildRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             if (ApplicationModel.SelectedLevel == 35) //This is where UltraCruiser Level is designated
             {

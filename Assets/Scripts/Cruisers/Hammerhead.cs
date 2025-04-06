@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers
         public float navalFactoryBuildRateBoost;
         public float shipBuildRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             if (ApplicationModel.SelectedLevel == 37) //This is where UltraCruiser Level is designated
             {

@@ -12,7 +12,7 @@ namespace BattleCruisers.Cruisers
     {
         public float buildingFireRateBoost;
 
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             if (ApplicationModel.SelectedLevel == 58) //This is where UltraCruiser Level is designated
             {

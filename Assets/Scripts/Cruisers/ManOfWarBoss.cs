@@ -15,7 +15,7 @@ namespace BattleCruisers.Cruisers
         bool started = false;
         public SpriteRenderer spriteRenderer;
         public LaserTurretStats laserTurretStats;
-        public override void Initialise(ICruiserArgs args)
+        public override void Initialise(CruiserArgs args)
         {
             isCruiser = false;
             base.Initialise(args);

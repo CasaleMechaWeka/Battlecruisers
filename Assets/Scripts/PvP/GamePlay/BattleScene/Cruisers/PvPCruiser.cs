@@ -316,7 +316,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             pvp_NumOfDrones.Value = DroneManager.NumOfDrones;
         }
 
-        public virtual void Initialise(IPvPCruiserArgs args)
+        public virtual void Initialise(PvPCruiserArgs args)
         {
             Faction = args.Faction;
             // client rpc call

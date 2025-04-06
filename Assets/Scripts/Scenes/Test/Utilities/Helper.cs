@@ -461,7 +461,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 
             BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: Deferrer);
 
-            ICruiserArgs cruiserArgs
+            CruiserArgs cruiserArgs
                 = new CruiserArgs(
                     Faction.Reds,
                     enemyCruiser: Substitute.For<ICruiser>(),
