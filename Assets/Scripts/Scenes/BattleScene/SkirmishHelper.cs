@@ -32,15 +32,17 @@ namespace BattleCruisers.Scenes.BattleScene
         public override ILevel GetLevel()
         {
             int levelNum = 1;  // Unused for skirmish
-            ILevel backgroundLevel = StaticData.Levels[_skirmish.BackgroundLevelNum];
-
-            return
-                new Level(
-                    levelNum,
-                    _skirmish.AICruiser,
-                    backgroundLevel.MusicKeys,
-                    backgroundLevel.SkyMaterialName,
-                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(21));
+            
+            // Use base.GetLevel() approach but modify for our needs
+            ApplicationModel.SelectedLevel = _skirmish.BackgroundLevelNum;
+            ILevel backgroundLevel = base.GetLevel();
+            
+            return new Level(
+                levelNum,
+                _skirmish.AICruiser,
+                backgroundLevel.MusicKeys,
+                backgroundLevel.SkyMaterialName,
+                StaticPrefabKeys.CaptainExos.GetCaptainExoKey(21));
         }
 
         protected override IStrategyFactory CreateStrategyFactory(int currentLevelNum)
@@ -56,7 +58,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
-            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(new LevelBackgroundImageStatsKey(levelNum));
+            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(
+                new LevelBackgroundImageStatsKey(_skirmish.BackgroundLevelNum));
         }
 
         public override IPrefabKey GetAiCruiserKey()
