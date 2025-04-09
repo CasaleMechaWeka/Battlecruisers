@@ -60,7 +60,8 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 _playableHulls.Add(StaticPrefabKeys.Hulls.ManOfWarBoss);
             if (DataProvider.GameModel.CompletedLevels.Count >= 31)
                 _playableHulls.Add(StaticPrefabKeys.Hulls.HuntressBoss);
-            if (DataProvider.GameModel.CompletedSideQuests.ToArray().Select(sideQuest => sideQuest.LevelNum).Contains(23))
+            if (DataProvider.GameModel.CompletedSideQuests != null
+                && DataProvider.GameModel.CompletedSideQuests.ToArray().Select(sideQuest => sideQuest.LevelNum).Contains(23))
                 _playableHulls.Add(StaticPrefabKeys.Hulls.FortressPrime);
 
             _randomDropdownEntry = LocTableCache.ScreensSceneTable.GetString("UI/SkirmishScreen/RandomDropdownEntry");
