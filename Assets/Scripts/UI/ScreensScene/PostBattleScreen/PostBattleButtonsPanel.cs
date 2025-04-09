@@ -26,13 +26,13 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(nextCommand, clockedGameButton);
             Assert.IsNotNull(nextCommand);
 
-            CanvasGroupButton retryButton = transform.FindNamedComponent<CanvasGroupButton>("SmallButtons/RetryButton");
+            CanvasGroupButton retryButton = transform.FindNamedComponent<CanvasGroupButton>("RetryButton");
             retryButton.Initialise(soundPlayer, postBattleScreen.Retry);
             if (wasVictory)
             {
                 Destroy(retryButton.gameObject);
             }
-            CanvasGroupButton loadoutButton = transform.FindNamedComponent<CanvasGroupButton>("SmallButtons/LoadoutButton");
+            CanvasGroupButton loadoutButton = transform.FindNamedComponent<CanvasGroupButton>("LoadoutButton");
             loadoutButton.Initialise(soundPlayer, postBattleScreen.GoToLoadoutScreen);
 
             if (clockedGameCommand.CanExecute)
