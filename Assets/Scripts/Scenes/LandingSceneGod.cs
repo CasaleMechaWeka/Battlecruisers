@@ -794,15 +794,6 @@ namespace BattleCruisers.Scenes
             _lastSceneLoaded = sceneName;
         }
 
-        //void Update()
-        //{
-        //    if (!isUpdatingInternetConnectivity)
-        //    {
-        //        isUpdatingInternetConnectivity = true;
-        //        iUpdateInternetConnectivity();
-        //    }
-        //}
-
         public void Update()
         {
 #if PLATFORM_IOS
@@ -811,17 +802,6 @@ namespace BattleCruisers.Scenes
                 _AppleAuthManager.Update();
             }
 #endif
-        }
-
-        async void iUpdateInternetConnectivity()
-        {
-            await Task.Delay(5000);
-
-            if (this == null)
-                return;
-            HasInternetConnection = await CheckForInternetConnection();
-            if (this == null)
-                return;
         }
 
         public void OnRetry()
