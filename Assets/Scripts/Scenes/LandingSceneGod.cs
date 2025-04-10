@@ -65,16 +65,12 @@ namespace BattleCruisers.Scenes
 
         public GameObject landingCanvas;
 
-        public GameObject loginPanel, retryPanel;
+        public GameObject loginPanel;
 
         public GameObject logos;
         public CanvasGroupButton appleBtn, googleBtn, guestBtn;
         public GameObject spinApple, spinGoogle, spinGuest;
         public GameObject labelApple, labelGoogle, labelGuest;
-
-        public GameObject quitBtn, retryBtn;
-        public GameObject spinRetry;
-        public GameObject labelRetry;
 
         public const string AuthProfileCommandLineArg = "-AuthProfile";
 
@@ -119,9 +115,9 @@ namespace BattleCruisers.Scenes
 
             LogToScreen(Application.platform.ToString());
             messagebox.HideMessage();
-            Helper.AssertIsNotNull(landingCanvas, loginPanel, retryPanel, logos, googleBtn, guestBtn, quitBtn, retryBtn);
-            Helper.AssertIsNotNull(spinGoogle, spinGuest, spinRetry);
-            Helper.AssertIsNotNull(labelGoogle, labelGuest, labelRetry);
+            Helper.AssertIsNotNull(landingCanvas, loginPanel, logos, googleBtn, guestBtn);
+            Helper.AssertIsNotNull(spinGoogle, spinGuest);
+            Helper.AssertIsNotNull(labelGoogle, labelGuest);
             Helper.AssertIsNotNull(messageHandler);
             LogToScreen("Starting Battlecruisers"); // SCREEN START
 
@@ -264,10 +260,6 @@ namespace BattleCruisers.Scenes
             googleBtn.gameObject.SetActive(false);
             appleBtn.gameObject.SetActive(false);
             guestBtn.gameObject.SetActive(false);
-
-            retryPanel.SetActive(false);
-            labelRetry.SetActive(true);
-            spinRetry.SetActive(false);
 
             //below is code to localise the logo
             string locName = LocalizationSettings.SelectedLocale.name;
