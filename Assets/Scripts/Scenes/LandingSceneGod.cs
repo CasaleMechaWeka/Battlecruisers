@@ -75,7 +75,6 @@ namespace BattleCruisers.Scenes
         public const string AuthProfileCommandLineArg = "-AuthProfile";
 
         public static LandingSceneGod Instance;
-        public LoginType loginType = LoginType.None;
 
         public ErrorMessageHandler messageHandler;
         public bool HasInternetConnection { get; private set; }
@@ -352,8 +351,6 @@ namespace BattleCruisers.Scenes
             labelGoogle.SetActive(false);
             spinGoogle.SetActive(true);
 
-            loginType = LoginType.Google;
-
             try
             {
                 bool authSuccessful = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
@@ -579,7 +576,6 @@ namespace BattleCruisers.Scenes
             labelGuest.SetActive(false);
             spinGuest.SetActive(true);
 
-            loginType = LoginType.Anonymous;
             try
             {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
@@ -594,7 +590,6 @@ namespace BattleCruisers.Scenes
             }
 
             // play without Internet
-            loginType = LoginType.NoInternet;
             loginPanel.SetActive(false);
             labelGuest.SetActive(true);
             spinGuest.SetActive(false);
@@ -612,7 +607,6 @@ namespace BattleCruisers.Scenes
             labelGoogle.SetActive(true);
             labelApple.SetActive(true);
             labelGuest.SetActive(true);
-            loginType = LoginType.None;
         }
 
         void SignedIn()
@@ -778,7 +772,5 @@ namespace BattleCruisers.Scenes
                 return false;
             }
         }
-
-        public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
 }
