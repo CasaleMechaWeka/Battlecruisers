@@ -145,13 +145,13 @@ namespace BattleCruisers.Scenes
                 var options = new InitializationOptions();
                 options.SetEnvironmentName("production");
                 //options.SetEnvironmentName("dev");
-                var profile = GetProfile();
+                string profile = GetProfile();
                 if (profile.Length > 0)
                 {
                     try
                     {
                         /*{LocalProfileTool.LocalProfileSuffix}*/
-                        options.SetProfile($"{profile}");
+                        options.SetProfile(profile);
                     }
                     catch (Exception e)
                     {
@@ -797,19 +797,6 @@ namespace BattleCruisers.Scenes
 #endif
         }
 
-        public void OnRetry()
-        {
-            if (loginType == LoginType.Anonymous)
-                AnonymousLogin();
-#if PLATFORM_ANDROID
-            if (loginType == LoginType.Google)
-                GoogleLogin();
-#elif PLATFORM_IOS
-            if (loginType == LoginType.Apple)
-                AppleLogin();
-#endif
-        }
-
         public void OnQuit()
         {
             Application.Quit();
@@ -839,10 +826,6 @@ namespace BattleCruisers.Scenes
                 return false;
             }
         }
-
-#if PLATFORM_IOS
-
-#endif
 
         public enum LoginType { Google, Apple, Anonymous, NoInternet, None }
     }
