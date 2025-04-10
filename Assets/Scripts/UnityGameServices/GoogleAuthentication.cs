@@ -16,11 +16,11 @@ namespace BattleCruisers.Utils.Network
     // Nothing sums it up better than this quote from a Unity Developer in a thread on the Unity forums:
     // "Just to clarify, Authentication works fine, it's google's API we are trying to clarify as it's ever changing."
 
-    public class GoogleAuthentication : IGoogleAuthentication
+    public class GoogleAuthentication
     {
         public void InitializePlayGamesLogin()
         {
-          
+
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
         }
@@ -32,18 +32,18 @@ namespace BattleCruisers.Utils.Network
             bool state = false;
             //The compiler doesn't like it if "interactivity" isn't passed into Authenticate().
             //This diverges from tutorials and documentation!
-            PlayGamesPlatform.Instance.Authenticate( (success) =>
+            PlayGamesPlatform.Instance.Authenticate((success) =>
             {
                 if (SignInStatus.Success == success)
                 {
                     Debug.Log("PlayGamesPlatform: Authenticate ====  success");
-                    PlayGamesPlatform.Instance.RequestServerSideAccess(true, (token) => 
+                    PlayGamesPlatform.Instance.RequestServerSideAccess(true, (token) =>
                     {
                         Debug.Log("PlayGamesPlatform: RequestServerSideAccess: " + token);
                         SignInWithGooglePlayGamesAsync(token);
                         state = true;
                     });
-                   
+
                     state = true;
                 }
                 else

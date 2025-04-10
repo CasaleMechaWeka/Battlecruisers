@@ -81,7 +81,7 @@ namespace BattleCruisers.Scenes
         public bool HasInternetConnection { get; private set; }
 
 #if PLATFORM_ANDROID
-        public static IGoogleAuthentication _GoogleAuthentication { get; set; }
+        public static GoogleAuthentication _GoogleAuthentication { get; set; }
 #endif
 #if PLATFORM_IOS
         public IAppleAuthManager _AppleAuthManager;
