@@ -27,6 +27,7 @@ using TMPro;
 
 #if PLATFORM_ANDROID
 using GooglePlayGames.BasicApi;
+using BattleCruisers.Utils.Network;
 #endif
 
 #if PLATFORM_IOS
