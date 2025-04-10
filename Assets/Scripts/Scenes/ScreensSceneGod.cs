@@ -139,7 +139,7 @@ namespace BattleCruisers.Scenes
             bool IsInternetAccessable = false;
             if (IsFirstTimeLoad)
             {
-                IsInternetAccessable = LandingSceneGod.Instance.InternetConnectivity.Value;
+                IsInternetAccessable = LandingSceneGod.Instance.HasInternetConnection;
             }
             else
             {

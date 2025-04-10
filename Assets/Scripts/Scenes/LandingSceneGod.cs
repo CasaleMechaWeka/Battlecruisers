@@ -22,8 +22,6 @@ using BattleCruisers.UI;
 using Unity.Services.Core;
 using System.Net;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Network;
-using BattleCruisers.Utils.Properties;
 using UnityEngine.UI;
 using TMPro;
 
@@ -83,18 +81,7 @@ namespace BattleCruisers.Scenes
         public LoginType loginType = LoginType.None;
 
         public ErrorMessageHandler messageHandler;
-
-        private INetworkState _currentInternetConnectivity;
-        private INetworkState CurrentInternetConnectivity
-        {
-            get => _currentInternetConnectivity;
-            set
-            {
-                Assert.IsNotNull(value);
-                _currentInternetConnectivity = value;
-                _internetConnectivity.Value = _currentInternetConnectivity.IsConnected;
-            }
-        }
+        public bool HasInternetConnection { get; private set; }
 
 #if PLATFORM_ANDROID
         public static IGoogleAuthentication _GoogleAuthentication { get; set; }
@@ -105,12 +92,7 @@ namespace BattleCruisers.Scenes
         private const string AppleUserToken = "AppleUserToken";
 #endif
 
-
-        private SettableBroadcastingProperty<bool> _internetConnectivity = new SettableBroadcastingProperty<bool>(false);
-        public IBroadcastingProperty<bool> InternetConnectivity { get; set; }
         public int coinBattleLevelNum = -1;
-        private INetworkState ConnectedState = new InternetConnectivity(true);
-        private INetworkState DisconnectedState = new InternetConnectivity(false);
 
         public MessageBox messagebox;
 
@@ -150,13 +132,7 @@ namespace BattleCruisers.Scenes
 
             _ = PrefabCache.CreatePrefabCacheAsync();       //starting this here instead of in ScreensSceneGod saves ~2s
 
-            bool startingState = await CheckForInternetConnection();
-
-            if (startingState)
-                CurrentInternetConnectivity = ConnectedState;
-            else
-                CurrentInternetConnectivity = DisconnectedState;
-            InternetConnectivity = new BroadcastingProperty<bool>(_internetConnectivity);
+            HasInternetConnection = await CheckForInternetConnection();
 
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
@@ -186,7 +162,7 @@ namespace BattleCruisers.Scenes
                     }
                 }
 
-                if (CurrentInternetConnectivity.IsConnected)
+                if (HasInternetConnection)
                 {
                     await UnityServices.InitializeAsync(options);
                 }
@@ -229,7 +205,7 @@ namespace BattleCruisers.Scenes
                 Debug.LogError("Auth events failed the register");
             }
 
-            if (CurrentInternetConnectivity.IsConnected)
+            if (HasInternetConnection)
             {
 #if PLATFORM_ANDROID
                 _GoogleAuthentication = new GoogleAuthentication();
@@ -309,7 +285,7 @@ namespace BattleCruisers.Scenes
             // we probably want to await the task to finish for performance reasons
             guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
 
-            if (CurrentInternetConnectivity.IsConnected)
+            if (HasInternetConnection)
             {
 #if PLATFORM_IOS
                 appleBtn.Initialise(soundPlayer, AppleLogin);
@@ -636,7 +612,7 @@ namespace BattleCruisers.Scenes
         // Guest login by button:
         public async void AnonymousLogin()
         {
-            if (InternetConnectivity.Value)
+            if (HasInternetConnection)
             {
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
@@ -843,14 +819,9 @@ namespace BattleCruisers.Scenes
 
             if (this == null)
                 return;
-            bool currentState = await CheckForInternetConnection();
+            HasInternetConnection = await CheckForInternetConnection();
             if (this == null)
                 return;
-
-            if (currentState)
-                CurrentInternetConnectivity = ConnectedState;
-            else
-                CurrentInternetConnectivity = DisconnectedState;
         }
 
         public void OnRetry()
