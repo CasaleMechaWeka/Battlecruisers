@@ -352,28 +352,26 @@ namespace BattleCruisers.Scenes
             if (!AuthenticationService.Instance.IsSignedIn)
             {
                 SetInteractable(false);
-                spinGoogle.SetActive(true);
                 labelGoogle.SetActive(false);
+                spinGoogle.SetActive(true);
+
                 loginType = LoginType.Google;
 
                 try
                 {
-                    bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-                    if (state != true)
-                    {
-                        spinGoogle.SetActive(false);
-                        labelGoogle.SetActive(true);
-                        SetInteractable(true);
-                    }
+                    bool authSuccessful = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+                    if (authSuccessful)
+                        return;
                 }
                 catch (Exception ex)
                 {
                     LogToScreen("Error while trying to log in with Google"); // IF GOOGLE AUTH FAILS FOR ANY REASON
                     Debug.Log(ex.Message);
-                    spinGoogle.SetActive(false);
-                    labelGoogle.SetActive(true);
-                    SetInteractable(true);
                 }
+
+                labelGoogle.SetActive(true);
+                spinGoogle.SetActive(false);
+                SetInteractable(true);
             }
         }
 
@@ -414,9 +412,7 @@ namespace BattleCruisers.Scenes
                 {
                     // Initialize the Apple Auth Manager
                     if (_AppleAuthManager == null)
-                    {
                         InitializeAppleAuth();
-                    }
 
                     // Set the login arguments
                     var loginArgs = new AppleAuthLoginArgs(LoginOptions.None);
@@ -440,23 +436,18 @@ namespace BattleCruisers.Scenes
                                 PlayerPrefs.SetString(AppleUserToken, idToken);
                                 PlayerPrefs.Save();
                                 HandleAppleSignIn(appleIDCredential);
+                                return;
                             }
                             else
                             {
                                 Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
                                 LogToScreen("Retrieving Apple Id Token failed."); //Localise for prod
-                                spinApple.SetActive(false);
-                                labelApple.SetActive(true);
-                                SetInteractable(true);
                             }
                         },
                         error =>
                         {
                             Debug.Log("Sign-in with Apple error. Message: " + error.ToString());
                             LogToScreen("Login Unsuccessful: " + error.ToString()); //Localise for prod
-                            spinApple.SetActive(false);
-                            labelApple.SetActive(true);
-                            SetInteractable(true);
                         }
                     );
                 }
@@ -464,10 +455,11 @@ namespace BattleCruisers.Scenes
                 {
                     LogToScreen("Login Exception: " + ex.Message); //Localise for prod
                     Debug.Log(ex.Message);
-                    spinApple.SetActive(false);
-                    labelApple.SetActive(true);
-                    SetInteractable(true);
                 }
+
+                spinApple.SetActive(false);
+                labelApple.SetActive(true);
+                SetInteractable(true);
             }
         }
 
@@ -605,50 +597,36 @@ namespace BattleCruisers.Scenes
         // Guest login by button:
         public async void AnonymousLogin()
         {
-            if (HasInternetConnection)
+
+            if (HasInternetConnection && !AuthenticationService.Instance.IsSignedIn)
             {
-                if (!AuthenticationService.Instance.IsSignedIn)
+                SetInteractable(false);
+                labelGuest.SetActive(false);
+                spinGuest.SetActive(true);
+
+                loginType = LoginType.Anonymous;
+                try
                 {
-                    SetInteractable(false);
-                    spinGuest.SetActive(true);
-                    labelGuest.SetActive(false);
-                    loginType = LoginType.Anonymous;
-                    try
-                    {
-                        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.Log(ex.Message);
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
 
-                        // This only happens if UGS fails (boooooo)
-                        LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
-
-                        // play without Internet
-                        loginType = LoginType.NoInternet;
-                        loginPanel.SetActive(false);
-                        spinGuest.SetActive(false);
-                        labelGuest.SetActive(true);
-                        foreach (GameObject i in disableOnSceneTransition)
-                            i.SetActive(false);
-
-                        GoToScene(SceneNames.SCREENS_SCENE, true);
-                    }
+                    // This only happens if UGS fails (boooooo)
+                    LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
                 }
             }
-            else
-            {
-                // play without Internet
-                loginType = LoginType.NoInternet;
-                loginPanel.SetActive(false);
-                spinGuest.SetActive(false);
-                labelGuest.SetActive(true);
-                foreach (GameObject i in disableOnSceneTransition)
-                {
-                    i.SetActive(false);
-                }
-                GoToScene(SceneNames.SCREENS_SCENE, true);
-            }
+
+            // play without Internet
+            loginType = LoginType.NoInternet;
+            loginPanel.SetActive(false);
+            labelGuest.SetActive(true);
+            spinGuest.SetActive(false);
+            foreach (GameObject i in disableOnSceneTransition)
+                i.SetActive(false);
+            GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         private void SignFailed(RequestFailedException exception)
