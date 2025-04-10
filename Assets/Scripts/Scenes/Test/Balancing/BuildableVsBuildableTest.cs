@@ -7,7 +7,6 @@ using BattleCruisers.Scenes.Test.Balancing.Groups;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Threading;
-using BattleCruisers.Utils.Timers;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -17,8 +16,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
 {
     public class BuildableVsBuildableTest : MonoBehaviour, ITestScenario
     {
-		private TimerController _timer;
-
         protected IBuildableGroup _leftGroup, _rightGroup;
         protected TestUtils.Helper _helper;
         protected IDeferrer _deferrer;
@@ -36,8 +33,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
         // Lazily initialise, so camera can be accessed even if scenario 
         // initialisation is delayed (kamikaze balancing tests)
         private Camera _camera;
-        public Camera Camera 
-        { 
+        public Camera Camera
+        {
             get
             {
                 if (_camera == null)
@@ -92,32 +89,23 @@ namespace BattleCruisers.Scenes.Test.Balancing
             }
 
             ShowScenarioDetails();
-
-            // Start timer
-            _timer = GetComponentInChildren<TimerController>(includeInactive: true);
-            if (_timer != null)
-            {
-                _timer.Initialise("Time Elapsed: ", "s");
-                _timer.Begin();
-			}
-
             OnInitialised();
         }
 
         protected virtual void OnInitialised() { }
 
         protected virtual TestUtils.BuildableInitialisationArgs CreateLeftGroupArgs(
-            TestUtils.Helper helper, 
+            TestUtils.Helper helper,
             Vector2 spawnPosition,
             IUpdaterProvider updaterProvider,
             ICruiser parentCruiser,
             ICruiser enemyCruiser)
         {
-            return 
+            return
                 new TestUtils.BuildableInitialisationArgs(
-                    helper, 
-                    Faction.Blues, 
-                    parentCruiserDirection: Direction.Right, 
+                    helper,
+                    Faction.Blues,
+                    parentCruiserDirection: Direction.Right,
                     updaterProvider: updaterProvider,
                     parentCruiser: parentCruiser,
                     enemyCruiser: enemyCruiser,
@@ -125,7 +113,7 @@ namespace BattleCruisers.Scenes.Test.Balancing
         }
 
         protected virtual TestUtils.BuildableInitialisationArgs CreateRightGroupArgs(
-            TestUtils.Helper helper, 
+            TestUtils.Helper helper,
             Vector2 spawnPosition,
             IUpdaterProvider updaterProvider,
             ICruiser parentCruiser,
@@ -145,8 +133,8 @@ namespace BattleCruisers.Scenes.Test.Balancing
         private void ShowScenarioDetails()
         {
             TextMesh detailsText = transform.FindNamedComponent<TextMesh>("DetailsText");
-            detailsText.text 
-                = _leftGroup.BuildableKey.PrefabPath.GetFileName() + ": " + _leftGroup.NumOfBuildables 
+            detailsText.text
+                = _leftGroup.BuildableKey.PrefabPath.GetFileName() + ": " + _leftGroup.NumOfBuildables
                 + " vs " + _rightGroup.BuildableKey.PrefabPath.GetFileName() + ": " + _rightGroup.NumOfBuildables;
         }
 
@@ -158,11 +146,6 @@ namespace BattleCruisers.Scenes.Test.Balancing
             }
 
             _isScenarioOver = true;
-
-            if (_timer != null)
-            {
-				_timer.Stop();
-            }
 
             // Destroy all units (because behaviour is undefined if they have no more
             // targets, means the game is won).
