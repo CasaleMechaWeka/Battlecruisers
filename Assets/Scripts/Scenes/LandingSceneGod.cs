@@ -335,11 +335,7 @@ namespace BattleCruisers.Scenes
                 .ComputeHash(Encoding.UTF8.GetBytes(Application.dataPath));
             Array.Resize(ref hashedBytes, 16);
             return new Guid(hashedBytes).ToString("N").Length > 30 ? new Guid(hashedBytes).ToString("N").Substring(0, 30) : new Guid(hashedBytes).ToString("N");
-#elif PLATFORM_ANDROID
-            return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
-#elif PLATFORM_IOS
-            return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
-#elif PLATFORM_STANDALONE_WIN
+#elif PLATFORM_ANDROID || PLATFORM_IOS || PLATFORM_STANDALONE_WIN
             return SystemInfo.deviceUniqueIdentifier.Length > 30 ? SystemInfo.deviceUniqueIdentifier.Substring(0, 30) : SystemInfo.deviceUniqueIdentifier;
 #endif
         }
@@ -349,50 +345,30 @@ namespace BattleCruisers.Scenes
         public async void GoogleLogin()
         {
             LogToScreen("Attempting login with Google"); // ON GOOGLE BUTTON PRESS
-            if (!AuthenticationService.Instance.IsSignedIn)
-            {
-                SetInteractable(false);
-                labelGoogle.SetActive(false);
-                spinGoogle.SetActive(true);
+            if (AuthenticationService.Instance.IsSignedIn)  // already signed in
+                return;
 
-                loginType = LoginType.Google;
+            SetInteractable(false);
+            labelGoogle.SetActive(false);
+            spinGoogle.SetActive(true);
 
-                try
-                {
-                    bool authSuccessful = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
-                    if (authSuccessful)
-                        return;
-                }
-                catch (Exception ex)
-                {
-                    LogToScreen("Error while trying to log in with Google"); // IF GOOGLE AUTH FAILS FOR ANY REASON
-                    Debug.Log(ex.Message);
-                }
+            loginType = LoginType.Google;
 
-                labelGoogle.SetActive(true);
-                spinGoogle.SetActive(false);
-                SetInteractable(true);
-            }
-        }
-
-        // Attempt Google signin without user input:
-        private async Task GoogleAttemptSilentSigningAsync(ISingleSoundPlayer soundPlayer)
-        {
             try
             {
-                bool state = await _GoogleAuthentication.Authenticate(SignInInteractivity.NoPrompt);
-                if (state != true)
-                {
-                    ShowSignInScreen();
-                    Debug.Log("Google silent signin unsuccessful.");
-                }
+                bool authSuccessful = await _GoogleAuthentication.Authenticate(SignInInteractivity.CanPromptAlways); // The comments for these enums are actually pretty good!
+                if (authSuccessful)
+                    return;
             }
             catch (Exception ex)
             {
-                // if it fails, show the landing buttons:
-                ShowSignInScreen();
+                LogToScreen("Error while trying to log in with Google"); // IF GOOGLE AUTH FAILS FOR ANY REASON
                 Debug.Log(ex.Message);
             }
+
+            labelGoogle.SetActive(true);
+            spinGoogle.SetActive(false);
+            SetInteractable(true);
         }
 #endif
 
@@ -401,66 +377,66 @@ namespace BattleCruisers.Scenes
         private async void AppleLogin()
         {
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
-            if (!AuthenticationService.Instance.IsSignedIn)
+            if (AuthenticationService.Instance.IsSignedIn)  // already signed in
+                return;
+
+            SetInteractable(false);
+            spinApple.SetActive(true);
+            labelApple.SetActive(false);
+            loginType = LoginType.Apple;
+
+            try
             {
-                SetInteractable(false);
-                spinApple.SetActive(true);
-                labelApple.SetActive(false);
-                loginType = LoginType.Apple;
+                // Initialize the Apple Auth Manager
+                if (_AppleAuthManager == null)
+                    InitializeAppleAuth();
 
-                try
-                {
-                    // Initialize the Apple Auth Manager
-                    if (_AppleAuthManager == null)
-                        InitializeAppleAuth();
+                // Set the login arguments
+                var loginArgs = new AppleAuthLoginArgs(LoginOptions.None);
+                Debug.Log("####### AppleLogin Args assigned.");
 
-                    // Set the login arguments
-                    var loginArgs = new AppleAuthLoginArgs(LoginOptions.None);
-                    Debug.Log("####### AppleLogin Args assigned.");
-
-                    // Perform the login
-                    _AppleAuthManager.LoginWithAppleId(
-                        loginArgs,
-                        credential =>
+                // Perform the login
+                _AppleAuthManager.LoginWithAppleId(
+                    loginArgs,
+                    credential =>
+                    {
+                        var appleIDCredential = credential as IAppleIDCredential;
+                        if (appleIDCredential != null)
                         {
-                            var appleIDCredential = credential as IAppleIDCredential;
-                            if (appleIDCredential != null)
-                            {
-                                var idToken = Encoding.UTF8.GetString(
-                                    appleIDCredential.IdentityToken,
-                                    0,
-                                    appleIDCredential.IdentityToken.Length);
-                                Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
-                                LogToScreen("Sign-in success."); //Localise for prod
-                                PlayerPrefs.SetString(AppleUserIdKey, credential.User);
-                                PlayerPrefs.SetString(AppleUserToken, idToken);
-                                PlayerPrefs.Save();
-                                HandleAppleSignIn(appleIDCredential);
-                                return;
-                            }
-                            else
-                            {
-                                Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
-                                LogToScreen("Retrieving Apple Id Token failed."); //Localise for prod
-                            }
-                        },
-                        error =>
-                        {
-                            Debug.Log("Sign-in with Apple error. Message: " + error.ToString());
-                            LogToScreen("Login Unsuccessful: " + error.ToString()); //Localise for prod
+                            var idToken = Encoding.UTF8.GetString(
+                                appleIDCredential.IdentityToken,
+                                0,
+                                appleIDCredential.IdentityToken.Length);
+                            Debug.Log("Sign-in with Apple successfully done. IDToken: " + idToken);
+                            LogToScreen("Sign-in success."); //Localise for prod
+                            PlayerPrefs.SetString(AppleUserIdKey, credential.User);
+                            PlayerPrefs.SetString(AppleUserToken, idToken);
+                            PlayerPrefs.Save();
+                            HandleAppleSignIn(appleIDCredential);
+                            return;
                         }
-                    );
-                }
-                catch (Exception ex)
-                {
-                    LogToScreen("Login Exception: " + ex.Message); //Localise for prod
-                    Debug.Log(ex.Message);
-                }
-
-                spinApple.SetActive(false);
-                labelApple.SetActive(true);
-                SetInteractable(true);
+                        else
+                        {
+                            Debug.Log("Sign-in with Apple error. Message: appleIDCredential is null");
+                            LogToScreen("Retrieving Apple Id Token failed."); //Localise for prod
+                        }
+                    },
+                    error =>
+                    {
+                        Debug.Log("Sign-in with Apple error. Message: " + error.ToString());
+                        LogToScreen("Login Unsuccessful: " + error.ToString()); //Localise for prod
+                    }
+                );
             }
+            catch (Exception ex)
+            {
+                LogToScreen("Login Exception: " + ex.Message); //Localise for prod
+                Debug.Log(ex.Message);
+            }
+
+            spinApple.SetActive(false);
+            labelApple.SetActive(true);
+            SetInteractable(true);
         }
 
         // Attempt Apple signin without user input:
@@ -474,9 +450,7 @@ namespace BattleCruisers.Scenes
             {
                 // Initialize the Apple Auth Manager
                 if (_AppleAuthManager == null)
-                {
                     InitializeAppleAuth();
-                }
 
                 _AppleAuthManager.QuickLogin(
                     quickLoginArgs,
@@ -598,25 +572,25 @@ namespace BattleCruisers.Scenes
         public async void AnonymousLogin()
         {
 
-            if (HasInternetConnection && !AuthenticationService.Instance.IsSignedIn)
+            if (!(HasInternetConnection && !AuthenticationService.Instance.IsSignedIn))
+                return;
+
+            SetInteractable(false);
+            labelGuest.SetActive(false);
+            spinGuest.SetActive(true);
+
+            loginType = LoginType.Anonymous;
+            try
             {
-                SetInteractable(false);
-                labelGuest.SetActive(false);
-                spinGuest.SetActive(true);
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                return;
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
 
-                loginType = LoginType.Anonymous;
-                try
-                {
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    Debug.Log(ex.Message);
-
-                    // This only happens if UGS fails (boooooo)
-                    LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
-                }
+                // This only happens if UGS fails (boooooo)
+                LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
             }
 
             // play without Internet
