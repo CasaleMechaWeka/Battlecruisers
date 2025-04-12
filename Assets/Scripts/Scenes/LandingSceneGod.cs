@@ -568,25 +568,25 @@ namespace BattleCruisers.Scenes
         // Guest login by button:
         public async void AnonymousLogin()
         {
-
             if (!(HasInternetConnection && !AuthenticationService.Instance.IsSignedIn))
-                return;
-
-            SetInteractable(false);
-            labelGuest.SetActive(false);
-            spinGuest.SetActive(true);
-
-            try
             {
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                return;
-            }
-            catch (Exception ex)
-            {
-                Debug.Log(ex.Message);
 
-                // This only happens if UGS fails (boooooo)
-                LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
+                SetInteractable(false);
+                labelGuest.SetActive(false);
+                spinGuest.SetActive(true);
+
+                try
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+
+                    // This only happens if UGS fails (boooooo)
+                    LogToScreen("Unity Game Services could not be reached"); // IF UNITY GAME SERVICES FAILS FOR ANY REASON
+                }
             }
 
             // play without Internet
