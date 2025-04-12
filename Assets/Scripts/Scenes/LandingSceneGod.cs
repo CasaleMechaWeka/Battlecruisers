@@ -568,9 +568,8 @@ namespace BattleCruisers.Scenes
         // Guest login by button:
         public async void AnonymousLogin()
         {
-            if (!(HasInternetConnection && !AuthenticationService.Instance.IsSignedIn))
+            if (HasInternetConnection && !AuthenticationService.Instance.IsSignedIn)
             {
-
                 SetInteractable(false);
                 labelGuest.SetActive(false);
                 spinGuest.SetActive(true);
