@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes
         public Text onscreenLogging;
 
         private string _lastSceneLoaded;
-        private IHintProvider _hintProvider;
+        private CompositeHintProvider _hintProvider;
 
         [Header("For testing")]
         public bool testCreditsScene = false;
@@ -184,8 +184,7 @@ namespace BattleCruisers.Scenes
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
 
-            HintProviders hintProviders = new HintProviders();
-            _hintProvider = new CompositeHintProvider(hintProviders.BasicHints, hintProviders.AdvancedHints, DataProvider.GameModel);
+            _hintProvider = new CompositeHintProvider();
 
             try
             {

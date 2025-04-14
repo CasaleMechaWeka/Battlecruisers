@@ -1,36 +1,66 @@
-﻿using BattleCruisers.Data.Models;
+﻿using System.Collections.Generic;
+using BattleCruisers.Data;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.PlatformAbstractions;
+using UnityEngine;
 
 namespace BattleCruisers.UI.Loading
 {
-    public class CompositeHintProvider : IHintProvider
+    public class CompositeHintProvider
     {
-        private readonly IHintProvider _basicHints, _advancedHints;
-        private readonly GameModel _gameModel;
+        private List<string> basicHints;
+        private List<string> advancedHints;
 
         // The level local boosters are unlocked (one of the advanced hints refers
         // to local boosters)
         public const int ADVANCED_HINT_LEVEL_REQUIREMENT = 9;
 
-        public CompositeHintProvider(IHintProvider basicHints, IHintProvider advancedHints, GameModel gameModel)
+        public CompositeHintProvider()
         {
-            Helper.AssertIsNotNull(basicHints, advancedHints, gameModel);
+            basicHints = new List<string>()
+            {
+                LocTableCache.CommonTable.GetString("Hints/Factories"),
+                LocTableCache.CommonTable.GetString("Hints/BuilderAutomaticRepair"),
+                LocTableCache.CommonTable.GetString("Hints/DifficultyIsChangeable"),
+                LocTableCache.CommonTable.GetString("Hints/HowToChangeCruiser"),
+                LocTableCache.CommonTable.GetString("Hints/CheckEnemyCruiser")
+            };
 
-            _basicHints = basicHints;
-            _advancedHints = advancedHints;
-            _gameModel = gameModel;
+            //we need to do this due to Localisation
+            string buildingsAreDeleteableBase = LocTableCache.CommonTable.GetString("Hints/BuildingsAreDeletable");
+            string deleteButtonText = LocTableCache.CommonTable.GetString("UI/Informator/DemolishButton");
+            basicHints.Add(string.Format(buildingsAreDeleteableBase, deleteButtonText));
+
+            advancedHints = new List<string>()
+            {
+                LocTableCache.CommonTable.GetString("Hints/CruisersAreUnique"),
+                LocTableCache.CommonTable.GetString("Hints/ConstructBuildingsSequentially"),
+                LocTableCache.CommonTable.GetString("Hints/PauseUnitProduction")
+            };
+
+            if (!SystemInfoBC.Instance.IsHandheld)
+                advancedHints.Add("Hints/Hotkeys");
+
+            string targetButtonBase = LocTableCache.CommonTable.GetString("Hints/TargetButton");
+            string targetButtonText = LocTableCache.CommonTable.GetString("UI/Informator/TargetButton");
+            advancedHints.Add(string.Format(targetButtonBase, targetButtonText));
+            string buildersButtonBase = LocTableCache.CommonTable.GetString("Hints/BuildersButton");
+            string buildersButtonText = LocTableCache.CommonTable.GetString("Common/Builders");
+            advancedHints.Add(string.Format(buildersButtonBase, buildersButtonText));
+
         }
 
         public string GetHint()
         {
-            if (_gameModel.NumOfLevelsCompleted > ADVANCED_HINT_LEVEL_REQUIREMENT
+            if (DataProvider.GameModel.NumOfLevelsCompleted > ADVANCED_HINT_LEVEL_REQUIREMENT
                 && RandomGenerator.NextBool())
             {
-                return _advancedHints.GetHint();
+                return advancedHints[Random.Range(0, advancedHints.Count)];
             }
             else
             {
-                return _basicHints.GetHint();
+                return basicHints[Random.Range(0, basicHints.Count)];
             }
         }
     }

@@ -8,24 +8,20 @@ namespace BattleCruisers.Tests.UI.Loading
 {
     public class CompositeHintProviderTests
     {
-        private IHintProvider _compositHintProvider, _basicHints, _advancedHints;
+        private CompositeHintProvider _compositHintProvider;
         private GameModel _gameModel;
         private string _basicHint, _advancedHint;
 
         [SetUp]
         public void TestSetup()
         {
-            _basicHints = Substitute.For<IHintProvider>();
-            _advancedHints = Substitute.For<IHintProvider>();
             _gameModel = Substitute.For<GameModel>();
 
-            _compositHintProvider = new CompositeHintProvider(_basicHints, _advancedHints, _gameModel);
+            _compositHintProvider = new CompositeHintProvider();
 
             _basicHint = "basic hint";
-            _basicHints.GetHint().Returns(_basicHint);
 
             _advancedHint = "advanced hint";
-            _advancedHints.GetHint().Returns(_advancedHint);
         }
 
         [Test]
