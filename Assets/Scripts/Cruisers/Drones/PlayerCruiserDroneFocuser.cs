@@ -10,13 +10,13 @@ namespace BattleCruisers.Cruisers.Drones
 {
     public class PlayerCruiserDroneFocuser : IDroneFocuser
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
         private readonly DroneFocusSoundPicker _soundPicker;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
 
         public event EventHandler PlayerTriggeredRepair;
 
-        public PlayerCruiserDroneFocuser(IDroneManager droneManager, DroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
+        public PlayerCruiserDroneFocuser(DroneManager droneManager, DroneFocusSoundPicker soundPicker, IPrioritisedSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(droneManager, soundPicker, soundPlayer);
 

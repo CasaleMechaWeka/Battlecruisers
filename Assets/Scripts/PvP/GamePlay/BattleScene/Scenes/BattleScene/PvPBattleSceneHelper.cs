@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPUIManager CreateUIManager();
         public abstract void InitialiseUIManager(PvPManagerArgs args);
         public abstract ILoadout GetPlayerLoadout();
-        public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
+        public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
         public abstract IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager /*, IPrioritisedSoundPlayer soundPlayer, ITargetIndicator targetIndicator*/);
         public abstract IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer, ITargetIndicator targetIndicator);

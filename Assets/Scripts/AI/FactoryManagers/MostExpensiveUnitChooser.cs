@@ -16,9 +16,9 @@ namespace BattleCruisers.AI.FactoryManagers
 	public class MostExpensiveUnitChooser : UnitChooser
 	{
 		private readonly IList<IBuildableWrapper<IUnit>> _units;
-		private readonly IDroneManager _droneManager;
+		private readonly DroneManager _droneManager;
 
-		public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, IDroneManager droneManager)
+		public MostExpensiveUnitChooser(IList<IBuildableWrapper<IUnit>> units, DroneManager droneManager)
 		{
 			Helper.AssertIsNotNull(units, droneManager);
 			Assert.IsTrue(units.Count != 0);

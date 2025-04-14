@@ -96,7 +96,7 @@ namespace BattleCruisers.Cruisers
         public SlotAccessor SlotAccessor { get; private set; }
         public SlotHighlighter SlotHighlighter { get; private set; }
         public ISlotNumProvider SlotNumProvider { get; private set; }
-        public IDroneManager DroneManager { get; private set; }
+        public DroneManager DroneManager { get; private set; }
         public IDroneFocuser DroneFocuser { get; private set; }
         public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
         public ICruiserUnitMonitor UnitMonitor { get; private set; }

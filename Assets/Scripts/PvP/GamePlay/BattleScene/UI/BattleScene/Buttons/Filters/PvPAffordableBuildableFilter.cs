@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPAffordableBuildableFilter : IBroadcastingFilter<IPvPBuildable>
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
 
         public event EventHandler PotentialMatchChange;
         private readonly PvPCruiser _playerCruiser;
 
 
         // we don't use this constructor :D
-        public PvPAffordableBuildableFilter(IDroneManager droneManager)
+        public PvPAffordableBuildableFilter(DroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
 

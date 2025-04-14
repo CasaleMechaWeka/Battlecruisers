@@ -161,7 +161,7 @@ namespace BattleCruisers.Cruisers
                     faction,
                     ApplicationModel.IsTutorial);
 
-            IDroneManager droneManager = new DroneManager();
+            DroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, FactoryProvider.Sound.PrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
@@ -195,7 +195,7 @@ namespace BattleCruisers.Cruisers
             cruiser.Initialise(cruiserArgs);
         }
 
-        private IDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, IDroneManager droneManager, IPrioritisedSoundPlayer soundPlayer)
+        private IDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, DroneManager droneManager, IPrioritisedSoundPlayer soundPlayer)
         {
             if (isPlayerCruiser)
             {

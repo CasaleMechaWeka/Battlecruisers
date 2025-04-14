@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         PvPSlotAccessor SlotAccessor { get; }
         PvPSlotHighlighter SlotHighlighter { get; }
         ISlotNumProvider SlotNumProvider { get; }
-        IDroneManager DroneManager { get; }
+        DroneManager DroneManager { get; }
         IPvPDroneFocuser DroneFocuser { get; }
         IPvPCruiserBuildingMonitor BuildingMonitor { get; }
         IPvPCruiserUnitMonitor UnitMonitor { get; }

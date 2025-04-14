@@ -26,7 +26,7 @@ namespace BattleCruisers.AI.Drones
     {
         private readonly ResponsiveStrategy _strategy;
         private readonly ICruiserBuildingMonitor _aiBuildingMonitor;
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
         private readonly IList<IFactory> _completedFactories;
         private readonly DroneConsumerFocusHelper _focusHelper;
 

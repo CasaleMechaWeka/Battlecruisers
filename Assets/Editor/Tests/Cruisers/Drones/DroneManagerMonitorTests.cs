@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     public class DroneManagerMonitorTests
     {
         private DroneManagerMonitor _monitor;
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private IDeferrer _deferrer;
         private ObservableCollection<IDroneConsumer> _droneConsumers;
         private IDroneConsumer _idleDroneConsumer, _activeDroneConsumer;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         [SetUp]
         public void TestSetup()
         {
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager = Substitute.For<DroneManager>();
             _droneManager.NumOfDrones.Returns(2);
             _droneConsumers = new ObservableCollection<IDroneConsumer>();
             ReadOnlyObservableCollection<IDroneConsumer> readonlyDroneConsumers = new ReadOnlyObservableCollection<IDroneConsumer>(_droneConsumers);

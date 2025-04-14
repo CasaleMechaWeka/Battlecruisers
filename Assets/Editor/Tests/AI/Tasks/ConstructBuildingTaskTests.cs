@@ -68,7 +68,7 @@ namespace BattleCruisers.Tests.AI.Tasks
             _cruiser.SlotAccessor.IsSlotAvailable(_building.SlotSpecification).Returns(true);
             PrefabFactory.GetBuildingWrapperPrefab(_key).Returns(_prefab);
             _building.NumOfDronesRequired.Returns(4);
-            IDroneManager droneManager = Substitute.For<IDroneManager>();
+            DroneManager droneManager = Substitute.For<DroneManager>();
             droneManager.NumOfDrones = 2;
             _cruiser.DroneManager.Returns(droneManager);
 

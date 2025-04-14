@@ -9,11 +9,11 @@ namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
     public class AffordableBuildableFilter : IBroadcastingFilter<IBuildable>
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
 
         public event EventHandler PotentialMatchChange;
 
-        public AffordableBuildableFilter(IDroneManager droneManager)
+        public AffordableBuildableFilter(DroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
 

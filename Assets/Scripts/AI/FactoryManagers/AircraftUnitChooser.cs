@@ -18,7 +18,7 @@ namespace BattleCruisers.AI.FactoryManagers
     public class AircraftUnitChooser : UnitChooser
     {
         private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
         private readonly BaseThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.AI.FactoryManagers
             IBuildableWrapper<IUnit> antiNavalPlane,
             IBuildableWrapper<IUnit> broadswordGunship,
             IBuildableWrapper<IUnit> stratBomber,
-            IDroneManager droneManager,
+            DroneManager droneManager,
             BaseThreatMonitor airThreatMonitor,
             BaseThreatMonitor navalThreatMonitor,
             ThreatLevel threatLevelThreshold)

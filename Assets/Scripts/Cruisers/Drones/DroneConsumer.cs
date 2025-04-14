@@ -5,7 +5,7 @@ namespace BattleCruisers.Cruisers.Drones
 {
 	public class DroneConsumer : IDroneConsumer
 	{
-		private readonly IDroneManager _droneManager;
+		private readonly DroneManager _droneManager;
 
 		private int _numOfDrones;
 		public int NumOfDrones
@@ -44,7 +44,7 @@ namespace BattleCruisers.Cruisers.Drones
 		public event EventHandler<DroneNumChangedEventArgs> DroneNumChanged;
 		public event EventHandler<DroneStateChangedEventArgs> DroneStateChanged;
 
-		public DroneConsumer(int numOfDronesRequired, IDroneManager droneManager)
+		public DroneConsumer(int numOfDronesRequired, DroneManager droneManager)
 		{
 			if (numOfDronesRequired < 0)
 			{

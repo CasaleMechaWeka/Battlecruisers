@@ -79,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return Difficulty.Harder;
         }
 
-        public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
+        public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
         {
             return
                 new PvPButtonVisibilityFilters(

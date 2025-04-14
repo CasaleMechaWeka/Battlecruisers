@@ -6,11 +6,11 @@ namespace BattleCruisers.AI.Drones
 {
     public class DroneConsumerFocusHelper
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
         private readonly FactoryAnalyzer _factoryAnalyzer;
         private readonly AffordableInProgressNonFocusedProvider _affordableInProgressNonFocusedBuildingProvider;
 
-        public DroneConsumerFocusHelper(IDroneManager droneManager, FactoryAnalyzer factoryAnalyzer, AffordableInProgressNonFocusedProvider affordableInProgressNonFocusedBuildingProvider)
+        public DroneConsumerFocusHelper(DroneManager droneManager, FactoryAnalyzer factoryAnalyzer, AffordableInProgressNonFocusedProvider affordableInProgressNonFocusedBuildingProvider)
         {
             Helper.AssertIsNotNull(droneManager, factoryAnalyzer, affordableInProgressNonFocusedBuildingProvider);
 

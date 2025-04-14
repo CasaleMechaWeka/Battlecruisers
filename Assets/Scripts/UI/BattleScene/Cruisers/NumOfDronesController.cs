@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 {
     public class NumOfDronesController : Togglable, IManagedDisposable, IButton, IPointerClickHandler
     {
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
 
         public Text numOfDronesText;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
             }
         }
 
-        public void Initialise(IDroneManager droneManager)
+        public void Initialise(DroneManager droneManager)
         {
             base.Initialise();
 

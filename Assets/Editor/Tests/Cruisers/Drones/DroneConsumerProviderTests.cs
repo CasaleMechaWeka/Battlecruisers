@@ -9,13 +9,13 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     {
         private IDroneConsumerProvider _droneConsumerProvider;
 
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private IDroneConsumer _droneConsumer;
 
         [SetUp]
         public void SetuUp()
         {
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager = Substitute.For<DroneManager>();
             _droneConsumer = Substitute.For<IDroneConsumer>();
 
             _droneConsumerProvider = new DroneConsumerProvider(_droneManager);

@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
     public class MostExpensiveUnitChooserTests
     {
         private UnitChooser _unitChooser;
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private IList<IBuildableWrapper<IUnit>> _units;
         private IBuildableWrapper<IUnit> _unit2Drones, _unit4Drones, _unit6Drones;
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
                 _unit6Drones
             };
 
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager = Substitute.For<DroneManager>();
             _droneManager.NumOfDrones.Returns(12);
 
             _unitChooser = new MostExpensiveUnitChooser(_units, _droneManager);

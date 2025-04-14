@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.BattleScene
         ILoadout GetPlayerLoadout();
         IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
         IFilter<ISlot> CreateHighlightableSlotFilter();
-        IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
+        IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         IUserChosenTargetHelper CreateUserChosenTargetHelper(

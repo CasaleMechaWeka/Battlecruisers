@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         public abstract IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
-        public abstract IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager);
+        public abstract IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         public abstract IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         public abstract IFilter<ISlot> CreateHighlightableSlotFilter();
         public abstract IUIManager CreateUIManager();

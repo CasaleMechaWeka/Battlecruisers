@@ -8,7 +8,7 @@ namespace BattleCruisers.Cruisers.Drones
 {
     public class DroneManagerMonitor : IManagedDisposable
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
         private readonly IDeferrer _deferrer;
         private int _previousNumOfDrones;
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Cruisers.Drones
         public event EventHandler IdleDronesStarted;
         public event EventHandler IdleDronesEnded;
 
-        public DroneManagerMonitor(IDroneManager droneManager, IDeferrer deferrer)
+        public DroneManagerMonitor(DroneManager droneManager, IDeferrer deferrer)
         {
             Helper.AssertIsNotNull(droneManager, deferrer);
 

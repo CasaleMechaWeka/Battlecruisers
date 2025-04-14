@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
     public class PlayerCruiserDroneFocuserTests
     {
         private IDroneFocuser _droneFocuser;
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private DroneFocusSoundPicker _soundPicker;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IDroneConsumer _droneConsumer;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones
         [SetUp]
         public void TestSetup()
         {
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager = Substitute.For<DroneManager>();
             _soundPicker = Substitute.For<DroneFocusSoundPicker>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
 

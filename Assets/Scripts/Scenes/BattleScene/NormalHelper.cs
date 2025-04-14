@@ -91,7 +91,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new FreeSlotFilter();
         }
 
-        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
+        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
         {
             return
                 new ButtonVisibilityFilters(

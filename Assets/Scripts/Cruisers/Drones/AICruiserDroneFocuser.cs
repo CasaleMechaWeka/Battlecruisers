@@ -5,14 +5,14 @@ namespace BattleCruisers.Cruisers.Drones
 {
     public class AICruiserDroneFocuser : IDroneFocuser
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
 
 #pragma warning disable 67  // Unused event
         // Never the case for AI cruiser
         public event EventHandler PlayerTriggeredRepair;
 #pragma warning restore 67  // Unused event
 
-        public AICruiserDroneFocuser(IDroneManager droneManager)
+        public AICruiserDroneFocuser(DroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
             _droneManager = droneManager;

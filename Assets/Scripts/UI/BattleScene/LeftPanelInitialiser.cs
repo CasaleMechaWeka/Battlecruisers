@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene
         public GameObject popLimitReachedFeedback;
 
         public LeftPanelComponents Initialise(
-            IDroneManager droneManager,
+            DroneManager droneManager,
             DroneManagerMonitor droneManagerMonitor,
             IUIManager uiManager,
             ILoadout playerLoadout,
@@ -68,7 +68,7 @@ namespace BattleCruisers.UI.BattleScene
             return new LeftPanelComponents(numberOfDronesHighlightable, buildMenu, new GameObjectBC(popLimitReachedFeedback));
         }
 
-        private IHighlightable SetupDronesPanel(IDroneManager droneManager, DroneManagerMonitor droneManagerMonitor)
+        private IHighlightable SetupDronesPanel(DroneManager droneManager, DroneManagerMonitor droneManagerMonitor)
         {
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }

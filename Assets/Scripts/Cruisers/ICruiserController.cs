@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers
         SlotAccessor SlotAccessor { get; }
         SlotHighlighter SlotHighlighter { get; }
         ISlotNumProvider SlotNumProvider { get; }
-        IDroneManager DroneManager { get; }
+        DroneManager DroneManager { get; }
         IDroneFocuser DroneFocuser { get; }
         ICruiserBuildingMonitor BuildingMonitor { get; }
         ICruiserUnitMonitor UnitMonitor { get; }

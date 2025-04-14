@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Faction Faction { get; }
         public IPvPCruiser EnemyCruiser { get; }
         public IPvPUIManager UiManager { get; }
-        public IDroneManager DroneManager { get; }
+        public DroneManager DroneManager { get; }
         public IPvPDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Faction faction,
             IPvPCruiser enemyCruiser,
             IPvPUIManager uiManager,
-            IDroneManager droneManager,
+            DroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Faction faction,
             IPvPCruiser enemyCruiser,
             // IPvPUIManager uiManager,
-            IDroneManager droneManager,
+            DroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,

@@ -11,13 +11,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.Filters
     {
         private IBroadcastingFilter<IBuildable> _filter;
 
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private IBuildable _buildable;
 
         [SetUp]
         public void SetuUp()
         {
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager = Substitute.For<DroneManager>();
             _filter = new AffordableBuildableFilter(_droneManager);
 
             _buildable = Substitute.For<IBuildable>();

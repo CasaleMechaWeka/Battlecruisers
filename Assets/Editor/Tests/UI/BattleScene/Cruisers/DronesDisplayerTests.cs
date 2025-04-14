@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Cruisers
     public class DronesDisplayerTests
     {
         private DronesDisplayer _dronesDisplayer;
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private DroneManagerMonitor _droneManagerMonitor;
         private INumberDisplay _numberDisplay;
         private IGameObject _idleFeedback;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Cruisers
         [SetUp]
         public void TestSetup()
         {
-            _droneManager = Substitute.For<IDroneManager>();
+            _droneManager = Substitute.For<DroneManager>();
             _droneManager.NumOfDrones = 17;
 
             _droneManagerMonitor = Substitute.For<DroneManagerMonitor>();

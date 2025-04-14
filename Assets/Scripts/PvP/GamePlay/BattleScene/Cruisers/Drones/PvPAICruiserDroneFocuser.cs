@@ -7,14 +7,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPAICruiserDroneFocuser : IPvPDroneFocuser
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
 
 #pragma warning disable 67  // Unused event
         // Never the case for AI cruiser
         public event EventHandler PlayerTriggeredRepair;
 #pragma warning restore 67  // Unused event
 
-        public PvPAICruiserDroneFocuser(IDroneManager droneManager)
+        public PvPAICruiserDroneFocuser(DroneManager droneManager)
         {
             Assert.IsNotNull(droneManager);
             _droneManager = droneManager;

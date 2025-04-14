@@ -7,13 +7,13 @@ namespace BattleCruisers.UI.BattleScene.Cruisers
 {
     public class DronesDisplayer
     {
-        private readonly IDroneManager _droneManager;
+        private readonly DroneManager _droneManager;
         private readonly DroneManagerMonitor _droneManagerMonitor;
         private readonly INumberDisplay _numberDisplay;
         private readonly IGameObject _idleFeedback;
 
         public DronesDisplayer(
-            IDroneManager droneManager,
+            DroneManager droneManager,
             DroneManagerMonitor droneManagerMonitor,
             INumberDisplay numberDisplay,
             IGameObject idleFeedback)

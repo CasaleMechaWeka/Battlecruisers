@@ -101,7 +101,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new StaticFilter<ITarget>(isMatch: false);
         }
 
-        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(IDroneManager droneManager)
+        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
         {
             return
                 new ButtonVisibilityFilters(

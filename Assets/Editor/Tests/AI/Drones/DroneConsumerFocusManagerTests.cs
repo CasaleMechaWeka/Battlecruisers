@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.AI.Drones
         private DroneConsumerFocusManager _focusManager;
 
         private ResponsiveStrategy _strategy;
-        private IDroneManager _droneManager;
+        private DroneManager _droneManager;
         private ICruiserBuildingMonitor _aiBuildingMonitor;
         private DroneConsumerFocusHelper _focusHelper;
         private IFactory _factory;
