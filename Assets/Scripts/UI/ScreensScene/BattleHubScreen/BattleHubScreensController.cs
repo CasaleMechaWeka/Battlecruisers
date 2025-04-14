@@ -21,6 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ISingleSoundPlayer _soundPlayer;
 
         public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
+        public CanvasGroupButton discordButton, blackMarketButton;
         public GameObject coins;
 
         public ScreenController battlePanel;
@@ -30,6 +31,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
         public CoinBattleScreenController coinBattleController;
+        public BlackMarketScreenController blackMarketScreenController;
+
+        // Discord invite link
+        private const string DiscordInviteLink = "https://discord.gg/V94HZVdvHy";
 
         public PlayerInfoPanelController playerInfoPanelController;
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton, coinBattleButton;
@@ -52,7 +57,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton);
+            Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, 
+                profileButton, arenaBackButton, discordButton, blackMarketButton);
 
             _lastBattleResult = DataProvider.GameModel.LastBattleResult;
             _soundPlayer = soundPlayer;
@@ -64,6 +70,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             shopButton.Initialise(_soundPlayer, OpenShop);
             leaderboardButton.Initialise(_soundPlayer, OpenLeaderboard);
             profileButton.Initialise(_soundPlayer, OpenProfile);
+            
+            // Initialize Discord and Black Market buttons with their respective actions
+            discordButton.Initialise(_soundPlayer, OpenDiscord);
+            blackMarketButton.Initialise(_soundPlayer, OpenBlackMarket);
+
+            // Set button visibility based on platform
+            SetPlatformSpecificButtonVisibility();
 
             continueButton.Initialise(_soundPlayer, Continue);
             levelsButton.Initialise(_soundPlayer, GoToLevelsScreen);
@@ -301,6 +314,41 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (result)
                 return version_num;
             else return 0;
+        }
+
+        // Set visibility of buttons based on platform
+        private void SetPlatformSpecificButtonVisibility()
+        {
+            bool isWindows = Application.platform == RuntimePlatform.WindowsPlayer || 
+                             Application.platform == RuntimePlatform.WindowsEditor;
+
+            // Show Discord button on Windows, hide Black Market button
+            if (discordButton.gameObject.activeInHierarchy != isWindows)
+                discordButton.gameObject.SetActive(isWindows);
+                
+            // Show Black Market button on mobile, hide Discord button
+            if (blackMarketButton.gameObject.activeInHierarchy != !isWindows)
+                blackMarketButton.gameObject.SetActive(!isWindows);
+        }
+
+        // Method to open Discord via URL
+        private void OpenDiscord()
+        {
+            Application.OpenURL(DiscordInviteLink);
+        }
+
+        // Method to open the Black Market screen
+        private void OpenBlackMarket()
+        {
+            playerInfoPanelController.gameObject.SetActive(true);
+            
+            if (ScreensSceneGod.Instance.cameraOfCaptains != null)
+                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+            if (ScreensSceneGod.Instance.cameraOfCharacter != null)
+                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+                
+            _screensSceneGod.GotoBlackMarketScreen();
+            UnselectAll();
         }
     }
 }
