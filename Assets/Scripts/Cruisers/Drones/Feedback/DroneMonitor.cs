@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     /// If you have a lot of drones they make a heck of a racket.  So limit the number
     /// of drones that make a sound.
     /// </summary>
-    public class DroneMonitor : IDroneMonitor
+    public class DroneMonitor
     {
         private readonly IDroneFactory _droneFactory;
 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
 {
     public class DroneMonitorTests
     {
-        private IDroneMonitor _droneMonitor;
+        private DroneMonitor _droneMonitor;
         private IDroneFactory _droneFactory;
         private IDroneController _redDrone1, _redDrone2, _blueDrone1, _blueDrone2;
 

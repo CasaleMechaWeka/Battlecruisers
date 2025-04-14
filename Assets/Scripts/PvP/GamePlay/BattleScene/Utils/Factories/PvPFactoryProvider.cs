@@ -1,12 +1,9 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -16,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private static PvPBattleSceneGodComponents _components;
 
         public static DeferrerProvider DeferrerProvider { get; private set; }
-        public static IDroneMonitor DroneMonitor { get; private set; }
+        public static DroneMonitor DroneMonitor { get; private set; }
         public static FlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
         public static IUpdaterProvider UpdaterProvider { get; private set; }
 
@@ -44,6 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
         }
+
         public static void Initialise_Rest()
         {
             poolProviders.SetInitialCapacities_Rest();
@@ -58,7 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PoolProviders = null;
             Sound = null;
         }
-
 
         public static void Initialise_Sound()
         {

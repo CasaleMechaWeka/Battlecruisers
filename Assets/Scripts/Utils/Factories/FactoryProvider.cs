@@ -15,7 +15,7 @@ namespace BattleCruisers.Utils.Factories
         private static BattleSceneGodComponents _components;
 
         public static DeferrerProvider DeferrerProvider { get; private set; }
-        public static IDroneMonitor DroneMonitor { get; private set; }
+        public static DroneMonitor DroneMonitor { get; private set; }
         public static FlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
         public static TargetFactoriesProvider Targets { get; private set; }
         public static IUpdaterProvider UpdaterProvider { get; private set; }
