@@ -371,7 +371,7 @@ namespace BattleCruisers.Scenes
 
 #if PLATFORM_IOS
         // Apple login by button:
-        private async void AppleLogin()
+        private void AppleLogin()
         {
             LogToScreen("Attempting login with Apple"); // ON APPLE BUTTON PRESS
             if (AuthenticationService.Instance.IsSignedIn)  // already signed in
@@ -380,7 +380,6 @@ namespace BattleCruisers.Scenes
             SetInteractable(false);
             spinApple.SetActive(true);
             labelApple.SetActive(false);
-            loginType = LoginType.Apple;
 
             try
             {
