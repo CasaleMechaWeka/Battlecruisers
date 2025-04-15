@@ -195,6 +195,15 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 {
                     postBattleState = new DefeatState(this, musicPlayer);
                     title.color = Color.white; // Set title text to white for defeat
+                    if (ApplicationModel.SelectedLevel == DataProvider.GameModel.CompletedLevels.Count + 1 && DataProvider.SettingsManager.AIDifficulty != Difficulty.Normal && ApplicationModel.Mode == GameMode.Campaign)
+                    {
+                        DataProvider.GameModel.TimesLostOnLastLevel += 1;
+                        if (DataProvider.GameModel.TimesLostOnLastLevel == 2)
+                        {
+                            //Display message
+                            DataProvider.GameModel.TimesLostOnLastLevel = 0;
+                        }
+                    }
                 }
                 else
                 {
