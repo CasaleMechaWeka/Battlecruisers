@@ -6,9 +6,8 @@ using NUnit.Framework;
 
 namespace BattleCruisers.Tests.UI.Loading
 {
-    public class CompositeHintProviderTests
+    public class HintProviderTests
     {
-        private CompositeHintProvider _compositHintProvider;
         private GameModel _gameModel;
         private string _basicHint, _advancedHint;
 
@@ -16,8 +15,6 @@ namespace BattleCruisers.Tests.UI.Loading
         public void TestSetup()
         {
             _gameModel = Substitute.For<GameModel>();
-
-            _compositHintProvider = new CompositeHintProvider();
 
             _basicHint = "basic hint";
 
@@ -27,24 +24,24 @@ namespace BattleCruisers.Tests.UI.Loading
         [Test]
         public void GetHint_EarlyInGame()
         {
-            _gameModel.NumOfLevelsCompleted.Returns(CompositeHintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT - 1);
-            Assert.AreEqual(_basicHint, _compositHintProvider.GetHint());
+            _gameModel.NumOfLevelsCompleted.Returns(HintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT - 1);
+            Assert.AreEqual(_basicHint, HintProvider.GetHint());
         }
 
         [Test]
         public void GetHint_LateInGame_StillBasicHint()
         {
-            _gameModel.NumOfLevelsCompleted.Returns(CompositeHintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT + 1);
+            _gameModel.NumOfLevelsCompleted.Returns(HintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT + 1);
             RandomGenerator.NextBool().Returns(false);
-            Assert.AreEqual(_basicHint, _compositHintProvider.GetHint());
+            Assert.AreEqual(_basicHint, HintProvider.GetHint());
         }
 
         [Test]
         public void GetHint_LateInGame_AdvancedHint()
         {
-            _gameModel.NumOfLevelsCompleted.Returns(CompositeHintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT + 1);
+            _gameModel.NumOfLevelsCompleted.Returns(HintProvider.ADVANCED_HINT_LEVEL_REQUIREMENT + 1);
             RandomGenerator.NextBool().Returns(true);
-            Assert.AreEqual(_advancedHint, _compositHintProvider.GetHint());
+            Assert.AreEqual(_advancedHint, HintProvider.GetHint());
         }
     }
 }

@@ -7,16 +7,17 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Loading
 {
-    public class CompositeHintProvider
+    public static class HintProvider
     {
-        private List<string> basicHints;
-        private List<string> advancedHints;
+        private static List<string> basicHints;
+        private static List<string> advancedHints;
 
         // The level local boosters are unlocked (one of the advanced hints refers
         // to local boosters)
         public const int ADVANCED_HINT_LEVEL_REQUIREMENT = 9;
+        private static bool isInitialised = false;
 
-        public CompositeHintProvider()
+        public static void Initialise()
         {
             basicHints = new List<string>()
             {
@@ -49,10 +50,14 @@ namespace BattleCruisers.UI.Loading
             string buildersButtonText = LocTableCache.CommonTable.GetString("Common/Builders");
             advancedHints.Add(string.Format(buildersButtonBase, buildersButtonText));
 
+            isInitialised = true;
         }
 
-        public string GetHint()
+        public static string GetHint()
         {
+            if (!isInitialised)
+                Initialise();
+
             if (DataProvider.GameModel.NumOfLevelsCompleted > ADVANCED_HINT_LEVEL_REQUIREMENT
                 && RandomGenerator.NextBool())
             {

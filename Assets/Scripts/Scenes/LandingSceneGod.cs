@@ -48,7 +48,6 @@ namespace BattleCruisers.Scenes
         public Text onscreenLogging;
 
         private string _lastSceneLoaded;
-        private CompositeHintProvider _hintProvider;
 
         [Header("For testing")]
         public bool testCreditsScene = false;
@@ -183,8 +182,6 @@ namespace BattleCruisers.Scenes
             MusicPlayer = CreateMusicPlayer();
             DontDestroyOnLoad(gameObject);
             SceneNavigator = this;
-
-            _hintProvider = new CompositeHintProvider();
 
             try
             {
@@ -653,12 +650,12 @@ namespace BattleCruisers.Scenes
             if (sceneName == SceneNames.BATTLE_SCENE
                 && !ApplicationModel.IsTutorial)
             {
-                hint = _hintProvider.GetHint();
+                hint = HintProvider.GetHint();
             }
             if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModel.IsTutorial)
             {
                 // should be replace with PvP
-                hint = _hintProvider.GetHint();
+                hint = HintProvider.GetHint();
             }
 
             LoadingScreenHint = hint;
