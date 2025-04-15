@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
@@ -15,19 +13,21 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
+        private readonly IDroneFactory _droneFactory;
 
         public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
         public DroneFeedback(
             DroneConsumerInfo droneConsumerInfo,
-            Pool<IDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
+            IDroneFactory droneFactory,
             Faction faction)
         {
-            Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder);
+            Helper.AssertIsNotNull(droneConsumerInfo, droneFactory, spawnPositionFinder);
 
             _droneConsumerInfo = droneConsumerInfo;
             _spawnPositionFinder = spawnPositionFinder;
+            _droneFactory = droneFactory;
             _faction = faction;
             _drones = new List<IDroneController>();
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
                         _faction);
-                IDroneController droneToAdd = FactoryProvider.DroneFactory.CreateItem();
+                IDroneController droneToAdd = _droneFactory.CreateItem();
                 droneToAdd.Activate(activationArgs);
                 _drones.Add(droneToAdd);
             }

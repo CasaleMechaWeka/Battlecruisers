@@ -17,8 +17,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public static FlightPointsProviderFactory FlightPointsProviderFactory { get; private set; }
         public static IUpdaterProvider UpdaterProvider { get; private set; }
 
-        public static IPvPPoolProviders PoolProviders { get; private set; }
+        public static PvPPoolProviders PoolProviders { get; private set; }
         public static ISoundFactoryProvider Sound { get; private set; }
+        public static PvPDroneFactory DroneFactory { get; private set; }
 
         private static PvPPoolProviders poolProviders;
 
@@ -34,10 +35,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static void Initialise()
         {
-            IDroneFactory droneFactory = new PvPDroneFactory();
-            DroneMonitor = new DroneMonitor(droneFactory);
+            DroneFactory = new PvPDroneFactory();
+            DroneMonitor = new DroneMonitor(DroneFactory);
             Sound = new PvPSoundFactoryProvider(_components /*, poolProviders */);
-            poolProviders = new PvPPoolProviders(droneFactory);
+            poolProviders = new PvPPoolProviders(DroneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
         }

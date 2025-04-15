@@ -2,6 +2,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Fog;
+using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Repairables;
@@ -169,7 +170,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     enemyCruiser,
                     userChosenTargetTracker,
                     PvPFactoryProvider.UpdaterProvider,
-                    faction);
+                    faction,
+                    ApplicationModel.IsTutorial);
 
             DroneManager droneManager = new DroneManager();
             IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.PrioritisedSoundPlayer*/);

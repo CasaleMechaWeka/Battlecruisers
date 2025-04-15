@@ -39,6 +39,7 @@ namespace BattleCruisers.Utils.Factories
             DroneFeedbackFactory
                 = new DroneFeedbackFactory(
                     new SpawnPositionFinder(Constants.WATER_LINE),
+                    FactoryProvider.DroneFactory,
                     faction);
         }
     }
