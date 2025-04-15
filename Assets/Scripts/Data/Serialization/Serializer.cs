@@ -258,6 +258,11 @@ namespace BattleCruisers.Data.Serialization
             if (gameData.GetType().GetProperty("CreditsChange").GetValue(gameData) != null)
                 compatibleGameModel.CreditsChange = (int)gameData.GetType().GetProperty("CreditsChange").GetValue(gameData);
 
+            if (gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData) != null)
+            {
+                compatibleGameModel.TimesLostOnLastLevel = (int)gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData);
+            }
+
             // Variants
             if (_playerLoadout.SelectedVariants == null)
                 _playerLoadout.SelectedVariants = new List<int>();
