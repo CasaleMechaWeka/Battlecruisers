@@ -34,7 +34,7 @@ namespace BattleCruisers.Utils.BattleScene
             _isCompleted = true;
 
             BattleCompleted?.Invoke(this, EventArgs.Empty);
-            Debug.Log(wasVictory);
+            Debug.Log($"Was Victory: {wasVictory}");
 
             switch (ApplicationModel.Mode)
             {
