@@ -46,7 +46,6 @@ namespace BattleCruisers.Scenes
     {
         private ScreenController _currentScreen;
         private GameModel _gameModel;
-        private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
@@ -263,7 +262,6 @@ namespace BattleCruisers.Scenes
 
             Task handlePlayerPrefs = HandlePlayerPrefs();
 
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             if (this == null)
                 return;
@@ -285,7 +283,6 @@ namespace BattleCruisers.Scenes
             if (_musicPlayer == null)
             {
                 _musicPlayer = Substitute.For<IMusicPlayer>();
-                _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
             messageBox.gameObject.SetActive(true);
@@ -412,7 +409,7 @@ namespace BattleCruisers.Scenes
                 _isPlaying = true;
             }
 
-            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+            SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
 
@@ -632,7 +629,7 @@ namespace BattleCruisers.Scenes
                     DataProvider.GameModel.ID_Bodykit_AIbot = -1;
                     DataProvider.SaveGame();
                     //GoToScreen(trashScreen, playDefaultMusic: false);
-                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                    SceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
                 else
                 {
@@ -802,33 +799,33 @@ namespace BattleCruisers.Scenes
             ApplicationModel.SelectedSideQuestID = sideQuestID;
             ApplicationModel.Mode = GameMode.SideQuest;
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }
 
         public void LoadBattleScene()
         {
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }
 
         public void LoadCreditsScene()
         {
-            _sceneNavigator.GoToScene(SceneNames.CREDITS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.CREDITS_SCENE, true);
             CleanUp();
         }
 
         public void LoadCutsceneScene()
         {
-            _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
             CleanUp();
         }
 
         public void LoadPvPBattleScene()
         {
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.PvP_BOOT_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.PvP_BOOT_SCENE, true);
             CleanUp();
         }
 

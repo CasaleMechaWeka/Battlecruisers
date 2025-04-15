@@ -38,7 +38,6 @@ namespace BattleCruisers.Scenes
     {
         private ScreenController _currentScreen;
         private GameModel _gameModel;
-        private ISceneNavigator _sceneNavigator;
         private IMusicPlayer _musicPlayer;
         private ISingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
@@ -100,7 +99,6 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After prefab cache load");
 
             _gameModel = DataProvider.GameModel;
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
             _musicPlayer = LandingSceneGod.MusicPlayer;
             _soundPlayer
                 = new SingleSoundPlayer(
@@ -123,7 +121,6 @@ namespace BattleCruisers.Scenes
             if (_musicPlayer == null)
             {
                 _musicPlayer = Substitute.For<IMusicPlayer>();
-                _sceneNavigator = Substitute.For<ISceneNavigator>();
             }
 
             homeScreen.Initialise(this, _soundPlayer);
@@ -192,7 +189,7 @@ namespace BattleCruisers.Scenes
 
             ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
 
-            _sceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
+            SceneNavigator.SceneLoaded(SceneNames.SCREENS_SCENE);
 
             if (_gameModel.PremiumEdition)
             {
@@ -311,7 +308,7 @@ namespace BattleCruisers.Scenes
                 {
                     levelToShowCutscene = levelNum;
                     //GoToScreen(trashScreen, playDefaultMusic: false);
-                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                    SceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
                 else
                 {
@@ -391,26 +388,26 @@ namespace BattleCruisers.Scenes
             ApplicationModel.SelectedSideQuestID = sideQuestID;
             ApplicationModel.Mode = GameMode.SideQuest;
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }
 
         public void LoadBattleScene()
         {
             AdvertisingBanner.stopAdvert();
-            _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             CleanUp();
         }
 
         public void LoadCreditsScene()
         {
-            _sceneNavigator.GoToScene(SceneNames.CREDITS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.CREDITS_SCENE, true);
             CleanUp();
         }
 
         public void LoadCutsceneScene()
         {
-            _sceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.CUTSCENE_SCENE, true);
             CleanUp();
         }
 
@@ -488,7 +485,7 @@ namespace BattleCruisers.Scenes
                     levelToShowCutscene = sideQuestLevelNum;
                     DataProvider.GameModel.ID_Bodykit_AIbot = -1;
                     DataProvider.SaveGame();
-                    _sceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
+                    SceneNavigator.GoToScene(SceneNames.STAGE_INTERSTITIAL_SCENE, true);
                 }
                 else
                 {

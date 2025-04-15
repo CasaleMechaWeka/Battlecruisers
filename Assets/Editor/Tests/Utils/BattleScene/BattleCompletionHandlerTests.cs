@@ -11,15 +11,12 @@ namespace BattleCruisers.Tests.Utils.BattleScene
     public class BattleCompletionHandlerTests
     {
         private BattleCompletionHandler _battleCompletionHandler;
-        private ISceneNavigator _sceneNavigator;
         private int _battleCompletedCount;
 
         [SetUp]
         public void TestSetup()
         {
-            _sceneNavigator = Substitute.For<ISceneNavigator>();
-
-            _battleCompletionHandler = new BattleCompletionHandler(_sceneNavigator);
+            _battleCompletionHandler = new BattleCompletionHandler();
 
             _battleCompletedCount = 0;
             _battleCompletionHandler.BattleCompleted += (sender, e) => _battleCompletedCount++;
@@ -33,7 +30,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.CompleteBattle(wasVictory: default, retryLevel: true);
 
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.BATTLE_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
         }
 
         [Test]
@@ -44,7 +41,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _battleCompletionHandler.CompleteBattle(wasVictory: default, retryLevel: false);
 
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         [Test]
@@ -58,7 +55,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             BattleResult expectedResult = new BattleResult(ApplicationModel.SelectedLevel, wasVictory: true);
             DataProvider.GameModel.Received().LastBattleResult = expectedResult;
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         [Test]
@@ -70,7 +67,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
 
             ApplicationModel.UserWonSkirmish = false;
             CommonChecks();
-            _sceneNavigator.Received().GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         private void CommonChecks()

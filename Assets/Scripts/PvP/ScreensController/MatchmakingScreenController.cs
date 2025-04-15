@@ -28,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
     public class MatchmakingScreenController : ScreenController
     {
-        private ISceneNavigator _sceneNavigator;
         private GameModel _gameModel;
         private ITrashTalkData _trashTalkData;
         public Animator animator;
@@ -143,7 +142,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Instance = this;
             Connection_Quality = ConnectionQuality.HIGH;
             LoadingBarParent.SetActive(false);
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
             sprites.Add("BlackRig", BlackRig);
             sprites.Add("Bullshark", Bullshark);
             sprites.Add("Eagle", Eagle);
@@ -557,8 +555,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (GameObject.Find("NetworkManager") != null)
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
-            _sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
 
             if (backgroundMusic.isPlaying)
                 backgroundMusic.Stop();

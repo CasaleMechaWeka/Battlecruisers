@@ -20,7 +20,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPBattleCompletionHandler : IPvPBattleCompletionHandler
     {
-        private readonly ISceneNavigator _sceneNavigator;
         public static bool _isCompleted = false;
 
         public event EventHandler BattleCompleted;
@@ -29,12 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private float playerBRating;
         public float registeredTime { get; set; }
         private const int POST_GAME_WAIT_TIME_IN_S = 10 * 1000;
-        public PvPBattleCompletionHandler(
-            ISceneNavigator sceneNavigator)
+        public PvPBattleCompletionHandler()
         {
-            PvPHelper.AssertIsNotNull(sceneNavigator);
-            _sceneNavigator = sceneNavigator;
-
             _isCompleted = false;
             team = SynchedServerData.Instance.GetTeam();
             playerARating = SynchedServerData.Instance.playerARating.Value;
@@ -121,7 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (isTriggtered)
                 return;
             isTriggtered = false;
-            _sceneNavigator.GoToScene(sceneName, true);
+            SceneNavigator.GoToScene(sceneName, true);
         }
 
         private float Probability(float rating1, float rating2)
@@ -232,7 +227,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (NetworkManager.Singleton != null)
                 NetworkManager.Singleton.Shutdown(true);
             DestroyAllNetworkObjects();
-            _sceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
         }
 
         public async void DestroyAllNetworkObjects()

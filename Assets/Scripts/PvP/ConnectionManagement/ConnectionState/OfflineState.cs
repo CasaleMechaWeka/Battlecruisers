@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
                 if (GameObject.Find("NetworkManager") != null)
                     GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
-                LandingSceneGod.SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
 

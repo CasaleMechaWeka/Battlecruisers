@@ -22,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         [SerializeField]
         private Text screenTitle;
 
-        private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
         public CanvasGroupButton skipButton;
@@ -149,22 +148,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         void Start()
         {
             PvPPrefabCache.Clear();
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
+            LandingSceneGod.MusicPlayer.PlayVictoryMusic();
 
-            if (_sceneNavigator != null)
-            {
-                LandingSceneGod.MusicPlayer.PlayVictoryMusic();
+            _soundPlayer
+                = new SingleSoundPlayer(
+                    new EffectVolumeAudioSource(
+                        new AudioSourceBC(_uiAudioSource), 1));
 
-                _soundPlayer
-                    = new SingleSoundPlayer(
-                        new EffectVolumeAudioSource(
-                            new AudioSourceBC(_uiAudioSource), 1));
-
-                nextButton.Initialise(_soundPlayer, Done);
-                skipButton.Initialise(_soundPlayer, SkipAnim);
-                _sceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
-
-            }
+            nextButton.Initialise(_soundPlayer, Done);
+            skipButton.Initialise(_soundPlayer, SkipAnim);
+            SceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
             StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
             StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
@@ -826,7 +819,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private void Done()
         {
             // and now we actually are done:
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
         }
 
         //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding

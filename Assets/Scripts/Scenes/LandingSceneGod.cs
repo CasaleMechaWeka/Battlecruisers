@@ -1,13 +1,10 @@
 ﻿using BattleCruisers.Data;
-using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.Music;
-using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +13,6 @@ using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Localization.Settings;
-using UnityEngine.SceneManagement;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI;
 using Unity.Services.Core;
@@ -43,11 +39,9 @@ using System.Security.Cryptography;
 
 namespace BattleCruisers.Scenes
 {
-    public class LandingSceneGod : MonoBehaviour, ISceneNavigator
+    public class LandingSceneGod : MonoBehaviour
     {
         public Text onscreenLogging;
-
-        private string _lastSceneLoaded;
 
         [Header("For testing")]
         public bool testCreditsScene = false;
@@ -56,7 +50,6 @@ namespace BattleCruisers.Scenes
         [Header("For testing")]
         public bool testCutScene = false;
 
-        public static ISceneNavigator SceneNavigator { get; private set; }
         public static IMusicPlayer MusicPlayer { get; private set; }
 
         public ISingleSoundPlayer soundPlayer;
@@ -181,7 +174,6 @@ namespace BattleCruisers.Scenes
             messagebox.Initialize(soundPlayer);
             MusicPlayer = CreateMusicPlayer();
             DontDestroyOnLoad(gameObject);
-            SceneNavigator = this;
 
             try
             {
@@ -589,7 +581,7 @@ namespace BattleCruisers.Scenes
             spinGuest.SetActive(false);
             foreach (GameObject i in disableOnSceneTransition)
                 i.SetActive(false);
-            GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
 
         private void SignFailed(RequestFailedException exception)
@@ -617,7 +609,7 @@ namespace BattleCruisers.Scenes
             {
                 i.SetActive(false);
             }
-            GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
         }
 
@@ -642,89 +634,6 @@ namespace BattleCruisers.Scenes
             return
                 new MusicPlayer(
                     new SingleSoundPlayer(audioSource));
-        }
-
-        public void GoToScene(string sceneName, bool stopMusic)
-        {
-            string hint = null;
-            if (sceneName == SceneNames.BATTLE_SCENE
-                && !ApplicationModel.IsTutorial)
-            {
-                hint = HintProvider.GetHint();
-            }
-            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModel.IsTutorial)
-            {
-                // should be replace with PvP
-                hint = HintProvider.GetHint();
-            }
-
-            LoadingScreenHint = hint;
-
-            if (MusicPlayer != null && stopMusic)
-                MusicPlayer.Stop();
-
-            StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
-        }
-
-        private IEnumerator LoadSceneWithLoadingScreen(string sceneName)
-        {
-            Logging.LogMethod(Tags.SCENE_NAVIGATION);
-
-            _lastSceneLoaded = null;
-            if (sceneName == SceneNames.PvP_BOOT_SCENE)
-            {
-                yield return LoadScene(SceneNames.PvP_INITIALIZE_SCENE, LoadSceneMode.Single);
-            }
-            else
-            {
-                yield return LoadScene(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
-            }
-
-
-            yield return LoadScene(sceneName, LoadSceneMode.Additive);
-
-            Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);
-
-            while (_lastSceneLoaded != sceneName)
-            {
-                float waitIntervalInS = 0.1f;
-                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  waiting another: {waitIntervalInS}s");
-                yield return new WaitForSeconds(waitIntervalInS);
-            }
-            Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
-
-            // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
-
-            if (sceneName == SceneNames.PvP_BOOT_SCENE)
-            {
-                if (MatchmakingScreenController.Instance != null)
-                    MatchmakingScreenController.Instance.Destroy();
-            }
-            else
-            {
-                if (LoadingScreenController.Instance != null)
-                    LoadingScreenController.Instance.Destroy();
-            }
-        }
-
-        private IEnumerator LoadScene(string sceneName, LoadSceneMode loadSceneMode)
-        {
-            Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
-
-            while (!loadOperation.isDone)
-            {
-                Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  progress: {loadOperation.progress}");
-                yield return null;
-            }
-
-            Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
-        }
-
-        public void SceneLoaded(string sceneName)
-        {
-            Logging.Log(Tags.SCENE_NAVIGATION, sceneName);
-            _lastSceneLoaded = sceneName;
         }
 
         public void Update()

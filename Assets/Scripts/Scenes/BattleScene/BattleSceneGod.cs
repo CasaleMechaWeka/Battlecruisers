@@ -29,7 +29,6 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
-using NSubstitute;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -105,23 +104,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Helper.AssertIsNotNull(cameraInitialiser, topPanelInitialiser, leftPanelInitialiser, rightPanelInitialiser, tutorialInitialiser, waterSplashVolumeController);
 
-            ISceneNavigator sceneNavigator = LandingSceneGod.SceneNavigator;
-
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);//Sets the drone sounds to either the normal or alt versions based on settings
-            // TEMP  Only because I'm starting the the scene without a previous Choose Level Scene
-            if (sceneNavigator == null)
-            {
-                // TEMP  Force level I'm currently testing :)
-                if (defaultLevel >= 1)
-                    ApplicationModel.SelectedLevel = defaultLevel;
-                else
-                {
-                    ApplicationModel.Mode = GameMode.SideQuest;
-                    ApplicationModel.SelectedSideQuestID = defaultSideQuest;
-                }
-                //Debug.Log(ApplicationModel.SelectedLevel);
-                sceneNavigator = Substitute.For<ISceneNavigator>();
-            }
 
             components = GetComponent<BattleSceneGodComponents>();
             Assert.IsNotNull(components);
@@ -219,7 +202,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Debug.Log($"Enemy name before instantiating: {enemyName}");
 
-            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler(sceneNavigator);
+            BattleCompletionHandler battleCompletionHandler = new BattleCompletionHandler();
 
             TopPanelComponents topPanelComponents = topPanelInitialiser.Initialise(playerCruiser, aiCruiser, enemyName);
 
@@ -407,7 +390,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Do not enable updates until asynchronous loading is complete.
             components.UpdaterProvider.SwitchableUpdater.Enabled = true;
 
-            sceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
+            SceneNavigator.SceneLoaded(SceneNames.BATTLE_SCENE);
 
             //Code that uses current level to set the image of the enemy robot on the enemy nav button
             //Make sure to add more images to the EnemyCharacterImages prefab if more enemies are added

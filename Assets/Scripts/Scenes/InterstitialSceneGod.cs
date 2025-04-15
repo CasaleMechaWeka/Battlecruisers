@@ -11,7 +11,6 @@ namespace BattleCruisers.Scenes
 {
     public class InterstitialSceneGod : MonoBehaviour
     {
-        private ISceneNavigator _sceneNavigator;
         public CanvasGroupButton nextButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
@@ -22,23 +21,16 @@ namespace BattleCruisers.Scenes
         public GameObject musicePlayerForTesting;
         void Start()
         {
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
 
             GameModel gm = DataProvider.GameModel;
-            if (_sceneNavigator == null)
+
+            musicePlayerForTesting.SetActive(false);
+            LandingSceneGod.MusicPlayer.PlayCutsceneMusic();
+            for (int i = 0; i < LevelStages.STAGE_STARTS.Length; i++)
             {
-                screens[TestingScreen - 1].SetActive(true);
-            }
-            else
-            {
-                musicePlayerForTesting.SetActive(false);
-                LandingSceneGod.MusicPlayer.PlayCutsceneMusic();
-                for (int i = 0; i < LevelStages.STAGE_STARTS.Length; i++)
-                {
-                    screens[i].SetActive(false);
-                    if (gm.SelectedLevel - 1 == LevelStages.STAGE_STARTS[i])
-                        screens[i].SetActive(true);
-                }
+                screens[i].SetActive(false);
+                if (gm.SelectedLevel - 1 == LevelStages.STAGE_STARTS[i])
+                    screens[i].SetActive(true);
             }
 
             _soundPlayer
@@ -48,8 +40,7 @@ namespace BattleCruisers.Scenes
 
 
             nextButton.Initialise(_soundPlayer, Done);
-            if (_sceneNavigator != null)
-                _sceneNavigator.SceneLoaded(SceneNames.STAGE_INTERSTITIAL_SCENE);
+            SceneNavigator.SceneLoaded(SceneNames.STAGE_INTERSTITIAL_SCENE);
         }
 
         /*        private void OnEnable()
@@ -65,7 +56,7 @@ namespace BattleCruisers.Scenes
 
         private void Done()
         {
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private Text screenTitle;
 
-        private ISceneNavigator _sceneNavigator;
         public DestructionCard[] destructionCards;
         public CanvasGroupButton nextButton;
         public CanvasGroupButton skipButton;
@@ -125,22 +124,16 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
-            _sceneNavigator = LandingSceneGod.SceneNavigator;
+            LandingSceneGod.MusicPlayer.PlayVictoryMusic();
 
-            if (_sceneNavigator != null)
-            {
-                LandingSceneGod.MusicPlayer.PlayVictoryMusic();
+            _soundPlayer
+                = new SingleSoundPlayer(
+                    new EffectVolumeAudioSource(
+                        new AudioSourceBC(_uiAudioSource), 1));
 
-                _soundPlayer
-                    = new SingleSoundPlayer(
-                        new EffectVolumeAudioSource(
-                            new AudioSourceBC(_uiAudioSource), 1));
-
-                nextButton.Initialise(_soundPlayer, Done);
-                skipButton.Initialise(_soundPlayer, SkipAnim);
-                _sceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
-
-            }
+            nextButton.Initialise(_soundPlayer, Done);
+            skipButton.Initialise(_soundPlayer, SkipAnim);
+            SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
 
             // Populate screen:
             if (BattleSceneGod.deadBuildables != null)
@@ -702,7 +695,7 @@ namespace BattleCruisers.Scenes
         private void Done()
         {
             // and now we actually are done:
-            _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
+            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, false);
         }
 
         //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding

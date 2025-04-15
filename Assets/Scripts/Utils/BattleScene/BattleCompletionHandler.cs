@@ -9,18 +9,12 @@ namespace BattleCruisers.Utils.BattleScene
 {
     public class BattleCompletionHandler
     {
-        private readonly ISceneNavigator _sceneNavigator;
         private bool _isCompleted;
 
         public event EventHandler BattleCompleted;
 
-        public BattleCompletionHandler(
-            ISceneNavigator sceneNavigator)
+        public BattleCompletionHandler()
         {
-            Helper.AssertIsNotNull(sceneNavigator);
-
-            _sceneNavigator = sceneNavigator;
-
             _isCompleted = false;
         }
 
@@ -74,11 +68,11 @@ namespace BattleCruisers.Utils.BattleScene
 
             if (retryLevel)
             {
-                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+                SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             }
             else
             {
-                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
 
@@ -132,7 +126,7 @@ namespace BattleCruisers.Utils.BattleScene
 
             if (retryLevel)
             {
-                _sceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
+                SceneNavigator.GoToScene(SceneNames.BATTLE_SCENE, true);
             }
             else if (wasVictory)
             {
@@ -144,12 +138,12 @@ namespace BattleCruisers.Utils.BattleScene
                     DataProvider.GameModel.BestDestructionScore = destructionScore;
                 }
                 DataProvider.SaveGame();
-                _sceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
+                SceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
 
             }
             else
             {
-                _sceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
     }

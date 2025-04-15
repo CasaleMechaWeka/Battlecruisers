@@ -77,7 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
         private IWindManager windManager;
-        ISceneNavigator sceneNavigator;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
         public IPvPUIManager uiManager;
@@ -313,8 +312,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            sceneNavigator = LandingSceneGod.SceneNavigator;
-            battleCompletionHandler = new PvPBattleCompletionHandler(sceneNavigator);
+            battleCompletionHandler = new PvPBattleCompletionHandler();
 
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize();
@@ -332,8 +330,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PrioritisedSoundKeys.SetSoundKeys(DataProvider.SettingsManager.AltDroneSounds);
 
             _battleSceneGodTunnel = GetComponent<PvPBattleSceneGodTunnel>();
-            sceneNavigator = LandingSceneGod.SceneNavigator;
-            battleCompletionHandler = new PvPBattleCompletionHandler(sceneNavigator);
+            battleCompletionHandler = new PvPBattleCompletionHandler();
 
             messageBox.gameObject.SetActive(true);
             messageBox.Initialize();
@@ -836,7 +833,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             yield return new WaitForSeconds(5f); // to show matchmaking animation 
             MatchmakingScreenController.Instance.animator.SetBool("Completed", false);
             MatchmakingScreenController.Instance.DisableAllAnimatedGameObjects();
-            sceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
+            SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             PlayCountDownAnimation();
             if (SynchedServerData.Instance != null)
             {
