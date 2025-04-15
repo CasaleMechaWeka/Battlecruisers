@@ -24,6 +24,7 @@ namespace BattleCruisers.Utils.Factories
         // Circular dependencies :/
         public static PoolProviders PoolProviders { get; private set; }
         public static ISoundFactoryProvider Sound { get; private set; }
+        public static IDroneFactory DroneFactory { get; private set; }
 
         public static void Initialise(
             BattleSceneGodComponents components,
@@ -41,10 +42,10 @@ namespace BattleCruisers.Utils.Factories
 
             Assert.IsNotNull(uiManager);
 
-            IDroneFactory droneFactory = new DroneFactory();
-            DroneMonitor = new DroneMonitor(droneFactory);
+            DroneFactory = new DroneFactory();
+            DroneMonitor = new DroneMonitor(DroneFactory);
 
-            PoolProviders poolProviders = new PoolProviders(uiManager, droneFactory);
+            PoolProviders poolProviders = new PoolProviders(uiManager);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
 

@@ -21,9 +21,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class BuildableInitialisationArgs
     {
-        // Singleton.  Want only one pool provider, especially for performance test scenes.
-        private static PoolProviders _poolProviders;
-
         public IUIManager UiManager { get; }
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
@@ -66,7 +63,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             {
                 droneFeedbackFactory
                     = new DroneFeedbackFactory(
-                        FactoryProvider.PoolProviders.DronePool,
                         new SpawnPositionFinder(Constants.WATER_LINE),
                         faction);
             }
@@ -103,19 +99,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             cruiserSpecificFactories.Targets.DetectorFactory.Returns(targetDetectorFactory);
             cruiserSpecificFactories.Targets.ProviderFactory.Returns(targetProviderFactory);
             cruiserSpecificFactories.DroneFeedbackFactory.Returns(droneFeedbackFactory);
-        }
-
-        private static PoolProviders GetPoolProviders(IUIManager uiManager)
-        {
-            if (_poolProviders == null)
-            {
-                IDroneFactory droneFactory = new DroneFactory();
-                PoolProviders poolProviders = new PoolProviders(uiManager, droneFactory);
-                FactoryProvider.PoolProviders.Returns(poolProviders);
-                poolProviders.SetInitialCapacities();
-                _poolProviders = poolProviders;
-            }
-            return _poolProviders;
         }
     }
 }

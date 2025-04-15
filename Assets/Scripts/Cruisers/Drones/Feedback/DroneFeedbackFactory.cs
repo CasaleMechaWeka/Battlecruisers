@@ -14,13 +14,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly Faction _faction;
 
         public DroneFeedbackFactory(
-            Pool<IDroneController, DroneActivationArgs> dronePool,
             ISpawnPositionFinder spawnPositionFinder,
             Faction faction)
         {
-            Helper.AssertIsNotNull(dronePool, spawnPositionFinder, faction);
+            Helper.AssertIsNotNull(spawnPositionFinder, faction);
 
-            _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
             _faction = faction;
         }

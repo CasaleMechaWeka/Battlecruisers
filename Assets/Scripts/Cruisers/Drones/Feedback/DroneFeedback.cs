@@ -2,6 +2,7 @@
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
+using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
@@ -11,7 +12,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneFeedback : IDroneFeedback
     {
         private readonly DroneConsumerInfo _droneConsumerInfo;
-        private readonly Pool<IDroneController, DroneActivationArgs> _dronePool;
         private readonly ISpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
@@ -27,7 +27,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             Helper.AssertIsNotNull(droneConsumerInfo, dronePool, spawnPositionFinder);
 
             _droneConsumerInfo = droneConsumerInfo;
-            _dronePool = dronePool;
             _spawnPositionFinder = spawnPositionFinder;
             _faction = faction;
             _drones = new List<IDroneController>();
@@ -58,7 +57,8 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
                         _faction);
-                IDroneController droneToAdd = _dronePool.GetItem(activationArgs);
+                IDroneController droneToAdd = FactoryProvider.DroneFactory.CreateItem();
+                droneToAdd.Activate(activationArgs);
                 _drones.Add(droneToAdd);
             }
         }
