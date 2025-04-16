@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Sound.Pools
     {
         [SerializeField]
         private AudioSource _audioSource;
-        public int type = -1;
+        const int type = -1;
 
         public AudioSourcePoolable Initialise()
         {

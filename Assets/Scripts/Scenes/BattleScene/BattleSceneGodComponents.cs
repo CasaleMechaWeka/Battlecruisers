@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Data.Settings;
-using BattleCruisers.Hotkeys;
+﻿using BattleCruisers.Hotkeys;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Clouds;
@@ -66,6 +65,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             Deferrer = GetComponent<TimeScaleDeferrer>();
             Assert.IsNotNull(Deferrer);
+
 
             RealTimeDeferrer = GetComponent<RealTimeDeferrer>();
             Assert.IsNotNull(RealTimeDeferrer);

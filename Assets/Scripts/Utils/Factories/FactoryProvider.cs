@@ -47,7 +47,6 @@ namespace BattleCruisers.Utils.Factories
 
             PoolProviders poolProviders = new PoolProviders(uiManager);
             PoolProviders = poolProviders;
-            poolProviders.SetInitialCapacities();
 
             Sound = new SoundFactoryProvider(_components, poolProviders);
         }

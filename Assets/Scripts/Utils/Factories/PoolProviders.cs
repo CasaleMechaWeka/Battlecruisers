@@ -44,17 +44,5 @@ namespace BattleCruisers.Utils.Factories
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }
-
-        // Not part of constructor, because ProjecilePoolProvider and UnitPollProvider depend on ExplosionPoolProvider :/
-        public void SetInitialCapacities()
-        {
-            /*
-            _shipDeathPoolProvider.SetInitialCapacity();
-            _projectilePoolProvider.SetInitialCapacity();
-            _unitPoolProvider.SetInitialCapacity();
-            _dronePool.AddCapacity(DRONES_INITIAL_CAPACITY);
-            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
-            */
-        }
     }
 }
