@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _unitPoolProvider = new PvPUnitPoolProvider();
 
             IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory
-                = new PvPAudioSourcePoolableFactory(PvPFactoryProvider.DeferrerProvider.RealTimeDeferrer);
+                = new PvPAudioSourcePoolableFactory();
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);

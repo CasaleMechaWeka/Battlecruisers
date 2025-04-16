@@ -1,7 +1,7 @@
 ﻿using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -13,16 +13,16 @@ namespace BattleCruisers.UI.Sound.Pools
         private AudioSource _audioSource;
         public int type = -1;
 
-        public AudioSourcePoolable Initialise(IDeferrer realTimeDeferrer)
+        public AudioSourcePoolable Initialise()
         {
             Assert.IsNotNull(_audioSource);
-            Helper.AssertIsNotNull(realTimeDeferrer);
+            Helper.AssertIsNotNull(FactoryProvider.DeferrerProvider.RealTimeDeferrer);
 
             return
                 new AudioSourcePoolable(
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_audioSource), type),
-                    realTimeDeferrer);
+                    FactoryProvider.DeferrerProvider.RealTimeDeferrer);
         }
     }
 }

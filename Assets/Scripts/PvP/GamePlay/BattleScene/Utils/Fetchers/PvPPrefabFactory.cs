@@ -11,7 +11,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.P
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
-using UnityEngine.Assertions;
 using Unity.Netcode;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
@@ -23,8 +22,8 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using Object = UnityEngine.Object;
-using BattleCruisers.Utils.Threading;
 using BattleCruisers.Effects.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -159,11 +158,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newDrone;
         }
 
-        public static IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
+        public static IPoolable<AudioSourceActivationArgs> CreateAudioSource()
         {
-            Assert.IsNotNull(realTimeDeferrer);
             PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PvPPrefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise(realTimeDeferrer);
+            return audioSourceInitialiser.Initialise(PvPFactoryProvider.DeferrerProvider.RealTimeDeferrer);
         }
 
         public static async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)

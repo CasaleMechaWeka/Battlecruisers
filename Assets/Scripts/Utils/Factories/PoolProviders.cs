@@ -39,7 +39,7 @@ namespace BattleCruisers.Utils.Factories
             _projectilePoolProvider = new ProjectilePoolProvider();
             _unitPoolProvider = new UnitPoolProvider(uiManager);
 
-            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new AudioSourcePoolableFactory(FactoryProvider.DeferrerProvider.RealTimeDeferrer);
+            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new AudioSourcePoolableFactory();
             _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);

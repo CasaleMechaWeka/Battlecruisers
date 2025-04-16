@@ -14,9 +14,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.Threading;
 using UnityEngine;
-using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
@@ -107,12 +105,10 @@ namespace BattleCruisers.Utils.Fetchers
             return newDrone;
         }
 
-        public static IPoolable<AudioSourceActivationArgs> CreateAudioSource(IDeferrer realTimeDeferrer)
+        public static IPoolable<AudioSourceActivationArgs> CreateAudioSource()
         {
-            Assert.IsNotNull(realTimeDeferrer);
-
             AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PrefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise(realTimeDeferrer);
+            return audioSourceInitialiser.Initialise();
         }
 
         public static CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
