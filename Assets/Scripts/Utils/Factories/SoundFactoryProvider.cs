@@ -16,7 +16,7 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(components, poolProviders);
 
-            SoundPlayer = new SoundPlayer(poolProviders.AudioSourcePool);
+            SoundPlayer = new SoundPlayer();
             UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();

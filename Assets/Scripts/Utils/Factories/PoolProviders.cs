@@ -3,8 +3,6 @@ using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound.Pools;
-using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -22,13 +20,7 @@ namespace BattleCruisers.Utils.Factories
         private UnitPoolProvider _unitPoolProvider;
         public UnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
-        private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
-        public Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
-
         public UnitToPoolMap UnitToPoolMap { get; }
-
-        // 16 per cruiser
-        private const int AUDIO_SOURCE_INITIAL_CAPACITY = 20;
 
         public PoolProviders(IUIManager uiManager)
         {
@@ -38,9 +30,6 @@ namespace BattleCruisers.Utils.Factories
             _shipDeathPoolProvider = new ShipDeathPoolProvider();
             _projectilePoolProvider = new ProjectilePoolProvider();
             _unitPoolProvider = new UnitPoolProvider(uiManager);
-
-            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new AudioSourcePoolableFactory();
-            _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }

@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.Sound
         {
             _audioSourcePool = Substitute.For<Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>>();
 
-            _soundPlayer = new SoundPlayer(_audioSourcePool);
+            _soundPlayer = new SoundPlayer();
 
             _sound = Substitute.For<AudioClipWrapper>();
             _soundKey = Substitute.For<ISoundKey>();

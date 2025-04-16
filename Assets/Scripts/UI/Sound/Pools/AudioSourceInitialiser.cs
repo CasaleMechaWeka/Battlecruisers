@@ -1,28 +1,21 @@
 ﻿using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Pools
 {
+    // TODO: kill this stupid script
     public class AudioSourceInitialiser : Prefab
     {
         [SerializeField]
         private AudioSource _audioSource;
         const int type = -1;
 
-        public AudioSourcePoolable Initialise()
+        public IAudioSource Initialise()
         {
             Assert.IsNotNull(_audioSource);
-            Helper.AssertIsNotNull(FactoryProvider.DeferrerProvider.RealTimeDeferrer);
-
-            return
-                new AudioSourcePoolable(
-                    new EffectVolumeAudioSource(
-                        new AudioSourceBC(_audioSource), type),
-                    FactoryProvider.DeferrerProvider.RealTimeDeferrer);
+            return new EffectVolumeAudioSource(new AudioSourceBC(_audioSource), type);
         }
     }
 }

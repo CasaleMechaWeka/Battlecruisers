@@ -6,9 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.De
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Sound.Pools;
-using BattleCruisers.UI.Sound.Pools;
-using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -26,9 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private PvPUnitPoolProvider _unitPoolProvider;
         public PvPUnitPoolProvider UnitPoolProvider => _unitPoolProvider;
 
-        private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
-        public Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> AudioSourcePool => _audioSourcePool;
-
         public PvPUnitToPoolMap UnitToPoolMap { get; }
 
         // 16 per cruiser
@@ -42,9 +36,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider();
             _projectilePoolProvider = new PvPProjectilePoolProvider();
             _unitPoolProvider = new PvPUnitPoolProvider();
-            /*
-                        IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory = new PvPAudioSourcePoolableFactory(factoryProvider.PrefabFactory, factoryProvider.DeferrerProvider.RealTimeDeferrer);
-                        _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, PvPAudioSourceActivationArgs>(audioSourceFactory);*/
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }
@@ -60,10 +51,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             _shipDeathPoolProvider = new PvPShipDeathPoolProvider();
             _projectilePoolProvider = new PvPProjectilePoolProvider();
             _unitPoolProvider = new PvPUnitPoolProvider();
-
-            IPoolableFactory<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> audioSourceFactory
-                = new PvPAudioSourcePoolableFactory();
-            _audioSourcePool = new Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs>(audioSourceFactory);
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
         }
