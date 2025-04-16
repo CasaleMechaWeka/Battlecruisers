@@ -11,6 +11,7 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers.Cache;
@@ -106,7 +107,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newDrone;
         }
 
-        public static IAudioSource CreateAudioSource()
+        public static EffectVolumeAudioSource CreateAudioSource()
         {
             AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PrefabCache.AudioSource);
             return audioSourceInitialiser.Initialise();

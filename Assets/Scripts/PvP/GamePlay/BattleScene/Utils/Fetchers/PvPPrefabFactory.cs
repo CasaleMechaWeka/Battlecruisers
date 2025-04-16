@@ -157,12 +157,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return newDrone;
         }
 
-        public static IAudioSource CreateAudioSource()
-        {
-            PvPAudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PvPPrefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise();
-        }
-
         public static async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
         {
             string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";

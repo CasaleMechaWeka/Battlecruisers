@@ -1,3 +1,4 @@
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace BattleCruisers.UI.Sound.Players
         public void PlaySound(AudioClipWrapper sound, Vector2 position)
         {
             Assert.IsNotNull(sound);
-            IAudioSource source = PrefabFactory.CreateAudioSource();
+            EffectVolumeAudioSource source = PrefabFactory.CreateAudioSource();
             source.IsActive = true;
             source.AudioClip = sound;
             source.Position = position;

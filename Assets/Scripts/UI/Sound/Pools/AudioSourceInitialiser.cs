@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Sound.Pools
         private AudioSource _audioSource;
         const int type = -1;
 
-        public IAudioSource Initialise()
+        public EffectVolumeAudioSource Initialise()
         {
             Assert.IsNotNull(_audioSource);
             return new EffectVolumeAudioSource(new AudioSourceBC(_audioSource), type);
