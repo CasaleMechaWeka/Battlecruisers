@@ -6,7 +6,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class DroneFactory : IDroneFactory
     {
-
         public event EventHandler<DroneCreatedEventArgs> DroneCreated;
 
         public IDroneController CreateItem()

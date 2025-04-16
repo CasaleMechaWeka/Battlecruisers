@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    public class DroneFeedbackFactory : IDroneFeedbackFactory
+    public class DroneFeedbackFactory
     {
         private readonly IDroneFactory _droneFactory;
         private readonly ISpawnPositionFinder _spawnPositionFinder;

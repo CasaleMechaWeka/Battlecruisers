@@ -1,4 +1,3 @@
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Pools;

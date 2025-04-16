@@ -58,7 +58,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             realTimeDeferrer = realTimeDeferrer ?? Substitute.For<IDeferrer>();
             globalBoostProviders = globalBoostProviders ?? new GlobalBoostProviders();
 
-            IDroneFeedbackFactory droneFeedbackFactory = Substitute.For<IDroneFeedbackFactory>();
+            DroneFeedbackFactory droneFeedbackFactory = Substitute.For<DroneFeedbackFactory>();
             if (showDroneFeedback)
             {
                 droneFeedbackFactory
@@ -90,7 +90,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             TargetTrackerFactory targetTrackerFactory,
             TargetDetectorFactory targetDetectorFactory,
             TargetProviderFactory targetProviderFactory,
-            IDroneFeedbackFactory droneFeedbackFactory)
+            DroneFeedbackFactory droneFeedbackFactory)
         {
             cruiserSpecificFactories.AircraftProvider.Returns(aircraftProvider);
             cruiserSpecificFactories.GlobalBoostProviders.Returns(globalBoostProviders);

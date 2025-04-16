@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Repairables
     /// </summary>
     public class RepairManager : IRepairManager
     {
-        private readonly IDroneFeedbackFactory _feedbackFactory;
+        private readonly DroneFeedbackFactory _feedbackFactory;
         private readonly IDroneConsumerProvider _droneConsumerProvider;
         private readonly ICruiser _cruiser;
         private readonly IDictionary<IRepairable, IDroneFeedback> _repairableToFeedback;
@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Repairables
         // Code smell :D  ICruiser contains DroneConsumerProvider property, but this is not set
         // until cruiser has been initialised.  Hence directly pass drone consumer provider.
         public RepairManager(
-            IDroneFeedbackFactory feedbackFactory,
+            DroneFeedbackFactory feedbackFactory,
             IDroneConsumerProvider droneConsumerProvider,
             ICruiser cruiser)
         {

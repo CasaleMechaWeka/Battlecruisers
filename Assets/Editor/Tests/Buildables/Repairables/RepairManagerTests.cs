@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
         private IDroneConsumer _cruiserDroneConsumer, _buildingDroneConsumer;
         private IBuilding _building;
         private RepairCommand _cruiserRepairCommand, _buildingRepairCommand;
-        private IDroneFeedbackFactory _feedbackFactory;
+        private DroneFeedbackFactory _feedbackFactory;
         private IDroneFeedback _cruiserFeedback, _buildingFeedback;
         private float _repairAmount;
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.Buildables.Repairables
             _cruiserFeedback.DroneConsumer.Returns(_cruiserDroneConsumer);
             _buildingFeedback = Substitute.For<IDroneFeedback>();
             _buildingFeedback.DroneConsumer.Returns(_buildingDroneConsumer);
-            _feedbackFactory = Substitute.For<IDroneFeedbackFactory>();
+            _feedbackFactory = Substitute.For<DroneFeedbackFactory>();
 
             // Cruiser repairable
             _cruiserRepairCommand = Substitute.For<RepairCommand>();
