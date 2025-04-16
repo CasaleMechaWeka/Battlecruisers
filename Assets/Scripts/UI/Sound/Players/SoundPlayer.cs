@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Players
 {
-    public class SoundPlayer : ISoundPlayer
+    public class SoundPlayer
     {
         private readonly Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
 

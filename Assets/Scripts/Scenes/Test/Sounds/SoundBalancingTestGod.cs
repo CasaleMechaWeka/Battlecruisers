@@ -40,7 +40,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
         private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource, PoolProviders poolProviders)
         {
 
-            ISoundPlayer soundPlayer
+            SoundPlayer soundPlayer
                 = new SoundPlayer(poolProviders.AudioSourcePool);
 
             ISingleSoundPlayer singleSoundPlayer

@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
 {
     public class SoundGroupController : MonoBehaviour
     {
-        private ISoundPlayer _soundPlayer;
+        private SoundPlayer _soundPlayer;
         private ISingleSoundPlayer _singleSoundPlayer;
         private ICircularList<AudioClip> _sounds;
         private Text _titleText, _nameText, _locationText, _foreverButtonText, _playAllButtonText;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
         public int startingSoundIndex;
         public bool playAtLocation = false;
 
-        [DrawIf("playAtLocation", true)] 
+        [DrawIf("playAtLocation", true)]
         public GameObject playLocation;
 
         private AudioClip _currentSound;
@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
             }
         }
 
-        public void Initialise(ISoundPlayer soundPlayer, ISingleSoundPlayer singleSoundPlayer)
+        public void Initialise(SoundPlayer soundPlayer, ISingleSoundPlayer singleSoundPlayer)
         {
             Assert.IsTrue(!playAtLocation || playLocation != null);
             BCUtils.Helper.AssertIsNotNull(soundPlayer, singleSoundPlayer);
@@ -97,7 +97,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
         private async void PlayRepeating()
         {
             Logging.LogMethod(Tags.ALWAYS);
-            
+
             _playingForever = true;
             _foreverButtonText.text = "Stop";
 

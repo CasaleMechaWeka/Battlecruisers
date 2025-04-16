@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.Sound
 {
     public class SoundPlayerTests
     {
-        private ISoundPlayer _soundPlayer;
+        private SoundPlayer _soundPlayer;
         private Pool<IPoolable<AudioSourceActivationArgs>, AudioSourceActivationArgs> _audioSourcePool;
         private IPoolable<AudioSourceActivationArgs> _audioSource;
         private AudioClipWrapper _sound;

@@ -1,5 +1,4 @@
 using BattleCruisers.Data.Static;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
@@ -15,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class SectorShieldController : Target
     {
-        private ISoundPlayer _soundPlayer;
+        private SoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
         private IDebouncer _takeDamageSoundDebouncer;
 
@@ -49,7 +48,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, ISoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
+        public void Initialise(Faction faction, SoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
         {
             _targetType = targetType;
 

@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSectorShieldController : PvPTarget
     {
-        private ISoundPlayer _soundPlayer;
+        private SoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
         private IDebouncer _takeDamageSoundDebouncer;
 
@@ -53,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, ISoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
+        public void Initialise(Faction faction, SoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
         {
             _targetType = targetType;
 

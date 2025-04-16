@@ -6,7 +6,7 @@ namespace BattleCruisers.Utils.Factories
 {
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
-        public ISoundPlayer SoundPlayer { get; }
+        public SoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
         public ISingleSoundPlayer UISoundPlayer { get; }

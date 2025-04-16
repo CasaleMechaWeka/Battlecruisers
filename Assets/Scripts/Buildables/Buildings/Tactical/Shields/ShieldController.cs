@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldController : Target
     {
-        private ISoundPlayer _soundPlayer;
+        private SoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
         private IDebouncer _takeDamageSoundDebouncer;
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, ISoundPlayer soundPlayer)
+        public void Initialise(Faction faction, SoundPlayer soundPlayer)
         {
             Faction = faction;
 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPSoundFactoryProvider : ISoundFactoryProvider
     {
-        public ISoundPlayer SoundPlayer { get; set; }
+        public SoundPlayer SoundPlayer { get; set; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
         public ISingleSoundPlayer UISoundPlayer { get; }
