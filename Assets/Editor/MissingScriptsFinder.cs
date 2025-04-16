@@ -289,6 +289,8 @@ public class MissingScriptsFinder : EditorWindow
             if (filteredEntries.Count == 0)
                 continue;
 
+            bool hasMissingComponent = filteredEntries.Any(e => e.objectName.StartsWith("Missing Component"));
+
             // Get short name & icon
             string displayName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
             GUIContent icon = isPrefab
@@ -307,6 +309,17 @@ public class MissingScriptsFinder : EditorWindow
                     GUILayout.Label(icon, GUILayout.Width(18), GUILayout.Height(18));
 
                 EditorGUILayout.LabelField($"{displayName} → {single.uniquePath}", GUILayout.ExpandWidth(true));
+
+                if (hasMissingComponent)
+                {
+                    EditorGUI.BeginDisabledGroup(replacementScript == null);
+                    if (GUILayout.Button("Replace", GUILayout.Width(60)))
+                    {
+                        ReplaceMissingAssetGroup(single.assetPath, replacementScript);
+                        Repaint();
+                    }
+                    EditorGUI.EndDisabledGroup();
+                }
 
                 if (GUILayout.Button("Jump", GUILayout.Width(50)))
                     JumpToReference(single.assetPath, single.uniquePath);
@@ -350,6 +363,17 @@ public class MissingScriptsFinder : EditorWindow
 
             if (GUILayout.Button("Jump", GUILayout.Width(50)))
                 OpenAssetAndSelectRoot(assetPath);
+
+            if (hasMissingComponent)
+            {
+                EditorGUI.BeginDisabledGroup(replacementScript == null);
+                if (GUILayout.Button("Replace", GUILayout.Width(60)))
+                {
+                    ReplaceMissingAssetGroup(assetPath, replacementScript);
+                    Repaint();
+                }
+                EditorGUI.EndDisabledGroup();
+            }
 
             string groupBtnText = isIgnore ? "Remove All" : "Ignore";
             if (GUILayout.Button(groupBtnText, GUILayout.Width(50)))
@@ -838,6 +862,10 @@ public class MissingScriptsFinder : EditorWindow
         Dictionary<string, List<MissingScriptEntry>> groupedEntries = new Dictionary<string, List<MissingScriptEntry>>();
         foreach (var entry in missingScriptEntries)
         {
+            // Skip pure missing‑reference rows
+            if (!entry.objectName.StartsWith("Missing Component"))
+                continue;
+
             if (!groupedEntries.ContainsKey(entry.assetPath))
                 groupedEntries[entry.assetPath] = new List<MissingScriptEntry>();
             groupedEntries[entry.assetPath].Add(entry);
