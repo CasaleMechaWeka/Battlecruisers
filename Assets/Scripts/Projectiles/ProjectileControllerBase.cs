@@ -180,7 +180,7 @@ namespace BattleCruisers.Projectiles
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            FactoryProvider.Sound.SoundPlayer.PlaySound(_impactSound, transform.position);
+            FactoryProvider.Sound.SoundPlayer.PlaySound(_impactSound.AudioClip, transform.position);
         }
 
         private void AdjustGameObjectDirection()

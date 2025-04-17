@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.Sound
         [Test]
         public void PlaySound_ProvidePosition()
         {
-            _soundPlayer.PlaySound(_sound, _soundPosition);
+            _soundPlayer.PlaySound(_sound.AudioClip, _soundPosition);
             _audioSourcePool.GetItem(_activationArgs).Returns(_audioSource);
         }
     }

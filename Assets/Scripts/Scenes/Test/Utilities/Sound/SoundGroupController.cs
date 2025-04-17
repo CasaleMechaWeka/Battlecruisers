@@ -70,7 +70,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
 
             if (playAtLocation)
             {
-                _soundPlayer.PlaySound(new AudioClipWrapper(CurrentSound), playLocation.transform.position);
+                _soundPlayer.PlaySound(CurrentSound, playLocation.transform.position);
             }
             else
             {

@@ -11,11 +11,8 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers.Cache;
-using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -105,12 +102,6 @@ namespace BattleCruisers.Utils.Fetchers
             DroneController newDrone = Object.Instantiate(PrefabCache.Drone);
             newDrone.StaticInitialise();
             return newDrone;
-        }
-
-        public static EffectVolumeAudioSource CreateAudioSource()
-        {
-            AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PrefabCache.AudioSource);
-            return audioSourceInitialiser.Initialise();
         }
 
         public static CaptainExo GetCaptainExo(IPrefabKey captainExoKey)

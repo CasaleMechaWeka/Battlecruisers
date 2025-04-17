@@ -517,7 +517,7 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup.CleanUp();
             _healthBoostableGroup.CleanUp();
 
-            FactoryProvider.Sound.SoundPlayer.PlaySound(_deathSound, transform.position);
+            FactoryProvider.Sound.SoundPlayer.PlaySound(_deathSound.AudioClip, transform.position);
 
             if (Faction == Faction.Reds)
             {

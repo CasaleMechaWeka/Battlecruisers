@@ -1,4 +1,4 @@
-using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.Data;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
@@ -13,18 +13,14 @@ namespace BattleCruisers.UI.Sound.Players
         {
             Assert.IsNotNull(soundKey);
             AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(soundKey);
-            PlaySound(sound, position);
+            PlaySound(sound.AudioClip, position);
         }
 
         // TODO: this is a mess
-        public void PlaySound(AudioClipWrapper sound, Vector2 position)
+        public void PlaySound(AudioClip clip, Vector2 position)
         {
-            Assert.IsNotNull(sound);
-            EffectVolumeAudioSource source = PrefabFactory.CreateAudioSource();
-            source.IsActive = true;
-            source.AudioClip = sound;
-            source.Position = position;
-            source.Play();
+            Assert.IsNotNull(clip);
+            AudioSource.PlayClipAtPoint(clip, position, DataProvider.SettingsManager.EffectVolume);
         }
     }
 }
