@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ScreenController _currentScreen;
         private ISingleSoundPlayer _soundPlayer;
 
-        public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
+        public CanvasGroupButton homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
         public CanvasGroupButton discordButton, blackMarketButton;
         public GameObject coins;
 
@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, 
+            Helper.AssertIsNotNull(homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton, 
                 profileButton, arenaBackButton, discordButton, blackMarketButton);
 
             _lastBattleResult = DataProvider.GameModel.LastBattleResult;
@@ -65,6 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
+            battleHubButton2.Initialise(_soundPlayer, OpenBattleHub);
             arenaBackButton.Initialise(_soundPlayer, OpenBattleHub);
             loadoutButton.Initialise(_soundPlayer, OpenLoadout);
             shopButton.Initialise(_soundPlayer, OpenShop);
@@ -115,6 +116,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void UnselectAll()
         {
             battleHubButton.IsSelected = false;
+            battleHubButton2.IsSelected = false;
             loadoutButton.IsSelected = false;
             shopButton.IsSelected = false;
             leaderboardButton.IsSelected = false;
