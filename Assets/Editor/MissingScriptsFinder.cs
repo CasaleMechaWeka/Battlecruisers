@@ -361,9 +361,6 @@ public class MissingScriptsFinder : EditorWindow
 
             GUILayout.FlexibleSpace();
 
-            if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                OpenAssetAndSelectRoot(assetPath);
-
             if (hasMissingComponent)
             {
                 EditorGUI.BeginDisabledGroup(replacementScript == null);
@@ -374,6 +371,9 @@ public class MissingScriptsFinder : EditorWindow
                 }
                 EditorGUI.EndDisabledGroup();
             }
+
+            if (GUILayout.Button("Jump", GUILayout.Width(50)))
+                OpenAssetAndSelectRoot(assetPath);
 
             string groupBtnText = isIgnore ? "Remove All" : "Ignore";
             if (GUILayout.Button(groupBtnText, GUILayout.Width(50)))
@@ -829,8 +829,8 @@ public class MissingScriptsFinder : EditorWindow
     // You can rename or adjust it as needed if you want.
     private void ReplaceMissingAssetGroup(string assetPath, MonoScript replacementScript)
     {
-        if (replacementScript == null)
-            return;
+        if (replacementScript == null) return;
+
         Type newType = replacementScript.GetClass();
         if (newType == null)
         {
@@ -838,23 +838,75 @@ public class MissingScriptsFinder : EditorWindow
             return;
         }
 
+        /* --------------------------------------------------
+           Remember what the user’s inspecting right now
+        -------------------------------------------------- */
+        UnityEngine.Object[] keepSelection = Selection.objects;
+        Scene keepActiveScene = EditorSceneManager.GetActiveScene();
+
+        /* --------------------------------------------------
+           PREFAB ASSETS
+        -------------------------------------------------- */
         if (assetPath.EndsWith(".prefab"))
         {
-            GameObject prefabContents = PrefabUtility.LoadPrefabContents(assetPath);
-            ProcessAssetForMissingReferences(prefabContents, newType);
-            PrefabUtility.SaveAsPrefabAsset(prefabContents, assetPath);
-            PrefabUtility.UnloadPrefabContents(prefabContents);
+            PrefabStage stage = PrefabStageUtility.GetCurrentPrefabStage();
+
+            if (stage != null && stage.assetPath == assetPath)
+            {
+                // Already in Prefab Mode → edit what the inspector is showing
+                GameObject root = stage.prefabContentsRoot;
+
+                ProcessAssetForMissingReferences(root, newType);
+
+                // Overwrite the asset on disk – works even if ‘root’ still has instance IDs
+                PrefabUtility.SaveAsPrefabAsset(root, assetPath);
+
+                // Optional: clear the dirty flag so the prefab’s title bar loses its asterisk
+                stage.ClearDirtiness();
+            }
+            else
+            {
+                // Invisible scratch‑scene route for closed prefabs
+                GameObject tmp = PrefabUtility.LoadPrefabContents(assetPath);
+                ProcessAssetForMissingReferences(tmp, newType);
+                PrefabUtility.SaveAsPrefabAsset(tmp, assetPath);
+                PrefabUtility.UnloadPrefabContents(tmp);
+            }
         }
+
+        /* --------------------------------------------------
+           SCENE ASSETS
+        -------------------------------------------------- */
         else if (assetPath.EndsWith(".unity"))
         {
-            Scene scene = EditorSceneManager.OpenScene(assetPath, OpenSceneMode.Single);
-            GameObject[] roots = scene.GetRootGameObjects();
-            foreach (GameObject root in roots)
+            // ❸ Is the scene already loaded?
+            Scene targetScene = SceneManager.GetSceneByPath(assetPath);
+            bool sceneWasLoaded = targetScene.isLoaded;
+
+            if (!sceneWasLoaded)
+                targetScene = EditorSceneManager.OpenScene(assetPath, OpenSceneMode.Additive);
+
+            foreach (GameObject root in targetScene.GetRootGameObjects())
                 ProcessAssetForMissingReferences(root, newType);
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
+
+            EditorSceneManager.MarkSceneDirty(targetScene);
+            EditorSceneManager.SaveScene(targetScene);
+
+            if (!sceneWasLoaded)
+                EditorSceneManager.CloseScene(targetScene, true);
         }
+
+        /* --------------------------------------------------
+           Put everything back exactly as the user left it
+        -------------------------------------------------- */
+        Selection.objects = keepSelection;
+        EditorSceneManager.SetActiveScene(keepActiveScene);
+
+        /* --------------------------------------------------
+           Remove the fixed entries from the list and refresh
+        -------------------------------------------------- */
         missingScriptEntries.RemoveAll(e => e.assetPath == assetPath);
+        Repaint();
     }
 
     private void ReplaceAllMissing(MonoScript replacementScript)
