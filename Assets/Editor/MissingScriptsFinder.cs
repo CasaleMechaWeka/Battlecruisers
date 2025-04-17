@@ -68,6 +68,15 @@ public class MissingScriptsFinder : EditorWindow
     private Dictionary<string, bool> ignoreFoldoutStates = new Dictionary<string, bool>();
 
     private const string IgnoreListKey = "MissingScriptsIgnoreList";
+
+    // --- incremental scanning ---
+    private bool isScanning = false;
+    private List<string> scanAssets = new List<string>();
+    private int scanIndex = 0;
+    private double lastUIRefresh = 0.0;
+    private const float k_UI_REFRESH_INTERVAL = 0.5f;   // seconds
+    private float frameBudget = 0.1f;
+
     #endregion
 
     #region GUI
@@ -82,10 +91,18 @@ public class MissingScriptsFinder : EditorWindow
     {
         LoadIgnoreList();
         LoadCacheFromDisk();
+
+        frameBudget = Mathf.Min(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
     }
 
     private void OnDisable()
     {
+        if (isScanning)
+        {
+            EditorApplication.update -= ScanStep;
+            EditorUtility.ClearProgressBar();
+        }
+
         if (keepIgnoreList)
         {
             SaveIgnoreList();
@@ -151,7 +168,7 @@ public class MissingScriptsFinder : EditorWindow
         {
             GUIContent compButtonContent = new GUIContent("Missing Components");
             bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent,
-                "Button", GUILayout.Width(130));
+                "Button", GUILayout.Width(135));
             if (newFilterMissingComponents != filterMissingComponents)
             {
                 filterMissingComponents = newFilterMissingComponents;
@@ -163,7 +180,7 @@ public class MissingScriptsFinder : EditorWindow
         {
             GUIContent refsButtonContent = new GUIContent("Missing References");
             bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent,
-                "Button", GUILayout.Width(130));
+                "Button", GUILayout.Width(135));
             if (newFilterMissingReferences != filterMissingReferences)
             {
                 filterMissingReferences = newFilterMissingReferences;
@@ -177,7 +194,7 @@ public class MissingScriptsFinder : EditorWindow
             replacementScript,             // current value
             typeof(MonoScript),            // type filter
             false,                         // allowSceneObjects?
-            GUILayout.Width(150)           // adjust as you like
+            GUILayout.Width(296)           // adjust as you like
         );
 
         // "Replace All" button
@@ -507,6 +524,7 @@ public class MissingScriptsFinder : EditorWindow
     private List<MissingScriptEntry> GetMissingReferencesForAsset(string assetPath)
     {
         List<MissingScriptEntry> output = new List<MissingScriptEntry>();
+
         try
         {
             if (assetPath.EndsWith(".prefab"))
@@ -559,81 +577,92 @@ public class MissingScriptsFinder : EditorWindow
 
     private void FindMissingScripts()
     {
+        if (isScanning) return;            // already running
+
+        // Use the original method to *prepare* everything – but ask it not to loop
+        PrepareScanAssetList();            // builds scanAssets, sets scanIndex = 0
+        isScanning = true;
+        lastUIRefresh = EditorApplication.timeSinceStartup;
+        EditorApplication.update += ScanStep;
+    }
+
+    private void PrepareScanAssetList()
+    {
         missingScriptEntries.Clear();
         ignoredItemsFound = 0;
         assetFoldoutStates.Clear();
         ignoreFoldoutStates.Clear();
 
-        // Grab prefabs & scenes in "Assets/"
-        string[] prefabAndSceneGUIDs = AssetDatabase.FindAssets("t:Prefab t:Scene", new[] { "Assets" });
-        string[] allAssets = prefabAndSceneGUIDs.Select(AssetDatabase.GUIDToAssetPath).ToArray();
+        var prefabPaths = AssetDatabase.FindAssets("t:MonoBehaviour t:Prefab", new[] { "Assets" })
+                               .Select(AssetDatabase.GUIDToAssetPath);
 
-        // Setup scene selection dict if needed
-        if (sceneSelection.Count == 0)
+        var buildScenePaths = EditorBuildSettings.scenes          // enabled build scenes only
+                                .Where(s => s.enabled)
+                                .Select(s => s.path);
+
+        scanAssets = prefabPaths.Concat(buildScenePaths).ToList();
+
+        // Apply the same filters you already have (testing, trash, etc.)
+        scanAssets = scanAssets.Where(asset =>
+            !(skipTestingScenes && asset.StartsWith("Assets/Scenes/Testing/")) &&
+            !(skipTrashScenes && asset.StartsWith("Assets/Scenes/Trash/"))
+        ).ToList();
+
+        // … any other filters you used before …
+
+        scanIndex = 0;
+    }
+
+    private void ScanStep()
+    {
+        if (!isScanning)
+            return;
+
+        double frameStart = EditorApplication.timeSinceStartup;
+
+        // Process assets until we've used ~8 ms this frame
+        while (scanIndex < scanAssets.Count &&
+               EditorApplication.timeSinceStartup - frameStart < frameBudget)
         {
-            foreach (var scene in EditorBuildSettings.scenes)
+            string assetPath = scanAssets[scanIndex];
+            scanIndex++;
+
+            DateTime fileTime = System.IO.File.GetLastWriteTime(assetPath);
+            List<MissingScriptEntry> assetEntries = null;
+
+            if (assetCache.TryGetValue(assetPath, out CacheEntry c) && c.lastWriteTime == fileTime)
+                assetEntries = c.entries;
+            else
             {
-                if (!sceneSelection.ContainsKey(scene.path))
-                    sceneSelection[scene.path] = scene.enabled;
+                assetEntries = GetMissingReferencesForAsset(assetPath);
+                assetCache[assetPath] = new CacheEntry { lastWriteTime = fileTime, entries = assetEntries };
             }
+
+            if (assetEntries != null && assetEntries.Count > 0)
+                missingScriptEntries.AddRange(assetEntries);
         }
 
-        // If scene selection is toggled, only scan those
-        if (sceneSelection.Values.Contains(true))
+        // Progress bar
+        float progress = (float)scanIndex / scanAssets.Count;
+        EditorUtility.DisplayProgressBar("Finding Missing Components",
+            $"Scanning {scanIndex}/{scanAssets.Count}", progress);
+
+        // UI repaint throttled to 0.5 s
+        if (EditorApplication.timeSinceStartup - lastUIRefresh > k_UI_REFRESH_INTERVAL)
         {
-            allAssets = allAssets.Where(asset =>
-                !asset.EndsWith(".unity") ||
-                (sceneSelection.ContainsKey(asset) && sceneSelection[asset])
-            ).ToArray();
+            lastUIRefresh = EditorApplication.timeSinceStartup;
+            Repaint();
         }
 
-        int totalAssets = allAssets.Length;
-        int processedAssets = 0;
-
-        try
-        {
-            foreach (string assetPath in allAssets)
-            {
-                processedAssets++;
-                if (skipTestingScenes && assetPath.StartsWith("Assets/Scenes/Testing/"))
-                    continue;
-                if (skipTrashScenes && assetPath.StartsWith("Assets/Scenes/Trash/"))
-                    continue;
-
-                DateTime fileTime = System.IO.File.GetLastWriteTime(assetPath);
-                List<MissingScriptEntry> assetEntries = null;
-
-                if (assetCache.TryGetValue(assetPath, out CacheEntry cache) && cache.lastWriteTime == fileTime)
-                {
-                    assetEntries = cache.entries;
-                }
-                else
-                {
-                    assetEntries = GetMissingReferencesForAsset(assetPath);
-                    assetCache[assetPath] = new CacheEntry { lastWriteTime = fileTime, entries = assetEntries };
-                }
-
-                if (assetEntries != null && assetEntries.Count > 0)
-                {
-                    missingScriptEntries.AddRange(assetEntries);
-                }
-
-                float progress = (float)processedAssets / totalAssets;
-                EditorUtility.DisplayProgressBar("Finding Missing Components",
-                    $"Processing asset {processedAssets}/{totalAssets}", progress);
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"An error occurred during scanning: {ex}");
-        }
-        finally
+        // Finished?
+        if (scanIndex >= scanAssets.Count)
         {
             EditorUtility.ClearProgressBar();
+            isScanning = false;
+            EditorApplication.update -= ScanStep;
+            SaveCacheToDisk();
+            Repaint();              // final refresh
         }
-
-        SaveCacheToDisk();
-        Repaint();
     }
 
     #endregion
