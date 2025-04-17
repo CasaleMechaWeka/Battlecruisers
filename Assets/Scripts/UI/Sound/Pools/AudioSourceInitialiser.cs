@@ -6,6 +6,8 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.Sound.Pools
 {
     // TODO: kill this stupid script
+
+    [RequireComponent(typeof(AudioSource))]
     public class AudioSourceInitialiser : Prefab
     {
         [SerializeField]
@@ -16,6 +18,11 @@ namespace BattleCruisers.UI.Sound.Pools
         {
             Assert.IsNotNull(_audioSource);
             return new EffectVolumeAudioSource(new AudioSourceBC(_audioSource), type);
+        }
+
+        void Reset()               // editor‑only
+        {
+            _audioSource = GetComponent<AudioSource>();
         }
     }
 }
