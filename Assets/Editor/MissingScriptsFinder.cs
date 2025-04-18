@@ -54,7 +54,8 @@ public class MissingScriptsFinder : EditorWindow
 
     private bool filterScenes = true;
     private bool filterPrefabs = true;
-    // Renamed from filterMissingScripts → filterMissingComponents
+
+    private bool filterMissingPrefabs = true;
     private bool filterMissingComponents = true;
     private bool filterMissingReferences = true;
 
@@ -160,6 +161,18 @@ public class MissingScriptsFinder : EditorWindow
             if (newFilterPrefabs != filterPrefabs)
             {
                 filterPrefabs = newFilterPrefabs;
+                Repaint();
+            }
+        }
+
+        // Missing Prefabs button
+        {
+            GUIContent prefabBtnContent = new GUIContent("Missing Prefabs");
+            bool newFilterMissingPrefabs = GUILayout.Toggle(filterMissingPrefabs, prefabBtnContent,
+                "Button", GUILayout.Width(115));
+            if (newFilterMissingPrefabs != filterMissingPrefabs)
+            {
+                filterMissingPrefabs = newFilterMissingPrefabs;
                 Repaint();
             }
         }
@@ -289,6 +302,7 @@ public class MissingScriptsFinder : EditorWindow
             var filteredEntries = new List<MissingScriptEntry>();
             foreach (var e in allEntries)
             {
+                bool isMissingPrefab = e.objectName.StartsWith("Missing Prefab");
                 bool isMissingComponent = e.objectName.StartsWith("Missing Component");
                 bool isMissingReference = e.objectName.StartsWith("Missing Reference");
 
@@ -296,7 +310,8 @@ public class MissingScriptsFinder : EditorWindow
                 // or the user wants to see missing references and this entry is a missing reference,
                 // then we keep this entry.
                 if ((filterMissingComponents && isMissingComponent)
-                    || (filterMissingReferences && isMissingReference))
+                    || (filterMissingReferences && isMissingReference)
+                    || (filterMissingPrefabs && isMissingPrefab))
                 {
                     filteredEntries.Add(e);
                 }
@@ -473,6 +488,16 @@ public class MissingScriptsFinder : EditorWindow
     // Modified to label missing scripts as “Missing Component” and references as “Missing Reference: ...”
     private void CollectMissingReferences(GameObject obj, string assetPath, List<MissingScriptEntry> output)
     {
+        var status = PrefabUtility.GetPrefabInstanceStatus(obj);
+        if (status == PrefabInstanceStatus.MissingAsset)
+        {
+            string uniquePath = GetUniquePath(obj);
+            var entry = new MissingScriptEntry(assetPath, "Missing Prefab", uniquePath);
+            if (!output.Contains(entry))
+                output.Add(entry);
+            return;    // no need to scan its components
+        }
+
         Component[] comps = obj.GetComponents<Component>();
         foreach (var comp in comps)
         {
@@ -529,13 +554,23 @@ public class MissingScriptsFinder : EditorWindow
         {
             if (assetPath.EndsWith(".prefab"))
             {
-                GameObject prefabRoot = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
-                if (prefabRoot == null)
+                GameObject prefabContents = null;
+                try
                 {
-                    Debug.LogWarning($"Skipping invalid prefab: {assetPath} (LoadAssetAtPath returned null)");
+                    // this will throw if the prefab has !=1 root
+                    prefabContents = PrefabUtility.LoadPrefabContents(assetPath);
+                }
+                catch (ArgumentException e)
+                {
+                    Debug.LogWarning($"Skipping prefab with multiple roots or invalid format: {assetPath}\n  {e.Message}");
                     return output;
                 }
-                CollectMissingReferences(prefabRoot, assetPath, output);
+
+                // now do the normal scan
+                CollectMissingReferences(prefabContents, assetPath, output);
+
+                // unload the scratch scene
+                PrefabUtility.UnloadPrefabContents(prefabContents);
             }
             else if (assetPath.EndsWith(".unity"))
             {
