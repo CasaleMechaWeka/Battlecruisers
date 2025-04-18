@@ -1,7 +1,5 @@
 using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.Fetchers;
-using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -18,16 +16,17 @@ namespace BattleCruisers.UI.Sound.Players
             PlaySound(sound.AudioClip, position);
         }
 
-        // TODO: this is a mess
         public static void PlaySound(AudioClip clip, Vector2 position)
         {
             Assert.IsNotNull(clip);
-            AudioSourceInitialiser audioSourceInitialiser = Object.Instantiate(PrefabCache.AudioSource);
-            EffectVolumeAudioSource source = audioSourceInitialiser.Initialise();
-            GameObject sourceObject = audioSourceInitialiser.gameObject;
 
-            source.AudioClip = new AudioClipWrapper(clip);
+            GameObject sourceObject = new GameObject("Audio Source");
             sourceObject.transform.position = position;
+
+            AudioSource source = sourceObject.AddComponent<AudioSource>();
+            EffectVolumeAudioSource effectVolumeAudioSource = new EffectVolumeAudioSource(new AudioSourceBC(source));
+
+            effectVolumeAudioSource.AudioClip = new AudioClipWrapper(clip);
 
             // we do not want thousands of AudioSources by the end of a long battle
             Object.Destroy(sourceObject, clip.length);
