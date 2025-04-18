@@ -14,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class ShieldController : Target
     {
-        private SoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
         private IDebouncer _takeDamageSoundDebouncer;
 
@@ -57,11 +56,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, SoundPlayer soundPlayer)
+        public void Initialise(Faction faction)
         {
             Faction = faction;
 
-            _soundPlayer = soundPlayer;
             _timeSinceDamageInS = 1000;
             circleCollider.radius = Stats.ShieldRadiusInM;
 
@@ -104,7 +102,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
                     if (Health == maxHealth)
                     {
-                        _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
+                        _ = SoundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
                     }
                 }
             }
@@ -151,7 +149,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void PlayDamagedSound()
         {
-            _soundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
+            _ = SoundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
         }
 
         private void EnableShield()
@@ -165,7 +163,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             visuals.SetActive(false);
             circleCollider.enabled = false;
-            _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
+            _ = SoundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
             UpdateBuildingImmunity(false);
         }
 

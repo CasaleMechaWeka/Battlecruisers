@@ -5,8 +5,6 @@ namespace BattleCruisers.Utils.Factories
 {
     public interface ISoundFactoryProvider
     {
-        SoundPlayer SoundPlayer { get; }
-
         /// <summary>
         /// Plays a single sound at a time.  Used by in game events, such as
         /// building completed or cruiser events.

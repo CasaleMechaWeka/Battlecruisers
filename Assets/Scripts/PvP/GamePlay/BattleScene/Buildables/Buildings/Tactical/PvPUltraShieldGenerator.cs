@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Localisation;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
@@ -45,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.Activate(activationArgs);
 
-            _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null);
+            _shieldController.Initialise(Faction);
             _shieldController.gameObject.SetActive(false);
             OnEnableShieldClientRpc(false);
             _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);

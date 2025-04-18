@@ -38,10 +38,6 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
         private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource)
         {
-
-            SoundPlayer soundPlayer
-                = new SoundPlayer();
-
             ISingleSoundPlayer singleSoundPlayer
                 = new SingleSoundPlayer(new AudioSourceBC(singleSoundPlayerSource));
 
@@ -49,7 +45,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
             foreach (SoundGroupController group in soundGroups)
             {
-                group.Initialise(soundPlayer, singleSoundPlayer);
+                group.Initialise(singleSoundPlayer);
             }
         }
     }

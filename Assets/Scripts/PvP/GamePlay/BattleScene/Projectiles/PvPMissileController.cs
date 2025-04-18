@@ -16,6 +16,7 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -162,7 +163,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private async void PlayExplosionSound()
         {
             Debug.Log("[PvPMissileController] PlayExplosionSound invoked with Type: " + _type + ", Name: " + _name + ", Position: " + _pos);
-            await PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
+            await SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
         // should be called by client

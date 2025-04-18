@@ -15,6 +15,7 @@ using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
@@ -517,7 +518,7 @@ namespace BattleCruisers.Buildables
             _buildRateBoostableGroup.CleanUp();
             _healthBoostableGroup.CleanUp();
 
-            FactoryProvider.Sound.SoundPlayer.PlaySound(_deathSound.AudioClip, transform.position);
+            SoundPlayer.PlaySound(_deathSound.AudioClip, transform.position);
 
             if (Faction == Faction.Reds)
             {

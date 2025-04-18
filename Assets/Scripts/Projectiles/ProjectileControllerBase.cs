@@ -5,6 +5,7 @@ using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -180,7 +181,7 @@ namespace BattleCruisers.Projectiles
         protected void ShowExplosion()
         {
             _explosionPool.GetItem(transform.position);
-            FactoryProvider.Sound.SoundPlayer.PlaySound(_impactSound.AudioClip, transform.position);
+            SoundPlayer.PlaySound(_impactSound.AudioClip, transform.position);
         }
 
         private void AdjustGameObjectDirection()

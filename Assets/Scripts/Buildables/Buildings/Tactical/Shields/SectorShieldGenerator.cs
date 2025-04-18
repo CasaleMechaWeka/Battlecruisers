@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
@@ -41,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         {
             base.Activate(activationArgs);
 
-            _shieldController.Initialise(Faction, FactoryProvider.Sound.SoundPlayer);
+            _shieldController.Initialise(Faction);
             _shieldController.gameObject.SetActive(false);
 
             _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);

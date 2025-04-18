@@ -6,7 +6,6 @@ namespace BattleCruisers.Utils.Factories
 {
     public class SoundFactoryProvider : ISoundFactoryProvider
     {
-        public SoundPlayer SoundPlayer { get; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
         public ISingleSoundPlayer UISoundPlayer { get; }
@@ -16,7 +15,6 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(components, poolProviders);
 
-            SoundPlayer = new SoundPlayer();
             UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();

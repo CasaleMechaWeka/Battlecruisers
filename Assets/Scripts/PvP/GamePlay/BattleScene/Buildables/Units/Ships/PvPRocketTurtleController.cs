@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             if (_shieldController != null)
             {
-                _shieldController.Initialise(Faction /*,  _factoryProvider.Sound.SoundPlayer */, null, TargetType.Ships);
+                _shieldController.Initialise(Faction, TargetType.Ships);
                 _shieldController.gameObject.SetActive(false);
                 OnEnableShieldClientRpc(false);
                 _localBoosterBoostableGroup.AddBoostable(_shieldController.Stats);

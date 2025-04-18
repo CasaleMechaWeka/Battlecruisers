@@ -7,9 +7,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Sound.Players
 {
-    public class SoundPlayer
+    public static class SoundPlayer
     {
-        public async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
+        public static async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
             AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(soundKey);
@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Sound.Players
         }
 
         // TODO: this is a mess
-        public void PlaySound(AudioClip clip, Vector2 position)
+        public static void PlaySound(AudioClip clip, Vector2 position)
         {
             Assert.IsNotNull(clip);
             AudioSource.PlayClipAtPoint(clip, position, DataProvider.SettingsManager.EffectVolume);

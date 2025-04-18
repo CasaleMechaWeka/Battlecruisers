@@ -13,7 +13,6 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
 {
     public class SoundGroupController : MonoBehaviour
     {
-        private SoundPlayer _soundPlayer;
         private ISingleSoundPlayer _singleSoundPlayer;
         private ICircularList<AudioClip> _sounds;
         private Text _titleText, _nameText, _locationText, _foreverButtonText, _playAllButtonText;
@@ -38,10 +37,10 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
             }
         }
 
-        public void Initialise(SoundPlayer soundPlayer, ISingleSoundPlayer singleSoundPlayer)
+        public void Initialise(ISingleSoundPlayer singleSoundPlayer)
         {
             Assert.IsTrue(!playAtLocation || playLocation != null);
-            BCUtils.Helper.AssertIsNotNull(soundPlayer, singleSoundPlayer);
+            BCUtils.Helper.AssertIsNotNull(singleSoundPlayer);
 
             _titleText = transform.FindNamedComponent<Text>("Title");
             _titleText.text = name;
@@ -57,7 +56,6 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
             };
             CurrentSound = _sounds.Current();
 
-            _soundPlayer = soundPlayer;
             _singleSoundPlayer = singleSoundPlayer;
             _playingForever = false;
             _playingAll = false;
@@ -70,7 +68,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
 
             if (playAtLocation)
             {
-                _soundPlayer.PlaySound(CurrentSound, playLocation.transform.position);
+                SoundPlayer.PlaySound(CurrentSound, playLocation.transform.position);
             }
             else
             {

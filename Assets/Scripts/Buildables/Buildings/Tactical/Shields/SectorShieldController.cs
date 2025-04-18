@@ -14,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
     public class SectorShieldController : Target
     {
-        private SoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
         private IDebouncer _takeDamageSoundDebouncer;
 
@@ -48,7 +47,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, SoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
+        public void Initialise(Faction faction, TargetType targetType = TargetType.Buildings)
         {
             _targetType = targetType;
 
@@ -58,7 +57,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
             Faction = faction;
 
-            _soundPlayer = soundPlayer;
             _timeSinceDamageInS = 1000;
 
             healthBar.Initialise(this, true);
@@ -77,7 +75,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
                     RepairCommandExecute(Stats.ShieldRechargeRatePerS * _time.DeltaTime);
 
                     if (Health == maxHealth)
-                        _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
+                        _ = SoundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyCharged, Position);
                 }
             }
             shieldUpdateCnt++;
@@ -115,7 +113,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void PlayDamagedSound()
         {
-            _soundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
+            _ = SoundPlayer.PlaySoundAsync(SoundKeys.Shields.HitWhileActive, Position);
         }
 
         private void EnableShield()
@@ -131,7 +129,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
             if (visuals != null)
                 visuals.SetActive(false);
             polygonCollider.enabled = false;
-            _soundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
+            _ = SoundPlayer.PlaySoundAsync(SoundKeys.Shields.FullyDepleted, Position);
             UpdateBuildingImmunity(false);
         }
 

@@ -26,6 +26,7 @@ using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -708,7 +709,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsClient)
             {
-                PvPFactoryProvider.Sound.SoundPlayer.PlaySound(_deathSound.AudioClip, transform.position);
+                SoundPlayer.PlaySound(_deathSound.AudioClip, transform.position);
                 // in some case, smoke strong is not removed from scene in client side, so force stop it when boat destroyed.
                 //   _smokeInitialiser.gameObject.GetComponent<PvPSmoke>()._particleSystem.Clear();
 

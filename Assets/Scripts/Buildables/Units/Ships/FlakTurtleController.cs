@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -46,7 +45,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void OnBuildableCompleted()
         {
-            _shieldController.Initialise(Faction, FactoryProvider.Sound.SoundPlayer, TargetType.Ships);
+            _shieldController.Initialise(Faction, TargetType.Ships);
             _shieldController.gameObject.SetActive(false);
             base.OnBuildableCompleted();
             _flakturret.ApplyVariantStats(this);

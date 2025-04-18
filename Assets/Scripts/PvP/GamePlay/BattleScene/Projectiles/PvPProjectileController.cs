@@ -1,7 +1,7 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -93,7 +93,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private async void PlayExplosionSound()
         {
-            await PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
+            await SoundPlayer.PlaySoundAsync(new SoundKey(_type, _name), _pos);
         }
 
     }

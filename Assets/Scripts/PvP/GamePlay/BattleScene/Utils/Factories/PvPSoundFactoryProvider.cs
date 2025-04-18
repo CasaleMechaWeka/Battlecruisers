@@ -6,7 +6,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPSoundFactoryProvider : ISoundFactoryProvider
     {
-        public SoundPlayer SoundPlayer { get; set; }
         public IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
         public IPrioritisedSoundPlayer DummySoundPlayer { get; }
         public ISingleSoundPlayer UISoundPlayer { get; }
@@ -19,7 +18,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         SoundFetcher = new PvPSoundFetcher();
                         SoundPlayer = new PvPSoundPlayer(SoundFetcher , _audioSourcePool*//*, poolProviders.AudioSourcePool*//*);*/
 
-            SoundPlayer = new SoundPlayer();
             UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);
             DummySoundPlayer = new DummySoundPlayer();

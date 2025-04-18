@@ -13,13 +13,11 @@ using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
 {
     public class PvPSectorShieldController : PvPTarget
     {
-        private SoundPlayer _soundPlayer;
         private float _timeSinceDamageInS;
         private IDebouncer _takeDamageSoundDebouncer;
 
@@ -53,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _takeDamageSoundDebouncer = new Debouncer(TimeBC.Instance.TimeSinceGameStartProvider, debounceTimeInS: 0.5f);
         }
 
-        public void Initialise(Faction faction, SoundPlayer soundPlayer, TargetType targetType = TargetType.Buildings)
+        public void Initialise(Faction faction, TargetType targetType = TargetType.Buildings)
         {
             _targetType = targetType;
 
@@ -63,7 +61,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Faction = faction;
 
-            _soundPlayer = soundPlayer;
             _timeSinceDamageInS = 1000;
 
             SetHealthToMax();
@@ -203,7 +200,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnPlaySoundClientRpc(SoundType soundType, string soundName, Vector3 position)
         {
             if (IsClient)
-                PvPFactoryProvider.Sound.SoundPlayer.PlaySoundAsync(new SoundKey(soundType, soundName), position);
+                _ = SoundPlayer.PlaySoundAsync(new SoundKey(soundType, soundName), position);
         }
 
         [ClientRpc]
