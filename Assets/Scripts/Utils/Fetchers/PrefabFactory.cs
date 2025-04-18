@@ -104,6 +104,7 @@ namespace BattleCruisers.Utils.Fetchers
             return newDrone;
         }
 
+
         public static CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
         {
             return PrefabCache.GetCaptainExo(captainExoKey);

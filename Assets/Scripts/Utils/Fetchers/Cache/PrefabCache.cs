@@ -8,6 +8,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         public static VariantPrefab GetVariant(IPrefabKey key) => _variants.GetPrefab(key);
         public static Prefab GetProjectile(IPrefabKey key) => _projectiles.GetPrefab(key);
         public static DroneController Drone { get; private set; }
+        public static AudioSourceInitialiser AudioSource { get; private set; }
 
         public static async Task CreatePrefabCacheAsync()
         {
@@ -79,6 +81,10 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             Container<DroneController> DroneContainer = new Container<DroneController>();
             retrievePrefabsTasks.Add(GetPrefab(StaticPrefabKeys.Effects.BuilderDrone, DroneContainer));
 
+            Container<AudioSourceInitialiser> AudioSourceContainer = new Container<AudioSourceInitialiser>();
+            retrievePrefabsTasks.Add(GetPrefab(StaticPrefabKeys.AudioSource, AudioSourceContainer));
+
+
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
 
@@ -95,6 +101,7 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After retrieve all prefabs task");
             Drone = DroneContainer.Value;
+            AudioSource = AudioSourceContainer.Value;
         }
 
         private static async Task GetPrefabs<TPrefab>(
