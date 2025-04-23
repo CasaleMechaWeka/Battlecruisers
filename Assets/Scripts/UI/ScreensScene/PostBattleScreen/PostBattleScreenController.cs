@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public Text title;
         public SlidingPanel unlockedItemSection;
-        public GameObject defeatMessage, victoryNoLootMessage, demoCompletedScreen;
+        public GameObject defeatMessage, victoryNoLootMessage, demoCompletedScreen, decreaseDifficultySection;
         public LevelNameController levelName;
         public LevelStatsController completedDifficultySymbol;
         public CanvasGroupButton demoHomeButton;
@@ -51,6 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public PostSkirmishButtonsPanel postSkirmishButtonsPanel;
         public AppraisalSectionController appraisalSection;
         public AppraisalButtonsPanel appraisalButtonsPanel;
+        public DecreaseDifficultySuggestionController decreaseDifficultyController;
 
         [Header("Can change these for testing")]
         public PostBattleScreenBehaviour desiredBehaviour;
@@ -200,7 +201,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         DataProvider.GameModel.TimesLostOnLastLevel += 1;
                         if (DataProvider.GameModel.TimesLostOnLastLevel == 2)
                         {
-                            //Display message
+                            if (defeatMessage.activeSelf)
+                                defeatMessage.SetActive(false);
+                            if (postBattleButtonsPanel.gameObject.activeSelf)
+                                postBattleButtonsPanel.gameObject.SetActive(false);
+                            Debug.LogError(DataProvider.GameModel.TimesLostOnLastLevel);
+                            decreaseDifficultySection.SetActive(true);
                             DataProvider.GameModel.TimesLostOnLastLevel = 0;
                         }
                     }
@@ -225,6 +231,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
                 ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
                 postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
+                decreaseDifficultyController.Initialise(this, soundPlayer);
             }
 
             SetupBackground(postBattleState.ShowVictoryBackground);
