@@ -221,7 +221,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                PvPAttackBoat, PvPFrigate, PvPDestroyer, PvPArchon, PvPAttackRIB, PvPSiegeDestroyer, PvPGlassCannoneer, PvPGunBoat, PvPTurtle
+                PvPAttackBoat, PvPAttackRIB, PvPFrigate, PvPDestroyer,PvPSiegeDestroyer, PvPArchon, PvPGlassCannoneer, PvPGunBoat, PvPTurtle
             });
 
             public static IPrefabKey GetKey(PvPShipDeathType deathType)

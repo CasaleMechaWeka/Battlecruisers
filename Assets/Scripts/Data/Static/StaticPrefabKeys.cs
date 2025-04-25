@@ -474,7 +474,7 @@ namespace BattleCruisers.Data.Static
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                AttackBoat, Frigate, Destroyer, SiegeDestroyer, Archon, AttackRIB, GlassCannoneer, GunBoat, Turtle
+                AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, Archon, GlassCannoneer, GunBoat, Turtle
             });
 
             public static IPrefabKey GetKey(ShipDeathType deathType)

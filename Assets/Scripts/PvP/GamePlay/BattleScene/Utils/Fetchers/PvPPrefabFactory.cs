@@ -33,17 +33,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
         static Stack<IDroneController> dronePool;
+        static Stack<IPoolable<Vector3>>[] shipDeathPool;
 
         public static void CreatePools()
         {
             dronePool = new Stack<IDroneController>();
             Assert.IsTrue(explosionPoolTargets.Length == PvPStaticPrefabKeys.PvPExplosions.AllKeys.Count);
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
+            shipDeathPool = new Stack<IPoolable<Vector3>>[PvPStaticPrefabKeys.PvPShipDeaths.AllKeys.Count];
+
             for (int i = 0; i < explosionPoolTargets.Length; i++)
             {
                 explosionPool[i] = new Stack<IPoolable<Vector3>>();
                 for (int j = 0; j < explosionPoolTargets[i]; j++)
                     explosionPool[i].Push(CreateExplosion((PvPExplosionType)i));
+            }
+
+            for (int i = 0; i < shipDeathPool.Length; i++)
+            {
+                shipDeathPool[i] = new Stack<IPoolable<Vector3>>();
+                shipDeathPool[i].Push(CreateShipDeath((PvPShipDeathType)i));
             }
         }
         public static void ClearPool()
@@ -151,23 +160,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPExplosionController explosionPrefab = PvPPrefabCache.GetExplosion(PvPStaticPrefabKeys.PvPExplosions.GetKey(explosionType));
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             newExplosion.GetComponent<NetworkObject>().Spawn();
-            return newExplosion.Initialise();
+
+            IPoolable<Vector3> explosion = newExplosion.Initialise();
+            explosion.Deactivated += (object sender, EventArgs e) => { explosionPool[(int)explosionType].Push(explosion); };
+
+            return explosion;
         }
 
         public static IPoolable<Vector3> ShowExplosion(PvPExplosionType explosionType, Vector3 position)
         {
             IPoolable<Vector3> explosion;
             if (explosionPool != null && explosionPool[(int)explosionType].Count > 0)
-            {
                 explosion = explosionPool[(int)explosionType].Pop();
-                explosion.Activate(position);
-            }
             else
-            {
                 explosion = CreateExplosion(explosionType);
-                explosion.Activate(position);
-                explosion.Deactivated += (object sender, EventArgs e) => { explosionPool[(int)explosionType].Push(explosion); };
-            }
+
+            explosion.Activate(position);
             return explosion;
         }
 
@@ -176,12 +184,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(PvPStaticPrefabKeys.PvPShipDeaths.GetKey(deathType));
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             newShipDeath.GetComponent<NetworkObject>().Spawn();
-            return newShipDeath.CreateShipDeath();
+
+            IPoolable<Vector3> shipDeath = newShipDeath.CreateShipDeath();
+            shipDeath.Deactivated += (object sender, EventArgs e) => { shipDeathPool[(int)deathType].Push(shipDeath); };
+
+            return shipDeath;
         }
 
         public static IPoolable<Vector3> ShowShipDeath(PvPShipDeathType deathType, Vector3 position, Faction faction)
         {
-            IPoolable<Vector3> shipDeath = CreateShipDeath(deathType);
+            IPoolable<Vector3> shipDeath;
+
+            if (shipDeathPool != null && shipDeathPool[(int)deathType].Count > 0)
+                shipDeath = shipDeathPool[(int)deathType].Pop();
+            else
+                shipDeath = CreateShipDeath(deathType);
+
             shipDeath.Activate(position, faction);
             return shipDeath;
         }
@@ -203,6 +221,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPDroneController newDrone = Object.Instantiate(PvPPrefabCache.Drone);
             newDrone.GetComponent<NetworkObject>().Spawn();
             newDrone.StaticInitialise();
+
+            newDrone.Deactivated += (object sender, EventArgs e) => { dronePool.Push(newDrone); };
             return newDrone;
         }
 
@@ -210,14 +230,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             IDroneController drone;
             if (dronePool != null && dronePool.Count > 0)
-            {
                 drone = dronePool.Pop();
-            }
             else
-            {
                 drone = CreateDrone();
-                drone.Deactivated += (object sender, EventArgs e) => { dronePool.Push(drone); };
-            }
+
             return drone;
         }
 

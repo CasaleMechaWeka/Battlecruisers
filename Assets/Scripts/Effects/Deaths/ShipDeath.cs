@@ -37,9 +37,9 @@ namespace BattleCruisers.Effects.Deaths
         private void _sinkingAnimation_AnimationDone(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.DEATHS);
-
             _shipDeathController.IsVisible = false;
             Deactivated?.Invoke(this, EventArgs.Empty);
+            Debug.Log("DEACTIVATE");
         }
 
         public void Activate(Vector3 activationArgs)
