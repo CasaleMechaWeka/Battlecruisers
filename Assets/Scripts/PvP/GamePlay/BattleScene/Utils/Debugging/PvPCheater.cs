@@ -1,7 +1,8 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Utils.Debugging;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -58,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public void ShowNuke()
         {
             Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            PvPFactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
+            PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPExplosion500, nukePoint);
         }
 
         public void TogglePause()

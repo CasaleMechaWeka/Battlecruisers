@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using BattleCruisers.Effects.Explosions.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
@@ -14,7 +14,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IUnit _parentAircraft;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
-        private IExplosionPoolProvider _explosionPoolProvider;
         private ITarget _initialTarget;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -43,7 +42,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             kamikazeDamageStats = new DamageStats(remainingPotentialDamage, parentAircraft.Size.x);
 
             _damageApplier = new AreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
-            _explosionPoolProvider = FactoryProvider.PoolProviders.ExplosionPoolProvider;
 
             _initialTarget.Destroyed += Target_Destroyed;
         }
@@ -52,7 +50,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             if (!_parentAircraft.IsDestroyed)
             {
-                _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
+                PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPFlakExplosion, transform.position);
                 CleanUp();
             }
         }
@@ -87,7 +85,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _damageApplier = new AreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
-                _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
+                PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPFlakExplosion, transform.position);
 
                 float damageDealt = prevTargetHP - _targetToDamage.Health;
                 float f = damageDealt / KAMIKAZE_DAMAGE_MULTIPLIER;

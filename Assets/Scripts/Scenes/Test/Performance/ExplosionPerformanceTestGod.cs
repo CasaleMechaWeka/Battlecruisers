@@ -23,7 +23,7 @@ namespace BattleCruisers.Scenes.Test.Performance
 
         private void Update()
         {
-            IPoolable<Vector3> explosion = PrefabFactory.CreateExplosion(StaticPrefabKeys.Explosions.FlakExplosion);
+            IPoolable<Vector3> explosion = PrefabFactory.CreateExplosion(ExplosionType.FlakExplosion);
             explosion.Activate(FindRandomSpawnPosition());
         }
 

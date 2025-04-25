@@ -50,7 +50,6 @@ using BattleCruisers.Buildables.Colours;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.Scenes.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {

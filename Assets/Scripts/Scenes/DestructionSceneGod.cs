@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Scenes
 {
@@ -125,6 +126,7 @@ namespace BattleCruisers.Scenes
         async void Start()
         {
             LandingSceneGod.MusicPlayer.PlayVictoryMusic();
+            PrefabFactory.ClearPool();
 
             _soundPlayer
                 = new SingleSoundPlayer(

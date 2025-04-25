@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.Test.Utilities;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -39,12 +40,12 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
             if (showArtilleryExplosion)
             {
-                FactoryProvider.PoolProviders.ExplosionPoolProvider.LargeExplosionsPool.GetItem(explosionPosition);
+                PrefabFactory.ShowExplosion(ExplosionType.Explosion150, explosionPosition);
             }
 
             if (showNukeExplosion)
             {
-                FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(explosionPosition);
+                PrefabFactory.ShowExplosion(ExplosionType.Explosion500, explosionPosition);
             }
         }
     }

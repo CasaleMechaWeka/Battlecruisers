@@ -1,8 +1,11 @@
-﻿using BattleCruisers.Buildables;
+﻿using System;
+using System.Collections.Generic;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
@@ -14,12 +17,34 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers.Cache;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 
 namespace BattleCruisers.Utils.Fetchers
 {
     public static class PrefabFactory
     {
+        static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
+        static Stack<IPoolable<Vector3>>[] explosionPool;
+
+        public static void CreateExplosionPool()
+        {
+            Assert.IsTrue(explosionPoolTargets.Length == StaticPrefabKeys.Explosions.AllKeys.Count);
+            explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
+
+            for (int i = 0; i < explosionPoolTargets.Length; i++)
+            {
+                explosionPool[i] = new Stack<IPoolable<Vector3>>();
+                for (int j = 0; j < explosionPoolTargets[i]; j++)
+                    explosionPool[i].Push(CreateExplosion((ExplosionType)i));
+            }
+        }
+
+        public static void ClearPool()
+        {
+            explosionPool = null;
+        }
+
         public static IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return PrefabCache.GetBuilding(buildingKey);
@@ -71,11 +96,28 @@ namespace BattleCruisers.Utils.Fetchers
             return cruiser;
         }
 
-        public static IPoolable<Vector3> CreateExplosion(ExplosionKey explosionKey)
+        public static IPoolable<Vector3> CreateExplosion(ExplosionType explosionType)
         {
-            ExplosionController explosionPrefab = PrefabCache.GetExplosion(explosionKey);
+            ExplosionController explosionPrefab = PrefabCache.GetExplosion(StaticPrefabKeys.Explosions.GetKey(explosionType));
             ExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             return newExplosion.Initialise();
+        }
+
+        public static IPoolable<Vector3> ShowExplosion(ExplosionType explosionType, Vector3 position)
+        {
+            IPoolable<Vector3> explosion;
+            if (explosionPool != null && explosionPool[(int)explosionType].Count > 0)
+            {
+                explosion = explosionPool[(int)explosionType].Pop();
+                explosion.Activate(position);
+                explosion.Deactivated += (object sender, EventArgs e) => { explosionPool[(int)explosionType].Push(explosion); };
+            }
+            else
+            {
+                explosion = CreateExplosion(explosionType);
+                explosion.Activate(position);
+            }
+            return explosion;
         }
 
         public static IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)

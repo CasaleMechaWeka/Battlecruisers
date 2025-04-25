@@ -8,7 +8,6 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.Sound.Pools;
 using BattleCruisers.Utils.DataStrctures;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

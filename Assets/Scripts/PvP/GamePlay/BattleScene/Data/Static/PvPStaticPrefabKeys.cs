@@ -122,8 +122,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPRaptor { get; } = new PvPHullKey("PvPRaptor");
             public static PvPHullKey PvPRockjaw { get; } = new PvPHullKey("PvPRockjaw");
             public static PvPHullKey PvPTrident { get; } = new PvPHullKey("PvPTrident");
-            // public static PvPHullKey PvPManOfWarBoss { get; } = new PvPHullKey("PvPManOfWarBoss");
-            // public static PvPHullKey PvPHuntressBoss { get; } = new PvPHullKey("PvPHuntressBoss");
             public static PvPHullKey PvPTasDevil { get; } = new PvPHullKey("PvPTasDevil");
             public static PvPHullKey PvPYeti { get; } = new PvPHullKey("PvPYeti");
             public static PvPHullKey PvPRickshaw { get; } = new PvPHullKey("PvPRickshaw");
@@ -137,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident, /*PvPManOfWarBoss, PvPHuntressBoss,*/ 
+                PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident,
                 PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith
             });
         }
@@ -170,6 +168,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPRailSlugImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion,
                 PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionMF, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500, PvPExplosionFiveShellCluster
             });
+
+            public static IPrefabKey GetKey(PvPExplosionType explosionType)
+            {
+                return AllKeys[(int)explosionType];
+            }
         }
 
         public static class PvPProjectiles
@@ -279,5 +282,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 PvPGrapheneBarrierOutline, PvPCannonOutline, PvPBlastVLSOutline, PvPFirecrackerVLSOutline
             });
         }
+    }
+
+    public enum PvPExplosionType
+    {
+        PvPBulletImpact = 0,
+        PvPHighCalibreBulletImpact = 1,
+        PvPTinyBulletImpact = 2,
+        PvPNovaShellImpact = 3,
+        PvPRocketShellImpact = 4,
+        PvPBombExplosion = 5,
+        PvPFlakExplosion = 6,
+        PvPExplosion75 = 7,
+        PvPExplosion100 = 8,
+        PvPExplosionMF = 9,
+        PvPRailSlugImpact = 10,
+        PvPExplosionFirecracker = 11,
+        PvPExplosion150 = 12,
+        PvPExplosion500 = 13,
+        PvPExplosionFiveShellCluster = 14
     }
 }

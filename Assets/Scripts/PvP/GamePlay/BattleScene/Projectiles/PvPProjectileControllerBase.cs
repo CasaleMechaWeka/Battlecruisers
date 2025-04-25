@@ -1,7 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
@@ -18,6 +16,8 @@ using UnityEngine.Assertions;
 using Unity.Netcode.Components;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
         private AudioClipWrapper _impactSound;
-        private Pool<IPoolable<Vector3>, Vector3> _explosionPool;
+        public PvPExplosionType explosionType;
 
         protected bool _isActiveAndAlive;
         protected virtual bool needToTeleport { get => false; }
@@ -92,9 +92,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
                 Assert.IsNotNull(_rigidBody);
 
-                IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
-                Assert.IsNotNull(explosionPoolChooser);
-                _explosionPool = explosionPoolChooser.ChoosePool(PvPFactoryProvider.PoolProviders.ExplosionPoolProvider);
                 _isActiveAndAlive = false;
                 OnSetPosition_Visible(Position, false);
                 gameObject.SetActive(false);
@@ -219,9 +216,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected void ShowExplosion()
         {
-            if (_explosionPool == null)
-                _explosionPool = GetComponent<IExplosionPoolChooser>().ChoosePool(PvPFactoryProvider.PoolProviders.ExplosionPoolProvider);
-            _explosionPool.GetItem(transform.position);
+            PvPPrefabFactory.ShowExplosion(explosionType, transform.position);
             OnPlayExplosionSound(SoundType.Explosions, _impactSound.AudioClip.name, transform.position);
 
             //Debug.Log("[PvPProjectileControllerBase] Showing explosion at position: " + transform.position + " with sound: " + (_impactSound != null && _impactSound.AudioClip != null ? _impactSound.AudioClip.name : "null"));

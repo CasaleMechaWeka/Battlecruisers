@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Effects.Deaths.Pools;
-using BattleCruisers.Effects.Explosions.Pools;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.UI.BattleScene.Manager;
 
@@ -8,9 +7,6 @@ namespace BattleCruisers.Utils.Factories
 {
     public class PoolProviders
     {
-        private ExplosionPoolProvider _explosionPoolProvider;
-        public IExplosionPoolProvider ExplosionPoolProvider => _explosionPoolProvider;
-
         private ShipDeathPoolProvider _shipDeathPoolProvider;
         public IShipDeathPoolProvider ShipDeathPoolProvider => _shipDeathPoolProvider;
 
@@ -26,7 +22,6 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(uiManager);
 
-            _explosionPoolProvider = new ExplosionPoolProvider();
             _shipDeathPoolProvider = new ShipDeathPoolProvider();
             _projectilePoolProvider = new ProjectilePoolProvider();
             _unitPoolProvider = new UnitPoolProvider(uiManager);

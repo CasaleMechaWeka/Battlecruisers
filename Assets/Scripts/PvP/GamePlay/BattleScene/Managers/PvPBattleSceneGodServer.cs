@@ -17,10 +17,8 @@ using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Buildables;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Scenes.BattleScene;
-using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -90,6 +88,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             Assert.IsNotNull(components);
             components.Initialise();
             PvPFactoryProvider.Setup(components);
+            if (NetworkManager.Singleton.IsHost)
+                PvPPrefabFactory.CreateExplosionPool();
 
             if (m_NetcodeHooks)
             {

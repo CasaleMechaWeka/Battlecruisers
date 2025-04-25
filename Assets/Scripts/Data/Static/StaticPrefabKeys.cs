@@ -422,6 +422,11 @@ namespace BattleCruisers.Data.Static
                 BombExplosion, FlakExplosion, Explosion75, Explosion100, ExplosionFirecracker,
                 Explosion150, Explosion500, ExplosionMF, ExplosionFiveShellCluster
             });
+
+            public static IPrefabKey GetKey(ExplosionType explosionType)
+            {
+                return AllKeys[(int)explosionType];
+            }
         }
 
         public static class Projectiles
@@ -474,5 +479,24 @@ namespace BattleCruisers.Data.Static
         }
 
         public static IPrefabKey AudioSource { get; } = new GenericKey("AudioSource", "UI/Sound");
+    }
+
+    public enum ExplosionType
+    {
+        BulletImpact = 0,
+        HighCalibreBulletImpact = 1,
+        TinyBulletImpact = 2,
+        RailSlugImpact = 3,
+        NovaShellImpact = 4,
+        RocketShellImpact = 5,
+        BombExplosion = 6,
+        FlakExplosion = 7,
+        Explosion75 = 8,
+        Explosion100 = 9,
+        ExplosionFirecracker = 10,
+        Explosion150 = 11,
+        Explosion500 = 12,
+        ExplosionMF = 13,
+        ExplosionFiveShellCluster = 14
     }
 }

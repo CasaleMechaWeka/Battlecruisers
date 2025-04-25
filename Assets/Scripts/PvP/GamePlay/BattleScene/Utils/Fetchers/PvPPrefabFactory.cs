@@ -21,11 +21,34 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using System;
 using Object = UnityEngine.Object;
 using BattleCruisers.Effects.Drones;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
     public static class PvPPrefabFactory
     {
+        static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
+        static Stack<IPoolable<Vector3>>[] explosionPool;
+
+        public static void CreateExplosionPool()
+        {
+            Assert.IsTrue(explosionPoolTargets.Length == PvPStaticPrefabKeys.PvPExplosions.AllKeys.Count);
+            explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
+            for (int i = 0; i < explosionPoolTargets.Length; i++)
+            {
+                explosionPool[i] = new Stack<IPoolable<Vector3>>();
+                for (int j = 0; j < explosionPoolTargets[i]; j++)
+                    explosionPool[i].Push(CreateExplosion((PvPExplosionType)i));
+            }
+        }
+        public static void ClearPool()
+        {
+            explosionPool = null;
+        }
+
+
         public static IPvPBuildableWrapper<IPvPBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
         {
             return PvPPrefabCache.GetBuilding(buildingKey);
@@ -119,12 +142,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return cruiser;
         }
 
-        public static IPoolable<Vector3> CreateExplosion(PvPExplosionKey explosionKey)
+        public static IPoolable<Vector3> CreateExplosion(PvPExplosionType explosionType)
         {
-            PvPExplosionController explosionPrefab = PvPPrefabCache.GetExplosion(explosionKey);
+            PvPExplosionController explosionPrefab = PvPPrefabCache.GetExplosion(PvPStaticPrefabKeys.PvPExplosions.GetKey(explosionType));
             PvPExplosionController newExplosion = Object.Instantiate(explosionPrefab);
             newExplosion.GetComponent<NetworkObject>().Spawn();
             return newExplosion.Initialise();
+        }
+
+        public static IPoolable<Vector3> ShowExplosion(PvPExplosionType explosionType, Vector3 position)
+        {
+            IPoolable<Vector3> explosion;
+            if (explosionPool != null && explosionPool[(int)explosionType].Count > 0)
+            {
+                explosion = explosionPool[(int)explosionType].Pop();
+                explosion.Activate(position);
+                explosion.Deactivated += (object sender, EventArgs e) => { explosionPool[(int)explosionType].Push(explosion); };
+            }
+            else
+            {
+                explosion = CreateExplosion(explosionType);
+                explosion.Activate(position);
+            }
+            return explosion;
         }
 
         public static IPoolable<Vector3> CreateShipDeath(PvPShipDeathKey shipDeathKey)
@@ -161,7 +201,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
             await handle.Task;
             if (handle.Status != AsyncOperationStatus.Succeeded
-    || handle.Result == null)
+                || handle.Result == null)
             {
                 throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
             }

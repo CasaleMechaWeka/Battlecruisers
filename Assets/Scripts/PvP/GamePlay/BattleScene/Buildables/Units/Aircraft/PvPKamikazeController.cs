@@ -1,9 +1,9 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Explosions.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.DamageAppliers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -17,7 +17,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPUnit _parentAircraft;
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
-        private IExplosionPoolProvider _explosionPoolProvider;
         private ITarget _initialTarget;
 
         // Have this to defer damaging the target until the next FixedUpdate(), because
@@ -47,8 +46,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             kamikazeDamageStats = new DamageStats(remainingPotentialDamage, parentAircraft.Size.x);
             _damageApplier = new PvPAreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
-            _explosionPoolProvider = PvPFactoryProvider.PoolProviders.ExplosionPoolProvider;
-
             _initialTarget.Destroyed += Target_Destroyed;
         }
 
@@ -56,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!_parentAircraft.IsDestroyed)
             {
-                _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
+                PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPFlakExplosion, transform.position);
                 CleanUp();
             }
         }
@@ -89,7 +86,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _damageApplier = new PvPAreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
-                _explosionPoolProvider.FlakExplosionsPool.GetItem(transform.position);
+                PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPFlakExplosion, transform.position);
 
                 float damageDealt = prevTargetHP - _targetToDamage.Health;
                 _parentAircraft.TakeDamage(damageDealt / KAMIKAZE_DAMAGE_MULTIPLIER, _parentAircraft);

@@ -1,8 +1,9 @@
 ﻿using BattleCruisers.AI.Tasks;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.BattleScene;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -61,7 +62,7 @@ namespace BattleCruisers.Utils.Debugging
         public void ShowNuke()
         {
             Vector2 nukePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(nukePoint);
+            PrefabFactory.ShowExplosion(ExplosionType.Explosion500, nukePoint);
         }
 
         public void TogglePause()

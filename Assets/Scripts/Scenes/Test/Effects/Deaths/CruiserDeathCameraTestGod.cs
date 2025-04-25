@@ -1,10 +1,11 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Sound.Players;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using NSubstitute;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,8 +55,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         public void PlayerNuke()
         {
-            FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(playerCruiser.Position);
-
+            PrefabFactory.ShowExplosion(ExplosionType.Explosion500, playerCruiser.Position);
         }
 
         public void PlayerCruiser()
@@ -70,7 +70,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
         public void AINuke()
         {
-            FactoryProvider.PoolProviders.ExplosionPoolProvider.HugeExplosionsPool.GetItem(aiCruiser.Position);
+            PrefabFactory.ShowExplosion(ExplosionType.Explosion500, aiCruiser.Position);
         }
 
         public void AICruiser()

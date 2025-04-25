@@ -1,5 +1,5 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Effects.Explosions.Pools;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -9,7 +9,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
-using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier _singleDamageApplier;
         private ITarget _parent;
         private AudioClipWrapper _impactSound;
-        private Pool<IPoolable<Vector3>, Vector3> _explosionPool;
+        public ExplosionType explosionType;
 
         private bool _isActiveAndAlive;
 
@@ -76,10 +76,6 @@ namespace BattleCruisers.Projectiles
 
             _rigidBody = GetComponent<Rigidbody2D>();
             Assert.IsNotNull(_rigidBody);
-
-            IExplosionPoolChooser explosionPoolChooser = GetComponent<IExplosionPoolChooser>();
-            Assert.IsNotNull(explosionPoolChooser);
-            _explosionPool = explosionPoolChooser.ChoosePool(FactoryProvider.PoolProviders.ExplosionPoolProvider);
 
             _isActiveAndAlive = false;
             gameObject.SetActive(false);
@@ -180,7 +176,7 @@ namespace BattleCruisers.Projectiles
 
         protected void ShowExplosion()
         {
-            _explosionPool.GetItem(transform.position);
+            PrefabFactory.ShowExplosion(explosionType, transform.position);
             SoundPlayer.PlaySound(_impactSound.AudioClip, transform.position);
         }
 
