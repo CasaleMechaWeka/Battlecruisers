@@ -110,12 +110,12 @@ namespace BattleCruisers.Utils.Fetchers
             {
                 explosion = explosionPool[(int)explosionType].Pop();
                 explosion.Activate(position);
-                explosion.Deactivated += (object sender, EventArgs e) => { explosionPool[(int)explosionType].Push(explosion); };
             }
             else
             {
                 explosion = CreateExplosion(explosionType);
                 explosion.Activate(position);
+                explosion.Deactivated += (object sender, EventArgs e) => { Debug.Log("PUSH"); explosionPool[(int)explosionType].Push(explosion); };
             }
             return explosion;
         }
