@@ -2,7 +2,7 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Effects.Deaths.Pools;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetDetectors;
@@ -11,13 +11,12 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
@@ -37,7 +36,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
-        private Pool<IPoolable<Vector3>, Vector3> _deathPool;
+        public ShipDeathType deathType;
 
         private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
@@ -115,10 +114,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         public override void Initialise(IUIManager uiManager)
         {
             base.Initialise(uiManager);
-
-            IShipDeathPoolChooser shipDeathPoolChooser = GetComponent<IShipDeathPoolChooser>();
-            Assert.IsNotNull(shipDeathPoolChooser);
-            _deathPool = shipDeathPoolChooser.ChoosePool(FactoryProvider.PoolProviders.ShipDeathPoolProvider);
         }
 
         protected override void OnBuildableCompleted()
@@ -225,7 +220,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void ShowDeathEffects()
         {
-            _deathPool.GetItem(Position, Faction);
+            PrefabFactory.ShowShipDeath(deathType, Position, Faction);
             Deactivate();
         }
 

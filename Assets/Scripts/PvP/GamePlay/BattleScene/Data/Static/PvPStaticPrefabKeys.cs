@@ -223,6 +223,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             {
                 PvPAttackBoat, PvPFrigate, PvPDestroyer, PvPArchon, PvPAttackRIB, PvPSiegeDestroyer, PvPGlassCannoneer, PvPGunBoat, PvPTurtle
             });
+
+            public static IPrefabKey GetKey(PvPShipDeathType deathType)
+            {
+                return AllKeys[(int)deathType];
+            }
         }
 
         public static IPrefabKey AudioSource { get; } = new PvPGenericKey("PvPAudioSource", "UI/Sound");
@@ -282,6 +287,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 PvPGrapheneBarrierOutline, PvPCannonOutline, PvPBlastVLSOutline, PvPFirecrackerVLSOutline
             });
         }
+    }
+
+    public enum PvPShipDeathType
+    {
+        PvPAttackBoat = 0,
+        PvPAttackRIB = 1,
+        PvPFrigate = 2,
+        PvPDestroyer = 3,
+        PvPSiegeDestroyer = 4,
+        PvPArchon = 5,
+        PvPGlassCannoneer = 6,
+        PvPGunBoat = 7,
+        PvPTurtle = 8
     }
 
     public enum PvPExplosionType

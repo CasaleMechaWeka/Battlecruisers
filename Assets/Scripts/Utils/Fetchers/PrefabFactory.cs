@@ -120,11 +120,18 @@ namespace BattleCruisers.Utils.Fetchers
             return explosion;
         }
 
-        public static IPoolable<Vector3> CreateShipDeath(ShipDeathKey shipDeathKey)
+        public static IPoolable<Vector3> CreateShipDeath(ShipDeathType deathType)
         {
-            ShipDeathInitialiser shipDeathPrefab = PrefabCache.GetShipDeath(shipDeathKey);
+            ShipDeathInitialiser shipDeathPrefab = PrefabCache.GetShipDeath(StaticPrefabKeys.ShipDeaths.GetKey(deathType));
             ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             return newShipDeath.CreateShipDeath();
+        }
+
+        public static IPoolable<Vector3> ShowShipDeath(ShipDeathType deathType, Vector3 position, Faction faction)
+        {
+            IPoolable<Vector3> shipDeath = CreateShipDeath(deathType);
+            shipDeath.Activate(position, faction);
+            return shipDeath;
         }
 
         public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey)

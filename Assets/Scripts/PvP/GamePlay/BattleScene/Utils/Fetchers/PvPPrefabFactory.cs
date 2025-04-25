@@ -24,6 +24,7 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
+using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -167,12 +168,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return explosion;
         }
 
-        public static IPoolable<Vector3> CreateShipDeath(PvPShipDeathKey shipDeathKey)
+        public static IPoolable<Vector3> CreateShipDeath(PvPShipDeathType deathType)
         {
-            PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(shipDeathKey);
+            PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(PvPStaticPrefabKeys.PvPShipDeaths.GetKey(deathType));
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             newShipDeath.GetComponent<NetworkObject>().Spawn();
             return newShipDeath.CreateShipDeath();
+        }
+
+        public static IPoolable<Vector3> ShowShipDeath(PvPShipDeathType deathType, Vector3 position, Faction faction)
+        {
+            IPoolable<Vector3> shipDeath = CreateShipDeath(deathType);
+            shipDeath.Activate(position, faction);
+            return shipDeath;
         }
 
         public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey)

@@ -476,9 +476,27 @@ namespace BattleCruisers.Data.Static
             {
                 AttackBoat, Frigate, Destroyer, SiegeDestroyer, Archon, AttackRIB, GlassCannoneer, GunBoat, Turtle
             });
+
+            public static IPrefabKey GetKey(ShipDeathType deathType)
+            {
+                return AllKeys[(int)deathType];
+            }
         }
 
         public static IPrefabKey AudioSource { get; } = new GenericKey("AudioSource", "UI/Sound");
+    }
+
+    public enum ShipDeathType
+    {
+        AttackBoat = 0,
+        AttackRIB = 1,
+        Frigate = 2,
+        Destroyer = 3,
+        SiegeDestroyer = 4,
+        Archon = 5,
+        GlassCannoneer = 6,
+        GunBoat = 7,
+        Turtle = 8
     }
 
     public enum ExplosionType

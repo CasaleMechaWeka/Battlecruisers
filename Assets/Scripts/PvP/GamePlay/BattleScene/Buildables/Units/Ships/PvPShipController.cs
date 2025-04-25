@@ -2,20 +2,16 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Effects.Deaths.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProcessors;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets.TargetDetectors;
-using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.Helpers;
@@ -24,6 +20,8 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -43,8 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
-        private Pool<IPoolable<Vector3>, Vector3> _deathPool;
-
+        public PvPShipDeathType deathType;
         private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
@@ -121,10 +118,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void Initialise()
         {
             base.Initialise();
-
-            IShipDeathPoolChooser shipDeathPoolChooser = GetComponent<IShipDeathPoolChooser>();
-            Assert.IsNotNull(shipDeathPoolChooser);
-            _deathPool = shipDeathPoolChooser.ChoosePool(PvPFactoryProvider.PoolProviders.ShipDeathPoolProvider);
         }
 
         protected override void OnBuildableCompleted()
@@ -237,7 +230,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (IsHost)
             {
-                _deathPool.GetItem(Position, Faction);
+                PvPPrefabFactory.ShowShipDeath(deathType, Position, Faction);
                 Deactivate();
             }
         }
