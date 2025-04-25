@@ -14,6 +14,7 @@ using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
@@ -177,6 +178,10 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
             int backgroundLevelNum = RandomGenerator.Range(1, StaticData.NUM_OF_LEVELS);
 
             DropdownResult<HullKey> playerCruiserResult = GetSelectedCruiser(playerCruiserDropdown);
+
+            if (playerCruiserResult.Result != DataProvider.GameModel.PlayerLoadout.Hull)
+                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
+
             DropdownResult<HullKey> aiCruiserResult = GetSelectedCruiser(aiCruiserDropdown);
             DropdownResult<StrategyType> strategyResult = GetSelectedStrategy();
 
@@ -210,8 +215,6 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
                 Assert.IsTrue(adjustedIndex < _playableHulls.Count);
                 cruiserKey = _playableHulls[adjustedIndex];
             }
-            if (cruiserKey != DataProvider.GameModel.PlayerLoadout.Hull)
-                DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
 
             return new DropdownResult<HullKey>(wasRandom, cruiserKey);
         }

@@ -205,6 +205,7 @@ namespace BattleCruisers.Cruisers
             {
                 string logName = gameObject.name.ToUpper().Replace("(CLONE)", "");
                 int id_bodykit = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
+
                 if (id_bodykit != -1)
                 {
                     Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
