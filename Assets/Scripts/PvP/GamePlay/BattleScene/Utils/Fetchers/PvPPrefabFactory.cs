@@ -32,9 +32,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
+        static Stack<IDroneController> dronePool;
 
-        public static void CreateExplosionPool()
+        public static void CreatePools()
         {
+            dronePool = new Stack<IDroneController>();
             Assert.IsTrue(explosionPoolTargets.Length == PvPStaticPrefabKeys.PvPExplosions.AllKeys.Count);
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
             for (int i = 0; i < explosionPoolTargets.Length; i++)
@@ -46,6 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
         public static void ClearPool()
         {
+            dronePool = null;
             explosionPool = null;
         }
 
@@ -201,6 +204,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             newDrone.GetComponent<NetworkObject>().Spawn();
             newDrone.StaticInitialise();
             return newDrone;
+        }
+
+        public static IDroneController GetDrone()
+        {
+            IDroneController drone;
+            if (dronePool != null && dronePool.Count > 0)
+            {
+                drone = dronePool.Pop();
+            }
+            else
+            {
+                drone = CreateDrone();
+                drone.Deactivated += (object sender, EventArgs e) => { dronePool.Push(drone); };
+            }
+            return drone;
         }
 
         public static async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)

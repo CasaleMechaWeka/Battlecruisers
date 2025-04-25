@@ -10,7 +10,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
         public IDroneController CreateItem()
         {
-            IDroneController newDrone = PrefabFactory.CreateDrone();
+            IDroneController newDrone = PrefabFactory.GetDrone();
             DroneCreated?.Invoke(this, new DroneCreatedEventArgs(newDrone));
             return newDrone;
         }

@@ -141,7 +141,7 @@ namespace BattleCruisers.Scenes.BattleScene
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
             FactoryProvider.Initialise(components, DataProvider.SettingsManager, uiManager);
-            PrefabFactory.CreateExplosionPool();
+            PrefabFactory.CreatePools();
             ICruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();

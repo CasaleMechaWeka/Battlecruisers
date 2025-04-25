@@ -89,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             components.Initialise();
             PvPFactoryProvider.Setup(components);
             if (NetworkManager.Singleton.IsHost)
-                PvPPrefabFactory.CreateExplosionPool();
+                PvPPrefabFactory.CreatePools();
 
             if (m_NetcodeHooks)
             {

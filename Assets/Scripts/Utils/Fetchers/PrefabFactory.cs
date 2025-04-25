@@ -26,9 +26,12 @@ namespace BattleCruisers.Utils.Fetchers
     {
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
+        static Stack<IDroneController> dronePool;
 
-        public static void CreateExplosionPool()
+        public static void CreatePools()
         {
+            dronePool = new Stack<IDroneController>();
+
             Assert.IsTrue(explosionPoolTargets.Length == StaticPrefabKeys.Explosions.AllKeys.Count);
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
 
@@ -43,6 +46,7 @@ namespace BattleCruisers.Utils.Fetchers
         public static void ClearPool()
         {
             explosionPool = null;
+            dronePool = null;
         }
 
         public static IBuildableWrapper<IBuilding> GetBuildingWrapperPrefab(IPrefabKey buildingKey)
@@ -115,7 +119,7 @@ namespace BattleCruisers.Utils.Fetchers
             {
                 explosion = CreateExplosion(explosionType);
                 explosion.Activate(position);
-                explosion.Deactivated += (object sender, EventArgs e) => { Debug.Log("PUSH"); explosionPool[(int)explosionType].Push(explosion); };
+                explosion.Deactivated += (object sender, EventArgs e) => { explosionPool[(int)explosionType].Push(explosion); };
             }
             return explosion;
         }
@@ -153,6 +157,20 @@ namespace BattleCruisers.Utils.Fetchers
             return newDrone;
         }
 
+        public static IDroneController GetDrone()
+        {
+            IDroneController drone;
+            if (dronePool != null && dronePool.Count > 0)
+            {
+                drone = dronePool.Pop();
+            }
+            else
+            {
+                drone = CreateDrone();
+                drone.Deactivated += (object sender, EventArgs e) => { dronePool.Push(drone); };
+            }
+            return drone;
+        }
 
         public static CaptainExo GetCaptainExo(IPrefabKey captainExoKey)
         {
