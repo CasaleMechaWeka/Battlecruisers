@@ -9,7 +9,7 @@ namespace BattleCruisers.AI.Tasks.States
         {
         }
 
-        public override IState Start()
+        public override BaseState Start()
         {
             if (_task.Start())
             {
@@ -21,12 +21,12 @@ namespace BattleCruisers.AI.Tasks.States
             }
         }
 
-        public override IState Stop()
+        public override BaseState Stop()
         {
             return this;
         }
 
-        public override IState OnCompleted()
+        public override BaseState OnCompleted()
         {
             throw new Exception("Should never complete from the InitialState :(");
         }

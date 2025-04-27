@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.Tasks
     public class PrioritisedTask : IPrioritisedTask
     {
         private readonly ITask _task;
-        private IState _currentState;
+        private BaseState _currentState;
 
         public TaskPriority Priority { get; }
 

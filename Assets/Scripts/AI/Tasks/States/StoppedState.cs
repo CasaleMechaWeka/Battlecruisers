@@ -2,21 +2,21 @@
 {
     public class StoppedState : BaseState
     {
-        private readonly IState _inProgressState;
+        private readonly BaseState _inProgressState;
 
-        public StoppedState(ITask task, PrioritisedTask eventEmitter, IState inProgressState)
+        public StoppedState(ITask task, PrioritisedTask eventEmitter, BaseState inProgressState)
             : base(task, eventEmitter)
         {
             _inProgressState = inProgressState;
         }
 
-        public override IState Start()
+        public override BaseState Start()
         {
             _task.Resume();
             return _inProgressState;
         }
 
-        public override IState Stop()
+        public override BaseState Stop()
         {
             return this;
         }

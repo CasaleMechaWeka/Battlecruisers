@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.AI.Tasks.States
 {
-	public abstract class BaseState : IState
+	public abstract class BaseState
 	{
 		protected readonly ITask _task;
 		protected readonly PrioritisedTask _eventEmitter;
@@ -11,11 +11,11 @@
 			_eventEmitter = eventEmitter;
 		}
 
-		public abstract IState Start();
+		public abstract BaseState Start();
 
-		public abstract IState Stop();
+		public abstract BaseState Stop();
 
-		public virtual IState OnCompleted()
+		public virtual BaseState OnCompleted()
 		{
 			return new CompletedState(_task, _eventEmitter);
 		}

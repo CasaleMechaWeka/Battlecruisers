@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
 {
     public class CompletedStateTests : StateTestsBase
     {
-        private IState _state;
+        private BaseState _state;
 
         [SetUp]
         public override void TestSetup()
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
         [Test]
         public void Start_EmitsEvent_StaysInCompletedState()
         {
-            IState nextState = _state.Start();
+            BaseState nextState = _state.Start();
 
             Assert.AreSame(_state, nextState);
             _eventEmitter.Received().EmitCompletedEvent();
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
         [Test]
         public void Stop_StaysInCompletedState()
         {
-            IState nextState = _state.Stop();
+            BaseState nextState = _state.Stop();
             Assert.AreSame(_state, nextState);
         }
 

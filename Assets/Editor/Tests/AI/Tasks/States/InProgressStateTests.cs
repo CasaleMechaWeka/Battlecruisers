@@ -6,7 +6,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
 {
     public class InProgressStateTests : StateTestsBase
     {
-        private IState _state;
+        private BaseState _state;
 
         [SetUp]
         public override void TestSetup()
@@ -19,14 +19,14 @@ namespace BattleCruisers.Tests.AI.Tasks.States
         [Test]
         public void Start_StaysInInProgressState()
         {
-            IState nextState = _state.Start();
+            BaseState nextState = _state.Start();
             Assert.AreSame(_state, nextState);
         }
 
         [Test]
         public void Stop_StopsTask_GoesToStoppedState()
         {
-            IState nextState = _state.Stop();
+            BaseState nextState = _state.Stop();
 
             _task.Received().Stop();
             Assert.IsInstanceOf<StoppedState>(nextState);
@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.AI.Tasks.States
         [Test]
         public void OnCompleted_GoesToCompletedState()
         {
-            IState nextState = _state.OnCompleted();
+            BaseState nextState = _state.OnCompleted();
             Assert.IsInstanceOf<CompletedState>(nextState);
         }
     }

@@ -2,8 +2,8 @@
 {
     public class InProgressState : BaseState
     {
-        private IState _stoppedState;
-        private IState StoppedState
+        private BaseState _stoppedState;
+        private BaseState StoppedState
         {
             get
             {
@@ -21,12 +21,12 @@
         {
         }
 
-        public override IState Start()
+        public override BaseState Start()
         {
             return this;
         }
 
-        public override IState Stop()
+        public override BaseState Stop()
         {
             _task.Stop();
             return StoppedState;
