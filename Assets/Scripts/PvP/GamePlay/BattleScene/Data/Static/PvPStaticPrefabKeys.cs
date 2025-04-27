@@ -163,10 +163,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPExplosionKey PvPExplosion500 { get; } = new PvPExplosionKey("PvPExplosion5.0");
             public static PvPExplosionKey PvPExplosionFiveShellCluster { get; } = new PvPExplosionKey("PvPExplosionFiveShellCluster");
 
+            // don't change the order!!
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPRailSlugImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion,
-                PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionMF, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500, PvPExplosionFiveShellCluster
+                PvPBulletImpact, PvPHighCalibreBulletImpact, PvPTinyBulletImpact, PvPNovaShellImpact, PvPRocketShellImpact, PvPBombExplosion,
+                PvPFlakExplosion, PvPExplosion75, PvPExplosion100, PvPExplosionMF, PvPRailSlugImpact, PvPExplosionFirecracker, PvPExplosion150, PvPExplosion500, PvPExplosionFiveShellCluster
             });
 
             public static IPrefabKey GetKey(PvPExplosionType explosionType)
