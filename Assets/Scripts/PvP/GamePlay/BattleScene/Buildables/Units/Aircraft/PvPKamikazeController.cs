@@ -78,6 +78,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (_targetToDamage != null
                 && !_parentAircraft.IsDestroyed)
             {
+                if (remainingPotentialDamage <= 0f)
+                    CleanUp();
+
                 float prevTargetHP = _targetToDamage.Health;
                 kamikazeDamageStats = new DamageStats(
                     Mathf.Min(remainingPotentialDamage, _targetToDamage.Health),

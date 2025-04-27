@@ -75,6 +75,9 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             if (_targetToDamage != null
                 && !_parentAircraft.IsDestroyed)
             {
+                if (remainingPotentialDamage <= 0f)
+                    CleanUp();
+
                 float prevTargetHP = _targetToDamage.Health;
                 Debug.Log(_targetToDamage.Health);
 
