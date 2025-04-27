@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Aircraft
@@ -50,7 +50,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             if (!_parentAircraft.IsDestroyed)
             {
-                PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPFlakExplosion, transform.position);
+                PrefabFactory.ShowExplosion(ExplosionType.FlakExplosion, transform.position);
                 CleanUp();
             }
         }
@@ -85,7 +85,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _damageApplier = new AreaOfEffectDamageApplier(kamikazeDamageStats, new FactionTargetFilter(_initialTarget.Faction));
 
                 _damageApplier.ApplyDamage(_targetToDamage, _parentAircraft.Position, damageSource: _parentAircraft);
-                PvPPrefabFactory.ShowExplosion(PvPExplosionType.PvPFlakExplosion, transform.position);
+                PrefabFactory.ShowExplosion(ExplosionType.FlakExplosion, transform.position);
 
                 float damageDealt = prevTargetHP - _targetToDamage.Health;
                 float f = damageDealt / KAMIKAZE_DAMAGE_MULTIPLIER;
