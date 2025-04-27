@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class MissileSpawner : ProjectileSpawner<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
+    public class MissileSpawner : ProjectileSpawner<MissileController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
     {
         //private void Awake()
         //{
@@ -18,7 +18,7 @@ namespace BattleCruisers.Projectiles.Spawners
         //	}
         //}
 
-        public void SetProjectileStats(IProjectileStats stats)
+        public void SetProjectileStats(ProjectileStats stats)
         {
             _projectileStats = stats;
             Debug.Log($"_projectileStats set to: {_projectileStats}");
@@ -30,33 +30,33 @@ namespace BattleCruisers.Projectiles.Spawners
 
             if (_projectileStats == null)
             {
-            //    Debug.LogError("MissileSpawner: _projectileStats is null");
+                //    Debug.LogError("MissileSpawner: _projectileStats is null");
                 return;
             }
             if (_parent == null)
             {
-            //    Debug.LogError("MissileSpawner: _parent is null.");
+                //    Debug.LogError("MissileSpawner: _parent is null.");
                 return;
             }
             if (_impactSound == null)
             {
-             //   Debug.LogError("MissileSpawner: _impactSound is null.");
+                //   Debug.LogError("MissileSpawner: _impactSound is null.");
                 return;
             }
             if (target == null)
             {
-             //   Debug.LogError("MissileSpawner: target is null.");
+                //   Debug.LogError("MissileSpawner: target is null.");
                 return;
             }
             if (targetFilter == null)
             {
-             //   Debug.LogError("MissileSpawner: targetFilter is null.");
+                //   Debug.LogError("MissileSpawner: targetFilter is null.");
                 return;
             }
 
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            TargetProviderActivationArgs<IProjectileStats> activationArgs
-                = new TargetProviderActivationArgs<IProjectileStats>(
+            TargetProviderActivationArgs<ProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<ProjectileStats>(
                     transform.position,
                     _projectileStats,
                     missileVelocity,

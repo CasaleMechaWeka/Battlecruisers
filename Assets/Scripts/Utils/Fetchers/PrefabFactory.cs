@@ -158,7 +158,7 @@ namespace BattleCruisers.Utils.Fetchers
         public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey)
             where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
             where TActiavtionArgs : ProjectileActivationArgs<TStats>
-            where TStats : IProjectileStats
+            where TStats : ProjectileStats
         {
 
             Prefab prefab = PrefabCache.GetProjectile(prefabKey);

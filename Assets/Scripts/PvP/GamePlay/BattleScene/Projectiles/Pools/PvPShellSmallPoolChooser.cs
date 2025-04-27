@@ -5,18 +5,18 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
-    public class PvPShellSmallPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class PvPShellSmallPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         public bool rocketShell = false;
 
-        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (rocketShell)
             {
                 return projectilePoolProvider.RocketShellPool;
             }
-            
+
             return projectilePoolProvider.ShellsSmallPool;
         }
     }

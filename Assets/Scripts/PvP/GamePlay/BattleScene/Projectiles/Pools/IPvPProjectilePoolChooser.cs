@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public interface IPvPProjectilePoolChooser<TPvPProjectile, TPvPActivationArgs, TPvPStats>
         where TPvPProjectile : PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats>
         where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
-        where TPvPStats : IProjectileStats
+        where TPvPStats : ProjectileStats
     {
         Pool<TPvPProjectile, TPvPActivationArgs> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider);
     }

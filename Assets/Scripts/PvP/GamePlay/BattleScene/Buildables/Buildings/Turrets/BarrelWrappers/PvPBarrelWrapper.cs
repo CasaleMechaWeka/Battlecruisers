@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         // Assumes all barrel projectile stats are the same.
-        private IProjectileStats ProjectileStats
+        private ProjectileStats ProjectileStats
         {
             get
             {
@@ -267,7 +267,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new DummyTargetPositionPredictor();
         }
 
-        protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
+        protected abstract IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats);
 
         protected virtual IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {

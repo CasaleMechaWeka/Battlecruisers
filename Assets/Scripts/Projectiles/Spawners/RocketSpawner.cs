@@ -10,28 +10,28 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class RocketSpawner : ProjectileSpawner<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
-	{
-        private ICruisingProjectileStats _rocketStats;
+    public class RocketSpawner : ProjectileSpawner<RocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>
+    {
+        private CruisingProjectileStats _rocketStats;
 
         public async Task InitialiseAsync(
             IProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            ICruisingProjectileStats rocketStats)
-		{
+            CruisingProjectileStats rocketStats)
+        {
             Assert.IsNotNull(rocketStats);
             _rocketStats = rocketStats;
 
             await base.InitialiseAsync(args, firingSound);
-		}
+        }
 
-		public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
-		{
+        public void SpawnRocket(float angleInDegrees, bool isSourceMirrored, ITarget target, ITargetFilter targetFilter)
+        {
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs
-                = new TargetProviderActivationArgs<ICruisingProjectileStats>(
+            TargetProviderActivationArgs<CruisingProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<CruisingProjectileStats>(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,
@@ -40,6 +40,6 @@ namespace BattleCruisers.Projectiles.Spawners
                     _impactSound,
                     target);
             base.SpawnProjectile(activationArgs);
-		}
-	}
+        }
+    }
 }

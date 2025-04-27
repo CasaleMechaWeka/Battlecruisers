@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -17,20 +16,20 @@ using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
+using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Offensive
 {
     public class PvPNukeLauncherController : PvPBuilding
     {
         private PvPNukeSpinner _spinner;
-        private INukeStats _nukeStats;
+        private CruisingProjectileStats _nukeStats;
         private PvPNukeController _launchedNuke;
 
         public PvPSiloHalfController leftSiloHalf, rightSiloHalf;
@@ -67,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_spinner);
             _spinner.StaticInitialise();
 
-            _nukeStats = GetComponent<PvPNukeProjectileStats>();
+            _nukeStats = GetComponent<CruisingProjectileStats>();
             Assert.IsNotNull(_nukeStats);
             AddAttackCapability(TargetType.Cruiser);
             AddDamageStats(new PvPDamageCapability(_nukeStats.Damage, AttackCapabilities));
@@ -130,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise();
             _launchedNuke.Activate(
-                new TargetProviderActivationArgs<INukeStats>(
+                new TargetProviderActivationArgs<CruisingProjectileStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,
                     _nukeStats,
                     Vector2.zero,

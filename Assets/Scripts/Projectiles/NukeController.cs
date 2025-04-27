@@ -11,16 +11,16 @@ using UnityEngine;
 namespace BattleCruisers.Projectiles
 {
     public class NukeController :
-        ProjectileWithTrail<TargetProviderActivationArgs<INukeStats>, INukeStats>,
+        ProjectileWithTrail<TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>,
         ITargetProvider
     {
-        private INukeStats _nukeStats;
+        private CruisingProjectileStats _nukeStats;
         private IFlightPointsProvider _flightPointsProvider;
         public SpriteRenderer nukeSprite; // Reference to the nuke's sprite
 
         public ITarget Target { get; private set; }
 
-        public override void Activate(TargetProviderActivationArgs<INukeStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<CruisingProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 

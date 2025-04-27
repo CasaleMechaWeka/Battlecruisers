@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Projectiles.Stats
 {
     // Extends MonoBehaviour so can be set in Unity inspector
-    public class ProjectileStats : MonoBehaviour, IProjectileStats
+    public class ProjectileStats : MonoBehaviour, IDamageStats, IProjectileFlightStats
     {
         public float initialVelocityMultiplier;
 

@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
     public class PvPRocketController :
-        PvPProjectileWithTrail<TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>,
+        PvPProjectileWithTrail<TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>,
         ITargetProvider
     {
         private PvPRocketTarget _rocketTarget;
@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public override void Activate(TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<CruisingProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 

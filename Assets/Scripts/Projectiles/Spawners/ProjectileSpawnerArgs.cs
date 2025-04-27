@@ -10,14 +10,14 @@ namespace BattleCruisers.Projectiles.Spawners
     public class ProjectileSpawnerArgs : IProjectileSpawnerArgs
     {
         public ITarget Parent { get; }
-        public IProjectileStats ProjectileStats { get; }
+        public ProjectileStats ProjectileStats { get; }
         public int BurstSize { get; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public ICruiser EnempCruiser { get; }
 
         public ProjectileSpawnerArgs(
             BarrelControllerArgs barrelControllerArgs,
-            IProjectileStats projectileStats,
+            ProjectileStats projectileStats,
             int burstSize)
             : this(
                   barrelControllerArgs.Parent,
@@ -29,7 +29,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public ProjectileSpawnerArgs(
             ITarget parent,
-            IProjectileStats projectileStats,
+            ProjectileStats projectileStats,
             int burstSize,
             CruiserSpecificFactories cruiserSpecificFactories,
             ICruiser enemyCruiser)

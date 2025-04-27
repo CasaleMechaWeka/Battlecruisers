@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected abstract float DesiredAngleInDegrees { get; }
 
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new StaticAngleCalculator(DesiredAngleInDegrees);
         }

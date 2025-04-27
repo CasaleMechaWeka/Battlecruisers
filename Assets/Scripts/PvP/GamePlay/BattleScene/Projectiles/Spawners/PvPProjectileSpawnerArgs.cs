@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPProjectileSpawnerArgs : IPvPProjectileSpawnerArgs
     {
         public ITarget Parent { get; }
-        public IProjectileStats ProjectileStats { get; }
+        public ProjectileStats ProjectileStats { get; }
         public int BurstSize { get; }
         public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPCruiser EnempCruiser { get; }
 
         public PvPProjectileSpawnerArgs(
             IPvPBarrelControllerArgs barrelControllerArgs,
-            IProjectileStats projectileStats,
+            ProjectileStats projectileStats,
             int burstSize)
             : this(
                   barrelControllerArgs.Parent,
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public PvPProjectileSpawnerArgs(
             ITarget parent,
-            IProjectileStats projectileStats,
+            ProjectileStats projectileStats,
             int burstSize,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPCruiser enemyCruiser)

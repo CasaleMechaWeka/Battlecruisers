@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
     public class SmartMissileBarrelController : BarrelController
     {
-        private ISmartProjectileStats _smartProjectileStats;
+        private SmartProjectileStats _smartProjectileStats;
         private SmartMissileSpawner _missileSpawner;
         private ITargetFilter _targetFilter;
 
@@ -29,9 +29,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             Assert.IsNotNull(_missileSpawner);
         }
 
-        protected override IProjectileStats GetProjectileStats()
+        protected override ProjectileStats GetProjectileStats()
         {
-            _smartProjectileStats = GetComponent<ISmartProjectileStats>();
+            _smartProjectileStats = GetComponent<SmartProjectileStats>();
             Assert.IsNotNull(_smartProjectileStats);
             return _smartProjectileStats;
         }

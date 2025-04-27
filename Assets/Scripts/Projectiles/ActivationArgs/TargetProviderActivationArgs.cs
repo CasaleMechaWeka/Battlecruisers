@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
-    public class TargetProviderActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : IProjectileStats
+    public class TargetProviderActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : ProjectileStats
     {
         public ITarget Target { get; }
 

@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSmartMissileBarrelController : PvPBarrelController
     {
-        private ISmartProjectileStats _smartProjectileStats;
+        private SmartProjectileStats _smartProjectileStats;
         private PvPSmartMissileSpawner _missileSpawner;
         private ITargetFilter _targetFilter;
 
@@ -25,9 +25,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_missileSpawner);
         }
 
-        protected override IProjectileStats GetProjectileStats()
+        protected override ProjectileStats GetProjectileStats()
         {
-            _smartProjectileStats = GetComponent<ISmartProjectileStats>();
+            _smartProjectileStats = GetComponent<SmartProjectileStats>();
             Assert.IsNotNull(_smartProjectileStats);
             return _smartProjectileStats;
         }

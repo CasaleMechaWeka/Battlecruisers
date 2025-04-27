@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test
             }
         }
 
-        protected abstract IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats);
+        protected abstract IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats);
 
         protected virtual ITarget CreateTarget(Vector2 targetPosition)
         {

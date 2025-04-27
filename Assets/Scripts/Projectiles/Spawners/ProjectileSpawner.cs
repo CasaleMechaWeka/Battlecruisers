@@ -19,13 +19,13 @@ namespace BattleCruisers.Projectiles.Spawners
     public abstract class ProjectileSpawner<TProjectile, TProjectileArgs, TStats> : MonoBehaviour
         where TProjectile : ProjectileControllerBase<TProjectileArgs, TStats>
         where TProjectileArgs : ProjectileActivationArgs<TStats>
-        where TStats : IProjectileStats
+        where TStats : ProjectileStats
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         private Pool<TProjectile, TProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
-        protected IProjectileStats _projectileStats;
+        protected ProjectileStats _projectileStats;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
         protected ICruiser _enemyCruiser;
 

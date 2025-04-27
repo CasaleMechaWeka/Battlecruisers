@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
 {
-    public class CruisingProjectileStats : ProjectileStats, ICruisingProjectileStats
+    public class CruisingProjectileStats : ProjectileStats
     {
         public float cruisingAltitudeInM;
         public float CruisingAltitudeInM => cruisingAltitudeInM;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Projectiles.Stats
         }
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
                 base.ApplyVariantStats(statVariant);
                 cruisingAltitudeInM += statVariant.cruising_altitude;

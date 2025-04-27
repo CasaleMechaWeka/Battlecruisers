@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
-            where TPvPStats : IProjectileStats
+            where TPvPStats : ProjectileStats
     {
         private Collider2D _collider;
         private IDeferrer _deferrer;

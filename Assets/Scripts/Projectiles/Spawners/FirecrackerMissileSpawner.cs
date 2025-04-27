@@ -10,14 +10,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class FirecrackerMissileSpawner : ProjectileSpawner<RocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
+    public class FirecrackerMissileSpawner : ProjectileSpawner<RocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>
     {
-        private ICruisingProjectileStats _rocketStats;
+        private CruisingProjectileStats _rocketStats;
 
         public async Task InitialiseAsync(
             IProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            ICruisingProjectileStats rocketStats)
+            CruisingProjectileStats rocketStats)
         {
             Assert.IsNotNull(rocketStats);
             _rocketStats = rocketStats;
@@ -30,8 +30,8 @@ namespace BattleCruisers.Projectiles.Spawners
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            TargetProviderActivationArgs<ICruisingProjectileStats> activationArgs
-                = new TargetProviderActivationArgs<ICruisingProjectileStats>(
+            TargetProviderActivationArgs<CruisingProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<CruisingProjectileStats>(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,

@@ -5,7 +5,7 @@ namespace BattleCruisers.Scenes.Test
 {
     public class ArtilleryBarrelControllerTests : BarrelControllerTestGod
     {
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new GravityAffectedAngleCalculator(projectileStats, false);
         }

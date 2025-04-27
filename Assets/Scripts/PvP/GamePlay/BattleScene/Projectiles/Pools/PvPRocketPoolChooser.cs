@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
-    public class PvPRocketPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
+    public class PvPRocketPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>
     {
         public bool isSmall = false;
 
-        public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>>
+        public Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (isSmall)

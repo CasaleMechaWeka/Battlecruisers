@@ -22,7 +22,7 @@ namespace BattleCruisers.Projectiles
         IRemovable,
         IPoolable<TActivationArgs>
             where TActivationArgs : ProjectileActivationArgs<TStats>
-            where TStats : IProjectileStats
+            where TStats : ProjectileStats
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
@@ -114,7 +114,7 @@ namespace BattleCruisers.Projectiles
 
         }
 
-        private IDamageApplier CreateDamageApplier(IProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(ProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?

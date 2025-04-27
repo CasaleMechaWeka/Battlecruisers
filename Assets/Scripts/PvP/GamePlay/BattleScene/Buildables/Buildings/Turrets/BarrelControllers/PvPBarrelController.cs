@@ -8,8 +8,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils;
@@ -23,6 +21,7 @@ using Unity.Netcode;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -37,8 +36,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected ITargetFilter _targetFilter;
         protected FireIntervalManager _fireIntervalManager;
 
-        protected IProjectileStats _projectileStats;
-        public IProjectileStats ProjectileStats => _projectileStats;
+        protected ProjectileStats _projectileStats;
+        public ProjectileStats ProjectileStats => _projectileStats;
 
         protected TurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
@@ -93,9 +92,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
         }
 
-        protected virtual IProjectileStats GetProjectileStats()
+        protected virtual ProjectileStats GetProjectileStats()
         {
-            PvPProjectileStats projectileStats = GetComponent<PvPProjectileStats>();
+            ProjectileStats projectileStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(projectileStats);
             return projectileStats;
         }
@@ -118,7 +117,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                     // turret stats
                     _baseTurretStats.ApplyVariantStats(variant.statVariant);
-                    GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
+                    GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
                 }
             }
         }
@@ -130,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
                 // turret stats
                 _baseTurretStats.ApplyVariantStats(variant.statVariant);
-                GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
+                GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
             }
         }
 

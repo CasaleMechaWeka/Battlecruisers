@@ -5,7 +5,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPDirectFireBarrelWrapper : PvPBarrelWrapper
     {
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new AngleCalculator();
         }

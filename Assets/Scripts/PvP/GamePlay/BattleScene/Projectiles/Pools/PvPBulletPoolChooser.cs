@@ -6,13 +6,13 @@ using UnityEngine;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
 
-    public class PvPBulletPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class PvPBulletPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         public bool highCalibre = false;
         public bool tinyBullet = false;
         public bool flakBullet = false;
 
-        public Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (highCalibre)

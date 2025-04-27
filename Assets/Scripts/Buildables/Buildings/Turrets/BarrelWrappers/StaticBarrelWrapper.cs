@@ -7,7 +7,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     {
         protected abstract float DesiredAngleInDegrees { get; }
 
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new StaticAngleCalculator(DesiredAngleInDegrees);
         }

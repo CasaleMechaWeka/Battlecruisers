@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public class BomberController : AircraftController, ITargetConsumer
     {
         private BombSpawner _bombSpawner;
-        private IProjectileStats _bombStats;
+        private ProjectileStats _bombStats;
         private ITargetProcessor _targetProcessor;
         private IBomberMovementController _bomberMovementControler;
         private bool _haveDroppedBombOnRun = false;

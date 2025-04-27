@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
-    public class ProjectileActivationArgs<TStats> where TStats : IProjectileStats
+    public class ProjectileActivationArgs<TStats> where TStats : ProjectileStats
     {
         public Vector3 Position { get; }
         public TStats ProjectileStats { get; }

@@ -1,5 +1,4 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -14,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private ICircularList<PvPRocketSpawner> _rocketSpawners;
         private PvPRocketSpawner _middleSpawner;
-        private ICruisingProjectileStats _rocketStats;
+        private CruisingProjectileStats _rocketStats;
 
         public override Vector3 ProjectileSpawnerPosition
         {
@@ -38,9 +37,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _middleSpawner = rocketSpawners.Middle();
         }
 
-        protected override IProjectileStats GetProjectileStats()
+        protected override ProjectileStats GetProjectileStats()
         {
-            _rocketStats = GetComponent<PvPCruisingProjectileStats>();
+            _rocketStats = GetComponent<CruisingProjectileStats>();
             Assert.IsNotNull(_rocketStats);
             return _rocketStats;
         }

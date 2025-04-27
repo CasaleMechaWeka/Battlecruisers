@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.Test
                 Target = _target
             };
 
-            INukeStats nukeStats = GetComponent<NukeProjectileStats>();
+            CruisingProjectileStats nukeStats = GetComponent<CruisingProjectileStats>();
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
 
@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.Test
 
             _nuke.Initialise();
             _nuke.Activate(
-                new TargetProviderActivationArgs<INukeStats>(
+                new TargetProviderActivationArgs<CruisingProjectileStats>(
                     _nuke.Position,
                     nukeStats,
                     Vector2.zero,

@@ -13,7 +13,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPShellSpawner : PvPProjectileSpawner<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class PvPShellSpawner : PvPProjectileSpawner<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         private ITargetFilter _targetFilter;
         private IProjectileSoundPlayerInitialiser soundPlayerInitialiser;
@@ -30,8 +30,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void SpawnShell(float angleInDegrees, bool isSourceMirrored)
         {
             Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
-            ProjectileActivationArgs<IProjectileStats> activationArgs
-                = new ProjectileActivationArgs<IProjectileStats>(
+            ProjectileActivationArgs<ProjectileStats> activationArgs
+                = new ProjectileActivationArgs<ProjectileStats>(
                     transform.position,
                     _projectileStats,
                     shellVelocity,

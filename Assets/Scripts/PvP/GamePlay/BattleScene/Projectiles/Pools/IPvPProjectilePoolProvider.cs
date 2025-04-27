@@ -7,26 +7,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public interface IPvPProjectilePoolProvider
     {
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> BulletsPool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> HighCalibreBulletsPool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> TinyBulletsPool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> FlakBulletsPool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsLargePool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> NovaShellPool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> FiveShellCluster { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> RocketShellPool { get; }
-        Pool<PvPProjectileController, ProjectileActivationArgs<IProjectileStats>> ShellsSmallPool { get; }
-        Pool<PvPBombController, ProjectileActivationArgs<IProjectileStats>> BombsPool { get; }
-        Pool<PvPBombController, ProjectileActivationArgs<IProjectileStats>> StratBombsPool { get; }
-        Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsPool { get; }
-        Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesSmallPool { get; }
-        Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> RocketsSmallPool { get; }
-        Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMediumPool { get; }
-        Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesMFPool { get; }
-        Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> RailSlugsPool { get; }
-        Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> MissilesFirecrackerPool { get; }
-        Pool<PvPMissileController, TargetProviderActivationArgs<IProjectileStats>> MissilesLargePool { get; }
-        Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ISmartProjectileStats>> MissilesSmartPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> BulletsPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> HighCalibreBulletsPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> TinyBulletsPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> FlakBulletsPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> ShellsLargePool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> NovaShellPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> FiveShellCluster { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> RocketShellPool { get; }
+        Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> ShellsSmallPool { get; }
+        Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>> BombsPool { get; }
+        Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>> StratBombsPool { get; }
+        Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsPool { get; }
+        Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesSmallPool { get; }
+        Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsSmallPool { get; }
+        Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMediumPool { get; }
+        Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMFPool { get; }
+        Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> RailSlugsPool { get; }
+        Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesLargePool { get; }
+        Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<SmartProjectileStats>> MissilesSmartPool { get; }
 
     }
 }

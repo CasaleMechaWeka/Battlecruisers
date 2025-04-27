@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test
                 Target = target
             };
 
-            IProjectileStats missileStats = GetComponent<ProjectileStats>();
+            ProjectileStats missileStats = GetComponent<ProjectileStats>();
             Vector2 initialVelocity = new Vector2(5, 5);
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);
             ITarget parent = Substitute.For<ITarget>();
@@ -47,7 +47,7 @@ namespace BattleCruisers.Scenes.Test
             {
                 missile.Initialise();
                 missile.Activate(
-                    new TargetProviderActivationArgs<IProjectileStats>(
+                    new TargetProviderActivationArgs<ProjectileStats>(
                         missile.Position,
                         missileStats,
                         initialVelocity,

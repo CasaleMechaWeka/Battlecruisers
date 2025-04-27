@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Projectiles
 {
-    public class ProjectileController : ProjectileControllerBase<ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class ProjectileController : ProjectileControllerBase<ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         public List<TargetType> AttackCapabilities { get; set; }
 

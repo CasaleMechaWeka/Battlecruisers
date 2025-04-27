@@ -5,7 +5,7 @@ namespace BattleCruisers.Scenes.Test
 {
     public class TurretBarrelControllerTestGod : BarrelControllerTestGod
     {
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new AngleCalculator();
         }

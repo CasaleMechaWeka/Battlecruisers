@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
             _aircraft.StartConstruction();
             _aircraft.CompletedBuildable += Aircraft_CompletedBuildable;
 
-            IProjectileStats projectileStats = Substitute.For<IProjectileStats>();
+            ProjectileStats projectileStats = Substitute.For<ProjectileStats>();
             projectileStats.GravityScale.Returns(1);
             ITarget parent = Substitute.For<ITarget>();
             ITargetFilter targetFilter = Substitute.For<ITargetFilter>();
@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
             {
                 projectile.Initialise();
                 projectile.Activate(
-                    new ProjectileActivationArgs<IProjectileStats>(
+                    new ProjectileActivationArgs<ProjectileStats>(
                         projectile.Position,
                         projectileStats,
                         Vector2.zero,

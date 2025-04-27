@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class BombSpawner : ProjectileSpawner<BombController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class BombSpawner : ProjectileSpawner<BombController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         protected ITargetFilter _targetFilter;
 
@@ -20,10 +20,10 @@ namespace BattleCruisers.Projectiles.Spawners
         }
 
         public void SpawnShell(float currentXVelocityInMPers)
-		{
-			Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
-            ProjectileActivationArgs<IProjectileStats> activationArgs
-                = new ProjectileActivationArgs<IProjectileStats>(
+        {
+            Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
+            ProjectileActivationArgs<ProjectileStats> activationArgs
+                = new ProjectileActivationArgs<ProjectileStats>(
                     transform.position,
                     _projectileStats,
                     shellVelocity,
@@ -32,6 +32,6 @@ namespace BattleCruisers.Projectiles.Spawners
                     _impactSound);
 
             base.SpawnProjectile(activationArgs);
-		}
-	}
+        }
+    }
 }

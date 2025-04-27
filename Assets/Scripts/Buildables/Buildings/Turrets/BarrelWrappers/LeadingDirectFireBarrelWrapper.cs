@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new LinearTargetPositionPredictor();
         }
 
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new AngleCalculator();
         }

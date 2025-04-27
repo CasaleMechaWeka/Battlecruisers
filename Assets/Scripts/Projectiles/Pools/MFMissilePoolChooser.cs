@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class MFMissilePoolChooser : MonoBehaviour, IProjectilePoolChooser<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
+    public class MFMissilePoolChooser : MonoBehaviour, IProjectilePoolChooser<MissileController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
     {
-        public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             return projectilePoolProvider.MissilesMFPool;
         }

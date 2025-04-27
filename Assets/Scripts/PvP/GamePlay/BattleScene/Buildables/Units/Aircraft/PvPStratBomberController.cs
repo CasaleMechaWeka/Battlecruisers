@@ -2,7 +2,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -29,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPStratBomberController : PvPAircraftController, ITargetConsumer
     {
         private PvPBombSpawner _bombSpawner;
-        private IProjectileStats _bombStats;
+        private ProjectileStats _bombStats;
         private ITargetProcessor _targetProcessor;
         private IBomberMovementController _bomberMovementControler;
         private bool _haveDroppedBombOnRun = false;
@@ -80,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _bombSpawner = gameObject.GetComponentInChildren<PvPBombSpawner>();
             Assert.IsNotNull(_bombSpawner);
 
-            _bombStats = GetComponent<PvPProjectileStats>();
+            _bombStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_bombStats);
 
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
@@ -129,9 +128,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (variantIndex != -1)
             {
                 VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(variantIndex));
-                GetComponent<PvPProjectileStats>().ApplyVariantStats(variant.statVariant);
+                GetComponent<ProjectileStats>().ApplyVariantStats(variant.statVariant);
             }
-            _bombStats = GetComponent<PvPProjectileStats>();
+            _bombStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_bombStats);
             float damagePerS = _bombStats.Damage * AVERAGE_FIRE_RATE_PER_S;
             IList<TargetType> attackCapabilities = new List<TargetType>()

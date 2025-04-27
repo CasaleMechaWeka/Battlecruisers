@@ -9,14 +9,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class SmartMissileSpawner : ProjectileSpawner<SmartMissileController, SmartMissileActivationArgs<ISmartProjectileStats>, ISmartProjectileStats>
-	{
-        private ISmartProjectileStats _smartProjectileStats;
+    public class SmartMissileSpawner : ProjectileSpawner<SmartMissileController, SmartMissileActivationArgs<SmartProjectileStats>, SmartProjectileStats>
+    {
+        private SmartProjectileStats _smartProjectileStats;
 
         public async Task InitialiseAsync(
             IProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            ISmartProjectileStats smartProjectileStats)
+            SmartProjectileStats smartProjectileStats)
         {
             Assert.IsNotNull(smartProjectileStats);
             _smartProjectileStats = smartProjectileStats;
@@ -25,10 +25,10 @@ namespace BattleCruisers.Projectiles.Spawners
         }
 
         public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
-		{
+        {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            SmartMissileActivationArgs<ISmartProjectileStats> activationArgs
-                = new SmartMissileActivationArgs<ISmartProjectileStats>(
+            SmartMissileActivationArgs<SmartProjectileStats> activationArgs
+                = new SmartMissileActivationArgs<SmartProjectileStats>(
                     transform.position,
                     _smartProjectileStats,
                     missileVelocity,
@@ -41,6 +41,6 @@ namespace BattleCruisers.Projectiles.Spawners
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}");
 
             base.SpawnProjectile(activationArgs);
-		}
-	}
+        }
+    }
 }

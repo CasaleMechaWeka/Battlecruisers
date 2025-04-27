@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
-            where TPvPStats : IProjectileStats
+            where TPvPStats : ProjectileStats
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
@@ -147,7 +147,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
         }
 
-        private IDamageApplier CreateDamageApplier(IProjectileStats projectileStats)
+        private IDamageApplier CreateDamageApplier(ProjectileStats projectileStats)
         {
             return
                 projectileStats.HasAreaOfEffectDamage ?

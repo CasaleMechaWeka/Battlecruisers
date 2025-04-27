@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Stats
 {
-    public class SmartProjectileStats : ProjectileStats, ISmartProjectileStats
+    public class SmartProjectileStats : ProjectileStats
     {
         public float detectionRangeM;
         public float DetectionRangeM => detectionRangeM;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Projectiles.Stats
 
         public override void ApplyVariantStats(StatVariant statVariant)
         {
-            if(!isAppliedVariant)
+            if (!isAppliedVariant)
             {
                 base.ApplyVariantStats(statVariant);
                 detectionRangeM += statVariant.detection_range;

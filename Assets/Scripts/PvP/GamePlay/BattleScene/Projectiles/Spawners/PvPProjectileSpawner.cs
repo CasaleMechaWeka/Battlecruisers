@@ -20,13 +20,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPProjectileSpawner<TPvPProjectile, TPvPProjectileArgs, TPvPStats> : NetworkBehaviour
         where TPvPProjectile : PvPProjectileControllerBase<TPvPProjectileArgs, TPvPStats>
         where TPvPProjectileArgs : ProjectileActivationArgs<TPvPStats>
-        where TPvPStats : IProjectileStats
+        where TPvPStats : ProjectileStats
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         private Pool<TPvPProjectile, TPvPProjectileArgs> _projectilePool;
 
         protected ITarget _parent;
-        protected IProjectileStats _projectileStats;
+        protected ProjectileStats _projectileStats;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected IPvPCruiser _enemyCruiser;
 

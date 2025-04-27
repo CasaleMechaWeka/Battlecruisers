@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TProjectile, TActivationArgs>
         where TActivationArgs : ProjectileActivationArgs<TStats>
         where TProjectile : PvPProjectileControllerBase<TActivationArgs, TStats>
-        where TStats : IProjectileStats
+        where TStats : ProjectileStats
     {
         private readonly PvPProjectileKey _projectileKey;
 

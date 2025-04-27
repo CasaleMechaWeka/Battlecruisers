@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
         private AngleLimiter _angleLimiter;
 
         private ITarget _target;
-        private IProjectileStats _projectileStats;
+        private ProjectileStats _projectileStats;
         private Vector2 _targetPositionToAttack, _predictedTargetPosition;
         private float _desiredAngleInDegrees, _limitedAngelInDegrees;
 
@@ -58,7 +58,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.BarrelControllers.He
             Vector3 projectileSpawnerPosition = new Vector3(91, 82, 73);
             _barrelController.ProjectileSpawnerPosition.Returns(projectileSpawnerPosition);
 
-            _projectileStats = Substitute.For<IProjectileStats>();
+            _projectileStats = Substitute.For<ProjectileStats>();
             _projectileStats.MaxVelocityInMPerS.Returns(32.54f);
             _barrelController.ProjectileStats.Returns(_projectileStats);
 

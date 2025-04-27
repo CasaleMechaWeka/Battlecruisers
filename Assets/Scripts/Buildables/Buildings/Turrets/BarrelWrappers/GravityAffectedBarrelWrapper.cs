@@ -16,7 +16,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         [Header("True to use lower arc (artillery), false to use higher arc (mortar)")]
         public bool useLowerArc = true;
 
-        protected override IAngleCalculator CreateAngleCalculator(IProjectileStats projectileStats)
+        protected override IAngleCalculator CreateAngleCalculator(ProjectileStats projectileStats)
         {
             return new GravityAffectedAngleCalculator(projectileStats, !useLowerArc);
         }

@@ -6,13 +6,13 @@ using UnityEngine;
 namespace BattleCruisers.Projectiles.Pools
 {
 
-    public class BulletPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class BulletPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         public bool highCalibre = false;
         public bool tinyBullet = false;
         public bool flakBullet = false;
 
-        public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public Pool<ProjectileController, ProjectileActivationArgs<ProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             if (highCalibre)
             {

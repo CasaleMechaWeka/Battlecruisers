@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-    public class BombController : ProjectileWithTrail<ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class BombController : ProjectileWithTrail<ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         protected override float TrailLifetimeInS => 3;
 
-        public override void Activate(ProjectileActivationArgs<IProjectileStats> activationArgs)
+        public override void Activate(ProjectileActivationArgs<ProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
             MovementController = new DummyMovementController();

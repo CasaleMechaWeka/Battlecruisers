@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class MissilesMediumPoolChooser : MonoBehaviour, IProjectilePoolChooser<MissileController, TargetProviderActivationArgs<IProjectileStats>, IProjectileStats>
+    public class MissilesMediumPoolChooser : MonoBehaviour, IProjectilePoolChooser<MissileController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
     {
-        
+
         public bool isRailSlug = false;
 
-        public Pool<MissileController, TargetProviderActivationArgs<IProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
 
-                         if (isRailSlug)
+            if (isRailSlug)
             {
                 return projectilePoolProvider.RailSlugsPool;
             }

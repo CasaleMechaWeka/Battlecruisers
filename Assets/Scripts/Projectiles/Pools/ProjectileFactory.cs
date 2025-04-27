@@ -10,7 +10,7 @@ namespace BattleCruisers.Projectiles.Pools
     public class ProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TProjectile, TActivationArgs>
         where TActivationArgs : ProjectileActivationArgs<TStats>
         where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
-        where TStats : IProjectileStats
+        where TStats : ProjectileStats
     {
         private readonly ProjectileKey _projectileKey;
 

@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
-    public class PvPMissilesFirecrackerPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>, ICruisingProjectileStats>
+    public class PvPMissilesFirecrackerPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>
     {
-        public Pool<PvPRocketController, TargetProviderActivationArgs<ICruisingProjectileStats>> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
+        public Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             return projectilePoolProvider.MissilesFirecrackerPool;
         }

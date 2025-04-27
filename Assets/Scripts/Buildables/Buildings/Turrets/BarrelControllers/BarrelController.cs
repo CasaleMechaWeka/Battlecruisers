@@ -31,8 +31,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected ITargetFilter _targetFilter;
         protected FireIntervalManager _fireIntervalManager;
 
-        protected IProjectileStats _projectileStats;
-        public IProjectileStats ProjectileStats => _projectileStats;
+        protected ProjectileStats _projectileStats;
+        public ProjectileStats ProjectileStats => _projectileStats;
 
         protected TurretStats _baseTurretStats;
         private ITurretStatsWrapper _turretStatsWrapper;
@@ -81,7 +81,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             IParticleSystemGroupInitialiser muzzleFlashInitialiser = transform.FindNamedComponent<IParticleSystemGroupInitialiser>("MuzzleFlash");
             _muzzleFlash = muzzleFlashInitialiser.CreateParticleSystemGroup();
         }
-        protected virtual IProjectileStats GetProjectileStats()
+        protected virtual ProjectileStats GetProjectileStats()
         {
             ProjectileStats projectileStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(projectileStats);

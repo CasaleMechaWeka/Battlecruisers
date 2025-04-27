@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.ActivationArgs
 {
-    public class SmartMissileActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : IProjectileStats
+    public class SmartMissileActivationArgs<TStats> : ProjectileActivationArgs<TStats> where TStats : ProjectileStats
     {
         public CruiserTargetFactoriesProvider TargetFactories { get; }
         public ICruiser EnemyCruiser { get; }

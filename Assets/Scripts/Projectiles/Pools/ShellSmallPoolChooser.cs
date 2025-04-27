@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class ShellSmallPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class ShellSmallPoolChooser : MonoBehaviour, IProjectilePoolChooser<ProjectileController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         public bool rocketShell = false;
 
-        public Pool<ProjectileController, ProjectileActivationArgs<IProjectileStats>>
+        public Pool<ProjectileController, ProjectileActivationArgs<ProjectileStats>>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             if (rocketShell)

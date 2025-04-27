@@ -10,7 +10,7 @@ using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<IProjectileStats>, IProjectileStats>
+    public class ShellSpawner : ProjectileSpawner<ProjectileController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
     {
         private ITargetFilter _targetFilter;
         public List<TargetType> _AttackCapabilities { get; private set; }
@@ -27,8 +27,8 @@ namespace BattleCruisers.Projectiles.Spawners
         public ProjectileController SpawnShell(float angleInDegrees, bool isSourceMirrored)
         {
             Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
-            ProjectileActivationArgs<IProjectileStats> activationArgs
-                = new ProjectileActivationArgs<IProjectileStats>(
+            ProjectileActivationArgs<ProjectileStats> activationArgs
+                = new ProjectileActivationArgs<ProjectileStats>(
                     transform.position,
                     _projectileStats,
                     shellVelocity,

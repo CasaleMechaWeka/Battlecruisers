@@ -20,7 +20,7 @@ namespace BattleCruisers.Projectiles
         IRemovable,
         IPoolable<TActivationArgs>
             where TActivationArgs : ProjectileActivationArgs<TStats>
-            where TStats : IProjectileStats
+            where TStats : ProjectileStats
     {
         private Collider2D _collider;
         private IDeferrer _deferrer;
