@@ -112,7 +112,11 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-            Screen.SetResolution((int)_resolutionDropdown.Resolution.x, (int)_resolutionDropdown.Resolution.y - (_fullScreen.Value ? 0 : (int)(_resolutionDropdown.Resolution.y * 0.06)), _fullScreen.Value ? (FullScreenMode)1 : (FullScreenMode)3);
+            Vector2Int resolution = new Vector2Int(Mathf.Max(640, (int)_resolutionDropdown.Resolution.x),
+                                                   Mathf.Max(360, (int)_resolutionDropdown.Resolution.y));
+
+
+            Screen.SetResolution(resolution.x, resolution.y - (_fullScreen.Value ? 0 : (int)(resolution.y * 0.06)), _fullScreen.Value ? (FullScreenMode)1 : (FullScreenMode)3);
             QualitySettings.vSyncCount = _VSync.Value ? 1 : 0;
 
             Assert.IsTrue(ShouldBeEnabled());
@@ -121,7 +125,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             _settingsManager.AIDifficulty = _difficultyDropdown.Difficulty;
             _settingsManager.Language = _languageDropdown.Language;
-            _settingsManager.Resolution = _resolutionDropdown.Resolution;
+            _settingsManager.Resolution = resolution;
             _settingsManager.ZoomSpeedLevel = _zoomSpeedLevel.Value;
             _settingsManager.ScrollSpeedLevel = _scrollSpeedLevel.Value;
             _settingsManager.MasterVolume = _masterVolume.Value;

@@ -73,6 +73,9 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             difficultyDropdown.Initialise(_settingsManager.AIDifficulty);
             languageDropdown.Initialise(_settingsManager.Language);
+
+            DataProvider.GameModel.Settings.InitialiseGraphicsSettings();
+
             resolutionDropdown.Initialise(_settingsManager.Resolution);
 
 

@@ -293,6 +293,8 @@ namespace BattleCruisers.Data.Models
 
             AltDroneSounds = false;
 
+            Resolution = new Vector2(640, 360);
+
 #if !UNITY_EDITOR   //this should circumvent Unity being stupid and serializing fields it shouldn't serialize
             InitialiseGraphicsSettings();
             AltDroneSounds = Application.systemLanguage != SystemLanguage.English;
