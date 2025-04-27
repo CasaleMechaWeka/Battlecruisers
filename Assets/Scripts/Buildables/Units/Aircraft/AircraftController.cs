@@ -189,12 +189,12 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         private void UpdateFaction(ITarget kamikazeTarget)
         {
+            _collider.enabled = false;
             Faction = Helper.GetOppositeFaction(kamikazeTarget.Faction);
 
             // Make our collider be lost and refound by all target detectors.
             // Means target detectors that we are already in range of can 
             // re-evaluate whether we are a target, as our faction has just changed.
-            _collider.enabled = false;
             _collider.enabled = true;
 
             _kamikazeController.Initialise(this, kamikazeTarget);
