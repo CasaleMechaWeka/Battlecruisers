@@ -78,6 +78,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             // Initialize MessageBoxBig
             messageBoxBig.Initialize(soundPlayer);
+            messageBoxBig.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HowToFightAFriend"), LocTableCache.ScreensSceneTable.GetString("HowToFightAFriendDescription"));
             messageBoxBig.HideMessage();
         }
 
