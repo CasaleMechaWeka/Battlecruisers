@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes.Test
 
 			ITarget parent = Substitute.For<ITarget>();
 			parent.Faction.Returns(Faction.Reds);
-			CruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
+			ProjectileStats rocketStats = GetComponent<ProjectileStats>();
 			int burstSize = 1;
 			BuildableInitialisationArgs args = helper.CreateBuildableInitialisationArgs();
 			IProjectileSpawnerArgs spawnerArgs

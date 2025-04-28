@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     {
         private ICircularList<FirecrackerMissileSpawner> _missileSpawners;
         private FirecrackerMissileSpawner _middleSpawner;
-        private CruisingProjectileStats _missileStats;
+        private ProjectileStats _missileStats;
 
         public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => false;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override ProjectileStats GetProjectileStats()
         {
-            _missileStats = GetComponent<CruisingProjectileStats>();
+            _missileStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_missileStats);
             return _missileStats;
         }

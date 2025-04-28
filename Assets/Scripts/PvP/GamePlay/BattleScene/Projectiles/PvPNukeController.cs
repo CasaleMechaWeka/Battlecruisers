@@ -19,15 +19,15 @@ using BattleCruisers.UI.Sound.Players;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
     public class PvPNukeController :
-        PvPProjectileWithTrail<TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>,
+        PvPProjectileWithTrail<TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>,
         ITargetProvider
     {
-        private CruisingProjectileStats _nukeStats;
+        private ProjectileStats _nukeStats;
         private IFlightPointsProvider _flightPointsProvider;
 
         public ITarget Target { get; private set; }
 
-        public override void Activate(TargetProviderActivationArgs<CruisingProjectileStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<ProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
             _nukeStats = activationArgs.ProjectileStats;

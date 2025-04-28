@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSmartMissileBarrelController : PvPBarrelController
     {
-        private SmartProjectileStats _smartProjectileStats;
+        private ProjectileStats _ProjectileStats;
         private PvPSmartMissileSpawner _missileSpawner;
         private ITargetFilter _targetFilter;
 
@@ -27,21 +27,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override ProjectileStats GetProjectileStats()
         {
-            _smartProjectileStats = GetComponent<SmartProjectileStats>();
-            Assert.IsNotNull(_smartProjectileStats);
-            return _smartProjectileStats;
+            _ProjectileStats = GetComponent<ProjectileStats>();
+            Assert.IsNotNull(_ProjectileStats);
+            return _ProjectileStats;
         }
 
         protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
         {
-            _targetFilter = new FactionAndTargetTypeFilter(args.EnemyCruiser.Faction, _smartProjectileStats.AttackCapabilities);
+            _targetFilter = new FactionAndTargetTypeFilter(args.EnemyCruiser.Faction, _ProjectileStats.AttackCapabilities);
             IPvPProjectileSpawnerArgs spawnerArgs
                 = new PvPProjectileSpawnerArgs(
                     args,
-                    _smartProjectileStats,
+                    _ProjectileStats,
                     TurretStats.BurstSize);
 
-            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, _smartProjectileStats);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.Missile, _ProjectileStats);
         }
 
         public override void Fire(float angleInDegrees)

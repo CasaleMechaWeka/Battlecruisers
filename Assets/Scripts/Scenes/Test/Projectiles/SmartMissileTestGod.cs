@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Turrets
 {
 	public abstract class SmartMissileTestGod : TestGodBase
 	{
-		public SmartProjectileStats projectileStats;
+		public ProjectileStats projectileStats;
 		public TestTarget enemyCruiserTarget;
 		public ShipController enemyShip;
 		public TestAircraftController enemyAircraft;

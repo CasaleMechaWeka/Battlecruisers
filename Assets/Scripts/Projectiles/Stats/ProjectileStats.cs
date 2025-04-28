@@ -1,4 +1,7 @@
-﻿using BattleCruisers.UI.ScreensScene.ProfileScreen;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using BattleCruisers.Buildables;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,19 +21,24 @@ namespace BattleCruisers.Projectiles.Stats
         public float gravityScale;
         public float GravityScale => gravityScale;
 
-        public bool hasAreaOfEffectDamage;
-        public bool HasAreaOfEffectDamage => hasAreaOfEffectDamage;
-
         public float damageRadiusInM;
         public float DamageRadiusInM => damageRadiusInM;
-        public bool hasSecondaryDamage;
-        public bool HasSecondaryDamage => hasSecondaryDamage;
         public float secondaryDamage;
         public float SecondaryDamage => secondaryDamage;
         public float secondaryRadiusInM;
         public float SecondaryRadiusInM => secondaryRadiusInM;
         public float InitialVelocityInMPerS { get; private set; }
         protected bool isAppliedVariant = false;
+        [Header("Cruising")]
+        public float cruisingAltitudeInM;
+        public float CruisingAltitudeInM => cruisingAltitudeInM;
+        public bool isAccurate = false;
+        public bool IsAccurate => isAccurate;
+        [Header("Smart")]
+        public float detectionRangeM;
+        public float DetectionRangeM => detectionRangeM;
+        public List<TargetType> attackCapabilities;
+        public ReadOnlyCollection<TargetType> AttackCapabilities { get; private set; }
 
         void Awake()
         {
@@ -39,12 +47,16 @@ namespace BattleCruisers.Projectiles.Stats
             Assert.IsTrue(initialVelocityMultiplier >= 0);
             Assert.IsTrue(gravityScale >= 0);
 
-            if (hasAreaOfEffectDamage)
-            {
-                Assert.IsTrue(damageRadiusInM > 0);
-            }
+            Assert.IsTrue(damageRadiusInM >= 0);
+            Assert.IsTrue(secondaryRadiusInM >= 0);
+
+            Assert.IsTrue(cruisingAltitudeInM > 0);
+
+            Assert.IsTrue(detectionRangeM > 0);
+            Assert.IsTrue(attackCapabilities.Count > 0);
 
             InitialVelocityInMPerS = MaxVelocityInMPerS * initialVelocityMultiplier;
+            AttackCapabilities = attackCapabilities.AsReadOnly();
 
             OnAwake();
         }
@@ -64,6 +76,10 @@ namespace BattleCruisers.Projectiles.Stats
                 maxVelocityInMPerS = maxVelocityInMPerS <= 0 ? 0.1f : maxVelocityInMPerS;
                 gravityScale = gravityScale < 0 ? 0 : gravityScale;
                 damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
+
+                cruisingAltitudeInM += statVariant.cruising_altitude;
+
+                detectionRangeM += statVariant.detection_range;
 
                 isAppliedVariant = true;
             }

@@ -22,7 +22,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
     public class NukeLauncherController : Building
     {
         private NukeSpinner _spinner;
-        private CruisingProjectileStats _nukeStats;
+        private ProjectileStats _nukeStats;
         private NukeController _launchedNuke;
 
         public SiloHalfController leftSiloHalf, rightSiloHalf;
@@ -59,7 +59,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             Assert.IsNotNull(_spinner);
             _spinner.StaticInitialise();
 
-            _nukeStats = GetComponent<CruisingProjectileStats>();
+            _nukeStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_nukeStats);
             AddAttackCapability(TargetType.Cruiser);
             AddDamageStats(new DamageCapability(_nukeStats.Damage, AttackCapabilities));
@@ -101,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             ITargetFilter targetFilter = new ExactMatchTargetFilter { Target = EnemyCruiser };
             _launchedNuke.Initialise();
             _launchedNuke.Activate(
-                new TargetProviderActivationArgs<CruisingProjectileStats>(
+                new TargetProviderActivationArgs<ProjectileStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,
                     _nukeStats,
                     Vector2.zero,

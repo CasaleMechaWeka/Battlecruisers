@@ -19,7 +19,7 @@ namespace BattleCruisers.Projectiles
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
     public class RocketController :
-        ProjectileWithTrail<TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>,
+        ProjectileWithTrail<TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>,
         ITargetProvider
     {
         private RocketTarget _rocketTarget;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-        public override void Activate(TargetProviderActivationArgs<CruisingProjectileStats> activationArgs)
+        public override void Activate(TargetProviderActivationArgs<ProjectileStats> activationArgs)
         {
             base.Activate(activationArgs);
 

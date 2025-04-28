@@ -117,7 +117,7 @@ namespace BattleCruisers.Projectiles
         private IDamageApplier CreateDamageApplier(ProjectileStats projectileStats)
         {
             return
-                projectileStats.HasAreaOfEffectDamage ?
+                projectileStats.damageRadiusInM != 0 ?
                     new AreaOfEffectDamageApplier(projectileStats, new DummyTargetFilter(isMatchResult: true)) :
                     new SingleDamageApplier(projectileStats.Damage);
         }

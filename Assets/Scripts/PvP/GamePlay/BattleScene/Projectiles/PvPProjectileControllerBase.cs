@@ -150,7 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IDamageApplier CreateDamageApplier(ProjectileStats projectileStats)
         {
             return
-                projectileStats.HasAreaOfEffectDamage ?
+                projectileStats.damageRadiusInM != 0 ?
                     new PvPAreaOfEffectDamageApplier(projectileStats, new DummyTargetFilter(isMatchResult: true)) :
                     new SingleDamageApplier(projectileStats.Damage);
         }

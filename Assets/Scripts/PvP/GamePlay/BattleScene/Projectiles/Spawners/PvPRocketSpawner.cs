@@ -9,14 +9,14 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPRocketSpawner : PvPProjectileSpawner<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>
+    public class PvPRocketSpawner : PvPProjectileSpawner<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
     {
-        private CruisingProjectileStats _rocketStats;
+        private ProjectileStats _rocketStats;
 
         public async Task InitialiseAsync(
             IPvPProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            CruisingProjectileStats rocketStats)
+            ProjectileStats rocketStats)
         {
             Assert.IsNotNull(rocketStats);
             _rocketStats = rocketStats;
@@ -29,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             // Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            TargetProviderActivationArgs<CruisingProjectileStats> activationArgs
-                = new TargetProviderActivationArgs<CruisingProjectileStats>(
+            TargetProviderActivationArgs<ProjectileStats> activationArgs
+                = new TargetProviderActivationArgs<ProjectileStats>(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,

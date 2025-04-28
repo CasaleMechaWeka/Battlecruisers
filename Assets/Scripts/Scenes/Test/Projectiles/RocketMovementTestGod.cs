@@ -40,7 +40,7 @@ namespace BattleCruisers.Scenes.Test
             helper.InitialiseBuilding(_target);
 
             // Setup rocket
-            CruisingProjectileStats rocketStats = GetComponent<CruisingProjectileStats>();
+            ProjectileStats rocketStats = GetComponent<ProjectileStats>();
 
             Vector2 initialVelocity = new Vector2(0, 5);
 
@@ -56,7 +56,7 @@ namespace BattleCruisers.Scenes.Test
 
             _rocket.Initialise();
             _rocket.Activate(
-                new TargetProviderActivationArgs<CruisingProjectileStats>(
+                new TargetProviderActivationArgs<ProjectileStats>(
                     _rocket.Position,
                     rocketStats,
                     initialVelocity,

@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     {
         private ICircularList<RocketSpawner> _rocketSpawners;
         private RocketSpawner _middleSpawner;
-        private CruisingProjectileStats _rocketStats;
+        private ProjectileStats _rocketStats;
 
         public override Vector3 ProjectileSpawnerPosition => _middleSpawner.transform.position;
         public override bool CanFireWithoutTarget => false;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override ProjectileStats GetProjectileStats()
         {
-            _rocketStats = GetComponent<CruisingProjectileStats>();
+            _rocketStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_rocketStats);
             return _rocketStats;
         }

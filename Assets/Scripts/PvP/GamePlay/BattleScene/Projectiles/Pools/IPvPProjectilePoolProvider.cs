@@ -18,15 +18,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> ShellsSmallPool { get; }
         Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>> BombsPool { get; }
         Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>> StratBombsPool { get; }
-        Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsPool { get; }
+        Pool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>> RocketsPool { get; }
         Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesSmallPool { get; }
-        Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsSmallPool { get; }
+        Pool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>> RocketsSmallPool { get; }
         Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMediumPool { get; }
         Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMFPool { get; }
         Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> RailSlugsPool { get; }
-        Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        Pool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>> MissilesFirecrackerPool { get; }
         Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesLargePool { get; }
-        Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<SmartProjectileStats>> MissilesSmartPool { get; }
+        Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ProjectileStats>> MissilesSmartPool { get; }
 
     }
 }

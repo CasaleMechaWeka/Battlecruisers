@@ -17,15 +17,15 @@ namespace BattleCruisers.Projectiles.Pools
         Pool<ProjectileController, ProjectileActivationArgs<ProjectileStats>> ShellsSmallPool { get; }
         Pool<BombController, ProjectileActivationArgs<ProjectileStats>> BombsPool { get; }
         Pool<BombController, ProjectileActivationArgs<ProjectileStats>> StratBombsPool { get; }
-        Pool<RocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsPool { get; }
+        Pool<RocketController, TargetProviderActivationArgs<ProjectileStats>> RocketsPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesSmallPool { get; }
-        Pool<RocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsSmallPool { get; }
+        Pool<RocketController, TargetProviderActivationArgs<ProjectileStats>> RocketsSmallPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMediumPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMFPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> RailSlugsPool { get; }
-        Pool<RocketController, TargetProviderActivationArgs<CruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        Pool<RocketController, TargetProviderActivationArgs<ProjectileStats>> MissilesFirecrackerPool { get; }
         Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesLargePool { get; }
-        Pool<SmartMissileController, SmartMissileActivationArgs<SmartProjectileStats>> MissilesSmartPool { get; }
+        Pool<SmartMissileController, SmartMissileActivationArgs<ProjectileStats>> MissilesSmartPool { get; }
 
     }
 }

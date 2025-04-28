@@ -9,17 +9,17 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class SmartMissileSpawner : ProjectileSpawner<SmartMissileController, SmartMissileActivationArgs<SmartProjectileStats>, SmartProjectileStats>
+    public class SmartMissileSpawner : ProjectileSpawner<SmartMissileController, SmartMissileActivationArgs<ProjectileStats>, ProjectileStats>
     {
-        private SmartProjectileStats _smartProjectileStats;
+        private ProjectileStats _ProjectileStats;
 
         public async Task InitialiseAsync(
             IProjectileSpawnerArgs args,
             ISoundKey firingSound,
-            SmartProjectileStats smartProjectileStats)
+            ProjectileStats ProjectileStats)
         {
-            Assert.IsNotNull(smartProjectileStats);
-            _smartProjectileStats = smartProjectileStats;
+            Assert.IsNotNull(ProjectileStats);
+            _ProjectileStats = ProjectileStats;
 
             await base.InitialiseAsync(args, firingSound);
         }
@@ -27,10 +27,10 @@ namespace BattleCruisers.Projectiles.Spawners
         public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
         {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            SmartMissileActivationArgs<SmartProjectileStats> activationArgs
-                = new SmartMissileActivationArgs<SmartProjectileStats>(
+            SmartMissileActivationArgs<ProjectileStats> activationArgs
+                = new SmartMissileActivationArgs<ProjectileStats>(
                     transform.position,
-                    _smartProjectileStats,
+                    _ProjectileStats,
                     missileVelocity,
                     targetFilter,
                     _parent,

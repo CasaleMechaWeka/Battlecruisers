@@ -20,15 +20,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public Pool<PvPProjectileController, ProjectileActivationArgs<ProjectileStats>> ShellsSmallPool { get; }
         public Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>> BombsPool { get; }
         public Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>> StratBombsPool { get; }
-        public Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsPool { get; }
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>> RocketsPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesSmallPool { get; }
-        public Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> RocketsSmallPool { get; }
-        public Pool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>> MissilesFirecrackerPool { get; }
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>> RocketsSmallPool { get; }
+        public Pool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>> MissilesFirecrackerPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMediumPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesMFPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> RailSlugsPool { get; }
         public Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> MissilesLargePool { get; }
-        public Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<SmartProjectileStats>> MissilesSmartPool { get; }
+        public Pool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ProjectileStats>> MissilesSmartPool { get; }
 
         public PvPProjectilePoolProvider()
         {
@@ -90,12 +90,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.BOMB);
 
             RocketsPool
-                = CreatePool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>(
+                = CreatePool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>(
                     PvPStaticPrefabKeys.PvPProjectiles.PvPRocket,
                     PvPInitialCapacity.ROCKET);
 
             RocketsSmallPool
-                = CreatePool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>(
+                = CreatePool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>(
                     PvPStaticPrefabKeys.PvPProjectiles.PvPRocketSmall,
                     PvPInitialCapacity.ROCKET);
 
@@ -121,7 +121,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.MISSILE_MEDIUM);*/
 
             MissilesFirecrackerPool
-                = CreatePool<PvPRocketController, TargetProviderActivationArgs<CruisingProjectileStats>, CruisingProjectileStats>(
+                = CreatePool<PvPRocketController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>(
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileFirecracker,
                     PvPInitialCapacity.MISSILE_MEDIUM);
 
@@ -131,7 +131,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                     PvPInitialCapacity.MISSILE_LARGE);
 
             MissilesSmartPool
-                = CreatePool<PvPSmartMissileController, PvPSmartMissileActivationArgs<SmartProjectileStats>, SmartProjectileStats>(
+                = CreatePool<PvPSmartMissileController, PvPSmartMissileActivationArgs<ProjectileStats>, ProjectileStats>(
                     PvPStaticPrefabKeys.PvPProjectiles.PvPMissileSmart,
                     PvPInitialCapacity.MISSILE_SMART);
 

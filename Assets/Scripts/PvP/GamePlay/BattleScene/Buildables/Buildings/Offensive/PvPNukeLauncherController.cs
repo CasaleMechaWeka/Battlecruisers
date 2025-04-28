@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPNukeLauncherController : PvPBuilding
     {
         private PvPNukeSpinner _spinner;
-        private CruisingProjectileStats _nukeStats;
+        private ProjectileStats _nukeStats;
         private PvPNukeController _launchedNuke;
 
         public PvPSiloHalfController leftSiloHalf, rightSiloHalf;
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_spinner);
             _spinner.StaticInitialise();
 
-            _nukeStats = GetComponent<CruisingProjectileStats>();
+            _nukeStats = GetComponent<ProjectileStats>();
             Assert.IsNotNull(_nukeStats);
             AddAttackCapability(TargetType.Cruiser);
             AddDamageStats(new PvPDamageCapability(_nukeStats.Damage, AttackCapabilities));
@@ -129,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise();
             _launchedNuke.Activate(
-                new TargetProviderActivationArgs<CruisingProjectileStats>(
+                new TargetProviderActivationArgs<ProjectileStats>(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,
                     _nukeStats,
                     Vector2.zero,
