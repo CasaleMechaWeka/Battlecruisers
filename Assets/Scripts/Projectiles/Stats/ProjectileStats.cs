@@ -50,10 +50,9 @@ namespace BattleCruisers.Projectiles.Stats
             Assert.IsTrue(damageRadiusInM >= 0);
             Assert.IsTrue(secondaryRadiusInM >= 0);
 
-            Assert.IsTrue(cruisingAltitudeInM > 0);
+            Assert.IsTrue(cruisingAltitudeInM >= 0);
 
-            Assert.IsTrue(detectionRangeM > 0);
-            Assert.IsTrue(attackCapabilities.Count > 0);
+            Assert.IsTrue(detectionRangeM >= 0);
 
             InitialVelocityInMPerS = MaxVelocityInMPerS * initialVelocityMultiplier;
             AttackCapabilities = attackCapabilities.AsReadOnly();
