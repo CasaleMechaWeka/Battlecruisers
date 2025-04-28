@@ -3,7 +3,7 @@ using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;

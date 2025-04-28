@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
-using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;

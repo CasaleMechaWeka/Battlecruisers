@@ -2,7 +2,6 @@
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;

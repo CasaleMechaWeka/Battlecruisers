@@ -1,5 +1,5 @@
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;

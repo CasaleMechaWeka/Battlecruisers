@@ -1,4 +1,4 @@
-using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 

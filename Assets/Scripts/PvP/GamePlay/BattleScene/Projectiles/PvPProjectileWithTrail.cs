@@ -1,6 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Trails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;

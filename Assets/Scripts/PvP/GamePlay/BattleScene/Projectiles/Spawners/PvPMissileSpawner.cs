@@ -1,5 +1,5 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using UnityEngine;

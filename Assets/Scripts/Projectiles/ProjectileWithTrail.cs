@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Effects.Trails;
-using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;

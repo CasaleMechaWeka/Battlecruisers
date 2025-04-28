@@ -1,6 +1,5 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 

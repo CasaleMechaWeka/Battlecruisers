@@ -7,7 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.De
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
-using BattleCruisers.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 using Unity.Netcode;

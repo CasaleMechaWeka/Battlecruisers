@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Projectiles.ActivationArgs;
 using System.Collections.Generic;
 
 namespace BattleCruisers.Projectiles

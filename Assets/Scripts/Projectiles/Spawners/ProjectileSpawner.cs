@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Pools;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;

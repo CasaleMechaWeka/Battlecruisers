@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Utils.BattleScene.Pools;
+﻿using BattleCruisers.Utils.BattleScene.Pools;
 
 namespace BattleCruisers.Projectiles.Pools
 {

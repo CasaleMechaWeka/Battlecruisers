@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;

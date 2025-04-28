@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Targets.TargetFinders.Filters;
+﻿using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;

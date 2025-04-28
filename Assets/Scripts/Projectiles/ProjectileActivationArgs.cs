@@ -7,7 +7,7 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 
-namespace BattleCruisers.Projectiles.ActivationArgs
+namespace BattleCruisers.Projectiles
 {
     public class ProjectileActivationArgs
     {
