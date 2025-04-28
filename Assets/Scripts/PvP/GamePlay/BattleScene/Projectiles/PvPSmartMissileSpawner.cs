@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPSmartMissileSpawner : PvPProjectileSpawner<PvPSmartMissileController, PvPSmartMissileActivationArgs<ProjectileStats>, ProjectileStats>
+    public class PvPSmartMissileSpawner : PvPProjectileSpawner<PvPSmartMissileController, PvPProjectileActivationArgs, ProjectileStats>
     {
         private ProjectileStats _ProjectileStats;
 
@@ -26,8 +26,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
         {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            PvPSmartMissileActivationArgs<ProjectileStats> activationArgs
-                = new PvPSmartMissileActivationArgs<ProjectileStats>(
+            PvPProjectileActivationArgs activationArgs
+                = new PvPProjectileActivationArgs(
                     transform.position,
                     _ProjectileStats,
                     missileVelocity,

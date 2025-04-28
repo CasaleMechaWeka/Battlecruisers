@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
-    public class PvPMissilesMediumPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
+    public class PvPMissilesMediumPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPMissileController, ProjectileActivationArgs, ProjectileStats>
     {
 
         public bool isRailSlug = false;
-        public Pool<PvPMissileController, TargetProviderActivationArgs<ProjectileStats>> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
+        public Pool<PvPMissileController, ProjectileActivationArgs> ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (isRailSlug)
             {

@@ -1,16 +1,14 @@
 ﻿using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class ProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TProjectile, TActivationArgs>
-        where TActivationArgs : ProjectileActivationArgs<TStats>
-        where TProjectile : ProjectileControllerBase<TActivationArgs, TStats>
-        where TStats : ProjectileStats
+    public class ProjectileFactory<TProjectile, TActivationArgs> : IPoolableFactory<TProjectile, TActivationArgs>
+        where TActivationArgs : ProjectileActivationArgs
+        where TProjectile : ProjectileControllerBase<TActivationArgs>
     {
         private readonly ProjectileKey _projectileKey;
 
@@ -23,12 +21,12 @@ namespace BattleCruisers.Projectiles.Pools
 
         public TProjectile CreateItem()
         {
-            return PrefabFactory.CreateProjectile<TProjectile, TActivationArgs, TStats>(_projectileKey);
+            return PrefabFactory.CreateProjectile<TProjectile, TActivationArgs>(_projectileKey);
         }
 
         public override string ToString()
         {
-            return $"{nameof(ProjectileFactory<TProjectile, TActivationArgs, TStats>)} {_projectileKey}";
+            return $"{nameof(ProjectileFactory<TProjectile, TActivationArgs>)} {_projectileKey}";
         }
     }
 }

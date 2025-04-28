@@ -1,13 +1,12 @@
 ﻿using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class MFMissilePoolChooser : MonoBehaviour, IProjectilePoolChooser<MissileController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
+    public class MFMissilePoolChooser : MonoBehaviour, IProjectilePoolChooser<MissileController, ProjectileActivationArgs>
     {
-        public Pool<MissileController, TargetProviderActivationArgs<ProjectileStats>> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
+        public Pool<MissileController, ProjectileActivationArgs> ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             return projectilePoolProvider.MissilesMFPool;
         }

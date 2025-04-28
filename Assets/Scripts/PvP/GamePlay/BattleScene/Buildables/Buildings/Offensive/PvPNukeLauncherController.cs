@@ -129,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ITargetFilter targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
             _launchedNuke.Initialise();
             _launchedNuke.Activate(
-                new TargetProviderActivationArgs<ProjectileStats>(
+                new ProjectileActivationArgs(
                     transform.position + NUKE_SPAWN_POSITION_ADJUSTMENT,
                     _nukeStats,
                     Vector2.zero,

@@ -11,7 +11,7 @@ using UnityEngine;
 namespace BattleCruisers.Projectiles
 {
     public class NukeController :
-        ProjectileWithTrail<TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>,
+        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
         ITargetProvider
     {
         private ProjectileStats _nukeStats;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Projectiles
 
         public ITarget Target { get; private set; }
 
-        public override void Activate(TargetProviderActivationArgs<ProjectileStats> activationArgs)
+        public override void Activate(ProjectileActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 

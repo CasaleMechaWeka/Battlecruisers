@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPProjectileController : PvPProjectileControllerBase<ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
+    public class PvPProjectileController : PvPProjectileControllerBase<ProjectileActivationArgs, ProjectileStats>
     {
         private SoundType _type;
         private string _name;

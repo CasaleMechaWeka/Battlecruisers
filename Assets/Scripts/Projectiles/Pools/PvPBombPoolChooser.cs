@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
-    public class PvPBombPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPBombController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
+    public class PvPBombPoolChooser : MonoBehaviour, IPvPProjectilePoolChooser<PvPBombController, ProjectileActivationArgs, ProjectileStats>
     {
 
         public bool stratBomb = false;
 
 
-        public Pool<PvPBombController, ProjectileActivationArgs<ProjectileStats>>
+        public Pool<PvPBombController, ProjectileActivationArgs>
             ChoosePool(IPvPProjectilePoolProvider projectilePoolProvider)
         {
             if (stratBomb)

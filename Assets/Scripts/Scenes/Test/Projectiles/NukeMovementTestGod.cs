@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.Test
 
             _nuke.Initialise();
             _nuke.Activate(
-                new TargetProviderActivationArgs<ProjectileStats>(
+                new ProjectileActivationArgs(
                     _nuke.Position,
                     nukeStats,
                     Vector2.zero,

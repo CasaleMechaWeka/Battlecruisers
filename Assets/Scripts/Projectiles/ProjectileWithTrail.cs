@@ -16,10 +16,10 @@ namespace BattleCruisers.Projectiles
     /// Instead, the projectile should be inert, but set the trail hang around and dissipate
     /// before deactivating completely and being recycled.
     /// </summary>
-    public abstract class ProjectileWithTrail<TActivationArgs, TStats> : ProjectileControllerBase<TActivationArgs, TStats>,
+    public abstract class ProjectileWithTrail<TActivationArgs, TStats> : ProjectileControllerBase<TActivationArgs>,
         IRemovable,
         IPoolable<TActivationArgs>
-            where TActivationArgs : ProjectileActivationArgs<TStats>
+            where TActivationArgs : ProjectileActivationArgs
             where TStats : ProjectileStats
     {
         private Collider2D _collider;

@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class SmartMissileSpawner : ProjectileSpawner<SmartMissileController, SmartMissileActivationArgs<ProjectileStats>, ProjectileStats>
+    public class SmartMissileSpawner : ProjectileSpawner<SmartMissileController, ProjectileActivationArgs>
     {
         private ProjectileStats _ProjectileStats;
 
@@ -27,14 +27,15 @@ namespace BattleCruisers.Projectiles.Spawners
         public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
         {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            SmartMissileActivationArgs<ProjectileStats> activationArgs
-                = new SmartMissileActivationArgs<ProjectileStats>(
+            ProjectileActivationArgs activationArgs
+                = new ProjectileActivationArgs(
                     transform.position,
                     _ProjectileStats,
                     missileVelocity,
                     targetFilter,
                     _parent,
                     _impactSound,
+                    null,
                     _cruiserSpecificFactories.Targets,
                     _enemyCruiser);
 

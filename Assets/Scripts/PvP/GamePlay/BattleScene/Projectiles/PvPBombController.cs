@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPBombController : PvPProjectileWithTrail<ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
+    public class PvPBombController : PvPProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>
     {
         protected override float TrailLifetimeInS => 3;
 
-        public override void Activate(ProjectileActivationArgs<ProjectileStats> activationArgs)
+        public override void Activate(ProjectileActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
             MovementController = new DummyMovementController();

@@ -8,7 +8,7 @@ using BattleCruisers.Utils.BattleScene.Pools;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Pools
 {
     public class PvPProjectileFactory<TProjectile, TActivationArgs, TStats> : IPoolableFactory<TProjectile, TActivationArgs>
-        where TActivationArgs : ProjectileActivationArgs<TStats>
+        where TActivationArgs : ProjectileActivationArgs
         where TProjectile : PvPProjectileControllerBase<TActivationArgs, TStats>
         where TStats : ProjectileStats
     {

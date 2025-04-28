@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats> : PvPPrefab,
         IRemovable,
         IPoolable<TPvPActivationArgs>
-            where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
+            where TPvPActivationArgs : ProjectileActivationArgs
             where TPvPStats : ProjectileStats
     {
         private ITargetFilter _targetFilter;

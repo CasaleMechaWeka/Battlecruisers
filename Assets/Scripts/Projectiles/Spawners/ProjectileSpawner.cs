@@ -16,10 +16,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public abstract class ProjectileSpawner<TProjectile, TProjectileArgs, TStats> : MonoBehaviour
-        where TProjectile : ProjectileControllerBase<TProjectileArgs, TStats>
-        where TProjectileArgs : ProjectileActivationArgs<TStats>
-        where TStats : ProjectileStats
+    public abstract class ProjectileSpawner<TProjectile, TProjectileArgs> : MonoBehaviour
+        where TProjectile : ProjectileControllerBase<TProjectileArgs>
+        where TProjectileArgs : ProjectileActivationArgs
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         private Pool<TProjectile, TProjectileArgs> _projectilePool;
@@ -44,7 +43,7 @@ namespace BattleCruisers.Projectiles.Spawners
             _cruiserSpecificFactories = args.CruiserSpecificFactories;
             _enemyCruiser = args.EnempCruiser;
 
-            IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs, TStats>>();
+            IProjectilePoolChooser<TProjectile, TProjectileArgs> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs>>();
             Assert.IsNotNull(poolChooser);
             _projectilePool = poolChooser.ChoosePool(FactoryProvider.PoolProviders.ProjectilePoolProvider);
 

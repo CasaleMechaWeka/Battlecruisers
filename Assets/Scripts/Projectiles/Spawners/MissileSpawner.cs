@@ -2,12 +2,11 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Projectiles.ActivationArgs;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.Utils;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class MissileSpawner : ProjectileSpawner<MissileController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
+    public class MissileSpawner : ProjectileSpawner<MissileController, ProjectileActivationArgs>
     {
         //private void Awake()
         //{
@@ -55,8 +54,8 @@ namespace BattleCruisers.Projectiles.Spawners
             }
 
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            TargetProviderActivationArgs<ProjectileStats> activationArgs
-                = new TargetProviderActivationArgs<ProjectileStats>(
+            ProjectileActivationArgs activationArgs
+                = new ProjectileActivationArgs(
                     transform.position,
                     _projectileStats,
                     missileVelocity,

@@ -18,11 +18,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public abstract class ProjectileControllerBase<TActivationArgs, TStats> : Prefab,
+    public abstract class ProjectileControllerBase<TActivationArgs> : Prefab,
         IRemovable,
         IPoolable<TActivationArgs>
-            where TActivationArgs : ProjectileActivationArgs<TStats>
-            where TStats : ProjectileStats
+            where TActivationArgs : ProjectileActivationArgs
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;

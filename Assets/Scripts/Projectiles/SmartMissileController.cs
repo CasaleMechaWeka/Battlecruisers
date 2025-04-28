@@ -29,7 +29,7 @@ namespace BattleCruisers.Projectiles
     /// Once a target has been detected turns off target detection.
     /// </summary>
     public class SmartMissileController :
-        ProjectileWithTrail<SmartMissileActivationArgs<ProjectileStats>, ProjectileStats>,
+        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
         ITargetProvider,
         ITargetConsumer
     {
@@ -50,7 +50,7 @@ namespace BattleCruisers.Projectiles
 
         private ITarget _target;
 
-        private SmartMissileActivationArgs<ProjectileStats> _activationArgs;
+        private ProjectileActivationArgs _activationArgs;
         public ITarget Target
         {
             get => _target;
@@ -95,7 +95,7 @@ namespace BattleCruisers.Projectiles
             _transform = new TransformBC(gameObject.transform);
         }
 
-        public override void Activate(SmartMissileActivationArgs<ProjectileStats> activationArgs)
+        public override void Activate(ProjectileActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
             _activationArgs = activationArgs;
@@ -125,7 +125,7 @@ namespace BattleCruisers.Projectiles
             Logging.Log(Tags.SMART_MISSILE, $"Rotation: {transform.rotation.eulerAngles}  _rigidBody.velocity: {_rigidBody.velocity}  MovementController.Velocity: {MovementController.Velocity}  activationArgs.InitialVelocityInMPerS: {activationArgs.InitialVelocityInMPerS}");
         }
 
-        private void SetupTargetProcessor(SmartMissileActivationArgs<ProjectileStats> activationArgs)
+        private void SetupTargetProcessor(ProjectileActivationArgs activationArgs)
         {
             ITargetFilter targetFilter
                 = new FactionAndTargetTypeFilter(

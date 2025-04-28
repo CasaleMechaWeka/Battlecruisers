@@ -1,15 +1,14 @@
 ﻿using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils.BattleScene.Pools;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles.Pools
 {
-    public class RocketPoolChooser : MonoBehaviour, IProjectilePoolChooser<RocketController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
+    public class RocketPoolChooser : MonoBehaviour, IProjectilePoolChooser<RocketController, ProjectileActivationArgs>
     {
         public bool isSmall = false;
 
-        public Pool<RocketController, TargetProviderActivationArgs<ProjectileStats>>
+        public Pool<RocketController, ProjectileActivationArgs>
             ChoosePool(IProjectilePoolProvider projectilePoolProvider)
         {
             if (isSmall)

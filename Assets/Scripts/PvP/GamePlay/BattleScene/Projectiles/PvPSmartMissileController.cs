@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// Once a target has been detected turns off target detection.
     /// </summary>
     public class PvPSmartMissileController :
-        PvPProjectileWithTrail<PvPSmartMissileActivationArgs<ProjectileStats>, ProjectileStats>,
+        PvPProjectileWithTrail<PvPProjectileActivationArgs, ProjectileStats>,
         ITargetProvider,
         ITargetConsumer
     {
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private ITargetProcessor _targetProcessor;
         //---> CODE BY ANUJ
         private PvPRocketTarget _rocketTarget;
-        private PvPSmartMissileActivationArgs<ProjectileStats> _activationArgs;
+        private PvPProjectileActivationArgs _activationArgs;
         //<---
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
@@ -101,7 +101,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _transform = new TransformBC(gameObject.transform);
         }
 
-        public override void Activate(PvPSmartMissileActivationArgs<ProjectileStats> activationArgs)
+        public override void Activate(PvPProjectileActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 
@@ -134,7 +134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Logging.Log(Tags.SMART_MISSILE, $"Rotation: {transform.rotation.eulerAngles}  _rigidBody.velocity: {_rigidBody.velocity}  MovementController.Velocity: {MovementController.Velocity}  activationArgs.InitialVelocityInMPerS: {activationArgs.InitialVelocityInMPerS}");
         }
 
-        private void SetupTargetProcessor(PvPSmartMissileActivationArgs<ProjectileStats> activationArgs)
+        private void SetupTargetProcessor(PvPProjectileActivationArgs activationArgs)
         {
             ITargetFilter targetFilter
                 = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(

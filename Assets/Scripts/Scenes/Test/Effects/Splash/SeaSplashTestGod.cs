@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Splash
             {
                 projectile.Initialise();
                 projectile.Activate(
-                    new ProjectileActivationArgs<ProjectileStats>(
+                    new ProjectileActivationArgs(
                         projectile.Position,
                         projectileStats,
                         Vector2.zero,

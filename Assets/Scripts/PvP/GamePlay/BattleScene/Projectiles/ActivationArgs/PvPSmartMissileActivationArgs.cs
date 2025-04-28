@@ -10,14 +10,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs
 {
-    public class PvPSmartMissileActivationArgs<TPvPStats> : ProjectileActivationArgs<TPvPStats> where TPvPStats : ProjectileStats
+    public class PvPProjectileActivationArgs : ProjectileActivationArgs
     {
         public IPvPCruiserTargetFactoriesProvider TargetFactories { get; }
         public IPvPCruiser EnempCruiser { get; }
 
-        public PvPSmartMissileActivationArgs(
+        public PvPProjectileActivationArgs(
             Vector3 position,
-            TPvPStats projectileStats,
+            ProjectileStats projectileStats,
             Vector2 initialVelocityInMPerS,
             ITargetFilter targetFilter,
             ITarget parent,

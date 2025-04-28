@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class BombSpawner : ProjectileSpawner<BombController, ProjectileActivationArgs<ProjectileStats>, ProjectileStats>
+    public class BombSpawner : ProjectileSpawner<BombController, ProjectileActivationArgs>
     {
         protected ITargetFilter _targetFilter;
 
@@ -22,8 +21,8 @@ namespace BattleCruisers.Projectiles.Spawners
         public void SpawnShell(float currentXVelocityInMPers)
         {
             Vector2 shellVelocity = new Vector2(currentXVelocityInMPers, 0);
-            ProjectileActivationArgs<ProjectileStats> activationArgs
-                = new ProjectileActivationArgs<ProjectileStats>(
+            ProjectileActivationArgs activationArgs
+                = new ProjectileActivationArgs(
                     transform.position,
                     _projectileStats,
                     shellVelocity,

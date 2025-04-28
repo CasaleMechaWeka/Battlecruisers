@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public abstract class PvPProjectileWithTrail<TPvPActivationArgs, TPvPStats> : PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats>,
         IRemovable,
         IPoolable<TPvPActivationArgs>
-            where TPvPActivationArgs : ProjectileActivationArgs<TPvPStats>
+            where TPvPActivationArgs : ProjectileActivationArgs
             where TPvPStats : ProjectileStats
     {
         private Collider2D _collider;

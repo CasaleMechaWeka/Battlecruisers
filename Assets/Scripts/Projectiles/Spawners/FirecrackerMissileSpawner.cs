@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles.Spawners
 {
-    public class FirecrackerMissileSpawner : ProjectileSpawner<RocketController, TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>
+    public class FirecrackerMissileSpawner : ProjectileSpawner<RocketController, ProjectileActivationArgs>
     {
         private ProjectileStats _rocketStats;
 
@@ -30,8 +30,8 @@ namespace BattleCruisers.Projectiles.Spawners
             Logging.Log(Tags.PROJECTILE_SPAWNER, $"spawn position: {transform.position}");
 
             Vector2 rocketVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _rocketStats.InitialVelocityInMPerS);
-            TargetProviderActivationArgs<ProjectileStats> activationArgs
-                = new TargetProviderActivationArgs<ProjectileStats>(
+            ProjectileActivationArgs activationArgs
+                = new ProjectileActivationArgs(
                     transform.position,
                     _rocketStats,
                     rocketVelocity,

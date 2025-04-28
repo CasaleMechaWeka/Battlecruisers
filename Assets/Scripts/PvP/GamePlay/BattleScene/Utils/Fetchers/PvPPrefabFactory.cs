@@ -206,7 +206,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey)
             where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
-            where TActiavtionArgs : ProjectileActivationArgs<TStats>
+            where TActiavtionArgs : ProjectileActivationArgs
             where TStats : ProjectileStats
         {
             PvPPrefab prefab = PvPPrefabCache.GetProjectile(prefabKey);

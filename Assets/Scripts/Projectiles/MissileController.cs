@@ -14,7 +14,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Projectiles
 {
     public class MissileController :
-        ProjectileWithTrail<TargetProviderActivationArgs<ProjectileStats>, ProjectileStats>,
+        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
         ITargetProvider
     {
         private IDeferrer _deferrer;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Projectiles
         protected override float TrailLifetimeInS => 3;
         public ITarget Target { get; private set; }
 
-        private TargetProviderActivationArgs<ProjectileStats> _activationArgs;
+        private ProjectileActivationArgs _activationArgs;
 
         public override void Initialise()
         {
@@ -42,7 +42,7 @@ namespace BattleCruisers.Projectiles
             Assert.IsNotNull(missile);
         }
 
-        public override void Activate(TargetProviderActivationArgs<ProjectileStats> activationArgs)
+        public override void Activate(ProjectileActivationArgs activationArgs)
         {
             _activationArgs = activationArgs;
             base.Activate(_activationArgs);

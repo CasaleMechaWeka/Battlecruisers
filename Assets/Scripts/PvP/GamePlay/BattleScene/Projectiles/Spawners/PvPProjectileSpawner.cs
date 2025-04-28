@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 {
     public abstract class PvPProjectileSpawner<TPvPProjectile, TPvPProjectileArgs, TPvPStats> : NetworkBehaviour
         where TPvPProjectile : PvPProjectileControllerBase<TPvPProjectileArgs, TPvPStats>
-        where TPvPProjectileArgs : ProjectileActivationArgs<TPvPStats>
+        where TPvPProjectileArgs : ProjectileActivationArgs
         where TPvPStats : ProjectileStats
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;

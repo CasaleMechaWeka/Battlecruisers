@@ -11,7 +11,6 @@ using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.ActivationArgs;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -155,10 +154,9 @@ namespace BattleCruisers.Utils.Fetchers
             return shipDeath;
         }
 
-        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(ProjectileKey prefabKey)
-            where TProjectile : ProjectileControllerBase<TActiavtionArgs, TStats>
-            where TActiavtionArgs : ProjectileActivationArgs<TStats>
-            where TStats : ProjectileStats
+        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs>(ProjectileKey prefabKey)
+            where TProjectile : ProjectileControllerBase<TActiavtionArgs>
+            where TActiavtionArgs : ProjectileActivationArgs
         {
 
             Prefab prefab = PrefabCache.GetProjectile(prefabKey);

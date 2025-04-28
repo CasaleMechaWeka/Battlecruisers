@@ -56,7 +56,7 @@ namespace BattleCruisers.Scenes.Test
 
             _rocket.Initialise();
             _rocket.Activate(
-                new TargetProviderActivationArgs<ProjectileStats>(
+                new ProjectileActivationArgs(
                     _rocket.Position,
                     rocketStats,
                     initialVelocity,
