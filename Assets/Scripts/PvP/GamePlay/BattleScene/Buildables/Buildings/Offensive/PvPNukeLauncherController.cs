@@ -126,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         {*/
             _launchedNuke = Instantiate(nukeMissilePrefab);
             _launchedNuke.gameObject.GetComponent<NetworkObject>().Spawn();
-            ITargetFilter targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateExactMatchTargetFilter(EnemyCruiser);
+            ITargetFilter targetFilter = new ExactMatchTargetFilter() { Target = EnemyCruiser };
             _launchedNuke.Initialise();
             _launchedNuke.Activate(
                 new ProjectileActivationArgs(

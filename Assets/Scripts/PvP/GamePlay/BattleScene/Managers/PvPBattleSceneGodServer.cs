@@ -243,12 +243,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     }
                 }*/
 
-        public void Initialise_Rest()
-        {
-            PvPFactoryProvider.Initialise_Rest();
-            Debug.Log("====> All initialized");
-        }
-
         private void RegisteredAllBuildalbesToServer()
         {
             _gameEndMonitor

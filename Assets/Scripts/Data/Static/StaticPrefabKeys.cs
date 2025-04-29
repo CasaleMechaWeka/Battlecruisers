@@ -2,8 +2,10 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BattleCruisers.Data.Static
 {
@@ -434,30 +436,95 @@ namespace BattleCruisers.Data.Static
             public static ProjectileKey Bullet { get; } = new ProjectileKey("Bullet");
             public static ProjectileKey HighCalibreBullet { get; } = new ProjectileKey("HighCalibreBullet");
             public static ProjectileKey TinyBullet { get; } = new ProjectileKey("TinyBullet");
-            public static ProjectileKey RailSlug { get; } = new ProjectileKey("RailSlug");
             public static ProjectileKey FlakBullet { get; } = new ProjectileKey("FlakBullet");
-            public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
             public static ProjectileKey ShellLarge { get; } = new ProjectileKey("ShellLarge");
             public static ProjectileKey NovaShell { get; } = new ProjectileKey("NovaShell");
             public static ProjectileKey FiveShellCluster { get; } = new ProjectileKey("FiveShellCluster");
             public static ProjectileKey RocketShell { get; } = new ProjectileKey("RocketShell");
+            public static ProjectileKey ShellSmall { get; } = new ProjectileKey("ShellSmall");
+            public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
+            public static ProjectileKey StratBomb { get; } = new ProjectileKey("StratBomb");
+            public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
+            public static ProjectileKey RocketSmall { get; } = new ProjectileKey("RocketSmall");
+            public static ProjectileKey MissileFirecracker { get; } = new ProjectileKey("MissileFirecracker");
+            public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
             public static ProjectileKey MissileSmall { get; } = new ProjectileKey("MissileSmall");
             public static ProjectileKey MissileMedium { get; } = new ProjectileKey("MissileMedium");
             public static ProjectileKey MissileMF { get; } = new ProjectileKey("MissileMF");
-            public static ProjectileKey MissileFirecracker { get; } = new ProjectileKey("MissileFirecracker");
+            public static ProjectileKey RailSlug { get; } = new ProjectileKey("RailSlug");
             public static ProjectileKey MissileLarge { get; } = new ProjectileKey("MissileLarge");
             public static ProjectileKey MissileSmart { get; } = new ProjectileKey("MissileSmart");
-            public static ProjectileKey Bomb { get; } = new ProjectileKey("Bomb");
-            public static ProjectileKey StratBomb { get; } = new ProjectileKey("StratBomb");
-            public static ProjectileKey Nuke { get; } = new ProjectileKey("Nuke");
-            public static ProjectileKey Rocket { get; } = new ProjectileKey("Rocket");
-            public static ProjectileKey RocketSmall { get; } = new ProjectileKey("RocketSmall");
+
+            public static IPrefabKey[] Shells = new IPrefabKey[]
+            {
+                Bullet,
+                HighCalibreBullet,
+                TinyBullet,
+                FlakBullet,
+                ShellLarge,
+                NovaShell,
+                FiveShellCluster,
+                RocketShell,
+                ShellSmall
+            };
+
+            public static IPrefabKey[] Bombs = new IPrefabKey[]
+            {
+                Bomb,
+                StratBomb
+            };
+
+            public static IPrefabKey[] Rockets = new IPrefabKey[]
+            {
+                Rocket,
+                RocketSmall,
+                MissileFirecracker, // <-- yes, this is using a RocketController!
+                Nuke,
+            };
+
+            public static IPrefabKey[] Missiles = new IPrefabKey[]
+            {
+                MissileSmall,
+                MissileMedium,
+                MissileMF,
+                RailSlug,
+                MissileLarge,
+                MissileSmart
+            };
+
+            public static IPrefabKey[][] AllKeysByCategory = new IPrefabKey[][]
+            {
+                Shells,
+                Bombs,
+                Rockets,
+                Missiles,
+            };
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                Bullet, HighCalibreBullet, TinyBullet, RailSlug, FlakBullet, ShellSmall, ShellLarge, NovaShell, FiveShellCluster, RocketShell, MissileSmall,
-                MissileMedium, MissileMF, MissileLarge, MissileSmart, MissileFirecracker, Bomb, StratBomb, Nuke, Rocket, RocketSmall
+                // Shells
+                HighCalibreBullet, TinyBullet, FlakBullet, ShellLarge, NovaShell, FiveShellCluster, RocketShell, ShellSmall,
+                // Bombs
+                Bomb, StratBomb,
+                // Rockets
+                Rocket, RocketSmall, MissileFirecracker, Nuke,
+                // Missiles
+                MissileSmall, MissileMedium, MissileMF, RailSlug, MissileLarge, MissileSmart
             });
+
+            public static ProjectileControllerType GetProjectileControllerType(ProjectileType projectileType)
+            {
+                for (int i = 0; i < AllKeysByCategory.Length; i++)
+                    if (AllKeysByCategory[i].Contains(GetKey(projectileType)))
+                        return (ProjectileControllerType)i;
+
+                throw new Exception();
+            }
+
+            public static IPrefabKey GetKey(ProjectileType projectileType)
+            {
+                return AllKeys[(int)projectileType];
+            }
         }
 
         public static class ShipDeaths
@@ -484,6 +551,39 @@ namespace BattleCruisers.Data.Static
         }
 
         public static IPrefabKey AudioSource { get; } = new GenericKey("AudioSource", "UI/Sound");
+    }
+
+    public enum ProjectileControllerType
+    {
+        ProjectileController,
+        BombController,
+        RocketController,
+        MissileController
+    }
+
+    public enum ProjectileType
+    {
+        Bullet = 0,
+        HighCalibreBullet = 1,
+        TinyBullet = 2,
+        FlakBullet = 3,
+        ShellLarge = 4,
+        NovaShell = 5,
+        FiveShellCluster = 6,
+        RocketShell = 7,
+        ShellSmall = 8,
+        Bomb = 9,
+        StratBomb = 10,
+        Rocket = 11,
+        RocketSmall = 12,
+        MissileFirecracker = 13,
+        Nuke = 14,
+        MissileSmall = 15,
+        MissileMedium = 16,
+        MissileMF = 17,
+        RailSlug = 18,
+        MissileLarge = 19,
+        MissileSmart = 20,
     }
 
     public enum ShipDeathType

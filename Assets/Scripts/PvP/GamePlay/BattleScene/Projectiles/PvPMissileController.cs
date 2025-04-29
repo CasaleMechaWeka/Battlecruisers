@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
@@ -20,9 +19,7 @@ using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPMissileController :
-        PvPProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
-        ITargetProvider
+    public class PvPMissileController : PvPProjectileWithTrail<ProjectileActivationArgs>, ITargetProvider
     {
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;

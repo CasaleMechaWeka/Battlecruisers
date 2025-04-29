@@ -21,11 +21,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public abstract class PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats> : PvPPrefab,
+    public abstract class PvPProjectileControllerBase<TPvPActivationArgs> : PvPPrefab,
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : ProjectileActivationArgs
-            where TPvPStats : ProjectileStats
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;

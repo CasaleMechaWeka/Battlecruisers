@@ -226,7 +226,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return;
             }
 
-            ITargetProvider cruiserTarget = _cruiserSpecificFactories.Targets.ProviderFactory.CreateStaticTargetProvider(kamikazeTarget);
+            ITargetProvider cruiserTarget = new StaticTargetProvider(kamikazeTarget);
             ActiveMovementController = new HomingMovementController(rigidBody, this, cruiserTarget);
 
             UpdateFaction(kamikazeTarget);

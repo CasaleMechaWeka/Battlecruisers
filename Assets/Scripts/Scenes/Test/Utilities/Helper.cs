@@ -248,7 +248,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             targetFactories.TargetProcessorFactory.BomberTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.OffensiveBuildableTargetProcessor.Returns(targetProcessor);
             targetFactories.TargetProcessorFactory.StaticTargetProcessor.Returns(staticTargetProcessor);
-            targetFactories.TargetProcessorFactory.CreateTargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
+            new TargetProcessor(null).ReturnsForAnyArgs(targetProcessor);
 
             // Trackers
             targetFactories.TargetTrackerFactory.CreateRankedTargetTracker(null, null).ReturnsForAnyArgs(targetTracker);

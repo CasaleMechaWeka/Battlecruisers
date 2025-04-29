@@ -7,9 +7,9 @@ using UnityEngine;
 namespace BattleCruisers.Buildables.Buildings
 {
     public enum BuildingCategory
-	{
-		Factory, Defence, Offence, Tactical, Ultra
-	}
+    {
+        Factory, Defence, Offence, Tactical, Ultra
+    }
 
     // Explicitly set integer values, because the Unity inspector binds
     // to the integer values.  So now, if I decide to modify the enum
@@ -20,7 +20,7 @@ namespace BattleCruisers.Buildables.Buildings
         Generic = 0,
         AntiAir = 1,
         AntiShip = 2,
-        Shield = 3  
+        Shield = 3
     }
 
     public interface IBuilding : IBuildable, IPoolable<BuildingActivationArgs>
@@ -45,11 +45,5 @@ namespace BattleCruisers.Buildables.Buildings
         void OverwriteComparableItem(string name, string description);
         int variantIndex { get; set; }
         void ApplyVariantStats(StatVariant statVariant);
-    }
-    public enum ProjectileType 
-    {
-        Laser = 0,
-        Shell =  1,
-        Rocket = 2 
     }
 }

@@ -1,6 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -30,10 +30,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         {
             PvPHelper.AssertIsNotNull(friendDetector, parentUnit);
 
-            _isInFrontFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = new PvPTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingFriendlyTypes = new List<TargetType>() { TargetType.Ships };
-            ITargetFilter friendFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(parentUnit.Faction, blockingFriendlyTypes);
+            ITargetFilter friendFilter = new FactionAndTargetTypeFilter(parentUnit.Faction, blockingFriendlyTypes);
             _friendFinder = new RangedTargetFinder(friendDetector, friendFilter);
 
             _friendFinder.TargetFound += OnFriendFound;

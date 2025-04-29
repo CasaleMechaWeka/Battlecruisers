@@ -156,7 +156,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             ITargetRanker followableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker followableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
-            _followableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(followableTargetTracker);
+            _followableTargetProcessor = new TargetProcessor(followableTargetTracker);
             _followableTargetProcessor.AddTargetConsumer(this);
 
             // Detect shootable enemies
@@ -169,7 +169,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             ITargetRanker shootableTargetRanker = _targetFactories.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker shootableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
-            _shootableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
+            _shootableTargetProcessor = new TargetProcessor(shootableTargetTracker);
             _shootableTargetProcessor.AddTargetConsumer(_barrelController);
         }
 

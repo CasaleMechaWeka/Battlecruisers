@@ -2,13 +2,11 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Explosions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 using Unity.Netcode;
 using System.Threading.Tasks;
@@ -31,15 +29,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public static class PvPPrefabFactory
     {
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
+        static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 20, 20, 10, 10, 16, 10, 10, 10, 10, 6, 6 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
+        static Stack<PvPProjectileControllerBase<ProjectileActivationArgs>>[] projectilePool;
         static Stack<IDroneController> dronePool;
         static Stack<IPoolable<Vector3>>[] shipDeathPool;
 
         public static void CreatePools()
         {
-            dronePool = new Stack<IDroneController>();
             Assert.IsTrue(explosionPoolTargets.Length == PvPStaticPrefabKeys.PvPExplosions.AllKeys.Count);
+            Assert.IsTrue(projectilePoolTargets.Length == PvPStaticPrefabKeys.PvPProjectiles.AllKeys.Count);
+
+            dronePool = new Stack<IDroneController>();
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
+            projectilePool = new Stack<PvPProjectileControllerBase<ProjectileActivationArgs>>[projectilePoolTargets.Length];
             shipDeathPool = new Stack<IPoolable<Vector3>>[PvPStaticPrefabKeys.PvPShipDeaths.AllKeys.Count];
 
             for (int i = 0; i < explosionPoolTargets.Length; i++)
@@ -54,11 +57,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 shipDeathPool[i] = new Stack<IPoolable<Vector3>>();
                 shipDeathPool[i].Push(CreateShipDeath((PvPShipDeathType)i));
             }
+
+            for (int i = 0; i < projectilePoolTargets.Length; i++)
+            {
+                projectilePool[i] = new Stack<PvPProjectileControllerBase<ProjectileActivationArgs>>();
+                PvPProjectileControllerType controllerType = PvPStaticPrefabKeys.PvPProjectiles.GetProjectileControllerType((PvPProjectileType)i);
+
+                for (int j = 0; j < projectilePoolTargets[i]; j++)
+                    switch (controllerType)
+                    {
+                        case PvPProjectileControllerType.ProjectileController:
+                            projectilePool[i].Push(CreateProjectile<PvPProjectileController>((PvPProjectileType)i));
+                            break;
+                        case PvPProjectileControllerType.BombController:
+                            projectilePool[i].Push(CreateProjectile<PvPBombController>((PvPProjectileType)i));
+                            break;
+                        case PvPProjectileControllerType.RocketController:
+                            projectilePool[i].Push(CreateProjectile<PvPRocketController>((PvPProjectileType)i));
+                            break;
+                        case PvPProjectileControllerType.MissileController:
+                            projectilePool[i].Push(CreateProjectile<PvPMissileController>((PvPProjectileType)i));
+                            break;
+                        default: throw new ArgumentException();
+                    }
+            }
         }
         public static void ClearPool()
         {
             dronePool = null;
             explosionPool = null;
+            projectilePool = null;
+            shipDeathPool = null;
         }
 
 
@@ -204,15 +233,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return shipDeath;
         }
 
-        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs, TStats>(PvPProjectileKey prefabKey)
-            where TProjectile : PvPProjectileControllerBase<TActiavtionArgs, TStats>
-            where TActiavtionArgs : ProjectileActivationArgs
-            where TStats : ProjectileStats
+        public static TProjectile CreateProjectile<TProjectile>(PvPProjectileType projectileType)
+            where TProjectile : PvPProjectileControllerBase<ProjectileActivationArgs>
         {
-            PvPPrefab prefab = PvPPrefabCache.GetProjectile(prefabKey);
+            PvPPrefab prefab = PvPPrefabCache.GetProjectile(PvPStaticPrefabKeys.PvPProjectiles.GetKey(projectileType));
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.GetComponent<NetworkObject>().Spawn();
             projectile.Initialise();
+            projectile.Deactivated += (object sender, EventArgs e) => { projectilePool[(int)projectileType].Push(projectile); };
+
+            return projectile;
+        }
+
+        public static TProjectile GetProjectile<TProjectile>(PvPProjectileType projectileType, ProjectileActivationArgs activationArgs)
+            where TProjectile : PvPProjectileControllerBase<ProjectileActivationArgs>
+        {
+            TProjectile projectile;
+
+            if (projectilePool[(int)projectileType].Count > 0)
+                projectile = (TProjectile)projectilePool[(int)projectileType].Pop();
+            else
+                projectile = CreateProjectile<TProjectile>(projectileType);
+
+            projectile.Activate(activationArgs);
             return projectile;
         }
 

@@ -139,7 +139,7 @@ namespace BattleCruisers.Projectiles
 
             ITargetRanker targetRanker = FactoryProvider.Targets.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
-            _targetProcessor = activationArgs.TargetFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
+            _targetProcessor = new TargetProcessor(_targetTracker);
             _targetProcessor.AddTargetConsumer(this);
         }
 

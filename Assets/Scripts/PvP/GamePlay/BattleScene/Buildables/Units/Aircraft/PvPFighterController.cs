@@ -122,7 +122,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 IPvPBarrelControllerArgs args
                     = new PvPBarrelControllerArgs(
                         updater,
-                        PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, AttackCapabilities),
+                        new FactionAndTargetTypeFilter(enemyFaction, AttackCapabilities),
                         new LinearTargetPositionPredictor(),
                         new AngleCalculator(),
                         new AccuracyAdjuster((0, 0)),
@@ -176,16 +176,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     PvPTargetFactoriesProvider.RangeCalculatorProvider.BasicCalculator);
             Faction enemyFaction = PvPHelper.GetOppositeFaction(Faction);
             IList<TargetType> targetTypesToFollow = new List<TargetType>() { TargetType.Aircraft };
-            ITargetFilter targetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFollow);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(enemyFaction, targetTypesToFollow);
             _followableTargetFinder = new RangedTargetFinder(_followableEnemyDetectorProvider.TargetDetector, targetFilter);
 
             ITargetRanker followableTargetRanker = PvPTargetFactoriesProvider.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker followableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_followableTargetFinder, followableTargetRanker);
-            _followableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(followableTargetTracker);
+            _followableTargetProcessor = new TargetProcessor(followableTargetTracker);
             _followableTargetProcessor.AddTargetConsumer(this);
 
             // Detect shootable enemies
-            _exactMatchTargetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateMulitpleExactMatchTargetFilter();
+            _exactMatchTargetFilter = new MultipleExactMatchesTargetFilter();
             _followableTargetProcessor.AddTargetConsumer(_exactMatchTargetFilter);
 
             _shootableEnemeyDetectorProvider
@@ -197,7 +197,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             ITargetRanker shootableTargetRanker = PvPTargetFactoriesProvider.RankerFactory.EqualTargetRanker;
             IRankedTargetTracker shootableTargetTracker = _cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(_shootableTargetFinder, shootableTargetRanker);
-            _shootableTargetProcessor = _cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(shootableTargetTracker);
+            _shootableTargetProcessor = new TargetProcessor(shootableTargetTracker);
             _shootableTargetProcessor.AddTargetConsumer(_barrelController);
         }
 

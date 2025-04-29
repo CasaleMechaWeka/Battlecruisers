@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Stats;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -26,9 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// But it can only subclass one of these.  Hence subclass ProjectileController, and
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
-    public class PvPRocketController :
-        PvPProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
-        ITargetProvider
+    public class PvPRocketController : PvPProjectileWithTrail<ProjectileActivationArgs>, ITargetProvider
     {
         private PvPRocketTarget _rocketTarget;
 

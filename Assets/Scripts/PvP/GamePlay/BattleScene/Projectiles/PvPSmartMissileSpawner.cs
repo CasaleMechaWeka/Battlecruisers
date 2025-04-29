@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
+using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPSmartMissileSpawner : PvPProjectileSpawner<PvPSmartMissileController, PvPProjectileActivationArgs, ProjectileStats>
+    public class PvPSmartMissileSpawner : PvPProjectileSpawner<PvPSmartMissileController, ProjectileActivationArgs, ProjectileStats>
     {
         private ProjectileStats _ProjectileStats;
 
@@ -26,14 +26,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public void SpawnMissile(float angleInDegrees, bool isSourceMirrored, ITargetFilter targetFilter)
         {
             Vector2 missileVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
-            PvPProjectileActivationArgs activationArgs
-                = new PvPProjectileActivationArgs(
+            ProjectileActivationArgs activationArgs
+                = new ProjectileActivationArgs(
                     transform.position,
                     _ProjectileStats,
                     missileVelocity,
                     targetFilter,
                     _parent,
                     _impactSound,
+                    null,
                     _cruiserSpecificFactories.Targets,
                     _enemyCruiser);
 

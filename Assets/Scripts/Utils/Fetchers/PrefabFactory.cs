@@ -23,16 +23,21 @@ namespace BattleCruisers.Utils.Fetchers
     public static class PrefabFactory
     {
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
+        static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 20, 20, 10, 10, 16, 10, 10, 10, 10, 6, 6 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
+        static Stack<ProjectileControllerBase<ProjectileActivationArgs>>[] projectilePool;
         static Stack<IDroneController> dronePool;
         static Stack<IPoolable<Vector3>>[] shipDeathPool;
 
         public static void CreatePools()
         {
+            Assert.IsTrue(explosionPoolTargets.Length == StaticPrefabKeys.Explosions.AllKeys.Count);
+            Assert.IsTrue(projectilePoolTargets.Length == StaticPrefabKeys.Projectiles.AllKeys.Count);
+
             dronePool = new Stack<IDroneController>();
 
-            Assert.IsTrue(explosionPoolTargets.Length == StaticPrefabKeys.Explosions.AllKeys.Count);
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
+            projectilePool = new Stack<ProjectileControllerBase<ProjectileActivationArgs>>[projectilePoolTargets.Length];
             shipDeathPool = new Stack<IPoolable<Vector3>>[StaticPrefabKeys.ShipDeaths.AllKeys.Count];
 
             for (int i = 0; i < explosionPoolTargets.Length; i++)
@@ -40,6 +45,30 @@ namespace BattleCruisers.Utils.Fetchers
                 explosionPool[i] = new Stack<IPoolable<Vector3>>();
                 for (int j = 0; j < explosionPoolTargets[i]; j++)
                     explosionPool[i].Push(CreateExplosion((ExplosionType)i));
+            }
+
+            for (int i = 0; i < projectilePoolTargets.Length; i++)
+            {
+                projectilePool[i] = new Stack<ProjectileControllerBase<ProjectileActivationArgs>>();
+                ProjectileControllerType controllerType = StaticPrefabKeys.Projectiles.GetProjectileControllerType((ProjectileType)i);
+
+                for (int j = 0; j < projectilePoolTargets[i]; j++)
+                    switch (controllerType)
+                    {
+                        case ProjectileControllerType.ProjectileController:
+                            projectilePool[i].Push(CreateProjectile<ProjectileController>((ProjectileType)i));
+                            break;
+                        case ProjectileControllerType.BombController:
+                            projectilePool[i].Push(CreateProjectile<BombController>((ProjectileType)i));
+                            break;
+                        case ProjectileControllerType.RocketController:
+                            projectilePool[i].Push(CreateProjectile<RocketController>((ProjectileType)i));
+                            break;
+                        case ProjectileControllerType.MissileController:
+                            projectilePool[i].Push(CreateProjectile<MissileController>((ProjectileType)i));
+                            break;
+                        default: throw new ArgumentException();
+                    }
             }
 
             for (int i = 0; i < shipDeathPool.Length; i++)
@@ -53,6 +82,7 @@ namespace BattleCruisers.Utils.Fetchers
         {
             dronePool = null;
             explosionPool = null;
+            projectilePool = null;
             shipDeathPool = null;
         }
 
@@ -135,7 +165,7 @@ namespace BattleCruisers.Utils.Fetchers
             ShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
 
             IPoolable<Vector3> shipDeath = newShipDeath.CreateShipDeath();
-            shipDeath.Deactivated += (object sender, EventArgs e) => { Debug.Log("PUSH"); shipDeathPool[(int)deathType].Push(shipDeath); };
+            shipDeath.Deactivated += (object sender, EventArgs e) => { shipDeathPool[(int)deathType].Push(shipDeath); };
 
             return shipDeath;
         }
@@ -153,14 +183,28 @@ namespace BattleCruisers.Utils.Fetchers
             return shipDeath;
         }
 
-        public static TProjectile CreateProjectile<TProjectile, TActiavtionArgs>(ProjectileKey prefabKey)
-            where TProjectile : ProjectileControllerBase<TActiavtionArgs>
-            where TActiavtionArgs : ProjectileActivationArgs
+        public static TProjectile CreateProjectile<TProjectile>(ProjectileType projectileType)
+            where TProjectile : ProjectileControllerBase<ProjectileActivationArgs>
         {
-
-            Prefab prefab = PrefabCache.GetProjectile(prefabKey);
+            Prefab prefab = PrefabCache.GetProjectile(StaticPrefabKeys.Projectiles.GetKey(projectileType));
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.Initialise();
+            projectile.Deactivated += (object sender, EventArgs e) => { projectilePool[(int)projectileType].Push(projectile); };
+
+            return projectile;
+        }
+
+        public static TProjectile GetProjectile<TProjectile>(ProjectileType projectileType, ProjectileActivationArgs activationArgs)
+            where TProjectile : ProjectileControllerBase<ProjectileActivationArgs>
+        {
+            TProjectile projectile;
+
+            if (projectilePool[(int)projectileType].Count > 0)
+                projectile = (TProjectile)projectilePool[(int)projectileType].Pop();
+            else
+                projectile = CreateProjectile<TProjectile>(projectileType);
+
+            projectile.Activate(activationArgs);
             return projectile;
         }
 

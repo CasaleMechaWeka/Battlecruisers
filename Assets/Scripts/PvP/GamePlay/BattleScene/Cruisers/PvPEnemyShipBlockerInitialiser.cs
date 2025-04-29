@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetDetectors;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             ITargetFinder targetFinder
                 = new RangedTargetFinder(
                     targetDetectorController,
-                    PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, targetTypesToFind));
+                    new FactionAndTargetTypeFilter(enemyFaction, targetTypesToFind));
 
             return targetTrackerFactory.CreateTargetTracker(targetFinder);
         }

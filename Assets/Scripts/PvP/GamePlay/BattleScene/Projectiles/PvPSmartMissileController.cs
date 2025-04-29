@@ -1,9 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.ActivationArgs;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -22,6 +20,7 @@ using Unity.Netcode;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Projectiles;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
@@ -32,8 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// 
     /// Once a target has been detected turns off target detection.
     /// </summary>
-    public class PvPSmartMissileController :
-        PvPProjectileWithTrail<PvPProjectileActivationArgs, ProjectileStats>,
+    public class PvPSmartMissileController : PvPProjectileWithTrail<ProjectileActivationArgs>,
         ITargetProvider,
         ITargetConsumer
     {
@@ -46,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private ITargetProcessor _targetProcessor;
         //---> CODE BY ANUJ
         private PvPRocketTarget _rocketTarget;
-        private PvPProjectileActivationArgs _activationArgs;
+        private ProjectileActivationArgs _activationArgs;
         //<---
 
         private const float MISSILE_POST_TARGET_DESTROYED_LIFETIME_IN_S = 0.5f;
@@ -101,13 +99,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _transform = new TransformBC(gameObject.transform);
         }
 
-        public override void Activate(PvPProjectileActivationArgs activationArgs)
+        public override void Activate(ProjectileActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 
             _activationArgs = activationArgs;
 
-            Target = activationArgs.EnempCruiser;
+            Target = activationArgs.EnemyCruiser;
 
             _deferrer = PvPFactoryProvider.DeferrerProvider.Deferrer;
 
@@ -134,12 +132,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             Logging.Log(Tags.SMART_MISSILE, $"Rotation: {transform.rotation.eulerAngles}  _rigidBody.velocity: {_rigidBody.velocity}  MovementController.Velocity: {MovementController.Velocity}  activationArgs.InitialVelocityInMPerS: {activationArgs.InitialVelocityInMPerS}");
         }
 
-        private void SetupTargetProcessor(PvPProjectileActivationArgs activationArgs)
+        private void SetupTargetProcessor(ProjectileActivationArgs activationArgs)
         {
-            ITargetFilter targetFilter
-                = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(
-                    activationArgs.EnempCruiser.Faction,
-                    activationArgs.ProjectileStats.AttackCapabilities);
+            ITargetFilter targetFilter = new FactionAndTargetTypeFilter(activationArgs.EnemyCruiser.Faction, activationArgs.ProjectileStats.AttackCapabilities);
             _enemyDetectorProvider
                 = activationArgs.TargetFactories.DetectorFactory.CreateEnemyShipAndAircraftTargetDetector(
                     _transform,
@@ -149,13 +144,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
             ITargetRanker targetRanker = PvPTargetFactoriesProvider.RankerFactory.EqualTargetRanker;
             _targetTracker = activationArgs.TargetFactories.TrackerFactory.CreateRankedTargetTracker(_targetFinder, targetRanker);
-            _targetProcessor = activationArgs.TargetFactories.ProcessorFactory.CreateTargetProcessor(_targetTracker);
+            _targetProcessor = new TargetProcessor(_targetTracker);
             _targetProcessor.AddTargetConsumer(this);
         }
 
         private void Retarget()
         {
-            Target = _activationArgs.EnempCruiser;
+            Target = _activationArgs.EnemyCruiser;
 
             SetupTargetProcessor(_activationArgs);
         }

@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -22,8 +21,8 @@ namespace BattleCruisers.Projectiles
         public ITarget Target { get; }
 
         // Smart
-        public CruiserTargetFactoriesProvider TargetFactories { get; }
-        public ICruiser EnemyCruiser { get; }
+        public ICruiserTargetFactoriesProvider TargetFactories { get; }
+        public ITarget EnemyCruiser { get; }
 
         public ProjectileActivationArgs(
             Vector3 position,
@@ -33,8 +32,8 @@ namespace BattleCruisers.Projectiles
             ITarget parent,
             AudioClipWrapper impactSound,
             ITarget target = null,
-            CruiserTargetFactoriesProvider targetFactories = null,
-            ICruiser enemyCruiser = null)
+            ICruiserTargetFactoriesProvider targetFactories = null,
+            ITarget enemyCruiser = null)
         {
             Helper.AssertIsNotNull(projectileStats, targetFilter, parent, impactSound);
 

@@ -26,7 +26,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers
@@ -259,7 +258,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual ITargetFilter CreateTargetFilter()
         {
-            return PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(_enemyFaction, DamageCapability.AttackCapabilities);
+            return new FactionAndTargetTypeFilter(_enemyFaction, DamageCapability.AttackCapabilities);
         }
 
         protected virtual ITargetPositionPredictor CreateTargetPositionPredictor()

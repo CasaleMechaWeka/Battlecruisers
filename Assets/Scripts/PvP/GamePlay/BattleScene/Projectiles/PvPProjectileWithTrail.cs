@@ -1,7 +1,6 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Trails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.Threading;
@@ -15,11 +14,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// Instead, the projectile should be inert, but set the trail hang around and dissipate
     /// before deactivating completely and being recycled.
     /// </summary>
-    public abstract class PvPProjectileWithTrail<TPvPActivationArgs, TPvPStats> : PvPProjectileControllerBase<TPvPActivationArgs, TPvPStats>,
+    public abstract class PvPProjectileWithTrail<TPvPActivationArgs> : PvPProjectileControllerBase<TPvPActivationArgs>,
         IRemovable,
         IPoolable<TPvPActivationArgs>
             where TPvPActivationArgs : ProjectileActivationArgs
-            where TPvPStats : ProjectileStats
     {
         private Collider2D _collider;
         private IDeferrer _deferrer;

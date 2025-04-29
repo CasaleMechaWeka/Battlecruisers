@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             IRankedTargetTracker inRangeTargetTracker = args.CruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(InRangeTargetFinder, inRangeTargetRanker);
 
             // Attacking targets
-            ITargetFilter attackingTargetFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(args.EnemyFaction, args.AttackCapabilities);
+            ITargetFilter attackingTargetFilter = new FactionAndTargetTypeFilter(args.EnemyFaction, args.AttackCapabilities);
             ITargetFinder attackingTargetFinder = new AttackingTargetFinder(args.ParentTarget, attackingTargetFilter);
             ITargetRanker baseRanker = PvPTargetFactoriesProvider.RankerFactory.ShipTargetRanker;
             ITargetRanker attackingTargetRanker = PvPTargetFactoriesProvider.RankerFactory.CreateBoostedRanker(baseRanker, ATTACKING_RANK_BOOST);
@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
                     inRangeTargetTracker,
                     attackingTargetTracker,
                     args.CruiserSpecificFactories.Targets.TrackerFactory.UserChosenTargetTracker);
-            return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(compositeTracker);
+            return new TargetProcessor(compositeTracker);
         }
     }
 }

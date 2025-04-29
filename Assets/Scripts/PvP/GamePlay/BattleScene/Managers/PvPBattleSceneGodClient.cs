@@ -488,7 +488,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             if (NetworkManager.Singleton.IsHost)
             {
                 PvPBattleSceneGodServer.Instance.playerASelectedVariants = DataProvider.GameModel.PlayerLoadout.SelectedVariants;
-                PvPBattleSceneGodServer.Instance.Initialise_Rest();
             }
         }
 

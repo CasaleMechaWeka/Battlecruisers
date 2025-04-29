@@ -8,7 +8,6 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
@@ -40,12 +39,11 @@ namespace BattleCruisers.Targets.TargetProviders
         }
 
         public ShipBlockingEnemyProvider(
-            CruiserSpecificFactories cruiserSpecificFactories,
             TargetFactoriesProvider targetsFactories,
             ITargetDetector enemyDetector,
             IUnit parentUnit)
         {
-            Helper.AssertIsNotNull(cruiserSpecificFactories, targetsFactories, enemyDetector, parentUnit);
+            Helper.AssertIsNotNull(targetsFactories, enemyDetector, parentUnit);
 
             _isInFrontFilter = new TargetInFrontFilter(parentUnit);
 
@@ -55,8 +53,8 @@ namespace BattleCruisers.Targets.TargetProviders
             ITargetFinder enemyFinder = new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = targetsFactories.RankerFactory.EqualTargetRanker;
-            IRankedTargetTracker targetTracker = cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);
-            _targetProcessor = cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(targetTracker);
+            IRankedTargetTracker targetTracker = new RankedTargetTracker(enemyFinder, targetRanker);
+            _targetProcessor = new TargetProcessor(targetTracker);
 
             _targetProcessor.AddTargetConsumer(this);
         }

@@ -33,7 +33,7 @@ namespace BattleCruisers.Targets.TargetProcessors
                     inRangeTargetTracker,
                     attackingTargetTracker,
                     args.CruiserSpecificFactories.Targets.TrackerFactory.UserChosenTargetTracker);
-            return args.CruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(compositeTracker);
+            return new TargetProcessor(compositeTracker);
         }
     }
 }

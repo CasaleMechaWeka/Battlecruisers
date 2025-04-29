@@ -1,9 +1,12 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static
 {
@@ -181,31 +184,91 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPProjectileKey PvPBullet { get; } = new PvPProjectileKey("PvPBullet");
             public static PvPProjectileKey PvPHighCalibreBullet { get; } = new PvPProjectileKey("PvPHighCalibreBullet");
             public static PvPProjectileKey PvPTinyBullet { get; } = new PvPProjectileKey("PvPTinyBullet");
-            //public static PvPProjectileKey PvPRailSlug { get; } = new PvPProjectileKey("PvPRailSlug");
             public static PvPProjectileKey PvPFlakBullet { get; } = new PvPProjectileKey("PvPFlakBullet");
-            public static PvPProjectileKey PvPShellSmall { get; } = new PvPProjectileKey("PvPShellSmall");
             public static PvPProjectileKey PvPShellLarge { get; } = new PvPProjectileKey("PvPShellLarge");
             public static PvPProjectileKey PvPNovaShell { get; } = new PvPProjectileKey("PvPNovaShell");
             public static PvPProjectileKey PvPFiveShellCluster { get; } = new PvPProjectileKey("PvPFiveShellCluster");
             public static PvPProjectileKey PvPRocketShell { get; } = new PvPProjectileKey("PvPRocketShell");
+            public static PvPProjectileKey PvPShellSmall { get; } = new PvPProjectileKey("PvPShellSmall");
+            public static PvPProjectileKey PvPBomb { get; } = new PvPProjectileKey("PvPBomb");
+            public static PvPProjectileKey PvPStratBomb { get; } = new PvPProjectileKey("PvPStratBomb");
+            public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("PvPRocket");
+            public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("PvPRocketSmall");
+            public static PvPProjectileKey PvPMissileFirecracker { get; } = new PvPProjectileKey("PvPMissileFirecracker");
+            public static PvPProjectileKey PvPNuke { get; } = new PvPProjectileKey("PvPNuke");
             public static PvPProjectileKey PvPMissileSmall { get; } = new PvPProjectileKey("PvPMissileSmall");
             public static PvPProjectileKey PvPMissileMedium { get; } = new PvPProjectileKey("PvPMissileMedium");
             public static PvPProjectileKey PvPMissileMF { get; } = new PvPProjectileKey("PvPMissileMF");
-            public static PvPProjectileKey PvPMissileFirecracker { get; } = new PvPProjectileKey("PvPMissileFirecracker");
+            //public static PvPProjectileKey PvPRailSlug { get; } = new PvPProjectileKey("PvPRailSlug");
             public static PvPProjectileKey PvPMissileLarge { get; } = new PvPProjectileKey("PvPMissileLarge");
             public static PvPProjectileKey PvPMissileSmart { get; } = new PvPProjectileKey("PvPMissileSmart");
-            public static PvPProjectileKey PvPBomb { get; } = new PvPProjectileKey("PvPBomb");
-            public static PvPProjectileKey PvPStratBomb { get; } = new PvPProjectileKey("PvPStratBomb");
-            public static PvPProjectileKey PvPNuke { get; } = new PvPProjectileKey("PvPNuke");
-            public static PvPProjectileKey PvPRocket { get; } = new PvPProjectileKey("PvPRocket");
-            public static PvPProjectileKey PvPRocketSmall { get; } = new PvPProjectileKey("PvPRocketSmall");
+
+            public static IPrefabKey[] Shells = new IPrefabKey[]
+            {
+                PvPBullet,
+                PvPHighCalibreBullet,
+                PvPTinyBullet,
+                PvPFlakBullet,
+                PvPShellLarge,
+                PvPNovaShell,
+                PvPFiveShellCluster,
+                PvPRocketShell,
+                PvPShellSmall
+            };
+
+            public static IPrefabKey[] Bombs = new IPrefabKey[]
+            {
+                PvPBomb,
+                PvPStratBomb
+            };
+
+            public static IPrefabKey[] Rockets = new IPrefabKey[]
+            {
+                PvPRocket,
+                PvPRocketSmall,
+                PvPMissileFirecracker, // <-- yes, this is using a RocketController!
+                PvPNuke,
+            };
+
+            public static IPrefabKey[] Missiles = new IPrefabKey[]
+            {
+                PvPMissileSmall,
+                PvPMissileMedium,
+                PvPMissileMF,
+                //PvPRailSlug,
+                PvPMissileLarge,
+                PvPMissileSmart
+            };
+
+            public static IPrefabKey[][] AllKeysByCategory = new IPrefabKey[][]
+            {
+                Shells,
+                Bombs,
+                Rockets,
+                Missiles,
+            };
+
+            public static PvPProjectileControllerType GetProjectileControllerType(PvPProjectileType projectileType)
+            {
+                for (int i = 0; i < AllKeysByCategory.Length; i++)
+                    if (AllKeysByCategory[i].Contains(GetKey(projectileType)))
+                        return (PvPProjectileControllerType)i;
+
+                throw new Exception();
+            }
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, /*PvPRailSlug,*/ PvPFlakBullet, PvPShellSmall, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell,
-                PvPMissileSmall, PvPMissileMedium, PvPMissileMF, PvPMissileFirecracker, PvPMissileLarge, PvPMissileSmart,
-                PvPBomb, PvPStratBomb, PvPNuke, PvPRocket, PvPRocketSmall
+                PvPBullet, PvPHighCalibreBullet, PvPTinyBullet, PvPFlakBullet, PvPShellLarge, PvPNovaShell, PvPFiveShellCluster, PvPRocketShell, PvPShellSmall,
+                PvPBomb, PvPStratBomb,
+                PvPRocket, PvPRocketSmall, PvPMissileFirecracker, PvPNuke,
+                PvPMissileSmall, PvPMissileMedium, PvPMissileMF, /*PvPRailSlug,*/ PvPMissileLarge,PvPMissileSmart
             });
+
+            public static IPrefabKey GetKey(PvPProjectileType projectileType)
+            {
+                return AllKeys[(int)projectileType];
+            }
         }
 
         public static class PvPShipDeaths
@@ -288,6 +351,39 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 PvPGrapheneBarrierOutline, PvPCannonOutline, PvPBlastVLSOutline, PvPFirecrackerVLSOutline
             });
         }
+    }
+
+    public enum PvPProjectileControllerType
+    {
+        ProjectileController,
+        BombController,
+        RocketController,
+        MissileController
+    }
+
+    public enum PvPProjectileType
+    {
+        PvPBullet = 0,
+        PvPHighCalibreBullet = 1,
+        PvPTinyBullet = 2,
+        PvPRailSlug = 3,
+        PvPFlakBullet = 4,
+        PvPShellSmall = 5,
+        PvPShellLarge = 6,
+        PvPNovaShell = 7,
+        PvPFiveShellCluster = 8,
+        PvPRocketShell = 9,
+        PvPMissileSmall = 10,
+        PvPMissileMedium = 11,
+        PvPMissileMF = 12,
+        PvPMissileFirecracker = 13,
+        PvPMissileLarge = 14,
+        PvPMissileSmart = 15,
+        PvPBomb = 16,
+        PvPStratBomb = 17,
+        PvPNuke = 18,
+        PvPRocket = 19,
+        PvPRocketSmall = 20
     }
 
     public enum PvPShipDeathType

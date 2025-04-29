@@ -1,6 +1,5 @@
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Projectiles;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using Unity.Netcode;
@@ -8,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPBombController : PvPProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>
+    public class PvPBombController : PvPProjectileWithTrail<ProjectileActivationArgs>
     {
         protected override float TrailLifetimeInS => 3;
 

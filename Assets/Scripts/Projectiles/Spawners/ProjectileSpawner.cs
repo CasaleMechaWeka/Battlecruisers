@@ -1,12 +1,12 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Projectiles.Pools;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.BattleScene.Pools;
 using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,12 +16,10 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Projectiles.Spawners
 {
     public abstract class ProjectileSpawner<TProjectile, TProjectileArgs> : MonoBehaviour
-        where TProjectile : ProjectileControllerBase<TProjectileArgs>
-        where TProjectileArgs : ProjectileActivationArgs
+        where TProjectile : ProjectileControllerBase<ProjectileActivationArgs>
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
-        private Pool<TProjectile, TProjectileArgs> _projectilePool;
-
+        public ProjectileType projectileType;
         protected ITarget _parent;
         protected ProjectileStats _projectileStats;
         protected CruiserSpecificFactories _cruiserSpecificFactories;
@@ -41,10 +39,6 @@ namespace BattleCruisers.Projectiles.Spawners
             _projectileStats = args.ProjectileStats;
             _cruiserSpecificFactories = args.CruiserSpecificFactories;
             _enemyCruiser = args.EnempCruiser;
-
-            IProjectilePoolChooser<TProjectile, TProjectileArgs> poolChooser = GetComponent<IProjectilePoolChooser<TProjectile, TProjectileArgs>>();
-            Assert.IsNotNull(poolChooser);
-            _projectilePool = poolChooser.ChoosePool(FactoryProvider.PoolProviders.ProjectilePoolProvider);
 
             IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
             Assert.IsNotNull(soundPlayerInitialiser);
@@ -70,11 +64,12 @@ namespace BattleCruisers.Projectiles.Spawners
             return new Vector2(velocityX, velocityY);
         }
 
-        protected TProjectile SpawnProjectile(TProjectileArgs projectileActivationArgs)
+        protected TProjectile SpawnProjectile(ProjectileActivationArgs projectileActivationArgs)
         {
             Assert.IsNotNull(projectileActivationArgs);
 
-            TProjectile projectile = _projectilePool.GetItem(projectileActivationArgs);
+            TProjectile projectile = PrefabFactory.GetProjectile<TProjectile>(projectileType, projectileActivationArgs);
+
             if (_soundPlayer != null)
             {
                 _soundPlayer.OnProjectileFired();

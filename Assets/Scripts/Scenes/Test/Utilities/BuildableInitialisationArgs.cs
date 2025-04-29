@@ -77,7 +77,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 targetFactories?.TargetProcessorFactory ?? new TargetProcessorFactory(EnemyCruiser, userChosenTargetManager),
                 targetFactories?.TargetTrackerFactory ?? new TargetTrackerFactory(userChosenTargetManager),
                 targetFactories?.TargetDetectorFactory ?? new TargetDetectorFactory(EnemyCruiser.UnitTargets, ParentCruiser.UnitTargets, updaterProvider),
-                targetFactories?.TargetProviderFactory ?? new TargetProviderFactory(CruiserSpecificFactories, targetFactoriesProvider),
+                targetFactories?.TargetProviderFactory ?? new TargetProviderFactory(targetFactoriesProvider),
                 droneFeedbackFactory);
         }
 

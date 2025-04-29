@@ -14,17 +14,17 @@ namespace BattleCruisers.Targets.Factories
         public ITargetProcessor StaticTargetProcessor { get; }
 
         public TargetProcessorFactory(ICruiser enemyCruiser, IRankedTargetTracker userChosenTargetTracker)
-		{
+        {
             Helper.AssertIsNotNull(enemyCruiser, userChosenTargetTracker);
 
             GlobalTargetFinder globalTargetFinder = new GlobalTargetFinder(enemyCruiser);
 
-            BomberTargetProcessor 
+            BomberTargetProcessor
                 = new TargetProcessor(
                     new CompositeTracker(
                         userChosenTargetTracker,
                         new RankedTargetTracker(
-                            globalTargetFinder, 
+                            globalTargetFinder,
                             new BomberTargetRanker())));
 
             OffensiveBuildableTargetProcessor
@@ -38,11 +38,6 @@ namespace BattleCruisers.Targets.Factories
             globalTargetFinder.EmitCruiserAsGlobalTarget();
 
             StaticTargetProcessor = new StaticTargetProcessor(enemyCruiser);
-		}
-
-        public ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker)
-		{
-			return new TargetProcessor(rankedTargetTracker);
-		}
+        }
     }
 }

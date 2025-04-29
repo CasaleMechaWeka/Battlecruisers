@@ -5,7 +5,7 @@ using BattleCruisers.Utils.Factories;
 
 namespace BattleCruisers.Targets.Factories
 {
-    public class CruiserTargetFactoriesProvider
+    public class CruiserTargetFactoriesProvider : ICruiserTargetFactoriesProvider
     {
         public ITargetProcessorFactory ProcessorFactory { get; }
         public TargetTrackerFactory TrackerFactory { get; }
@@ -23,7 +23,7 @@ namespace BattleCruisers.Targets.Factories
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, FactoryProvider.UpdaterProvider);
-            ProviderFactory = new TargetProviderFactory(cruiserSpecificFactories, FactoryProvider.Targets);
+            ProviderFactory = new TargetProviderFactory(FactoryProvider.Targets);
         }
     }
 }

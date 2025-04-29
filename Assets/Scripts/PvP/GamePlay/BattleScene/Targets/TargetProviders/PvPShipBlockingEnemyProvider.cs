@@ -1,8 +1,8 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetFinders.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -42,22 +42,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         }
 
         public PvPShipBlockingEnemyProvider(
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
             ITargetDetector enemyDetector,
             IPvPUnit parentUnit)
         {
-            PvPHelper.AssertIsNotNull(cruiserSpecificFactories, enemyDetector, parentUnit);
+            PvPHelper.AssertIsNotNull(enemyDetector, parentUnit);
 
-            _isInFrontFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetInFrontFilter(parentUnit);
+            _isInFrontFilter = new PvPTargetInFrontFilter(parentUnit);
 
             IList<TargetType> blockingEnemyTypes = new List<TargetType>() { TargetType.Ships, TargetType.Cruiser, TargetType.Buildings };
             Faction enemyFaction = PvPHelper.GetOppositeFaction(parentUnit.Faction);
-            ITargetFilter enemyDetectionFilter = PvPTargetFactoriesProvider.FilterFactory.CreateTargetFilter(enemyFaction, blockingEnemyTypes);
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(enemyFaction, blockingEnemyTypes);
             ITargetFinder enemyFinder = new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
 
             ITargetRanker targetRanker = PvPTargetFactoriesProvider.RankerFactory.EqualTargetRanker;
-            IRankedTargetTracker targetTracker = cruiserSpecificFactories.Targets.TrackerFactory.CreateRankedTargetTracker(enemyFinder, targetRanker);
-            _targetProcessor = cruiserSpecificFactories.Targets.ProcessorFactory.CreateTargetProcessor(targetTracker);
+            IRankedTargetTracker targetTracker = new RankedTargetTracker(enemyFinder, targetRanker);
+            _targetProcessor = new TargetProcessor(targetTracker);
 
             _targetProcessor.AddTargetConsumer(this);
         }

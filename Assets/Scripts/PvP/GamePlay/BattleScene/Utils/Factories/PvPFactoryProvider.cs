@@ -43,11 +43,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             poolProviders.SetInitialCapacities();
         }
 
-        public static void Initialise_Rest()
-        {
-            poolProviders.SetInitialCapacities_Rest();
-        }
-
         public static void Clear()
         {
             DeferrerProvider = null;

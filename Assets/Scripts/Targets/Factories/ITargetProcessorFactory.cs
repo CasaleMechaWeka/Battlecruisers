@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Targets.TargetTrackers;
 
 namespace BattleCruisers.Targets.Factories
 {
@@ -8,6 +7,5 @@ namespace BattleCruisers.Targets.Factories
         ITargetProcessor BomberTargetProcessor { get; }
         ITargetProcessor OffensiveBuildableTargetProcessor { get; }
         ITargetProcessor StaticTargetProcessor { get; }
-        ITargetProcessor CreateTargetProcessor(IRankedTargetTracker rankedTargetTracker);
     }
 }
