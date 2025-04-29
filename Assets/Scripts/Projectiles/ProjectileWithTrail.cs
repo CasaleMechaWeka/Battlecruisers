@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Effects.Trails;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -15,11 +14,9 @@ namespace BattleCruisers.Projectiles
     /// Instead, the projectile should be inert, but set the trail hang around and dissipate
     /// before deactivating completely and being recycled.
     /// </summary>
-    public abstract class ProjectileWithTrail<TActivationArgs, TStats> : ProjectileControllerBase<TActivationArgs>,
+    public abstract class ProjectileWithTrail : ProjectileControllerBase,
         IRemovable,
-        IPoolable<TActivationArgs>
-            where TActivationArgs : ProjectileActivationArgs
-            where TStats : ProjectileStats
+        IPoolable<ProjectileActivationArgs>
     {
         private Collider2D _collider;
         private IDeferrer _deferrer;
@@ -41,7 +38,7 @@ namespace BattleCruisers.Projectiles
             _trail.Initialise();
         }
 
-        public override void Activate(TActivationArgs activationArgs)
+        public override void Activate(ProjectileActivationArgs activationArgs)
         {
             base.Activate(activationArgs);
 

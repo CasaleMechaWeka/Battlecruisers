@@ -17,7 +17,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
     public abstract class PvPProjectileSpawner<TPvPProjectile, TPvPProjectileArgs, TPvPStats> : NetworkBehaviour
-        where TPvPProjectile : PvPProjectileControllerBase<ProjectileActivationArgs>
+        where TPvPProjectile : PvPProjectileControllerBase
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         PvPProjectileType projectileType;

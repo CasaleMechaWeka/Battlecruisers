@@ -2,7 +2,6 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -12,9 +11,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public class MissileController :
-        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
-        ITargetProvider
+    public class MissileController : ProjectileWithTrail, ITargetProvider
     {
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;

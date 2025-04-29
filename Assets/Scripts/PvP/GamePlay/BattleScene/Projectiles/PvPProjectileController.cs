@@ -1,4 +1,3 @@
-using BattleCruisers.Projectiles;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using Unity.Netcode;
@@ -6,7 +5,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPProjectileController : PvPProjectileControllerBase<ProjectileActivationArgs>
+    public class PvPProjectileController : PvPProjectileControllerBase
     {
         private SoundType _type;
         private string _name;

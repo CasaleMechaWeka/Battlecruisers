@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Projectiles
 {
-    public class ProjectileController : ProjectileControllerBase<ProjectileActivationArgs>
+    public class ProjectileController : ProjectileControllerBase
     {
         public List<TargetType> AttackCapabilities { get; set; }
 

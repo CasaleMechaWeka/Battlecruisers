@@ -1,10 +1,9 @@
 ﻿using BattleCruisers.Movement.Velocity;
-using BattleCruisers.Projectiles.Stats;
 using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-    public class BombController : ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>
+    public class BombController : ProjectileWithTrail
     {
         protected override float TrailLifetimeInS => 3;
 

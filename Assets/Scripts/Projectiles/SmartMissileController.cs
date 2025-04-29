@@ -2,7 +2,6 @@
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
@@ -27,10 +26,7 @@ namespace BattleCruisers.Projectiles
     /// 
     /// Once a target has been detected turns off target detection.
     /// </summary>
-    public class SmartMissileController :
-        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
-        ITargetProvider,
-        ITargetConsumer
+    public class SmartMissileController : ProjectileWithTrail, ITargetProvider, ITargetConsumer
     {
         private ITransform _transform;
         private IDeferrer _deferrer;

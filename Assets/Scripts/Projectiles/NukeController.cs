@@ -9,9 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Projectiles
 {
-    public class NukeController :
-        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
-        ITargetProvider
+    public class NukeController : ProjectileWithTrail, ITargetProvider
     {
         private ProjectileStats _nukeStats;
         private IFlightPointsProvider _flightPointsProvider;

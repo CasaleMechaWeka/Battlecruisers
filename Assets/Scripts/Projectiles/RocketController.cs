@@ -2,7 +2,6 @@
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Projectiles.FlightPoints;
-using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Utils.Factories;
 using UnityEngine;
@@ -17,9 +16,7 @@ namespace BattleCruisers.Projectiles
     /// But it can only subclass one of these.  Hence subclass ProjectileController, and
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
-    public class RocketController :
-        ProjectileWithTrail<ProjectileActivationArgs, ProjectileStats>,
-        ITargetProvider
+    public class RocketController : ProjectileWithTrail, ITargetProvider
     {
         private RocketTarget _rocketTarget;
         public GameObject rocketSprite; //for making more complicated rocket sprites disappear on detonation

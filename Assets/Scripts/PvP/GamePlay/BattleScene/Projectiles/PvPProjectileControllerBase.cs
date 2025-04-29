@@ -21,10 +21,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public abstract class PvPProjectileControllerBase<TPvPActivationArgs> : PvPPrefab,
-        IRemovable,
-        IPoolable<TPvPActivationArgs>
-            where TPvPActivationArgs : ProjectileActivationArgs
+    public abstract class PvPProjectileControllerBase : PvPPrefab, IRemovable, IPoolable<ProjectileActivationArgs>
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
@@ -97,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        public virtual void Activate(TPvPActivationArgs activationArgs)
+        public virtual void Activate(ProjectileActivationArgs activationArgs)
         {
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
@@ -142,7 +139,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             if (needToTeleport && GetComponent<NetworkTransform>() != null)
                 GetComponent<NetworkTransform>().Teleport(activationArgs.Position, transform.rotation, transform.localScale);
         }
-        public void Activate(TPvPActivationArgs activationArgs, Faction faction)
+        public void Activate(ProjectileActivationArgs activationArgs, Faction faction)
         {
         }
 

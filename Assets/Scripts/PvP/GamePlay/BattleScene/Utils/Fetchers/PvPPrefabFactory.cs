@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
         static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 20, 20, 10, 10, 16, 10, 10, 10, 10, 6, 6 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
-        static Stack<PvPProjectileControllerBase<ProjectileActivationArgs>>[] projectilePool;
+        static Stack<PvPProjectileControllerBase>[] projectilePool;
         static Stack<IDroneController> dronePool;
         static Stack<IPoolable<Vector3>>[] shipDeathPool;
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             dronePool = new Stack<IDroneController>();
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
-            projectilePool = new Stack<PvPProjectileControllerBase<ProjectileActivationArgs>>[projectilePoolTargets.Length];
+            projectilePool = new Stack<PvPProjectileControllerBase>[projectilePoolTargets.Length];
             shipDeathPool = new Stack<IPoolable<Vector3>>[PvPStaticPrefabKeys.PvPShipDeaths.AllKeys.Count];
 
             for (int i = 0; i < explosionPoolTargets.Length; i++)
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
             for (int i = 0; i < projectilePoolTargets.Length; i++)
             {
-                projectilePool[i] = new Stack<PvPProjectileControllerBase<ProjectileActivationArgs>>();
+                projectilePool[i] = new Stack<PvPProjectileControllerBase>();
                 PvPProjectileControllerType controllerType = PvPStaticPrefabKeys.PvPProjectiles.GetProjectileControllerType((PvPProjectileType)i);
 
                 for (int j = 0; j < projectilePoolTargets[i]; j++)
@@ -234,7 +234,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         public static TProjectile CreateProjectile<TProjectile>(PvPProjectileType projectileType)
-            where TProjectile : PvPProjectileControllerBase<ProjectileActivationArgs>
+            where TProjectile : PvPProjectileControllerBase
         {
             PvPPrefab prefab = PvPPrefabCache.GetProjectile(PvPStaticPrefabKeys.PvPProjectiles.GetKey(projectileType));
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
@@ -246,7 +246,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
 
         public static TProjectile GetProjectile<TProjectile>(PvPProjectileType projectileType, ProjectileActivationArgs activationArgs)
-            where TProjectile : PvPProjectileControllerBase<ProjectileActivationArgs>
+            where TProjectile : PvPProjectileControllerBase
         {
             TProjectile projectile;
 

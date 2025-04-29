@@ -17,10 +17,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Projectiles
 {
-    public abstract class ProjectileControllerBase<TActivationArgs> : Prefab,
-        IRemovable,
-        IPoolable<TActivationArgs>
-            where TActivationArgs : ProjectileActivationArgs
+    public abstract class ProjectileControllerBase : Prefab, IRemovable, IPoolable<ProjectileActivationArgs>
     {
         private ITargetFilter _targetFilter;
         private IDamageApplier _damageApplier;
@@ -79,7 +76,7 @@ namespace BattleCruisers.Projectiles
             gameObject.SetActive(false);
         }
 
-        public virtual void Activate(TActivationArgs activationArgs)
+        public virtual void Activate(ProjectileActivationArgs activationArgs)
         {
             Logging.Log(Tags.SHELLS, $"position: {activationArgs.Position}  initial velocity: {activationArgs.InitialVelocityInMPerS}  current velocity: {_rigidBody.velocity}");
 
@@ -107,7 +104,7 @@ namespace BattleCruisers.Projectiles
             }
         }
 
-        public void Activate(TActivationArgs activationArgs, Faction faction)
+        public void Activate(ProjectileActivationArgs activationArgs, Faction faction)
         {
 
         }

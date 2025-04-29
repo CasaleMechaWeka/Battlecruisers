@@ -25,7 +25,7 @@ namespace BattleCruisers.Utils.Fetchers
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
         static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 20, 20, 10, 10, 16, 10, 10, 10, 10, 6, 6 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
-        static Stack<ProjectileControllerBase<ProjectileActivationArgs>>[] projectilePool;
+        static Stack<ProjectileControllerBase>[] projectilePool;
         static Stack<IDroneController> dronePool;
         static Stack<IPoolable<Vector3>>[] shipDeathPool;
 
@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils.Fetchers
             dronePool = new Stack<IDroneController>();
 
             explosionPool = new Stack<IPoolable<Vector3>>[explosionPoolTargets.Length];
-            projectilePool = new Stack<ProjectileControllerBase<ProjectileActivationArgs>>[projectilePoolTargets.Length];
+            projectilePool = new Stack<ProjectileControllerBase>[projectilePoolTargets.Length];
             shipDeathPool = new Stack<IPoolable<Vector3>>[StaticPrefabKeys.ShipDeaths.AllKeys.Count];
 
             for (int i = 0; i < explosionPoolTargets.Length; i++)
@@ -49,7 +49,7 @@ namespace BattleCruisers.Utils.Fetchers
 
             for (int i = 0; i < projectilePoolTargets.Length; i++)
             {
-                projectilePool[i] = new Stack<ProjectileControllerBase<ProjectileActivationArgs>>();
+                projectilePool[i] = new Stack<ProjectileControllerBase>();
                 ProjectileControllerType controllerType = StaticPrefabKeys.Projectiles.GetProjectileControllerType((ProjectileType)i);
 
                 for (int j = 0; j < projectilePoolTargets[i]; j++)
@@ -184,7 +184,7 @@ namespace BattleCruisers.Utils.Fetchers
         }
 
         public static TProjectile CreateProjectile<TProjectile>(ProjectileType projectileType)
-            where TProjectile : ProjectileControllerBase<ProjectileActivationArgs>
+            where TProjectile : ProjectileControllerBase
         {
             Prefab prefab = PrefabCache.GetProjectile(StaticPrefabKeys.Projectiles.GetKey(projectileType));
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
@@ -195,7 +195,7 @@ namespace BattleCruisers.Utils.Fetchers
         }
 
         public static TProjectile GetProjectile<TProjectile>(ProjectileType projectileType, ProjectileActivationArgs activationArgs)
-            where TProjectile : ProjectileControllerBase<ProjectileActivationArgs>
+            where TProjectile : ProjectileControllerBase
         {
             TProjectile projectile;
 

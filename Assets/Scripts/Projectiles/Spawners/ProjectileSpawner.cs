@@ -16,7 +16,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Projectiles.Spawners
 {
     public abstract class ProjectileSpawner<TProjectile, TProjectileArgs> : MonoBehaviour
-        where TProjectile : ProjectileControllerBase<ProjectileActivationArgs>
+        where TProjectile : ProjectileControllerBase
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
         public ProjectileType projectileType;
