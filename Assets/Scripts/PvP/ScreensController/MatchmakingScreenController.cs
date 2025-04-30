@@ -23,6 +23,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -100,6 +101,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public RenderTexture hostTexture, clientTexture;
         public AudioSource backgroundMusic;
         public AudioSource enemyFoundMusic;
+
+        private PostBattleScreenController postBattleScreenController;
 
         public static MatchmakingScreenController Instance { get; private set; }
 
@@ -536,6 +539,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void FailedMatchmaking()
         {
+            Debug.Log("Matchmaking failed");
             // CanceledMatchmaking();
             if (GameObject.Find("ApplicationController") != null)
                 GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
@@ -556,7 +560,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
             SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
-            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            //SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            postBattleScreenController.GoToHomeScreen();
 
             if (backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
