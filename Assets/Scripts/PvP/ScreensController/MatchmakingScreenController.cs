@@ -58,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         // private ILocTable commonStrings;
 
         public Sprite BlackRig;
+        public Sprite BasicRig;
         public Sprite Bullshark;
         public Sprite Eagle;
         public Sprite Flea;
@@ -146,6 +147,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Connection_Quality = ConnectionQuality.HIGH;
             LoadingBarParent.SetActive(false);
             sprites.Add("BlackRig", BlackRig);
+            sprites.Add("BasicRig", BasicRig);
             sprites.Add("Bullshark", Bullshark);
             sprites.Add("Eagle", Eagle);
             sprites.Add("Flea", Flea);
@@ -257,6 +259,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.Trident;
                 case "BlackRig":
                     return HullType.BlackRig;
+                case "BasicRig":
+                    return HullType.BasicRig;
                 case "Bullshark":
                     return HullType.Bullshark;
                 case "Eagle":

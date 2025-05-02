@@ -134,11 +134,12 @@ namespace BattleCruisers.Data.Static
             public static HullKey Goatherd { get; } = new HullKey("Goatherd");
             public static HullKey Megalith { get; } = new HullKey("Megalith");
             public static HullKey FortressPrime { get; } = new HullKey("FortressPrime");
+            public static HullKey BasicRig { get; } = new HullKey("BasicRig");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss,
-                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime
+                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime, BasicRig
             });
         }
 

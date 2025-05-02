@@ -48,7 +48,7 @@ namespace BattleCruisers.Buildables.Buildings
         public int variantIndex { get; set; }
         private bool isAppliedVariant = false;
         [SerializeField]
-        private List<GameObject> additionalRenderers = new List<GameObject>();
+        public List<GameObject> additionalRenderers = new List<GameObject>();
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {

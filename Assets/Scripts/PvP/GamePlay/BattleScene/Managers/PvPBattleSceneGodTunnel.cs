@@ -66,6 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static float difficultyDestructionScoreMultiplier = 1.0f;
         public static Dictionary<string, long> cruiser_scores = new Dictionary<string, long>() {
             { "BlackRig", 5800},
+            { "BasicRig", 500},
             { "Bullshark", 4000},
             { "Eagle", 2400},
             { "Flea", 4000},

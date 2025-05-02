@@ -31,6 +31,8 @@ namespace BattleCruisers.Utils
         Hull_Goatherd = 0016,
         Hull_Megalith = 0017,
 
+        Hull_BasicRig= 0018,
+
         // === Buildings ===
         // Factories
         Building_AirFactory = 0100,

@@ -1,5 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Pools;
@@ -151,6 +152,23 @@ namespace BattleCruisers.Buildables
 
                 _buildableProgress.FillableImage.color = value;
                 _buildableProgress.OutlineImage.color = value;
+                
+                // Apply color to additional renderers in Building objects
+                Building building = this as Building;
+                if (building != null && building.additionalRenderers != null)
+                {
+                    foreach (GameObject obj in building.additionalRenderers)
+                    {
+                        if (obj != null)
+                        {
+                            SpriteRenderer[] renderers = obj.GetComponentsInChildren<SpriteRenderer>();
+                            foreach (SpriteRenderer sr in renderers)
+                            {
+                                sr.color = value;
+                            }
+                        }
+                    }
+                }
             }
         }
 
