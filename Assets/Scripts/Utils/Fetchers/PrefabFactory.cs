@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
@@ -23,7 +23,7 @@ namespace BattleCruisers.Utils.Fetchers
     public static class PrefabFactory
     {
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
-        static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 20, 20, 10, 10, 16, 10, 10, 10, 10, 6, 6 };
+        static int[] projectilePoolTargets = new int[21] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 5, 20, 20, 10, 10, 1, 10, 10, 10, 10, 6, 6 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
         static Stack<ProjectileControllerBase>[] projectilePool;
         static Stack<IDroneController> dronePool;
@@ -66,6 +66,12 @@ namespace BattleCruisers.Utils.Fetchers
                             break;
                         case ProjectileControllerType.MissileController:
                             projectilePool[i].Push(CreateProjectile<MissileController>((ProjectileType)i));
+                            break;
+                        case ProjectileControllerType.NukeController:
+                            projectilePool[i].Push(CreateProjectile<NukeController>((ProjectileType)i));
+                            break;
+                        case ProjectileControllerType.SmartMissileController:
+                            projectilePool[i].Push(CreateProjectile<SmartMissileController>((ProjectileType)i));
                             break;
                         default: throw new ArgumentException();
                     }
@@ -187,6 +193,9 @@ namespace BattleCruisers.Utils.Fetchers
             where TProjectile : ProjectileControllerBase
         {
             Prefab prefab = PrefabCache.GetProjectile(StaticPrefabKeys.Projectiles.GetKey(projectileType));
+            Debug.Log(typeof(TProjectile));
+            Debug.Log(projectileType);
+            Debug.Log(prefab.gameObject);
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.Initialise();
             projectile.Deactivated += (object sender, EventArgs e) => { projectilePool[(int)projectileType].Push(projectile); };

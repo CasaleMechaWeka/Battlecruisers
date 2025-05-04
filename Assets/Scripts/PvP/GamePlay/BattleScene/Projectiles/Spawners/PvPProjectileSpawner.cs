@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         where TPvPProjectile : PvPProjectileControllerBase
     {
         private IProjectileSpawnerSoundPlayer _soundPlayer;
-        PvPProjectileType projectileType;
+        public PvPProjectileType projectileType;
 
         protected ITarget _parent;
         protected ProjectileStats _projectileStats;

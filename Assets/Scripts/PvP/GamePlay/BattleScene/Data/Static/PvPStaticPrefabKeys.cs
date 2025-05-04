@@ -227,7 +227,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 PvPRocket,
                 PvPRocketSmall,
                 PvPMissileFirecracker, // <-- yes, this is using a RocketController!
-                PvPNuke,
             };
 
             public static IPrefabKey[] Missiles = new IPrefabKey[]
@@ -237,6 +236,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 PvPMissileMF,
                 //PvPRailSlug,
                 PvPMissileLarge,
+            };
+
+            public static IPrefabKey[] Nukes = new IPrefabKey[]
+            {
+                PvPNuke
+            };
+
+            public static IPrefabKey[] SmartMissiles = new IPrefabKey[]
+            {
                 PvPMissileSmart
             };
 
@@ -246,6 +254,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
                 Bombs,
                 Rockets,
                 Missiles,
+                Nukes,
+                SmartMissiles
             };
 
             public static PvPProjectileControllerType GetProjectileControllerType(PvPProjectileType projectileType)
@@ -358,7 +368,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
         ProjectileController,
         BombController,
         RocketController,
-        MissileController
+        MissileController,
+        NukeController,
+        SmartMissileController
     }
 
     public enum PvPProjectileType

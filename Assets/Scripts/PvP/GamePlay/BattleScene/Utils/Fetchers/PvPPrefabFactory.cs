@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     public static class PvPPrefabFactory
     {
         static int[] explosionPoolTargets = new int[15] { 5, 5, 50, 10, 5, 10, 10, 5, 5, 10, 2, 4, 10, 1, 10 };
-        static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 20, 20, 10, 10, 16, 10, 10, 10, 10, 6, 6 };
+        static int[] projectilePoolTargets = new int[20] { 20, 20, 50, 20, 5, 5, 5, 5, 5, 5, 20, 20, 10, 10, 1, 10, 10, 10, /*10, */ 6, 6 };
         static Stack<IPoolable<Vector3>>[] explosionPool;
         static Stack<PvPProjectileControllerBase>[] projectilePool;
         static Stack<IDroneController> dronePool;
@@ -77,6 +77,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                             break;
                         case PvPProjectileControllerType.MissileController:
                             projectilePool[i].Push(CreateProjectile<PvPMissileController>((PvPProjectileType)i));
+                            break;
+                        case PvPProjectileControllerType.NukeController:
+                            projectilePool[i].Push(CreateProjectile<PvPNukeController>((PvPProjectileType)i));
+                            break;
+                        case PvPProjectileControllerType.SmartMissileController:
+                            projectilePool[i].Push(CreateProjectile<PvPSmartMissileController>((PvPProjectileType)i));
                             break;
                         default: throw new ArgumentException();
                     }

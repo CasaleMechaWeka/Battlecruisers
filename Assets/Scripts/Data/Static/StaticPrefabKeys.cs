@@ -479,7 +479,6 @@ namespace BattleCruisers.Data.Static
                 Rocket,
                 RocketSmall,
                 MissileFirecracker, // <-- yes, this is using a RocketController!
-                Nuke,
             };
 
             public static IPrefabKey[] Missiles = new IPrefabKey[]
@@ -489,6 +488,15 @@ namespace BattleCruisers.Data.Static
                 MissileMF,
                 RailSlug,
                 MissileLarge,
+            };
+
+            public static IPrefabKey[] Nukes = new IPrefabKey[]
+            {
+                Nuke
+            };
+
+            public static IPrefabKey[] SmartMissiles = new IPrefabKey[]
+            {
                 MissileSmart
             };
 
@@ -498,18 +506,24 @@ namespace BattleCruisers.Data.Static
                 Bombs,
                 Rockets,
                 Missiles,
+                Nukes,
+                SmartMissiles
             };
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 // Shells
-                HighCalibreBullet, TinyBullet, FlakBullet, ShellLarge, NovaShell, FiveShellCluster, RocketShell, ShellSmall,
+                Bullet, HighCalibreBullet, TinyBullet, FlakBullet, ShellLarge, NovaShell, FiveShellCluster, RocketShell, ShellSmall,
                 // Bombs
                 Bomb, StratBomb,
                 // Rockets
-                Rocket, RocketSmall, MissileFirecracker, Nuke,
+                Rocket, RocketSmall, MissileFirecracker,
                 // Missiles
-                MissileSmall, MissileMedium, MissileMF, RailSlug, MissileLarge, MissileSmart
+                MissileSmall, MissileMedium, MissileMF, RailSlug, MissileLarge,
+                // Nuke
+                Nuke,
+                // Smart Missile
+                MissileSmart
             });
 
             public static ProjectileControllerType GetProjectileControllerType(ProjectileType projectileType)
@@ -558,7 +572,9 @@ namespace BattleCruisers.Data.Static
         ProjectileController,
         BombController,
         RocketController,
-        MissileController
+        MissileController,
+        NukeController,
+        SmartMissileController
     }
 
     public enum ProjectileType
