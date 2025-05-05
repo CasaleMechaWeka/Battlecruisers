@@ -47,6 +47,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public string[] PvPHullNames => new string[]
             {
             "BlackRig",
+            "BasicRig",
             "Bullshark",
             "Eagle",
             "Flea",

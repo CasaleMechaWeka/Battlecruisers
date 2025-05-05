@@ -144,6 +144,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public Sprite TasDevil;
         public Sprite Trident;
         public Sprite Yeti;
+        public Sprite BasicRig;
 
         void Start()
         {
@@ -269,6 +270,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 case "Megalith":
                     destructionCards[2].image.sprite = Megalith;
                     break;
+                case "BasicRig":
+                    destructionCards[2].image.sprite = BasicRig;
+                    break; 
                 case "Microlodon":
                     destructionCards[2].image.sprite = Microlodon;
                     break;

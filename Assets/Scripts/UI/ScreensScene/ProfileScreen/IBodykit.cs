@@ -28,6 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Pistol,
         Flea,
         Megalith,
+        BasicRig,
         None   //  no bodykit
     }
 }

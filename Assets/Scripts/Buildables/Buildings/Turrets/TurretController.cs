@@ -65,9 +65,20 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             }
             else
             {
-                GameObject turretBase = transform.Find("Base").gameObject;
+                Transform baseTransform = transform.Find("Base");
+                if (baseTransform == null)
+                {
+                    Debug.LogWarning($"No Base found for turret {gameObject.name}. Returning empty renderer list.");
+                    return new SpriteRenderer[0];
+                }
+                
+                GameObject turretBase = baseTransform.gameObject;
                 SpriteRenderer[] turretBaseRenderers = turretBase.GetComponentsInChildren<SpriteRenderer>();
-                Assert.IsTrue(turretBaseRenderers.Length > 0);
+                if (turretBaseRenderers.Length == 0)
+                {
+                    Debug.LogWarning($"No sprite renderers found in Base for {gameObject.name}");
+                }
+                
                 return turretBaseRenderers;
             }
         }

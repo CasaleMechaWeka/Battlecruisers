@@ -5,7 +5,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class RailCannon : OffenseTurret
     {
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Artillery;
+        protected override ISoundKey FiringSound => SoundKeys.Firing.RailCannon;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Railgun;
     }
 } 

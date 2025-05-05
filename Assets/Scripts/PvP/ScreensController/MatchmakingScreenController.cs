@@ -23,6 +23,7 @@ using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -57,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         // private ILocTable commonStrings;
 
         public Sprite BlackRig;
+        public Sprite BasicRig;
         public Sprite Bullshark;
         public Sprite Eagle;
         public Sprite Flea;
@@ -101,6 +103,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public AudioSource backgroundMusic;
         public AudioSource enemyFoundMusic;
 
+        private PostBattleScreenController postBattleScreenController;
+
         public static MatchmakingScreenController Instance { get; private set; }
 
         public enum MMStatus
@@ -143,6 +147,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Connection_Quality = ConnectionQuality.HIGH;
             LoadingBarParent.SetActive(false);
             sprites.Add("BlackRig", BlackRig);
+            sprites.Add("BasicRig", BasicRig);
             sprites.Add("Bullshark", Bullshark);
             sprites.Add("Eagle", Eagle);
             sprites.Add("Flea", Flea);
@@ -254,6 +259,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.Trident;
                 case "BlackRig":
                     return HullType.BlackRig;
+                case "BasicRig":
+                    return HullType.BasicRig;
                 case "Bullshark":
                     return HullType.Bullshark;
                 case "Eagle":
@@ -534,8 +541,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
         }
 
-        public void FailedMatchmaking()
+        public async Task FailedMatchmaking()
         {
+            Debug.Log("Matchmaking failed");
             // CanceledMatchmaking();
             if (GameObject.Find("ApplicationController") != null)
                 GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
@@ -556,7 +564,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
             SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
-            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            await SceneNavigator.GoToSceneAsync(SceneNames.SCREENS_SCENE, true);
+            postBattleScreenController.GoToHomeScreen();
 
             if (backgroundMusic.isPlaying)
                 backgroundMusic.Stop();

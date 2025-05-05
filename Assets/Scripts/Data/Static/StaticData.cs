@@ -115,7 +115,8 @@ namespace BattleCruisers.Data.Static
             { Hulls.Rickshaw, 34 },
             { Hulls.TasDevil, 35 },
             { Hulls.BlackRig, 37 },
-            { Hulls.Yeti, 40 }
+            { Hulls.Yeti, 40 },
+            { Hulls.BasicRig, 95 }
         });
 
         private static ReadOnlyDictionary<BuildingKey, int> _buildingToCompletedSideQuest
@@ -326,7 +327,8 @@ namespace BattleCruisers.Data.Static
             Hulls.Shepherd,
             Hulls.TasDevil,
             Hulls.Yeti,
-            Hulls.FortressPrime
+            Hulls.FortressPrime,
+            Hulls.BasicRig
         });
         public static ReadOnlyCollection<UnitKey> UnitKeys { get; } = new ReadOnlyCollection<UnitKey>(new List<UnitKey>()
         {

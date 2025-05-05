@@ -97,6 +97,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                     return HullType.Trident;
                 case "BlackRig":
                     return HullType.BlackRig;
+                case "BasicRig":
+                    return HullType.BasicRig;     
                 case "Bullshark":
                     return HullType.Bullshark;
                 case "Eagle":
