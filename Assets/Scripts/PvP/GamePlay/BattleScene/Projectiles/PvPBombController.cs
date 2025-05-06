@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPBombController : PvPProjectileWithTrail<ProjectileActivationArgs>
+    public class PvPBombController : PvPProjectileWithTrail
     {
         protected override float TrailLifetimeInS => 3;
 

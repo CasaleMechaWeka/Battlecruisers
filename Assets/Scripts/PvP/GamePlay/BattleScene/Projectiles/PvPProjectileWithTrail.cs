@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// Instead, the projectile should be inert, but set the trail hang around and dissipate
     /// before deactivating completely and being recycled.
     /// </summary>
-    public abstract class PvPProjectileWithTrail<TPvPActivationArgs> : PvPProjectileControllerBase,
+    public abstract class PvPProjectileWithTrail : PvPProjectileControllerBase,
         IRemovable,
         IPoolable<ProjectileActivationArgs>
     {

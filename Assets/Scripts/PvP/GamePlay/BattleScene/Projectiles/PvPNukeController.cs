@@ -18,7 +18,7 @@ using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPNukeController : PvPProjectileWithTrail<ProjectileActivationArgs>, ITargetProvider
+    public class PvPNukeController : PvPProjectileWithTrail, ITargetProvider
     {
         private ProjectileStats _nukeStats;
         private IFlightPointsProvider _flightPointsProvider;

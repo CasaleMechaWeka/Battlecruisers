@@ -19,7 +19,7 @@ using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
 {
-    public class PvPMissileController : PvPProjectileWithTrail<ProjectileActivationArgs>, ITargetProvider
+    public class PvPMissileController : PvPProjectileWithTrail, ITargetProvider
     {
         private IDeferrer _deferrer;
         private IMovementController _dummyMovementController;

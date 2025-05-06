@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// But it can only subclass one of these.  Hence subclass ProjectileController, and
     /// have a child game object deriving of Target, to get both behaviours.
     /// </summary>
-    public class PvPRocketController : PvPProjectileWithTrail<ProjectileActivationArgs>, ITargetProvider
+    public class PvPRocketController : PvPProjectileWithTrail, ITargetProvider
     {
         private PvPRocketTarget _rocketTarget;
 

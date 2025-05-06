@@ -31,9 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     /// 
     /// Once a target has been detected turns off target detection.
     /// </summary>
-    public class PvPSmartMissileController : PvPProjectileWithTrail<ProjectileActivationArgs>,
-        ITargetProvider,
-        ITargetConsumer
+    public class PvPSmartMissileController : PvPProjectileWithTrail, ITargetProvider, ITargetConsumer
     {
         private ITransform _transform;
         private IDeferrer _deferrer;
