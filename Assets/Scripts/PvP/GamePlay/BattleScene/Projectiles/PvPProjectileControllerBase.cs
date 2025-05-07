@@ -77,7 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             {
                 _rigidBody = GetComponent<Rigidbody2D>();
                 Assert.IsNotNull(_rigidBody);
-                _isActiveAndAlive = false;
             }
             else
             {
@@ -87,11 +86,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 _rigidBody = GetComponent<Rigidbody2D>();
                 //Debug.Log("[PvPProjectileControllerBase] Rigidbody assigned: " + (_rigidBody != null) + ", Explosion pool set: " + (_explosionPool != null));
                 Assert.IsNotNull(_rigidBody);
-
-                _isActiveAndAlive = false;
                 OnSetPosition_Visible(Position, false);
                 gameObject.SetActive(false);
             }
+            _isActiveAndAlive = false;
+            InvokeDeactivated();
         }
 
         public virtual void Activate(ProjectileActivationArgs activationArgs)

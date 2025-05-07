@@ -193,9 +193,6 @@ namespace BattleCruisers.Utils.Fetchers
             where TProjectile : ProjectileControllerBase
         {
             Prefab prefab = PrefabCache.GetProjectile(StaticPrefabKeys.Projectiles.GetKey(projectileType));
-            Debug.Log(typeof(TProjectile));
-            Debug.Log(projectileType);
-            Debug.Log(prefab.gameObject);
             TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
             projectile.Initialise();
             projectile.Deactivated += (object sender, EventArgs e) => { projectilePool[(int)projectileType].Push(projectile); };

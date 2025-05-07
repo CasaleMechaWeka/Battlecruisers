@@ -23,6 +23,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
+using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -61,8 +62,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             for (int i = 0; i < projectilePoolTargets.Length; i++)
             {
                 projectilePool[i] = new Stack<PvPProjectileControllerBase>();
+                /*
                 PvPProjectileControllerType controllerType = PvPStaticPrefabKeys.PvPProjectiles.GetProjectileControllerType((PvPProjectileType)i);
-
                 for (int j = 0; j < projectilePoolTargets[i]; j++)
                     switch (controllerType)
                     {
@@ -86,6 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                             break;
                         default: throw new ArgumentException();
                     }
+                    */
             }
         }
         public static void ClearPool()
@@ -243,8 +245,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             where TProjectile : PvPProjectileControllerBase
         {
             PvPPrefab prefab = PvPPrefabCache.GetProjectile(PvPStaticPrefabKeys.PvPProjectiles.GetKey(projectileType));
-            TProjectile projectile = (TProjectile)Object.Instantiate(prefab);
-            projectile.GetComponent<NetworkObject>().Spawn();
+            prefab = Object.Instantiate(prefab);
+            TProjectile projectile = prefab.gameObject.GetComponent<TProjectile>();
+            Debug.Log(prefab.gameObject.name + " " + projectileType.ToString() + " " + (projectile != null).ToString());
+            prefab.gameObject.GetComponent<NetworkObject>().Spawn();
             projectile.Initialise();
             projectile.Deactivated += (object sender, EventArgs e) => { projectilePool[(int)projectileType].Push(projectile); };
 
@@ -254,12 +258,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public static TProjectile GetProjectile<TProjectile>(PvPProjectileType projectileType, ProjectileActivationArgs activationArgs)
             where TProjectile : PvPProjectileControllerBase
         {
+            Debug.Log(typeof(TProjectile) + " " + projectileType.ToString());
             TProjectile projectile;
 
-            if (projectilePool[(int)projectileType].Count > 0)
-                projectile = (TProjectile)projectilePool[(int)projectileType].Pop();
-            else
-                projectile = CreateProjectile<TProjectile>(projectileType);
+            //if (projectilePool[(int)projectileType].Count > 0)
+            //{
+            //    PvPProjectileControllerBase b = projectilePool[(int)projectileType].Pop();
+            //    Debug.Log(b.gameObject.name);
+            //    projectile = (TProjectile)b;
+            //}
+            //else
+            projectile = CreateProjectile<TProjectile>(projectileType);
 
             projectile.Activate(activationArgs);
             return projectile;

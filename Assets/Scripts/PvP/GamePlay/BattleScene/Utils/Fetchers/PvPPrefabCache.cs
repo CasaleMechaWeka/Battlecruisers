@@ -76,7 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static PvPPrefab GetProjectile(IPrefabKey key)
         {
-            if (_shipDeaths != null)
+            if (_projectiles != null)
                 return _projectiles.GetPrefab(key);
             return PrefabFetcher.GetPrefabSync<PvPPrefab>(key);
         }
