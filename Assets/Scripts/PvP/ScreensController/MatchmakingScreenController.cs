@@ -541,7 +541,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
         }
 
-        public async Task FailedMatchmaking()
+        public void FailedMatchmaking()
         {
             Debug.Log("Matchmaking failed");
             // CanceledMatchmaking();
@@ -564,7 +564,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
             SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
-            await SceneNavigator.GoToSceneAsync(SceneNames.SCREENS_SCENE, true);
+            //SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             postBattleScreenController.GoToHomeScreen();
 
             if (backgroundMusic.isPlaying)

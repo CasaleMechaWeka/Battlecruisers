@@ -94,20 +94,5 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCENE_NAVIGATION, sceneName);
             _lastSceneLoaded = sceneName;
         }
-        public static async Task GoToSceneAsync(string sceneName, bool stopMusic)
-        {
-            string hint = null;
-            if (sceneName == SceneNames.BATTLE_SCENE && !ApplicationModel.IsTutorial)
-                hint = HintProvider.GetHint();
-            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModel.IsTutorial)
-                hint = HintProvider.GetHint();
-
-            LoadingScreenHint = hint;
-
-            if (LandingSceneGod.MusicPlayer != null && stopMusic)
-                LandingSceneGod.MusicPlayer.Stop();
-
-            await LoadSceneWithLoadingScreen(sceneName);
-        }
     }
 }
