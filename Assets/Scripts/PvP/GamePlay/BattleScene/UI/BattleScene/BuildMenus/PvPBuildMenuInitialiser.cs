@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public IPvPBuildMenu Initialise(
             PvPCruiser playerCruiser,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IList<IPvPBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,

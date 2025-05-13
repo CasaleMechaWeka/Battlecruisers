@@ -70,7 +70,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         }
 
-        public override void Initialise(IUIManager uiManager)
+        public override void Initialise(UIManager uiManager)
         {
             base.Initialise(uiManager);
             AudioSourceBC[] sources = new AudioSourceBC[audioSources.Length];

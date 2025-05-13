@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
     public class BuildingClickHandlerTests
     {
         private IBuildingClickHandler _clickHandler;
-        private IUIManager _uiManager;
+        private UIManager _uiManager;
         private IPrioritisedSoundPlayer _eventSoundPlayer;
         private ISingleSoundPlayer _uiSoundPlayer;
         private IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         [SetUp]
         public void TestSetup()
         {
-            _uiManager = Substitute.For<IUIManager>();
+            _uiManager = Substitute.For<UIManager>();
             _eventSoundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
             _playerCruiserFocusHelper = Substitute.For<IPlayerCruiserFocusHelper>();

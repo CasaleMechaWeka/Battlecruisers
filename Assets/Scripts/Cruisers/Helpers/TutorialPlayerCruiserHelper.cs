@@ -7,7 +7,7 @@ namespace BattleCruisers.Cruisers.Helpers
 {
     public class TutorialPlayerCruiserHelper : CruiserHelper
     {
-        public TutorialPlayerCruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser)
+        public TutorialPlayerCruiserHelper(UIManager uIManager, ICameraFocuser cameraFocuser)
             : base(uIManager, cameraFocuser)
         {
         }

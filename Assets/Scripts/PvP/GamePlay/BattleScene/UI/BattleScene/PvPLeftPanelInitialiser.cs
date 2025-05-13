@@ -37,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         /*        public async Task<PvPLeftPanelComponents> Initialise(
                     DroneManager droneManager,
                     IPvPDroneManagerMonitor droneManagerMonitor,
-                    IPvPUIManager uiManager,
+                    PvPUIManager uiManager,
                     ILoadout playerLoadout,
                     PvPPrefabFactory prefabFactory,
                     IPvPSpriteProvider spriteProvider,
@@ -85,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPLeftPanelComponents Initialise(
             PvPCruiser playerCruiser,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         private IPvPBuildMenu SetupBuildMenuController(
             PvPCruiser playerCruiser,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             ILoadout playerLoadout,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,

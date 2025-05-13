@@ -10,8 +10,8 @@ using UnityEngine.UI;
 namespace BattleCruisers.UI.BattleScene.Buttons
 {
     public class BuildingCategoryButton : CanvasGroupButton, IBuildingCategoryButton, IBroadcastingFilter
-	{
-        private IUIManager _uiManager;
+    {
+        private UIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
         private FilterToggler _filterToggler;
 
@@ -34,9 +34,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             BuildingCategory expectedBuildingCategory,
-            IUIManager uiManager, 
+            UIManager uiManager,
             IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
-		{
+        {
             base.Initialise(soundPlayer);
 
             Helper.AssertIsNotNull(activeFeedback, uiManager, shouldBeEnabledFilter);
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             _shouldBeEnabledFilter = shouldBeEnabledFilter;
 
             _filterToggler = new FilterToggler(this, this);
-		}
+        }
 
         private void OnDestroy()
         {

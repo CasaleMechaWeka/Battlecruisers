@@ -29,7 +29,7 @@ namespace BattleCruisers.Utils.Factories
         public static void Initialise(
             BattleSceneGodComponents components,
             SettingsManager settingsManager,
-            IUIManager uiManager)
+            UIManager uiManager)
         {
             Helper.AssertIsNotNull(components, settingsManager);
 

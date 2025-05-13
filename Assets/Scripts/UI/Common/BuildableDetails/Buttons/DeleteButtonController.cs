@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     {
         public GameObject buildingMenu;
         private CanvasGroup canvasGroup;
-        private IUIManager _uiManager;
+        private UIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
         private ILongPressIdentifier _longPressIdentifier;
 
@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IUIManager uiManager,
+            UIManager uiManager,
             IFilter<ITarget> buttonVisibilityFilter,
             IUpdater updater)
         {

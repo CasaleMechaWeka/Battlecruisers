@@ -17,7 +17,7 @@ namespace BattleCruisers.Tutorial
         TopPanelComponents TopPanelComponents { get; }
         LeftPanelComponents LeftPanelComponents { get; }
         RightPanelComponents RightPanelComponents { get; }
-        IUIManager UIManager { get; }
+        UIManager UIManager { get; }
         GameEndMonitor GameEndMonitor { get; }
     }
 }

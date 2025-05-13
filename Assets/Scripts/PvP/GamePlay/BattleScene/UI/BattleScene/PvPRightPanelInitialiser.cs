@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPHecklePanelController heckleController;
 
         public PvPRightPanelComponents Initialise(
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         private IPvPInformatorPanel SetupInformator(
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUpdater perFrameUpdater,
             IUserChosenTargetHelper userChosenTargetHelper,

@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IUIManager uiManager,
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildingGroup> buildingGroups)
         {
@@ -41,8 +41,8 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
                     button
                         .Initialise(
                             soundPlayer,
-                            group.BuildingCategory, 
-                            uiManager, 
+                            group.BuildingCategory,
+                            uiManager,
                             buttonVisibilityFilters.CategoryButtonVisibilityFilter);
                     _categoryToCategoryButtons.Add(group.BuildingCategory, button);
                 }

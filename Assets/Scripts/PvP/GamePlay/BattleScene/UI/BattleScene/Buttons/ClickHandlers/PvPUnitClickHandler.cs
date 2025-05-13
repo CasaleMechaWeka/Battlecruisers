@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPUnitClickHandler(
             PvPCruiser playerCruiser,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPvPPopulationLimitReachedDecider populationLimitReachedDecider)

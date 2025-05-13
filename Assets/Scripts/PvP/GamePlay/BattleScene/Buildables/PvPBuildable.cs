@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public GameObject _parent;
         private IDroneFeedback _droneFeedback;
 
-        protected IPvPUIManager _uiManager;
+        protected PvPUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected AircraftProvider _aircraftProvider;
         protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
@@ -319,7 +319,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public virtual void Initialise(IPvPUIManager uiManager)
+        public virtual void Initialise(PvPUIManager uiManager)
         {
             Logging.Log(Tags.BUILDABLE, this);
 

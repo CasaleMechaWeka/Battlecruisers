@@ -136,7 +136,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
             PauseGameManager pauseGameManager = new PauseGameManager(time);
-            IUIManager uiManager = helper.CreateUIManager();
+            UIManager uiManager = helper.CreateUIManager();
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");

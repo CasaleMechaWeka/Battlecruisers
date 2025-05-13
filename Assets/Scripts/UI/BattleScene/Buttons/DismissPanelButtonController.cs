@@ -9,12 +9,12 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public abstract class DismissPanelButtonController : ElementWithClickSound
     {
         private FilterToggler _isEnabledToggler;
-        protected IUIManager _uiManager;
+        protected UIManager _uiManager;
 
         private Image _closeImage;
         protected override MaskableGraphic Graphic => _closeImage;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, UIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

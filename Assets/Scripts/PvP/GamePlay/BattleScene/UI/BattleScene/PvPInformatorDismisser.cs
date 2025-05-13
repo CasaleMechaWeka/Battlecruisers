@@ -9,10 +9,10 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene
     public class PvPInformatorDismisser
     {
         private readonly IClickableEmitter _background;
-        private readonly IPvPUIManager _uiManager;
+        private readonly PvPUIManager _uiManager;
         private readonly PvPHecklePanelController _panelController;
 
-        public PvPInformatorDismisser(IClickableEmitter background, IPvPUIManager uiManager, PvPHecklePanelController hecklePanel)
+        public PvPInformatorDismisser(IClickableEmitter background, PvPUIManager uiManager, PvPHecklePanelController hecklePanel)
         {
             PvPHelper.AssertIsNotNull(background, uiManager);
 

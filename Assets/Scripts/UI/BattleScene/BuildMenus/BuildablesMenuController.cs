@@ -15,14 +15,14 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     public abstract class BuildablesMenuController<TButton, TBuildable> : PresentableController, IBuildablesMenu
         where TButton : BuildableButtonController
         where TBuildable : class, IBuildable
-	{
-        protected IUIManager _uiManager;
+    {
+        protected UIManager _uiManager;
         protected IBroadcastingFilter<IBuildable> _shouldBeEnabledFilter;
 
         public ReadOnlyCollection<IBuildableButton> BuildableButtons { get; private set; }
 
-		public virtual void Initialise(
-            IUIManager uiManager,
+        public virtual void Initialise(
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<TBuildable>> buildables)
         {
@@ -62,5 +62,5 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         protected abstract void InitialiseBuildableButton(TButton button, IBuildableWrapper<TBuildable> buildableWrapper);
-	}
+    }
 }

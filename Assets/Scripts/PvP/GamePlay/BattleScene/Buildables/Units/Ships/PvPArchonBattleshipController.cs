@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.Initialise();
         }
 
-        public override void Initialise(IPvPUIManager uiManager)
+        public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
         }

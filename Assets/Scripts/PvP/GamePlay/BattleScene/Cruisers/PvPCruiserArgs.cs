@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         public Faction Faction { get; }
         public IPvPCruiser EnemyCruiser { get; }
-        public IPvPUIManager UiManager { get; }
+        public PvPUIManager UiManager { get; }
         public DroneManager DroneManager { get; }
         public IPvPDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPCruiserArgs(
             Faction faction,
             IPvPCruiser enemyCruiser,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             DroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
@@ -95,7 +95,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPCruiserArgs(
             Faction faction,
             IPvPCruiser enemyCruiser,
-            // IPvPUIManager uiManager,
+            // PvPUIManager uiManager,
             DroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,

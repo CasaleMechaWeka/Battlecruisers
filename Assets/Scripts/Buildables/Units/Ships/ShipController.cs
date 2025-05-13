@@ -111,7 +111,7 @@ namespace BattleCruisers.Buildables.Units.Ships
                     .ToList();
         }
 
-        public override void Initialise(IUIManager uiManager)
+        public override void Initialise(UIManager uiManager)
         {
             base.Initialise(uiManager);
         }

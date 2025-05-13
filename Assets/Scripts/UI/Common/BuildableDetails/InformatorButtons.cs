@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ISingleSoundPlayer soundPlayer,
             ISlidingPanel informatorPanel,
             IUpdater updater,
-            IUIManager uiManager)
+            UIManager uiManager)
         {
             Helper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, informatorPanel, updater, uiManager);
             Helper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);

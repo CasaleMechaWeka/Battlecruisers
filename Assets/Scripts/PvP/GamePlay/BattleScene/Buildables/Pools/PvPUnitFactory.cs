@@ -10,10 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPUnitFactory : IPoolableFactory<PvPUnit, PvPBuildableActivationArgs>
     {
         private readonly IPrefabKey _unitKey;
-        // private readonly IPvPUIManager _uiManager;
+        // private readonly PvPUIManager _uiManager;
         private readonly IPvPBuildableWrapper<IPvPUnit> _unitPrefab;
 
-        public PvPUnitFactory(IPrefabKey unitKey /* IPvPUIManager uiManager, */)
+        public PvPUnitFactory(IPrefabKey unitKey /* PvPUIManager uiManager, */)
         {
             PvPHelper.AssertIsNotNull(unitKey);
 

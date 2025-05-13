@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
 
         public UnitClickHandler(
-            IUIManager uiManager,
+            UIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPopulationLimitReachedDecider populationLimitReachedDecider)

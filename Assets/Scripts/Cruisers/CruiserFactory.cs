@@ -29,14 +29,14 @@ namespace BattleCruisers.Cruisers
     {
         private readonly IBattleSceneHelper _helper;
         private readonly IFilter<ISlot> _highlightableSlotFilter;
-        private readonly IUIManager _uiManager;
+        private readonly UIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
         public CruiserFactory(
             IBattleSceneHelper helper,
-            IUIManager uiManager)
+            UIManager uiManager)
         {
             Helper.AssertIsNotNull(helper, uiManager);
 
@@ -139,7 +139,7 @@ namespace BattleCruisers.Cruisers
         private void InitialiseCruiser(
             Cruiser cruiser,
             ICruiser enemyCruiser,
-            IUIManager uiManager,
+            UIManager uiManager,
             ICruiserHelper helper,
             Faction faction,
             Direction facingDirection,
@@ -207,7 +207,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        private ICruiserHelper CreateAIHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
+        private ICruiserHelper CreateAIHelper(UIManager uiManager, ICameraFocuser cameraFocuser)
         {
             if (ApplicationModel.IsTutorial)
             {
@@ -219,7 +219,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        private ICruiserHelper CreatePlayerHelper(IUIManager uiManager, ICameraFocuser cameraFocuser)
+        private ICruiserHelper CreatePlayerHelper(UIManager uiManager, ICameraFocuser cameraFocuser)
         {
             if (ApplicationModel.IsTutorial)
             {

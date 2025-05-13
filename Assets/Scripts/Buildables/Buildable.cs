@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables
         private GameObject _parent;
         private IDroneFeedback _droneFeedback;
 
-        protected IUIManager _uiManager;
+        protected UIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected TargetFactoriesProvider _targetFactories;
         protected AircraftProvider _aircraftProvider;
@@ -152,7 +152,7 @@ namespace BattleCruisers.Buildables
 
                 _buildableProgress.FillableImage.color = value;
                 _buildableProgress.OutlineImage.color = value;
-                
+
                 // Apply color to additional renderers in Building objects
                 Building building = this as Building;
                 if (building != null && building.additionalRenderers != null)
@@ -258,7 +258,7 @@ namespace BattleCruisers.Buildables
         /// <summary>
         /// Called only once, when an object is first instantiated.
         /// </summary>
-        public virtual void Initialise(IUIManager uiManager)
+        public virtual void Initialise(UIManager uiManager)
         {
             Logging.Log(Tags.BUILDABLE, this);
 

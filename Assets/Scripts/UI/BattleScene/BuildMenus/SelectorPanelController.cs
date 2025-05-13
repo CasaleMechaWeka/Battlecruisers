@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class SelectorPanelController : SlidingPanel
     {
-        public void Initialise(IUIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters, ISingleSoundPlayer soundPlayer)
+        public void Initialise(UIManager uiManager, IButtonVisibilityFilters buttonVisibilityFilters, ISingleSoundPlayer soundPlayer)
         {
             base.Initialise();
 

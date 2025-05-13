@@ -15,7 +15,7 @@ using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
 {
-    public class PvPUIManager : IPvPUIManager
+    public class PvPUIManager
     {
         private PvPCruiser _playerCruiser, _enemyCruiser;
         private IPvPBuildMenu _buildMenu;

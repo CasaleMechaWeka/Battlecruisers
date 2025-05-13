@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _gameSpeedPermitter, _navigationPermitter;
         private readonly RightPanelComponents _rightPanelComponents;
-        private readonly IUIManager _uiManager;
+        private readonly UIManager _uiManager;
 
         public GameSpeedStepsFactory(
             TutorialStepArgsFactory argsFactory,
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IPermitter gameSpeedPermitter,
             IPermitter navigationPermitter,
             RightPanelComponents rightPanelComponents,
-            IUIManager uiManager)
+            UIManager uiManager)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(

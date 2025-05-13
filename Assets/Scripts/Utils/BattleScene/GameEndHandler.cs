@@ -27,7 +27,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IDeferrer _deferrer;
         private readonly ICruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
-        private readonly IUIManager _uiManager;
+        private readonly UIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
         private readonly IWindManager _windManager;
         private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Utils.BattleScene
             IDeferrer deferrer,
             ICruiserDeathCameraFocuser cameraFocuser,
             IPermitter navigationPermitter,
-            IUIManager uiManager,
+            UIManager uiManager,
             ITargetIndicator targetIndicator,
             IWindManager windManager,
             IBuildingCategoryPermitter buildingCategoryPermitter,

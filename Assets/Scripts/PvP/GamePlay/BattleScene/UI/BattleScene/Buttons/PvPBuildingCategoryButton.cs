@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildingCategoryButton : PvPCanvasGroupButton, IBuildingCategoryButton, IBroadcastingFilter
     {
-        private IPvPUIManager _uiManager;
+        private PvPUIManager _uiManager;
         private IBroadcastingFilter<BuildingCategory> _shouldBeEnabledFilter;
         private FilterToggler _filterToggler;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
             BuildingCategory expectedBuildingCategory,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);

@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene
         public LeftPanelComponents Initialise(
             DroneManager droneManager,
             DroneManagerMonitor droneManagerMonitor,
-            IUIManager uiManager,
+            UIManager uiManager,
             ILoadout playerLoadout,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene
         }
 
         private IBuildMenu SetupBuildMenuController(
-            IUIManager uiManager,
+            UIManager uiManager,
             ILoadout playerLoadout,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,

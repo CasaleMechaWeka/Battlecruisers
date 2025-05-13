@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public abstract class PvPCruiserHelper : IPvPCruiserHelper
     {
-        protected readonly IPvPUIManager _uiManager;
+        protected readonly PvPUIManager _uiManager;
         protected readonly ICameraFocuser _cameraFocuser;
 
-        protected PvPCruiserHelper(IPvPUIManager uIManager, ICameraFocuser cameraFocuser)
+        protected PvPCruiserHelper(PvPUIManager uIManager, ICameraFocuser cameraFocuser)
         {
             PvPHelper.AssertIsNotNull(uIManager, cameraFocuser);
 
@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _cameraFocuser = cameraFocuser;
         }
 
-        protected PvPCruiserHelper(/*IPvPUIManager uIManager, ICameraFocuser cameraFocuser*/)
+        protected PvPCruiserHelper(/*PvPUIManager uIManager, ICameraFocuser cameraFocuser*/)
         {
             //    PvPHelper.AssertIsNotNull(uIManager /*, cameraFocuser*/);
 

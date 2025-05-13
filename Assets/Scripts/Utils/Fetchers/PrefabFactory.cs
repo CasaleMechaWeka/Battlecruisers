@@ -99,7 +99,7 @@ namespace BattleCruisers.Utils.Fetchers
 
         public static IBuilding CreateBuilding(
             IBuildableWrapper<IBuilding> buildingWrapperPrefab,
-            IUIManager uiManager)
+            UIManager uiManager)
         {
             return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager);
         }
@@ -111,14 +111,14 @@ namespace BattleCruisers.Utils.Fetchers
 
         public static IUnit CreateUnit(
             IBuildableWrapper<IUnit> unitWrapperPrefab,
-            IUIManager uiManager)
+            UIManager uiManager)
         {
             return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager);
         }
 
         private static TBuildable CreateBuildable<TBuildable>(
             BuildableWrapper<TBuildable> buildableWrapperPrefab,
-            IUIManager uiManager) where TBuildable : class, IBuildable
+            UIManager uiManager) where TBuildable : class, IBuildable
         {
             Helper.AssertIsNotNull(buildableWrapperPrefab, uiManager);
 

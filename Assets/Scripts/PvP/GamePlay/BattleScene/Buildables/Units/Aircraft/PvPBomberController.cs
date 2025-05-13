@@ -96,7 +96,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);
         }
 
-        public override void Initialise(IPvPUIManager uiManager)
+        public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
             _bomberMovementControler = new BomberMovementController(rigidBody, maxVelocityProvider: this);

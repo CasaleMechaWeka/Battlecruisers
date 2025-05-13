@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start()
         {
-            IUIManager uiManager = Substitute.For<IUIManager>();
+            UIManager uiManager = Substitute.For<UIManager>();
             ITutorialStep step = new HideItemDetailsStep(_args, uiManager);
 
             step.Start(_completionCallback);

@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IPrefabKey PlayerCruiser { get; }
 
         // Separate methods because of circular dependency between UIManager and everything else :/
-        IUIManager CreateUIManager();
+        UIManager CreateUIManager();
         void InitialiseUIManager(ManagerArgs args);
 
         IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();

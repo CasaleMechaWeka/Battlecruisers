@@ -67,7 +67,7 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
             _nukeImpactSound = new AudioClipWrapper(nukeImpactSound);
         }
 
-        public override void Initialise(IUIManager uiManager)
+        public override void Initialise(UIManager uiManager)
         {
             base.Initialise(uiManager);
 

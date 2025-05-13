@@ -12,31 +12,31 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class UnitsMenuController : BuildablesMenuController<UnitButtonController, IUnit>
+	public class UnitsMenuController : BuildablesMenuController<UnitButtonController, IUnit>
 	{
 		private ISingleSoundPlayer _soundPlayer;
-        private IUnitClickHandler _unitClickHandler;
-        private IFactory _factory;
+		private IUnitClickHandler _unitClickHandler;
+		private IFactory _factory;
 
 		public void Initialise(
 			ISingleSoundPlayer soundPlayer,
-            IUIManager uiManager,
-            IButtonVisibilityFilters buttonVisibilityFilters,
-            IList<IBuildableWrapper<IUnit>> units,
-            IUnitClickHandler clickHandler)
+			UIManager uiManager,
+			IButtonVisibilityFilters buttonVisibilityFilters,
+			IList<IBuildableWrapper<IUnit>> units,
+			IUnitClickHandler clickHandler)
 		{
-            // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
-            Helper.AssertIsNotNull(soundPlayer, clickHandler);
+			// Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
+			Helper.AssertIsNotNull(soundPlayer, clickHandler);
 			_soundPlayer = soundPlayer;
-            _unitClickHandler = clickHandler;
+			_unitClickHandler = clickHandler;
 
-            base.Initialise(uiManager, buttonVisibilityFilters, units);
+			base.Initialise(uiManager, buttonVisibilityFilters, units);
 		}
 
-        protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildableWrapper)
-        {
-            button.Initialise(_soundPlayer, buildableWrapper, _shouldBeEnabledFilter, _unitClickHandler);
-        }
+		protected override void InitialiseBuildableButton(UnitButtonController button, IBuildableWrapper<IUnit> buildableWrapper)
+		{
+			button.Initialise(_soundPlayer, buildableWrapper, _shouldBeEnabledFilter, _unitClickHandler);
+		}
 
 		public override void OnPresenting(object activationParameter)
 		{
@@ -58,5 +58,5 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 			_factory.Destroyed -= _factory_Destroyed;
 			_factory = null;
 		}
-    }
+	}
 }

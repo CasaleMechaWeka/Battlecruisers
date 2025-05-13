@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
 
         public IBuildMenu Initialise(
-            IUIManager uiManager,
+            UIManager uiManager,
             IList<IBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
             IButtonVisibilityFilters buttonVisibilityFilters,

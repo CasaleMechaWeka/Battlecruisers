@@ -123,7 +123,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new DummySoundPlayer();
         }
 
-        public override IUIManager CreateUIManager()
+        public override UIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "CreateUIManager() should only be called once");
             _uiManager = new LimitableUIManager();

@@ -15,13 +15,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         where TButton : PvPBuildableButtonController
         where TBuildable : class, IPvPBuildable
     {
-        protected IPvPUIManager _uiManager;
+        protected PvPUIManager _uiManager;
         protected IBroadcastingFilter<IPvPBuildable> _shouldBeEnabledFilter;
 
         public ReadOnlyCollection<IPvPBuildableButton> BuildableButtons { get; private set; }
 
         public virtual void Initialise(
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<TBuildable>> buildables)
         {

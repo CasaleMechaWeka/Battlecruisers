@@ -11,12 +11,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public abstract class PvPDismissPanelButtonController : PvPElementWithClickSound
     {
         private FilterToggler _isEnabledToggler;
-        protected IPvPUIManager _uiManager;
+        protected PvPUIManager _uiManager;
 
         private Image _closeImage;
         protected override MaskableGraphic Graphic => _closeImage;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(ISingleSoundPlayer soundPlayer, PvPUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

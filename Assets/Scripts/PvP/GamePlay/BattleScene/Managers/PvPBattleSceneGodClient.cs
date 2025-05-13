@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IWindManager windManager;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
-        public IPvPUIManager uiManager;
+        public PvPUIManager uiManager;
         public PvPCruiser playerCruiser;
         public PvPCruiser enemyCruiser;
         public CaptainExo leftCaptain, rightCaptain;
@@ -721,7 +721,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             windManager?.DisposeManagedState();
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
+        private IPvPCruiserHelper CreatePlayerHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
         }

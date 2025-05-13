@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public void Initialise(
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
-            IUIManager uiManager,
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<TBuildable> buildableSorter,
             ISingleSoundPlayer soundPlayer)
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
             IList<TMenu> buildableMenus = GetComponentsInChildren<TMenu>().ToList();
 
-            
+
             //Debug.Log(buildables.Count);
             Assert.AreEqual(buildables.Count, buildableMenus.Count);
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         protected abstract void InitialiseMenu(
             ISingleSoundPlayer soundPlayer,
             TMenu menu,
-            IUIManager uiManager,
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<TBuildable>> buildables);
 

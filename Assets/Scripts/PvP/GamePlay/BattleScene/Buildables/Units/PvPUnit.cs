@@ -112,7 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, factoryProvider.SettingsManager, 2);
         }
 
-        public override void Initialise(IPvPUIManager uiManager)
+        public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
             _engineAudioSource = new EffectVolumeAudioSource(_coreEngineAudioSource, 2);

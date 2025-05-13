@@ -36,7 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public IInformatorButtons Buttons => buttons;
 
         public void Initialise(
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUpdater perFrameUpdater,
             IUserChosenTargetHelper userChosenTargetHelper,

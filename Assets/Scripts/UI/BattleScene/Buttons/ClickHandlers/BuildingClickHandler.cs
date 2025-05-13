@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         private readonly AudioClipWrapper _buildingSelectedSound;
 
         public BuildingClickHandler(
-            IUIManager uiManager,
+            UIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,

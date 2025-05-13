@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
 
         public void Initialise(
-            IUIManager uiManager,
+            UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters visibilityFilters,

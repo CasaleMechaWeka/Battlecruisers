@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IDeferrer _deferrer;
         private ICruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
-        private IUIManager _uiManager;
+        private UIManager _uiManager;
         private ITargetIndicator _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IWindManager _windManager;
@@ -56,7 +56,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _deferrer = Substitute.For<IDeferrer>();
             _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
-            _uiManager = Substitute.For<IUIManager>();
+            _uiManager = Substitute.For<UIManager>();
             _targetIndicator = Substitute.For<ITargetIndicator>();
             _windManager = Substitute.For<IWindManager>();
             _buildingCategoryPermitter = Substitute.For<IBuildingCategoryPermitter>();

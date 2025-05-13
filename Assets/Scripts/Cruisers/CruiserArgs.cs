@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers
     {
         public Faction Faction { get; }
         public ICruiser EnemyCruiser { get; }
-        public IUIManager UiManager { get; }
+        public UIManager UiManager { get; }
         public DroneManager DroneManager { get; }
         public IDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
@@ -39,7 +39,7 @@ namespace BattleCruisers.Cruisers
         public CruiserArgs(
             Faction faction,
             ICruiser enemyCruiser,
-            IUIManager uiManager,
+            UIManager uiManager,
             DroneManager droneManager,
             IDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,

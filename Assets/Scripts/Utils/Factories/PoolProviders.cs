@@ -10,7 +10,7 @@ namespace BattleCruisers.Utils.Factories
 
         public UnitToPoolMap UnitToPoolMap { get; }
 
-        public PoolProviders(IUIManager uiManager)
+        public PoolProviders(UIManager uiManager)
         {
             Helper.AssertIsNotNull(uiManager);
 

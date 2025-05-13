@@ -77,7 +77,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 
 
-        public override void Initialise(IUIManager uiManager)
+        public override void Initialise(UIManager uiManager)
         {
             base.Initialise(uiManager);
 

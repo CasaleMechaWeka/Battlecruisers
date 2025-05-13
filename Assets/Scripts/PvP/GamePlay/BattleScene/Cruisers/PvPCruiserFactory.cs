@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly IPvPBattleSceneHelper _helper;
         private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
-        private readonly IPvPUIManager _uiManager;
+        private readonly PvPUIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
@@ -150,7 +150,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void InitialiseCruiser(
             PvPCruiser cruiser,
             IPvPCruiser enemyCruiser,
-            // IPvPUIManager uiManager,
+            // PvPUIManager uiManager,
             IPvPCruiserHelper helper,
             Faction faction,
             Direction facingDirection,
@@ -219,7 +219,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
+        private IPvPCruiserHelper CreatePlayerBHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             // if (ApplicationModel.IsTutorial)
             // {
@@ -231,7 +231,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper(/*IPvPUIManager uiManager  , ICameraFocuser cameraFocuser*/)
+        private IPvPCruiserHelper CreatePlayerBHelper(/*PvPUIManager uiManager  , ICameraFocuser cameraFocuser*/)
         {
             // if (ApplicationModel.IsTutorial)
             // {
@@ -243,7 +243,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper(IPvPUIManager uiManager, ICameraFocuser cameraFocuser)
+        private IPvPCruiserHelper CreatePlayerHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             // if (ApplicationModel.IsTutorial)
             // {
@@ -256,7 +256,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
 
-        private IPvPCruiserHelper CreatePlayerHelper(/*IPvPUIManager uiManager , ICameraFocuser cameraFocuser*/)
+        private IPvPCruiserHelper CreatePlayerHelper(/*PvPUIManager uiManager , ICameraFocuser cameraFocuser*/)
         {
             // if (ApplicationModel.IsTutorial)
             // {

@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly AudioClipWrapper _buildingSelectedSound;
 
         public PvPBuildingClickHandler(
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             ISingleSoundPlayer uiSoundPlayer,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,

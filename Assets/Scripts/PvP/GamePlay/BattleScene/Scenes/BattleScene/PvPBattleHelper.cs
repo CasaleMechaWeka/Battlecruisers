@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _buildingCategoryFilter.AllowAllCategories();
         }
 
-        public override IPvPUIManager CreateUIManager()
+        public override PvPUIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");
             _uiManager = new PvPUIManager();

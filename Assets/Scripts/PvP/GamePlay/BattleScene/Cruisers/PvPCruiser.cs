@@ -50,7 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiser : PvPTarget, IPvPCruiser, IComparableItem
     {
-        protected IPvPUIManager _uiManager;
+        protected PvPUIManager _uiManager;
         protected IPvPCruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
@@ -209,7 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public async void Initialise_Client_PvP(IPvPUIManager uiManager, IPvPCruiserHelper helper)
+        public async void Initialise_Client_PvP(PvPUIManager uiManager, IPvPCruiserHelper helper)
         {
             _uiManager = uiManager;
             _helper = helper;

@@ -83,7 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _spinner.Initialise();
         }
 
-        public override void Initialise(IPvPUIManager uiManager)
+        public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
             leftSiloHalf.Initialise(SILO_HALVES_ROTATE_SPEED_IN_M_PER_S, SILO_TARGET_ANGLE_IN_DEGREES);

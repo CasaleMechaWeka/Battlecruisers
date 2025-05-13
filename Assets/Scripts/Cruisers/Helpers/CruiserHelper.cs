@@ -8,10 +8,10 @@ namespace BattleCruisers.Cruisers.Helpers
 {
     public abstract class CruiserHelper : ICruiserHelper
     {
-        protected readonly IUIManager _uiManager;
+        protected readonly UIManager _uiManager;
         protected readonly ICameraFocuser _cameraFocuser;
 
-        protected CruiserHelper(IUIManager uIManager, ICameraFocuser cameraFocuser)
+        protected CruiserHelper(UIManager uIManager, ICameraFocuser cameraFocuser)
         {
             Helper.AssertIsNotNull(uIManager, cameraFocuser);
 

@@ -82,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
-        public override void Initialise(IPvPUIManager uiManager)
+        public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
             _outsideRangeMovementController = new FollowingXAxisMovementController(rigidBody, maxVelocityProvider: this);

@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             ISingleSoundPlayer soundPlayer,
             ISlidingPanel informatorPanel,
             IUpdater updater,
-            IPvPUIManager uiManager)
+            PvPUIManager uiManager)
         {
             PvPHelper.AssertIsNotNull(droneFocuser, repairManager, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer, informatorPanel, updater, uiManager);
             PvPHelper.AssertIsNotNull(extendButton, toggleDronesButton, chooseTargetButton, repairButton, deleteButton);

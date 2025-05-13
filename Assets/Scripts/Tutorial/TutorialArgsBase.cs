@@ -18,7 +18,7 @@ namespace BattleCruisers.Tutorial
         public TopPanelComponents TopPanelComponents { get; }
         public LeftPanelComponents LeftPanelComponents { get; }
         public RightPanelComponents RightPanelComponents { get; }
-        public IUIManager UIManager { get; }
+        public UIManager UIManager { get; }
         public GameEndMonitor GameEndMonitor { get; }
 
         public TutorialArgsBase(ITutorialArgsBase baseArgs)
@@ -44,7 +44,7 @@ namespace BattleCruisers.Tutorial
             TopPanelComponents topPanelComponents,
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
-            IUIManager uiManager,
+            UIManager uiManager,
             GameEndMonitor gameEndMonitor)
         {
             Helper.AssertIsNotNull(

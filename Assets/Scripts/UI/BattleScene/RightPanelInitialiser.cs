@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.BattleScene
         public HelpButton helpButton;
 
         public RightPanelComponents Initialise(
-            IUIManager uiManager,
+            UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.BattleScene
         }
 
         private IInformatorPanel SetupInformator(
-            IUIManager uiManager,
+            UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,

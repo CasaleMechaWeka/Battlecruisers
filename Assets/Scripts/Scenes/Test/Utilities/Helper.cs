@@ -87,7 +87,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InitialiseBuilding(
             IBuilding building,
             Faction faction = Faction.Blues,
-            IUIManager uiManager = null,
+            UIManager uiManager = null,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             AircraftProvider aircraftProvider = null,
@@ -138,7 +138,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InitialiseUnit(
             IUnit unit,
             Faction faction = Faction.Blues,
-            IUIManager uiManager = null,
+            UIManager uiManager = null,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             AircraftProvider aircraftProvider = null,
@@ -465,7 +465,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                 = new CruiserArgs(
                     Faction.Reds,
                     enemyCruiser: Substitute.For<ICruiser>(),
-                    uiManager: Substitute.For<IUIManager>(),
+                    uiManager: Substitute.For<UIManager>(),
                     droneManager: new DroneManager(),
                     droneFocuser: Substitute.For<IDroneFocuser>(),
                     droneConsumerProvider: CreateDroneConsumerProvider(),

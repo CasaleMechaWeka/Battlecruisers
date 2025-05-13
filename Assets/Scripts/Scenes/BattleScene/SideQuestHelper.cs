@@ -126,7 +126,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return FactoryProvider.Sound.PrioritisedSoundPlayer;
         }
 
-        public override IUIManager CreateUIManager()
+        public override UIManager CreateUIManager()
         {
             Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");
             _uiManager = new UIManager();

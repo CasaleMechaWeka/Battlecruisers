@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Sava added code
 
 
-        public override void Initialise(IPvPUIManager uiManager)
+        public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
             _boosterGlow = transform.FindNamedComponent<ParticleSystem>("LocalBoosterMasterGlow");

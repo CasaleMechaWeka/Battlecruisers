@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
     public class UnitClickHandlerTests
     {
         private IUnitClickHandler _clickHandler;
-        private IUIManager _uiManager;
+        private UIManager _uiManager;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IPopulationLimitReachedDecider _populationLimitReachedDecider;
         private ISingleSoundPlayer _uiSoundPlayer;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         [SetUp]
         public void TestSetup()
         {
-            _uiManager = Substitute.For<IUIManager>();
+            _uiManager = Substitute.For<UIManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _populationLimitReachedDecider = Substitute.For<IPopulationLimitReachedDecider>();
             _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
@@ -83,7 +83,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
             bool canAffordUnit = true;
 
             _clickHandler.HandleClick(canAffordUnit, _unitWrapper, _factory);
-            
+
             _uiSoundPlayer.Received().PlaySound(_factory.UnitSelectedSound);
             _uiManager.Received().ShowUnitDetails(_unit);
         }

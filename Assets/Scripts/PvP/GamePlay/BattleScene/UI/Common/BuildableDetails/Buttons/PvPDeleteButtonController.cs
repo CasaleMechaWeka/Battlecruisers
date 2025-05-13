@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     {
         public GameObject PvPbuildingMenu;
         private CanvasGroup PvPcanvasGroup;
-        private IPvPUIManager _uiManager;
+        private PvPUIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
         private ILongPressIdentifier _longPressIdentifier;
 
@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IFilter<ITarget> buttonVisibilityFilter,
             IUpdater updater
             )

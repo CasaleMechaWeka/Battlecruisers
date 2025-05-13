@@ -37,7 +37,7 @@ namespace BattleCruisers.Cruisers
     {
         protected readonly float UltraCruiserUtilityModifier = 2.0f; //UltraCruiser base utility stat modifier
         protected readonly float UltraCruiserHealthModifier = 1.25f; //UltraCruiser base health stat modifier        
-        protected IUIManager _uiManager;
+        protected UIManager _uiManager;
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;

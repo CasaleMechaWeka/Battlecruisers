@@ -21,7 +21,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
 {
     public class BuildableInitialisationArgs
     {
-        public IUIManager UiManager { get; }
+        public UIManager UiManager { get; }
         public ICruiser ParentCruiser { get; }
         public ICruiser EnemyCruiser { get; }
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public BuildableInitialisationArgs(
             Helper helper,
             Faction faction = Faction.Blues,
-            IUIManager uiManager = null,
+            UIManager uiManager = null,
             ICruiser parentCruiser = null,
             ICruiser enemyCruiser = null,
             AircraftProvider aircraftProvider = null,
@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             ParentCruiserFacingDirection = parentCruiserDirection;
             ParentCruiser = parentCruiser ?? helper.CreateCruiser(ParentCruiserFacingDirection, faction);
             EnemyCruiser = enemyCruiser ?? helper.CreateCruiser(Direction.Left, BcUtils.Helper.GetOppositeFaction(faction));
-            UiManager = uiManager ?? Substitute.For<IUIManager>();
+            UiManager = uiManager ?? Substitute.For<UIManager>();
             userChosenTargetManager = userChosenTargetManager ?? new UserChosenTargetManager();
             updaterProvider = updaterProvider ?? Substitute.For<IUpdaterProvider>();
             TargetFactoriesProvider targetFactoriesProvider = targetFactories?.TargetFactoriesProvider ?? new TargetFactoriesProvider();

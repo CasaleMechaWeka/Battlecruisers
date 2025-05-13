@@ -7,9 +7,9 @@ namespace BattleCruisers.UI.BattleScene
     public class InformatorDismisser
     {
         private readonly IClickableEmitter _background;
-        private readonly IUIManager _uiManager;
+        private readonly UIManager _uiManager;
 
-        public InformatorDismisser(IClickableEmitter background, IUIManager uiManager)
+        public InformatorDismisser(IClickableEmitter background, UIManager uiManager)
         {
             Helper.AssertIsNotNull(background, uiManager);
 

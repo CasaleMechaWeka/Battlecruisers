@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPBuilding>> buildings,
             IPvPBuildingClickHandler clickHandler,

@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         public abstract IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         public abstract IFilter<ISlot> CreateHighlightableSlotFilter();
-        public abstract IUIManager CreateUIManager();
+        public abstract UIManager CreateUIManager();
         public abstract IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer, ITargetIndicator targetIndicator);
         public abstract IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         public abstract ILoadout GetPlayerLoadout();

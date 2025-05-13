@@ -123,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static IPvPUnit CreateUnit(
             IPvPBuildableWrapper<IPvPUnit> unitWrapperPrefab
-            /* IPvPUIManager uiManager , */)
+            /* PvPUIManager uiManager , */)
         {
             var _unitBuildable = CreateUnitBuildable(unitWrapperPrefab.UnityObject);
             return _unitBuildable;

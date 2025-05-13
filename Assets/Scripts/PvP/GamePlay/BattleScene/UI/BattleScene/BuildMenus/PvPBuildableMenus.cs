@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public void Initialise(
             IDictionary<TCategories, IList<IPvPBuildableWrapper<TBuildable>>> buildables,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<TBuildable> buildableSorter,
             ISingleSoundPlayer soundPlayer)
@@ -64,7 +64,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         protected abstract void InitialiseMenu(
             ISingleSoundPlayer soundPlayer,
             TMenu menu,
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<TBuildable>> buildables);
 

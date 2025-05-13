@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public void Initialise(
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings,
-            IUIManager uiManager,
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
             ISingleSoundPlayer soundPlayer,
@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         protected override void InitialiseMenu(
             ISingleSoundPlayer soundPlayer,
             BuildingsMenuController menu,
-            IUIManager uiManager,
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)
         {

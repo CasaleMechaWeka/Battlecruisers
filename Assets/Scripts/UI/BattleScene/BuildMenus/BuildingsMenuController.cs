@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public void Initialise(
             ISingleSoundPlayer soundPlayer,
-            IUIManager uiManager,
+            UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildings,
             IBuildingClickHandler clickHandler)

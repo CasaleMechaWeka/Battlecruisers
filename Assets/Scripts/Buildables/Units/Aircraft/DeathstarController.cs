@@ -35,7 +35,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			AddDamageStats(_barrelWrapper.DamageCapability);
 		}
 
-		public override void Initialise(IUIManager uiManager)
+		public override void Initialise(UIManager uiManager)
 		{
 			base.Initialise(uiManager);
 

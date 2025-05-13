@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
-    public class UIManager : IUIManager
+    public class UIManager
     {
         private ICruiser _playerCruiser, _aiCruiser;
         private IBuildMenu _buildMenu;

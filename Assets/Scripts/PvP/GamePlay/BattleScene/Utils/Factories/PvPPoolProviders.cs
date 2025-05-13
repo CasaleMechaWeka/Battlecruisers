@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
 
         public PvPPoolProviders(
-            IPvPUIManager uiManager,
+            PvPUIManager uiManager,
             IDroneFactory droneFactory)
         {
             PvPHelper.AssertIsNotNull(uiManager, droneFactory);

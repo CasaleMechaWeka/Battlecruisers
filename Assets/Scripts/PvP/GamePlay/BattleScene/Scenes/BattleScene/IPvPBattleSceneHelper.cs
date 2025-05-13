@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IFilter<IPvPSlot> CreateHighlightableSlotFilter();
         IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
-        IPvPUIManager CreateUIManager();
+        PvPUIManager CreateUIManager();
         void InitialiseUIManager(PvPManagerArgs args);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
