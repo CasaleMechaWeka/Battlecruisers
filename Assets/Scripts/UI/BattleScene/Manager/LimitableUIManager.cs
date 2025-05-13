@@ -11,9 +11,9 @@ namespace BattleCruisers.UI.BattleScene.Manager
     /// </summary>
     public class LimitableUIManager : UIManager
     {
-        private IUIManagerPermissions _permissions;
+        private UIManagerPermissions _permissions;
 
-        public void Initialise(ManagerArgs args, IUIManagerPermissions permissions)
+        public void Initialise(ManagerArgs args, UIManagerPermissions permissions)
         {
             base.Initialise(args);
 

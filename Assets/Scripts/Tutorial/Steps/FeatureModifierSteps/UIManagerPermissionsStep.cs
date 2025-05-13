@@ -6,14 +6,14 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
 {
     public class UIManagerPermissionsStep : TutorialStep
     {
-        private readonly IUIManagerSettablePermissions _permissions;
+        private readonly UIManagerPermissions _permissions;
         private readonly bool _canShowItemDetails;
         private readonly bool _canDismissItemDetails;
 
         public UIManagerPermissionsStep(
             ITutorialStepArgs args,
-            IUIManagerSettablePermissions permissions, 
-            bool canShowItemDetails, 
+            UIManagerPermissions permissions,
+            bool canShowItemDetails,
             bool canDismissItemDetails)
             : base(args)
         {

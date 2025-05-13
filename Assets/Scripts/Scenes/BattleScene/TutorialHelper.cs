@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
         public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
-        public IUIManagerSettablePermissions UIManagerPermissions { get; private set; }
+        public UIManagerPermissions UIManagerPermissions { get; private set; }
         public NavigationPermitters NavigationPermitters { get; }
 
         private BroadcastingFilter _speedButtonsFilter;

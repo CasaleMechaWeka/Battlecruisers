@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.UI.BattleScene.Manager
 {
-    public class UIManagerPermissions : IUIManagerPermissions, IUIManagerSettablePermissions
+    public class UIManagerPermissions
     {
         public bool CanShowItemDetails { get; set; }
         public bool CanDismissItemDetails { get; set; }

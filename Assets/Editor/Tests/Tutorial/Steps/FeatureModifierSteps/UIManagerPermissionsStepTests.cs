@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.FeatureModifierSteps
         [Test]
         public void Start()
         {
-            IUIManagerSettablePermissions permissions = Substitute.For<IUIManagerSettablePermissions>();
+            UIManagerPermissions permissions = Substitute.For<UIManagerPermissions>();
             ITutorialStep step = new UIManagerPermissionsStep(_args, permissions, canShowItemDetails: true, canDismissItemDetails: false);
 
             step.Start(_completionCallback);

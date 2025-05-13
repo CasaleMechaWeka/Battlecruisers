@@ -17,7 +17,7 @@ namespace BattleCruisers.Tutorial
         IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
         IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
         IBuildingPermitter BuildingPermitter { get; }
-        IUIManagerSettablePermissions UIManagerPermissions { get; }
+        UIManagerPermissions UIManagerPermissions { get; }
         NavigationPermitters NavigationPermitters { get; }
         IPermitter SpeedButtonsPermitter { get; }
         IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; }
