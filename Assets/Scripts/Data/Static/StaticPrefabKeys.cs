@@ -519,10 +519,10 @@ namespace BattleCruisers.Data.Static
                 Bomb, StratBomb,
                 // Rockets
                 Rocket, RocketSmall, MissileFirecracker,
-                // Missiles
-                MissileSmall, MissileMedium, MissileMF, RailSlug, MissileLarge,
                 // Nuke
                 Nuke,
+                // Missiles
+                MissileSmall, MissileMedium, MissileMF, RailSlug, MissileLarge,
                 // Smart Missile
                 MissileSmart
             });
