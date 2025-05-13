@@ -4,7 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.S
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetTrackers.UserChosen;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Settings;
@@ -21,6 +21,8 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -47,10 +49,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return _uiManager;
         }
 
-        public override void InitialiseUIManager(PvPManagerArgs args)
+        public override void InitialiseUIManager(
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
+            IPvPBuildMenu buildMenu,
+            IPvPItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer)
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
-            _uiManager.Initialise(args);
+            _uiManager.Initialise(playerCruiser,
+                enemyCruiser,
+                buildMenu,
+                detailsManager,
+                soundPlayer,
+                uiSoundPlayer);
         }
 
         public override IFilter<IPvPSlot> CreateHighlightableSlotFilter()

@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables.BuildProgress;
+﻿using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
@@ -9,9 +8,11 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -48,7 +49,12 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer, ITargetIndicator targetIndicator);
         public abstract IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         public abstract ILoadout GetPlayerLoadout();
-        public abstract void InitialiseUIManager(ManagerArgs args);
+        public abstract void InitialiseUIManager(ICruiser PlayerCruiser,
+                                                 ICruiser AICruiser,
+                                                 IBuildMenu BuildMenu,
+                                                 IItemDetailsManager DetailsManager,
+                                                 IPrioritisedSoundPlayer SoundPlayer,
+                                                 ISingleSoundPlayer UISoundPlayer);
         public abstract IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         public abstract IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
 

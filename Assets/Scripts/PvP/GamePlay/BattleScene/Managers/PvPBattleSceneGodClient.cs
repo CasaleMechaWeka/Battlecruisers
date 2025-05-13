@@ -10,9 +10,8 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
@@ -422,15 +421,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             IPvPItemDetailsManager itemDetailsManager = new PvPItemDetailsManager(rightPanelComponents.InformatorPanel);
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new PvPBuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
-            PvPManagerArgs args
-                = new PvPManagerArgs(
-                    playerCruiser,
-                    enemyCruiser,
-                    leftPanelComponents.BuildMenu,
-                    itemDetailsManager,
-                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
-                    PvPFactoryProvider.Sound.UISoundPlayer);
-            pvpBattleHelper.InitialiseUIManager(args);
+
+            pvpBattleHelper.InitialiseUIManager(
+                playerCruiser,
+                enemyCruiser,
+                leftPanelComponents.BuildMenu,
+                itemDetailsManager,
+                PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                PvPFactoryProvider.Sound.UISoundPlayer);
+
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
             // Audio
             ILayeredMusicPlayer layeredMusicPlayer

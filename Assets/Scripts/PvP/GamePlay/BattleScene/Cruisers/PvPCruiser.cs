@@ -24,7 +24,7 @@ using BattleCruisers.Utils.Localisation;
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using Unity.Netcode;
 using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;

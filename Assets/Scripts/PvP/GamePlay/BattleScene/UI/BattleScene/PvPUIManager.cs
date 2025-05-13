@@ -9,11 +9,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
-using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Data;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
     public class PvPUIManager
     {
@@ -57,16 +56,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         // Not in constructor because of circular dependency with:
         // + Build menu
         // + Cruisers
-        public void Initialise(PvPManagerArgs args)
+        public void Initialise(
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
+            IPvPBuildMenu buildMenu,
+            IPvPItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer)
         {
-            Assert.IsNotNull(args);
-
-            _buildMenu = args.BuildMenu;
-            _detailsManager = args.DetailsManager;
-            _playerCruiser = args.PlayerCruiser;
-            _enemyCruiser = args.EnemyCruiser;
-            _soundPlayer = args.SoundPlayer;
-            _uiSoundPlayer = args.UISoundPlayer;
+            _buildMenu = buildMenu;
+            _detailsManager = detailsManager;
+            _playerCruiser = playerCruiser;
+            _enemyCruiser = enemyCruiser;
+            _soundPlayer = soundPlayer;
+            _uiSoundPlayer = uiSoundPlayer;
         }
         public void SetHecklePanel(PvPHecklePanelController hecklePanel)
         {

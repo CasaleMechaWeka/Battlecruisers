@@ -271,15 +271,14 @@ namespace BattleCruisers.Scenes.BattleScene
             _userTargetTracker = new UserTargetTracker(itemDetailsManager.SelectedItem, new UserTargetsColourChanger());
             _buildableButtonColourController = new BuildableButtonColourController(itemDetailsManager.SelectedItem, leftPanelComponents.BuildMenu.BuildableButtons);
 
-            ManagerArgs args
-                = new ManagerArgs(
-                    playerCruiser,
-                    aiCruiser,
-                    leftPanelComponents.BuildMenu,
-                    itemDetailsManager,
-                    FactoryProvider.Sound.PrioritisedSoundPlayer,
-                    FactoryProvider.Sound.UISoundPlayer);
-            helper.InitialiseUIManager(args);
+
+            helper.InitialiseUIManager(
+                playerCruiser,
+                aiCruiser,
+                leftPanelComponents.BuildMenu,
+                itemDetailsManager,
+                FactoryProvider.Sound.PrioritisedSoundPlayer,
+                FactoryProvider.Sound.UISoundPlayer);
 
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);
 

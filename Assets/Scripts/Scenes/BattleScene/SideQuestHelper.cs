@@ -11,9 +11,11 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
@@ -133,10 +135,21 @@ namespace BattleCruisers.Scenes.BattleScene
             return _uiManager;
         }
 
-        public override void InitialiseUIManager(ManagerArgs args)
+        public override void InitialiseUIManager(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBuildMenu buildMenu,
+            IItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer)
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
-            _uiManager.Initialise(args);
+            _uiManager.Initialise(playerCruiser,
+                aiCruiser,
+                buildMenu,
+                detailsManager,
+                soundPlayer,
+                uiSoundPlayer);
         }
 
         /*

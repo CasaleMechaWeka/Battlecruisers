@@ -1,6 +1,9 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
+using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Sound.Players;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
@@ -13,10 +16,15 @@ namespace BattleCruisers.UI.BattleScene.Manager
     {
         private UIManagerPermissions _permissions;
 
-        public void Initialise(ManagerArgs args, UIManagerPermissions permissions)
+        public void Initialise(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBuildMenu buildMenu,
+            IItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer,
+            UIManagerPermissions permissions)
         {
-            base.Initialise(args);
-
             Assert.IsNotNull(permissions);
             _permissions = permissions;
         }

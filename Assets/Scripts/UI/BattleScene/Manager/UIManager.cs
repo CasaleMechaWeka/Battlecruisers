@@ -11,7 +11,6 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Localisation;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Manager
 {
@@ -59,16 +58,20 @@ namespace BattleCruisers.UI.BattleScene.Manager
         // Not in constructor because of circular dependency with:
         // + Build menu
         // + Cruisers
-        public void Initialise(ManagerArgs args)
+        public void Initialise(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBuildMenu buildMenu,
+            IItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer)
         {
-            Assert.IsNotNull(args);
-
-            _buildMenu = args.BuildMenu;
-            _detailsManager = args.DetailsManager;
-            _playerCruiser = args.PlayerCruiser;
-            _aiCruiser = args.AICruiser;
-            _soundPlayer = args.SoundPlayer;
-            _uiSoundPlayer = args.UISoundPlayer;
+            _buildMenu = buildMenu;
+            _detailsManager = detailsManager;
+            _playerCruiser = playerCruiser;
+            _aiCruiser = aiCruiser;
+            _soundPlayer = soundPlayer;
+            _uiSoundPlayer = uiSoundPlayer;
         }
 
         private void _shownItem_Destroyed(object sender, DestroyedEventArgs e)

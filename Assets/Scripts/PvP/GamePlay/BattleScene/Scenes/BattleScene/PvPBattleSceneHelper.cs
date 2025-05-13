@@ -7,7 +7,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
@@ -20,6 +20,8 @@ using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -34,7 +36,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         public abstract IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
         public abstract PvPUIManager CreateUIManager();
-        public abstract void InitialiseUIManager(PvPManagerArgs args);
+        public abstract void InitialiseUIManager(
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
+            IPvPBuildMenu buildMenu,
+            IPvPItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer);
         public abstract ILoadout GetPlayerLoadout();
         public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         public abstract IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);

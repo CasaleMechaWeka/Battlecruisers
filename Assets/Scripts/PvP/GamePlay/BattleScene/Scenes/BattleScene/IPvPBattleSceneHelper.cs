@@ -5,7 +5,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Manager;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
@@ -16,6 +16,8 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -31,7 +33,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
         PvPUIManager CreateUIManager();
-        void InitialiseUIManager(PvPManagerArgs args);
+        void InitialiseUIManager(
+            PvPCruiser playerCruiser,
+            PvPCruiser enemyCruiser,
+            IPvPBuildMenu buildMenu,
+            IPvPItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser);

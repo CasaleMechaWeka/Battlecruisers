@@ -9,9 +9,11 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -130,7 +132,13 @@ namespace BattleCruisers.Scenes.BattleScene
             return _uiManager;
         }
 
-        public override void InitialiseUIManager(ManagerArgs args)
+        public override void InitialiseUIManager(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            IBuildMenu buildMenu,
+            IItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            ISingleSoundPlayer uiSoundPlayer)
         {
             Assert.IsNotNull(_uiManager, "InitialiseUIManager() should only be called after CreaetUIManager()");
 
@@ -141,7 +149,13 @@ namespace BattleCruisers.Scenes.BattleScene
             };
             UIManagerPermissions = uiManagerPermissions;
 
-            _uiManager.Initialise(args, uiManagerPermissions);
+            _uiManager.Initialise(playerCruiser,
+                aiCruiser,
+                buildMenu,
+                detailsManager,
+                soundPlayer,
+                uiSoundPlayer,
+                uiManagerPermissions);
         }
 
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(

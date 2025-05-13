@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables.BuildProgress;
+﻿using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
@@ -8,9 +7,11 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -27,7 +28,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         // Separate methods because of circular dependency between UIManager and everything else :/
         UIManager CreateUIManager();
-        void InitialiseUIManager(ManagerArgs args);
+        public abstract void InitialiseUIManager(ICruiser PlayerCruiser,
+                                                 ICruiser AICruiser,
+                                                 IBuildMenu BuildMenu,
+                                                 IItemDetailsManager DetailsManager,
+                                                 IPrioritisedSoundPlayer SoundPlayer,
+                                                 ISingleSoundPlayer UISoundPlayer);
 
         IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
