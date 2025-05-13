@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.Buildables.Pools;
-using BattleCruisers.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -10,11 +9,9 @@ namespace BattleCruisers.Utils.Factories
 
         public UnitToPoolMap UnitToPoolMap { get; }
 
-        public PoolProviders(UIManager uiManager)
+        public PoolProviders()
         {
-            Helper.AssertIsNotNull(uiManager);
-
-            _unitPoolProvider = new UnitPoolProvider(uiManager);
+            _unitPoolProvider = new UnitPoolProvider();
 
             UnitToPoolMap = new UnitToPoolMap(UnitPoolProvider);
         }

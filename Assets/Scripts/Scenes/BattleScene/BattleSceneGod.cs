@@ -84,6 +84,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
         public GameObject ultraPanel;
+        public UIManager uiManager;
 
         public GameObject PlayerCaptain;
         public GameObject EnemyCaptain;
@@ -136,11 +137,11 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
             PauseGameManager pauseGameManager = new PauseGameManager(time);
-            UIManager uiManager = helper.CreateUIManager();
+            uiManager = helper.CreateUIManager();
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            FactoryProvider.Initialise(components, DataProvider.SettingsManager, uiManager);
+            FactoryProvider.Initialise(components, DataProvider.SettingsManager);
             PrefabFactory.CreatePools();
             ICruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 

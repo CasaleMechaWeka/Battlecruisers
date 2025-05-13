@@ -155,7 +155,7 @@ namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.Client
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            FactoryProvider.Initialise(components, DataProvider.SettingsManager, uiManager);
+            FactoryProvider.Initialise(components, DataProvider.SettingsManager);
             ICruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();

@@ -1,8 +1,7 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.Utils;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 
@@ -10,7 +9,6 @@ namespace BattleCruisers.Buildables.Pools
 {
     public class UnitPoolProvider
     {
-        private readonly UIManager _uiManager;
         private readonly IList<Pool<Unit, BuildableActivationArgs>> _pools;
 
         // Don't want more than 1 because unit may never be built.  Want at least 1
@@ -41,11 +39,8 @@ namespace BattleCruisers.Buildables.Pools
         public Pool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
         public Pool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
 
-        public UnitPoolProvider(UIManager uiManager)
+        public UnitPoolProvider()
         {
-            Helper.AssertIsNotNull(uiManager);
-
-            _uiManager = uiManager;
             _pools = new List<Pool<Unit, BuildableActivationArgs>>();
 
             // Aircraft
@@ -76,7 +71,7 @@ namespace BattleCruisers.Buildables.Pools
         {
             Pool<Unit, BuildableActivationArgs> pool
                 = new Pool<Unit, BuildableActivationArgs>(
-                    new UnitFactory(unitKey, _uiManager));
+                    new UnitFactory(unitKey, BattleSceneGod.Instance.uiManager));
             _pools.Add(pool);
             return pool;
         }

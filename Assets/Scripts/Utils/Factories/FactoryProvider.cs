@@ -3,10 +3,8 @@ using BattleCruisers.Data.Settings;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
-using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Threading;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.Utils.Factories
 {
@@ -28,8 +26,7 @@ namespace BattleCruisers.Utils.Factories
 
         public static void Initialise(
             BattleSceneGodComponents components,
-            SettingsManager settingsManager,
-            UIManager uiManager)
+            SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(components, settingsManager);
 
@@ -40,12 +37,10 @@ namespace BattleCruisers.Utils.Factories
             DeferrerProvider = new DeferrerProvider(components.Deferrer, components.RealTimeDeferrer);
             UpdaterProvider = components.UpdaterProvider;
 
-            Assert.IsNotNull(uiManager);
-
             DroneFactory = new DroneFactory();
             DroneMonitor = new DroneMonitor(DroneFactory);
 
-            PoolProviders poolProviders = new PoolProviders(uiManager);
+            PoolProviders poolProviders = new PoolProviders();
             PoolProviders = poolProviders;
 
             Sound = new SoundFactoryProvider(_components, poolProviders);
