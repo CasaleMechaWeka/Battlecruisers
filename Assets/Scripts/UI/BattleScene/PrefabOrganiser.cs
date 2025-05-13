@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class PrefabOrganiser : IPrefabOrganiser
+    public class PrefabOrganiser
     {
         private readonly ILoadout _playerLoadout;
 
