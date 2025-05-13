@@ -9,16 +9,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPUnitFactory : IPoolableFactory<PvPUnit, PvPBuildableActivationArgs>
     {
-        private readonly IPrefabKey _unitKey;
-        // private readonly PvPUIManager _uiManager;
         private readonly IPvPBuildableWrapper<IPvPUnit> _unitPrefab;
 
-        public PvPUnitFactory(IPrefabKey unitKey /* PvPUIManager uiManager, */)
+        public PvPUnitFactory(IPrefabKey unitKey)
         {
             PvPHelper.AssertIsNotNull(unitKey);
-
-            _unitKey = unitKey;
-            // _uiManager = uiManager;
 
             _unitPrefab = PvPPrefabFactory.GetUnitWrapperPrefab(unitKey);
         }
@@ -26,11 +21,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPUnit CreateItem()
         {
             var unit = PvPPrefabFactory
-                    .CreateUnit(_unitPrefab /* _uiManager */ );
+                    .CreateUnit(_unitPrefab);
             return unit.Parse<PvPUnit>();
-            /*        _prefabFactory
-                        .CreateUnit(_unitPrefab, *//* _uiManager *//* _factoryProvider)
-                        .Parse<PvPUnit>();*/
         }
 
         public override string ToString()

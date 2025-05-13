@@ -10,6 +10,7 @@ using BattleCruisers.Effects.Deaths;
 using BattleCruisers.Effects.Drones;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Projectiles;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -98,10 +99,9 @@ namespace BattleCruisers.Utils.Fetchers
         }
 
         public static IBuilding CreateBuilding(
-            IBuildableWrapper<IBuilding> buildingWrapperPrefab,
-            UIManager uiManager)
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab)
         {
-            return CreateBuildable(buildingWrapperPrefab.UnityObject, uiManager);
+            return CreateBuildable(buildingWrapperPrefab.UnityObject);
         }
 
         public static IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
@@ -110,22 +110,21 @@ namespace BattleCruisers.Utils.Fetchers
         }
 
         public static IUnit CreateUnit(
-            IBuildableWrapper<IUnit> unitWrapperPrefab,
-            UIManager uiManager)
+            IBuildableWrapper<IUnit> unitWrapperPrefab)
         {
-            return CreateBuildable(unitWrapperPrefab.UnityObject, uiManager);
+            return CreateBuildable(unitWrapperPrefab.UnityObject);
         }
 
         private static TBuildable CreateBuildable<TBuildable>(
-            BuildableWrapper<TBuildable> buildableWrapperPrefab,
-            UIManager uiManager) where TBuildable : class, IBuildable
+            BuildableWrapper<TBuildable> buildableWrapperPrefab)
+            where TBuildable : class, IBuildable
         {
-            Helper.AssertIsNotNull(buildableWrapperPrefab, uiManager);
+            Helper.AssertIsNotNull(buildableWrapperPrefab);
 
             BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.StaticInitialise();
-            buildableWrapper.Buildable.Initialise(uiManager);
+            buildableWrapper.Buildable.Initialise(BattleSceneGod.Instance.uiManager);
 
             Logging.Log(Tags.PREFAB_FACTORY, $"Building: {buildableWrapper.Buildable}  Prefab id: {buildableWrapperPrefab.GetInstanceID()}  New instance id: {buildableWrapper.GetInstanceID()}");
             return buildableWrapper.Buildable;

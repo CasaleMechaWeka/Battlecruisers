@@ -282,7 +282,7 @@ namespace BattleCruisers.Cruisers
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab, _uiManager);
+            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
             /*       SetVariantIcon(building);*/
             building.Activate(
                 new BuildingActivationArgs(

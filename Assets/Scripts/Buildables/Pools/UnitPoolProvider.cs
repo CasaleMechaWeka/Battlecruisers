@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Utils.BattleScene.Pools;
 using System.Collections.Generic;
 
@@ -71,7 +70,7 @@ namespace BattleCruisers.Buildables.Pools
         {
             Pool<Unit, BuildableActivationArgs> pool
                 = new Pool<Unit, BuildableActivationArgs>(
-                    new UnitFactory(unitKey, BattleSceneGod.Instance.uiManager));
+                    new UnitFactory(unitKey));
             _pools.Add(pool);
             return pool;
         }
