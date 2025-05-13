@@ -68,7 +68,7 @@ namespace BattleCruisers.Scenes.Test.Performance.ObjectPooling
                 new Vector2(-12, 10),
                 new Vector2(12, 10)
             };
-            aircraftProvider.FindBomberPatrolPoints(default).ReturnsForAnyArgs(bomberPatrolPonts);
+            aircraftProvider.BomberPatrolPoints(default).ReturnsForAnyArgs(bomberPatrolPonts);
 
             helper.InitialiseBuilding(_airFactory, aircraftProvider: aircraftProvider);
             _airFactory.StartConstruction();

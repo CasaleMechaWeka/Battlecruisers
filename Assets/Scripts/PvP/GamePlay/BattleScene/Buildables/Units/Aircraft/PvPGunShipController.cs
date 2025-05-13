@@ -175,7 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
-            IList<Vector2> patrolPositions = _aircraftProvider.FindGunshipPatrolPoints(cruisingAltitudeInM);
+            IList<Vector2> patrolPositions = _aircraftProvider.GunshipPatrolPoints(cruisingAltitudeInM);
             return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
         }
 

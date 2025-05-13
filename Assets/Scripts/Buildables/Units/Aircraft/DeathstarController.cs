@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
 		protected override IList<IPatrolPoint> GetPatrolPoints()
 		{
-			IList<Vector2> patrolPositions = _aircraftProvider.FindDeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
+			IList<Vector2> patrolPositions = _aircraftProvider.DeathstarPatrolPoints(transform.position, cruisingAltitudeInM);
 
 			IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
 			{

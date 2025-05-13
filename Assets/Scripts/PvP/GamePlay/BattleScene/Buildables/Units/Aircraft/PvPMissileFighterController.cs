@@ -203,7 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
-            return PvPHelper.ConvertVectorsToPatrolPoints(_aircraftProvider.FindFighterPatrolPoints(cruisingAltitudeInM));
+            return PvPHelper.ConvertVectorsToPatrolPoints(_aircraftProvider.FighterPatrolPoints(cruisingAltitudeInM));
         }
 
         protected override void OnFixedUpdate()

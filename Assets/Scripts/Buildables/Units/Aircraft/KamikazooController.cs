@@ -160,7 +160,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
-            IList<Vector2> patrolPositions = _aircraftProvider.FindBomberPatrolPoints(cruisingAltitudeInM);
+            IList<Vector2> patrolPositions = _aircraftProvider.BomberPatrolPoints(cruisingAltitudeInM);
             return ProcessPatrolPoints(patrolPositions, OnFirstPatrolPointReached);
         }
         private void OnFirstPatrolPointReached()

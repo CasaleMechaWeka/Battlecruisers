@@ -34,7 +34,7 @@ namespace BattleCruisers.Scenes.Test.Performance
             // Initialise air factory
             AircraftProvider aircraftProvider = Substitute.For<AircraftProvider>();
             aircraftProvider.FighterSafeZone.Returns(new Rectangle(-50, 50, -50, 50));
-            aircraftProvider.FindFighterPatrolPoints(default).ReturnsForAnyArgs(patrolPoints);
+            aircraftProvider.FighterPatrolPoints(default).ReturnsForAnyArgs(patrolPoints);
 
             AirFactory factory = FindObjectOfType<AirFactory>();
             helper.InitialiseBuilding(factory, Faction.Blues, parentCruiserDirection: Direction.Right, aircraftProvider: aircraftProvider);

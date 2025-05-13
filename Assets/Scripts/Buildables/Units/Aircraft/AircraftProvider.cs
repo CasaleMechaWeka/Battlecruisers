@@ -62,7 +62,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				maxY: SAFE_ZONE_MAX_Y);
 		}
 
-		public IList<Vector2> FindBomberPatrolPoints(float cruisingAltitudeInM)
+		public IList<Vector2> BomberPatrolPoints(float cruisingAltitudeInM)
 		{
 			if (_isTutorial)
 			{
@@ -89,7 +89,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			};
 		}
 
-		public IList<Vector2> FindGunshipPatrolPoints(float cruisingAltitudeInM)
+		public IList<Vector2> GunshipPatrolPoints(float cruisingAltitudeInM)
 		{
 			cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
 
@@ -104,7 +104,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			};
 		}
 
-		public IList<Vector2> FindFighterPatrolPoints(float cruisingAltitudeInM)
+		public IList<Vector2> FighterPatrolPoints(float cruisingAltitudeInM)
 		{
 			cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
 
@@ -118,7 +118,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			};
 		}
 
-		public IList<Vector2> FindDeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
+		public IList<Vector2> DeathstarPatrolPoints(Vector2 deathstarPosition, float cruisingAltitudeInM)
 		{
 			float furtherEnemyCruiserPatrolPointAdjustemntX = IsEnemyToTheRight ? DEATHSTAR_PATROL_MARGIN : -DEATHSTAR_PATROL_MARGIN;
 			float closerEnemyCruiserPatrolPointAdjustemntX = IsEnemyToTheRight ? -DEATHSTAR_PATROL_MARGIN : DEATHSTAR_PATROL_MARGIN;
@@ -132,7 +132,19 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 			};
 		}
 
-		public IList<Vector2> FindSpySatellitePatrolPoints(Vector2 satellitePosition, float cruisingAltitudeInM)
+		public IList<Vector2> SpyPlanePatrolPoints(Vector2 spyPlanePosition, float cruisingAltitudeInM)
+		{
+			float furtherEnemyCruiserPatrolPointAdjustemntX = IsEnemyToTheRight ? BOMBER_PATROL_MARGIN : -BOMBER_PATROL_MARGIN;
+			float closerEnemyCruiserPatrolPointAdjustemntX = IsEnemyToTheRight ? -BOMBER_PATROL_MARGIN : BOMBER_PATROL_MARGIN;
+
+			return new List<Vector2>()
+			{
+				new Vector2(_parentCruiserPosition.x + furtherEnemyCruiserPatrolPointAdjustemntX, cruisingAltitudeInM),
+				new Vector2(_parentCruiserPosition.x + closerEnemyCruiserPatrolPointAdjustemntX, cruisingAltitudeInM)
+			};
+		}
+
+		public IList<Vector2> SpySatellitePatrolPoints(Vector2 satellitePosition, float cruisingAltitudeInM)
 		{
 			float closerToEnemyCruiserPatrolPointX = IsEnemyToTheRight ? SPY_SATELLITE_PATROL_MARGIN : -SPY_SATELLITE_PATROL_MARGIN;
 			float closerToFriendlyCruiserPatrolPointX = IsEnemyToTheRight ? -SPY_SATELLITE_PATROL_MARGIN : SPY_SATELLITE_PATROL_MARGIN;
@@ -144,7 +156,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 				new Vector2(closerToFriendlyCruiserPatrolPointX, cruisingAltitudeInM)
 			};
 		}
-		public IList<Vector2> FindMissileFighterPatrolPoints(float cruisingAltitudeInM)
+		public IList<Vector2> MissileFighterPatrolPoints(float cruisingAltitudeInM)
 		{
 			cruisingAltitudeInM = FuzzCruisingAltitude(cruisingAltitudeInM);
 

@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.Aircraft
 		[Test]
 		public void PlayerAircraftProvider_FindBomberPatrolPoints()
 		{
-			IList<Vector2> patrolPoints = _playerAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
+			IList<Vector2> patrolPoints = _playerAircraftProvider.BomberPatrolPoints(_bomberAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));     // -30 + 10
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));      // 30 - 10
@@ -71,7 +71,7 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			_aiAircraftProvider = new AircraftProvider(_aiCruiserPosition, _playerCruiserPosition, isTutorial: true);
 
-			IList<Vector2> patrolPoints = _aiAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
+			IList<Vector2> patrolPoints = _aiAircraftProvider.BomberPatrolPoints(_bomberAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M)));     // -30 + 10
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_TUTORIAL_ADJUSTMENT_IN_M)));      // 30 - 10
@@ -82,7 +82,7 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			_aiAircraftProvider = new AircraftProvider(_aiCruiserPosition, _playerCruiserPosition, isTutorial: false);
 
-			IList<Vector2> patrolPoints = _aiAircraftProvider.FindBomberPatrolPoints(_bomberAltitude);
+			IList<Vector2> patrolPoints = _aiAircraftProvider.BomberPatrolPoints(_bomberAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(-20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));     // -30 + 10
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(20, _bomberAltitude - AircraftProvider.CRUISING_ALTITUDE_ERROR_MARGIN_IN_M)));      // 30 - 10
@@ -91,7 +91,7 @@ namespace BattleCruisers.Tests.Aircraft
 		[Test]
 		public void PlayerAircraftProvider_FindFighterPatrolPoints()
 		{
-			IList<Vector2> patrolPoints = _playerAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
+			IList<Vector2> patrolPoints = _playerAircraftProvider.FighterPatrolPoints(_fighterAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(-35, _fighterAltitude)));   // -40 + 5
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude)));     // 5 - 5
@@ -100,7 +100,7 @@ namespace BattleCruisers.Tests.Aircraft
 		[Test]
 		public void AiAircraftProvider_FindFighterPatrolPoints()
 		{
-			IList<Vector2> patrolPoints = _aiAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
+			IList<Vector2> patrolPoints = _aiAircraftProvider.FighterPatrolPoints(_fighterAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude)));     // -5 + 5
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude)));    // 40 - 5
@@ -111,7 +111,7 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			Vector2 deathstarPosition = _playerCruiserPosition;
 
-			IList<Vector2> patrolPoints = _playerAircraftProvider.FindDeathstarPatrolPoints(deathstarPosition, _deathstarAltitude);
+			IList<Vector2> patrolPoints = _playerAircraftProvider.DeathstarPatrolPoints(deathstarPosition, _deathstarAltitude);
 
 			Assert.IsTrue(patrolPoints.Count == 4);
 			Assert.IsTrue(patrolPoints[1] == new Vector2(-30, _deathstarAltitude));
@@ -124,7 +124,7 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			Vector2 deathstarPosition = _aiCruiserPosition;
 
-			IList<Vector2> patrolPoints = _aiAircraftProvider.FindDeathstarPatrolPoints(deathstarPosition, _deathstarAltitude);
+			IList<Vector2> patrolPoints = _aiAircraftProvider.DeathstarPatrolPoints(deathstarPosition, _deathstarAltitude);
 
 			Assert.IsTrue(patrolPoints.Count == 4);
 			Assert.IsTrue(patrolPoints[1] == new Vector2(30, _deathstarAltitude));
@@ -137,7 +137,7 @@ namespace BattleCruisers.Tests.Aircraft
 		{
 			RandomGenerator.RangeFromCenter(default, default).ReturnsForAnyArgs(arg => (float)(arg.Args()[0]) + 1.5f);
 
-			IList<Vector2> patrolPoints = _aiAircraftProvider.FindFighterPatrolPoints(_fighterAltitude);
+			IList<Vector2> patrolPoints = _aiAircraftProvider.FighterPatrolPoints(_fighterAltitude);
 
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(0, _fighterAltitude + 1.5f)));     // -5 + 5
 			Assert.IsTrue(patrolPoints.Contains(new Vector2(35, _fighterAltitude + 1.5f)));    // 40 - 5

@@ -284,7 +284,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new Vector2(0, 4)
                 };
             }
-            provider.FindBomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
+            provider.BomberPatrolPoints(0).ReturnsForAnyArgs(bomberPatrolPoints);
 
             if (gunshipPatrolPoints == null)
             {
@@ -294,7 +294,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new Vector2(0, 4)
                 };
             }
-            provider.FindGunshipPatrolPoints(0).ReturnsForAnyArgs(gunshipPatrolPoints);
+            provider.GunshipPatrolPoints(0).ReturnsForAnyArgs(gunshipPatrolPoints);
 
             if (fighterPatrolPoints == null)
             {
@@ -304,7 +304,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new Vector2(3, 10)
                 };
             }
-            provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+            provider.FighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
 
             if (deathstarPatrolPoints == null)
             {
@@ -316,7 +316,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new Vector2(0, 40)
                 };
             }
-            provider.FindDeathstarPatrolPoints(default, 0).ReturnsForAnyArgs(deathstarPatrolPoints);
+            provider.DeathstarPatrolPoints(default, 0).ReturnsForAnyArgs(deathstarPatrolPoints);
 
             if (spySatellitePatrolPoints == null)
             {
@@ -327,7 +327,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new Vector2(0, 30)
                 };
             }
-            provider.FindSpySatellitePatrolPoints(default, 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
+            provider.SpySatellitePatrolPoints(default, 0).ReturnsForAnyArgs(spySatellitePatrolPoints);
 
             if (fighterSafeZone == null)
             {
@@ -345,7 +345,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     new Vector2(3, 10)
                 };
             }
-            provider.FindMissileFighterPatrolPoints(0).ReturnsForAnyArgs(missileFighterPatrolPoints);
+            provider.MissileFighterPatrolPoints(0).ReturnsForAnyArgs(missileFighterPatrolPoints);
 
             provider.FighterSafeZone.Returns(fighterSafeZone);
 

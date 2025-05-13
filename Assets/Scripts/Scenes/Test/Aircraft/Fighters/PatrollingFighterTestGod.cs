@@ -46,7 +46,7 @@ namespace BattleCruisers.Scenes.Test.Aircraft.Fighters
                 new Vector2(-5, 2)
             };
 
-            provider.FindFighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
+            provider.FighterPatrolPoints(0).ReturnsForAnyArgs(fighterPatrolPoints);
 
             return provider;
         }

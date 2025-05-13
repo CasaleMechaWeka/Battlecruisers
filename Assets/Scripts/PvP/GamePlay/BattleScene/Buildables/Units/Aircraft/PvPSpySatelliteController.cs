@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override IList<IPatrolPoint> GetPatrolPoints()
         {
-            IList<Vector2> patrolPositions = _aircraftProvider.FindSpySatellitePatrolPoints(transform.position, cruisingAltitudeInM);
+            IList<Vector2> patrolPositions = _aircraftProvider.SpySatellitePatrolPoints(transform.position, cruisingAltitudeInM);
 
             IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count)
             {
