@@ -127,8 +127,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     new SmoothZoomAdjuster(icamera, time, cameraTransitionSpeedManager),
                     new SmoothPositionAdjuster(icamera, time, cameraTransitionSpeedManager));
 
-            PvPCameraFocuser coreCameraFocuser
-                = new PvPCameraFocuser(
+            CameraFocuser coreCameraFocuser
+                = new CameraFocuser(
                     targets,
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider,
@@ -212,8 +212,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     new SmoothZoomAdjuster(icamera, time, cameraTransitionSpeedManager),
                     new SmoothPositionAdjuster(icamera, time, cameraTransitionSpeedManager));
 
-            PvPCameraFocuser coreCameraFocuser
-                = new PvPCameraFocuser(
+            CameraFocuser coreCameraFocuser
+                = new CameraFocuser(
                     targets,
                     trumpCameraTargetProvider,
                     defaultCameraTargetProvider,
