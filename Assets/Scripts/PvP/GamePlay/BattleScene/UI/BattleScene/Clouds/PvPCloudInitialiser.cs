@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPMistController mist;
         public MoonController moon;
         public FogController fog;
-        public PvPSkyStatsGroup skyStatsGroup;
+        public SkyStatsGroup skyStatsGroup;
         public BackgroundImageController background;
 
         public SpriteRenderer underwaterGlowSprite;
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             fog.Initialise(skyStats.FogColour);
 
             // Apply WaterColour to SeaBackground sprite, UnderwaterGlow sprite, and SeaShade canvas
-            if (skyStats is PvPSkyStatsController pvPSkyStatsController)
+            if (skyStats is SkyStatsController pvPSkyStatsController)
             {
                 ApplyColoursToElements(pvPSkyStatsController.WaterColour, pvPSkyStatsController.UnderwaterGlowColour);
             }

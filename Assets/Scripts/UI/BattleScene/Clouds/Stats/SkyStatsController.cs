@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
@@ -38,18 +39,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         private Color _fogColour;
         public Color FogColour => _fogColour;
 
-        [SerializeField] 
-        private Color _waterColour; 
-        public Color WaterColour => _waterColour; 
+        [SerializeField]
+        private Color _waterColour;
+        public Color WaterColour => _waterColour;
 
-        [SerializeField] private Color _underwaterGlowColour; 
+        [SerializeField] private Color _underwaterGlowColour;
         public Color UnderwaterGlowColour => _underwaterGlowColour;
-
-
-        private void Awake()
-        {
-            Initialise();
-        }
 
         public void Initialise()
         {
