@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
@@ -36,7 +35,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public CloudInitialiser cloudInitialiser;
         public CloudInitialiser CloudInitialiser => cloudInitialiser;
 
-        public PvPSkyboxInitialiser SkyboxInitialiser { get; private set; }
         public PvPClickableEmitter backgroundClickableEmitter;
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
@@ -77,9 +75,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 UISoundsAudioSource
                     = new EffectVolumeAudioSource(
                         new AudioSourceBC(uiSoundsAudioSource), 1);
-
-                SkyboxInitialiser = GetComponent<PvPSkyboxInitialiser>();
-                Assert.IsNotNull(SkyboxInitialiser);
 
                 LifetimeEventBroadcaster lifetimeEvents = GetComponent<LifetimeEventBroadcaster>();
                 Assert.IsNotNull(lifetimeEvents);

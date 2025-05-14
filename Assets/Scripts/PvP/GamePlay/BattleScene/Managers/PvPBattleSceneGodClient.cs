@@ -373,7 +373,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             currentLevel = pvpBattleHelper.GetPvPLevel();
             PrefabContainer<BackgroundImageStats> backgroundStats = await pvpBattleHelper.GetBackgroundStatsAsync(currentLevel.Num);
             components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
-            await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel);
+            cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentLevel.SkyMaterialName);
 
             IPvPButtonVisibilityFilters buttonVisibilityFilters = pvpBattleHelper.CreateButtonVisibilityFilters(playerCruiser);
             _battleSceneGodTunnel.battleCompletionHandler = battleCompletionHandler;

@@ -329,14 +329,14 @@ namespace BattleCruisers.Scenes.BattleScene
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedLevel);
                 backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
                 components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
-                await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentLevel.SkyMaterialName);
+                cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentLevel.SkyMaterialName);
             }
             else
             {
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedSideQuestID);
                 backgroundStats = await helper.GetBackgroundStatsAsync(ApplicationModel.SelectedSideQuestID);
                 components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
-                await components.SkyboxInitialiser.InitialiseAsync(cameraComponents.Skybox, currentSideQuest.SkyMaterial);
+                cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentLevel.SkyMaterialName);
             }
             components.HotkeyInitialiser.Initialise(
                 DataProvider.GameModel.Hotkeys,

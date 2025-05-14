@@ -2,7 +2,6 @@
 using BattleCruisers.UI;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Clouds;
-using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Wind;
@@ -36,7 +35,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public CloudInitialiser cloudInitialiser;
         public CloudInitialiser CloudInitialiser => cloudInitialiser;
 
-        public SkyboxInitialiser SkyboxInitialiser { get; private set; }
         public LifetimeEventBroadcaster LifetimeEvents { get; private set; }
 
         private UpdaterProvider _updaterProvider;
@@ -76,9 +74,6 @@ namespace BattleCruisers.Scenes.BattleScene
             UISoundsAudioSource
                 = new EffectVolumeAudioSource(
                     new AudioSourceBC(uiSoundsAudioSource), 1);
-
-            SkyboxInitialiser = GetComponent<SkyboxInitialiser>();
-            Assert.IsNotNull(SkyboxInitialiser);
 
             _updaterProvider = GetComponentInChildren<UpdaterProvider>();
             Assert.IsNotNull(_updaterProvider);
