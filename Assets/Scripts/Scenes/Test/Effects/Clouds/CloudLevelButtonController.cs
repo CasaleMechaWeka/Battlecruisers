@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
         private PrefabContainer<BackgroundImageStats> _backgroundStats;
         private BackgroundImageController _backgroundImage;
         private float _cameraAspectRatio;
-        private IBackgroundImageCalculator _calculator;
+        private BackgroundImageCalculator _calculator;
 
         public Text levelNumText;
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             PrefabContainer<BackgroundImageStats> backgroundStats,
             BackgroundImageController backgroundImage,
             float cameraAspectRatio,
-            IBackgroundImageCalculator calculator)
+            BackgroundImageCalculator calculator)
         {
             Assert.IsNotNull(levelNumText);
             BCUtils.Helper.AssertIsNotNull(skyStats, skySetter, backgroundStats, backgroundImage, calculator);

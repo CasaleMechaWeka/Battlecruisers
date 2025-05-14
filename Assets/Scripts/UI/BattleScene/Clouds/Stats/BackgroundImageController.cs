@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 
         public SpriteRenderer background;
 
-        public void Initialise(PrefabContainer<BackgroundImageStats> statsContainer, float cameraAspectRatio, IBackgroundImageCalculator calculator)
+        public void Initialise(PrefabContainer<BackgroundImageStats> statsContainer, float cameraAspectRatio, BackgroundImageCalculator calculator)
         {
             Helper.AssertIsNotNull(statsContainer, calculator);
             Assert.IsNotNull(background);

@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    public class BackgroundImageCalculator : IBackgroundImageCalculator
+    public class BackgroundImageCalculator
     {
         public const float RATIO_4_TO_3 = 1.333f;
         public const float RATIO_16_TO_9 = 1.778f;
