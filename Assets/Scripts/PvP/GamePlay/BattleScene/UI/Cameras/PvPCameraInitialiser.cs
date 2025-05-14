@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private PvPCruiser _playerCruiser;
         private PvPCruiser _enemyCruiser;
 
-        public IPvPCameraComponents Initialise(
+        public PvPCameraComponents Initialise(
             SettingsManager settingsManager,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraTransitionSpeedManager);
 
             cameraFocuser
-                = new PvPIndirectCameraFocuser(
+                = new IndirectCameraFocuser(
                     coreCameraFocuser,
                     icamera,
                     new CameraTargetTracker(
@@ -162,7 +162,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
 
 
-        public IPvPCameraComponents Initialise(
+        public PvPCameraComponents Initialise(
             SettingsManager settingsManager,
             IPvPCruiser playerCruiser,
             IPvPCruiser enemyCruiser,
@@ -220,7 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraTransitionSpeedManager);
 
             cameraFocuser
-                = new PvPIndirectCameraFocuser(
+                = new IndirectCameraFocuser(
                     coreCameraFocuser,
                     icamera,
                     new CameraTargetTracker(

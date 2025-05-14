@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPCruiserDeathManager _cruiserDeathManager;
         private PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private NavigationPermitters navigationPermitters;
-        private IPvPCameraComponents cameraComponents;
+        private PvPCameraComponents cameraComponents;
 
         public PvPCameraInitialiser cameraInitialiser;
         public PvPTopPanelInitialiser topPanelInitialiser;

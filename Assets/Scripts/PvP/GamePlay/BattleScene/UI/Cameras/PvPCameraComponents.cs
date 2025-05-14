@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras
 {
-    public class PvPCameraComponents : IPvPCameraComponents
+    public class PvPCameraComponents
     {
         public ICamera MainCamera { get; }
         public ICameraAdjuster CameraAdjuster { get; }
