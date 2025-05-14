@@ -11,9 +11,9 @@ namespace BattleCruisers.Utils.Factories
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 
-        public SoundFactoryProvider(BattleSceneGodComponents components, PoolProviders poolProviders)
+        public SoundFactoryProvider(BattleSceneGodComponents components)
         {
-            Helper.AssertIsNotNull(components, poolProviders);
+            Helper.AssertIsNotNull(components);
 
             UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);

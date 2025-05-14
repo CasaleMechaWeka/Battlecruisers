@@ -43,7 +43,7 @@ namespace BattleCruisers.Utils.Factories
             PoolProviders poolProviders = new PoolProviders();
             PoolProviders = poolProviders;
 
-            Sound = new SoundFactoryProvider(_components, poolProviders);
+            Sound = new SoundFactoryProvider(_components);
         }
 
         public static void Clear()

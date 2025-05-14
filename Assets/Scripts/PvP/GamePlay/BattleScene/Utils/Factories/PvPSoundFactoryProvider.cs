@@ -11,12 +11,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         public ISingleSoundPlayer UISoundPlayer { get; }
         public ISoundPlayerFactory SoundPlayerFactory { get; }
 
-        public PvPSoundFactoryProvider(PvPBattleSceneGodComponents components /*, IPvPPoolProviders poolProviders */)
+        public PvPSoundFactoryProvider(PvPBattleSceneGodComponents components)
         {
-            PvPHelper.AssertIsNotNull(components /*, poolProviders*/);
-            /*            _audioSourcePool.AddCapacity(AUDIO_SOURCE_INITIAL_CAPACITY);
-                        SoundFetcher = new PvPSoundFetcher();
-                        SoundPlayer = new PvPSoundPlayer(SoundFetcher , _audioSourcePool*//*, poolProviders.AudioSourcePool*//*);*/
+            PvPHelper.AssertIsNotNull(components);
 
             UISoundPlayer = new SingleSoundPlayer(components.UISoundsAudioSource);
             SoundPlayerFactory = new SoundPlayerFactory(components.Deferrer);
