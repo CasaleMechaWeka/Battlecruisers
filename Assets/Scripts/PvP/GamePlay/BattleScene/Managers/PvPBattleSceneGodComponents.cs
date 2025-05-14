@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Clouds;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI;
@@ -15,6 +14,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.BattleScene.Clouds;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -33,8 +33,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public WindInitialiser windInitialiser;
         public WindInitialiser WindInitialiser => windInitialiser;
 
-        public PvPCloudInitialiser cloudInitialiser;
-        public PvPCloudInitialiser CloudInitialiser => cloudInitialiser;
+        public CloudInitialiser cloudInitialiser;
+        public CloudInitialiser CloudInitialiser => cloudInitialiser;
 
         public PvPSkyboxInitialiser SkyboxInitialiser { get; private set; }
         public PvPClickableEmitter backgroundClickableEmitter;
