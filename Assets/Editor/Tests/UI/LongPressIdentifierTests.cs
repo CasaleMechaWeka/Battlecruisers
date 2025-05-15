@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.UI
 {
     public class LongPressIdentifierTests
     {
-        private ILongPressIdentifier _longPressIdentifier;
+        private LongPressIdentifier _longPressIdentifier;
 
         private IPointerUpDownEmitter _button;
         private ITime _time;

@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private CanvasGroup canvasGroup;
         private UIManager _uiManager;
         private IFilter<ITarget> _buttonVisibilityFilter;
-        private ILongPressIdentifier _longPressIdentifier;
+        private LongPressIdentifier _longPressIdentifier;
 
         public float lightUpIntervalS = 0.25f;
         public Image activeImage;

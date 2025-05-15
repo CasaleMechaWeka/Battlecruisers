@@ -5,7 +5,7 @@ using System;
 
 namespace BattleCruisers.UI
 {
-    public class LongPressIdentifier : ILongPressIdentifier
+    public class LongPressIdentifier
     {
         private readonly IPointerUpDownEmitter _button;
         private readonly ITime _time;
