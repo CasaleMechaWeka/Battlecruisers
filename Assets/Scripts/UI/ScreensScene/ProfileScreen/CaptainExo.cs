@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 {
-    public class CaptainExo : Prefab, ICaptainExo
+    public class CaptainExo : Prefab
     {
         public Sprite captainExoImage;
         public Sprite CaptainExoImage => captainExoImage;
