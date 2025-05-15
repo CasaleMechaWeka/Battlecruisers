@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text playerName;
         // xp and rank vars
         [SerializeField]
-        private XPBar xpBar;
+        private Slider xpBar;
         private int currentXP;
         private int levelXP;
         private int rank;
@@ -92,7 +92,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 currentXP = 0;
             }
             totalDamage.text = FormatNumber(lDes);
-            xpBar.setValues(currentXP, nextLevelXP);
+            xpBar.maxValue = nextLevelXP;
+            xpBar.value = currentXP;
             currentXPString.text = FormatNumber(currentXP);
             levelXPString.text = FormatNumber(nextLevelXP);
 
