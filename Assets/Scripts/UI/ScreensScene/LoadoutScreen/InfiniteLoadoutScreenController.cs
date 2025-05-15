@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class InfiniteLoadoutScreenController : ScreenController, ILoadoutScreenController, IManagedDisposable
+    public class InfiniteLoadoutScreenController : ScreenController, IManagedDisposable
     {
         private ItemDetails.IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamilyTracker;

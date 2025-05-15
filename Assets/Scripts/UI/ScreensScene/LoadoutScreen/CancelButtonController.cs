@@ -5,9 +5,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class CancelButtonController : CanvasGroupButton
     {
-        private ILoadoutScreenController _loadoutScreen;
+        private InfiniteLoadoutScreenController _loadoutScreen;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, ILoadoutScreenController loadoutScreen)
+        public void Initialise(ISingleSoundPlayer soundPlayer, InfiniteLoadoutScreenController loadoutScreen)
         {
             base.Initialise(soundPlayer, parent: loadoutScreen);
 
