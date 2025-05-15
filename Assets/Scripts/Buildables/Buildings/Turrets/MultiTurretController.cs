@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected IBarrelWrapper[] _barrelWrappers;
 
         // By default have null (no) sound
-        protected virtual ISoundKey[] FiringSounds => null;
+        protected virtual SoundKey[] FiringSounds => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;

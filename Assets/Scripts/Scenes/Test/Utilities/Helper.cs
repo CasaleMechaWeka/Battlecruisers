@@ -378,7 +378,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             CruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ICruiser enemyCruiser = null,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null)
         {
             BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: Deferrer);

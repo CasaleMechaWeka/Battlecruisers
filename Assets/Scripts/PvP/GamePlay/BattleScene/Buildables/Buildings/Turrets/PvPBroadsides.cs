@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBroadsides : PvPOffenseTurret
     {
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Broadsides;
+        protected override SoundKey FiringSound => SoundKeys.Firing.Broadsides;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override void AddBuildRateBoostProviders(

@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Music
     public class MusicPlayer : IMusicPlayer
     {
         private readonly ISingleSoundPlayer _soundPlayer;
-        private ISoundKey _currentlyPlaying;
+        private SoundKey _currentlyPlaying;
         private AsyncOperationHandle<AudioClip> _currentlyPlayingHandle;
 
         public MusicPlayer(ISingleSoundPlayer soundPlayer)
@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.Music
             _ = PlayMusic(SoundKeys.Music.Advertisements, loop: false);
         }
 
-        private async Task PlayMusic(ISoundKey soundKeyToPlay, bool loop = true)
+        private async Task PlayMusic(SoundKey soundKeyToPlay, bool loop = true)
         {
             if (!soundKeyToPlay.Equals(_currentlyPlaying))
             {

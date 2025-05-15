@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPCannon : PvPOffenseTurret
     {
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Broadsides;
+        protected override SoundKey FiringSound => SoundKeys.Firing.Broadsides;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Artillery;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();

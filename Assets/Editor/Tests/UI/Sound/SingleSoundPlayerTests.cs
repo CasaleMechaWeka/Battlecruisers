@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.Sound
     {
         private ISingleSoundPlayer _soundPlayer;
         private IAudioSource _audioSource;
-        private ISoundKey _soundKey;
+        private SoundKey _soundKey;
         private AudioClipWrapper _soundToPlay;
 
         [SetUp]
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Sound
             _audioSource = Substitute.For<IAudioSource>();
             _soundPlayer = new SingleSoundPlayer(_audioSource);
 
-            _soundKey = Substitute.For<ISoundKey>();
+            _soundKey = Substitute.For<SoundKey>();
             _soundToPlay = Substitute.For<AudioClipWrapper>();
             SoundFetcher.GetSoundAsync(_soundKey).Returns(Task.FromResult(_soundToPlay));
         }

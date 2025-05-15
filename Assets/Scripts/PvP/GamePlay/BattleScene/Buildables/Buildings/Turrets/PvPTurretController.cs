@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IPvPBarrelWrapper _barrelWrapper;
 
         // By default have null (no) sound
-        protected virtual ISoundKey FiringSound => null;
+        protected virtual SoundKey FiringSound => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;

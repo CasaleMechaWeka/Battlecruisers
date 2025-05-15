@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         // DLC  Have own sound
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.RocketLauncher;
-        protected override ISoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
+        protected override SoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         // Visibility 

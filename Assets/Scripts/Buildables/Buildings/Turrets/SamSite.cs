@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class SamSite : DefenseTurret
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SamSite;
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Missile;
+        protected override SoundKey FiringSound => SoundKeys.Firing.Missile;
         protected override void AddBuildRateBoostProviders(
         GlobalBoostProviders globalBoostProviders,
         IList<ObservableCollection<IBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)

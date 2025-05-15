@@ -112,7 +112,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             foreach (var barrelWrapper in barrelWrappers)
             {
-                ISoundKey soundKey;
+                SoundKey soundKey;
                 switch (barrelWrapper.firingSoundKey)
                 {
                     case "AttackBoat":

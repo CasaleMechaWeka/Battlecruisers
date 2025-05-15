@@ -13,7 +13,7 @@ namespace BattleCruisers.Projectiles.Spawners
         private ITargetFilter _targetFilter;
         public List<TargetType> _AttackCapabilities { get; private set; }
 
-        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter, List<TargetType> attackCapabilities)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, SoundKey firingSound, ITargetFilter targetFilter, List<TargetType> attackCapabilities)
         {
             await base.InitialiseAsync(args, firingSound);
 

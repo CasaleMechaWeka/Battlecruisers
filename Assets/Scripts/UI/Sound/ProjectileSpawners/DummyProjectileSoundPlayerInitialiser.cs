@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     {
         public Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
             ISoundPlayerFactory soundPlayerFactory,
-            ISoundKey firingSound,
+            SoundKey firingSound,
             int burstSize,
             SettingsManager settingsManager)
         {

@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public GameObject captainImage;
 
-        protected override ISoundKey ClickSound => SoundKeys.UI.Click;
+        protected override SoundKey ClickSound => SoundKeys.UI.Click;
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,

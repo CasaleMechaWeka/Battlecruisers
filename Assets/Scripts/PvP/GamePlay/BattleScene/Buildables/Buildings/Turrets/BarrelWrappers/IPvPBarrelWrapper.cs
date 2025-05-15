@@ -24,14 +24,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void Initialise(
             IPvPBuildable parent,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);
 
         void Initialise(
             IPvPBuildable parent,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null);
 
         void ApplyVariantStats(IPvPBuilding building);

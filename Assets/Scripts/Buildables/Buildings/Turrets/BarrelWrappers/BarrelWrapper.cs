@@ -119,7 +119,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public void Initialise(
             IBuildable parent,
             CruiserSpecificFactories cruiserSpecificFactories,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
@@ -170,7 +170,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            ISoundKey firingSound,
+            SoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IAnimation barrelFiringAnimation)

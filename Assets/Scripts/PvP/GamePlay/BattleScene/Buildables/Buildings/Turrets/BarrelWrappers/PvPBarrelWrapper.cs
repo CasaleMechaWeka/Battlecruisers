@@ -130,7 +130,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void Initialise(
             IPvPBuildable parent,
             IPvPCruiserSpecificFactories cruiserSpecificFactories,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
@@ -179,7 +179,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by client
         public void Initialise(
             IPvPBuildable parent,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent);
@@ -206,7 +206,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            ISoundKey firingSound,
+            SoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IAnimation barrelFiringAnimation)
@@ -235,7 +235,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
             IBarrelController barrel,
             IPvPBuildable parent,
-            ISoundKey firingSound,
+            SoundKey firingSound,
             IAnimation barrelFiringAnimation)
         {
             return new PvPBarrelControllerArgs(

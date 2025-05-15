@@ -8,9 +8,9 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         public float burstEndDelayInS;
 
         protected override async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory, 
-            ISoundKey firingSound, 
-            int burstSize, 
+            ISoundPlayerFactory soundPlayerFactory,
+            SoundKey firingSound,
+            int burstSize,
             IAudioSource audioSource)
         {
             return await soundPlayerFactory.CreateLongSoundPlayerAsync(firingSound, audioSource, burstSize, burstEndDelayInS);

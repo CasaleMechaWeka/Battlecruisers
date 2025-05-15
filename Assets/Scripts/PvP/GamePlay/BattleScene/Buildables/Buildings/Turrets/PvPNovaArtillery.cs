@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPNovaArtillery : PvPOffenseTurret
     {
         // DLC  Have own sound
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Artillery;
+        protected override SoundKey FiringSound => SoundKeys.Firing.Artillery;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Artillery;
 
         protected override void AddBuildRateBoostProviders(

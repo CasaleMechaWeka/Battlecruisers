@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.TeslaCoil;
         protected override bool HasSingleSprite => true;
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Lightning;
+        protected override SoundKey FiringSound => SoundKeys.Firing.Lightning;
 
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,

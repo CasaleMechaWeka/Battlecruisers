@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public float lightUpIntervalS = 0.25f;
         public Image activeImage;
         public List<Sprite> activeStateImages;
-        protected override ISoundKey ClickSound => SoundKeys.UI.Delete;
+        protected override SoundKey ClickSound => SoundKeys.UI.Delete;
 
         private const int NUMBER_OF_ACTIVE_STATES = 3;
 

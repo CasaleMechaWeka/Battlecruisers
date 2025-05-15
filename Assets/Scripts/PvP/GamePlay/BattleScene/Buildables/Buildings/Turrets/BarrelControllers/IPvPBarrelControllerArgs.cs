@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         AngleLimiter AngleLimiter { get; }
         IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         ITarget Parent { get; }
-        ISoundKey SpawnerSoundKey { get; }
+        SoundKey SpawnerSoundKey { get; }
         ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
         IAnimation BarrelFiringAnimation { get; }

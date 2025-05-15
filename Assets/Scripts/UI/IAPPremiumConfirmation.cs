@@ -1,4 +1,3 @@
-using BattleCruisers.Data;
 using BattleCruisers.UI;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;

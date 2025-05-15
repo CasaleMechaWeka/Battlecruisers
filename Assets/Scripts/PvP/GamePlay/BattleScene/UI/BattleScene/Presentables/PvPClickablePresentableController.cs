@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public bool IsPresented =>
             _presentableComponent != null
                 && _presentableComponent.IsPresented;
-        protected override ISoundKey ClickSound => null;
+        protected override SoundKey ClickSound => null;
 
         public void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
         {

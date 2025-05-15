@@ -21,13 +21,13 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
             DummyPlayer = new DummyProjectileSpawnerSoundPlayer();
         }
 
-        public async Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(SoundKey firingSound, IAudioSource audioSource)
         {
             AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(firingSound);
             return new ShortSoundPlayer(sound, audioSource);
         }
 
-        public async Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS)
+        public async Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(SoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS)
         {
             AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(firingSound);
             return new LongSoundPlayer(sound, audioSource, _deferrer, burstSize, burstEndDelayInS);

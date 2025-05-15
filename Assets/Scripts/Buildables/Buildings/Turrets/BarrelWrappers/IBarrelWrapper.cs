@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         void Initialise(
             IBuildable parent,
             CruiserSpecificFactories cruiserSpecificFactories,
-            ISoundKey firingSound = null,
+            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);

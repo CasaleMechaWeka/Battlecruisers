@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     {
         IProjectileSpawnerSoundPlayer DummyPlayer { get; }
 
-        Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource);
-        Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(ISoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS);
+        Task<IProjectileSpawnerSoundPlayer> CreateShortSoundPlayerAsync(SoundKey firingSound, IAudioSource audioSource);
+        Task<IProjectileSpawnerSoundPlayer> CreateLongSoundPlayerAsync(SoundKey firingSound, IAudioSource audioSource, int burstSize, float burstEndDelayInS);
     }
 }

@@ -15,7 +15,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public async Task InitialiseAsync(
             IProjectileSpawnerArgs args,
-            ISoundKey firingSound,
+            SoundKey firingSound,
             ProjectileStats rocketStats)
         {
             Assert.IsNotNull(rocketStats);

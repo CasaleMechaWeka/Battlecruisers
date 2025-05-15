@@ -10,7 +10,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     public class RocketLauncherController : OffenseTurret
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.RocketLauncher;
-        protected override ISoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
+        protected override SoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
         public ProjectileType projectileType = ProjectileType.Rocket;
 
         protected override void AddBuildRateBoostProviders(

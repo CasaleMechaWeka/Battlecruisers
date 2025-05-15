@@ -30,7 +30,7 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public List<TargetType> AttackCapabilities { get; set; }
 
-        public async Task InitialiseAsync(IProjectileSpawnerArgs args, ISoundKey firingSound)
+        public async Task InitialiseAsync(IProjectileSpawnerArgs args, SoundKey firingSound)
         {
             Helper.AssertIsNotNull(impactSound, args);
 

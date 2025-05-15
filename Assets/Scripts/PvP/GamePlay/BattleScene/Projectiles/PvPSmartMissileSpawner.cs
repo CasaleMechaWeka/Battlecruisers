@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         public async Task InitialiseAsync(
             IPvPProjectileSpawnerArgs args,
-            ISoundKey firingSound,
+            SoundKey firingSound,
             ProjectileStats ProjectileStats)
         {
             Assert.IsNotNull(ProjectileStats);

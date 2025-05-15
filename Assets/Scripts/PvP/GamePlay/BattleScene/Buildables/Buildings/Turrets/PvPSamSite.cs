@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPSamSite : PvPDefenseTurret
     {
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.SamSite;
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Missile;
+        protected override SoundKey FiringSound => SoundKeys.Firing.Missile;
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         // Visibility 

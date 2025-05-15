@@ -11,10 +11,10 @@
 
     public class PrioritisedSoundKey
     {
-        public ISoundKey Key { get; }
+        public SoundKey Key { get; }
         public SoundPriority Priority { get; }
 
-        public PrioritisedSoundKey(ISoundKey key, SoundPriority priority)
+        public PrioritisedSoundKey(SoundKey key, SoundPriority priority)
         {
             Key = key;
             Priority = priority;

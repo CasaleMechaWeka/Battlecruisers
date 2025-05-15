@@ -15,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected IBarrelWrapper _barrelWrapper;
 
         // By default have null (no) sound
-        protected virtual ISoundKey FiringSound => null;
+        protected virtual SoundKey FiringSound => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;
@@ -71,14 +71,14 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                     Debug.LogWarning($"No Base found for turret {gameObject.name}. Returning empty renderer list.");
                     return new SpriteRenderer[0];
                 }
-                
+
                 GameObject turretBase = baseTransform.gameObject;
                 SpriteRenderer[] turretBaseRenderers = turretBase.GetComponentsInChildren<SpriteRenderer>();
                 if (turretBaseRenderers.Length == 0)
                 {
                     Debug.LogWarning($"No sprite renderers found in Base for {gameObject.name}");
                 }
-                
+
                 return turretBaseRenderers;
             }
         }

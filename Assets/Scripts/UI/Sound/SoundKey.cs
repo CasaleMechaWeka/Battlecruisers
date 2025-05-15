@@ -2,8 +2,13 @@
 
 namespace BattleCruisers.UI.Sound
 {
+    public enum SoundType
+    {
+        Deaths, Engines, Explosions, Firing, Completed, Events, Music, UI, Shields
+    }
+
     // PERF  Struct candidate?
-    public class SoundKey : ISoundKey
+    public class SoundKey
     {
         public SoundType Type { get; }
         public string Name { get; }

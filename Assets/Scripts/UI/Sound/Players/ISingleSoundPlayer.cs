@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Sound.Players
     {
         bool IsPlayingSound { get; }
 
-        Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(ISoundKey soundKey, bool loop = false);
+        Task<AsyncOperationHandle<AudioClip>> PlaySoundAsync(SoundKey soundKey, bool loop = false);
         void PlaySound(AudioClipWrapper sound, bool loop = false);
         void Stop();
     }

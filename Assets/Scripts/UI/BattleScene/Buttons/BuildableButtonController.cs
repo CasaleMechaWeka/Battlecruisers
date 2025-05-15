@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         protected override bool Disable => false;
-        protected override ISoundKey ClickSound => SoundKeys.UI.Click;
+        protected override SoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual bool IsMatch => current_variant == null ? _shouldBeEnabledFilter.IsMatch(Buildable) : _shouldBeEnabledFilter.IsMatch(Buildable, current_variant);
         private VariantPrefab current_variant = null;

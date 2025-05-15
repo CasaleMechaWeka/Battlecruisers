@@ -30,10 +30,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         protected AudioClipWrapper _impactSound;
         public AudioClip impactSound;
 
-        private ISoundKey _firingSound;
+        private SoundKey _firingSound;
         protected int _burstSize;
 
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, ISoundKey firingSound)
+        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, SoundKey firingSound)
         {
 
             PvPHelper.AssertIsNotNull(impactSound, args);
@@ -87,6 +87,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
                 Debug.LogWarning("Warning, soundplayer was null when spawn projectile was called");
             }
         }
-        protected virtual void OnProjectileFiredSound(ISoundKey firingSound, int burstSize) { }
+        protected virtual void OnProjectileFiredSound(SoundKey firingSound, int burstSize) { }
     }
 }

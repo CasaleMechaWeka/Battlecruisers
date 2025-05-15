@@ -13,7 +13,7 @@ namespace BattleCruisers.Utils.Fetchers
         private const string SOUND_ROOT_DIR = "Assets/Resources_moved/Sounds";
         private const char PATH_SEPARATOR = '/';
 
-        public static async Task<AudioClipWrapper> GetSoundAsync(ISoundKey soundKey)
+        public static async Task<AudioClipWrapper> GetSoundAsync(SoundKey soundKey)
         {
             string soundPath = CreateSoundPath(soundKey);
             AsyncOperationHandle<AudioClip> handle = new AsyncOperationHandle<AudioClip>();
@@ -51,7 +51,7 @@ namespace BattleCruisers.Utils.Fetchers
             return new AudioClipWrapper(handle.Result, handle);
         }
 
-        private static string CreateSoundPath(ISoundKey soundKey)
+        private static string CreateSoundPath(SoundKey soundKey)
         {
             return SOUND_ROOT_DIR + PATH_SEPARATOR + soundKey.Type.ToString() + PATH_SEPARATOR + soundKey.Name;
         }

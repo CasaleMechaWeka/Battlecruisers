@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.Sound.Players
 {
     public static class SoundPlayer
     {
-        public static async Task PlaySoundAsync(ISoundKey soundKey, Vector2 position)
+        public static async Task PlaySoundAsync(SoundKey soundKey, Vector2 position)
         {
             Assert.IsNotNull(soundKey);
             AudioClipWrapper sound = await SoundFetcher.GetSoundAsync(soundKey);

@@ -4,10 +4,10 @@ namespace BattleCruisers.UI.Sound
 {
     public class SoundKeyPair
     {
-        public ISoundKey PrimaryKey { get; }
-        public ISoundKey SecondaryKey { get; }
+        public SoundKey PrimaryKey { get; }
+        public SoundKey SecondaryKey { get; }
 
-        public SoundKeyPair(ISoundKey primaryKey, ISoundKey secondaryKey)
+        public SoundKeyPair(SoundKey primaryKey, SoundKey secondaryKey)
         {
             Helper.AssertIsNotNull(primaryKey, secondaryKey);
 

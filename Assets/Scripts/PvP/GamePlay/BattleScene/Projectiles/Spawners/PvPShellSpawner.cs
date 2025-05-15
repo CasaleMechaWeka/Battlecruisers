@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private IProjectileSoundPlayerInitialiser soundPlayerInitialiser;
         private SoundType _type;
         private string _name;
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, ISoundKey firingSound, ITargetFilter targetFilter)
+        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, SoundKey firingSound, ITargetFilter targetFilter)
         {
             await base.InitialiseAsync(args, firingSound);
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             base.SpawnProjectile(activationArgs);
         }
 
-        protected override void OnProjectileFiredSound(ISoundKey firingSound, int burstSize)
+        protected override void OnProjectileFiredSound(SoundKey firingSound, int burstSize)
         {
             OnProjectileFiredSoundClientRpc(firingSound.Type, firingSound.Name, burstSize);
         }

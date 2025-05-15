@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     {
         // DLC  Have own sound
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.RocketLauncher;
-        protected override ISoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
+        protected override SoundKey FiringSound => SoundKeys.Firing.RocketLauncher;
         protected override void AddBuildRateBoostProviders(
         GlobalBoostProviders globalBoostProviders,
         IList<ObservableCollection<IBoostProvider>> rocketBuildingsBuildRateBoostProvidersList)

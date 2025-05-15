@@ -4,8 +4,8 @@ using BattleCruisers.UI.Sound;
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
     public class CoastGuard : DefenseTurret
-	{
-        protected override ISoundKey FiringSound => SoundKeys.Firing.Artillery;
+    {
+        protected override SoundKey FiringSound => SoundKeys.Firing.Artillery;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AntiShipTurret;
     }
 }
