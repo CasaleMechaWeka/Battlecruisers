@@ -47,7 +47,7 @@ namespace BattleCruisers.Scenes
         private ScreenController _currentScreen;
         private GameModel _gameModel;
         private IMusicPlayer _musicPlayer;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
 
         public HomeScreenController homeScreen;

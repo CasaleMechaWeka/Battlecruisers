@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IUnit> buildableSorter,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IUnitClickHandler clickHandler)
         {
             // Need this for abstract method called by base.Initialise().  Codesmell :P
@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         }
 
         protected override void InitialiseMenu(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             UnitsMenuController menu,
             UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,

@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<TBuildable> buildableSorter,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             PvPHelper.AssertIsNotNull(buildables, uiManager, buttonVisibilityFilters, buildableSorter, soundPlayer);
 
@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         protected abstract void InitialiseMenu(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             TMenu menu,
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,

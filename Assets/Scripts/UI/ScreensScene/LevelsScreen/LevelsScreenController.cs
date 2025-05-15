@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
             Sprite[] difficultyIndicators,
@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         }
 
         private async Task InitialiseLevelSetsAsync(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IScreensSceneGod screensSceneGod,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,

@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public void Initialise(
             IItemPanelsController itemPanels,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             GameModel gameModel,
             IList<IItemButton> itemButtons,
             IComparingItemFamilyTracker itemFamilyTracker)

@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             SettingsManager settingsManager)
         {
             base.Initialise(screensSceneGod);

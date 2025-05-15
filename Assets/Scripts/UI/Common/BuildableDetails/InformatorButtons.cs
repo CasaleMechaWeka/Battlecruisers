@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ISlidingPanel informatorPanel,
             IUpdater updater,
             UIManager uiManager)

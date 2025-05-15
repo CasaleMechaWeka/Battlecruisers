@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         [SerializeField]
         private GameObject captainItemPrefab; // assign this from the editor
 
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
 
         public Transform captainCamContainer;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         private CaptainData currentCaptainData;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             _soundPlayer = soundPlayer;
             captainDataChanged += CaptainDataChanged;

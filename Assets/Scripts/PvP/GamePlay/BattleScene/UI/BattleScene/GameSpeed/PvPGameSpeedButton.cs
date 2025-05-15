@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)
+        public void Initialise(SingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter, ITime time)
         {
             base.Initialise(soundPlayer);
 

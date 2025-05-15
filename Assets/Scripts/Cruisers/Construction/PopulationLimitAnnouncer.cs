@@ -16,8 +16,8 @@ namespace BattleCruisers.Cruisers.Construction
 
         public PopulationLimitAnnouncer(
             IPopulationLimitMonitor populationLimitMonitor,
-            IPrioritisedSoundPlayer soundPlayer, 
-            IDebouncer debouncer, 
+            IPrioritisedSoundPlayer soundPlayer,
+            IDebouncer debouncer,
             IGameObject popLimitReachedFeedback)
         {
             Helper.AssertIsNotNull(populationLimitMonitor, soundPlayer, debouncer, popLimitReachedFeedback);

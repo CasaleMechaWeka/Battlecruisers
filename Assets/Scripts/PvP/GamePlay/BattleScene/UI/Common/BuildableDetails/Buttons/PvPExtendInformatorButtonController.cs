@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public Image defaultImage;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ISlidingPanel informatorPanel)
         {
             base.Initialise(soundPlayer);

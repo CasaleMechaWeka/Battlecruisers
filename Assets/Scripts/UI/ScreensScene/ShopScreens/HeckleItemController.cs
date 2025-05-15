@@ -13,14 +13,14 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
         private HeckleData _heckleData;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private HecklesContainer _hecklesContainer;
         public int _index;
         public Text heckleNameText;
 
 
         public void StaticInitialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             HeckleData heckleData,
             HecklesContainer hecklesContainer,
             int index,

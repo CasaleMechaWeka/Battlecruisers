@@ -7,10 +7,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public abstract class PvPBuildableClickHandler
     {
         protected readonly IPrioritisedSoundPlayer _eventSoundPlayer;
-        protected readonly ISingleSoundPlayer _uiSoundPlayer;
+        protected readonly SingleSoundPlayer _uiSoundPlayer;
         protected readonly PvPUIManager _uiManager;
 
-        public PvPBuildableClickHandler(PvPUIManager uiManager, IPrioritisedSoundPlayer eventSoundPlayer, ISingleSoundPlayer uiSoundPlayer)
+        public PvPBuildableClickHandler(PvPUIManager uiManager, IPrioritisedSoundPlayer eventSoundPlayer, SingleSoundPlayer uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(uiManager, eventSoundPlayer, uiSoundPlayer);
 

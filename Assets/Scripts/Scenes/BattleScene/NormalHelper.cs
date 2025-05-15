@@ -110,13 +110,13 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
-                    FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
 
         public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
         {
-            return FactoryProvider.Sound.PrioritisedSoundPlayer;
+            return FactoryProvider.Sound.IPrioritisedSoundPlayer;
         }
 
         public override UIManager CreateUIManager()
@@ -132,7 +132,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBuildMenu buildMenu,
             IItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ISingleSoundPlayer uiSoundPlayer)
+            SingleSoundPlayer uiSoundPlayer)
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
             _uiManager.Initialise(playerCruiser,

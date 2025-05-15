@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public SliderController zoomSlider, scrollSlider;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
             SettingsManager settingsManager)
         {

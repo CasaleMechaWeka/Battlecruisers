@@ -120,7 +120,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         }
 
         public bool isSelected = false;
-        public void Initialise(ISingleSoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
+        public void Initialise(SingleSoundPlayer soundPlayer, IBuildable buildable, IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

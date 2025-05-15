@@ -169,7 +169,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IUserChosenTargetHelper userChosenTargetHelper
                 = helper.CreateUserChosenTargetHelper(
                     playerCruiserUserChosenTargetManager,
-                    FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
                     components.TargetIndicator);
             cruiserFactory
                 .InitialiseAICruiser(
@@ -278,7 +278,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 aiCruiser,
                 leftPanelComponents.BuildMenu,
                 itemDetailsManager,
-                FactoryProvider.Sound.PrioritisedSoundPlayer,
+                FactoryProvider.Sound.IPrioritisedSoundPlayer,
                 FactoryProvider.Sound.UISoundPlayer);
 
             _informatorDismisser = new InformatorDismisser(components.BackgroundClickableEmitter, uiManager);

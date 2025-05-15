@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
             IMusicPlayer musicPlayer)

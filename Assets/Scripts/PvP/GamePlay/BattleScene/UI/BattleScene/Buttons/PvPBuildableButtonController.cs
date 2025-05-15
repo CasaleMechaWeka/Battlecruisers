@@ -115,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         public bool isSelected = false;
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPBuildable buildable, IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter)
+        public void Initialise(SingleSoundPlayer soundPlayer, IPvPBuildable buildable, IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

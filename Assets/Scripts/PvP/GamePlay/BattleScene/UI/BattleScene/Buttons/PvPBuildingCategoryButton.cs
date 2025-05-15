@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public bool IsActiveFeedbackVisible { set { activeFeedback.enabled = value; } }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             BuildingCategory expectedBuildingCategory,
             PvPUIManager uiManager,
             IBroadcastingFilter<BuildingCategory> shouldBeEnabledFilter)

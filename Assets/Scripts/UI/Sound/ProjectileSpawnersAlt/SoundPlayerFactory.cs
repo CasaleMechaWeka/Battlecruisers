@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BattleCruisers.UI.Sound.ProjectileSpawners
 {
-    public class SoundPlayerFactory : ISoundPlayerFactory
+    public class SoundPlayerFactory
     {
         private readonly IDeferrer _deferrer;
 

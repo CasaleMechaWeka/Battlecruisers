@@ -27,7 +27,7 @@ namespace BattleCruisers.Scenes
         public CanvasGroupButton skipButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public Text million, billion, trillion, quadrillion;
 
         private long[] destructionValues;

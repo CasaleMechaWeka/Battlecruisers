@@ -74,7 +74,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 new CruiserEventMonitor(
                     new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
-                    FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -83,7 +83,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new UltrasConstructionMonitor(
                     aiCruiser,
-                    FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -92,7 +92,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return
                 new PopulationLimitAnnouncer(
                     playerCruiser.PopulationLimitMonitor,
-                    FactoryProvider.Sound.PrioritisedSoundPlayer,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                     popLimitReachedFeedback);
         }

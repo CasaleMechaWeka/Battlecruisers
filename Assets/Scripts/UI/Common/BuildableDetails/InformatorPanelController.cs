@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters visibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise();
             Helper.AssertIsNotNull(uiManager, playerCruiser, userChosenTargetHelper, visibilityFilters, soundPlayer);

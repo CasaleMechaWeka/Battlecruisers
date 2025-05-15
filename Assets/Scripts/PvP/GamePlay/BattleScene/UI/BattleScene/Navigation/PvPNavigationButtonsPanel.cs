@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPCanvasGroupButton heckleButton, mainMenuButton;
 
-        public void Initialise(IBroadcastingFilter enabledFilter, ICameraFocuser cameraFocuser, ISingleSoundPlayer singleSoundPlayer)
+        public void Initialise(IBroadcastingFilter enabledFilter, ICameraFocuser cameraFocuser, SingleSoundPlayer singleSoundPlayer)
         {
             base.Initialise();
 

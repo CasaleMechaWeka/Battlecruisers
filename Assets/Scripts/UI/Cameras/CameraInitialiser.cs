@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.Cameras
             ICruiser aiCruiser,
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater,
-            ISingleSoundPlayer uiSoundPlayer)
+            SingleSoundPlayer uiSoundPlayer)
         {
             Helper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel, captainsNavigationButtonsPanel);
             Helper.AssertIsNotNull(settingsManager, playerCruiser, aiCruiser, navigationPermitters, switchableUpdater, uiSoundPlayer);

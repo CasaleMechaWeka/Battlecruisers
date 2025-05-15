@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
         private BattleResult _lastBattleResult;
         private ScreenController _currentScreen;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
 
         public CanvasGroupButton homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
         public CanvasGroupButton discordButton, blackMarketButton;
@@ -53,11 +53,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text openingSoonText;
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton, 
+            Helper.AssertIsNotNull(homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton,
                 profileButton, arenaBackButton, discordButton, blackMarketButton);
 
             _lastBattleResult = DataProvider.GameModel.LastBattleResult;
@@ -71,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             shopButton.Initialise(_soundPlayer, OpenShop);
             leaderboardButton.Initialise(_soundPlayer, OpenLeaderboard);
             profileButton.Initialise(_soundPlayer, OpenProfile);
-            
+
             // Initialize Discord and Black Market buttons with their respective actions
             discordButton.Initialise(_soundPlayer, OpenDiscord);
             blackMarketButton.Initialise(_soundPlayer, OpenBlackMarket);
@@ -321,13 +321,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         // Set visibility of buttons based on platform
         private void SetPlatformSpecificButtonVisibility()
         {
-            bool isWindows = Application.platform == RuntimePlatform.WindowsPlayer || 
+            bool isWindows = Application.platform == RuntimePlatform.WindowsPlayer ||
                              Application.platform == RuntimePlatform.WindowsEditor;
 
             // Show Discord button on Windows, hide Black Market button
             if (discordButton.gameObject.activeInHierarchy != isWindows)
                 discordButton.gameObject.SetActive(isWindows);
-                
+
             // Show Black Market button on mobile, hide Discord button
             if (blackMarketButton.gameObject.activeInHierarchy != !isWindows)
                 blackMarketButton.gameObject.SetActive(!isWindows);
@@ -343,12 +343,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenBlackMarket()
         {
             playerInfoPanelController.gameObject.SetActive(true);
-            
+
             if (ScreensSceneGod.Instance.cameraOfCaptains != null)
                 ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
             if (ScreensSceneGod.Instance.cameraOfCharacter != null)
                 ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
-                
+
             _screensSceneGod.GotoBlackMarketScreen();
             UnselectAll();
         }

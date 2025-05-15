@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             PvPUIManager uiManager,
             IFilter<ITarget> buttonVisibilityFilter,
             IUpdater updater

@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public SliderController zoomSlider, scrollSlider;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
             SettingsManager settingsManager)
         {

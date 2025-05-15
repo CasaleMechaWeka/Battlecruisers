@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             PvPCruiser enemyCruiser,
             NavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             Team team)
         {
             PvPHelper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
@@ -168,7 +168,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             IPvPCruiser enemyCruiser,
             // PvPNavigationPermitters navigationPermitters,
             ISwitchableUpdater switchableUpdater,
-            ISingleSoundPlayer uiSoundPlayer)
+            SingleSoundPlayer uiSoundPlayer)
         {
             PvPHelper.AssertIsNotNull(dragTracker, mainCamera, skybox, navigationButtonsPanel);
             PvPHelper.AssertIsNotNull(settingsManager, playerCruiser, enemyCruiser, /* navigationPermitters, */ switchableUpdater, uiSoundPlayer);

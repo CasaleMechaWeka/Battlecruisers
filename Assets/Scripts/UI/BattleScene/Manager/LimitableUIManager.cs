@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             IBuildMenu buildMenu,
             IItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             UIManagerPermissions permissions)
         {
             Assert.IsNotNull(permissions);

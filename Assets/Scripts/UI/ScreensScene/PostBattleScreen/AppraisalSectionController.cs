@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void Initialise(
             string appraisalText,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Action lootButtonAction = null)
         {
             Helper.AssertIsNotNull(appraisalDroneText, lootButton);

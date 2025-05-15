@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
     {
 
         public static ProfilePanelScreenController Instance { get; private set; }
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
 
         public CanvasGroupButton captainEditButton;
         public CanvasGroupButton playerNameEditButton;
@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public async void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
 

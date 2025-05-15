@@ -9,13 +9,13 @@ namespace BattleCruisers.Tests.UI.Sound
     public class PrioritisedSoundPlayerTests
     {
         private IPrioritisedSoundPlayer _prioritisedSoundPlayer;
-        private ISingleSoundPlayer _singleSoundPlayer;
+        private SingleSoundPlayer _singleSoundPlayer;
         private PrioritisedSoundKey _lowPrioritySound, _highPrioritySound;
 
         [SetUp]
         public void TestSetup()
         {
-            _singleSoundPlayer = Substitute.For<ISingleSoundPlayer>();
+            _singleSoundPlayer = Substitute.For<SingleSoundPlayer>();
             _prioritisedSoundPlayer = new PrioritisedSoundPlayer(_singleSoundPlayer);
 
             _lowPrioritySound = new PrioritisedSoundKey(SoundKeys.Completed.SpySatellite, SoundPriority.Low);

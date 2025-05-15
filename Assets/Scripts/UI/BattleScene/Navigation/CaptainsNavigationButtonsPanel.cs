@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 
         public CanvasGroupButton playerCruiserButton, aiCruiserButton;
 
-        public void Initialise(IBroadcastingFilter enabledFilter, ICameraFocuser cameraFocuser, ISingleSoundPlayer singleSoundPlayer)
+        public void Initialise(IBroadcastingFilter enabledFilter, ICameraFocuser cameraFocuser, SingleSoundPlayer singleSoundPlayer)
         {
             base.Initialise();
 

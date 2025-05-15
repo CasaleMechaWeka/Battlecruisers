@@ -9,7 +9,7 @@ namespace BattleCruisers.Scenes.Test.UI
     {
         void Start()
         {
-            ISingleSoundPlayer soundPlayer = Substitute.For<ISingleSoundPlayer>();
+            SingleSoundPlayer soundPlayer = Substitute.For<SingleSoundPlayer>();
 
             CanvasGroupButton[] buttons = FindObjectsOfType<CanvasGroupButton>();
 

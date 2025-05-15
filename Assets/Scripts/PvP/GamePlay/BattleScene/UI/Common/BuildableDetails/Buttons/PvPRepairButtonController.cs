@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             }
         }
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IPvPDroneFocuser droneFocuser, IRepairManager repairManager)
+        public void Initialise(SingleSoundPlayer soundPlayer, IPvPDroneFocuser droneFocuser, IRepairManager repairManager)
         {
             base.Initialise(soundPlayer);
 

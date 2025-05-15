@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public BodykitsContainer bodykitsContainer;
         public VariantsContainer variantsContainer;
         public GameObject hecklesMessage;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public Transform captainCamContainer;
         public Text blackMarketText;
         private bool InternetConnection;
@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             bool hasInternetonnection = false)
         {
             base.Initialise(screensSceneGod);

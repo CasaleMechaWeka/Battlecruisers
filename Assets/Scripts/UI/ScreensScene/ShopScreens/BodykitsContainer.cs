@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject btnBuy, ownFeedback;
         public GameObject priceLabel;
         public CanvasGroupButton premiumButton;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public GameObject content;
         public GameObject bodykitMessagePanel;
         public GameObject itemDetailsPanel;
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene
         public Animator seaAnimator;
         public GameObject previewCanvas;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             bodykitDataChanged += BodykitDataChanged;
             onBodykitItemClick += OnBodykitItemClick;

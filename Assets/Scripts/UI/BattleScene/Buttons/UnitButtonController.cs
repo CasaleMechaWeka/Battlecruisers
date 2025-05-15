@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IBuildableWrapper<IUnit> unitWrapper,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
             IUnitClickHandler unitClickHandler)

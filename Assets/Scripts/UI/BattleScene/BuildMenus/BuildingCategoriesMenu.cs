@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildingGroup> buildingGroups)

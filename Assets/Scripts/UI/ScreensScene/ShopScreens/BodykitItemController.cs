@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _lockedItemMark;
         public GameObject _clickedFeedback;
         private BodykitData _bodykitData;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private BodykitsContainer _bodykitContainer;
         private Sprite _bodykitSprite;
         public int _index;
@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.ScreensScene
         private bool _isOwned;
 
         public void StaticInitialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Sprite spriteBodykit,
             BodykitData bodykitData,
             BodykitsContainer bodykitContainer,

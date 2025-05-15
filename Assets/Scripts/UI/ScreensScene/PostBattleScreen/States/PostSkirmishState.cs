@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         public PostSkirmishState(
             PostBattleScreenController postBattleScreen,
             IMusicPlayer musicPlayer,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
             : base(postBattleScreen, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);

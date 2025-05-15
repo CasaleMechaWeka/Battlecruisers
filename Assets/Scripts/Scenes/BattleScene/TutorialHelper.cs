@@ -138,7 +138,7 @@ namespace BattleCruisers.Scenes.BattleScene
             IBuildMenu buildMenu,
             IItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ISingleSoundPlayer uiSoundPlayer)
+            SingleSoundPlayer uiSoundPlayer)
         {
             Assert.IsNotNull(_uiManager, "InitialiseUIManager() should only be called after CreaetUIManager()");
 

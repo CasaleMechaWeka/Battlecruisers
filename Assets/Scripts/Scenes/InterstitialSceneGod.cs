@@ -14,7 +14,7 @@ namespace BattleCruisers.Scenes
         public CanvasGroupButton nextButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public GameObject[] screens;
         [Header("The number of the screen that comes up when running this scene.")]
         public int TestingScreen = 1;

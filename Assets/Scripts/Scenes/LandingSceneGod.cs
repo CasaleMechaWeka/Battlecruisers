@@ -52,7 +52,7 @@ namespace BattleCruisers.Scenes
 
         public static IMusicPlayer MusicPlayer { get; private set; }
 
-        public ISingleSoundPlayer soundPlayer;
+        public SingleSoundPlayer soundPlayer;
         public static string LoadingScreenHint { get; private set; }
 
         public GameObject landingCanvas;

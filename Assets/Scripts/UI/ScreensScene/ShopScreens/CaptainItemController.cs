@@ -13,13 +13,13 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _ownedItemMark;
         public GameObject _clickedFeedback;
         private CaptainData _captainData;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private CaptainsContainer _captainsContainer;
         private Sprite _captainSprite;
         public int _index;
 
         public void StaticInitialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Sprite spriteCaptain,
             CaptainData captainData,
             CaptainsContainer captainsContainer,

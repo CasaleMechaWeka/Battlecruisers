@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         public UnitClickHandler(
             UIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {

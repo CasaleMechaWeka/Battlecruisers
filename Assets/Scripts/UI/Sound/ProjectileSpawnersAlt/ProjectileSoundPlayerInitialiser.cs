@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     public abstract class ProjectileSoundPlayerInitialiser : MonoBehaviour, IProjectileSoundPlayerInitialiser
     {
         public async Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory,
+            SoundPlayerFactory soundPlayerFactory,
             SoundKey firingSound,
             int burstSize,
             SettingsManager settingsManager)
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
         }
 
         protected abstract Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory,
+            SoundPlayerFactory soundPlayerFactory,
             SoundKey firingSound,
             int burstSize,
             IAudioSource audioSource);

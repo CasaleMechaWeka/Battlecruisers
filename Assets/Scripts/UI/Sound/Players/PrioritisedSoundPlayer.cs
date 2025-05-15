@@ -10,12 +10,12 @@ namespace BattleCruisers.UI.Sound.Players
     /// </summary>
     public class PrioritisedSoundPlayer : IPrioritisedSoundPlayer
     {
-        private readonly ISingleSoundPlayer _soundPlayer;
+        private readonly SingleSoundPlayer _soundPlayer;
         private PrioritisedSoundKey _lastSoundKey;
 
         public bool Enabled { get; set; } = true;
 
-        public PrioritisedSoundPlayer(ISingleSoundPlayer soundPlayer)
+        public PrioritisedSoundPlayer(SingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(soundPlayer);
             _soundPlayer = soundPlayer;

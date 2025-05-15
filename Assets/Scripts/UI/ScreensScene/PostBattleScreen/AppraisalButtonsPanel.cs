@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         public async Task InitialiseAsync(
             AppraisalSectionController appraisalSection,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ITrashTalkProvider trashTalkList)
         {
             Helper.AssertIsNotNull(appraisalSection, soundPlayer, trashTalkList);

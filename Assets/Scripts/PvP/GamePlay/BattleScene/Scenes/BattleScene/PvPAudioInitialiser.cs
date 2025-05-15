@@ -78,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 new CruiserEventMonitor(
                     new PvPHealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
-                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -87,7 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new PvPUltrasConstructionMonitor(
                     aiCruiser,
-                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
         }
 
@@ -97,7 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                         new PvPPopulationLimitAnnouncer(
                             playerCruiser,
                             playerCruiser.PopulationLimitMonitor
-        *//*                    playerCruiser.FactoryProvider.Sound.PrioritisedSoundPlayer,
+        *//*                    playerCruiser.FactoryProvider.Sound.IPrioritisedSoundPlayer,
                             new PvPDebouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                             popLimitReachedFeedback*//*);
                 }*/
@@ -107,7 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new PvPPopulationLimitAnnouncer(
                     playerCruiser.PopulationLimitMonitor,
-                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                     popLimitReachedFeedback);
         }

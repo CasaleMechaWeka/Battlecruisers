@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
             IMusicPlayer musicPlayer,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
             : base(postBattleScreen, musicPlayer)
         {
             Assert.IsNotNull(soundPlayer);

@@ -31,13 +31,13 @@ namespace BattleCruisers.UI.ScreensScene
         private string firstNameString;
         private string firstDescrtiptionString;
 
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public GameObject content;
         public GameObject captainMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_captainMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             captainDataChanged += CaptainDataChanged;
             onCaptainItemClick += OnCaptainItemClick;

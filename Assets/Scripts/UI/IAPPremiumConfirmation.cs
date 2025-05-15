@@ -10,7 +10,7 @@ public class IAPPremiumConfirmation : MonoBehaviour
 {
     [SerializeField]
     public AudioSource _uiAudioSource;
-    private ISingleSoundPlayer _soundPlayer;
+    private SingleSoundPlayer _soundPlayer;
     public CanvasGroupButton Button_No;
     public CanvasGroupButton Button_Upgrade;
     public AdvertisingBannerScrollingText AdvertistingBanner;

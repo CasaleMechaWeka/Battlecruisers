@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene
         private MaskableGraphic _text;
         protected override MaskableGraphic Graphic => _text;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
+        public void Initialise(SingleSoundPlayer soundPlayer, IDismissableEmitter parent = null)
         {
             base.Initialise(soundPlayer, parent: parent);
 

@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPCanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             bool isTutorial,
             IMainMenuManager menuManager)
         {

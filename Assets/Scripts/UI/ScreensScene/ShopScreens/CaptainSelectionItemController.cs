@@ -16,12 +16,12 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _clickedFeedback;
         public TextMeshProUGUI CaptainName;
         private CaptainData _captainData;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private Sprite _captainSprite;
         private CaptainSelectorPanel _captainSelectorPanel;
         public int _index;
         public void StaticInitialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             /*PrefabFactory prefabFactory,*/
             Sprite spriteCaptain,
             CaptainData captainData,

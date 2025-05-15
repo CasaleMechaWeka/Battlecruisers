@@ -55,7 +55,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             IPvPBuildMenu buildMenu,
             IPvPItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ISingleSoundPlayer uiSoundPlayer)
+            SingleSoundPlayer uiSoundPlayer)
         {
             Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
             _uiManager.Initialise(playerCruiser,
@@ -118,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(IPvPCruiser playerCruiser)
         {
-            return PvPFactoryProvider.Sound.PrioritisedSoundPlayer;
+            return PvPFactoryProvider.Sound.IPrioritisedSoundPlayer;
         }
 
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
@@ -145,7 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return
                 new DroneEventSoundPlayer(
                     new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
-                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                     new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
         }
     }

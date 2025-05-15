@@ -9,9 +9,9 @@ namespace BattleCruisers.Utils.Factories
         /// Plays a single sound at a time.  Used by in game events, such as
         /// building completed or cruiser events.
         /// </summary>
-        IPrioritisedSoundPlayer PrioritisedSoundPlayer { get; }
+        IPrioritisedSoundPlayer IPrioritisedSoundPlayer { get; }
         IPrioritisedSoundPlayer DummySoundPlayer { get; }
-        ISingleSoundPlayer UISoundPlayer { get; }
-        ISoundPlayerFactory SoundPlayerFactory { get; }
+        SingleSoundPlayer UISoundPlayer { get; }
+        SoundPlayerFactory SoundPlayerFactory { get; }
     }
 }

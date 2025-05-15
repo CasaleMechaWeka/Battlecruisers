@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IUpdater perFrameUpdater,
             PauseGameManager pauseGameManager,
             IPvPBattleCompletionHandler battleCompletionHandler,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager
             )
         {
@@ -82,7 +82,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IUpdater perFrameUpdater,
             IUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             PvPInformatorPanelController informator = GetComponentInChildren<PvPInformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -99,14 +99,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return informator;
         }
 
-        private PvPSpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IPvPButtonVisibilityFilters buttonVisibilityFilters)
+        private PvPSpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, IPvPButtonVisibilityFilters buttonVisibilityFilters)
         {
             PvPSpeedPanelController speedPanelInitialiser = GetComponentInChildren<PvPSpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
             return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
+        private void SetupMainMenuButtons(SingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
         {
             PvPMainMenuButtonController mainMenuButton = GetComponentInChildren<PvPMainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);

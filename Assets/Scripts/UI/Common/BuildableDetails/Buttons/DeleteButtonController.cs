@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             UIManager uiManager,
             IFilter<ITarget> buttonVisibilityFilter,
             IUpdater updater)

@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.Sound
 {
     public class SingleSoundPlayerTests
     {
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private IAudioSource _audioSource;
         private SoundKey _soundKey;
         private AudioClipWrapper _soundToPlay;

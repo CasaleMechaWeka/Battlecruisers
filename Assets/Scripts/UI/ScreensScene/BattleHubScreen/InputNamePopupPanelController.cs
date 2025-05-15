@@ -23,12 +23,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject btnLabel;
 
         private IScreensSceneGod _screenSceneGod;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private CaptainExoKey loadedCaptain;
 
         public void Initialise(
         IScreensSceneGod screensSceneGod,
-        ISingleSoundPlayer soundPlayer)
+        SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer);
             _screenSceneGod = screensSceneGod;

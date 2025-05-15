@@ -13,10 +13,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text label;
         public Text closeButton;
         public CanvasGroupButton okBtn;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private Action _onClick;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer, Action onClick = null)
+        public void Initialize(SingleSoundPlayer soundPlayer, Action onClick = null)
         {
             _soundPlayer = soundPlayer;
             _onClick = onClick;

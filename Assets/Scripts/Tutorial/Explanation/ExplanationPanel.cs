@@ -11,12 +11,12 @@ namespace BattleCruisers.Tutorial.Explanation
         private RectTransform _textDisplayerTransform;
 
         private const float LARGE_HEIGHT = 770;
-        private const float EXPANDED_HEIGHT = 570; 
+        private const float EXPANDED_HEIGHT = 570;
         private const float EXPANDED_HEIGHT_NO_BUTTONS = 460;
         private const float MID_HEIGHT = 430;
         private const float MID_HEIGHT_NO_BUTTONS = 320;
         private const float SHRUNK_HEIGHT = 220;
-        
+
         private const float TEXT_RECT_BOTTOM_NO_BUTTON = 0;
         private const float TEXT_RECT_BOTTOM_BUTTON = 150;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tutorial.Explanation
         public ExplanationDismissButton doneButton;
         public IExplanationDismissButton DoneButton => doneButton;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer)
+        public void Initialise(SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(textDisplayer, okButton, doneButton);
             Assert.IsNotNull(soundPlayer);
@@ -89,12 +89,12 @@ namespace BattleCruisers.Tutorial.Explanation
                     _textDisplayerTransform.offsetMin = new Vector2(_textDisplayerTransform.offsetMin.x, TEXT_RECT_BOTTOM_BUTTON);
                 }
             }
-            else 
+            else
             {
                 _transform.sizeDelta = new Vector2(_transform.sizeDelta.x, LARGE_HEIGHT);
                 _textDisplayerTransform.offsetMin = new Vector2(_textDisplayerTransform.offsetMin.x, TEXT_RECT_BOTTOM_BUTTON);
             }
-            
+
         }
 
         public void ShrinkHeight()

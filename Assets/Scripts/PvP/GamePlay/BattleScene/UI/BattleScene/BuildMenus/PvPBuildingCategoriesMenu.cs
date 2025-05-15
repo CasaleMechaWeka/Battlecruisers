@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IDictionary<BuildingCategory, IBuildingCategoryButton> _categoryToCategoryButtons;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildingGroup> buildingGroups)

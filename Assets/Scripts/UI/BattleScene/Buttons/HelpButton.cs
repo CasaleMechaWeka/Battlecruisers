@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         //private Image _leverOff, _leverOn;
         private IHelpLabelManager _helpLabelManager;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IHelpLabelManager helpLabelManager)
+        public void Initialise(SingleSoundPlayer soundPlayer, IHelpLabelManager helpLabelManager)
         {
             base.Initialise(soundPlayer);
 

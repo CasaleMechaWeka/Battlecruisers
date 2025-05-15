@@ -11,11 +11,11 @@ namespace BattleCruisers.UI.Music
 {
     public class MusicPlayer : IMusicPlayer
     {
-        private readonly ISingleSoundPlayer _soundPlayer;
+        private readonly SingleSoundPlayer _soundPlayer;
         private SoundKey _currentlyPlaying;
         private AsyncOperationHandle<AudioClip> _currentlyPlayingHandle;
 
-        public MusicPlayer(ISingleSoundPlayer soundPlayer)
+        public MusicPlayer(SingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(soundPlayer);
 

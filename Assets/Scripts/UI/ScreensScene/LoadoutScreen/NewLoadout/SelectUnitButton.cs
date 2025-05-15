@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override bool ToggleVisibility => true;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer,
+        public void Initialise(SingleSoundPlayer soundPlayer,
             IItemDetailsDisplayer<IUnit> unitDetails,
             IUnitNameToKey unitName,
             IBroadcastingProperty<ItemFamily?> _itemFamily,

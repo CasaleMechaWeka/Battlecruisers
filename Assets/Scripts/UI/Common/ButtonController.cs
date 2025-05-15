@@ -18,12 +18,12 @@ namespace BattleCruisers.UI.Common
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, ICommand command)
+        public void Initialise(SingleSoundPlayer soundPlayer, ICommand command)
         {
             base.Initialise(soundPlayer);
 
             Assert.IsNotNull(command);
-			
+
             _command = command;
             _command.CanExecuteChanged += (sender, e) => UpdateVisibility();
 

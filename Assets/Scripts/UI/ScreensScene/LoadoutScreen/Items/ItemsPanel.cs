@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private IItemDetailsManager _itemDetailsManager;
         private IComparingItemFamilyTracker _comparingFamiltyTracker;
         private IBroadcastingProperty<HullKey> _selectedHull;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         // Heckle Logic
 
         private HeckleButtonV2 _currentHeckleButton;
@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull);
 

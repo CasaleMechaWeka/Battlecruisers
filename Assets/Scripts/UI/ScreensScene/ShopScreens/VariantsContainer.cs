@@ -35,14 +35,14 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject btnBuy, ownFeedback;
 
         public GameObject priceLabel;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private VariantPrefab currentVariant;
         public GameObject content;
         public GameObject variantMessagePanel;
         public GameObject itemDetailsPanel;
         public Text t_variantsMessage;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             variantDataChanged += VariantDataChanged;
             onVariantItemClick += OnVariantItemClick;

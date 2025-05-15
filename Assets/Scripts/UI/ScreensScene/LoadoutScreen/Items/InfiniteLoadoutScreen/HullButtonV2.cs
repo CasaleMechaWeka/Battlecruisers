@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private string lootType;
         private string lootName;
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
@@ -98,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 case "BlackRig":
                     return HullType.BlackRig;
                 case "BasicRig":
-                    return HullType.BasicRig;     
+                    return HullType.BasicRig;
                 case "Bullshark":
                     return HullType.Bullshark;
                 case "Eagle":

@@ -174,7 +174,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     ApplicationModel.IsTutorial);
 
             DroneManager droneManager = new DroneManager();
-            IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.PrioritisedSoundPlayer*/);
+            IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.IPrioritisedSoundPlayer*/);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
             PvPFogOfWarManager fogOfWarManager = new PvPFogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
 

@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             set { _currentButton = value; }
         }
 
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private Dictionary<IBuilding, List<int>> _unlockedVariants;
         private int _index;
 
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public Text variantParentName;
         public StatsController<IBuilding> variantStats;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(soundPlayer);
             Helper.AssertIsNotNull(leftNav, rightNav);

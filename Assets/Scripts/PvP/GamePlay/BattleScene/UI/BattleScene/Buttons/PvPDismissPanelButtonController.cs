@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private Image _closeImage;
         protected override MaskableGraphic Graphic => _closeImage;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, PvPUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
+        public void Initialise(SingleSoundPlayer soundPlayer, PvPUIManager uiManager, IBroadcastingFilter shouldBeEnabledFilter)
         {
             base.Initialise(soundPlayer);
 

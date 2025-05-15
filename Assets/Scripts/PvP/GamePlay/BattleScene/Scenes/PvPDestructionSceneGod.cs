@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public CanvasGroupButton skipButton;
         [SerializeField]
         private AudioSource _uiAudioSource;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public Text million, billion, trillion, quadrillion;
 
         private long[] destructionValues;
@@ -272,7 +272,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     break;
                 case "BasicRig":
                     destructionCards[2].image.sprite = BasicRig;
-                    break; 
+                    break;
                 case "Microlodon":
                     destructionCards[2].image.sprite = Microlodon;
                     break;

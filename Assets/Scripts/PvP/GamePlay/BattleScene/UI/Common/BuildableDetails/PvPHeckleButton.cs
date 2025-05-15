@@ -15,9 +15,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public TextMeshProUGUI message;
 
         private HeckleData _heckleData;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private PvPHecklePanelController _panelController;
-        public void StaticInitialise(ISingleSoundPlayer soundPlayer, HeckleData heckleData, PvPHecklePanelController panelController)
+        public void StaticInitialise(SingleSoundPlayer soundPlayer, HeckleData heckleData, PvPHecklePanelController panelController)
         {
             Helper.AssertIsNotNull(soundPlayer, heckleData, panelController);
             _soundPlayer = soundPlayer;

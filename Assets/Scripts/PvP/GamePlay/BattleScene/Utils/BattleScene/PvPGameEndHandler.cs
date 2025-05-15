@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             //---> Code by ANUJ
             ClearProjectiles();
             //<---
-            PvPFactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.Enabled = false;
 
             if (_ai_LeftPlayer != null)
                 _ai_LeftPlayer.DisposeManagedState();

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
         private IComparingItemFamilyTracker _comparingItemFamilyTracker;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer,
+        public void Initialise(SingleSoundPlayer soundPlayer,
             HeckleDetailsController heckleDetails,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
             IComparingItemFamilyTracker comparingItemFamily)

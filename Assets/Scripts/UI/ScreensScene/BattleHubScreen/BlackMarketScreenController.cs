@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene
     public class BlackMarketScreenController : ScreenController
     {
         public CanvasGroupButton backButton, buyButton;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         public Transform iapContainer;
         public EventHandler<IAPDataEventArgs> iapDataChanged;
         public GameObject itemPrefab;
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(backButton, buyButton, confirmModal, screensSceneGod, soundPlayer, iapContainer);

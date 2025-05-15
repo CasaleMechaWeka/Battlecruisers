@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
         private IBuildingCategoriesMenu _buildingCategoriesMenu;
         private IBuildableMenus<BuildingCategory> _buildingMenus;
         private IBuildableMenus<UnitCategory> _unitMenus;
-        private ISingleSoundPlayer _uiSoundPlayer;
+        private SingleSoundPlayer _uiSoundPlayer;
         private AudioClipWrapper _selectorOpeningSound;
         private IBuildablesMenu _buildablesMenu1, _buildablesMenu2;
         private BuildingCategory _buildingCategory1, _buildingCategory2;
@@ -56,7 +56,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
 
             _selectorPanel = Substitute.For<ISlidingPanel>();
             _buildingCategoriesMenu = Substitute.For<IBuildingCategoriesMenu>();
-            _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
+            _uiSoundPlayer = Substitute.For<SingleSoundPlayer>();
             _selectorOpeningSound = Substitute.For<AudioClipWrapper>();
 
             _buildMenu = new BuildMenu(_selectorPanel, _buildingCategoriesMenu, _buildingMenus, _unitMenus, _uiSoundPlayer, _selectorOpeningSound);

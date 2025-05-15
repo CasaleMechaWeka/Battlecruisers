@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             loadingSpinner.SetActive(false);
             base.Initialise(screensSceneGod);

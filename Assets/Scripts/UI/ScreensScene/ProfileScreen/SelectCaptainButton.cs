@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         private ISettableBroadcastingProperty<CaptainExoKey> _selectedCaptain;
         public IBroadcastingProperty<CaptainExoKey> SelectedCaptain { get; private set; }
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise(soundPlayer);

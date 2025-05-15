@@ -13,7 +13,7 @@ namespace BattleCruisers.UI
         public bool hasFeedback;
 
         public override void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Action clickAction = null,
             IDismissableEmitter parent = null)
         {

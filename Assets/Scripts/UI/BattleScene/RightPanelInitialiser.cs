@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             PauseGameManager pauseGameManager,
             BattleCompletionHandler battleCompletionHandler,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
@@ -70,7 +70,7 @@ namespace BattleCruisers.UI.BattleScene
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
             IButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
             Assert.IsNotNull(informator);
@@ -86,14 +86,14 @@ namespace BattleCruisers.UI.BattleScene
             return informator;
         }
 
-        private SpeedComponents SetupSpeedPanel(ISingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
+        private SpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);
             return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
         }
 
-        private void SetupMainMenuButtons(ISingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
+        private void SetupMainMenuButtons(SingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
         {
             MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
             Assert.IsNotNull(mainMenuButton);

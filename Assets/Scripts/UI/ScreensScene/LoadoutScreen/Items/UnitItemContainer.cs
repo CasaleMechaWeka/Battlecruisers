@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             GameModel gameModel)
         {
             IBuildableWrapper<IUnit> unitPrefab = PrefabFactory.GetUnitWrapperPrefab(Key);

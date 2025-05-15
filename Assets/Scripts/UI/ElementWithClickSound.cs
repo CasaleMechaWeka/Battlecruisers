@@ -11,11 +11,11 @@ namespace BattleCruisers.UI
     {
         private Action _clickAction;
         private IDismissableEmitter _parent;
-        protected ISingleSoundPlayer _soundPlayer;
+        protected SingleSoundPlayer _soundPlayer;
         protected virtual SoundKey ClickSound => SoundKeys.UI.Click;
 
         public virtual void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Action clickAction = null,
             IDismissableEmitter parent = null)
         {

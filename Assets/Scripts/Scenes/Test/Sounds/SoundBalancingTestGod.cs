@@ -38,7 +38,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 
         private void SetupSoundPlayerObjects(AudioSource singleSoundPlayerSource)
         {
-            ISingleSoundPlayer singleSoundPlayer
+            SingleSoundPlayer singleSoundPlayer
                 = new SingleSoundPlayer(new AudioSourceBC(singleSoundPlayerSource));
 
             SoundGroupController[] soundGroups = FindObjectsOfType<SoundGroupController>();

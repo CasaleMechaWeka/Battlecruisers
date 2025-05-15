@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         public Image defaultImage;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ISlidingPanel informatorPanel)
         {
             base.Initialise(soundPlayer);

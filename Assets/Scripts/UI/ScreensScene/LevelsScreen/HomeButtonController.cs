@@ -8,13 +8,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     {
         private IScreensSceneGod _screensSceneGod;
 
-		public void Initialise(ISingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDismissableEmitter parent)
-		{
+        public void Initialise(SingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDismissableEmitter parent)
+        {
             base.Initialise(soundPlayer, parent);
 
             Assert.IsNotNull(screensSceneGod);
             _screensSceneGod = screensSceneGod;
-		}
+        }
 
         protected override void OnClicked()
         {

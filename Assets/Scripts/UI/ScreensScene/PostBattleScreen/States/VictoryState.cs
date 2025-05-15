@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
         public VictoryState(
             PostBattleScreenController postBattleScreen,
             IMusicPlayer musicPlayer,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ILootManager lootManager,
             ITrashTalkData trashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)

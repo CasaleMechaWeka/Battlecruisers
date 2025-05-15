@@ -47,7 +47,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
                     aiCruiser,
                     navigationPermitters,
                     _updaterProvider.SwitchableUpdater,
-                    Substitute.For<ISingleSoundPlayer>());
+                    Substitute.For<SingleSoundPlayer>());
             _cameraFocuser = cameraComponents.CameraFocuser;
 
             BuildableInitialisationArgs args = new BuildableInitialisationArgs(helper);

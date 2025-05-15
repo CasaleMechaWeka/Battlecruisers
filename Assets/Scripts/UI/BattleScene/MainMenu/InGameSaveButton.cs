@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
             SettingsManager settingsManager,
             IBroadcastingProperty<float> masterVolume,

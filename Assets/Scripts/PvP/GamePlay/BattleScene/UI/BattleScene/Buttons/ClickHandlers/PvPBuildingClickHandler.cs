@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPBuildingClickHandler(
             PvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             AudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)

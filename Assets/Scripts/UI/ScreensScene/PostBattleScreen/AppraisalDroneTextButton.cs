@@ -10,14 +10,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         private AppraisalSectionController _appraisalSection;
         private string _appraisalText;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
 
         public Text levelNumText;
 
         public void Initialise(
-            AppraisalSectionController appraisalSection, 
-            string appraisalText, 
-            ISingleSoundPlayer soundPlayer,
+            AppraisalSectionController appraisalSection,
+            string appraisalText,
+            SingleSoundPlayer soundPlayer,
             int levelNum)
         {
             Assert.IsNotNull(levelNumText);

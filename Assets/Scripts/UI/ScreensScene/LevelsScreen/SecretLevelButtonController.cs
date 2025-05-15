@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             int numOfLevelUnlocked)
         {
             _screensSceneGod = screensSceneGod;

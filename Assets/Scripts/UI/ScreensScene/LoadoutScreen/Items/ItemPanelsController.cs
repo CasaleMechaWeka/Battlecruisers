@@ -48,7 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             ItemType defaultItemTypeToShow,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer);
 

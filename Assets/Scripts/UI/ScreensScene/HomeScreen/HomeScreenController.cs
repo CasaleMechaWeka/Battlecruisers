@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
 

@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             SettingsManager settingsManager,
             IHotkeysModel hotkeysModel)
         {

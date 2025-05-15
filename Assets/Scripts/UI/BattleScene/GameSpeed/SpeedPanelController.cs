@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     {
         public GameSpeedButton slowMotion, normalSpeed, fastForward, pause;
 
-        public SpeedComponents Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
+        public SpeedComponents Initialise(SingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             Helper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
             Helper.AssertIsNotNull(slowMotion, normalSpeed, fastForward);

@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         public PvPGameSpeedButton slowMotion, normalSpeed, fastForward, pause;
 
-        public PvPSpeedComponents Initialise(ISingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
+        public PvPSpeedComponents Initialise(SingleSoundPlayer soundPlayer, IBroadcastingFilter shouldBeEnabledFilter)
         {
             PvPHelper.AssertIsNotNull(soundPlayer, shouldBeEnabledFilter);
             PvPHelper.AssertIsNotNull(slowMotion, normalSpeed, fastForward);

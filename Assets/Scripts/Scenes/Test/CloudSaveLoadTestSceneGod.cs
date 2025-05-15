@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes
                     new AudioSourceBC(platformAudioSource),
                     DataProvider.SettingsManager);
 
-            ISingleSoundPlayer soundPlayer = new SingleSoundPlayer(
+            SingleSoundPlayer soundPlayer = new SingleSoundPlayer(
                 audioSource
                 );
 

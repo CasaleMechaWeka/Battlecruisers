@@ -14,12 +14,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPUnitsMenuController : PvPBuildablesMenuController<PvPUnitButtonController, IPvPUnit>
     {
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private IPvPUnitClickHandler _unitClickHandler;
         private IPvPFactory _factory;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPUnit>> units,

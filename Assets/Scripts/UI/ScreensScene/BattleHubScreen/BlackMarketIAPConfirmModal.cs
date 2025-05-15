@@ -20,11 +20,11 @@ public class BlackMarketIAPConfirmModal : MonoBehaviour
     public Text price;
 
     public CanvasGroupButton buyBtn, noBtn;
-    private ISingleSoundPlayer _soundPlayer;
+    private SingleSoundPlayer _soundPlayer;
 
     private IAPData _currentIAPData;
 
-    public void Initiaize(ISingleSoundPlayer soundPlayer)
+    public void Initiaize(SingleSoundPlayer soundPlayer)
     {
         Helper.AssertIsNotNull(soundPlayer);
         _soundPlayer = soundPlayer;

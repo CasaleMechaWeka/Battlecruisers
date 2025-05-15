@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public Image variantIcon;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBuildableWrapper<IBuilding> buildingPrefab,

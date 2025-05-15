@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private IBuildMenu _buildMenu;
         private IItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
-        private ISingleSoundPlayer _uiSoundPlayer;
+        private SingleSoundPlayer _uiSoundPlayer;
         private IBuilding lastClickedBuilding;
         private IUnit lastClickedUnit;
         private ICruiser lastClickedCruiser;
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             IBuildMenu buildMenu,
             IItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ISingleSoundPlayer uiSoundPlayer)
+            SingleSoundPlayer uiSoundPlayer)
         {
             _buildMenu = buildMenu;
             _detailsManager = detailsManager;

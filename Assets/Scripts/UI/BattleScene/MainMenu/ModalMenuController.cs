@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
 		public IBroadcastingProperty<bool> IsVisible { get; private set; }
 
 		public void Initialise(
-			ISingleSoundPlayer soundPlayer,
+			SingleSoundPlayer soundPlayer,
 			bool isTutorial,
 			IMainMenuManager menuManager,
 			SettingsManager settingsManager)

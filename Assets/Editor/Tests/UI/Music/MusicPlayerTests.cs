@@ -9,12 +9,12 @@ namespace BattleCruisers.Tests.UI.Music
     public class MusicPlayerTests
     {
         private IMusicPlayer _musicPlayer;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
 
         [SetUp]
         public void TestSetup()
         {
-            _soundPlayer = Substitute.For<ISingleSoundPlayer>();
+            _soundPlayer = Substitute.For<SingleSoundPlayer>();
             _musicPlayer = new MusicPlayer(_soundPlayer);
         }
 

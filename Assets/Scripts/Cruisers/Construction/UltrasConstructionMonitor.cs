@@ -14,7 +14,7 @@ namespace BattleCruisers.Cruisers.Construction
         private readonly IDebouncer _debouncer;
 
         public UltrasConstructionMonitor(
-            ICruiserController cruiser, 
+            ICruiserController cruiser,
             IPrioritisedSoundPlayer soundPlayer,
             IDebouncer debouncer)
         {

@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor,
             bool flipClickAndDragIcon)
         {

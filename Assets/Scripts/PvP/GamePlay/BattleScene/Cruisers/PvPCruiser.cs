@@ -671,7 +671,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_PrioritisedSoundClientRpc(SoundType soundType, string name, SoundPriority priority)
         {
 
-            PvPFactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(new PrioritisedSoundKey(new SoundKey(soundType, name), priority));
+            PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.PlaySound(new PrioritisedSoundKey(new SoundKey(soundType, name), priority));
         }
 
         [ServerRpc(RequireOwnership = true)]

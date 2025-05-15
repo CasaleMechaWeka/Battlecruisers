@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IDismissableEmitter parent,
             IScreensSceneGod screensSceneGod,
             SettingsManager settingsManager,

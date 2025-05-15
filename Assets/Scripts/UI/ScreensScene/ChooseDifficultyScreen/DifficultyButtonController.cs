@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
         public Color battlecruisersRed;
         public int buildSpeedPercentage = 125;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IChooseDifficultyScreen chooseDifficultyScreen)
+        public void Initialise(SingleSoundPlayer soundPlayer, IChooseDifficultyScreen chooseDifficultyScreen)
         {
             base.Initialise(soundPlayer, parent: chooseDifficultyScreen);
 

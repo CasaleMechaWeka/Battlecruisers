@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             PauseGameManager pauseGameManager,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             INavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(helpLabelCanvas, helpLabels, modalHelpButton);

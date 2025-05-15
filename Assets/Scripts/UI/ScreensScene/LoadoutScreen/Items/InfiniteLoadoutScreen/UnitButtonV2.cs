@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public Button toggleSelectionButton;
         public Image variantIcon;
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingItemFamily,
             IBuildableWrapper<IUnit> unitPrefab,

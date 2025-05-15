@@ -20,8 +20,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public override IComparableItem Item => _cruiserPrefab;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
-            IItemDetailsManager itemDetailsManager, 
+            SingleSoundPlayer soundPlayer,
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             Cruiser cruiserPrefab,

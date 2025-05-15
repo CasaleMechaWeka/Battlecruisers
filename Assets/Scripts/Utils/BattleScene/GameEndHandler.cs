@@ -90,7 +90,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
             ClearProjectiles();
-            FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            FactoryProvider.Sound.IPrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;
@@ -118,7 +118,7 @@ namespace BattleCruisers.Utils.BattleScene
             ICruiser losingCruiser = wasPlayerVictory ? _aiCruiser : _playerCruiser;
 
             ClearProjectiles();
-            FactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            FactoryProvider.Sound.IPrioritisedSoundPlayer.Enabled = false;
             _ai.DisposeManagedState();
             victoryCruiser.MakeInvincible();
             _navigationPermitter.IsMatch = false;

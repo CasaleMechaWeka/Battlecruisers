@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             _gameSpeedText = GetComponent<Text>();
             Assert.IsNotNull(_gameSpeedText);
 
-            ISingleSoundPlayer soundPlayer = Substitute.For<ISingleSoundPlayer>();
+            SingleSoundPlayer soundPlayer = Substitute.For<SingleSoundPlayer>();
 
             _increaseSpeedCommand = new Command(IncreaseSpeedCommandExecute, CanIncreaseSpeedCommandExecute);
             _increaseSpeedButton = transform.FindNamedComponent<TextGameSpeedButton>("IncreaseSpeedButton");

@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPBuilding> buildingSorter,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IPvPBuildingClickHandler clickHandler,
             bool flipClickAndDragIcon)
         {
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         protected override void InitialiseMenu(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             PvPBuildingsMenuController menu,
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,

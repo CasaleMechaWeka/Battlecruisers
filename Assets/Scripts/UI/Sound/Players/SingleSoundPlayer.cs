@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Sound.Players
     /// If a second sound is played while the previous sound has not completed playing,
     /// then the first sound is stopped.
     /// </summary>
-    public class SingleSoundPlayer : ISingleSoundPlayer
+    public class SingleSoundPlayer
     {
         private readonly IAudioSource _audioSource;
 

@@ -24,7 +24,7 @@ public class AdvertisingBannerScrollingText : MonoBehaviour
     private bool _isFirstLoad = true;
     [SerializeField]
     public AudioSource _uiAudioSource;
-    private ISingleSoundPlayer _soundPlayer;
+    private SingleSoundPlayer _soundPlayer;
 
     private const string ANIMATOR_TRIGGER = "Play";
 

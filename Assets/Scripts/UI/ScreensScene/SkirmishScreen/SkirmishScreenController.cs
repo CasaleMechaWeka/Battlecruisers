@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);
 

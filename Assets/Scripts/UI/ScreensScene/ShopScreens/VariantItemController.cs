@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene
         public GameObject _clickedFeedback;
         public Image _clickedFeedbackVariantImage;
         private VariantData _variantData;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private VariantsContainer _variantsContainer;
         private Sprite _parentSprite;
         private Sprite _variantSprite;
@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene
         private VariantPrefab _variant;
 
         public void StaticInitialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Sprite spriteParent,
             Sprite spriteVariant,
             string parentName,

@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private bool ShowButton => _buttonVisibilityFilter.IsMatch(Target);
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IUserChosenTargetHelper userChosenTargetHelper,
             IFilter<ITarget> buttonVisibilityFilter)
         {

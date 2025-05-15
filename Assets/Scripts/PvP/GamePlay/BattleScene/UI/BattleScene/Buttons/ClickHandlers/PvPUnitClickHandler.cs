@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPCruiser playerCruiser,
             PvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPvPPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {

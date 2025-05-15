@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public ItemFamily itemFamily;
 
-        protected virtual void Initialise(ISingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
+        protected virtual void Initialise(SingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
         {
             base.Initialise(soundPlayer);
 

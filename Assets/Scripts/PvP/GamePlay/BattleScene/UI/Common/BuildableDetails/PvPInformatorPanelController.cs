@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             IUpdater perFrameUpdater,
             IUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters visibilityFilters,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             base.Initialise();
             PvPHelper.AssertIsNotNull(uiManager, playerCruiser, visibilityFilters, soundPlayer);

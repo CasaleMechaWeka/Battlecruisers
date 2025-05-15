@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public IBroadcastingProperty<bool> IsVisible { get; private set; }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             bool isTutorial,
             IMainMenuManager menuManager,
             SettingsManager settingsManager)

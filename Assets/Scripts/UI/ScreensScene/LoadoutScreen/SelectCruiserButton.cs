@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public IBroadcastingProperty<HullKey> SelectedHull { get; private set; }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IItemDetailsDisplayer<ICruiser> cruiserDetails,
             IComparisonStateTracker comparisonStateTracker,
             IHullNameToKey hullNameToKey)

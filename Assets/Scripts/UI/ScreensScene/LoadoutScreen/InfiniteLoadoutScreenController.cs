@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CanvasGroupButton shopButton;
 
 
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         IScreensSceneGod _screensSceneGod;
         private IList<IItemButton> _itemButtons = new List<IItemButton>();
 
@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer)
         {
             _soundPlayer = soundPlayer;
             _screensSceneGod = screensSceneGod;

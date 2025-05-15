@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private ScreenController _settingsScreen;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, ScreenController settingsScreen)
+        public void Initialise(SingleSoundPlayer soundPlayer, ScreenController settingsScreen)
         {
             base.Initialise(soundPlayer, settingsScreen);
 

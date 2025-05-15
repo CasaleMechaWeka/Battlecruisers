@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPUnit> buildableSorter,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IPvPUnitClickHandler clickHandler)
         {
             // Need this for abstract method called by base.Initialise().  Codesmell :P
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         protected override void InitialiseMenu(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             PvPUnitsMenuController menu,
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,

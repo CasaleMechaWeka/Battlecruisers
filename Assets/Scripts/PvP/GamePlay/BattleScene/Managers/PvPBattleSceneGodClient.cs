@@ -385,7 +385,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     pvpBattleHelper.GetPlayerLoadout(),
                     buttonVisibilityFilters,
                     new PvPPlayerCruiserFocusHelper(cameraComponents.MainCamera, cameraComponents.CameraFocuser, playerCruiser, ApplicationModel.IsTutorial),
-                    PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                     PvPFactoryProvider.Sound.UISoundPlayer,
                     playerCruiser.PopulationLimitMonitor,
                     SynchedServerData.Instance.GetTeam() == Team.RIGHT);
@@ -401,7 +401,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             userChosenTargetHelper
                 = pvpBattleHelper.CreateUserChosenTargetHelper(
                             playerCruiserUserChosenTargetManager,
-                            PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                            PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                             components.TargetIndicator);
 
             NavigationPermitterManager navigationPermitterManager = new NavigationPermitterManager(navigationPermitters);
@@ -427,7 +427,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 enemyCruiser,
                 leftPanelComponents.BuildMenu,
                 itemDetailsManager,
-                PvPFactoryProvider.Sound.PrioritisedSoundPlayer,
+                PvPFactoryProvider.Sound.IPrioritisedSoundPlayer,
                 PvPFactoryProvider.Sound.UISoundPlayer);
 
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
@@ -684,7 +684,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public void HandleCruiserDestroyed()
         {
             canFlee = false;
-            PvPFactoryProvider.Sound.PrioritisedSoundPlayer.Enabled = false;
+            PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.Enabled = false;
             navigationPermitters.NavigationFilter.IsMatch = false;
             uiManager.HideCurrentlyShownMenu();
             uiManager.HideItemDetails();
@@ -729,19 +729,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             if (newVal)
             {
-                _debouncer.Debounce(() => PvPFactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached));
+                _debouncer.Debounce(() => PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.PopulationLimitReached));
             }
             leftPanelComponents.PopLimitReachedFeedback.IsVisible = newVal;
         }
 
         private void DroneNumIncreased_ValueChanged(bool oldVal, bool newVal)
         {
-            PvPFactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NewDronesReady);
+            PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.NewDronesReady);
         }
 
         private void IdleDronesStarted_ValueChanged(bool oldVal, bool newVal)
         {
-            new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => PvPFactoryProvider.Sound.PrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
+            new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20).Debounce(() => PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Events.Drones.Idle));
         }
 
         private void IdleDronesEnded_ValueChanged(bool oldVal, bool newVal)

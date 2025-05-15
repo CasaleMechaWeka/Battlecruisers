@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
         public BuildingClickHandler(
             UIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             AudioClipWrapper buildingSelectedSound)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)

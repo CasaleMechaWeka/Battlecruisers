@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
         [SerializeField]
         private UnityEvent clickAction;
 
-        public virtual void Initialise(ISingleSoundPlayer soundPlayer, IHomeScreen homeScreen, GameModel gameModel)
+        public virtual void Initialise(SingleSoundPlayer soundPlayer, IHomeScreen homeScreen, GameModel gameModel)
         {
             base.Initialise(soundPlayer, homeScreen);
 

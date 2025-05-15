@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IMusicPlayer musicPlayer,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashTalkList,
@@ -308,7 +308,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
         }
 
-        private async Task SetupAppraisalButtonsAsync(ISingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
+        private async Task SetupAppraisalButtonsAsync(SingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
         {
             if (showAppraisalButtons)
             {

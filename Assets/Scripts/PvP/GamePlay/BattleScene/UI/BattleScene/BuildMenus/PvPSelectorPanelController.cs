@@ -9,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPSelectorPanelController : SlidingPanel
     {
-        public void Initialise(PvPUIManager uiManager, IPvPButtonVisibilityFilters buttonVisibilityFilters, ISingleSoundPlayer soundPlayer)
+        public void Initialise(PvPUIManager uiManager, IPvPButtonVisibilityFilters buttonVisibilityFilters, SingleSoundPlayer soundPlayer)
         {
             base.Initialise();
 

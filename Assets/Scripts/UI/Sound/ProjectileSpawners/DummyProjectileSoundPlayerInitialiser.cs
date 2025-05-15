@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.Sound.ProjectileSpawners
     public class DummyProjectileSoundPlayerInitialiser : MonoBehaviour, IProjectileSoundPlayerInitialiser
     {
         public Task<IProjectileSpawnerSoundPlayer> CreateSoundPlayerAsync(
-            ISoundPlayerFactory soundPlayerFactory,
+            SoundPlayerFactory soundPlayerFactory,
             SoundKey firingSound,
             int burstSize,
             SettingsManager settingsManager)

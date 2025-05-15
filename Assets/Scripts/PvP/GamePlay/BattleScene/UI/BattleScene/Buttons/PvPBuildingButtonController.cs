@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private PvPBuildableClickAndDrag _buildableClickAndDrag;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapper,
             IPvPBuildingClickHandler clickHandler,
             IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,

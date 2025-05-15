@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private PostBattleScreenController postBattleScreen;
 
-        public void Initialise(PostBattleScreenController screenController, ISingleSoundPlayer soundPlayer)
+        public void Initialise(PostBattleScreenController screenController, SingleSoundPlayer soundPlayer)
         {
             postBattleScreen = screenController;
             Assert.IsNotNull(postBattleScreen, "PostBattleScreen is not assigned.");

@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         private Vector3 _originalClickAndDragPosition;
         private BuildableClickAndDrag _buildableClickAndDrag;
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IBuildableWrapper<IBuilding> buildingWrapper,
             IBuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)

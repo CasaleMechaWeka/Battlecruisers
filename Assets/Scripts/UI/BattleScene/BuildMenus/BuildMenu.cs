@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IBuildableMenus<BuildingCategory> _buildingMenus;
         private readonly IBuildableMenus<UnitCategory> _unitMenus;
-        private readonly ISingleSoundPlayer _uiSoundPlayer;
+        private readonly SingleSoundPlayer _uiSoundPlayer;
         private readonly AudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IBuildableMenus<BuildingCategory> buildingMenus,
             IBuildableMenus<UnitCategory> unitMenus,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             AudioClipWrapper selectorOpeningSound)
         {
             Helper.AssertIsNotNull(selectorPanel, buildingCategoriesMenu, buildingMenus, unitMenus, uiSoundPlayer, selectorOpeningSound);

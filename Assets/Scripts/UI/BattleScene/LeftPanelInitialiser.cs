@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
             Helper.AssertIsNotNull(
@@ -79,7 +79,7 @@ namespace BattleCruisers.UI.BattleScene
             IButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
-            ISingleSoundPlayer uiSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
             IPopulationLimitMonitor populationLimitMonitor)
         {
             PrefabOrganiser prefabOrganiser = new PrefabOrganiser(playerLoadout);

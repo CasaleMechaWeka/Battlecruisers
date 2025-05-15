@@ -26,9 +26,9 @@ namespace BattleCruisers.UI.ScreensScene
         public HeckleData currentHeckleData;
         public Text hecklePrice;
         public GameObject priceLabel;
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
 
-        public void Initialize(ISingleSoundPlayer soundPlayer)
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             heckleDataChanged += HeckleDataChanged;
             _soundPlayer = soundPlayer;

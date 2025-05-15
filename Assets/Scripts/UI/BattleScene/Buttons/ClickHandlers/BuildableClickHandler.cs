@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
     public abstract class BuildableClickHandler
     {
         protected readonly IPrioritisedSoundPlayer _eventSoundPlayer;
-        protected readonly ISingleSoundPlayer _uiSoundPlayer;
+        protected readonly SingleSoundPlayer _uiSoundPlayer;
         protected readonly UIManager _uiManager;
 
-        public BuildableClickHandler(UIManager uiManager, IPrioritisedSoundPlayer eventSoundPlayer, ISingleSoundPlayer uiSoundPlayer)
+        public BuildableClickHandler(UIManager uiManager, IPrioritisedSoundPlayer eventSoundPlayer, SingleSoundPlayer uiSoundPlayer)
         {
             Helper.AssertIsNotNull(uiManager, eventSoundPlayer, uiSoundPlayer);
 

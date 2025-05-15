@@ -87,12 +87,12 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             }
         }
 
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private Dictionary<HullType, List<int>> _unlockedBodykits = new Dictionary<HullType, List<int>>();
         private int _index;
         public CanvasGroupButton leftNavButton, rightNavButton;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer)
+        public void Initialise(SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(soundPlayer);
             Helper.AssertIsNotNull(leftNavButton, rightNavButton);

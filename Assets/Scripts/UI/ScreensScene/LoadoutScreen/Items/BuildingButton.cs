@@ -13,8 +13,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public override IComparableItem Item => _buildingPrefab.Buildable;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer, 
-            IItemDetailsManager itemDetailsManager, 
+            SingleSoundPlayer soundPlayer,
+            IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingFamiltyTracker,
             IBuildableWrapper<IBuilding> buildingPrefab)
         {

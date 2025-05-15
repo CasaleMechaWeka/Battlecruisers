@@ -54,7 +54,7 @@ namespace BattleCruisers.Scenes.BattleScene
                                                  IBuildMenu BuildMenu,
                                                  IItemDetailsManager DetailsManager,
                                                  IPrioritisedSoundPlayer SoundPlayer,
-                                                 ISingleSoundPlayer UISoundPlayer);
+                                                 SingleSoundPlayer UISoundPlayer);
         public abstract IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         public abstract IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
 

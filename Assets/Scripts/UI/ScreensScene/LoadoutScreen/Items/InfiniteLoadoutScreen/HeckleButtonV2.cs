@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public void Initialise(
             ItemsPanel itemsPanel,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             HeckleData heckleData,
             IItemDetailsManager itemDetailsManager,
             IComparingItemFamilyTracker comparingItemFamily,

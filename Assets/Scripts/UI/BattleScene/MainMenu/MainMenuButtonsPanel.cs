@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public CanvasGroupButton endGameButton, skipTutorialButton, resumeButton, retryButton, settingsButton;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             bool isTutorial,
             IMainMenuManager menuManager)
         {

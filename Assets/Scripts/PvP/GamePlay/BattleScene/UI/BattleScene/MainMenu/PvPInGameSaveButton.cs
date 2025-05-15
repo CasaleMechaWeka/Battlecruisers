@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IMainMenuManager mainMenuManager,
             SettingsManager settingsManager,
             IBroadcastingProperty<float> musicVolume,

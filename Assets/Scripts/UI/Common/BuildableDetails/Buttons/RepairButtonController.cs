@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         private IRepairManager _repairManager;
 
         private ITarget _repairable;
-		public ITarget Repairable
+        public ITarget Repairable
         {
             private get { return _repairable; }
             set
@@ -34,17 +34,17 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
         }
 
         // Only show repair button for user repairables, not opponent repairables
-        private bool ShowRepairButton 
-        { 
-            get 
-            { 
-                return 
-                    Repairable.Faction == Faction.Blues 
-                    && Repairable.RepairCommand.CanExecute; 
-            } 
+        private bool ShowRepairButton
+        {
+            get
+            {
+                return
+                    Repairable.Faction == Faction.Blues
+                    && Repairable.RepairCommand.CanExecute;
+            }
         }
 
-        public void Initialise(ISingleSoundPlayer soundPlayer, IDroneFocuser droneFocuser, IRepairManager repairManager)
+        public void Initialise(SingleSoundPlayer soundPlayer, IDroneFocuser droneFocuser, IRepairManager repairManager)
         {
             base.Initialise(soundPlayer);
 
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
 
         private void UpdateVisibility()
         {
-			gameObject.SetActive(ShowRepairButton);
+            gameObject.SetActive(ShowRepairButton);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             ISlidingPanel informatorPanel,
             IUpdater updater,
             PvPUIManager uiManager)

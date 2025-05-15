@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 rightMessage.Show(UnityEngine.Random.Range(0, 280));
             }
         }
-        public void Initialise(ISingleSoundPlayer soundPlayer)
+        public void Initialise(SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(soundPlayer, leftMessage, rightMessage);
 

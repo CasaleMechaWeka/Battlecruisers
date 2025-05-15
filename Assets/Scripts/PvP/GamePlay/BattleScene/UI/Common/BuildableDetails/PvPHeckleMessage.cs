@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public float hideTime = 5f;
         private RectTransform messageFrame;
 
-        public void Initialise(ISingleSoundPlayer soundPlayer)
+        public void Initialise(SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(soundPlayer);
             messageFrame = GetComponent<RectTransform>();

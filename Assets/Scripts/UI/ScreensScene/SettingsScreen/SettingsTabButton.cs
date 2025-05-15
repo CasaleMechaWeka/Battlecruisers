@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         }
 
         public override void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             Action clickAction = null,
             IDismissableEmitter parent = null)
         {

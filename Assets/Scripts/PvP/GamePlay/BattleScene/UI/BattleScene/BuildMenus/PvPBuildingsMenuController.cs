@@ -11,14 +11,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPBuildingsMenuController : PvPBuildablesMenuController<PvPBuildingButtonController, IPvPBuilding>
     {
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private IPvPBuildingClickHandler _clickHandler;
         private bool _flipClickAndDragIcon;
 
         public PvPBuildingCategoryButton buildingCategoryButton;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             PvPUIManager uiManager,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPBuilding>> buildings,

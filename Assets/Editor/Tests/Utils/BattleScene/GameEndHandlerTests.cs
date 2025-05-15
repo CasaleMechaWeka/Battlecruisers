@@ -63,7 +63,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _speedButtonGroup = Substitute.For<IToggleButtonGroup>();
 
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            FactoryProvider.Sound.PrioritisedSoundPlayer.Returns(_soundPlayer);
+            FactoryProvider.Sound.IPrioritisedSoundPlayer.Returns(_soundPlayer);
 
             _gameEndHandler
                 = new GameEndHandler(

@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public Color battlecruisersRed;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             LevelInfo level,
             IScreensSceneGod screensSceneGod,
             Sprite[] difficultyIndicators,

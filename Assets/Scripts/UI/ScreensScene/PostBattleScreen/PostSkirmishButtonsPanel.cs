@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void Initialise(
             IPostBattleScreen postBattleScreen,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             bool wasVictory)
         {
             base.Initialise(postBattleScreen, soundPlayer);
@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             Helper.AssertIsNotNull(loadoutButton, retryButton);
 
             loadoutButton.Initialise(soundPlayer, postBattleScreen.GoToLoadoutScreen);
-            
+
             retryButton.Initialise(soundPlayer, postBattleScreen.RetrySkirmish);
             if (wasVictory)
             {

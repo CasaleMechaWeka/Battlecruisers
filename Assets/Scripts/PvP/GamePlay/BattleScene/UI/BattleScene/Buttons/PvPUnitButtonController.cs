@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         }
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPUnit> unitWrapper,
             IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
             IPvPUnitClickHandler unitClickHandler)

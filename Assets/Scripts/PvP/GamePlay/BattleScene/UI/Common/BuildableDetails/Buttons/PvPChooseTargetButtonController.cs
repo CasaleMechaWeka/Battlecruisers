@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private bool ShowButton => Target != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _target.Faction == Faction.Reds : _target.Faction == Faction.Blues) && _buttonVisibilityFilter.IsMatch(Target);
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             IUserChosenTargetHelper userChosenTargetHelper,
             IFilter<ITarget> buttonVisibilityFilter)
         {

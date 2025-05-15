@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             IPostBattleScreen postBattleScreen,
             ICommand nextCommand,
             ICommand clockedGameCommand,
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             bool wasVictory)
         {
             Debug.Log($"Initializing PostBattleButtonsPanel with SelectedLevel: {DataProvider.GameModel.SelectedLevel}, Mode: {ApplicationModel.Mode}");

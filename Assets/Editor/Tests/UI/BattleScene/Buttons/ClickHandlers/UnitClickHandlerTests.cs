@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
         private UIManager _uiManager;
         private IPrioritisedSoundPlayer _soundPlayer;
         private IPopulationLimitReachedDecider _populationLimitReachedDecider;
-        private ISingleSoundPlayer _uiSoundPlayer;
+        private SingleSoundPlayer _uiSoundPlayer;
         private IBuildableWrapper<IUnit> _unitWrapper;
         private IUnit _unit;
         private IFactory _factory;
@@ -27,7 +27,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
             _uiManager = Substitute.For<UIManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
             _populationLimitReachedDecider = Substitute.For<IPopulationLimitReachedDecider>();
-            _uiSoundPlayer = Substitute.For<ISingleSoundPlayer>();
+            _uiSoundPlayer = Substitute.For<SingleSoundPlayer>();
 
             _clickHandler = new UnitClickHandler(_uiManager, _soundPlayer, _uiSoundPlayer, _populationLimitReachedDecider);
 

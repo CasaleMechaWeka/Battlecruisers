@@ -12,13 +12,13 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildingsMenuController : BuildablesMenuController<BuildingButtonController, IBuilding>
     {
-        private ISingleSoundPlayer _soundPlayer;
+        private SingleSoundPlayer _soundPlayer;
         private IBuildingClickHandler _clickHandler;
 
         public BuildingCategoryButton buildingCategoryButton;
 
         public void Initialise(
-            ISingleSoundPlayer soundPlayer,
+            SingleSoundPlayer soundPlayer,
             UIManager uiManager,
             IButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildings,
