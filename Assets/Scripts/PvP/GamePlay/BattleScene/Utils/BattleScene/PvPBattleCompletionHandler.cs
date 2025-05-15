@@ -28,6 +28,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private float playerBRating;
         public float registeredTime { get; set; }
         private const int POST_GAME_WAIT_TIME_IN_S = 10 * 1000;
+
+        private const int K = 30;
         public PvPBattleCompletionHandler()
         {
             _isCompleted = false;
@@ -52,13 +54,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
 #if !DISABLE_MATCHMAKING
             var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
-            if (team == Cruisers.Team.LEFT)
+            if (team == Team.LEFT)
             {
-                DataProvider.GameModel.BattleWinScore = newRatings.Item1;
+                if (Mathf.Abs(newRatings.hostRating - DataProvider.GameModel.BattleWinScore) <= K)
+                    DataProvider.GameModel.BattleWinScore = newRatings.hostRating;
             }
             else
             {
-                DataProvider.GameModel.BattleWinScore = newRatings.Item2;
+                if (Mathf.Abs(newRatings.clientRating - DataProvider.GameModel.BattleWinScore) <= K)
+                    DataProvider.GameModel.BattleWinScore = newRatings.clientRating;
             }
             DataProvider.SaveGame();
 
@@ -125,14 +129,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         }
         private (float hostRating, float clientRating) CalculateNewRatings(float hostRating, float clientRating, bool wasVictory, Team playerTeam)
         {
-            const int K = 30;
             float Pb = Probability(hostRating, clientRating);
             float Pa = Probability(clientRating, hostRating);
 
             //If wasVictory == true if host wins; false if client wins
             if (wasVictory)
             {
-                if (playerTeam == Cruisers.Team.LEFT)
+                if (playerTeam == Team.LEFT)
                 {
                     if (registeredTime > 0 && Time.time - registeredTime > 60f)
                         hostRating += K * (1 - Pa);
@@ -145,10 +148,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                         clientRating += K * (1 - Pb);
                 }
             }
-
             else
             {
-                if (playerTeam == Cruisers.Team.LEFT)
+                if (playerTeam == Team.LEFT)
                 {
                     hostRating -= K * Pa;
                     if (registeredTime > 0 && Time.time - registeredTime > 60f)
@@ -181,13 +183,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             {
 #if !DISABLE_MATCHMAKING
                 var newRatings = CalculateNewRatings(playerARating, playerBRating, wasVictory, team);
-                if (team == Cruisers.Team.LEFT)
+                if (team == Team.LEFT)
                 {
-                    DataProvider.GameModel.BattleWinScore = newRatings.hostRating;
+                    if (Mathf.Abs(newRatings.hostRating - DataProvider.GameModel.BattleWinScore) <= K)
+                        DataProvider.GameModel.BattleWinScore = newRatings.hostRating;
                 }
                 else
                 {
-                    DataProvider.GameModel.BattleWinScore = newRatings.clientRating;
+                    if (Mathf.Abs(newRatings.clientRating - DataProvider.GameModel.BattleWinScore) <= K)
+                        DataProvider.GameModel.BattleWinScore = newRatings.clientRating;
                 }
                 DataProvider.SaveGame();
 
