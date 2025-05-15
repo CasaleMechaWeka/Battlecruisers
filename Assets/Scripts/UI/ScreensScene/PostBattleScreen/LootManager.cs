@@ -11,7 +11,7 @@ using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
-    public class LootManager : ILootManager
+    public class LootManager
     {
         private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 

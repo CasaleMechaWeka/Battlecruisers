@@ -5,7 +5,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 {
-    public abstract class PostBattleState : IPostBattleState
+    public abstract class PostBattleState
     {
         protected readonly PostBattleScreenController _postBattleScreen;
         protected readonly IMusicPlayer _musicPlayer;

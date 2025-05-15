@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public ButtonController nextButton, clockedGameButton;
 
         public void Initialise(
-            IPostBattleScreen postBattleScreen,
+            PostBattleScreenController postBattleScreen,
             ICommand nextCommand,
             ICommand clockedGameCommand,
             SingleSoundPlayer soundPlayer,

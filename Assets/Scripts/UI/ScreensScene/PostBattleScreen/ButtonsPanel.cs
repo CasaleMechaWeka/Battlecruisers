@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         public CanvasGroupButton homeButton;
 
-        public virtual void Initialise(IPostBattleScreen postBattleScreen, SingleSoundPlayer soundPlayer)
+        public virtual void Initialise(PostBattleScreenController postBattleScreen, SingleSoundPlayer soundPlayer)
         {
             Assert.IsNotNull(homeButton);
             Helper.AssertIsNotNull(postBattleScreen, soundPlayer);

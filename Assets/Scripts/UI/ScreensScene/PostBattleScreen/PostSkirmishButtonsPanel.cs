@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public CanvasGroupButton loadoutButton, retryButton;
 
         public void Initialise(
-            IPostBattleScreen postBattleScreen,
+            PostBattleScreenController postBattleScreen,
             SingleSoundPlayer soundPlayer,
             bool wasVictory)
         {

@@ -36,9 +36,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         Defeat_SideQuest
     }
 
-    public class PostBattleScreenController : ScreenController, IPostBattleScreen
+    public class PostBattleScreenController : ScreenController
     {
-        private ILootManager _lootManager;
+        private LootManager _lootManager;
 
         public Text title;
         public SlidingPanel unlockedItemSection;
@@ -91,7 +91,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour != PostBattleScreenBehaviour.Default)
                 SetupBattleResult();
 
-            IPostBattleState postBattleState = null;
+            PostBattleState postBattleState = null;
             Debug.Log(desiredBehaviour);
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || ApplicationModel.IsTutorial)
@@ -238,7 +238,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ShowDifficultySymbolIfNeeded(postBattleState, difficultyIndicators);
         }
 
-        private ILootManager CreateLootManager()
+        private LootManager CreateLootManager()
         {
             IItemDetailsGroup middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
             IItemDetailsGroup leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
@@ -299,7 +299,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             background.Initalise(isVictory);
         }
 
-        private void ShowDifficultySymbolIfNeeded(IPostBattleState postBattleState, Sprite[] difficultyIndicators)
+        private void ShowDifficultySymbolIfNeeded(PostBattleState postBattleState, Sprite[] difficultyIndicators)
         {
             if (postBattleState.ShowDifficultySymbol)
             {

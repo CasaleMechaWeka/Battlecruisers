@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 {
     public class LootManagerTests
     {
-        private ILootManager _lootManager;
+        private LootManager _lootManager;
 
         private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
