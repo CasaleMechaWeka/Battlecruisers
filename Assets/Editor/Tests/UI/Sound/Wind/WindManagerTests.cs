@@ -9,10 +9,10 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
 {
     public class WindManagerTests
     {
-        private IWindManager _manager;
+        private WindManager _manager;
         private IAudioSource _audioSource;
         private ICamera _camera;
-        private IVolumeCalculator _volumeCalculator;
+        private VolumeCalculator _volumeCalculator;
         private SettingsManager _settingsManager;
         private float _volume;
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
         {
             _audioSource = Substitute.For<IAudioSource>();
             _camera = Substitute.For<ICamera>();
-            _volumeCalculator = Substitute.For<IVolumeCalculator>();
+            _volumeCalculator = Substitute.For<VolumeCalculator>();
             _settingsManager = Substitute.For<SettingsManager>();
 
             _volume = 71.2f;

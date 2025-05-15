@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private UIManager _uiManager;
         private ITargetIndicator _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
-        private IWindManager _windManager;
+        private WindManager _windManager;
         private IBuildingCategoryPermitter _buildingCategoryPermitter;
         private IToggleButtonGroup _speedButtonGroup;
 
@@ -58,7 +58,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _uiManager = Substitute.For<UIManager>();
             _targetIndicator = Substitute.For<ITargetIndicator>();
-            _windManager = Substitute.For<IWindManager>();
+            _windManager = Substitute.For<WindManager>();
             _buildingCategoryPermitter = Substitute.For<IBuildingCategoryPermitter>();
             _speedButtonGroup = Substitute.For<IToggleButtonGroup>();
 

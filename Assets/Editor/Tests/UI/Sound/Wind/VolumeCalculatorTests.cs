@@ -8,18 +8,16 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
 {
     public class VolumeCalculatorTests
     {
-        private IVolumeCalculator _calculator;
-        private IProportionCalculator _proportionCalculator;
+        private VolumeCalculator _calculator;
         private IRange<float> _validOrthographicSizes;
         private SettingsManager _settingsManager;
 
         [SetUp]
         public void TestSetup()
         {
-            _proportionCalculator = Substitute.For<IProportionCalculator>();
             _validOrthographicSizes = new Range<float>(2, 10);
             _settingsManager = Substitute.For<SettingsManager>();
-            _calculator = new VolumeCalculator(_proportionCalculator, _validOrthographicSizes, _settingsManager);
+            _calculator = new VolumeCalculator(_validOrthographicSizes, _settingsManager);
         }
 
         [Test]
@@ -27,9 +25,6 @@ namespace BattleCruisers.Tests.UI.Sound.Wind
         {
             float cameraOrthographicSize = 3.2f;
             float proportion = 0.12f;
-            _proportionCalculator
-                .FindProportion(cameraOrthographicSize, _validOrthographicSizes)
-                .Returns(proportion);
             _settingsManager.EffectVolume.Returns(0.75f);
 
             float actualVolume = _calculator.FindVolume(cameraOrthographicSize);

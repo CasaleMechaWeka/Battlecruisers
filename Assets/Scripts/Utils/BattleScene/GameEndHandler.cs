@@ -1,5 +1,4 @@
-﻿using BattleCruisers.AI;
-using BattleCruisers.Buildables.Buildings;
+﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Buildables.Units.Ships;
 using BattleCruisers.Cruisers;
@@ -29,7 +28,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IPermitter _navigationPermitter;
         private readonly UIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
-        private readonly IWindManager _windManager;
+        private readonly WindManager _windManager;
         private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
         private readonly IToggleButtonGroup _speedButtonGroup;
 
@@ -47,7 +46,7 @@ namespace BattleCruisers.Utils.BattleScene
             IPermitter navigationPermitter,
             UIManager uiManager,
             ITargetIndicator targetIndicator,
-            IWindManager windManager,
+            WindManager windManager,
             IBuildingCategoryPermitter buildingCategoryPermitter,
             IToggleButtonGroup speedButtonGroup)
         {

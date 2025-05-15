@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
 {
     public class WindButtonsPanelController : MonoBehaviour
     {
-        private IWindManager _windManager;
+        private WindManager _windManager;
         public WindInitialiser windInitialiser;
 
         public void Initialise(ICamera camera, ICameraCalculatorSettings cameraCalculatorSettings)

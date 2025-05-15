@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Sound.Wind
     {
         public AudioSource audioSource;
 
-        public IWindManager Initialise(
+        public WindManager Initialise(
             ICamera camera,
             ICameraCalculatorSettings cameraCalculatorSettings,
             SettingsManager settingsManager)
@@ -25,7 +25,6 @@ namespace BattleCruisers.UI.Sound.Wind
                     new AudioSourceBC(audioSource),
                     camera,
                     new VolumeCalculator(
-                        new ProportionCalculator(),
                         cameraCalculatorSettings.ValidOrthographicSizes,
                         settingsManager),
                     settingsManager);

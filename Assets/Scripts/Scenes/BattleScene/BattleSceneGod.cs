@@ -307,7 +307,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     playerCruiserDamageMonitor,
                     leftPanelComponents.PopLimitReachedFeedback);
 
-            IWindManager windManager
+            WindManager windManager
                 = components.WindInitialiser.Initialise(
                     cameraComponents.MainCamera,
                     cameraComponents.Settings,

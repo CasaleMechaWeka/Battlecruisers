@@ -6,17 +6,17 @@ using System;
 
 namespace BattleCruisers.UI.Sound.Wind
 {
-    public class WindManager : IWindManager
+    public class WindManager
     {
         private readonly IAudioSource _audioSource;
         private readonly ICamera _camera;
-        private readonly IVolumeCalculator _volumeCalculator;
+        private readonly VolumeCalculator _volumeCalculator;
         private readonly SettingsManager _settingsManager;
 
         public WindManager(
             IAudioSource audioSource,
             ICamera camera,
-            IVolumeCalculator volumeCalculator,
+            VolumeCalculator volumeCalculator,
             SettingsManager settingsManager)
         {
             Helper.AssertIsNotNull(audioSource, camera, volumeCalculator, settingsManager);

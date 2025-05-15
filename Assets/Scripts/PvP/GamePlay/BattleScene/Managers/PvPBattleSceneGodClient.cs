@@ -74,7 +74,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private IDebouncer _debouncer;
         private PvPBuildableButtonColourController _buildableButtonColourController;
         private PvPInformatorDismisser _informatorDismisser;
-        private IWindManager windManager;
+        private WindManager windManager;
         IDictionary<ulong, NetworkObject> storageOfNetworkObject = new Dictionary<ulong, NetworkObject>();
         private bool isReadyToShowCaptainExo = false;
         public PvPUIManager uiManager;
