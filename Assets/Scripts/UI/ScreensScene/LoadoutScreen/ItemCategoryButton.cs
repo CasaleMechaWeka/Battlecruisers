@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private NewItemMark _newItemMark;
         // private RectTransform _itemCategoryButton;
 
-        private IComparingItemFamilyTracker _itemFamilyTracker;
+        private ComparingItemFamilyTracker _itemFamilyTracker;
 
         public Vector2 buttonWidth;
         public ItemType itemType;
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             GameModel gameModel,
             IList<IItemButton> itemButtons,
-            IComparingItemFamilyTracker itemFamilyTracker)
+            ComparingItemFamilyTracker itemFamilyTracker)
         {
             base.Initialise(soundPlayer);
 

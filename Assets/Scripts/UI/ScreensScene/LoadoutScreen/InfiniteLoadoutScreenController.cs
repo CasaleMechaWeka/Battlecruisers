@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     public class InfiniteLoadoutScreenController : ScreenController, IManagedDisposable
     {
         private ItemDetails.IItemDetailsManager _itemDetailsManager;
-        private IComparingItemFamilyTracker _comparingFamilyTracker;
+        private ComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourControllerV2 _loadoutItemColourController;
 
         public ItemDetailsPanel itemDetailsPanel;
@@ -63,17 +63,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             itemDetailsPanel.Initialise();
 
-            IItemDetailsDisplayer<IBuilding> buildingDetails
+            ItemDetailsDisplayer<IBuilding> buildingDetails
                 = new ItemDetailsDisplayer<IBuilding>(
                     itemDetailsPanel.LeftBuildingDetails,
                     itemDetailsPanel.RightBuildingDetails);
 
-            IItemDetailsDisplayer<IUnit> unitDetails
+            ItemDetailsDisplayer<IUnit> unitDetails
                 = new ItemDetailsDisplayer<IUnit>(
                     itemDetailsPanel.LeftUnitDetails,
                     itemDetailsPanel.RightUnitDetails);
 
-            IItemDetailsDisplayer<ICruiser> cruiserDetails
+            ItemDetailsDisplayer<ICruiser> cruiserDetails
                 = new ItemDetailsDisplayer<ICruiser>(
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
@@ -82,7 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemDetailsManager.HeckleDetails = _heckleDetails;
 
             _comparingFamilyTracker = new ComparingItemFamilyTracker();
-            IComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
+            ComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
 
             compareButton.Initialise(soundPlayer, _itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
             selectCruiserButton

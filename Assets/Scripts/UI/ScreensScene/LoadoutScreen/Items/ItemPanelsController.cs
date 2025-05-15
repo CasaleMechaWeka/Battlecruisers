@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager,
             ItemType defaultItemTypeToShow,
-            IComparingItemFamilyTracker comparingFamiltyTracker,
+            ComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer)
         {

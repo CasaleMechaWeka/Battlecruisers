@@ -14,8 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class SelectCruiserButton : CanvasGroupButton
     {
-        private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
-        private IComparisonStateTracker _comparisonStateTracker;
+        private ItemDetailsDisplayer<ICruiser> _cruiserDetails;
+        private ComparisonStateTracker _comparisonStateTracker;
         private IHullNameToKey _hullNameToKey;
         protected override bool ToggleVisibility => true;
 
@@ -24,8 +24,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            IItemDetailsDisplayer<ICruiser> cruiserDetails,
-            IComparisonStateTracker comparisonStateTracker,
+            ItemDetailsDisplayer<ICruiser> cruiserDetails,
+            ComparisonStateTracker comparisonStateTracker,
             IHullNameToKey hullNameToKey)
         {
             base.Initialise(soundPlayer);

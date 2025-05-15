@@ -15,10 +15,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class LimitDisplayer : MonoBehaviour
     {
-        private IItemDetailsDisplayer<IBuilding> _displayer;
-        private IItemDetailsDisplayer<IUnit> _unit;
+        private ItemDetailsDisplayer<IBuilding> _displayer;
+        private ItemDetailsDisplayer<IUnit> _unit;
         private HeckleDetailsController _heckle;
-        private IComparingItemFamilyTracker _familyTracker;
+        private ComparingItemFamilyTracker _familyTracker;
         private IBuildingNameToKey _buildingName;
         private IUnitNameToKey _unitName;
 
@@ -28,10 +28,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public int BuildableLimit = 5, HeckleLimit = 3;
 
         public void Initialise(
-            IItemDetailsDisplayer<IBuilding> buildingDetails,
-            IItemDetailsDisplayer<IUnit> unitDetails,
+            ItemDetailsDisplayer<IBuilding> buildingDetails,
+            ItemDetailsDisplayer<IUnit> unitDetails,
             HeckleDetailsController heckleDetails,
-            IComparingItemFamilyTracker comparingItemFamily)
+            ComparingItemFamilyTracker comparingItemFamily)
         //IBuildingNameToKey buildingNameToKey,
         //IUnitNameToKey unitNameToKey)
         {

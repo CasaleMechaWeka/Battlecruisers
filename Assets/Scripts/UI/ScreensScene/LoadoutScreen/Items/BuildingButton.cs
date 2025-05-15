@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamiltyTracker,
+            ComparingItemFamilyTracker comparingFamiltyTracker,
             IBuildableWrapper<IBuilding> buildingPrefab)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);

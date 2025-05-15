@@ -14,9 +14,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
     public class ItemDetailsManager : IItemDetailsManager
     {
-        private readonly IItemDetailsDisplayer<IBuilding> _buildingDetails;
-        private readonly IItemDetailsDisplayer<IUnit> _unitDetails;
-        private readonly IItemDetailsDisplayer<ICruiser> _cruiserDetails;
+        private readonly ItemDetailsDisplayer<IBuilding> _buildingDetails;
+        private readonly ItemDetailsDisplayer<IUnit> _unitDetails;
+        private readonly ItemDetailsDisplayer<ICruiser> _cruiserDetails;
 
         private HeckleDetailsController _heckleDetails;
         public HeckleDetailsController HeckleDetails
@@ -43,9 +43,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         public IBroadcastingProperty<IComparableItem> ComparingItem { get; }
 
         public ItemDetailsManager(
-            IItemDetailsDisplayer<IBuilding> buildingDetails,
-            IItemDetailsDisplayer<IUnit> unitDetails,
-            IItemDetailsDisplayer<ICruiser> cruiserDetails)
+            ItemDetailsDisplayer<IBuilding> buildingDetails,
+            ItemDetailsDisplayer<IUnit> unitDetails,
+            ItemDetailsDisplayer<ICruiser> cruiserDetails)
         {
             Helper.AssertIsNotNull(buildingDetails, unitDetails, cruiserDetails);
 
@@ -110,14 +110,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             _numOfDetailsShown.Value = 1;
         }
 
-        private void ShowDetails(IItemDetailsDisplayer<ICruiser> itemDetails, HullType hullType)
+        private void ShowDetails(ItemDetailsDisplayer<ICruiser> itemDetails, HullType hullType)
         {
             itemDetails.SelectItem(hullType);
         }
 
         private void ShowDetails<TItem, TItemDetails>(TItem item, TItemDetails itemDetails, ItemFamily itemFamily)
             where TItem : class, IComparableItem
-            where TItemDetails : IItemDetailsDisplayer<TItem>
+            where TItemDetails : ItemDetailsDisplayer<TItem>
         {
             Assert.IsNotNull(item);
 
@@ -145,7 +145,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 
         private void CompareWithSelectedItem<TItem, TItemDetails>(TItem item, TItemDetails itemDetails, ItemFamily itemFamily)
             where TItem : class, IComparableItem
-            where TItemDetails : IItemDetailsDisplayer<TItem>
+            where TItemDetails : ItemDetailsDisplayer<TItem>
         {
             Assert.IsNotNull(item);
             Assert.AreEqual(SelectedItemFamily, itemFamily);

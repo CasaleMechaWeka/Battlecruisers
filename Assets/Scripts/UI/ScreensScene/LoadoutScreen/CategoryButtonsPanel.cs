@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             SingleSoundPlayer soundPlayer,
             GameModel gameModel,
             IList<IItemButton> itemButtons,
-            IComparingItemFamilyTracker itemFamilyTracker)
+            ComparingItemFamilyTracker itemFamilyTracker)
         {
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, soundPlayer, gameModel, itemButtons);
 

@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private VariantClickedFeedback _variantClickedFeedback;
 
         protected IItemDetailsManager _itemDetailsManager;
-        protected IComparingItemFamilyTracker _comparingFamiltyTracker;
+        protected ComparingItemFamilyTracker _comparingFamiltyTracker;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public ItemFamily itemFamily;
 
-        protected virtual void Initialise(SingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, IComparingItemFamilyTracker comparingFamiltyTracker)
+        protected virtual void Initialise(SingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, ComparingItemFamilyTracker comparingFamiltyTracker)
         {
             base.Initialise(soundPlayer);
 

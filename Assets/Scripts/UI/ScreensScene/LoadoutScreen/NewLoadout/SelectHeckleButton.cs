@@ -28,12 +28,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         protected override bool ToggleVisibility => true;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
-        private IComparingItemFamilyTracker _comparingItemFamilyTracker;
+        private ComparingItemFamilyTracker _comparingItemFamilyTracker;
 
         public void Initialise(SingleSoundPlayer soundPlayer,
             HeckleDetailsController heckleDetails,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
-            IComparingItemFamilyTracker comparingItemFamily)
+            ComparingItemFamilyTracker comparingItemFamily)
         {
             base.Initialise(soundPlayer);
             Helper.AssertIsNotNull(heckleDetails, _itemFamily);

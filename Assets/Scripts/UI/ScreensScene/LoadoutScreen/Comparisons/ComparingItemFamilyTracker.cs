@@ -3,7 +3,7 @@ using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
 {
-    public class ComparingItemFamilyTracker : IComparingItemFamilyTracker
+    public class ComparingItemFamilyTracker
     {
         private ISettableBroadcastingProperty<ItemFamily?> _comparingFamily;
         public IBroadcastingProperty<ItemFamily?> ComparingFamily { get; }

@@ -13,12 +13,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public ItemType itemType;
         private ItemFamily ItemFamily => ItemFamily.Heckles;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
-        private IComparingItemFamilyTracker _itemFamilyTracker;
+        private ComparingItemFamilyTracker _itemFamilyTracker;
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IItemPanelsController itemPanels,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
-            IComparingItemFamilyTracker itemFamilyTracker)
+            ComparingItemFamilyTracker itemFamilyTracker)
         {
             base.Initialise(soundPlayer);
             _itemPanels = itemPanels;

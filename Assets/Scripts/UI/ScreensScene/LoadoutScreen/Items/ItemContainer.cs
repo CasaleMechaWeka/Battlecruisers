@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public IItemButton Initialise(
             ItemsPanel itemsPanel,
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamilyTracker,
+            ComparingItemFamilyTracker comparingFamilyTracker,
             GameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer)
@@ -60,7 +60,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         protected abstract ItemButton InitialiseItemButton(
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamilyTracker,
+            ComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer,
             GameModel gameModel);

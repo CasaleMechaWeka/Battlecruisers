@@ -18,10 +18,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class SelectUnitButton : CanvasGroupButton
     {
-        private IItemDetailsDisplayer<IUnit> _unitDetails;
+        private ItemDetailsDisplayer<IUnit> _unitDetails;
         private IUnitNameToKey _unitNameToKey;
         private IBroadcastingProperty<ItemFamily?> _comparingFamily;
-        private IComparingItemFamilyTracker _comparingItemFamilyTracker;
+        private ComparingItemFamilyTracker _comparingItemFamilyTracker;
 
         public TextMeshProUGUI limit;
         public GameObject selectText;
@@ -34,10 +34,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         protected override bool ToggleVisibility => true;
 
         public void Initialise(SingleSoundPlayer soundPlayer,
-            IItemDetailsDisplayer<IUnit> unitDetails,
+            ItemDetailsDisplayer<IUnit> unitDetails,
             IUnitNameToKey unitName,
             IBroadcastingProperty<ItemFamily?> _itemFamily,
-            IComparingItemFamilyTracker comparingItemFamily)
+            ComparingItemFamilyTracker comparingItemFamily)
         {
             base.Initialise(soundPlayer);
             Helper.AssertIsNotNull(unitDetails, unitName, _itemFamily);

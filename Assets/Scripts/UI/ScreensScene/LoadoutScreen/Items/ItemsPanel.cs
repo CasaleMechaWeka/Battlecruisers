@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public SelectHeckleButton toggleHeckleSelectionButton;
         private IList<IItemButton> buttons = new List<IItemButton>();
         private IItemDetailsManager _itemDetailsManager;
-        private IComparingItemFamilyTracker _comparingFamiltyTracker;
+        private ComparingItemFamilyTracker _comparingFamiltyTracker;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private SingleSoundPlayer _soundPlayer;
         // Heckle Logic
@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public IList<IItemButton> Initialise(
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamiltyTracker,
+            ComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer)
         {

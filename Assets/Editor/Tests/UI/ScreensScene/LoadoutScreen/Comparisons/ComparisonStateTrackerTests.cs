@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.Comparisons
 {
     public class ComparisonStateTrackerTests
     {
-        private IComparisonStateTracker _stateTracker;
+        private ComparisonStateTracker _stateTracker;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private IItemDetailsManager _itemDetailsManager;
         private int _stateChangedCounter;

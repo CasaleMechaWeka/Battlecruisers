@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public class UnitButtonV2 : ItemButton
     {
         private IBuildableWrapper<IUnit> _unitPrefab;
-        private IComparingItemFamilyTracker _itemFamilyTracker;
+        private ComparingItemFamilyTracker _itemFamilyTracker;
         private GameModel _gameModel;
         private UnitKey _unitkey;
         public SelectUnitButton selectUnitButton;
@@ -31,7 +31,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingItemFamily,
+            ComparingItemFamilyTracker comparingItemFamily,
             IBuildableWrapper<IUnit> unitPrefab,
             GameModel gameModel,
             UnitKey key)

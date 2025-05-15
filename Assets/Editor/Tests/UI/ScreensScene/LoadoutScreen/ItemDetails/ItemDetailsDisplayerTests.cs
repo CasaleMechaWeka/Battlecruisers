@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
     public class ItemDetailsDisplayerTests
     {
-        private IItemDetailsDisplayer<IBuilding> _displayer;
+        private ItemDetailsDisplayer<IBuilding> _displayer;
         private IComparableItemDetails<IBuilding> _leftDetails, _rightDetails;
         private IBuilding _building1, _building2;
 

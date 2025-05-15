@@ -8,16 +8,16 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
     public class CompareButton : CanvasGroupButton
     {
         private IItemDetailsManager _itemDetailsManager;
-        private IComparingItemFamilyTracker _comparingFamilyTracker;
-        private IComparisonStateTracker _comparisonStateTracker;
+        private ComparingItemFamilyTracker _comparingFamilyTracker;
+        private ComparisonStateTracker _comparisonStateTracker;
 
         protected override bool ToggleVisibility => false;
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IItemDetailsManager itemDetailsManager,
-            IComparingItemFamilyTracker comparingFamilyTracker,
-            IComparisonStateTracker comparisonStateTracker)
+            ComparingItemFamilyTracker comparingFamilyTracker,
+            ComparisonStateTracker comparisonStateTracker)
         {
             base.Initialise(soundPlayer);
 

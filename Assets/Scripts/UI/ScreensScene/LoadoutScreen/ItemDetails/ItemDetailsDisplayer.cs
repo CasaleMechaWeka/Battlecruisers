@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-    public class ItemDetailsDisplayer<TItem> : IItemDetailsDisplayer<TItem> where TItem : class, IComparableItem
+    public class ItemDetailsDisplayer<TItem> where TItem : class, IComparableItem
     {
         private readonly IComparableItemDetails<TItem> _leftDetails, _rightDetails;
         private ISettableBroadcastingProperty<TItem> _selectedItem;

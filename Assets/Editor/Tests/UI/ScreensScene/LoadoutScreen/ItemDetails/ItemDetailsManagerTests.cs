@@ -13,9 +13,9 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
     public class ItemDetailsManagerTest
     {
         private IItemDetailsManager _itemDetailsManager;
-        private IItemDetailsDisplayer<IBuilding> _buildingDetails;
-        private IItemDetailsDisplayer<IUnit> _unitDetails;
-        private IItemDetailsDisplayer<ICruiser> _cruiserDetails;
+        private ItemDetailsDisplayer<IBuilding> _buildingDetails;
+        private ItemDetailsDisplayer<IUnit> _unitDetails;
+        private ItemDetailsDisplayer<ICruiser> _cruiserDetails;
         private IBuilding _building;
         private IUnit _unit;
         private ICruiser _cruiser;
@@ -24,9 +24,9 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
         [SetUp]
         public void TestSetup()
         {
-            _buildingDetails = Substitute.For<IItemDetailsDisplayer<IBuilding>>();
-            _unitDetails = Substitute.For<IItemDetailsDisplayer<IUnit>>();
-            _cruiserDetails = Substitute.For<IItemDetailsDisplayer<ICruiser>>();
+            _buildingDetails = Substitute.For<ItemDetailsDisplayer<IBuilding>>();
+            _unitDetails = Substitute.For<ItemDetailsDisplayer<IUnit>>();
+            _cruiserDetails = Substitute.For<ItemDetailsDisplayer<ICruiser>>();
 
             _itemDetailsManager = new ItemDetailsManager(_buildingDetails, _unitDetails, _cruiserDetails);
 

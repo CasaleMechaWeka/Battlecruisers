@@ -6,7 +6,7 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
 {
-    public class ComparisonStateTracker : IComparisonStateTracker
+    public class ComparisonStateTracker
     {
         private readonly IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private readonly IItemDetailsManager _itemDetailsManager;
@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
         public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
         {
             Helper.AssertIsNotNull(itemFamilyToCompare, itemDetailsManager);
-            
+
             _itemFamilyToCompare = itemFamilyToCompare;
             _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
 
@@ -55,5 +55,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
                 return ComparisonState.NotComparing;
             }
         }
+    }
+
+    public enum ComparisonState
+    {
+        NotComparing,   // Single item details visible, compare button visible
+        ReadyToCompare, // Single item details visible, no compare button
+        Comparing       // Two item details visible, no compare button
     }
 }
