@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Scenes;
+﻿using BattleCruisers.Buildables.Buildings.Turrets;
+using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -18,6 +19,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public int SetIndex { get; private set; }
         public int LastLevelNum { get; private set; }
+
+        public GameObject[] trails;
 
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
@@ -68,14 +71,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 sideQuestButtons[i].Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked, true);
 
             // Set up trails
-            TrailController[] trails = GetComponentsInChildren<TrailController>();
             int expectedNumberOfTrails = _numOfLevels - 1;
             //Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
 
             for (int i = 0; i < trails.Length; ++i)
             {
                 bool isTrailVisible = numOfLevelsUnlocked - firstLevelIndex - 1 > i;
-                trails[i].IsVisible = isTrailVisible;
+                trails[i].SetActive(isTrailVisible);
             }
 
             // Setup navigation feedback button
@@ -85,6 +87,21 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             //Set up Side Quest levels
 
 
+        }
+
+        public void OnValidate()
+        {
+            if (trails.Length == 0)
+            {
+                Transform trailsParent = transform.GetChild(0);
+                List<GameObject> children = new List<GameObject>();
+                foreach (Transform t in trailsParent)
+                    children.Add(t.gameObject);
+
+                if (children.Count == 0)
+                    Debug.LogError("Didn't find any trails. Please validate manually.");
+                trails = children.ToArray();
+            }
         }
 
         public bool ContainsLevel(int levelNum)
