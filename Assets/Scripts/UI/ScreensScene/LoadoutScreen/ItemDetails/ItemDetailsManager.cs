@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-    public class ItemDetailsManager : IItemDetailsManager
+    public class ItemDetailsManager
     {
         private readonly ItemDetailsDisplayer<IBuilding> _buildingDetails;
         private readonly ItemDetailsDisplayer<IUnit> _unitDetails;

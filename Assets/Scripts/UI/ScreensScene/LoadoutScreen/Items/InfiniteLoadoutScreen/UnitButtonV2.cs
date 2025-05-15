@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public Image variantIcon;
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingItemFamily,
             IBuildableWrapper<IUnit> unitPrefab,
             GameModel gameModel,

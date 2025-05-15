@@ -5,7 +5,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
-    public class ChooseDifficultyScreenController : ScreenController, IChooseDifficultyScreen
+    public class ChooseDifficultyScreenController : ScreenController
     {
         private SettingsManager _settingsManager;
 

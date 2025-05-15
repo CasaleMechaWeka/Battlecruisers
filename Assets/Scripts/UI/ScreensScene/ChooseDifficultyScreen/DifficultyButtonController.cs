@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
 {
     public class DifficultyButtonController : ElementWithClickSound
     {
-        private IChooseDifficultyScreen _chooseDifficultyScreen;
+        private ChooseDifficultyScreenController _chooseDifficultyScreen;
 
         public Difficulty difficulty;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
         public Color battlecruisersRed;
         public int buildSpeedPercentage = 125;
 
-        public void Initialise(SingleSoundPlayer soundPlayer, IChooseDifficultyScreen chooseDifficultyScreen)
+        public void Initialise(SingleSoundPlayer soundPlayer, ChooseDifficultyScreenController chooseDifficultyScreen)
         {
             base.Initialise(soundPlayer, parent: chooseDifficultyScreen);
 

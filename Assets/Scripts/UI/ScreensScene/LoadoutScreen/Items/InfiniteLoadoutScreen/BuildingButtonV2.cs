@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamiltyTracker,
             IBuildableWrapper<IBuilding> buildingPrefab,
             GameModel gameModel,

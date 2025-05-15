@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.Comparisons
     {
         private ComparisonStateTracker _stateTracker;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
-        private IItemDetailsManager _itemDetailsManager;
+        private ItemDetailsManager _itemDetailsManager;
         private int _stateChangedCounter;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.Comparisons
             _itemFamilyToCompare = Substitute.For<IBroadcastingProperty<ItemFamily?>>();
             _itemFamilyToCompare.Value.Returns((ItemFamily?)null);
 
-            _itemDetailsManager = Substitute.For<IItemDetailsManager>();
+            _itemDetailsManager = Substitute.For<ItemDetailsManager>();
             _itemDetailsManager.NumOfDetailsShown.Value.Returns(0);
 
             _stateTracker = new ComparisonStateTracker(_itemFamilyToCompare, _itemDetailsManager);

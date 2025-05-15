@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
 
         protected override ItemButton InitialiseItemButton(
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer,

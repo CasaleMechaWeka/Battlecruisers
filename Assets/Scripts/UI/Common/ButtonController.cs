@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Common
 
         protected override bool ToggleVisibility => true;
 
-        protected Image _buttonImage;
+        public Image _buttonImage;
         protected override MaskableGraphic Graphic => _buttonImage;
 
         private CanvasGroup _canvasGroup;
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.Common
         {
             _canvasGroup = GetComponent<CanvasGroup>();
 
-            if (_canvasGroup == null)
+            if (_canvasGroup == null && _buttonImage == null)
             {
                 _buttonImage = GetComponentInChildren<Image>(includeInactive: true);
                 Assert.IsNotNull(_buttonImage);

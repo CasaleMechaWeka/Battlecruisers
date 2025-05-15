@@ -30,7 +30,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private string lootName;
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             Cruiser cruiserPrefab,

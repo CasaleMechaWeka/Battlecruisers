@@ -8,12 +8,12 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen.Buttons
 {
     public class HomeScreenButton : TextButton
     {
-        protected IHomeScreen _homeScreen;
+        protected HomeScreenController _homeScreen;
         protected GameModel _gameModel;
         [SerializeField]
         private UnityEvent clickAction;
 
-        public virtual void Initialise(SingleSoundPlayer soundPlayer, IHomeScreen homeScreen, GameModel gameModel)
+        public virtual void Initialise(SingleSoundPlayer soundPlayer, HomeScreenController homeScreen, GameModel gameModel)
         {
             base.Initialise(soundPlayer, homeScreen);
 

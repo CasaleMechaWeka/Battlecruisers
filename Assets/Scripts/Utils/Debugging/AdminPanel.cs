@@ -54,7 +54,7 @@ namespace BattleCruisers.Utils.Debugging
                 DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
             }
 
-            foreach (ISideQuestData sideQuest in StaticData.SideQuests)
+            foreach (SideQuestData sideQuest in StaticData.SideQuests)
             {
                 DataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
             }
@@ -119,7 +119,7 @@ namespace BattleCruisers.Utils.Debugging
                 }
                 else
                 {
-                    ISideQuestData sideQuest = StaticData.SideQuests.FirstOrDefault(sq => sq.SideLevelNum == levelNum);
+                    SideQuestData sideQuest = StaticData.SideQuests.FirstOrDefault(sq => sq.SideLevelNum == levelNum);
                     if (sideQuest != null)
                     {
                         DataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));

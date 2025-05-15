@@ -9,12 +9,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons
     public class ComparisonStateTracker
     {
         private readonly IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
-        private readonly IItemDetailsManager _itemDetailsManager;
+        private readonly ItemDetailsManager _itemDetailsManager;
 
         private readonly ISettableBroadcastingProperty<ComparisonState> _state;
         public IBroadcastingProperty<ComparisonState> State { get; }
 
-        public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, IItemDetailsManager itemDetailsManager)
+        public ComparisonStateTracker(IBroadcastingProperty<ItemFamily?> itemFamilyToCompare, ItemDetailsManager itemDetailsManager)
         {
             Helper.AssertIsNotNull(itemFamilyToCompare, itemDetailsManager);
 

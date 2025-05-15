@@ -5,7 +5,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
-using IItemDetailsManager = BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.IItemDetailsManager;
+using ItemDetailsManager = BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails.ItemDetailsManager;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public SelectHeckleButton toggleSelectionButton;
 
         protected override ItemButton InitialiseItemButton(
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer,

@@ -64,7 +64,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return StaticData.Levels[ApplicationModel.SelectedLevel - 1];
         }
 
-        public virtual ISideQuestData GetSideQuest()
+        public virtual SideQuestData GetSideQuest()
         {
             return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID];
         }

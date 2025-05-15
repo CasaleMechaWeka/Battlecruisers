@@ -14,11 +14,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     /// </summary>
     public class LoadoutItemColourControllerV2
     {
-        private readonly IItemDetailsManager _itemDetails;
-        private readonly IDictionary<IComparableItem, IItemButton> _itemToButton;
+        private readonly ItemDetailsManager _itemDetails;
+        private readonly IDictionary<IComparableItem, ItemButton> _itemToButton;
 
-        private IItemButton _selectedButton;
-        private IItemButton SelectedButton
+        private ItemButton _selectedButton;
+        private ItemButton SelectedButton
         {
             set
             {
@@ -26,8 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        private IItemButton _comparingButton;
-        private IItemButton ComparingButton
+        private ItemButton _comparingButton;
+        private ItemButton ComparingButton
         {
             set
             {
@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        public LoadoutItemColourControllerV2(IItemDetailsManager itemDetails, IList<IItemButton> itemButtons)
+        public LoadoutItemColourControllerV2(ItemDetailsManager itemDetails, IList<ItemButton> itemButtons)
         {
             Helper.AssertIsNotNull(itemDetails, itemButtons);
 
@@ -43,8 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _itemDetails.SelectedItem.ValueChanged += SelectedItem_ValueChanged;
             _itemDetails.ComparingItem.ValueChanged += ComparingItem_ValueChanged;
 
-            _itemToButton = new Dictionary<IComparableItem, IItemButton>();
-            foreach (IItemButton button in itemButtons)
+            _itemToButton = new Dictionary<IComparableItem, ItemButton>();
+            foreach (ItemButton button in itemButtons)
             {
                 if (button.Item is not null)
                     _itemToButton.Add(button.Item, button);
@@ -81,7 +81,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        private IItemButton SetButtonToHighlight(IItemButton currentButton, IItemButton newButton)
+        private ItemButton SetButtonToHighlight(ItemButton currentButton, ItemButton newButton)
         {
             if (currentButton != null)
             {

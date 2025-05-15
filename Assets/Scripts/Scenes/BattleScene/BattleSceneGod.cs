@@ -184,7 +184,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
             IButtonVisibilityFilters buttonVisibilityFilters = helper.CreateButtonVisibilityFilters(playerCruiser.DroneManager);
             ILevel currentLevel = null;
-            ISideQuestData currentSideQuest = null;
+            SideQuestData currentSideQuest = null;
             string enemyName;
 
             // Prior to setting up Captain Names

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace BattleCruisers.Data
 {
     [Serializable]
-    public class SideQuestData : ISideQuestData
+    public class SideQuestData
     {
         [SerializeField]
         private bool _playerTalksFirst;

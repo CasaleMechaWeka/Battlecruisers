@@ -245,7 +245,7 @@ namespace BattleCruisers.Data.Static
             new Level(39, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(39)),
             new Level(40, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(40)) //TODO: Change to new boss broadsword
         });
-        public static ReadOnlyCollection<ISideQuestData> SideQuests { get; } = new ReadOnlyCollection<ISideQuestData>(new List<ISideQuestData>()
+        public static ReadOnlyCollection<SideQuestData> SideQuests { get; } = new ReadOnlyCollection<SideQuestData>(new List<SideQuestData>()
         {
             //Set 1: Original Secret Levels
             new SideQuestData(false, Exos.GetCaptainExoKey(32), 32, -1, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, false, 0),

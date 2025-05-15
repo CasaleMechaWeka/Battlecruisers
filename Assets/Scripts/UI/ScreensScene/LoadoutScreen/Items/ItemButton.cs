@@ -9,14 +9,14 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public abstract class ItemButton : ElementWithClickSound, IItemButton
+    public abstract class ItemButton : ElementWithClickSound
     {
         private Image _itemImage;
         public Text _itemName;  // for heckle
         private ClickedFeedBack _clickedFeedBack;
         private VariantClickedFeedback _variantClickedFeedback;
 
-        protected IItemDetailsManager _itemDetailsManager;
+        protected ItemDetailsManager _itemDetailsManager;
         protected ComparingItemFamilyTracker _comparingFamiltyTracker;
 
         private CanvasGroup _canvasGroup;
@@ -47,7 +47,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public ItemFamily itemFamily;
 
-        protected virtual void Initialise(SingleSoundPlayer soundPlayer, IItemDetailsManager itemDetailsManager, ComparingItemFamilyTracker comparingFamiltyTracker)
+        protected virtual void Initialise(SingleSoundPlayer soundPlayer, ItemDetailsManager itemDetailsManager, ComparingItemFamilyTracker comparingFamiltyTracker)
         {
             base.Initialise(soundPlayer);
 

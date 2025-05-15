@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
-    public class ItemDetailsPanel : MonoBehaviour, IItemDetailsPanel
+    public class ItemDetailsPanel : MonoBehaviour
     {
         public ComparableCruiserDetailsController leftCruiserDetails, rightCruiserDetails;
         public IComparableItemDetails<ICruiser> LeftCruiserDetails => leftCruiserDetails;

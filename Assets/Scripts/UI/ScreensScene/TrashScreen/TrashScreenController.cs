@@ -113,7 +113,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             if (ApplicationModel.Mode == GameMode.SideQuest)
             {
                 int sideQuestID = ApplicationModel.SelectedSideQuestID;
-                ISideQuestData sideQuestData = StaticData.SideQuests[sideQuestID];
+                SideQuestData sideQuestData = StaticData.SideQuests[sideQuestID];
                 enemyCruiserPrefab = PrefabFactory.GetCruiserPrefab(sideQuestData.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + sideQuestData.SkyMaterial + SPRITES_FILE_EXTENSION;
 

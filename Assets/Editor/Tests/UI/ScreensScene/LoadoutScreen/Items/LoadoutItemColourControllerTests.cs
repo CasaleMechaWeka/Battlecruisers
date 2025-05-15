@@ -12,25 +12,25 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.Items
     public class LoadoutItemColourControllerTests
     {
         private LoadoutItemColourController _colourController;
-        private IItemDetailsManager _itemDetails;
-        private IList<IItemButton> _itemButtons;
-        private IItemButton _button1, _button2;
+        private ItemDetailsManager _itemDetails;
+        private IList<ItemButton> _itemButtons;
+        private ItemButton _button1, _button2;
         private IComparableItem _item1, _item2, _itemWithoutButton;
 
         [SetUp]
         public void TestSetup()
         {
-            _itemDetails = Substitute.For<IItemDetailsManager>();
+            _itemDetails = Substitute.For<ItemDetailsManager>();
 
-            _button1 = Substitute.For<IItemButton>();
+            _button1 = Substitute.For<ItemButton>();
             _item1 = Substitute.For<IComparableItem>();
             _button1.Item.Returns(_item1);
 
-            _button2 = Substitute.For<IItemButton>();
+            _button2 = Substitute.For<ItemButton>();
             _item2 = Substitute.For<IComparableItem>();
             _button2.Item.Returns(_item2);
 
-            _itemButtons = new List<IItemButton>()
+            _itemButtons = new List<ItemButton>()
             {
                 _button1,
                 _button2

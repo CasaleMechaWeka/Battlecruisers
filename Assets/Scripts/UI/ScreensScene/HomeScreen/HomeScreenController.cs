@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene.HomeScreen
 {
-    public class HomeScreenController : ScreenController, IHomeScreen
+    public class HomeScreenController : ScreenController
     {
         private BattleResult _lastBattleResult;
 

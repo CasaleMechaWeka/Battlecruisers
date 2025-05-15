@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             ItemsPanel itemsPanel,
             SingleSoundPlayer soundPlayer,
             HeckleData heckleData,
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingItemFamily,
             GameModel gameModel)
         {

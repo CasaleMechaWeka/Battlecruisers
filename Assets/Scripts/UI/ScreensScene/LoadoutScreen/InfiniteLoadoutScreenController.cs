@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public class InfiniteLoadoutScreenController : ScreenController, IManagedDisposable
     {
-        private ItemDetails.IItemDetailsManager _itemDetailsManager;
+        private ItemDetails.ItemDetailsManager _itemDetailsManager;
         private ComparingItemFamilyTracker _comparingFamilyTracker;
         private LoadoutItemColourControllerV2 _loadoutItemColourController;
 
@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private SingleSoundPlayer _soundPlayer;
         IScreensSceneGod _screensSceneGod;
-        private IList<IItemButton> _itemButtons = new List<IItemButton>();
+        private IList<ItemButton> _itemButtons = new List<ItemButton>();
 
 
 
@@ -115,7 +115,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _heckleDetails,
                 _comparingFamilyTracker);
 
-            IList<IItemButton> itemButtons
+            IList<ItemButton> itemButtons
                 = itemPanels.Initialise(
                     _itemDetailsManager,
                     ItemType.Hull,
@@ -139,7 +139,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public void AddHeckle(HeckleData heckleData)
         {
             itemPanels.AddHeckle(heckleData);
-            /*IList<IItemButton> itemButtons
+            /*IList<ItemButton> itemButtons
                 = await itemPanels.Initialise(
                     _itemDetailsManager,
                     ItemType.Hull,

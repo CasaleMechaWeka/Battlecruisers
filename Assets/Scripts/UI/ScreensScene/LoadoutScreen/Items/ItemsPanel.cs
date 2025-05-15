@@ -14,9 +14,9 @@ using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public class ItemsPanel : Panel, IItemsPanel
+    public class ItemsPanel : Panel
     {
-        private IList<IItemButton> _button;
+        private IList<ItemButton> _button;
 
         public ItemType itemType;
         public ItemType ItemType => itemType;
@@ -26,8 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
         public Transform heckleParent;
         public SelectHeckleButton toggleHeckleSelectionButton;
-        private IList<IItemButton> buttons = new List<IItemButton>();
-        private IItemDetailsManager _itemDetailsManager;
+        private IList<ItemButton> buttons = new List<ItemButton>();
+        private ItemDetailsManager _itemDetailsManager;
         private ComparingItemFamilyTracker _comparingFamiltyTracker;
         private IBroadcastingProperty<HullKey> _selectedHull;
         private SingleSoundPlayer _soundPlayer;
@@ -56,14 +56,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
                 heckleContainer.heckleData = heckleData;
                 heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
-                IItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, DataProvider.GameModel, _selectedHull, _soundPlayer);
+                ItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, DataProvider.GameModel, _selectedHull, _soundPlayer);
                 buttons.Add(button);
                 heckleContainer.gameObject.SetActive(true);
             }
         }
 
-        public IList<IItemButton> Initialise(
-            IItemDetailsManager itemDetailsManager,
+        public IList<ItemButton> Initialise(
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer)
@@ -92,13 +92,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 if (this == null)
                     return null;
                 ItemContainer[] itemContainers = GetComponentsInChildren<ItemContainer>(includeInactive: true);
-                IList<IItemButton> buttons = new List<IItemButton>();
+                IList<ItemButton> buttons = new List<ItemButton>();
 
                 HasUnlockedItem = false;
 
                 foreach (ItemContainer itemContainer in itemContainers)
                 {
-                    IItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, DataProvider.GameModel, selectedHull, soundPlayer);
+                    ItemButton button = itemContainer.Initialise(this, itemDetailsManager, comparingFamiltyTracker, DataProvider.GameModel, selectedHull, soundPlayer);
                     buttons.Add(button);
                     HasUnlockedItem = HasUnlockedItem || button.IsUnlocked;
                     itemContainer.gameObject.SetActive(button.IsUnlocked);
@@ -108,9 +108,26 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        public IItemButton GetFirstItemButton()
+        public ItemButton GetFirstItemButton()
         {
             return _button[0];
         }
+    }
+
+    public enum ItemType
+    {
+        // Cruisers
+        Hull,
+        // Buildings
+        Factory, Defense, Offensive, Tactical, Ultra,
+        // Units
+        Ship, Aircraft,
+        // Heckle
+        Heckle
+    }
+
+    public enum ItemFamily
+    {
+        Hulls, Buildings, Units, Heckles
     }
 }

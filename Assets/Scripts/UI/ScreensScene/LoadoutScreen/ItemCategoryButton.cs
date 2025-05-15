@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
     public abstract class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler, IManagedDisposable
     {
-        private IItemPanelsController _itemPanels;
+        private ItemPanelsController _itemPanels;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private GameModel _gameModel;
         private bool _hasUnlockedItem;
@@ -42,10 +42,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            IItemPanelsController itemPanels,
+            ItemPanelsController itemPanels,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             GameModel gameModel,
-            IList<IItemButton> itemButtons,
+            IList<ItemButton> itemButtons,
             ComparingItemFamilyTracker itemFamilyTracker)
         {
             base.Initialise(soundPlayer);
@@ -76,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             SetupNewMarkVisibilityCallback(_gameModel);
             UpdateNewItemMarkVisibility();
 
-            foreach (IItemButton button in itemButtons)
+            foreach (ItemButton button in itemButtons)
             {
                 button.Clicked += (sender, e) => UpdateNewItemMarkVisibility();
             }

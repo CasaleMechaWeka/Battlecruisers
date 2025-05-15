@@ -22,15 +22,15 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     /// </summary>
     public abstract class ItemContainer : MonoBehaviour
     {
-        private IItemButton _itemButton;
+        private ItemButton _itemButton;
         private GameModel _gameModel;
         private NewItemMark _newItemMark;
         protected ItemsPanel _itemsPanel;
 
 
-        public IItemButton Initialise(
+        public ItemButton Initialise(
             ItemsPanel itemsPanel,
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamilyTracker,
             GameModel gameModel,
             IBroadcastingProperty<HullKey> selectedHull,
@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
 
         protected abstract ItemButton InitialiseItemButton(
-            IItemDetailsManager itemDetailsManager,
+            ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamilyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
             SingleSoundPlayer soundPlayer,

@@ -13,14 +13,14 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
-    public class ItemPanelsController : MonoBehaviour, IItemPanelsController
+    public class ItemPanelsController : MonoBehaviour
     {
-        private IDictionary<ItemType, IItemsPanel> _typeToPanel;
+        private IDictionary<ItemType, ItemsPanel> _typeToPanel;
 
-        private IItemsPanel _currentlyShownPanel;
+        private ItemsPanel _currentlyShownPanel;
 
-        private List<IItemButton> _allItemButtons = new List<IItemButton>();
-        public IItemsPanel CurrentlyShownPanel
+        private List<ItemButton> _allItemButtons = new List<ItemButton>();
+        public ItemsPanel CurrentlyShownPanel
         {
             get { return _currentlyShownPanel; }
             set
@@ -43,8 +43,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public event EventHandler PotentialMatchChange;
 
-        public IList<IItemButton> Initialise(
-            IItemDetailsManager itemDetailsManager,
+        public IList<ItemButton> Initialise(
+            ItemDetailsManager itemDetailsManager,
             ItemType defaultItemTypeToShow,
             ComparingItemFamilyTracker comparingFamiltyTracker,
             IBroadcastingProperty<HullKey> selectedHull,
@@ -52,14 +52,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer);
 
-            _typeToPanel = new Dictionary<ItemType, IItemsPanel>();
+            _typeToPanel = new Dictionary<ItemType, ItemsPanel>();
 
             ItemsPanel[] panels = GetComponentsInChildren<ItemsPanel>(includeInactive: true);
-            List<IItemButton> allItemButtons = new List<IItemButton>();
+            List<ItemButton> allItemButtons = new List<ItemButton>();
 
             foreach (ItemsPanel panel in panels)
             {
-                IList<IItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer);
+                IList<ItemButton> panelItemButtons = panel.Initialise(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer);
                 allItemButtons.AddRange(panelItemButtons);
                 _typeToPanel.Add(panel.ItemType, panel);
                 panel.Hide();
@@ -83,11 +83,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
             CurrentlyShownPanel = _typeToPanel[itemType];
-            IItemsPanel itemsPanel = _typeToPanel[itemType];
+            ItemsPanel itemsPanel = _typeToPanel[itemType];
             itemsPanel.GetFirstItemButton().ShowDetails();
         }
 
-        public IItemsPanel GetPanel(ItemType itemType)
+        public ItemsPanel GetPanel(ItemType itemType)
         {
             Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
             return _typeToPanel[itemType];

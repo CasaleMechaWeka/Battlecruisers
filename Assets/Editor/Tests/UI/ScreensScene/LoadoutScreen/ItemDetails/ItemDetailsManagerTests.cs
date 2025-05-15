@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.LoadoutScreen.ItemDetails
 {
     public class ItemDetailsManagerTest
     {
-        private IItemDetailsManager _itemDetailsManager;
+        private ItemDetailsManager _itemDetailsManager;
         private ItemDetailsDisplayer<IBuilding> _buildingDetails;
         private ItemDetailsDisplayer<IUnit> _unitDetails;
         private ItemDetailsDisplayer<ICruiser> _cruiserDetails;

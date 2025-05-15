@@ -24,11 +24,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         private int previousCategory;
 
         public void Initialise(
-            IItemPanelsController itemPanels,
+            ItemPanelsController itemPanels,
             IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
             SingleSoundPlayer soundPlayer,
             GameModel gameModel,
-            IList<IItemButton> itemButtons,
+            IList<ItemButton> itemButtons,
             ComparingItemFamilyTracker itemFamilyTracker)
         {
             Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, soundPlayer, gameModel, itemButtons);
