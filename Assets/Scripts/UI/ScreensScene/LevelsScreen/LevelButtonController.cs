@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             IScreensSceneGod screensSceneGod,
             Sprite[] difficultyIndicators,
             int numOfLevelsUnlocked,
-            ITrashTalkData trashTalkData,
+            TrashTalkData trashTalkData,
             IDismissableEmitter parent)
         {
             base.Initialise(soundPlayer, parent: parent);

@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             IMusicPlayer musicPlayer,
             SingleSoundPlayer soundPlayer,
             ILootManager lootManager,
-            ITrashTalkData trashTalkData,
+            TrashTalkData trashTalkData,
             PostBattleScreenBehaviour desiredBehaviour)
             : base(postBattleScreen, musicPlayer)
         {

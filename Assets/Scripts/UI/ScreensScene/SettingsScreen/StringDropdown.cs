@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class StringDropdown : MonoBehaviour, IStringDropdown
+    public class StringDropdown : MonoBehaviour
     {
         private Dropdown _dropdown;
 

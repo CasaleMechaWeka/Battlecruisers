@@ -12,13 +12,13 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
     {
         private IScreensSceneGod _screensSceneGod;
         private SettingsManager _settingsManager;
-        private IDifficultyDropdown _difficultyDropdown;
+        private DifficultyDropdown _difficultyDropdown;
         private LanguageDropdown _languageDropdown;
         private ResolutionDropdown _resolutionDropdown;
         private IBroadcastingProperty<int> _zoomSpeedLevel, _scrollSpeedLevel;
         private IBroadcastingProperty<float> _musicVolume, _effectVolume, _masterVolume, _alertVolume, _interfaceVolume, _ambientVolume;
         private IBroadcastingProperty<bool> _showInGameHints, _showToolTips, _altDroneSounds, _showAds, _fullScreen, _VSync, _turboMode, _richMode, _hecklesAllowed, _cloudSaveEnabled;
-        private IHotkeysPanel _hotkeysPanel;
+        private HotkeysPanel _hotkeysPanel;
 
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
@@ -28,7 +28,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IDismissableEmitter parent,
             IScreensSceneGod screensSceneGod,
             SettingsManager settingsManager,
-            IDifficultyDropdown difficultyDropdown,
+            DifficultyDropdown difficultyDropdown,
             LanguageDropdown languageDropdown,
             ResolutionDropdown resolutionDropdown,
             IBroadcastingProperty<int> zoomSpeedLevel,
@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             IBroadcastingProperty<bool> cloudSaveEnabled,
             IBroadcastingProperty<bool> fullScreen,
             IBroadcastingProperty<bool> VSync,
-            IHotkeysPanel hotkeysPanel)
+            HotkeysPanel hotkeysPanel)
         {
             base.Initialise(soundPlayer, parent: parent);
 

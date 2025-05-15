@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
-    public class DifficultyDropdown : MonoBehaviour, IDifficultyDropdown
+    public class DifficultyDropdown : MonoBehaviour
     {
         private Dropdown _difficultyDropdown;
         private IList<Difficulty> _difficulties;

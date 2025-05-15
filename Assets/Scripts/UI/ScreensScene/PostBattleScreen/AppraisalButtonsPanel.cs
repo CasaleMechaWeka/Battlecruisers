@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             for (int i = 0; i < buttons.Length; ++i)
             {
                 int levelNum = i + 1;
-                ITrashTalkData trashData = await trashTalkList.GetTrashTalkAsync(levelNum);
+                TrashTalkData trashData = await trashTalkList.GetTrashTalkAsync(levelNum);
                 buttons[i]
                     .Initialise(
                         appraisalSection,

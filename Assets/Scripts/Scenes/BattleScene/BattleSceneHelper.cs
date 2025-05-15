@@ -71,7 +71,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual async Task<string> GetEnemyNameAsync(int levelNum)
         {
-            ITrashTalkData levelTrashTalkData;
+            TrashTalkData levelTrashTalkData;
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {ApplicationModel.Mode}");

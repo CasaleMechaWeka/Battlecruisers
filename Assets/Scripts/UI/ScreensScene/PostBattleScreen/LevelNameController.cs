@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         public Text levelName;
 
-        public void Initialise(int levelNum, ITrashTalkData levelTrashTalkData)
+        public void Initialise(int levelNum, TrashTalkData levelTrashTalkData)
         {
             Assert.IsNotNull(levelName);
             Assert.IsNotNull(levelTrashTalkData);

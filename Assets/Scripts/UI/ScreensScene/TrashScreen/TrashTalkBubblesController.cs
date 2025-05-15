@@ -9,7 +9,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         public BubbleController leftTop, rightBottom;
         public BubbleController rightTop, leftBottom;
 
-        public void Initialise(ITrashTalkData trashTalkData)
+        public void Initialise(TrashTalkData trashTalkData)
         {
             Helper.AssertIsNotNull(leftTop, rightBottom, rightTop, leftBottom);
             Helper.AssertIsNotNull(trashTalkData);

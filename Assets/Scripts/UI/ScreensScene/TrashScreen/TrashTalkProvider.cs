@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashTalkProvider : ITrashTalkProvider
     {
-        public async Task<ITrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false)
+        public async Task<TrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false)
         {
             if (isSideQuest)
             {

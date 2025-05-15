@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
     public class MatchmakingScreenController : ScreenController
     {
         private GameModel _gameModel;
-        private ITrashTalkData _trashTalkData;
+        private TrashTalkData _trashTalkData;
         public Animator animator;
         public TrashTalkBubblesController trashTalkBubbles;
         public PvPMessageBox messageBox;
@@ -395,7 +395,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             LoadingBar.value += step;
         }
-        public void SetTraskTalkData(ITrashTalkData trashTalkData)
+        public void SetTraskTalkData(TrashTalkData trashTalkData)
         {
             _trashTalkData = trashTalkData;
         }

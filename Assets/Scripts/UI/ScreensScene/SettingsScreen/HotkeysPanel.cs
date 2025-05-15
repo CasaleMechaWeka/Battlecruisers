@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         }
     }
 
-    public class HotkeysPanel : Panel, IHotkeysPanel
+    public class HotkeysPanel : Panel
     {
         private IHotkeysModel _hotkeysModel;
 
@@ -128,7 +128,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         private void SetupGameSpeedRows(IList<HotkeyRow> rows)
         {
             //rows.Add(pauseSpeedRow);
-           // pauseSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.PauseSpeed, this);
+            // pauseSpeedRow.Initialise(InputBC.Instance, _hotkeysModel.PauseSpeed, this);
 
             rows.Add(slowMotionRow);
             slowMotionRow.Initialise(InputBC.Instance, _hotkeysModel.SlowMotion, this);
@@ -396,7 +396,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             // Building categories
             _hotkeysModel.Factories = factoriesRow.Value.Key.Value;
-            _hotkeysModel.Defensives= defensivesRow.Value.Key.Value;
+            _hotkeysModel.Defensives = defensivesRow.Value.Key.Value;
             _hotkeysModel.Offensives = offensivesRow.Value.Key.Value;
             _hotkeysModel.Tacticals = tacticalsRow.Value.Key.Value;
             _hotkeysModel.Ultras = ultrasRow.Value.Key.Value;
@@ -410,7 +410,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             // Defensives
             _hotkeysModel.ShipTurret = Slot1.Value.Key.Value;
-            _hotkeysModel.AirTurret= Slot2.Value.Key.Value;
+            _hotkeysModel.AirTurret = Slot2.Value.Key.Value;
             _hotkeysModel.Mortar = Slot3.Value.Key.Value;
             _hotkeysModel.SamSite = Slot4.Value.Key.Value;
             _hotkeysModel.TeslaCoil = Slot5.Value.Key.Value;
@@ -423,7 +423,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.GatlingMortar = Slot5.Value.Key.Value;
             // Tacticals
             _hotkeysModel.Shield = Slot1.Value.Key.Value;
-            _hotkeysModel.Booster= Slot2.Value.Key.Value;
+            _hotkeysModel.Booster = Slot2.Value.Key.Value;
             _hotkeysModel.StealthGenerator = Slot3.Value.Key.Value;
             _hotkeysModel.SpySatellite = Slot4.Value.Key.Value;
             _hotkeysModel.ControlTower = Slot5.Value.Key.Value;
@@ -445,7 +445,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             // Ships
             _hotkeysModel.AttackBoat = Slot1.Value.Key.Value;
             _hotkeysModel.Frigate = Slot2.Value.Key.Value;
-            _hotkeysModel.Destroyer= Slot3.Value.Key.Value;
+            _hotkeysModel.Destroyer = Slot3.Value.Key.Value;
             _hotkeysModel.Archon = Slot4.Value.Key.Value;
             _hotkeysModel.AttackRIB = Slot5.Value.Key.Value;
 
@@ -473,7 +473,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             playerCruiserRow.ResetToDefaults(hotkeysModel.PlayerCruiser);
             overviewRow.ResetToDefaults(hotkeysModel.Overview);
             enemyCruiserRow.ResetToDefaults(hotkeysModel.EnemyCruiser);
-            
+
             // Game speed
             //pauseSpeedRow.ResetToDefaults(hotkeysModel.PauseSpeed);
             slowMotionRow.ResetToDefaults(hotkeysModel.SlowMotion);

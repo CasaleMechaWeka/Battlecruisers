@@ -588,7 +588,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
 
             trashDataList.Initialise();
-            ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
+            TrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
             MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData);
 
             // cheat code for local test

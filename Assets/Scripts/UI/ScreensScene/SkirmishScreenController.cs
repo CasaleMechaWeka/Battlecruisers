@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Assertions;
 
-namespace BattleCruisers.UI.ScreensScene.SkirmishScreen
+namespace BattleCruisers.UI.ScreensScene
 {
     public class DropdownResult<TItem>
     {

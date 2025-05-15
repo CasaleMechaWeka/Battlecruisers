@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
     public class TrashTalkDataList : MonoBehaviour, ITrashTalkProvider
     {
-        private ITrashTalkData[] _trashDataList;
+        private TrashTalkData[] _trashDataList;
 
         public void Initialise()
         {
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             }
         }
 
-        public Task<ITrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false)
+        public Task<TrashTalkData> GetTrashTalkAsync(int levelNum, bool isSideQuest = false)
         {
             if (isSideQuest)
             {

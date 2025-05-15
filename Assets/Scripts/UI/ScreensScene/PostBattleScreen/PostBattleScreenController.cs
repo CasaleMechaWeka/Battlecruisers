@@ -180,7 +180,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
                 // User completed a level
                 Assert.IsNotNull(BattleResult);
-                ITrashTalkData trashTalkData;
+                TrashTalkData trashTalkData;
 
                 if (ApplicationModel.Mode == GameMode.SideQuest)
                     trashTalkData = await sideQuestTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum, true);

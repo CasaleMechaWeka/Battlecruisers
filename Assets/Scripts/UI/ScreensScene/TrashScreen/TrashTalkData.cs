@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
-    public class TrashTalkData : Prefab, ITrashTalkData
+    public class TrashTalkData : Prefab
     {
         public Sprite enemySprite;
         public Sprite EnemySprite => enemySprite;

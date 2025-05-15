@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets;
-using BattleCruisers.Scenes;
+﻿using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -50,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             {
                 LevelButtonController button = levelButtons[i];
                 LevelInfo level = allLevels[firstLevelIndex + i];
-                ITrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(level.Num);
+                TrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(level.Num);
 
                 button.Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen);
             }

@@ -107,7 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
                 _cameraOfCaptains.orthographicSize = 8;
             }
 
-            ITrashTalkData trashTalkData;
+            TrashTalkData trashTalkData;
             ICruiser enemyCruiserPrefab;
             string skyPath;
             if (ApplicationModel.Mode == GameMode.SideQuest)
@@ -145,7 +145,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             PlayTauntAnimationOnCaptains();
         }
 
-        private void SetupEnemyCharacter(ITrashTalkData trashTalkData)
+        private void SetupEnemyCharacter(TrashTalkData trashTalkData)
         {
             //enemyCharacter.sprite = trashTalkData.EnemySprite;
             enemyPrefab = trashTalkData.EnemyPrefab;
