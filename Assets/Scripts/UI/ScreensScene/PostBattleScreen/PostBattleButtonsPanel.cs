@@ -14,8 +14,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public void Initialise(
             PostBattleScreenController postBattleScreen,
-            ICommand nextCommand,
-            ICommand clockedGameCommand,
+            Command nextCommand,
+            Command clockedGameCommand,
             SingleSoundPlayer soundPlayer,
             bool wasVictory)
         {

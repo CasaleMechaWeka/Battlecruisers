@@ -4,8 +4,8 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Commands
 {
-    public class Command :  CommandBase, ICommand
-	{
+    public class Command : CommandBase
+    {
         private readonly Action _action;
 
         public Command(Action action, Func<bool> canExecute)
@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Commands
             _action = action;
         }
 
-		public void Execute()
+        public void Execute()
         {
             Assert.IsTrue(CanExecute);
             _action.Invoke();

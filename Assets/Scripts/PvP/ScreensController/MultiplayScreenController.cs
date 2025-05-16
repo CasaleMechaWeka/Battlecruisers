@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public CanvasGroupButton homeButton, arenaButton, loadoutButton, shopButton, leaderboardButton;
         public CanvasGroupButton nextArenaButton, previousArenaButton;
         public CanvasGroupButton battleButton;
-        private ICommand _nextBattleCommand, _previousBattleCommand;
+        private Command _nextBattleCommand, _previousBattleCommand;
         Dictionary<Map, Sprite> _maps = new Dictionary<Map, Sprite>();
         IPvPArenaBackgroundSpriteProvider arenaSpritesProvider;
 

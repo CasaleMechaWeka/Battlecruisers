@@ -3,12 +3,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Commands
 {
-    public class ParameterisedCommand<T> : CommandBase, IParameterisedCommand<T>
+	public class ParameterisedCommand<T> : CommandBase
 	{
 		private readonly Action<T> _action;
 
 		public ParameterisedCommand(Action<T> action, Func<bool> canExecute)
-            : base(canExecute)
+			: base(canExecute)
 		{
 			Assert.IsNotNull(action);
 			_action = action;
@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.Commands
 		public void Execute(T parameter)
 		{
 			Assert.IsTrue(CanExecute);
-            _action.Invoke(parameter);
+			_action.Invoke(parameter);
 		}
 	}
 }

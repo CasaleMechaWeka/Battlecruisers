@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Commands
 {
-    public abstract class CommandBase : ICommandBase
+	public abstract class CommandBase
 	{
 		private readonly Func<bool> _canExecute;
 

@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelsScreenController : ScreenController
     {
         private IList<LevelsSetController> _levelSets;
-        private ICommand _nextSetCommand, _previousSetCommand;
+        private Command _nextSetCommand, _previousSetCommand;
         private int _numOfLevelsUnlocked;
 
         public ButtonController nextSetButton, previousSetButton;

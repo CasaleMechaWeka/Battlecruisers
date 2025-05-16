@@ -228,8 +228,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 await SetupAppraisalButtonsAsync(soundPlayer, levelTrashTalkList);
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
-                ICommand nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
-                ICommand clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
+                Command nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
+                Command clockedGameCommand = new Command(ClockedGameCommandExecute, CanClockedGameCommandExecute);
                 postBattleButtonsPanel.Initialise(this, nextCommand, clockedGameCommand, soundPlayer, BattleResult.WasVictory);
                 decreaseDifficultyController.Initialise(this, soundPlayer);
             }

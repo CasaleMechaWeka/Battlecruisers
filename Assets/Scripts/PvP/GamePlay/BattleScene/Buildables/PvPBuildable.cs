@@ -144,7 +144,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private bool IsDroneConsumerFocusable => DroneConsumer != null;
         protected bool IsDroneConsumerFocusable_PvPClient;
-        public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
+        public Command ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
 
 

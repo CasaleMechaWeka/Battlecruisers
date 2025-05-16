@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     {
         private ITime _time;
         private Text _gameSpeedText;
-        private ICommand _increaseSpeedCommand, _decreaseSpeedCommand;
+        private Command _increaseSpeedCommand, _decreaseSpeedCommand;
         private ButtonController _increaseSpeedButton, _decreaseSpeedButton;
 
         public float maxSpeed = DEFAULT_MAX_GAME_SPEED;

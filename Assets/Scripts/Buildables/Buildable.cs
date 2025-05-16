@@ -130,7 +130,7 @@ namespace BattleCruisers.Buildables
         }
 
         private bool IsDroneConsumerFocusable => DroneConsumer != null;
-        public ICommand ToggleDroneConsumerFocusCommand { get; private set; }
+        public Command ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
 
         protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders

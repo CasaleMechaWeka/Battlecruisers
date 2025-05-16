@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
         private IBuilding _clickedBuilding;
         private IDroneConsumer _repairDroneConsumer;
         private RepairCommand _repairCommand;
-        private ICommand _toggleDroneFocusCommand;
+        private Command _toggleDroneFocusCommand;
 
         [SetUp]
         public void TestSetup()
@@ -35,7 +35,7 @@ namespace BattleCruisers.Tests.UI.Common.Click
             _parentCruiser.RepairManager.Returns(_repairManager);
 
             _repairCommand = Substitute.For<RepairCommand>();
-            _toggleDroneFocusCommand = Substitute.For<ICommand>();
+            _toggleDroneFocusCommand = Substitute.For<Command>();
 
             _clickedBuilding = Substitute.For<IBuilding>();
             _clickedBuilding.ParentCruiser.Returns(_parentCruiser);

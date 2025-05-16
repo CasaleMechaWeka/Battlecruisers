@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.Common
 {
     public class ButtonController : ElementWithClickSound
     {
-        private ICommand _command;
+        private Command _command;
 
         protected override bool ToggleVisibility => true;
 
@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.Common
         private CanvasGroup _canvasGroup;
         protected override CanvasGroup CanvasGroup => _canvasGroup;
 
-        public void Initialise(SingleSoundPlayer soundPlayer, ICommand command)
+        public void Initialise(SingleSoundPlayer soundPlayer, Command command)
         {
             base.Initialise(soundPlayer);
 

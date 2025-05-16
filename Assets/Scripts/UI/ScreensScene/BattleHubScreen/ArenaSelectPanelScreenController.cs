@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public RectTransform[] arenas;
         private int indexCurrentArena = 0;
-        private ICommand _nextSetCommand, _previousSetCommand;
+        private Command _nextSetCommand, _previousSetCommand;
         public int IndexCurrentArena
         {
             get

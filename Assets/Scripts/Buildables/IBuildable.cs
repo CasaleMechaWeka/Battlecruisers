@@ -39,7 +39,7 @@ namespace BattleCruisers.Buildables
         int NumOfDronesRequired { get; }
         float BuildTimeInS { get; }
         IDroneConsumer DroneConsumer { get; }
-        ICommand ToggleDroneConsumerFocusCommand { get; }
+        Command ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
         IBoostable BuildProgressBoostable { get; }
