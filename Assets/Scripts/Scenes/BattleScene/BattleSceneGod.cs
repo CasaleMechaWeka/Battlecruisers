@@ -336,7 +336,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedSideQuestID);
                 backgroundStats = await helper.GetBackgroundStatsAsync(ApplicationModel.SelectedSideQuestID);
                 components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
-                cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentLevel.SkyMaterialName);
+
+                cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentSideQuest.SkyMaterial);
             }
             components.HotkeyInitialiser.Initialise(
                 DataProvider.GameModel.Hotkeys,
