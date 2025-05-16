@@ -9,7 +9,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.UI.Music
 {
-    public class MusicPlayer : IMusicPlayer
+    public class MusicPlayer
     {
         private readonly SingleSoundPlayer _soundPlayer;
         private SoundKey _currentlyPlaying;

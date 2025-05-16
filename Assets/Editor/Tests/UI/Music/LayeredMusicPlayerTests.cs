@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.Music
 {
     public class LayeredMusicPlayerTest
     {
-        private ILayeredMusicPlayer _musicPlayer;
+        private LayeredMusicPlayer _musicPlayer;
         private AudioVolumeFade _audioVolumeFade;
         private IAudioSource _primarySource, _secondarySource;
         private SettingsManager _settingsManager;

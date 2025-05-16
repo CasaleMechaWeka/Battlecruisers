@@ -50,7 +50,7 @@ namespace BattleCruisers.Scenes
         [Header("For testing")]
         public bool testCutScene = false;
 
-        public static IMusicPlayer MusicPlayer { get; private set; }
+        public static MusicPlayer MusicPlayer { get; private set; }
 
         public SingleSoundPlayer soundPlayer;
         public static string LoadingScreenHint { get; private set; }
@@ -622,7 +622,7 @@ namespace BattleCruisers.Scenes
             Debug.Log("===> You're Expired from UGS!!!");
         }
 
-        private IMusicPlayer CreateMusicPlayer()
+        private MusicPlayer CreateMusicPlayer()
         {
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);

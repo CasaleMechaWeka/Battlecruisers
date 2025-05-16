@@ -432,7 +432,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
             // Audio
-            ILayeredMusicPlayer layeredMusicPlayer
+            LayeredMusicPlayer layeredMusicPlayer
                 = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     currentLevel.MusicKeys,
                     DataProvider.SettingsManager);

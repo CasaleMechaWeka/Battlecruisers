@@ -8,11 +8,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
     public abstract class PostBattleState
     {
         protected readonly PostBattleScreenController _postBattleScreen;
-        protected readonly IMusicPlayer _musicPlayer;
+        protected readonly MusicPlayer _musicPlayer;
 
         protected PostBattleState(
             PostBattleScreenController postBattleScreen,
-            IMusicPlayer musicPlayer)
+            MusicPlayer musicPlayer)
         {
             Helper.AssertIsNotNull(postBattleScreen, musicPlayer);
 

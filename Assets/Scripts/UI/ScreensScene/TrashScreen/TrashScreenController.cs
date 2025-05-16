@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
     public class TrashScreenController : ScreenController
     {
         private ITrashTalkProvider _levelTrashDataList, _sideQuestTrashDataList;
-        private IMusicPlayer _musicPlayer;
+        private MusicPlayer _musicPlayer;
 
         public TrashTalkBubblesController trashTalkBubbles;
         public BackgroundCruisersController cruisers;
@@ -42,7 +42,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             SingleSoundPlayer soundPlayer,
             ITrashTalkProvider levelTrashDataList,
             ITrashTalkProvider sideQuestTrashDataList,
-            IMusicPlayer musicPlayer)
+            MusicPlayer musicPlayer)
         {
             base.Initialise(screensSceneGod);
 

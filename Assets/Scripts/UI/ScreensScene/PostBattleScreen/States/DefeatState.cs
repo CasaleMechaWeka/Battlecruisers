@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public DefeatState(
             PostBattleScreenController postBattleScreen,
-            IMusicPlayer musicPlayer)
+            MusicPlayer musicPlayer)
             : base(postBattleScreen, musicPlayer)
         {
             Helper.AssertIsNotNull(postBattleScreen, musicPlayer);

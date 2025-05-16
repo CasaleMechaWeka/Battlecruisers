@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public TutorialCompletedState(
             PostBattleScreenController postBattleScreen,
-            IMusicPlayer musicPlayer,
+            MusicPlayer musicPlayer,
             SingleSoundPlayer soundPlayer)
             : base(postBattleScreen, musicPlayer)
         {

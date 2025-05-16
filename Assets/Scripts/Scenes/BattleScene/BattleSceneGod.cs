@@ -285,7 +285,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Audio
             Logging.Log(Tags.BATTLE_SCENE, "Audio setup");
-            ILayeredMusicPlayer layeredMusicPlayer;
+            LayeredMusicPlayer layeredMusicPlayer;
             if (ApplicationModel.Mode == GameMode.SideQuest)
                 layeredMusicPlayer = await components.MusicPlayerInitialiser.CreatePlayerAsync(
                     currentSideQuest.MusicBackgroundKey,

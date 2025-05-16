@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
-    public class LayeredMusicPlayer : ILayeredMusicPlayer
+    public class LayeredMusicPlayer
     {
         private readonly AudioVolumeFade _audioVolumeFade;
         private readonly IAudioSource _primarySource, _secondarySource;

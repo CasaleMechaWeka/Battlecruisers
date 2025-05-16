@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public async Task InitialiseAsync(
             IScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
-            IMusicPlayer musicPlayer,
+            MusicPlayer musicPlayer,
             Sprite[] difficultyIndicators,
             ITrashTalkProvider levelTrashTalkList,
             ITrashTalkProvider sideQuestTrashTalkList)

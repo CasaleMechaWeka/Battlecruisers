@@ -7,7 +7,7 @@ namespace BattleCruisers.Scenes.Test.Sounds
 {
     public class LayeredMusicTestGod : MonoBehaviour
     {
-        private ILayeredMusicPlayer _musicPlayer;
+        private LayeredMusicPlayer _musicPlayer;
 
         async void Start()
         {

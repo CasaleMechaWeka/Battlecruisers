@@ -4,7 +4,6 @@ using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
-using BattleCruisers.Utils.Fetchers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
     {
         private Text _title;
         private LayeredMusicPlayerInitialiser _musicInitialiser;
-        private ILayeredMusicPlayer _musicPlayer;
+        private LayeredMusicPlayer _musicPlayer;
         private ICircularList<SoundKeyPair> _songs;
 
         [Tooltip("0-5")]
@@ -48,7 +47,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             _musicPlayer = await CreateMusicPlayer();
         }
 
-        private async Task<ILayeredMusicPlayer> CreateMusicPlayer()
+        private async Task<LayeredMusicPlayer> CreateMusicPlayer()
         {
             _title.text = $"Song: {_songs.Current()}  ({_songs.Index}/{_songs.Items.Count})";
 

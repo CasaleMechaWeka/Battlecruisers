@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Music
 {
-    public class DangerMonitorSummariser : IDangerMonitorSummariser
+    public class DangerMonitorSummariser
     {
         private readonly IDangerMonitor _dangerMonitor;
         private int _activeDangerEventCount;

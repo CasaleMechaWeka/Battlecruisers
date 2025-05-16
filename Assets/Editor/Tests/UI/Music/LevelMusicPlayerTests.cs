@@ -10,15 +10,15 @@ namespace BattleCruisers.Tests.UI.Music
 #pragma warning disable CS0414  // Variable is assigned but never used
         private LevelMusicPlayer _levelMusicPlayer;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private ILayeredMusicPlayer _musicPlayer;
-        private IDangerMonitorSummariser _dangerMonitorSummariser;
+        private LayeredMusicPlayer _musicPlayer;
+        private DangerMonitorSummariser _dangerMonitorSummariser;
         private BattleCompletionHandler _battleCompletionHandler;
 
         [SetUp]
         public void TestSetup()
         {
-            _musicPlayer = Substitute.For<ILayeredMusicPlayer>();
-            _dangerMonitorSummariser = Substitute.For<IDangerMonitorSummariser>();
+            _musicPlayer = Substitute.For<LayeredMusicPlayer>();
+            _dangerMonitorSummariser = Substitute.For<DangerMonitorSummariser>();
             _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
 
             _levelMusicPlayer = new LevelMusicPlayer(_musicPlayer, _dangerMonitorSummariser, _battleCompletionHandler);

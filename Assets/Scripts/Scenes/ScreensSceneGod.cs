@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes
     {
         private ScreenController _currentScreen;
         private GameModel _gameModel;
-        private IMusicPlayer _musicPlayer;
+        private MusicPlayer _musicPlayer;
         private SingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
 
@@ -281,7 +281,7 @@ namespace BattleCruisers.Scenes
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
             {
-                _musicPlayer = Substitute.For<IMusicPlayer>();
+                _musicPlayer = Substitute.For<MusicPlayer>();
             }
 
             messageBox.gameObject.SetActive(true);

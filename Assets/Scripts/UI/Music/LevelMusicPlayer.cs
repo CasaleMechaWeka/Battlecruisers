@@ -6,12 +6,12 @@ namespace BattleCruisers.UI.Music
 {
     public class LevelMusicPlayer
     {
-        private readonly ILayeredMusicPlayer _musicPlayer;
-        private readonly IDangerMonitorSummariser _dangerMonitorSummariser;
+        private readonly LayeredMusicPlayer _musicPlayer;
+        private readonly DangerMonitorSummariser _dangerMonitorSummariser;
 
         public LevelMusicPlayer(
-            ILayeredMusicPlayer musicPlayer,
-            IDangerMonitorSummariser dangerMonitorSummariser,
+            LayeredMusicPlayer musicPlayer,
+            DangerMonitorSummariser dangerMonitorSummariser,
             BattleCompletionHandler battleCompletionHandler)
         {
             Helper.AssertIsNotNull(musicPlayer, dangerMonitorSummariser, battleCompletionHandler);

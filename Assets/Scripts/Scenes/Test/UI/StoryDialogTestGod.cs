@@ -29,7 +29,7 @@ namespace BattleCruisers.Scenes.Test.UI
                     Substitute.For<SingleSoundPlayer>(),
                     trashDataList,
                     trashDataList,
-                    Substitute.For<IMusicPlayer>());
+                    Substitute.For<MusicPlayer>());
 
             levelButtonsPanel
                 .Initialise(

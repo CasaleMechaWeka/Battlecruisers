@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
         public PostSkirmishState(
             PostBattleScreenController postBattleScreen,
-            IMusicPlayer musicPlayer,
+            MusicPlayer musicPlayer,
             SingleSoundPlayer soundPlayer)
             : base(postBattleScreen, musicPlayer)
         {

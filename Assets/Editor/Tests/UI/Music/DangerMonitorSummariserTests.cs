@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.UI.Music
 {
     public class DangerMonitorSummariserTests
     {
-        private IDangerMonitorSummariser _summariser;
+        private DangerMonitorSummariser _summariser;
         private IDangerMonitor _dangerMonitor;
 
         [SetUp]

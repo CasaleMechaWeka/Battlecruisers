@@ -26,7 +26,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public AudioInitialiser(
             IBattleSceneHelper helper,
-            ILayeredMusicPlayer musicPlayer,
+            LayeredMusicPlayer musicPlayer,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IDeferrer deferrer,
@@ -45,7 +45,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         private LevelMusicPlayer CreateLevelMusicPlayer(
-            ILayeredMusicPlayer musicPlayer,
+            LayeredMusicPlayer musicPlayer,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IDeferrer deferrer,
