@@ -19,7 +19,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
             _itemKey = itemKey;
         }
 
-        public void ShowItemDetails(IItemDetailsGroup itemDetailsControllers)
+        public void ShowItemDetails(ItemDetailsGroupController itemDetailsControllers)
         {
             TItem item = GetItem();
             IComparableItemDetails<TItem> itemDetails = GetItemDetails(itemDetailsControllers);
@@ -29,7 +29,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
 
         protected abstract TItem GetItem();
 
-        protected abstract IComparableItemDetails<TItem> GetItemDetails(IItemDetailsGroup itemDetailsControllers);
+        protected abstract IComparableItemDetails<TItem> GetItemDetails(ItemDetailsGroupController itemDetailsControllers);
 
         public abstract void UnlockItem(GameModel gameModel);
 

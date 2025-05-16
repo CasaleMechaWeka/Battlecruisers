@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
 {
     public class ItemDetailsManagerTests
     {
-        private IItemDetailsManager _detailsManager;
+        private ItemDetailsManager _detailsManager;
         private InformatorPanelController _informatorPanel;
         private IComparableItemDetails<IBuilding> _buildingDetails;
         private IComparableItemDetails<IUnit> _unitDetails;

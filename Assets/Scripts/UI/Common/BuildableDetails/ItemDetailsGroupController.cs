@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class ItemDetailsGroupController : MonoBehaviour, IItemDetailsGroup
+    public class ItemDetailsGroupController : MonoBehaviour
     {
         public BuildingDetailsController buildingDetails;
         public IComparableItemDetails<IBuilding> BuildingDetails => buildingDetails;

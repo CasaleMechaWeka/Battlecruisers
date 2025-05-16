@@ -130,7 +130,7 @@ namespace BattleCruisers.Scenes.BattleScene
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             IBuildMenu buildMenu,
-            IItemDetailsManager detailsManager,
+            ItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer)
         {

@@ -12,7 +12,7 @@ using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class ItemDetailsManager : IItemDetailsManager
+    public class ItemDetailsManager
     {
         private readonly InformatorPanelController _informatorPanel;
         private readonly IComparableItemDetails<IBuilding> _buildingDetails;

@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem>, IHidable
+    public abstract class ItemDetails<TItem> : MonoBehaviour, IComparableItemDetails<TItem>
         where TItem : class, ITarget, IComparableItem
     {
         public Text itemName, itemDescription;

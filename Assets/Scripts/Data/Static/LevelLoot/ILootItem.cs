@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Data.Models;
 using BattleCruisers.UI.Common.BuildableDetails;
-using BattleCruisers.Utils.Fetchers;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
@@ -13,7 +12,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
         /// </summary>
         void UnlockItem(GameModel gameModel);
 
-        void ShowItemDetails(IItemDetailsGroup itemDetailsControllers);
+        void ShowItemDetails(ItemDetailsGroupController itemDetailsControllers);
         bool IsUnlocked(GameModel gameModel);
     }
 }

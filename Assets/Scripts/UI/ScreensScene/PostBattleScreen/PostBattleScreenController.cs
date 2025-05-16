@@ -240,14 +240,14 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         private LootManager CreateLootManager()
         {
-            IItemDetailsGroup middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
-            IItemDetailsGroup leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
-            IItemDetailsGroup rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
+            ItemDetailsGroupController middleDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/MiddleItemDetailsGroup");
+            ItemDetailsGroupController leftDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/LeftItemDetailsGroup");
+            ItemDetailsGroupController rightDetailsGroup = InitialiseGroup("UnlockedItemSection/ItemDetails/RightItemDetailsGroup");
 
             return new LootManager(middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
         }
 
-        private IItemDetailsGroup InitialiseGroup(string componentPath)
+        private ItemDetailsGroupController InitialiseGroup(string componentPath)
         {
             ItemDetailsGroupController detailsGroup = transform.FindNamedComponent<ItemDetailsGroupController>(componentPath);
             detailsGroup.Initialise();

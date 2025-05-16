@@ -13,12 +13,12 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 {
     public class LootManager
     {
-        private readonly IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
+        private readonly ItemDetailsGroupController _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         public LootManager(
-            IItemDetailsGroup middleDetailsGroup,
-            IItemDetailsGroup leftDetailsGroup,
-            IItemDetailsGroup rightDetailsGroup)
+            ItemDetailsGroupController middleDetailsGroup,
+            ItemDetailsGroupController leftDetailsGroup,
+            ItemDetailsGroupController rightDetailsGroup)
         {
             Helper.AssertIsNotNull(middleDetailsGroup, leftDetailsGroup, rightDetailsGroup);
 

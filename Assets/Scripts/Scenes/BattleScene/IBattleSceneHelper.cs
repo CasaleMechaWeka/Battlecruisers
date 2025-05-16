@@ -31,7 +31,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract void InitialiseUIManager(ICruiser PlayerCruiser,
                                                  ICruiser AICruiser,
                                                  IBuildMenu BuildMenu,
-                                                 IItemDetailsManager DetailsManager,
+                                                 ItemDetailsManager DetailsManager,
                                                  IPrioritisedSoundPlayer SoundPlayer,
                                                  SingleSoundPlayer UISoundPlayer);
 

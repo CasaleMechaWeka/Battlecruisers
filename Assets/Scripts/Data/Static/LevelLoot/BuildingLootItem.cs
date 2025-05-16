@@ -17,7 +17,7 @@ namespace BattleCruisers.Data.Static.LevelLoot
             return PrefabFactory.GetBuildingWrapperPrefab(_itemKey).Buildable;
         }
 
-        protected override IComparableItemDetails<IBuilding> GetItemDetails(IItemDetailsGroup itemDetailsControllers)
+        protected override IComparableItemDetails<IBuilding> GetItemDetails(ItemDetailsGroupController itemDetailsControllers)
         {
             return itemDetailsControllers.BuildingDetails;
         }

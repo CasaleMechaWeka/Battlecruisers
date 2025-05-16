@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
     {
         private LootManager _lootManager;
 
-        private IItemDetailsGroup _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
+        private ItemDetailsGroupController _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
         private ILoot _unlockedLoot;
         private IList<ILootItem> _lootItems;
@@ -24,9 +24,9 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
         [SetUp]
         public void SetuUp()
         {
-            _middleDetailsGroup = Substitute.For<IItemDetailsGroup>();
-            _leftDetailsGroup = Substitute.For<IItemDetailsGroup>();
-            _rightDetailsGroup = Substitute.For<IItemDetailsGroup>();
+            _middleDetailsGroup = Substitute.For<ItemDetailsGroupController>();
+            _leftDetailsGroup = Substitute.For<ItemDetailsGroupController>();
+            _rightDetailsGroup = Substitute.For<ItemDetailsGroupController>();
 
             _lootManager = new LootManager(_middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup);
 
