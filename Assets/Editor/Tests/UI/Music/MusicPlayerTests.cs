@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.UI.Music
 {
     public class MusicPlayerTests
     {
-        private IMusicPlayer _musicPlayer;
+        private MusicPlayer _musicPlayer;
         private SingleSoundPlayer _soundPlayer;
 
         [SetUp]
