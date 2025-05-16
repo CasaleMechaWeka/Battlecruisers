@@ -27,7 +27,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
 
             helpLabels.Initialise();
 
-            ISlidingPanel extendedInformatorPanel = rightPanelComponents.InformatorPanel.ExtendedPanel;
+            SlidingPanel extendedInformatorPanel = rightPanelComponents.InformatorPanel.ExtendedPanel;
 
             IHelpStateFinder helpStateFinder
                 = new HelpStateFinder(

@@ -20,11 +20,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         private readonly AudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
-        public ISlidingPanel SelectorPanel { get; }
+        public SlidingPanel SelectorPanel { get; }
         public IReadOnlyCollection<IBuildableButton> BuildableButtons { get; }
 
         public BuildMenu(
-            ISlidingPanel selectorPanel,
+            SlidingPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IBuildableMenus<BuildingCategory> buildingMenus,
             IBuildableMenus<UnitCategory> unitMenus,

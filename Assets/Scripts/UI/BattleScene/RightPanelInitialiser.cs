@@ -50,7 +50,7 @@ namespace BattleCruisers.UI.BattleScene
                 soundPlayer,
                 navigationPermitterManager);
 
-            IInformatorPanel informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            InformatorPanelController informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
             IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
             modalMenu.Initialise(soundPlayer, ApplicationModel.IsTutorial, mainMenuManager, DataProvider.SettingsManager);
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene
                     helpButton);
         }
 
-        private IInformatorPanel SetupInformator(
+        private InformatorPanelController SetupInformator(
             UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,

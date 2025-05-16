@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public interface IBuildMenu : IBuildMenuButtons
     {
-        ISlidingPanel SelectorPanel { get; }
+        SlidingPanel SelectorPanel { get; }
 
         /// <summary>
         /// Shows the building group menu for the given buildingCategory.

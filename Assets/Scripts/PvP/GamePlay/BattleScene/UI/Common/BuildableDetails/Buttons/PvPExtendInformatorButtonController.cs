@@ -10,14 +10,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
     // FELIX  Hide for tutorial?
     public class PvPExtendInformatorButtonController : PvPCanvasGroupButton, IButton
     {
-        private ISlidingPanel _informatorPanel;
+        private SlidingPanel _informatorPanel;
 
         public Image activeFeedback;
         public Image defaultImage;
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            ISlidingPanel informatorPanel)
+            SlidingPanel informatorPanel)
         {
             base.Initialise(soundPlayer);
 

@@ -5,11 +5,11 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
     public abstract class HelpState : IHelpState
     {
-        private readonly IPanel _helpLabelCanvas;
-        protected readonly ISlidingPanel _informatorExtendedPanel;
+        private readonly Panel _helpLabelCanvas;
+        protected readonly SlidingPanel _informatorExtendedPanel;
         protected readonly IHelpLabels _helpLabels;
 
-        protected HelpState(IPanel helpLabelCanvas, ISlidingPanel informatorExtendedPanel, IHelpLabels helpLabels)
+        protected HelpState(Panel helpLabelCanvas, SlidingPanel informatorExtendedPanel, IHelpLabels helpLabels)
         {
             Helper.AssertIsNotNull(helpLabelCanvas, informatorExtendedPanel, helpLabels);
 

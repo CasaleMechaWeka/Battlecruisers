@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 {
     public class ItemDetailsManager : IItemDetailsManager
     {
-        private readonly IInformatorPanel _informatorPanel;
+        private readonly InformatorPanelController _informatorPanel;
         private readonly IComparableItemDetails<IBuilding> _buildingDetails;
         private readonly IComparableItemDetails<IUnit> _unitDetails;
         private readonly IComparableItemDetails<ICruiser> _cruiserDetails;
@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public ItemDetailsManager(IInformatorPanel informator)
+        public ItemDetailsManager(InformatorPanelController informator)
         {
             Helper.AssertIsNotNull(informator);
 

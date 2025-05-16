@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 {
     public class PvPItemDetailsManager : IPvPItemDetailsManager
     {
-        private readonly IPvPInformatorPanel _informatorPanel;
+        private readonly PvPInformatorPanelController _informatorPanel;
         private readonly IPvPComparableItemDetails<IPvPBuilding> _buildingDetails;
         private readonly IPvPComparableItemDetails<IPvPUnit> _unitDetails;
         private readonly IPvPComparableItemDetails<IPvPCruiser> _cruiserDetails;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }
 
-        public PvPItemDetailsManager(IPvPInformatorPanel informator)
+        public PvPItemDetailsManager(PvPInformatorPanelController informator)
         {
             PvPHelper.AssertIsNotNull(informator);
 

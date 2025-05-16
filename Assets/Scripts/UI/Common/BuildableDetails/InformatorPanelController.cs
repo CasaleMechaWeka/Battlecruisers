@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Common.BuildableDetails
 {
-    public class InformatorPanelController : SlidingPanel, IInformatorPanel
+    public class InformatorPanelController : SlidingPanel
     {
         public DismissInformatorButtonController dismissButton;
 
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         public IComparableItemDetails<ICruiser> CruiserDetails => cruiserDetails;
 
         public SlidingPanel informatorPanelExtended;
-        public ISlidingPanel ExtendedPanel => informatorPanelExtended;
+        public SlidingPanel ExtendedPanel => informatorPanelExtended;
 
         public InformatorButtons buttons;
         public IInformatorButtons Buttons => buttons;

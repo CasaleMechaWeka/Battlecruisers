@@ -9,14 +9,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
     // FELIX  Hide for tutorial?
     public class ExtendInformatorButtonController : CanvasGroupButton, IButton
     {
-        private ISlidingPanel _informatorPanel;
+        private SlidingPanel _informatorPanel;
 
         public Image activeFeedback;
         public Image defaultImage;
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
-            ISlidingPanel informatorPanel)
+            SlidingPanel informatorPanel)
         {
             base.Initialise(soundPlayer);
 

@@ -5,15 +5,15 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
     public class HelpStateFinder : IHelpStateFinder
     {
-        private readonly ISlidingPanel _informatorPanel, _selectorPanel;
+        private readonly SlidingPanel _informatorPanel, _selectorPanel;
         private readonly IHelpState _bothCollapsed, _selectorShown, _informatorShown, _bothShown;
 
         public HelpStateFinder(
-            ISlidingPanel informatorPanel, 
-            ISlidingPanel selectorPanel, 
-            IHelpState bothCollapsed, 
-            IHelpState selectorShown, 
-            IHelpState informatorShown, 
+            SlidingPanel informatorPanel,
+            SlidingPanel selectorPanel,
+            IHelpState bothCollapsed,
+            IHelpState selectorShown,
+            IHelpState informatorShown,
             IHelpState bothShown)
         {
             Helper.AssertIsNotNull(informatorPanel, selectorPanel, bothCollapsed, selectorPanel, informatorPanel, bothShown);

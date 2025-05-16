@@ -6,12 +6,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class SlidingPanelWaitStepFactory : TutorialFactoryBase
     {
-        private readonly ISlidingPanel _selector, _informator;
+        private readonly SlidingPanel _selector, _informator;
 
         public SlidingPanelWaitStepFactory(
             TutorialStepArgsFactory argsFactory,
-            ISlidingPanel selector,
-            ISlidingPanel informator)
+            SlidingPanel selector,
+            SlidingPanel informator)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(selector, informator);

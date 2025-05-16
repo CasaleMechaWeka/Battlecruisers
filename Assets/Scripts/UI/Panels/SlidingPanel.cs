@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Panels
         Shown, Hidden, Sliding
     }
 
-    public class SlidingPanel : Panel, ISlidingPanel
+    public class SlidingPanel : Panel
     {
         private Vector2 _slidePositionVelocity, _sliderScaleVelocity;
         private bool _isInitialised = false;

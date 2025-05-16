@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 navigationPermitterManager
                 );
 
-            IPvPInformatorPanel informator = SetupInformator(uiManager, playerCruiser, perFrameUpdater, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            PvPInformatorPanelController informator = SetupInformator(uiManager, playerCruiser, perFrameUpdater, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
             heckleController.Initialise(soundPlayer, uiManager);
             uiManager.SetHecklePanel(heckleController);
             //    PvPSpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
@@ -76,7 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                     helpButton);
         }
 
-        private IPvPInformatorPanel SetupInformator(
+        private PvPInformatorPanelController SetupInformator(
             PvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUpdater perFrameUpdater,

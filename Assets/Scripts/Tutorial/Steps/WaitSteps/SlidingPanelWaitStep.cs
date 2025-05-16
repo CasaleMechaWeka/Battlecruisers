@@ -10,10 +10,10 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// </summary>
     public class SlidingPanelWaitStep : TutorialStep
     {
-        private readonly ISlidingPanel _slidingPanel;
+        private readonly SlidingPanel _slidingPanel;
         private readonly PanelState _desiredState;
 
-        public SlidingPanelWaitStep(ITutorialStepArgs args, ISlidingPanel slidingPanel, PanelState desiredState)
+        public SlidingPanelWaitStep(ITutorialStepArgs args, SlidingPanel slidingPanel, PanelState desiredState)
             : base(args)
         {
             Assert.IsNotNull(slidingPanel);

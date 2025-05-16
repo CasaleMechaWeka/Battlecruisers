@@ -16,7 +16,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
-    public class PvPInformatorPanelController : SlidingPanel, IPvPInformatorPanel
+    public class PvPInformatorPanelController : SlidingPanel
     {
         public PvPDismissInformatorButtonController dismissButton;
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public IPvPComparableItemDetails<IPvPCruiser> CruiserDetails => cruiserDetails;
 
         public SlidingPanel informatorPanelExtended;
-        public ISlidingPanel ExtendedPanel => informatorPanelExtended;
+        public SlidingPanel ExtendedPanel => informatorPanelExtended;
 
         public PvPInformatorButtons buttons;
         public IInformatorButtons Buttons => buttons;

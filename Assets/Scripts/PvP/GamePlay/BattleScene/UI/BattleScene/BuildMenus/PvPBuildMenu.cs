@@ -22,11 +22,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private readonly AudioClipWrapper _selectorOpeningSound;
         private IMenu _currentMenu, _lastShownMenu;
 
-        public ISlidingPanel SelectorPanel { get; }
+        public SlidingPanel SelectorPanel { get; }
         public IReadOnlyCollection<IPvPBuildableButton> BuildableButtons { get; }
 
         public PvPBuildMenu(
-            ISlidingPanel selectorPanel,
+            SlidingPanel selectorPanel,
             IBuildingCategoriesMenu buildingCategoriesMenu,
             IPvPBuildableMenus<BuildingCategory> buildingMenus,
             IPvPBuildableMenus<UnitCategory> unitMenus,

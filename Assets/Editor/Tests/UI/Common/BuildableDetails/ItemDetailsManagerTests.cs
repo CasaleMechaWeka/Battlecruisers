@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
     public class ItemDetailsManagerTests
     {
         private IItemDetailsManager _detailsManager;
-        private IInformatorPanel _informatorPanel;
+        private InformatorPanelController _informatorPanel;
         private IComparableItemDetails<IBuilding> _buildingDetails;
         private IComparableItemDetails<IUnit> _unitDetails;
         private IComparableItemDetails<ICruiser> _cruiserDetails;
@@ -25,7 +25,7 @@ namespace BattleCruisers.Tests.UI.Common.BuildableDetails
             _unitDetails = Substitute.For<IComparableItemDetails<IUnit>>();
             _cruiserDetails = Substitute.For<IComparableItemDetails<ICruiser>>();
 
-            _informatorPanel = Substitute.For<IInformatorPanel>();
+            _informatorPanel = Substitute.For<InformatorPanelController>();
             _informatorPanel.BuildingDetails.Returns(_buildingDetails);
             _informatorPanel.UnitDetails.Returns(_unitDetails);
             _informatorPanel.CruiserDetails.Returns(_cruiserDetails);

@@ -19,7 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPHeckleButton heckleButtonPrefab;
         public Transform hecklesParent;
 
-        public ISlidingPanel HecklePanel => hecklePanel;
+        public SlidingPanel HecklePanel => hecklePanel;
 
         private SingleSoundPlayer _soundPlayer;
         private PvPUIManager _puUIManager;

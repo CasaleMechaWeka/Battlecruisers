@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public interface IPvPBuildMenu : IPvPBuildMenuButtons
     {
-        ISlidingPanel SelectorPanel { get; }
+        SlidingPanel SelectorPanel { get; }
 
         /// <summary>
         /// Shows the building group menu for the given buildingCategory.

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
     public class SlidingPanelWaitStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _tutorialStep;
-        private ISlidingPanel _slidingPanel;
+        private SlidingPanel _slidingPanel;
         private PanelState _desiredState;
 
         [SetUp]
@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
         {
             base.SetuUp();
 
-            _slidingPanel = Substitute.For<ISlidingPanel>();
+            _slidingPanel = Substitute.For<SlidingPanel>();
             _desiredState = PanelState.Shown;
 
             _tutorialStep = new SlidingPanelWaitStep(_args, _slidingPanel, _desiredState);

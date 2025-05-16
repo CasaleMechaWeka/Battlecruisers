@@ -4,11 +4,11 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
     public interface IHelpLabels
     {
-        IPanel CruiserHealth { get; }
-        IPanel LeftBottom { get; }
-        IPanel BuildingCategories { get; }
-        IPanel RightBottom { get; }
-        IPanel Informator { get; }
-        IPanel BuildMenu { get; }
+        Panel CruiserHealth { get; }
+        Panel LeftBottom { get; }
+        Panel BuildingCategories { get; }
+        Panel RightBottom { get; }
+        Panel Informator { get; }
+        Panel BuildMenu { get; }
     }
 }

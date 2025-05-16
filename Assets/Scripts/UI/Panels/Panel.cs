@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Panels
 {
-    public class Panel : MonoBehaviour, IPanel
+    public class Panel : MonoBehaviour
     {
         public virtual void Show()
         {

@@ -8,14 +8,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
     public class HelpStateFinderTests
     {
         private IHelpStateFinder _helpStateFinder;
-        private ISlidingPanel _informatorPanel, _selectorPanel;
+        private SlidingPanel _informatorPanel, _selectorPanel;
         private IHelpState _bothCollapsed, _selectorShown, _informatorShown, _bothShown;
 
         [SetUp]
         public void TestSetup()
         {
-            _informatorPanel = Substitute.For<ISlidingPanel>();
-            _selectorPanel = Substitute.For<ISlidingPanel>();
+            _informatorPanel = Substitute.For<SlidingPanel>();
+            _selectorPanel = Substitute.For<SlidingPanel>();
             _bothCollapsed = Substitute.For<IHelpState>();
             _selectorShown = Substitute.For<IHelpState>();
             _informatorShown = Substitute.For<IHelpState>();

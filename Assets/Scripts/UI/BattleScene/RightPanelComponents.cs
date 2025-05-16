@@ -8,14 +8,14 @@ namespace BattleCruisers.UI.BattleScene
 {
     public class RightPanelComponents
     {
-        public IInformatorPanel InformatorPanel { get; }
+        public InformatorPanelController InformatorPanel { get; }
         public IMainMenuManager MainMenuManager { get; }
         public IModalMenu MainMenu { get; }
         public SpeedComponents SpeedComponents { get; }
         public HelpButton HelpButton { get; }
 
         public RightPanelComponents(
-            IInformatorPanel informatorPanel, 
+            InformatorPanelController informatorPanel,
             IMainMenuManager mainMenuManager,
             IModalMenu mainMenu,
             SpeedComponents speedComponents,
