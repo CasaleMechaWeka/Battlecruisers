@@ -8,20 +8,20 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class CompositeCameraTargetProviderTests
     {
-        private ICameraTargetProvider _compositeTargetProvider;
-        private IStaticCameraTargetProvider _defaultTargetProvider;
-        private IUserInputCameraTargetProvider _highPriorityTargetProvider, _lowPriorityTargetProvider;
-        private ICameraTarget _defaultTarget, _highPriorityTarget, _lowPriorityTarget;
+        private CompositeCameraTargetProvider _compositeTargetProvider;
+        private StaticCameraTargetProvider _defaultTargetProvider;
+        private UserInputCameraTargetProvider _highPriorityTargetProvider, _lowPriorityTargetProvider;
+        private CameraTarget _defaultTarget, _highPriorityTarget, _lowPriorityTarget;
         private int _targetChangedCount;
 
         [SetUp]
         public void TestSetup()
         {
-            _defaultTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
-            _highPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
-            _lowPriorityTargetProvider = Substitute.For<IUserInputCameraTargetProvider>();
+            _defaultTargetProvider = Substitute.For<StaticCameraTargetProvider>();
+            _highPriorityTargetProvider = Substitute.For<UserInputCameraTargetProvider>();
+            _lowPriorityTargetProvider = Substitute.For<UserInputCameraTargetProvider>();
 
-            IList<IUserInputCameraTargetProvider> providers = new List<IUserInputCameraTargetProvider>()
+            IList<UserInputCameraTargetProvider> providers = new List<UserInputCameraTargetProvider>()
             {
                 _highPriorityTargetProvider,
                 _lowPriorityTargetProvider
@@ -35,15 +35,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _targetChangedCount = 0;
             _compositeTargetProvider.TargetChanged += (sender, e) => _targetChangedCount++;
 
-            _defaultTarget = Substitute.For<ICameraTarget>();
+            _defaultTarget = Substitute.For<CameraTarget>();
             _defaultTargetProvider.Target.Returns(_defaultTarget);
             _defaultTargetProvider.Priority.Returns(1);
 
-            _highPriorityTarget = Substitute.For<ICameraTarget>();
+            _highPriorityTarget = Substitute.For<CameraTarget>();
             _highPriorityTargetProvider.Target.Returns(_highPriorityTarget);
             _highPriorityTargetProvider.Priority.Returns(3);
 
-            _lowPriorityTarget = Substitute.For<ICameraTarget>();
+            _lowPriorityTarget = Substitute.For<CameraTarget>();
             _lowPriorityTargetProvider.Target.Returns(_lowPriorityTarget);
             _lowPriorityTargetProvider.Priority.Returns(2);
         }
@@ -94,7 +94,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _defaultTargetProvider.Target.Returns(_lowPriorityTarget);
 
             _defaultTargetProvider.TargetChanged += Raise.Event();
-            
+
             Assert.AreEqual(1, _targetChangedCount);
             Assert.AreSame(_lowPriorityTarget, _compositeTargetProvider.Target);
         }

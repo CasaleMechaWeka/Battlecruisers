@@ -11,14 +11,14 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
     {
         private ICameraFocuser _indirectFocuser, _coreFocuser;
         private ICamera _camera;
-        private ICameraTargetTracker _overviewTargetTracker;
+        private CameraTargetTracker _overviewTargetTracker;
 
         [SetUp]
         public void TestSetup()
         {
             _coreFocuser = Substitute.For<ICameraFocuser>();
             _camera = Substitute.For<ICamera>();
-            _overviewTargetTracker = Substitute.For<ICameraTargetTracker>();
+            _overviewTargetTracker = Substitute.For<CameraTargetTracker>();
 
             _indirectFocuser
                 = new IndirectCameraFocuser(

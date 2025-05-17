@@ -51,12 +51,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetYPosition = 17;
             _cameraCalculator.FindCameraYPosition(targetOrthographicSize).Returns(17);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
-            ICameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
+            CameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
 
             Assert.AreEqual(expectedTarget, actualTarget);
         }
@@ -77,12 +77,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetYPosition = 17;
             _cameraCalculator.FindCameraYPosition(targetOrthographicSize).Returns(17);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
-            ICameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
+            CameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
 
             Assert.AreEqual(expectedTarget, actualTarget);
         }
@@ -103,12 +103,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetYPosition = 17;
             _cameraCalculator.FindCameraYPosition(targetOrthographicSize).Returns(17);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
-            ICameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
+            CameraTarget actualTarget = _directionalZoom.ZoomOut(_orthographicSizeDelta);
 
             Assert.AreEqual(expectedTarget, actualTarget);
         }
@@ -146,12 +146,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetYPosition = 71;
             _cameraCalculator.FindCameraYPosition(targetOrthographicSize).Returns(targetYPosition);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
-            ICameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
+            CameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
 
             Assert.AreEqual(expectedTarget, actualTarget);
         }
@@ -187,12 +187,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetYPosition = 71;
             _cameraCalculator.FindCameraYPosition(targetOrthographicSize).Returns(targetYPosition);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
-            ICameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
+            CameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
 
             Assert.AreEqual(expectedTarget, actualTarget);
         }
@@ -228,12 +228,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
             float targetYPosition = 71;
             _cameraCalculator.FindCameraYPosition(targetOrthographicSize).Returns(targetYPosition);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(targetXPosition, targetYPosition, _camera.Position.z),
                     targetOrthographicSize);
 
-            ICameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
+            CameraTarget actualTarget = _directionalZoom.ZoomIn(_orthographicSizeDelta, _contactPosition);
 
             Assert.AreEqual(expectedTarget, actualTarget);
         }

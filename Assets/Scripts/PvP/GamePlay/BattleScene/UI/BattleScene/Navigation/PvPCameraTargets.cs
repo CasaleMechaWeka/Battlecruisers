@@ -12,30 +12,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPCameraTargets : ICameraTargets
     {
-        public ICameraTarget PlayerCruiserTarget
+        public CameraTarget PlayerCruiserTarget
         {
             get
             {
                 return FindCruiserTarget(_camera, _cameraCalculator, _playerCruiser);
             }
         }
-        public ICameraTarget PlayerCruiserDeathTarget { get; }
-        public ICameraTarget PlayerCruiserNukedTarget { get; }
-        public ICameraTarget PlayerNavalFactoryTarget { get; }
+        public CameraTarget PlayerCruiserDeathTarget { get; }
+        public CameraTarget PlayerCruiserNukedTarget { get; }
+        public CameraTarget PlayerNavalFactoryTarget { get; }
 
-        public ICameraTarget EnemyCruiserTarget
+        public CameraTarget EnemyCruiserTarget
         {
             get
             {
                 return FindCruiserTarget(_camera, _cameraCalculator, _enemyCruiser);
             }
         }
-        public ICameraTarget EnemyCruiserDeathTarget { get; }
-        public ICameraTarget EnemyCruiserNukedTarget { get; }
-        public ICameraTarget EnemyNavalFactoryTarget { get; }
-
-        public ICameraTarget MidLeftTarget { get; }
-        public ICameraTarget OverviewTarget { get; }
+        public CameraTarget EnemyCruiserDeathTarget { get; }
+        public CameraTarget EnemyCruiserNukedTarget { get; }
+        public CameraTarget EnemyNavalFactoryTarget { get; }
+        public CameraTarget MidLeftTarget { get; }
+        public CameraTarget OverviewTarget { get; }
 
         private const float CRUISER_DEATH_ORTHOGRAPHIC_SIZE = 10;
         private const float MID_ORTHOGRAPHIC_SIZE = 15;
@@ -85,14 +84,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             EnemyCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, enemyCruiser.Position.x);
         }
 
-        private ICameraTarget FindCruiserTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, IPvPCruiser cruiser)
+        private CameraTarget FindCruiserTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, IPvPCruiser cruiser)
         {
             float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
-        private ICameraTarget CreateTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, float orthographicSize, float xPosition)
+        private CameraTarget CreateTarget(ICamera camera, IPvPCameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
             Vector3 position = new Vector3(xPosition, yPosition, camera.Position.z);

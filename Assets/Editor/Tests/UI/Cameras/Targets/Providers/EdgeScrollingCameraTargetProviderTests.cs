@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class EdgeScrollingCameraTargetProviderTests
     {
-        private IUserInputCameraTargetProvider _targetProvider;
+        private UserInputCameraTargetProvider _targetProvider;
 
         private IUpdater _updater;
         private EdgeScrollCalculator _scrollCalculator;
@@ -88,7 +88,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _updater.Updated += Raise.Event();
 
             // Assert
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(clampedTargetXPosition, _camera.Position.y, _camera.Position.z),
                     _camera.OrthographicSize);
@@ -113,7 +113,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _updater.Updated += Raise.Event();
 
             // Assert
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(clampedTargetXPosition, _camera.Position.y, _camera.Position.z),
                     _camera.OrthographicSize);

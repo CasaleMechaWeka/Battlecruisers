@@ -19,12 +19,12 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     {
         private readonly ICameraFocuser _coreFocuser;
         private readonly ICamera _camera;
-        private readonly ICameraTargetTracker _overviewTargetTracker;
+        private readonly CameraTargetTracker _overviewTargetTracker;
         private IndirectFocusTarget _indirectFocusTarget;
 
         public const float INDIRECTION_BUFFER_IN_M = 10;
 
-        public IndirectCameraFocuser(ICameraFocuser coreFocuser, ICamera camera, ICameraTargetTracker overviewTargetTracker)
+        public IndirectCameraFocuser(ICameraFocuser coreFocuser, ICamera camera, CameraTargetTracker overviewTargetTracker)
         {
             Helper.AssertIsNotNull(coreFocuser, camera, overviewTargetTracker);
 

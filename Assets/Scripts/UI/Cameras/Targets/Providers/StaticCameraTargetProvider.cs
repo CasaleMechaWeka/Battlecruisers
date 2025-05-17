@@ -1,6 +1,6 @@
 ﻿namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    public class StaticCameraTargetProvider : UserInputCameraTargetProvider, IStaticCameraTargetProvider
+    public class StaticCameraTargetProvider : UserInputCameraTargetProvider
     {
         public override int Priority { get; }
 
@@ -9,7 +9,7 @@
             Priority = priority;
         }
 
-        public void SetTarget(ICameraTarget target)
+        public void SetTarget(CameraTarget target)
         {
             Target = target;
         }

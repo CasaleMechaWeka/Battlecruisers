@@ -8,10 +8,10 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets
 {
     public class CameraTargetEqualityCalculatorTests
     {
-        private ICameraTargetEqualityCalculator _calculator;
+        private CameraTargetEqualityCalculator _calculator;
         private float _positionEqualityMarginInM, _orthographicSizeEqualityMargin;
         private ICamera _camera;
-        private ICameraTarget _target;
+        private CameraTarget _target;
 
         [SetUp]
         public void TestSetup()
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets
 
             _camera = Substitute.For<ICamera>();
 
-            _target = Substitute.For<ICameraTarget>();
+            _target = Substitute.For<CameraTarget>();
             _target.Position.Returns(Vector3.zero);
             _target.OrthographicSize.Returns(0);
         }

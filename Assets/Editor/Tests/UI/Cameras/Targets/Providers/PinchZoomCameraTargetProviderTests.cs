@@ -10,12 +10,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class PinchZoomCameraTargetProviderTests
     {
-        private IUserInputCameraTargetProvider _targetProvider;
+        private UserInputCameraTargetProvider _targetProvider;
         private ZoomCalculator _zoomCalculator;
         private IDirectionalZoom _directionalZoom;
         private PinchTracker _pinchTracker;
         private int _endedCount;
-        private ICameraTarget _target;
+        private CameraTarget _target;
 
         [SetUp]
         public void TestSetup()
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             _endedCount = 0;
             _targetProvider.UserInputEnded += (sender, e) => _endedCount++;
 
-            _target = Substitute.For<ICameraTarget>();
+            _target = Substitute.For<CameraTarget>();
         }
 
         [Test]

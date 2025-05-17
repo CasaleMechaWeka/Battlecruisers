@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 {
     public interface IDirectionalZoom
     {
-        ICameraTarget ZoomOut(float orthographicSizeDelta);
-        ICameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition);
+        CameraTarget ZoomOut(float orthographicSizeDelta);
+        CameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition);
     }
 }

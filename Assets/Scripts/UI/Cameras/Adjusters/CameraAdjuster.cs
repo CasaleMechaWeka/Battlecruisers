@@ -6,11 +6,11 @@ namespace BattleCruisers.UI.Cameras.Adjusters
 {
     public abstract class CameraAdjuster
     {
-        protected readonly ICameraTargetProvider _cameraTargetProvider;
+        protected readonly CompositeCameraTargetProvider _cameraTargetProvider;
 
         public event EventHandler CompletedAdjustment;
 
-        public CameraAdjuster(ICameraTargetProvider cameraTargetProvider)
+        public CameraAdjuster(CompositeCameraTargetProvider cameraTargetProvider)
         {
             Assert.IsNotNull(cameraTargetProvider);
             _cameraTargetProvider = cameraTargetProvider;

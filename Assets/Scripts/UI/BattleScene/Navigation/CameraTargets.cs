@@ -10,18 +10,16 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public class CameraTargets : ICameraTargets
     {
-        public ICameraTarget PlayerCruiserTarget { get; }
-        public ICameraTarget PlayerCruiserDeathTarget { get; }
-        public ICameraTarget PlayerCruiserNukedTarget { get; }
-        public ICameraTarget PlayerNavalFactoryTarget { get; }
-
-        public ICameraTarget EnemyCruiserTarget { get; }
-        public ICameraTarget EnemyCruiserDeathTarget { get; }
-        public ICameraTarget EnemyCruiserNukedTarget { get; }
-        public ICameraTarget EnemyNavalFactoryTarget { get; }
-
-        public ICameraTarget MidLeftTarget { get; }
-        public ICameraTarget OverviewTarget { get; }
+        public CameraTarget PlayerCruiserTarget { get; }
+        public CameraTarget PlayerCruiserDeathTarget { get; }
+        public CameraTarget PlayerCruiserNukedTarget { get; }
+        public CameraTarget PlayerNavalFactoryTarget { get; }
+        public CameraTarget EnemyCruiserTarget { get; }
+        public CameraTarget EnemyCruiserDeathTarget { get; }
+        public CameraTarget EnemyCruiserNukedTarget { get; }
+        public CameraTarget EnemyNavalFactoryTarget { get; }
+        public CameraTarget MidLeftTarget { get; }
+        public CameraTarget OverviewTarget { get; }
 
         private const float CRUISER_DEATH_ORTHOGRAPHIC_SIZE = 10;
         private const float MID_ORTHOGRAPHIC_SIZE = 15;
@@ -62,14 +60,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             EnemyCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
         }
 
-        private ICameraTarget FindCruiserTarget(ICamera camera, CameraCalculator cameraCalculator, ICruiser cruiser)
+        private CameraTarget FindCruiserTarget(ICamera camera, CameraCalculator cameraCalculator, ICruiser cruiser)
         {
             float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
-        private ICameraTarget CreateTarget(ICamera camera, CameraCalculator cameraCalculator, float orthographicSize, float xPosition)
+        private CameraTarget CreateTarget(ICamera camera, CameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
             Vector3 position = new Vector3(xPosition, yPosition, camera.Position.z);

@@ -10,8 +10,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
     public class SmoothCameraAdjusterTests
     {
         private CameraAdjuster _adjuster;
-        private ICameraTargetProvider _cameraTargetProvider;
-        private ICameraTarget _cameraTarget;
+        private CompositeCameraTargetProvider _cameraTargetProvider;
+        private CameraTarget _cameraTarget;
         private SmoothZoomAdjuster _zoomAdjuster;
         private SmoothPositionAdjuster _positionAdjuster;
         private int _adjustmentCompletedCounter;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
         [SetUp]
         public void TestSetup()
         {
-            _cameraTargetProvider = Substitute.For<ICameraTargetProvider>();
+            _cameraTargetProvider = Substitute.For<CompositeCameraTargetProvider>();
             _zoomAdjuster = Substitute.For<SmoothZoomAdjuster>();
             _positionAdjuster = Substitute.For<SmoothPositionAdjuster>();
             _adjuster = new SmoothCameraAdjuster(_cameraTargetProvider, _zoomAdjuster, _positionAdjuster);

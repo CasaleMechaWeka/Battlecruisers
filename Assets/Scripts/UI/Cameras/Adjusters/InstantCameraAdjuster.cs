@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     {
         private readonly ICamera _camera;
 
-        public InstantCameraAdjuster(ICameraTargetProvider cameraTargetProvider, ICamera camera)
+        public InstantCameraAdjuster(CompositeCameraTargetProvider cameraTargetProvider, ICamera camera)
             : base(cameraTargetProvider)
         {
             Assert.IsNotNull(camera);

@@ -5,19 +5,19 @@ using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
-    public class CameraTargetTracker : ICameraTargetTracker
+    public class CameraTargetTracker
     {
         private readonly ICamera _camera;
-        private readonly ICameraTarget _target;
-        private readonly ICameraTargetEqualityCalculator _equalityCalculator;
+        private readonly CameraTarget _target;
+        private readonly CameraTargetEqualityCalculator _equalityCalculator;
 
         private readonly ISettableBroadcastingProperty<bool> _isOnTarget;
         public IBroadcastingProperty<bool> IsOnTarget { get; }
 
         public CameraTargetTracker(
-            ICamera camera, 
-            ICameraTarget target,
-            ICameraTargetEqualityCalculator equalityCalculator)
+            ICamera camera,
+            CameraTarget target,
+            CameraTargetEqualityCalculator equalityCalculator)
         {
             Helper.AssertIsNotNull(camera, target, equalityCalculator);
 

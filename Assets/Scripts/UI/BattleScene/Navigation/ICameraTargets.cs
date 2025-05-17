@@ -4,17 +4,15 @@ namespace BattleCruisers.UI.BattleScene.Navigation
 {
     public interface ICameraTargets
     {
-        ICameraTarget PlayerCruiserTarget { get; }
-        ICameraTarget PlayerCruiserDeathTarget { get; }
-        ICameraTarget PlayerCruiserNukedTarget { get; }
-        ICameraTarget PlayerNavalFactoryTarget { get; }
-
-        ICameraTarget EnemyCruiserTarget { get; }
-        ICameraTarget EnemyCruiserDeathTarget { get; }
-        ICameraTarget EnemyCruiserNukedTarget { get; }
-        ICameraTarget EnemyNavalFactoryTarget { get; }
-
-        ICameraTarget MidLeftTarget { get; }
-        ICameraTarget OverviewTarget { get; }
+        CameraTarget PlayerCruiserTarget { get; }
+        CameraTarget PlayerCruiserDeathTarget { get; }
+        CameraTarget PlayerCruiserNukedTarget { get; }
+        CameraTarget PlayerNavalFactoryTarget { get; }
+        CameraTarget EnemyCruiserTarget { get; }
+        CameraTarget EnemyCruiserDeathTarget { get; }
+        CameraTarget EnemyCruiserNukedTarget { get; }
+        CameraTarget EnemyNavalFactoryTarget { get; }
+        CameraTarget MidLeftTarget { get; }
+        CameraTarget OverviewTarget { get; }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
-    public class CameraTargetEqualityCalculator : ICameraTargetEqualityCalculator
+    public class CameraTargetEqualityCalculator
     {
         private readonly float _positionEqualityMarginInM, _orthographicSizeEqualityMargin;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Cameras.Targets
             _orthographicSizeEqualityMargin = orthographicSizeEqualityMargin;
         }
 
-        public bool IsOnTarget(ICameraTarget target, ICamera camera)
+        public bool IsOnTarget(CameraTarget target, ICamera camera)
         {
             return
                 camera.OrthographicSize - target.OrthographicSize < _orthographicSizeEqualityMargin

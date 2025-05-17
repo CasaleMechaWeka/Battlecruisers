@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class ScrollWheelCameraTargetProviderTests
     {
-        private IUserInputCameraTargetProvider _cameraTargetProvider;
+        private UserInputCameraTargetProvider _cameraTargetProvider;
 
         private IInput _input;
         private IUpdater _updater;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
         private int _targetChangedCount, _userInputEndedCount;
         private float _orthograhpicSizeDelta = 7.23f;
-        private ICameraTarget _expectedTarget;
+        private CameraTarget _expectedTarget;
 
         [SetUp]
         public void TestSetup()

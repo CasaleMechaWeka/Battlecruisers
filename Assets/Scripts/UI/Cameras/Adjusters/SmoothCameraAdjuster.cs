@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.Cameras.Adjusters
         private readonly SmoothPositionAdjuster _positionAdjuster;
 
         public SmoothCameraAdjuster(
-            ICameraTargetProvider cameraTargetProvider,
+            CompositeCameraTargetProvider cameraTargetProvider,
             SmoothZoomAdjuster zoomAdjuster,
             SmoothPositionAdjuster positionAdjuster)
             : base(cameraTargetProvider)

@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             _validOrthographicSizes = validOrthographicSizes;
         }
 
-        public ICameraTarget ZoomOut(float orthographicSizeDelta)
+        public CameraTarget ZoomOut(float orthographicSizeDelta)
         {
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
 
@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     targetOrthographicSize);
         }
 
-        public ICameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition)
+        public CameraTarget ZoomIn(float orthographicSizeDelta, Vector3 contactPosition)
         {
             // Logging.Verbose(Tags.DIRECTIONAL_ZOOM, $"orthographicSizeDelta: {orthographicSizeDelta}");
 

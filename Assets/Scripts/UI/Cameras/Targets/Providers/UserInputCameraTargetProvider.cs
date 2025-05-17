@@ -3,14 +3,14 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
-    public abstract class UserInputCameraTargetProvider : IUserInputCameraTargetProvider
+    public abstract class UserInputCameraTargetProvider
     {
         private bool _duringUserInput;
 
         public abstract int Priority { get; }
 
-        private ICameraTarget _target;
-        public ICameraTarget Target
+        private CameraTarget _target;
+        public CameraTarget Target
         {
             get { return _target; }
             protected set

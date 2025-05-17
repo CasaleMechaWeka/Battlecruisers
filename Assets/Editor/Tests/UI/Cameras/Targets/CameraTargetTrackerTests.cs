@@ -7,17 +7,17 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets
 {
     public class CameraTargetTrackerTests
     {
-        private ICameraTargetTracker _tracker;
+        private CameraTargetTracker _tracker;
         private ICamera _camera;
-        private ICameraTarget _target;
-        private ICameraTargetEqualityCalculator _calculator;
+        private CameraTarget _target;
+        private CameraTargetEqualityCalculator _calculator;
 
         [SetUp]
         public void TestSetup()
         {
             _camera = Substitute.For<ICamera>();
-            _target = Substitute.For<ICameraTarget>();
-            _calculator = Substitute.For<ICameraTargetEqualityCalculator>();
+            _target = Substitute.For<CameraTarget>();
+            _calculator = Substitute.For<CameraTargetEqualityCalculator>();
 
             _calculator.IsOnTarget(_target, _camera).Returns(true);
 

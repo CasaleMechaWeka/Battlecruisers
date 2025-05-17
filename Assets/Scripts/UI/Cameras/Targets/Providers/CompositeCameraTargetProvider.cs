@@ -22,13 +22,13 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     /// 1. Default (static)
     /// (Lowest)
     /// </summary>
-    public class CompositeCameraTargetProvider : ICameraTargetProvider
+    public class CompositeCameraTargetProvider
     {
-        private readonly IStaticCameraTargetProvider _defaultTargetProvider;
-        private readonly IList<IUserInputCameraTargetProvider> _targetProviders;
+        private readonly StaticCameraTargetProvider _defaultTargetProvider;
+        private readonly IList<UserInputCameraTargetProvider> _targetProviders;
 
-        private IUserInputCameraTargetProvider _activeTargetProvider;
-        private IUserInputCameraTargetProvider ActiveTargetProvider
+        private UserInputCameraTargetProvider _activeTargetProvider;
+        private UserInputCameraTargetProvider ActiveTargetProvider
         {
             get { return _activeTargetProvider; }
             set
@@ -48,13 +48,13 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
             }
         }
 
-        public ICameraTarget Target => ActiveTargetProvider.Target;
+        public CameraTarget Target => ActiveTargetProvider.Target;
 
         public event EventHandler TargetChanged;
 
         public CompositeCameraTargetProvider(
-            IStaticCameraTargetProvider defaultTargetProvider,
-            IList<IUserInputCameraTargetProvider> targetProviders)
+            StaticCameraTargetProvider defaultTargetProvider,
+            IList<UserInputCameraTargetProvider> targetProviders)
         {
             Helper.AssertIsNotNull(defaultTargetProvider, targetProviders);
 
@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 
             ActiveTargetProvider = _defaultTargetProvider;
 
-            foreach (IUserInputCameraTargetProvider targetProvider in _targetProviders)
+            foreach (UserInputCameraTargetProvider targetProvider in _targetProviders)
             {
                 targetProvider.UserInputStarted += TargetProvider_UserInputStarted;
                 targetProvider.UserInputEnded += TargetProvider_UserInputEnded;
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"Active target provider: {_activeTargetProvider}");
 
-            IUserInputCameraTargetProvider startingProvider = sender.Parse<IUserInputCameraTargetProvider>();
+            UserInputCameraTargetProvider startingProvider = sender.Parse<UserInputCameraTargetProvider>();
 
             if (startingProvider.Priority > ActiveTargetProvider.Priority)
             {
@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         {
             Logging.Verbose(Tags.CAMERA_TARGET_PROVIDER, $"Active target provider: {_activeTargetProvider}");
 
-            IUserInputCameraTargetProvider endingProvider = sender.Parse<IUserInputCameraTargetProvider>();
+            UserInputCameraTargetProvider endingProvider = sender.Parse<UserInputCameraTargetProvider>();
 
             if (ReferenceEquals(ActiveTargetProvider, endingProvider))
             {

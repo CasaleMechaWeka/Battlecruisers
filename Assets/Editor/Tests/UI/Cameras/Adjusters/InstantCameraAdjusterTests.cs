@@ -11,15 +11,15 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
     public class InstantCameraAdjusterTests
     {
         private CameraAdjuster _adjuster;
-        private ICameraTargetProvider _cameraTargetProvider;
+        private CompositeCameraTargetProvider _cameraTargetProvider;
         private ICamera _camera;
-        private ICameraTarget _cameraTarget;
+        private CameraTarget _cameraTarget;
         private int _adjustmentCompletedCounter;
 
         [SetUp]
         public void TestSetup()
         {
-            _cameraTargetProvider = Substitute.For<ICameraTargetProvider>();
+            _cameraTargetProvider = Substitute.For<CompositeCameraTargetProvider>();
             _camera = Substitute.For<ICamera>();
             _adjuster = new InstantCameraAdjuster(_cameraTargetProvider, _camera);
 

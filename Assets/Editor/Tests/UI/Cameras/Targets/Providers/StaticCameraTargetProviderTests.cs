@@ -7,14 +7,14 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class StaticCameraTargetProviderTests
     {
-        private IStaticCameraTargetProvider _targetProvider;
-        private ICameraTarget _target;
+        private StaticCameraTargetProvider _targetProvider;
+        private CameraTarget _target;
 
         [SetUp]
         public void TestSetup()
         {
             _targetProvider = new StaticCameraTargetProvider(6);
-            _target = Substitute.For<ICameraTarget>();
+            _target = Substitute.For<CameraTarget>();
         }
 
         [Test]

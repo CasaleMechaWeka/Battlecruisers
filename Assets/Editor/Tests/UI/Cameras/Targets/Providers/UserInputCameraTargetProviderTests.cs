@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
     {
         public override int Priority => 1;
 
-        public void SetTarget(ICameraTarget target)
+        public void SetTarget(CameraTarget target)
         {
             Target = target;
         }
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
     public class UserInputCameraTargetProviderTests
     {
         private DummyCameraTargetProvider _cameraTargetProvider;
-        private ICameraTarget _target1, _target2, _target3;
+        private CameraTarget _target1, _target2, _target3;
         private int _targetChangedCount, _inputStartedCount, _inputEndedCount;
 
         [SetUp]

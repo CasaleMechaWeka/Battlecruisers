@@ -47,8 +47,8 @@ namespace BattleCruisers.UI.Cameras
         public float slowCameraSmoothTime = 0.5f;
         private ICamera icamera;
         private ICameraFocuser cameraFocuser;
-        private IStaticCameraTargetProvider defaultCameraTargetProvider;
-        private IStaticCameraTargetProvider trumpCameraTargetProvider;
+        private StaticCameraTargetProvider defaultCameraTargetProvider;
+        private StaticCameraTargetProvider trumpCameraTargetProvider;
         private ICameraTargets targets;
         private ITime time;
         private CameraTransitionSpeedManager cameraTransitionSpeedManager;
@@ -84,7 +84,7 @@ namespace BattleCruisers.UI.Cameras
             defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            ICameraTargetProvider cameraTargetProvider
+            CompositeCameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -138,20 +138,20 @@ namespace BattleCruisers.UI.Cameras
                     captainsNavigationButtonsPanel);
         }
 
-        private ICameraTargetProvider CreateCameraTargetProvider(
+        private CompositeCameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             CameraCalculator cameraCalculator,
             SettingsManager settingsManager,
             CameraCalculatorSettings settings,
             NavigationPermitters navigationPermitters,
-            IStaticCameraTargetProvider trumpCameraTargetProvider,
-            IStaticCameraTargetProvider defaultCameraTargetProvider)
+            StaticCameraTargetProvider trumpCameraTargetProvider,
+            StaticCameraTargetProvider defaultCameraTargetProvider)
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IUserInputCameraTargetProvider> cameraTargetProviders
+            IList<UserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -166,13 +166,13 @@ namespace BattleCruisers.UI.Cameras
                     cameraTargetProviders);
         }
 
-        private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
+        private IList<UserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera,
             CameraCalculator cameraCalculator,
             SettingsManager settingsManager,
             CameraCalculatorSettings settings,
             TogglableUpdater updater,
-            IStaticCameraTargetProvider trumpCameraTargetProvider)
+            StaticCameraTargetProvider trumpCameraTargetProvider)
         {
             IDirectionalZoom directionalZoom
                 = new DirectionalZoom(
@@ -194,7 +194,7 @@ namespace BattleCruisers.UI.Cameras
                     zoomScale,
                     zoomSettingsMultiplier);
 
-            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>()
+            IList<UserInputCameraTargetProvider> targetProviders = new List<UserInputCameraTargetProvider>()
             {
                 trumpCameraTargetProvider
             };
@@ -285,7 +285,7 @@ namespace BattleCruisers.UI.Cameras
         {
             CameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
             CameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
-            ICameraTargetProvider cameraTargetProvider
+            CompositeCameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,

@@ -51,8 +51,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public float slowCameraSmoothTime = 0.5f;
         private ICamera icamera;
         private ICameraFocuser cameraFocuser;
-        private IStaticCameraTargetProvider defaultCameraTargetProvider;
-        private IStaticCameraTargetProvider trumpCameraTargetProvider;
+        private StaticCameraTargetProvider defaultCameraTargetProvider;
+        private StaticCameraTargetProvider trumpCameraTargetProvider;
         private ICameraTargets targets;
         private ITime time;
         private CameraTransitionSpeedManager cameraTransitionSpeedManager;
@@ -107,7 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            ICameraTargetProvider cameraTargetProvider
+            CompositeCameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -192,7 +192,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
             defaultCameraTargetProvider.SetTarget(targets.PlayerCruiserTarget);
 
-            ICameraTargetProvider cameraTargetProvider
+            CompositeCameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,
@@ -243,20 +243,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     settings,
                     navigationButtonsPanel);
         }
-        private ICameraTargetProvider CreateCameraTargetProvider(
+        private CompositeCameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             SettingsManager settingsManager,
             CameraCalculatorSettings settings,
             NavigationPermitters navigationPermitters,
-            IStaticCameraTargetProvider trumpCameraTargetProvider,
-            IStaticCameraTargetProvider defaultCameraTargetProvider)
+            StaticCameraTargetProvider trumpCameraTargetProvider,
+            StaticCameraTargetProvider defaultCameraTargetProvider)
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
             updater.Initialise(navigationPermitters.ScrollWheelAndPinchZoomFilter);
 
-            IList<IUserInputCameraTargetProvider> cameraTargetProviders
+            IList<UserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -272,19 +272,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         }
 
 
-        private ICameraTargetProvider CreateCameraTargetProvider(
+        private CompositeCameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             SettingsManager settingsManager,
             CameraCalculatorSettings settings,
-            IStaticCameraTargetProvider trumpCameraTargetProvider,
-            IStaticCameraTargetProvider defaultCameraTargetProvider
+            StaticCameraTargetProvider trumpCameraTargetProvider,
+            StaticCameraTargetProvider defaultCameraTargetProvider
         )
         {
             TogglableUpdater updater = GetComponent<TogglableUpdater>();
             Assert.IsNotNull(updater);
 
-            IList<IUserInputCameraTargetProvider> cameraTargetProviders
+            IList<UserInputCameraTargetProvider> cameraTargetProviders
                 = CreateCameraTargetProviders(
                     camera,
                     cameraCalculator,
@@ -299,13 +299,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     cameraTargetProviders);
         }
 
-        private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
+        private IList<UserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
             SettingsManager settingsManager,
             CameraCalculatorSettings settings,
             TogglableUpdater updater,
-            IStaticCameraTargetProvider trumpCameraTargetProvider)
+            StaticCameraTargetProvider trumpCameraTargetProvider)
         {
             IDirectionalZoom directionalZoom
                 = new PvPDirectionalZoom(
@@ -327,7 +327,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
                     zoomScale,
                     zoomSettingsMultiplier);
 
-            IList<IUserInputCameraTargetProvider> targetProviders = new List<IUserInputCameraTargetProvider>()
+            IList<UserInputCameraTargetProvider> targetProviders = new List<UserInputCameraTargetProvider>()
             {
                 trumpCameraTargetProvider
             };
@@ -418,7 +418,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         {
             CameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
             IPvPCameraCalculator cameraCalculator = new PvPCameraCalculator(icamera, settings);
-            ICameraTargetProvider cameraTargetProvider
+            CompositeCameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,
                     cameraCalculator,

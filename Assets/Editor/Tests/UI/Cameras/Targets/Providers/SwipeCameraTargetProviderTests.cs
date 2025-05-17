@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 {
     public class SwipeCameraTargetProviderTests
     {
-        private IUserInputCameraTargetProvider _targetProvider;
+        private UserInputCameraTargetProvider _targetProvider;
 
         private DragTracker _dragTracker;
         private ScrollCalculator _scrollCalculator;
@@ -96,7 +96,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             float clampedXPosition = 33.77f;
             _cameraXPositionClamper.Clamp(targetXPosition, validXPositions).Returns(clampedXPosition);
 
-            ICameraTarget expectedTarget
+            CameraTarget expectedTarget
                 = new CameraTarget(
                     new Vector3(clampedXPosition, _camera.Position.y, _camera.Position.z),
                     _camera.OrthographicSize);
@@ -115,7 +115,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             float orthographicSizeDelta = 48.5f;
             _zoomCalculator.FindMouseScrollOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
 
-            ICameraTarget zoomInTarget = Substitute.For<ICameraTarget>();
+            CameraTarget zoomInTarget = Substitute.For<CameraTarget>();
             _directionalZoom.ZoomIn(orthographicSizeDelta, _pointerEventData.Position).Returns(zoomInTarget);
 
             _dragTracker.Drag += Raise.EventWith(_dragEventArgs);
@@ -132,7 +132,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
             float orthographicSizeDelta = 48.5f;
             _zoomCalculator.FindMouseScrollOrthographicSizeDelta(_pointerEventData.Delta.y).Returns(orthographicSizeDelta);
 
-            ICameraTarget zoomOutTarget = Substitute.For<ICameraTarget>();
+            CameraTarget zoomOutTarget = Substitute.For<CameraTarget>();
             _directionalZoom.ZoomOut(orthographicSizeDelta).Returns(zoomOutTarget);
 
             _dragTracker.Drag += Raise.EventWith(_dragEventArgs);

@@ -11,21 +11,21 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
     {
         private ICameraFocuser _cameraFocuser;
         private ICameraTargets _targets;
-        private IStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
+        private StaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
         private CameraTransitionSpeedManager _cameraTransitionSpeedManager;
-        private ICameraTarget _target;
+        private CameraTarget _target;
 
         [SetUp]
         public void TestSetup()
         {
             _targets = Substitute.For<ICameraTargets>();
-            _trumpCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
-            _defaultCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
+            _trumpCameraTargetProvider = Substitute.For<StaticCameraTargetProvider>();
+            _defaultCameraTargetProvider = Substitute.For<StaticCameraTargetProvider>();
             _cameraTransitionSpeedManager = Substitute.For<CameraTransitionSpeedManager>();
 
             _cameraFocuser = new CameraFocuser(_targets, _trumpCameraTargetProvider, _defaultCameraTargetProvider, _cameraTransitionSpeedManager);
 
-            _target = Substitute.For<ICameraTarget>();
+            _target = Substitute.For<CameraTarget>();
         }
 
         [Test]

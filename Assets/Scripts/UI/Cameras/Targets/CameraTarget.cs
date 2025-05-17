@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras.Targets
 {
-    public class CameraTarget : ICameraTarget
+    public class CameraTarget
     {
-		public Vector3 Position { get; } 
-		public float OrthographicSize { get; }
+        public Vector3 Position { get; }
+        public float OrthographicSize { get; }
 
-		public CameraTarget(Vector3 position, float orthographicSize)
-		{
-			Position = position;
-			OrthographicSize = orthographicSize;
-		}
+        public CameraTarget(Vector3 position, float orthographicSize)
+        {
+            Position = position;
+            OrthographicSize = orthographicSize;
+        }
 
         public override bool Equals(object obj)
         {

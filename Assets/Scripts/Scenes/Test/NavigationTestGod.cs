@@ -32,7 +32,7 @@ namespace BattleCruisers.Scenes.Test
                     _camera.Aspect);
             CameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
 
-            IUserInputCameraTargetProvider scrollWheelCameraTargetProvider
+            UserInputCameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(
                     InputBC.Instance,
                     _updaterProvider.PerFrameUpdater,
@@ -47,17 +47,17 @@ namespace BattleCruisers.Scenes.Test
                         cameraCalculator,
                         _cameraCalculatorSettings.ValidOrthographicSizes));
 
-            IStaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
+            StaticCameraTargetProvider defaultCameraTargetProvider = new StaticCameraTargetProvider(priority: 1);
             CameraTarget target
                 = new CameraTarget(
                     position: new Vector3(-35, 0, _camera.Position.z),
                     orthographicSize: _cameraCalculatorSettings.ValidOrthographicSizes.Min);
             defaultCameraTargetProvider.SetTarget(target);
 
-            ICameraTargetProvider cameraTargetProvider
+            CompositeCameraTargetProvider cameraTargetProvider
                 = new CompositeCameraTargetProvider(
                     defaultCameraTargetProvider,
-                    new List<IUserInputCameraTargetProvider>() { scrollWheelCameraTargetProvider });
+                    new List<UserInputCameraTargetProvider>() { scrollWheelCameraTargetProvider });
 
             // Instant, jerky adjuster
             _cameraAdjuster = new InstantCameraAdjuster(cameraTargetProvider, _camera);
