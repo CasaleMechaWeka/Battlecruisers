@@ -5,7 +5,6 @@ using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.Utils.BattleScene.Update;
-using BattleCruisers.Utils.Clamping;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
@@ -16,19 +15,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPEdgeScrollingCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IUpdater _updater;
-        private readonly IEdgeScrollCalculator _scrollCalculator;
+        private readonly EdgeScrollCalculator _scrollCalculator;
         private readonly ICamera _camera;
         private readonly IPvPCameraCalculator _cameraCalculator;
-        private readonly IEdgeDetector _edgeDetector;
+        private readonly EdgeDetector _edgeDetector;
 
         public override int Priority => 2;
 
         public PvPEdgeScrollingCameraTargetProvider(
             IUpdater updater,
-            IEdgeScrollCalculator scrollCalculator,
+            EdgeScrollCalculator scrollCalculator,
             ICamera camera,
             IPvPCameraCalculator cameraCalculator,
-            IEdgeDetector edgeDetector)
+            EdgeDetector edgeDetector)
         {
             PvPHelper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, edgeDetector);
 

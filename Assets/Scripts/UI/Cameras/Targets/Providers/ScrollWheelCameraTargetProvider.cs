@@ -11,15 +11,15 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     {
         private readonly IInput _input;
         private readonly IUpdater _updater;
-        private readonly IZoomCalculator _zoomCalculator;
+        private readonly ZoomCalculator _zoomCalculator;
         private readonly IDirectionalZoom _directionalZoom;
 
         public override int Priority => 5;
 
         public ScrollWheelCameraTargetProvider(
-            IInput input, 
+            IInput input,
             IUpdater updater,
-            IZoomCalculator zoomCalculator,
+            ZoomCalculator zoomCalculator,
             IDirectionalZoom directionalZoom)
         {
             Helper.AssertIsNotNull(input, updater, zoomCalculator, directionalZoom);

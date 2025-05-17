@@ -4,7 +4,6 @@ using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras.Adjusters;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using BattleCruisers.UI.Sound.Players;
@@ -70,8 +69,8 @@ namespace BattleCruisers.UI.Cameras
             icamera = new CameraBC(mainCamera);
             dragTracker.Initialise(navigationPermitters.SwipeFilter);
 
-            ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
-            ICameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
+            CameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
+            CameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
             trumpCameraTargetProvider = new StaticCameraTargetProvider(priority: 6);
 
             targets
@@ -141,9 +140,9 @@ namespace BattleCruisers.UI.Cameras
 
         private ICameraTargetProvider CreateCameraTargetProvider(
             ICamera camera,
-            ICameraCalculator cameraCalculator,
+            CameraCalculator cameraCalculator,
             SettingsManager settingsManager,
-            ICameraCalculatorSettings settings,
+            CameraCalculatorSettings settings,
             NavigationPermitters navigationPermitters,
             IStaticCameraTargetProvider trumpCameraTargetProvider,
             IStaticCameraTargetProvider defaultCameraTargetProvider)
@@ -169,9 +168,9 @@ namespace BattleCruisers.UI.Cameras
 
         private IList<IUserInputCameraTargetProvider> CreateCameraTargetProviders(
             ICamera camera,
-            ICameraCalculator cameraCalculator,
+            CameraCalculator cameraCalculator,
             SettingsManager settingsManager,
-            ICameraCalculatorSettings settings,
+            CameraCalculatorSettings settings,
             TogglableUpdater updater,
             IStaticCameraTargetProvider trumpCameraTargetProvider)
         {
@@ -182,10 +181,10 @@ namespace BattleCruisers.UI.Cameras
                     settings.ValidOrthographicSizes);
 
             IInput input = InputBC.Instance;
-            IPinchTracker pinchTracker = new PinchTracker(input, updater);
+            PinchTracker pinchTracker = new PinchTracker(input, updater);
 
             float zoomScale = SystemInfoBC.Instance.IsHandheld ? ZoomScale.SWIPE : ZoomScale.SCROLL_WHEEL;
-            float zoomSettingsMultiplier = new ZoomLevelConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
+            float zoomSettingsMultiplier = new LevelToMultiplierConverter().LevelToMultiplier(settingsManager.ZoomSpeedLevel);
 
             ZoomCalculator zoomCalculator
                 = new ZoomCalculator(
@@ -201,7 +200,7 @@ namespace BattleCruisers.UI.Cameras
             };
 
             IScrollRecogniser scrollRecogniser;
-            ScrollLevelConverter scrollLevelConverter = new ScrollLevelConverter();
+            LevelToMultiplierConverter scrollLevelConverter = new LevelToMultiplierConverter();
             float swipeMultiplier = TOUCH_SWIPE_MULTIPLIER;
 
             if (SystemInfoBC.Instance.IsHandheld)
@@ -284,8 +283,8 @@ namespace BattleCruisers.UI.Cameras
 
         public CameraComponents UpdateCamera(SettingsManager settingsManager, NavigationPermitters navigationPermitters)
         {
-            ICameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
-            ICameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
+            CameraCalculatorSettings settings = new CameraCalculatorSettings(settingsManager, icamera.Aspect);
+            CameraCalculator cameraCalculator = new CameraCalculator(icamera, settings);
             ICameraTargetProvider cameraTargetProvider
                 = CreateCameraTargetProvider(
                     icamera,

@@ -28,8 +28,8 @@ namespace BattleCruisers.UI.BattleScene.Navigation
         private const float NUKE_ORTHOGRAPHIC_SIZE = 30;
 
         public CameraTargets(
-            ICameraCalculator cameraCalculator,
-            ICameraCalculatorSettings cameraCalculatorSettings,
+            CameraCalculator cameraCalculator,
+            CameraCalculatorSettings cameraCalculatorSettings,
             ICruiser playerCruiser,
             ICruiser aiCruiser,
             ICamera camera)
@@ -62,14 +62,14 @@ namespace BattleCruisers.UI.BattleScene.Navigation
             EnemyCruiserNukedTarget = CreateTarget(camera, cameraCalculator, NUKE_ORTHOGRAPHIC_SIZE, aiCruiser.Position.x);
         }
 
-        private ICameraTarget FindCruiserTarget(ICamera camera, ICameraCalculator cameraCalculator, ICruiser cruiser)
+        private ICameraTarget FindCruiserTarget(ICamera camera, CameraCalculator cameraCalculator, ICruiser cruiser)
         {
             float targetOrthographicSize = cameraCalculator.FindCameraOrthographicSize(cruiser) + 0.75f;
             Vector3 targetPosition = cameraCalculator.FindCruiserCameraPosition(cruiser, targetOrthographicSize, camera.Position.z);
             return new CameraTarget(targetPosition, targetOrthographicSize);
         }
 
-        private ICameraTarget CreateTarget(ICamera camera, ICameraCalculator cameraCalculator, float orthographicSize, float xPosition)
+        private ICameraTarget CreateTarget(ICamera camera, CameraCalculator cameraCalculator, float orthographicSize, float xPosition)
         {
             float yPosition = cameraCalculator.FindCameraYPosition(orthographicSize);
             Vector3 position = new Vector3(xPosition, yPosition, camera.Position.z);

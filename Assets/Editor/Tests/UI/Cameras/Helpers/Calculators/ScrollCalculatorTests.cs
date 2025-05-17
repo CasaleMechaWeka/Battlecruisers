@@ -11,12 +11,12 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class ScrollCalculatorTests
     {
-        private IScrollCalculator _calculator;
+        private ScrollCalculator _calculator;
         private ICamera _camera;
         private ITime _time;
         private IRange<float> _validOrthographicSizes;
         private SettingsManager _settingsManager;
-        private ILevelToMultiplierConverter _scrollConverter;
+        private LevelToMultiplierConverter _scrollConverter;
         private float _scrollDeltaMultiplier;
 
         [SetUp]
@@ -26,7 +26,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             _time = Substitute.For<ITime>();
             _validOrthographicSizes = new Range<float>(5, 40);
             _settingsManager = Substitute.For<SettingsManager>();
-            _scrollConverter = Substitute.For<ILevelToMultiplierConverter>();
+            _scrollConverter = Substitute.For<LevelToMultiplierConverter>();
 
             float multiplier = 4;
             _calculator = new ScrollCalculator(_camera, _time, _validOrthographicSizes, _settingsManager, _scrollConverter, multiplier);

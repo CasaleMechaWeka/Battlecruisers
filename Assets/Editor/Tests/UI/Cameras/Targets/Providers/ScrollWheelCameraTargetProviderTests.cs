@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
         private IInput _input;
         private IUpdater _updater;
-        private IZoomCalculator _zoomCalculator;
+        private ZoomCalculator _zoomCalculator;
         private IDirectionalZoom _directionalZoom;
 
         private int _targetChangedCount, _userInputEndedCount;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         {
             _input = Substitute.For<IInput>();
             _updater = Substitute.For<IUpdater>();
-            _zoomCalculator = Substitute.For<IZoomCalculator>();
+            _zoomCalculator = Substitute.For<ZoomCalculator>();
             _directionalZoom = Substitute.For<IDirectionalZoom>();
 
             _cameraTargetProvider

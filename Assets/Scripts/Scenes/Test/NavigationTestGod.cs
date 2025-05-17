@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test
     {
         private CameraAdjuster _cameraAdjuster;
         protected ICamera _camera;
-        protected ICameraCalculatorSettings _cameraCalculatorSettings;
+        protected CameraCalculatorSettings _cameraCalculatorSettings;
 
         public float normalSmoothTime = 0.15f;
         public float slowSmoothTime = 0.5f;
@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.Test
                 = new CameraCalculatorSettings(
                     Substitute.For<SettingsManager>(),
                     _camera.Aspect);
-            ICameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
+            CameraCalculator cameraCalculator = new CameraCalculator(_camera, _cameraCalculatorSettings);
 
             IUserInputCameraTargetProvider scrollWheelCameraTargetProvider
                 = new ScrollWheelCameraTargetProvider(

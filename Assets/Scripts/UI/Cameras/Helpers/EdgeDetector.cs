@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    public class EdgeDetector : IEdgeDetector
+    public class EdgeDetector
     {
         private readonly IInput _input;
         private readonly int _edgeRegionWithInPixels;

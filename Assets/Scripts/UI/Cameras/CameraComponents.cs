@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.Cameras
         public ICameraFocuser CameraFocuser { get; }
         public ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
-        public ICameraCalculatorSettings Settings { get; }
+        public CameraCalculatorSettings Settings { get; }
         public IHighlightable NavigationButtonsPanel { get; }
         public IHighlightable CaptainsNavigationButtonsPanel { get; }
 
@@ -25,7 +25,7 @@ namespace BattleCruisers.UI.Cameras
             ICameraFocuser cameraFocuser,
             ICruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,
-            ICameraCalculatorSettings settings,
+            CameraCalculatorSettings settings,
             IHighlightable navigationButtonsPanel,
             IHighlightable captainsNavigationButtonsPanel)
         {

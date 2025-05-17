@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    public class ZoomCalculator : IZoomCalculator
+    public class ZoomCalculator
     {
         private readonly ICamera _camera;
         private readonly ITime _time;
@@ -15,8 +15,8 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         private readonly float _zoomScale, _zoomSettingsMultiplier;
 
         public ZoomCalculator(
-            ICamera camera, 
-            ITime time, 
+            ICamera camera,
+            ITime time,
             IRange<float> validOrthographicSizes,
             float zoomScale,
             float zoomSettingsMultiplier)

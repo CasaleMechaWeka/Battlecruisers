@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         private IDirectionalZoom _directionalZoom;
 
         private ICamera _camera;
-        private ICameraCalculator _cameraCalculator;
+        private CameraCalculator _cameraCalculator;
         private IRange<float> _validOrthographicSizes;
 
         private readonly float _orthographicSizeDelta = 5;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         public void TestSetup()
         {
             _camera = Substitute.For<ICamera>();
-            _cameraCalculator = Substitute.For<ICameraCalculator>();
+            _cameraCalculator = Substitute.For<CameraCalculator>();
             _validOrthographicSizes = new Range<float>(5, 40);
 
             _camera.Position.Returns(new Vector3(1, 2, 3));

@@ -3,16 +3,15 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    public class CameraCalculator : ICameraCalculator
+    public class CameraCalculator
     {
         private readonly ICamera _camera;
-        private readonly ICameraCalculatorSettings _settings;
+        private readonly CameraCalculatorSettings _settings;
 
-        public CameraCalculator(ICamera camera, ICameraCalculatorSettings settings)
+        public CameraCalculator(ICamera camera, CameraCalculatorSettings settings)
         {
             Helper.AssertIsNotNull(camera, settings);
 

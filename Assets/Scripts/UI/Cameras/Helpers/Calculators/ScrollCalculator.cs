@@ -7,13 +7,13 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    public class ScrollCalculator : IScrollCalculator
+    public class ScrollCalculator
     {
         private readonly ICamera _camera;
         private readonly ITime _time;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly SettingsManager _settingsManager;
-        private readonly ILevelToMultiplierConverter _scrollLevelConverter;
+        private readonly LevelToMultiplierConverter _scrollLevelConverter;
         private readonly float _scrollMultiplier;
 
         public ScrollCalculator(
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
             ITime time,
             IRange<float> validOrthographicSizes,
             SettingsManager settingsManager,
-            ILevelToMultiplierConverter scrollLevelConverter,
+            LevelToMultiplierConverter scrollLevelConverter,
             float scrollMultiplier)
         {
             Helper.AssertIsNotNull(camera, time, validOrthographicSizes, settingsManager, scrollLevelConverter);

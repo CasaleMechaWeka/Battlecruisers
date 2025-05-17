@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.Utils;
 using System;
 
@@ -8,16 +7,16 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     public class PinchZoomCameraTargetProvider : UserInputCameraTargetProvider
     {
-        private readonly IZoomCalculator _zoomCalculator;
+        private readonly ZoomCalculator _zoomCalculator;
         private readonly IDirectionalZoom _directionalZoom;
-        private readonly IPinchTracker _pinchTracker;
+        private readonly PinchTracker _pinchTracker;
 
         public override int Priority => 4;
 
         public PinchZoomCameraTargetProvider(
-            IZoomCalculator zoomCalculator,
+            ZoomCalculator zoomCalculator,
             IDirectionalZoom directionalZoom,
-            IPinchTracker pinchTracker)
+            PinchTracker pinchTracker)
         {
             Helper.AssertIsNotNull(zoomCalculator, directionalZoom, pinchTracker);
 

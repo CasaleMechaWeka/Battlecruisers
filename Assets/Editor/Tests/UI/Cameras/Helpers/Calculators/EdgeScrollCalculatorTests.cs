@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class EdgeScrollCalculatorTests
     {
-        private IEdgeScrollCalculator _calculator;
+        private EdgeScrollCalculator _calculator;
         private float _expectedDelta;
         private const float MULTIPLIER = 4;
 
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
             ITime time = Substitute.For<ITime>();
             IRange<float> validOrthographicSizes = new Range<float>(5, 40);
             SettingsManager settingsManager = Substitute.For<SettingsManager>();
-            ILevelToMultiplierConverter scrollConverter = Substitute.For<ILevelToMultiplierConverter>();
+            LevelToMultiplierConverter scrollConverter = Substitute.For<LevelToMultiplierConverter>();
 
             _calculator = new EdgeScrollCalculator(time, settingsManager, scrollConverter, camera, validOrthographicSizes, MULTIPLIER);
 

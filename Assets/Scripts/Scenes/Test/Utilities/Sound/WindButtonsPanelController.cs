@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Utilities.Sound
         private WindManager _windManager;
         public WindInitialiser windInitialiser;
 
-        public void Initialise(ICamera camera, ICameraCalculatorSettings cameraCalculatorSettings)
+        public void Initialise(ICamera camera, CameraCalculatorSettings cameraCalculatorSettings)
         {
             BCUtils.Helper.AssertIsNotNull(camera, cameraCalculatorSettings);
 

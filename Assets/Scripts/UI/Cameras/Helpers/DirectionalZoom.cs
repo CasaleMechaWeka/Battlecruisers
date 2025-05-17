@@ -10,10 +10,10 @@ namespace BattleCruisers.UI.Cameras.Helpers
     public class DirectionalZoom : IDirectionalZoom
     {
         private readonly ICamera _camera;
-        private readonly ICameraCalculator _cameraCalculator;
+        private readonly CameraCalculator _cameraCalculator;
         private readonly IRange<float> _validOrthographicSizes;
 
-        public DirectionalZoom(ICamera camera, ICameraCalculator cameraCalculator, IRange<float> validOrthographicSizes)
+        public DirectionalZoom(ICamera camera, CameraCalculator cameraCalculator, IRange<float> validOrthographicSizes)
         {
             Helper.AssertIsNotNull(camera, cameraCalculator, validOrthographicSizes);
 

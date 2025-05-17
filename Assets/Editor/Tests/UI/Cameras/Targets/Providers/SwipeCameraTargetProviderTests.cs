@@ -1,5 +1,4 @@
-﻿using System;
-using BattleCruisers.UI.Cameras.Helpers;
+﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
@@ -16,11 +15,11 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
     {
         private IUserInputCameraTargetProvider _targetProvider;
 
-        private IDragTracker _dragTracker;
-        private IScrollCalculator _scrollCalculator;
-        private IZoomCalculator _zoomCalculator;
+        private DragTracker _dragTracker;
+        private ScrollCalculator _scrollCalculator;
+        private ZoomCalculator _zoomCalculator;
         private ICamera _camera;
-        private ICameraCalculator _cameraCalculator;
+        private CameraCalculator _cameraCalculator;
         private IDirectionalZoom _directionalZoom;
         private IScrollRecogniser _scrollRecogniser;
         private BufferClamper _cameraXPositionClamper;
@@ -32,11 +31,11 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
         [SetUp]
         public void TestSetup()
         {
-            _dragTracker = Substitute.For<IDragTracker>();
-            _scrollCalculator = Substitute.For<IScrollCalculator>();
-            _zoomCalculator = Substitute.For<IZoomCalculator>();
+            _dragTracker = Substitute.For<DragTracker>();
+            _scrollCalculator = Substitute.For<ScrollCalculator>();
+            _zoomCalculator = Substitute.For<ZoomCalculator>();
             _camera = Substitute.For<ICamera>();
-            _cameraCalculator = Substitute.For<ICameraCalculator>();
+            _cameraCalculator = Substitute.For<CameraCalculator>();
             _directionalZoom = Substitute.For<IDirectionalZoom>();
             _scrollRecogniser = Substitute.For<IScrollRecogniser>();
             _cameraXPositionClamper = Substitute.For<BufferClamper>();

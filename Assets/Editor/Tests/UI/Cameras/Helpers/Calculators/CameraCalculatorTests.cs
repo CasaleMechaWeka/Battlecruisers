@@ -11,8 +11,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class CameraCalculatorTests
     {
-        private ICameraCalculator _calculator;
-        private ICameraCalculatorSettings _settings;
+        private CameraCalculator _calculator;
+        private CameraCalculatorSettings _settings;
         private ICamera _camera;
         private ICruiser _cruiser;
 

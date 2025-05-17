@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Calculators
 {
     public class ZoomCalculatorTests
     {
-        private IZoomCalculator _calculator;
+        private ZoomCalculator _calculator;
         private ICamera _camera;
         private ITime _time;
         private IRange<float> _validOrthographicSizes;

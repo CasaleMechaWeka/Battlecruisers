@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    public class CameraCalculatorSettings : ICameraCalculatorSettings
+    public class CameraCalculatorSettings
     {
         private readonly SettingsManager _settingsManager;
 

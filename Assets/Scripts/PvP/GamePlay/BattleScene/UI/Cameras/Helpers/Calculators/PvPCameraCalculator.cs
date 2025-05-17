@@ -10,9 +10,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPCameraCalculator : IPvPCameraCalculator
     {
         private readonly ICamera _camera;
-        private readonly ICameraCalculatorSettings _settings;
+        private readonly CameraCalculatorSettings _settings;
 
-        public PvPCameraCalculator(ICamera camera, ICameraCalculatorSettings settings)
+        public PvPCameraCalculator(ICamera camera, CameraCalculatorSettings settings)
         {
             PvPHelper.AssertIsNotNull(camera, settings);
 

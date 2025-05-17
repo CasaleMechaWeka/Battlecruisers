@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.UI.Cameras.Helpers.Pinch;
 using BattleCruisers.UI.Cameras.Targets;
 using BattleCruisers.UI.Cameras.Targets.Providers;
 using NSubstitute;
@@ -12,18 +11,18 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
     public class PinchZoomCameraTargetProviderTests
     {
         private IUserInputCameraTargetProvider _targetProvider;
-        private IZoomCalculator _zoomCalculator;
+        private ZoomCalculator _zoomCalculator;
         private IDirectionalZoom _directionalZoom;
-        private IPinchTracker _pinchTracker;
+        private PinchTracker _pinchTracker;
         private int _endedCount;
         private ICameraTarget _target;
 
         [SetUp]
         public void TestSetup()
         {
-            _zoomCalculator = Substitute.For<IZoomCalculator>();
+            _zoomCalculator = Substitute.For<ZoomCalculator>();
             _directionalZoom = Substitute.For<IDirectionalZoom>();
-            _pinchTracker = Substitute.For<IPinchTracker>();
+            _pinchTracker = Substitute.For<PinchTracker>();
 
             _targetProvider = new PinchZoomCameraTargetProvider(_zoomCalculator, _directionalZoom, _pinchTracker);
 
@@ -32,7 +31,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Targets.Providers
 
             _target = Substitute.For<ICameraTarget>();
         }
-        
+
         [Test]
         public void _pinchTracker_Pinch_NegativeDelta()
         {

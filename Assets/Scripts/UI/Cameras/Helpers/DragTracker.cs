@@ -2,12 +2,12 @@
 using System;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.Cameras.Helpers
 {
-    public class DragTracker : MonoBehaviour, 
-        IDragTracker,
+    public class DragTracker : MonoBehaviour,
         IDragHandler,
         IBeginDragHandler,
         IEndDragHandler
@@ -32,6 +32,17 @@ namespace BattleCruisers.UI.Cameras.Helpers
         {
             Logging.VerboseMethod(Tags.SWIPE_NAVIGATION);
             DragEnd?.Invoke(this, new DragEventArgs(new PointerEventDataBC(eventData)));
+        }
+    }
+
+    public class DragEventArgs : EventArgs
+    {
+        public IPointerEventData PointerEventData { get; }
+
+        public DragEventArgs(IPointerEventData pointerEventData)
+        {
+            Assert.IsNotNull(pointerEventData);
+            PointerEventData = pointerEventData;
         }
     }
 }

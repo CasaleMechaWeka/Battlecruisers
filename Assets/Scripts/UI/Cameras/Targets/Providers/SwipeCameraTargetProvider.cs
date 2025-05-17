@@ -10,11 +10,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
 {
     public class SwipeCameraTargetProvider : UserInputCameraTargetProvider
     {
-        private readonly IDragTracker _dragTracker;
-        private readonly IScrollCalculator _scrollCalculator;
-        private readonly IZoomCalculator _zoomCalculator;
+        private readonly DragTracker _dragTracker;
+        private readonly ScrollCalculator _scrollCalculator;
+        private readonly ZoomCalculator _zoomCalculator;
         private readonly ICamera _camera;
-        private readonly ICameraCalculator _cameraCalculator;
+        private readonly CameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IScrollRecogniser _scrollRecogniser;
         private readonly BufferClamper _cameraXPositionClamper;
@@ -22,11 +22,11 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
         public override int Priority => 3;
 
         public SwipeCameraTargetProvider(
-            IDragTracker dragTracker,
-            IScrollCalculator scrollCalculator,
-            IZoomCalculator zoomCalculator,
+            DragTracker dragTracker,
+            ScrollCalculator scrollCalculator,
+            ZoomCalculator zoomCalculator,
             ICamera camera,
-            ICameraCalculator cameraCalculator,
+            CameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
             IScrollRecogniser scrollRecogniser,
             BufferClamper cameraXPositionClamper)

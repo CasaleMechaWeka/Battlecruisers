@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 {
     public class EdgeDetectorTests
     {
-        private IEdgeDetector _detector;
+        private EdgeDetector _detector;
         private IInput _input;
         private int _edgeRegionWithInPixels;
 

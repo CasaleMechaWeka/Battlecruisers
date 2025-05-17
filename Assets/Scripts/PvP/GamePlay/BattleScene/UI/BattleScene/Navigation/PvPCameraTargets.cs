@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPCameraTargets(
             IPvPCameraCalculator cameraCalculator,
-            ICameraCalculatorSettings cameraCalculatorSettings,
+            CameraCalculatorSettings cameraCalculatorSettings,
             IPvPCruiser playerCruiser,
             IPvPCruiser enemyCruiser,
             ICamera camera)

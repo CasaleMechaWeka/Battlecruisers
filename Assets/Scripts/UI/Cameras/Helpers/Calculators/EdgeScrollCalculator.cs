@@ -7,11 +7,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Helpers.Calculators
 {
-    public class EdgeScrollCalculator : IEdgeScrollCalculator
+    public class EdgeScrollCalculator
     {
         private readonly ITime _time;
         private readonly SettingsManager _settingsManager;
-        private readonly ILevelToMultiplierConverter _scrollLevelConverter;
+        private readonly LevelToMultiplierConverter _scrollLevelConverter;
         private readonly ICamera _camera;
         private readonly IRange<float> _validOrthographicSizes;
         private readonly float _scrollMultiplier;
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.Cameras.Helpers.Calculators
         public EdgeScrollCalculator(
             ITime time,
             SettingsManager settingsManager,
-            ILevelToMultiplierConverter scrollLevelConverter,
+            LevelToMultiplierConverter scrollLevelConverter,
             ICamera camera,
             IRange<float> validOrthographicSizes,
             float scrollMultiplier)

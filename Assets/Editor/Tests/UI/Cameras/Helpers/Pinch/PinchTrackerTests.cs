@@ -1,4 +1,4 @@
-﻿using BattleCruisers.UI.Cameras.Helpers.Pinch;
+﻿using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Pinch
 {
     public class PinchTrackerTests
     {
-        private IPinchTracker _pinchTracker;
+        private PinchTracker _pinchTracker;
         private IInput _input;
         private IUpdater _updater;
         private PinchEventArgs _lastPinchEventArgs;
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Pinch
         public void _updater_Updated_TouchCountNot2()
         {
             _input.TouchCount.Returns(1);
-            
+
             _updater.Updated += Raise.Event();
 
             Assert.AreEqual(0, _pinchStartCount);
@@ -100,7 +100,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers.Pinch
 
             // End pinch
             _input.TouchCount.Returns(1);
-            
+
             _updater.Updated += Raise.Event();
 
             Assert.AreEqual(1, _pinchEndCount);

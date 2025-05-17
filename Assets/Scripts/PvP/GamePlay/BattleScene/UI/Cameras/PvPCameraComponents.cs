@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public ICameraFocuser CameraFocuser { get; }
         public IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
-        public ICameraCalculatorSettings Settings { get; }
+        public CameraCalculatorSettings Settings { get; }
         public IHighlightable NavigationButtonsPanel { get; }
 
         public PvPCameraComponents(
@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ICameraFocuser cameraFocuser,
             IPvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,
-            ICameraCalculatorSettings settings,
+            CameraCalculatorSettings settings,
             IHighlightable navigationButtonsPanel)
         {
             PvPHelper.AssertIsNotNull(mainCamera, cameraAdjuster, cameraFocuser, cruiserDeathCameraFocuser, skybox, settings, navigationButtonsPanel);

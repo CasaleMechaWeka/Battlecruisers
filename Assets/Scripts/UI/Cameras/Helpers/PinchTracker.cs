@@ -4,9 +4,9 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.UI.Cameras.Helpers.Pinch
+namespace BattleCruisers.UI.Cameras.Helpers
 {
-    public class PinchTracker : IPinchTracker
+    public class PinchTracker
     {
         private readonly IInput _input;
         private readonly IUpdater _updater;
@@ -78,13 +78,38 @@ namespace BattleCruisers.UI.Cameras.Helpers.Pinch
         {
             Vector2 touchPosition1 = _input.GetTouchPosition(0);
             Vector2 touchPosition2 = _input.GetTouchPosition(1);
-            
+
             float currentDistance = Vector2.Distance(touchPosition1, touchPosition2);
             float delta = currentDistance - _lastDistanceInM;
             _lastDistanceInM = currentDistance;
 
             Logging.Log(Tags.PINCH, $"About to invoke {nameof(Pinch)} event with position: {touchPosition1}  and delta: {delta}");
             Pinch?.Invoke(this, new PinchEventArgs(touchPosition1, delta));
+        }
+    }
+
+    public class PinchEventArgs : EventArgs
+    {
+        public Vector2 Position { get; }
+        public float DeltaInM { get; }
+
+        public PinchEventArgs(Vector2 position, float deltaInM)
+        {
+            Position = position;
+            DeltaInM = deltaInM;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return
+                obj is PinchEventArgs other
+                && Position.SmartEquals(other.Position)
+                && DeltaInM == other.DeltaInM;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.GetHashCode(Position, DeltaInM);
         }
     }
 }

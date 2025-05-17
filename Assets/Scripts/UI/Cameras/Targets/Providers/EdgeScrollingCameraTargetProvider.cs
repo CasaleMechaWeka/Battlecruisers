@@ -12,19 +12,19 @@ namespace BattleCruisers.UI.Cameras.Targets.Providers
     public class EdgeScrollingCameraTargetProvider : UserInputCameraTargetProvider
     {
         private readonly IUpdater _updater;
-        private readonly IEdgeScrollCalculator _scrollCalculator;
+        private readonly EdgeScrollCalculator _scrollCalculator;
         private readonly ICamera _camera;
-        private readonly ICameraCalculator _cameraCalculator;
-        private readonly IEdgeDetector _edgeDetector;
+        private readonly CameraCalculator _cameraCalculator;
+        private readonly EdgeDetector _edgeDetector;
 
         public override int Priority => 2;
 
         public EdgeScrollingCameraTargetProvider(
             IUpdater updater,
-            IEdgeScrollCalculator scrollCalculator,
+            EdgeScrollCalculator scrollCalculator,
             ICamera camera,
-            ICameraCalculator cameraCalculator,
-            IEdgeDetector edgeDetector)
+            CameraCalculator cameraCalculator,
+            EdgeDetector edgeDetector)
         {
             Helper.AssertIsNotNull(updater, scrollCalculator, camera, cameraCalculator, edgeDetector);
 
