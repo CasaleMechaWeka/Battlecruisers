@@ -6,11 +6,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class CameraAdjustmentWaitStepFactory : TutorialFactoryBase
     {
-        private readonly ICameraComponents _cameraComponents;
+        private readonly CameraComponents _cameraComponents;
 
         public CameraAdjustmentWaitStepFactory(
             TutorialStepArgsFactory argsFactory,
-            ICameraComponents cameraComponents)
+            CameraComponents cameraComponents)
             : base(argsFactory)
         {
             Assert.IsNotNull(cameraComponents);

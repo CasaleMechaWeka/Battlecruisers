@@ -7,12 +7,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class AutoNavigationStepFactory : TutorialFactoryBase
     {
         private readonly CameraAdjustmentWaitStepFactory _cameraAdjustmentWaitStepFactory;
-        private readonly ICameraComponents _cameraComponents;
+        private readonly CameraComponents _cameraComponents;
 
         public AutoNavigationStepFactory(
             TutorialStepArgsFactory argsFactory,
             CameraAdjustmentWaitStepFactory cameraAdjustmentWaitStepFactory,
-            ICameraComponents cameraComponents)
+            CameraComponents cameraComponents)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(cameraAdjustmentWaitStepFactory, cameraComponents);

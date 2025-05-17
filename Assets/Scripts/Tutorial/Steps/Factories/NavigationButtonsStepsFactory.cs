@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly FeaturePermitterStepFactory _featurePermitterStepFactory;
         private readonly IPermitter _navigationButtonsPermitter, _hotkeysPermitter;
         private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
-        private readonly ICameraComponents _cameraComponents;
+        private readonly CameraComponents _cameraComponents;
 
         public NavigationButtonsStepsFactory(
             TutorialStepArgsFactory argsFactory,
@@ -20,7 +20,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IPermitter navigationButtonsPermitter,
             IPermitter hotkeysPermitter,
             ExplanationDismissableStepFactory explanationDismissableStepFactory,
-            ICameraComponents cameraComponents)
+            CameraComponents cameraComponents)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(featurePermitterStepFactory, navigationButtonsPermitter, hotkeysPermitter, explanationDismissableStepFactory, cameraComponents);

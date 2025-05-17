@@ -53,7 +53,7 @@ namespace BattleCruisers.UI.Cameras
         private ITime time;
         private CameraTransitionSpeedManager cameraTransitionSpeedManager;
 
-        public ICameraComponents Initialise(
+        public CameraComponents Initialise(
             SettingsManager settingsManager,
             ICruiser playerCruiser,
             ICruiser aiCruiser,

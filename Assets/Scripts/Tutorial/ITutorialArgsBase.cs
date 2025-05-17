@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial
         ICruiser AICruiser { get; }
         ITutorialProvider TutorialProvider { get; }
         BattleSceneGodComponents Components { get; }
-        ICameraComponents CameraComponents { get; }
+        CameraComponents CameraComponents { get; }
         TopPanelComponents TopPanelComponents { get; }
         LeftPanelComponents LeftPanelComponents { get; }
         RightPanelComponents RightPanelComponents { get; }

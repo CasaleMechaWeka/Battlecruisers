@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.Cameras
 {
-    public class CameraComponents : ICameraComponents
+    public class CameraComponents
     {
         public ICamera MainCamera { get; }
         public CameraAdjuster CameraAdjuster { get; }

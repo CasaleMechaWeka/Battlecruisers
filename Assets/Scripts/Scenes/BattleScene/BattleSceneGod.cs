@@ -76,7 +76,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
-        private ICameraComponents cameraComponents;
+        private CameraComponents cameraComponents;
         public ToolTipActivator toolTipActivator;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
         public static Sprite enemyCruiserSprite;

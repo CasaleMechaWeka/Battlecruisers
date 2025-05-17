@@ -40,7 +40,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Deaths
 
             CameraInitialiser cameraInitialiser = FindObjectOfType<CameraInitialiser>();
             Assert.IsNotNull(cameraInitialiser);
-            ICameraComponents cameraComponents = cameraInitialiser
+            CameraComponents cameraComponents = cameraInitialiser
                 .Initialise(
                     DataProvider.SettingsManager,
                     playerCruiser,
