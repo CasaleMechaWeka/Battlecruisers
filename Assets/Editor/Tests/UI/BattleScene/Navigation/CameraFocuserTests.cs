@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
         private ICameraFocuser _cameraFocuser;
         private ICameraTargets _targets;
         private IStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
-        private ICameraTransitionSpeedManager _cameraTransitionSpeedManager;
+        private CameraTransitionSpeedManager _cameraTransitionSpeedManager;
         private ICameraTarget _target;
 
         [SetUp]
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
             _targets = Substitute.For<ICameraTargets>();
             _trumpCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
             _defaultCameraTargetProvider = Substitute.For<IStaticCameraTargetProvider>();
-            _cameraTransitionSpeedManager = Substitute.For<ICameraTransitionSpeedManager>();
+            _cameraTransitionSpeedManager = Substitute.For<CameraTransitionSpeedManager>();
 
             _cameraFocuser = new CameraFocuser(_targets, _trumpCameraTargetProvider, _defaultCameraTargetProvider, _cameraTransitionSpeedManager);
 

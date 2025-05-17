@@ -9,9 +9,9 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     /// </summary>
     public class CameraAdjustmentWaitStep : TutorialStep
     {
-        private readonly ICameraAdjuster _cameraAdjuster;
+        private readonly CameraAdjuster _cameraAdjuster;
 
-        public CameraAdjustmentWaitStep(ITutorialStepArgs args, ICameraAdjuster cameraAdjuster)
+        public CameraAdjustmentWaitStep(ITutorialStepArgs args, CameraAdjuster cameraAdjuster)
             : base(args)
         {
             Assert.IsNotNull(cameraAdjuster);

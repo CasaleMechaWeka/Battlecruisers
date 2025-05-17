@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
-    public class CameraTransitionSpeedManager : ICameraTransitionSpeedManager, ICameraSmoothTimeProvider
+    public class CameraTransitionSpeedManager
     {
         private readonly float _normalSmoothTime, _slowSmoothTime;
         private const float MIN_SMOOTH_TIME = 0;

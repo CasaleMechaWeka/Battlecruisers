@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.Cameras
     public class CameraComponents : ICameraComponents
     {
         public ICamera MainCamera { get; }
-        public ICameraAdjuster CameraAdjuster { get; }
+        public CameraAdjuster CameraAdjuster { get; }
         public ICameraFocuser CameraFocuser { get; }
         public ICruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
@@ -21,7 +21,7 @@ namespace BattleCruisers.UI.Cameras
 
         public CameraComponents(
             ICamera mainCamera,
-            ICameraAdjuster cameraAdjuster,
+            CameraAdjuster cameraAdjuster,
             ICameraFocuser cameraFocuser,
             ICruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,

@@ -8,13 +8,13 @@ namespace BattleCruisers.UI.BattleScene.Navigation
     {
         private readonly ICameraTargets _targets;
         private readonly IStaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
-        private readonly ICameraTransitionSpeedManager _cameraTransitionSpeedManager;
+        private readonly CameraTransitionSpeedManager _cameraTransitionSpeedManager;
 
         public CameraFocuser(
             ICameraTargets targets,
             IStaticCameraTargetProvider trumpCameraTargetProvider,
             IStaticCameraTargetProvider defaultCameraTargetProvider,
-            ICameraTransitionSpeedManager cameraTransitionSpeedManager)
+            CameraTransitionSpeedManager cameraTransitionSpeedManager)
         {
             Helper.AssertIsNotNull(targets, trumpCameraTargetProvider, defaultCameraTargetProvider, cameraTransitionSpeedManager);
 

@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.Cameras.Adjusters
 {
-    public abstract class CameraAdjuster : ICameraAdjuster
+    public abstract class CameraAdjuster
     {
         protected readonly ICameraTargetProvider _cameraTargetProvider;
 

@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Adjusters
 {
     public class InstantCameraAdjusterTests
     {
-        private ICameraAdjuster _adjuster;
+        private CameraAdjuster _adjuster;
         private ICameraTargetProvider _cameraTargetProvider;
         private ICamera _camera;
         private ICameraTarget _cameraTarget;

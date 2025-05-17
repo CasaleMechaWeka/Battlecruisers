@@ -16,7 +16,7 @@ namespace BattleCruisers.Scenes.Test
 {
     public class NavigationTestGod : TestGodBase
     {
-        private ICameraAdjuster _cameraAdjuster;
+        private CameraAdjuster _cameraAdjuster;
         protected ICamera _camera;
         protected ICameraCalculatorSettings _cameraCalculatorSettings;
 
@@ -64,7 +64,7 @@ namespace BattleCruisers.Scenes.Test
 
             // Smooth adjuster
             ITime time = TimeBC.Instance;
-            ICameraSmoothTimeProvider smoothTimeProvider = new CameraTransitionSpeedManager(normalSmoothTime, slowSmoothTime);
+            CameraTransitionSpeedManager smoothTimeProvider = new CameraTransitionSpeedManager(normalSmoothTime, slowSmoothTime);
             _cameraAdjuster
                 = new SmoothCameraAdjuster(
                     cameraTargetProvider,

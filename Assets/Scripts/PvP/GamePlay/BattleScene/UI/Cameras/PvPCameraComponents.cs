@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPCameraComponents
     {
         public ICamera MainCamera { get; }
-        public ICameraAdjuster CameraAdjuster { get; }
+        public CameraAdjuster CameraAdjuster { get; }
         public ICameraFocuser CameraFocuser { get; }
         public IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         public PvPCameraComponents(
             ICamera mainCamera,
-            ICameraAdjuster cameraAdjuster,
+            CameraAdjuster cameraAdjuster,
             ICameraFocuser cameraFocuser,
             IPvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,

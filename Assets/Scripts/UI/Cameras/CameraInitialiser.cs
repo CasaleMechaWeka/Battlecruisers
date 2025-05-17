@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.Cameras
 {
     public class CameraInitialiser : MonoBehaviour
     {
-        private ICameraAdjuster _cameraAdjuster;
+        private CameraAdjuster _cameraAdjuster;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel

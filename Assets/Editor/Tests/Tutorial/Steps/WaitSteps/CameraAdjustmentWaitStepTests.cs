@@ -9,14 +9,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
     public class CameraAdjustmentWaitStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _step;
-        private ICameraAdjuster _cameraAdjuster;
+        private CameraAdjuster _cameraAdjuster;
 
         [SetUp]
         public override void SetuUp()
         {
             base.SetuUp();
 
-            _cameraAdjuster = Substitute.For<ICameraAdjuster>();
+            _cameraAdjuster = Substitute.For<CameraAdjuster>();
             _step = new CameraAdjustmentWaitStep(_args, _cameraAdjuster);
         }
 

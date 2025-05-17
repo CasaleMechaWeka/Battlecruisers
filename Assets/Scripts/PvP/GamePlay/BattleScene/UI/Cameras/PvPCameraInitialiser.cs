@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 {
     public class PvPCameraInitialiser : MonoBehaviour
     {
-        private ICameraAdjuster _cameraAdjuster;
+        private CameraAdjuster _cameraAdjuster;
 
         // Allows camera to be moved into invalid position up to this amount,
         // with camera snapping back into valid range when the navigation wheel

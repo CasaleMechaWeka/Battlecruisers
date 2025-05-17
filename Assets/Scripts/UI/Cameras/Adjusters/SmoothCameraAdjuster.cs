@@ -8,13 +8,13 @@ namespace BattleCruisers.UI.Cameras.Adjusters
     /// </summary>
     public class SmoothCameraAdjuster : CameraAdjuster
     {
-        private readonly ISmoothZoomAdjuster _zoomAdjuster;
-        private readonly ISmoothPositionAdjuster _positionAdjuster;
+        private readonly SmoothZoomAdjuster _zoomAdjuster;
+        private readonly SmoothPositionAdjuster _positionAdjuster;
 
         public SmoothCameraAdjuster(
-            ICameraTargetProvider cameraTargetProvider, 
-            ISmoothZoomAdjuster zoomAdjuster,
-            ISmoothPositionAdjuster positionAdjuster)
+            ICameraTargetProvider cameraTargetProvider,
+            SmoothZoomAdjuster zoomAdjuster,
+            SmoothPositionAdjuster positionAdjuster)
             : base(cameraTargetProvider)
         {
             Helper.AssertIsNotNull(zoomAdjuster, positionAdjuster);
