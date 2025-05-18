@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene
             PauseGameManager pauseGameManager,
             BattleCompletionHandler battleCompletionHandler,
             SingleSoundPlayer soundPlayer,
-            INavigationPermitterManager navigationPermitterManager)
+            NavigationPermitterManager navigationPermitterManager)
         {
             Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
             Helper.AssertIsNotNull(

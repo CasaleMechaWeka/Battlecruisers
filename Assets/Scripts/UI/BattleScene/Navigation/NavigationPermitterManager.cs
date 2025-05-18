@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class NavigationPermitterManager : INavigationPermitterManager
+    public class NavigationPermitterManager
     {
         private readonly NavigationPermitters _navigationPermitters;
 

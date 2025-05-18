@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
         public IBroadcastingProperty<bool> IsShown { get; }
 
         public HelpLabelManager(
-            INavigationPermitterManager navigationPermitterManager,
+            NavigationPermitterManager navigationPermitterManager,
             PauseGameManager pauseGameManager,
             HelpStateFinder helpStateFinder)
             : base(navigationPermitterManager, pauseGameManager)

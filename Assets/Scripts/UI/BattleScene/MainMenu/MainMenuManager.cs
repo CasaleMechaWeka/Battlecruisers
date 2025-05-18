@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
         public event EventHandler Dismissed;
 
         public MainMenuManager(
-            INavigationPermitterManager navigationPermitterManager,
+            NavigationPermitterManager navigationPermitterManager,
             PauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             BattleCompletionHandler battleCompletionHandler)

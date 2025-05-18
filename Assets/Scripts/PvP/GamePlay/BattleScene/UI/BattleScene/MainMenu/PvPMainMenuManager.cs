@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public event EventHandler Dismissed;
 
         public PvPMainMenuManager(
-            INavigationPermitterManager navigationPermitterManager,
+            NavigationPermitterManager navigationPermitterManager,
             PauseGameManager pauseGameManager,
             IModalMenu modalMenu,
             IPvPBattleCompletionHandler battleCompletionHandler)

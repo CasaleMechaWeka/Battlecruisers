@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Navigation
 {
-    public class CruiserDeathCameraFocuser : ICruiserDeathCameraFocuser
+    public class CruiserDeathCameraFocuser
     {
         private readonly ICameraFocuser _cameraFocuser;
 

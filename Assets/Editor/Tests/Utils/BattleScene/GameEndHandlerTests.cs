@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private IManagedDisposable _ai;
         private BattleCompletionHandler _battleCompletionHandler;
         private IDeferrer _deferrer;
-        private ICruiserDeathCameraFocuser _cameraFocuser;
+        private CruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
         private UIManager _uiManager;
         private ITargetIndicator _targetIndicator;
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _ai = Substitute.For<IManagedDisposable>();
             _battleCompletionHandler = Substitute.For<BattleCompletionHandler>();
             _deferrer = Substitute.For<IDeferrer>();
-            _cameraFocuser = Substitute.For<ICruiserDeathCameraFocuser>();
+            _cameraFocuser = Substitute.For<CruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _uiManager = Substitute.For<UIManager>();
             _targetIndicator = Substitute.For<ITargetIndicator>();

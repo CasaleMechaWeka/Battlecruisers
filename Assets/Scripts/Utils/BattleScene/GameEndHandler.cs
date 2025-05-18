@@ -24,7 +24,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly IManagedDisposable _ai;
         private readonly BattleCompletionHandler _battleCompletionHandler;
         private readonly IDeferrer _deferrer;
-        private readonly ICruiserDeathCameraFocuser _cameraFocuser;
+        private readonly CruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
         private readonly UIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
@@ -42,7 +42,7 @@ namespace BattleCruisers.Utils.BattleScene
             IManagedDisposable ai,
             BattleCompletionHandler battleCompletionHandler,
             IDeferrer deferrer,
-            ICruiserDeathCameraFocuser cameraFocuser,
+            CruiserDeathCameraFocuser cameraFocuser,
             IPermitter navigationPermitter,
             UIManager uiManager,
             ITargetIndicator targetIndicator,

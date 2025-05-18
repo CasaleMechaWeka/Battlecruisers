@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.UI.BattleScene
 {
     public class DummyModalManager : ModalManager
     {
-        public DummyModalManager(INavigationPermitterManager navigationPermitterManager, PauseGameManager pauseGameManager)
+        public DummyModalManager(NavigationPermitterManager navigationPermitterManager, PauseGameManager pauseGameManager)
             : base(navigationPermitterManager, pauseGameManager)
         {
         }

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Navigation
 {
     public class CruiserDeathCameraFocuserTests
     {
-        private ICruiserDeathCameraFocuser _cruiserDeathCameraFocuser;
+        private CruiserDeathCameraFocuser _cruiserDeathCameraFocuser;
         private ICameraFocuser _cameraFocuser;
         private ICruiser _losingCruiser;
         private NukeLauncherController _nukeLauncherController;

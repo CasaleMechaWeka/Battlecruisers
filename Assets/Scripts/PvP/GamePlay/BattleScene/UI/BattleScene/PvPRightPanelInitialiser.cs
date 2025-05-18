@@ -43,7 +43,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PauseGameManager pauseGameManager,
             IPvPBattleCompletionHandler battleCompletionHandler,
             SingleSoundPlayer soundPlayer,
-            INavigationPermitterManager navigationPermitterManager
+            NavigationPermitterManager navigationPermitterManager
             )
         {
             PvPHelper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);

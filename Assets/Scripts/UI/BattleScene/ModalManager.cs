@@ -6,13 +6,13 @@ namespace BattleCruisers.UI.BattleScene
 {
     public abstract class ModalManager
     {
-        private readonly INavigationPermitterManager _navigationPermitterManager;
+        private readonly NavigationPermitterManager _navigationPermitterManager;
         protected readonly PauseGameManager _pauseGameManager;
 
         private NavigationPermittersState _stateOnShowMenu;
 
         protected ModalManager(
-            INavigationPermitterManager navigationPermitterManager,
+            NavigationPermitterManager navigationPermitterManager,
             PauseGameManager pauseGameManager)
         {
             Helper.AssertIsNotNull(pauseGameManager, navigationPermitterManager);
