@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             IDroneFocuser droneFocuser,
             IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             SingleSoundPlayer soundPlayer,
             SlidingPanel informatorPanel,
             IUpdater updater,

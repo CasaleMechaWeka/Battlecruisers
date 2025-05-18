@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Toggles
 {
-    public class ToggleButtonGroup : IToggleButtonGroup
+    public class ToggleButtonGroup
     {
         private readonly IToggleButton _defaultButton;
 

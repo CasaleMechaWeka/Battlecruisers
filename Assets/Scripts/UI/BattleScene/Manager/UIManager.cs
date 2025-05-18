@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
     public class UIManager
     {
         private ICruiser _playerCruiser, _aiCruiser;
-        private IBuildMenu _buildMenu;
+        private BuildMenu _buildMenu;
         private ItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
         private SingleSoundPlayer _uiSoundPlayer;
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public void Initialise(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IBuildMenu buildMenu,
+            BuildMenu buildMenu,
             ItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer)

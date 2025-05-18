@@ -6,7 +6,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     public interface ISpeedComponents
     {
         IHighlightable SpeedButtonPanel { get; }
-        IToggleButtonGroup SpeedButtonGroup { get; }
+        ToggleButtonGroup SpeedButtonGroup { get; }
         IGameSpeedButton PauseButton { get; }
         IGameSpeedButton SlowMotionButton { get; }
         IGameSpeedButton NormalSpeedButton { get; }

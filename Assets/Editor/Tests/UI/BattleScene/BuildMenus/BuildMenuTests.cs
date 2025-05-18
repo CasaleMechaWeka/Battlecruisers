@@ -16,7 +16,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.BuildMenus
 {
     public class BuildMenuTests
     {
-        private IBuildMenu _buildMenu;
+        private BuildMenu _buildMenu;
         private SlidingPanel _selectorPanel;
         private IBuildingCategoriesMenu _buildingCategoriesMenu;
         private IBuildableMenus<BuildingCategory> _buildingMenus;

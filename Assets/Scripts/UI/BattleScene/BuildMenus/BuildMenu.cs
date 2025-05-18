@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
-    public class BuildMenu : IBuildMenu
+    public class BuildMenu
     {
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IBuildableMenus<BuildingCategory> _buildingMenus;

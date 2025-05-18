@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 
         public virtual void Initialise(
             UIManager uiManager,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<TBuildable>> buildables)
         {
             base.Initialise();

@@ -8,7 +8,7 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    public class BuildingNameFilter : IBroadcastingFilter<IBuildable>, IBuildingPermitter
+    public class BuildingNameFilter : IBroadcastingFilter<IBuildable>
     {
         private IBuilding _permittedBuilding;
         public IPrefabKey PermittedBuilding

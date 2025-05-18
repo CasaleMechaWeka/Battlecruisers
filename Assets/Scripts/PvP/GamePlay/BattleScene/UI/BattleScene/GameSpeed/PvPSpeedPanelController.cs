@@ -1,4 +1,3 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
                 speedButton.Initialise(soundPlayer, shouldBeEnabledFilter, TimeBC.Instance);
             }
 
-            IToggleButtonGroup speedButtonGroup = new PvPToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
+            ToggleButtonGroup speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
 
             Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);

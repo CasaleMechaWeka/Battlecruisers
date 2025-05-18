@@ -29,8 +29,8 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly UIManager _uiManager;
         private readonly ITargetIndicator _targetIndicator;
         private readonly WindManager _windManager;
-        private readonly IBuildingCategoryPermitter _buildingCategoryPermitter;
-        private readonly IToggleButtonGroup _speedButtonGroup;
+        private readonly BuildingCategoryFilter _buildingCategoryPermitter;
+        private readonly ToggleButtonGroup _speedButtonGroup;
 
         private bool _handledCruiserDeath, _handledGameEnd;
 
@@ -47,8 +47,8 @@ namespace BattleCruisers.Utils.BattleScene
             UIManager uiManager,
             ITargetIndicator targetIndicator,
             WindManager windManager,
-            IBuildingCategoryPermitter buildingCategoryPermitter,
-            IToggleButtonGroup speedButtonGroup)
+            BuildingCategoryFilter buildingCategoryPermitter,
+            ToggleButtonGroup speedButtonGroup)
         {
             Helper.AssertIsNotNull(
                 playerCruiser,

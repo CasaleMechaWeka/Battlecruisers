@@ -8,10 +8,10 @@ namespace BattleCruisers.UI.BattleScene
     public class LeftPanelComponents
     {
         public IHighlightable NumberOfDronesHighlightable { get; }
-        public IBuildMenu BuildMenu { get; }
+        public BuildMenu BuildMenu { get; }
         public IGameObject PopLimitReachedFeedback { get; }
 
-        public LeftPanelComponents(IHighlightable numberOfDronesHighlightable, IBuildMenu buildMenu, IGameObject popLimitReachedFeedback)
+        public LeftPanelComponents(IHighlightable numberOfDronesHighlightable, BuildMenu buildMenu, IGameObject popLimitReachedFeedback)
         {
             Helper.AssertIsNotNull(numberOfDronesHighlightable, buildMenu, popLimitReachedFeedback);
 

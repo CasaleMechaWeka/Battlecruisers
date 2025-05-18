@@ -12,14 +12,14 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class BuildingButtonController : BuildableButtonController, IPointerDownHandler, IEndDragHandler, IDragHandler
     {
         private IBuildableWrapper<IBuilding> _buildingWrapper;
-        private IBuildingClickHandler _clickHandler;
+        private BuildingClickHandler _clickHandler;
         private Transform _clickAndDragIcon;
         private Vector3 _originalClickAndDragPosition;
         private BuildableClickAndDrag _buildableClickAndDrag;
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IBuildableWrapper<IBuilding> buildingWrapper,
-            IBuildingClickHandler clickHandler,
+            BuildingClickHandler clickHandler,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter)
         {
             base.ApplyVariantIfExist(buildingWrapper.Buildable);

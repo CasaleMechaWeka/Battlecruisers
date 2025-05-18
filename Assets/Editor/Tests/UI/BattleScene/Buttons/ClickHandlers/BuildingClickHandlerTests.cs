@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 {
     public class BuildingClickHandlerTests
     {
-        private IBuildingClickHandler _clickHandler;
+        private BuildingClickHandler _clickHandler;
         private UIManager _uiManager;
         private IPrioritisedSoundPlayer _eventSoundPlayer;
         private SingleSoundPlayer _uiSoundPlayer;

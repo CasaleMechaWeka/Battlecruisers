@@ -9,15 +9,15 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
-    public class UnitClickHandler : BuildableClickHandler, IUnitClickHandler
+    public class UnitClickHandler : BuildableClickHandler
     {
-        private readonly IPopulationLimitReachedDecider _populationLimitReachedDecider;
+        private readonly PopulationLimitReachedDecider _populationLimitReachedDecider;
 
         public UnitClickHandler(
             UIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             SingleSoundPlayer uiSoundPlayer,
-            IPopulationLimitReachedDecider populationLimitReachedDecider)
+            PopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
             Assert.IsNotNull(populationLimitReachedDecider);

@@ -33,7 +33,7 @@ namespace BattleCruisers.UI.BattleScene
             UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             PauseGameManager pauseGameManager,
             BattleCompletionHandler battleCompletionHandler,
             SingleSoundPlayer soundPlayer,
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.BattleScene
             UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             SingleSoundPlayer soundPlayer)
         {
             InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
@@ -86,7 +86,7 @@ namespace BattleCruisers.UI.BattleScene
             return informator;
         }
 
-        private SpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, IButtonVisibilityFilters buttonVisibilityFilters)
+        private SpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, ButtonVisibilityFilters buttonVisibilityFilters)
         {
             SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);

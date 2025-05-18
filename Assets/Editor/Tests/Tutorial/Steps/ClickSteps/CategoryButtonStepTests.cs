@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     {
         private ITutorialStep _clickStep;
         private IBuildingCategoryButton _buildingCategoryButton;
-        private IBuildingCategoryPermitter _permitter;
+        private BuildingCategoryFilter _permitter;
 
         [SetUp]
         public override void SetuUp()
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 
             _buildingCategoryButton = Substitute.For<IBuildingCategoryButton>();
             _buildingCategoryButton.Category.Returns(BuildingCategory.Ultra);
-            _permitter = Substitute.For<IBuildingCategoryPermitter>();
+            _permitter = Substitute.For<BuildingCategoryFilter>();
 
             _clickStep = new CategoryButtonStep(_args, _buildingCategoryButton, _permitter);
         }

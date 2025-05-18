@@ -15,15 +15,15 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 	public class UnitsMenuController : BuildablesMenuController<UnitButtonController, IUnit>
 	{
 		private SingleSoundPlayer _soundPlayer;
-		private IUnitClickHandler _unitClickHandler;
+		private UnitClickHandler _unitClickHandler;
 		private IFactory _factory;
 
 		public void Initialise(
 			SingleSoundPlayer soundPlayer,
 			UIManager uiManager,
-			IButtonVisibilityFilters buttonVisibilityFilters,
+			ButtonVisibilityFilters buttonVisibilityFilters,
 			IList<IBuildableWrapper<IUnit>> units,
-			IUnitClickHandler clickHandler)
+			UnitClickHandler clickHandler)
 		{
 			// Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
 			Helper.AssertIsNotNull(soundPlayer, clickHandler);

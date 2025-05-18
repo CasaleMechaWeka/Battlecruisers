@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         // The unit wrapper is always the same for this button.  In contrast 
         // the factory can change
         private IBuildableWrapper<IUnit> _unitWrapper;
-        private IUnitClickHandler _unitClickHandler;
+        private UnitClickHandler _unitClickHandler;
         private UnitBuildProgressTrigger _unitBuildProgress;
 
         private IFactory _currentFactory;
@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
             SingleSoundPlayer soundPlayer,
             IBuildableWrapper<IUnit> unitWrapper,
             IBroadcastingFilter<IBuildable> shouldBeEnabledFilter,
-            IUnitClickHandler unitClickHandler)
+            UnitClickHandler unitClickHandler)
         {
             Helper.AssertIsNotNull(unitWrapper, unitClickHandler);
             base.ApplyVariantIfExist(unitWrapper.Buildable);

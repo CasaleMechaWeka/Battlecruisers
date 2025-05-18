@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
     public class SpeedComponents : ISpeedComponents
     {
         public IHighlightable SpeedButtonPanel { get; }
-        public IToggleButtonGroup SpeedButtonGroup { get; }
+        public ToggleButtonGroup SpeedButtonGroup { get; }
         public IGameSpeedButton SlowMotionButton { get; }
         public IGameSpeedButton NormalSpeedButton { get; }
         public IGameSpeedButton FastForwardButton { get; }
@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
 
         public SpeedComponents(
             IHighlightable speedButtonPanel,
-            IToggleButtonGroup speedButtonGroup,
+            ToggleButtonGroup speedButtonGroup,
             IGameSpeedButton slowMotionButton,
             IGameSpeedButton normalSpeedButton,
             IGameSpeedButton fastForwardButton,

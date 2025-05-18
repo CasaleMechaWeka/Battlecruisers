@@ -37,7 +37,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
             if (!DataProvider.GameModel.PremiumEdition || ApplicationModel.Mode != GameMode.Skirmish)
                 pause.gameObject.SetActive(false);
 
-            IToggleButtonGroup speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
+            ToggleButtonGroup speedButtonGroup = new ToggleButtonGroup(speedButtons.ToList<IToggleButton>(), normalSpeed);
 
             Highlightable speedButtonPanel = GetComponent<Highlightable>();
             Assert.IsNotNull(speedButtonPanel);

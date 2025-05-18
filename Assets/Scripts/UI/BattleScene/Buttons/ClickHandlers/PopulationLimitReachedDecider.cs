@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
-    public class PopulationLimitReachedDecider : IPopulationLimitReachedDecider
+    public class PopulationLimitReachedDecider
     {
         private readonly IPopulationLimitMonitor _populationLimitMonitor;
 

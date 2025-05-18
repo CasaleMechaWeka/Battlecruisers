@@ -5,13 +5,13 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    public class ButtonVisibilityFilters : IButtonVisibilityFilters
+    public class ButtonVisibilityFilters
     {
-        public IBroadcastingFilter<IBuildable> BuildableButtonVisibilityFilter  { get; }
-        public IBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter  { get; }
-        public IFilter<ITarget> ChooseTargetButtonVisiblityFilter  { get; }
-        public IFilter<ITarget> DeletButtonVisiblityFilter  { get; }
-        public IBroadcastingFilter DismissButtonVisibilityFilter  { get; }
+        public IBroadcastingFilter<IBuildable> BuildableButtonVisibilityFilter { get; }
+        public IBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter { get; }
+        public IFilter<ITarget> ChooseTargetButtonVisiblityFilter { get; }
+        public IFilter<ITarget> DeletButtonVisiblityFilter { get; }
+        public IBroadcastingFilter DismissButtonVisibilityFilter { get; }
         public IBroadcastingFilter SpeedButtonsEnabledFilter { get; }
 
         public ButtonVisibilityFilters(

@@ -35,7 +35,7 @@ namespace BattleCruisers.UI.BattleScene
             DroneManagerMonitor droneManagerMonitor,
             UIManager uiManager,
             ILoadout playerLoadout,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             SingleSoundPlayer uiSoundPlayer,
@@ -54,7 +54,7 @@ namespace BattleCruisers.UI.BattleScene
             Helper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(droneManager, droneManagerMonitor);
-            IBuildMenu buildMenu
+            BuildMenu buildMenu
                 = SetupBuildMenuController(
                     uiManager,
                     playerLoadout,
@@ -73,10 +73,10 @@ namespace BattleCruisers.UI.BattleScene
             return dronesPanelInitialiser.Initialise(droneManager, droneManagerMonitor);
         }
 
-        private IBuildMenu SetupBuildMenuController(
+        private BuildMenu SetupBuildMenuController(
             UIManager uiManager,
             ILoadout playerLoadout,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             SingleSoundPlayer uiSoundPlayer,

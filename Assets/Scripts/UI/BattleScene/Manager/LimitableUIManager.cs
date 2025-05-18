@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
         public void Initialise(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IBuildMenu buildMenu,
+            BuildMenu buildMenu,
             ItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer,

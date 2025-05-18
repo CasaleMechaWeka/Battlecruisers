@@ -26,7 +26,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IPrefabKey PlayerACruiser { get; }
         IPrefabKey PlayerBCruiser { get; }
         string[] PvPHullNames { get; }
-        IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        BuildingCategoryFilter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
         ILoadout GetPlayerLoadout();
         IFilter<IPvPSlot> CreateHighlightableSlotFilter();

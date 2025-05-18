@@ -20,11 +20,11 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
     {
         public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
 
-        public IBuildMenu Initialise(
+        public BuildMenu Initialise(
             UIManager uiManager,
             IList<IBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IBuildableWrapper<IUnit>>> units,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             SingleSoundPlayer uiSoundPlayer,
@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             Assert.IsNotNull(buildingMenus);
             IBuildableSorter<IBuilding> buildingSorter = new BuildingUnlockedLevelSorter();
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            IBuildingClickHandler buildingClickHandler
+            BuildingClickHandler buildingClickHandler
                 = new BuildingClickHandler(
                     uiManager,
                     eventSoundPlayer,
@@ -66,7 +66,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, uiSoundPlayer, buildingClickHandler);
 
             // Unit menus
-            IUnitClickHandler unitClickHandler
+            UnitClickHandler unitClickHandler
                 = new UnitClickHandler(
                     uiManager,
                     eventSoundPlayer,

@@ -12,15 +12,15 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
 {
     public class BuildingMenus : BuildableMenus<IBuilding, BuildingCategory, BuildingsMenuController>
     {
-        private IBuildingClickHandler _clickHandler;
+        private BuildingClickHandler _clickHandler;
 
         public void Initialise(
             IDictionary<BuildingCategory, IList<IBuildableWrapper<IBuilding>>> buildings,
             UIManager uiManager,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<IBuilding> buildingSorter,
             SingleSoundPlayer soundPlayer,
-            IBuildingClickHandler clickHandler)
+            BuildingClickHandler clickHandler)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
             Helper.AssertIsNotNull(clickHandler);
@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             SingleSoundPlayer soundPlayer,
             BuildingsMenuController menu,
             UIManager uiManager,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<IBuilding>> buildables)
         {
             menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _clickHandler);

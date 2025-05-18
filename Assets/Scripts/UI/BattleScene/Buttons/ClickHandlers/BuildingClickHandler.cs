@@ -10,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.ClickHandlers
 {
-    public class BuildingClickHandler : BuildableClickHandler, IBuildingClickHandler
+    public class BuildingClickHandler : BuildableClickHandler
     {
         private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
         private readonly AudioClipWrapper _buildingSelectedSound;

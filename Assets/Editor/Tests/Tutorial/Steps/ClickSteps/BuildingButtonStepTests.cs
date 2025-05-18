@@ -15,7 +15,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     {
         private ITutorialStep _clickStep;
         private IBuildableButton _buildableButton;
-        private IBuildingPermitter _buildingPermitter;
+        private BuildingNameFilter _buildingPermitter;
         private IPrefabKey _buildingToAllow;
         private SpecificSlotsFilter _slotPermitter;
         private ISlot _slot;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             base.SetuUp();
 
             _buildableButton = Substitute.For<IBuildableButton>();
-            _buildingPermitter = Substitute.For<IBuildingPermitter>();
+            _buildingPermitter = Substitute.For<BuildingNameFilter>();
             _buildingToAllow = Substitute.For<IPrefabKey>();
 
             _slotPermitter = Substitute.For<SpecificSlotsFilter>();

@@ -8,13 +8,13 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     public class CategoryButtonStep : ExplanationClickStep
     {
-        private readonly IBuildingCategoryPermitter _permitter;
+        private readonly BuildingCategoryFilter _permitter;
         private readonly BuildingCategory _category;
 
         public CategoryButtonStep(
-            ITutorialStepArgs args, 
+            ITutorialStepArgs args,
             IBuildingCategoryButton buildingCategoryButton,
-            IBuildingCategoryPermitter permitter) 
+            BuildingCategoryFilter permitter)
             : base(args, buildingCategoryButton)
         {
             Assert.IsNotNull(permitter);
@@ -23,16 +23,16 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             _category = buildingCategoryButton.Category;
         }
 
-		public override void Start(Action completionCallback)
-		{
+        public override void Start(Action completionCallback)
+        {
             base.Start(completionCallback);
             _permitter.AllowSingleCategory(_category);
-		}
+        }
 
-		protected override void OnCompleted()
-		{
+        protected override void OnCompleted()
+        {
             _permitter.AllowNoCategories();
-			base.OnCompleted();
-		}
-	}
+            base.OnCompleted();
+        }
+    }
 }

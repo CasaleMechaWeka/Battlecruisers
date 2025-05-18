@@ -33,9 +33,9 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override bool ShowInGameHints => false;
         public SpecificSlotsFilter SlotPermitter => _slotFilter;
-        public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public override BuildingCategoryFilter BuildingCategoryPermitter => _buildingCategoryFilter;
         public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
-        public IBuildingPermitter BuildingPermitter => _buildingNameFilter;
+        public BuildingNameFilter BuildingPermitter => _buildingNameFilter;
         public UIManagerPermissions UIManagerPermissions { get; private set; }
         public NavigationPermitters NavigationPermitters { get; }
 
@@ -103,7 +103,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new StaticFilter<ITarget>(isMatch: false);
         }
 
-        public override IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
+        public override ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
         {
             return
                 new ButtonVisibilityFilters(
@@ -135,7 +135,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public override void InitialiseUIManager(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            IBuildMenu buildMenu,
+            BuildMenu buildMenu,
             ItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer)

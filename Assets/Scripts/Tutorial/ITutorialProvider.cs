@@ -14,9 +14,9 @@ namespace BattleCruisers.Tutorial
     public interface ITutorialProvider
     {
         SpecificSlotsFilter SlotPermitter { get; }
-        IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        BuildingCategoryFilter BuildingCategoryPermitter { get; }
         IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter { get; }
-        IBuildingPermitter BuildingPermitter { get; }
+        BuildingNameFilter BuildingPermitter { get; }
         UIManagerPermissions UIManagerPermissions { get; }
         NavigationPermitters NavigationPermitters { get; }
         IPermitter SpeedButtonsPermitter { get; }

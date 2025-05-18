@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private PvPUIManager _uiManager;
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
-        public override IBuildingCategoryPermitter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public override BuildingCategoryFilter BuildingCategoryPermitter => _buildingCategoryFilter;
 
         public PvPBattleHelper() : base()
         {

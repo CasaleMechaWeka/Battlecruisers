@@ -30,7 +30,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
 
         public abstract bool ShowInGameHints { get; }
-        public abstract IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        public abstract BuildingCategoryFilter BuildingCategoryPermitter { get; }
         public virtual IPrefabKey PlayerCruiser => DataProvider.GameModel.PlayerLoadout.Hull;
 
         protected BattleSceneHelper()
@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.BattleScene
         }
 
         public abstract IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
-        public abstract IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
+        public abstract ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         public abstract IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         public abstract IFilter<ISlot> CreateHighlightableSlotFilter();
         public abstract UIManager CreateUIManager();
@@ -51,7 +51,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract ILoadout GetPlayerLoadout();
         public abstract void InitialiseUIManager(ICruiser PlayerCruiser,
                                                  ICruiser AICruiser,
-                                                 IBuildMenu BuildMenu,
+                                                 BuildMenu BuildMenu,
                                                  ItemDetailsManager DetailsManager,
                                                  IPrioritisedSoundPlayer SoundPlayer,
                                                  SingleSoundPlayer UISoundPlayer);

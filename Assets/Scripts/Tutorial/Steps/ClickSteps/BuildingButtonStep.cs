@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     /// </summary>
     public class BuildingButtonStep : ExplanationClickStep
     {
-        private readonly IBuildingPermitter _buildingPermitter;
+        private readonly BuildingNameFilter _buildingPermitter;
         private readonly IPrefabKey _buildingToAllow;
         private readonly IItemProvider<ISlot> _slotProvider;
         private readonly SpecificSlotsFilter _highlightableSlotPermitter;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         public BuildingButtonStep(
             ITutorialStepArgs args,
             IBuildableButton buildableButton,
-            IBuildingPermitter buildingPermitter,
+            BuildingNameFilter buildingPermitter,
             IPrefabKey buildingToAllow,
             IItemProvider<ISlot> slotProvider,
             SpecificSlotsFilter highlightableSlotPermitter)

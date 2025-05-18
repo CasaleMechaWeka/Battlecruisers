@@ -23,14 +23,14 @@ namespace BattleCruisers.Scenes.BattleScene
     public interface IBattleSceneHelper
     {
         bool ShowInGameHints { get; }
-        IBuildingCategoryPermitter BuildingCategoryPermitter { get; }
+        BuildingCategoryFilter BuildingCategoryPermitter { get; }
         IPrefabKey PlayerCruiser { get; }
 
         // Separate methods because of circular dependency between UIManager and everything else :/
         UIManager CreateUIManager();
         public abstract void InitialiseUIManager(ICruiser PlayerCruiser,
                                                  ICruiser AICruiser,
-                                                 IBuildMenu BuildMenu,
+                                                 BuildMenu BuildMenu,
                                                  ItemDetailsManager DetailsManager,
                                                  IPrioritisedSoundPlayer SoundPlayer,
                                                  SingleSoundPlayer UISoundPlayer);
@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.BattleScene
         ILoadout GetPlayerLoadout();
         IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
         IFilter<ISlot> CreateHighlightableSlotFilter();
-        IButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
+        ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
         IUserChosenTargetHelper CreateUserChosenTargetHelper(

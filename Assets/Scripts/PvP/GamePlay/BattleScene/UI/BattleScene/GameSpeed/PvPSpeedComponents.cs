@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPSpeedComponents : ISpeedComponents
     {
         public IHighlightable SpeedButtonPanel { get; }
-        public IToggleButtonGroup SpeedButtonGroup { get; }
+        public ToggleButtonGroup SpeedButtonGroup { get; }
         public IGameSpeedButton SlowMotionButton { get; }
         public IGameSpeedButton NormalSpeedButton { get; }
         public IGameSpeedButton FastForwardButton { get; }
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public PvPSpeedComponents(
             IHighlightable speedButtonPanel,
-            IToggleButtonGroup speedButtonGroup,
+            ToggleButtonGroup speedButtonGroup,
             IGameSpeedButton slowMotionButton,
             IGameSpeedButton normalSpeedButton,
             IGameSpeedButton fastForwardButton,

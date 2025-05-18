@@ -39,7 +39,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             UIManager uiManager,
             ICruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IButtonVisibilityFilters visibilityFilters,
+            ButtonVisibilityFilters visibilityFilters,
             SingleSoundPlayer soundPlayer)
         {
             base.Initialise();

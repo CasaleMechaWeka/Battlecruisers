@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
         public void Initialise(
             IDictionary<TCategories, IList<IBuildableWrapper<TBuildable>>> buildables,
             UIManager uiManager,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IBuildableSorter<TBuildable> buildableSorter,
             SingleSoundPlayer soundPlayer)
         {
@@ -65,7 +65,7 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             SingleSoundPlayer soundPlayer,
             TMenu menu,
             UIManager uiManager,
-            IButtonVisibilityFilters buttonVisibilityFilters,
+            ButtonVisibilityFilters buttonVisibilityFilters,
             IList<IBuildableWrapper<TBuildable>> buildables);
 
         public IBuildablesMenu GetBuildablesMenu(TCategories buildableCategory)

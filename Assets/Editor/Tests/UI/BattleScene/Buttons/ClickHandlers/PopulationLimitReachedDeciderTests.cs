@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Buttons.ClickHandlers
 {
     public class PopulationLimitReachedDeciderTests
     {
-        private IPopulationLimitReachedDecider _decider;
+        private PopulationLimitReachedDecider _decider;
         private IPopulationLimitMonitor _populationLimitMonitor;
         private IFactory _factory;
         private IUnit _unit;

@@ -5,7 +5,7 @@ using System;
 
 namespace BattleCruisers.UI.BattleScene.Buttons.Filters
 {
-    public class BuildingCategoryFilter : IBroadcastingFilter<BuildingCategory>, IBuildingCategoryPermitter
+    public class BuildingCategoryFilter : IBroadcastingFilter<BuildingCategory>
     {
         private bool _allowAll;
         private BuildingCategory? _permittedCategory;
