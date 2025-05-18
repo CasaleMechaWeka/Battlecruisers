@@ -9,14 +9,14 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
     {
         private const int EXPECTED_NUMBER_OF_SKIES = 7;
 
-        public IList<ISkyStats> SkyStats { get; private set; }
+        public IList<SkyStatsController> SkyStats { get; private set; }
 
         public void Initialise()
         {
             SkyStatsController[] skyStats = GetComponentsInChildren<SkyStatsController>();
             Assert.AreEqual(EXPECTED_NUMBER_OF_SKIES, skyStats.Length);
 
-            SkyStats = new List<ISkyStats>();
+            SkyStats = new List<SkyStatsController>();
             foreach (SkyStatsController stats in skyStats)
             {
                 stats.Initialise();
@@ -24,9 +24,9 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             }
         }
 
-        public ISkyStats GetSkyStats(string skyMaterialName)
+        public SkyStatsController GetSkyStats(string skyMaterialName)
         {
-            ISkyStats skyStats = SkyStats.FirstOrDefault(stats => stats.SkyMaterial.name == skyMaterialName);
+            SkyStatsController skyStats = SkyStats.FirstOrDefault(stats => stats.SkyMaterial.name == skyMaterialName);
             Assert.IsNotNull(skyStats, $"Unknown sky material name: {skyMaterialName}");
             return skyStats;
         }

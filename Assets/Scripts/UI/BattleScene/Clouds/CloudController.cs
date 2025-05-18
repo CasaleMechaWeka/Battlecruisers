@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
-    public class CloudController : MonoBehaviour, ICloud
+    public class CloudController : MonoBehaviour
     {
         public Vector2 Size { get; private set; }
 
@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             set { transform.position = value; }
         }
 
-        public void Initialise(ICloudStats cloudStats)
+        public void Initialise(SkyStatsController cloudStats)
         {
             Assert.IsNotNull(cloudStats);
             Assert.IsTrue(cloudStats.HorizontalMovementSpeedInMPerS > 0, "Only support clouds moving from left to right.");

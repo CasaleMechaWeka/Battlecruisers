@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    public class MoonStatsController : MonoBehaviour, IMoonStats
+    public class MoonStatsController : MonoBehaviour
     {
         public bool showMoon;
         public bool ShowMoon => showMoon;

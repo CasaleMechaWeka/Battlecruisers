@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    public class BackgroundImageStats : MonoBehaviour, IBackgroundImageStats
+    public class BackgroundImageStats : MonoBehaviour
     {
         public Vector2 scale;
         public Vector2 Scale => scale;

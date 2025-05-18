@@ -1,5 +1,4 @@
 ﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.UI.BattleScene.Clouds.Teleporters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
@@ -35,21 +34,20 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
 
             skyStatsGroup.Initialise();
-            ISkyStats skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
+            SkyStatsController skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
             background.Initialise(backgroundStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);
 
-            ICloudRandomiser cloudRandomiser
+            CloudRandomiser cloudRandomiser
                 = new CloudRandomiser(new Range<float>(min: -100, max: 400));
             cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
 
             _cloudTeleporter
                 = new CloudTeleporter(
                     updater,
-                    new TeleporterHelper(),
                     leftCloud,
                     rightCloud);
 

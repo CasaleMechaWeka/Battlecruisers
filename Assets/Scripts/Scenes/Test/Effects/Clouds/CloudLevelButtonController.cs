@@ -10,7 +10,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
     public class CloudLevelButtonController : MonoBehaviour
     {
         private ISkySetter _skySetter;
-        private ISkyStats _skyStats;
+        private SkyStatsController _skyStats;
         private PrefabContainer<BackgroundImageStats> _backgroundStats;
         private BackgroundImageController _backgroundImage;
         private float _cameraAspectRatio;
@@ -20,7 +20,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 
         public void Initialise(
             int levelNum,
-            ISkyStats skyStats,
+            SkyStatsController skyStats,
             ISkySetter skySetter,
             PrefabContainer<BackgroundImageStats> backgroundStats,
             BackgroundImageController backgroundImage,

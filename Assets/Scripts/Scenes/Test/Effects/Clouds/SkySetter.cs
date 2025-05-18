@@ -9,14 +9,14 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
     public class SkySetter : ISkySetter
     {
         private readonly Skybox _skybox;
-        private readonly IList<ICloud> _clouds;
+        private readonly IList<CloudController> _clouds;
         private readonly MistController _mist;
         private readonly MoonController _moon;
         private readonly FogController _fog;
 
         public SkySetter(
             Skybox skybox,
-            IList<ICloud> clouds,
+            IList<CloudController> clouds,
             MistController mist,
             MoonController moon,
             FogController fog)
@@ -30,11 +30,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
             _fog = fog;
         }
 
-        public void SetSky(ISkyStats skyStats)
+        public void SetSky(SkyStatsController skyStats)
         {
             _skybox.material = skyStats.SkyMaterial;
 
-            foreach (ICloud cloud in _clouds)
+            foreach (CloudController cloud in _clouds)
             {
                 cloud.Initialise(skyStats);
             }

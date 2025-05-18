@@ -4,6 +4,6 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public interface ISkySetter
     {
-        void SetSky(ISkyStats skyStats);
+        void SetSky(SkyStatsController skyStats);
     }
 }

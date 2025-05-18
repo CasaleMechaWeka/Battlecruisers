@@ -9,11 +9,11 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
     public class SkyButtonController : MonoBehaviour
     {
         private ISkySetter _skySetter;
-        private ISkyStats _skyStats;
+        private SkyStatsController _skyStats;
 
         public Text skyName;
 
-        public void Initialise(ISkySetter skySetter, ISkyStats skyStats)
+        public void Initialise(ISkySetter skySetter, SkyStatsController skyStats)
         {
             BCUtils.Helper.AssertIsNotNull(skySetter, skyStats);
             Assert.IsNotNull(skyName);

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds
 {
-    public class CloudRandomiser : ICloudRandomiser
+    public class CloudRandomiser
     {
         private readonly IRange<float> _rightCloudValidXPositions;
 
@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             _rightCloudValidXPositions = rightCloudValidXPositions;
         }
 
-        public void RandomiseStartingPosition(ICloud leftCloud, ICloud rightCloud)
+        public void RandomiseStartingPosition(CloudController leftCloud, CloudController rightCloud)
         {
             Helper.AssertIsNotNull(leftCloud, rightCloud);
             Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);

@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             Assert.IsTrue(cameraAspectRatio > 0);
 
             _statsContainer = statsContainer;
-            IBackgroundImageStats stats = _statsContainer.Prefab;
+            BackgroundImageStats stats = _statsContainer.Prefab;
 
             if (stats.Sprite == null)
             {

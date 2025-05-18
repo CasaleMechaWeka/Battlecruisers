@@ -8,7 +8,7 @@ namespace BattleCruisers.Scenes.Test.Effects.Clouds
 {
     public class SkyButtonGroup : MonoBehaviour
     {
-        public void Initialise(ISkySetter skySetter, IList<ISkyStats> skyStats)
+        public void Initialise(ISkySetter skySetter, IList<SkyStatsController> skyStats)
         {
             BCUtils.Helper.AssertIsNotNull(skySetter, skyStats);
 

@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public const float RATIO_16_TO_9 = 1.778f;
         public const float RATIO_24_TO_10 = 2.4f;
 
-        public Vector3 FindPosition(IBackgroundImageStats stats, float cameraAspectRatio)
+        public Vector3 FindPosition(BackgroundImageStats stats, float cameraAspectRatio)
         {
             if (cameraAspectRatio < 1.0) // Check if aspect ratio is narrower than 1:1
             {

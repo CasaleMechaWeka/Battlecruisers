@@ -10,7 +10,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         private const float NarrowAspectRatioThreshold = 1.0f; // Threshold for aspect ratio narrower than 1:1
         private const float NarrowMistYPosition = -120.0f; // Set this to whatever fixed Y position you want for narrow aspect ratios
 
-        public void Initialise(ICloudStats cloudStats)
+        public void Initialise(SkyStatsController cloudStats)
         {
             Assert.IsNotNull(cloudStats);
 

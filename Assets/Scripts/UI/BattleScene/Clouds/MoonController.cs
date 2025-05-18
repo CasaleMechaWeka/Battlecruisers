@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
 {
     public class MoonController : MonoBehaviour
     {
-        public void Initialise(IMoonStats moonStats)
+        public void Initialise(MoonStatsController moonStats)
         {
             Image moon = GetComponent<Image>();
             Assert.IsNotNull(moon);

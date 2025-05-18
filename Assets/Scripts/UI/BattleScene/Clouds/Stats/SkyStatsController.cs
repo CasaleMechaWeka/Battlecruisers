@@ -4,9 +4,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    public class SkyStatsController : MonoBehaviour, ISkyStats
+    public class SkyStatsController : MonoBehaviour
     {
-        public IMoonStats MoonStats { get; private set; }
+        public MoonStatsController MoonStats { get; private set; }
 
         public Material skyboxMaterial;
         public Material SkyMaterial => skyboxMaterial;
