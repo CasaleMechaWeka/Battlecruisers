@@ -7,19 +7,19 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
 {
     public class HelpLabelManagerTests : ModalManagerTestsBase
     {
-        private IHelpLabelManager _helpLabelManager;
-        private IHelpStateFinder _helpStateFinder;
-        private IHelpState _helpState;
+        private HelpLabelManager _helpLabelManager;
+        private HelpStateFinder _helpStateFinder;
+        private HelpState _helpState;
 
         [SetUp]
         public override void TestSetup()
         {
             base.TestSetup();
 
-            _helpStateFinder = Substitute.For<IHelpStateFinder>();
+            _helpStateFinder = Substitute.For<HelpStateFinder>();
             _helpLabelManager = new HelpLabelManager(_navigationPermitterManager, _pauseGameManager, _helpStateFinder);
 
-            _helpState = Substitute.For<IHelpState>();
+            _helpState = Substitute.For<HelpState>();
             _helpStateFinder.FindHelpState().Returns(_helpState);
         }
 

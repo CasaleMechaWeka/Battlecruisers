@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
         public HelpLabelsController helpLabels;
         public HelpButton modalHelpButton;
 
-        public IHelpLabelManager Initialise(
+        public HelpLabelManager Initialise(
             LeftPanelComponents leftPanelComponents,
             RightPanelComponents rightPanelComponents,
             PauseGameManager pauseGameManager,
@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
 
             SlidingPanel extendedInformatorPanel = rightPanelComponents.InformatorPanel.ExtendedPanel;
 
-            IHelpStateFinder helpStateFinder
+            HelpStateFinder helpStateFinder
                 = new HelpStateFinder(
                     rightPanelComponents.InformatorPanel,
                     leftPanelComponents.BuildMenu.SelectorPanel,
@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
                     new InformatorShownState(helpLabelCanvas, extendedInformatorPanel, helpLabels),
                     new BothShownState(helpLabelCanvas, extendedInformatorPanel, helpLabels));
 
-            IHelpLabelManager helpLabelManager
+            HelpLabelManager helpLabelManager
                 = new HelpLabelManager(
                     navigationPermitterManager,
                     pauseGameManager,

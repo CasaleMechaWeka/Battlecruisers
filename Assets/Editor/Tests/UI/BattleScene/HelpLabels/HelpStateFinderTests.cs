@@ -7,19 +7,19 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
 {
     public class HelpStateFinderTests
     {
-        private IHelpStateFinder _helpStateFinder;
+        private HelpStateFinder _helpStateFinder;
         private SlidingPanel _informatorPanel, _selectorPanel;
-        private IHelpState _bothCollapsed, _selectorShown, _informatorShown, _bothShown;
+        private HelpState _bothCollapsed, _selectorShown, _informatorShown, _bothShown;
 
         [SetUp]
         public void TestSetup()
         {
             _informatorPanel = Substitute.For<SlidingPanel>();
             _selectorPanel = Substitute.For<SlidingPanel>();
-            _bothCollapsed = Substitute.For<IHelpState>();
-            _selectorShown = Substitute.For<IHelpState>();
-            _informatorShown = Substitute.For<IHelpState>();
-            _bothShown = Substitute.For<IHelpState>();
+            _bothCollapsed = Substitute.For<HelpState>();
+            _selectorShown = Substitute.For<HelpState>();
+            _informatorShown = Substitute.For<HelpState>();
+            _bothShown = Substitute.For<HelpState>();
 
             _helpStateFinder
                 = new HelpStateFinder(
@@ -37,7 +37,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
             _informatorPanel.TargetState.Returns(PanelState.Shown);
             _selectorPanel.TargetState.Returns(PanelState.Shown);
 
-            IHelpState result = _helpStateFinder.FindHelpState();
+            HelpState result = _helpStateFinder.FindHelpState();
 
             Assert.AreSame(_bothShown, result);
         }
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
             _informatorPanel.TargetState.Returns(PanelState.Shown);
             _selectorPanel.TargetState.Returns(PanelState.Hidden);
 
-            IHelpState result = _helpStateFinder.FindHelpState();
+            HelpState result = _helpStateFinder.FindHelpState();
 
             Assert.AreSame(_informatorShown, result);
         }
@@ -59,7 +59,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
             _informatorPanel.TargetState.Returns(PanelState.Hidden);
             _selectorPanel.TargetState.Returns(PanelState.Shown);
 
-            IHelpState result = _helpStateFinder.FindHelpState();
+            HelpState result = _helpStateFinder.FindHelpState();
 
             Assert.AreSame(_selectorShown, result);
         }
@@ -70,7 +70,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.HelpLabels
             _informatorPanel.TargetState.Returns(PanelState.Hidden);
             _selectorPanel.TargetState.Returns(PanelState.Hidden);
 
-            IHelpState result = _helpStateFinder.FindHelpState();
+            HelpState result = _helpStateFinder.FindHelpState();
 
             Assert.AreSame(_bothCollapsed, result);
         }

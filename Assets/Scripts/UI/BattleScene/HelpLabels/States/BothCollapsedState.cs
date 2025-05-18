@@ -4,7 +4,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
     public class BothCollapsedState : HelpState
     {
-        public BothCollapsedState(Panel helpLabelCanvas, SlidingPanel informatorExtendedPanel, IHelpLabels helpLabels)
+        public BothCollapsedState(Panel helpLabelCanvas, SlidingPanel informatorExtendedPanel, HelpLabelsController helpLabels)
             : base(helpLabelCanvas, informatorExtendedPanel, helpLabels)
         {
         }

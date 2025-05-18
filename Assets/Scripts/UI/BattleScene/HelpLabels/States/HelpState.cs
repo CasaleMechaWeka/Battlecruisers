@@ -3,13 +3,13 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
-    public abstract class HelpState : IHelpState
+    public abstract class HelpState
     {
         private readonly Panel _helpLabelCanvas;
         protected readonly SlidingPanel _informatorExtendedPanel;
-        protected readonly IHelpLabels _helpLabels;
+        protected readonly HelpLabelsController _helpLabels;
 
-        protected HelpState(Panel helpLabelCanvas, SlidingPanel informatorExtendedPanel, IHelpLabels helpLabels)
+        protected HelpState(Panel helpLabelCanvas, SlidingPanel informatorExtendedPanel, HelpLabelsController helpLabels)
         {
             Helper.AssertIsNotNull(helpLabelCanvas, informatorExtendedPanel, helpLabels);
 

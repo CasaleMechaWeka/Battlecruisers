@@ -8,10 +8,10 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
     // FELIX  Target button help label string :D
-    public class HelpLabelManager : ModalManager, IHelpLabelManager
+    public class HelpLabelManager : ModalManager
     {
-        private readonly IHelpStateFinder _helpStateFinder;
-        private IHelpState _helpState;
+        private readonly HelpStateFinder _helpStateFinder;
+        private HelpState _helpState;
 
         private ISettableBroadcastingProperty<bool> _isShown;
         public IBroadcastingProperty<bool> IsShown { get; }
@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels
         public HelpLabelManager(
             INavigationPermitterManager navigationPermitterManager,
             PauseGameManager pauseGameManager,
-            IHelpStateFinder helpStateFinder)
+            HelpStateFinder helpStateFinder)
             : base(navigationPermitterManager, pauseGameManager)
         {
             Assert.IsNotNull(helpStateFinder);

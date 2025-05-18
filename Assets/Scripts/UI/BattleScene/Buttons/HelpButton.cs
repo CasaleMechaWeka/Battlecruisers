@@ -9,9 +9,9 @@ namespace BattleCruisers.UI.BattleScene.Buttons
     public class HelpButton : CanvasGroupButton
     {
         //private Image _leverOff, _leverOn;
-        private IHelpLabelManager _helpLabelManager;
+        private HelpLabelManager _helpLabelManager;
 
-        public void Initialise(SingleSoundPlayer soundPlayer, IHelpLabelManager helpLabelManager)
+        public void Initialise(SingleSoundPlayer soundPlayer, HelpLabelManager helpLabelManager)
         {
             base.Initialise(soundPlayer);
 

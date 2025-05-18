@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels
 {
-    public class HelpLabelsController : MonoBehaviour, IHelpLabels
+    public class HelpLabelsController : MonoBehaviour
     {
         public Panel cruiserHealth;
         public Panel CruiserHealth => cruiserHealth;

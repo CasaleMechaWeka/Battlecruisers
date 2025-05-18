@@ -3,18 +3,18 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.UI.BattleScene.HelpLabels.States
 {
-    public class HelpStateFinder : IHelpStateFinder
+    public class HelpStateFinder
     {
         private readonly SlidingPanel _informatorPanel, _selectorPanel;
-        private readonly IHelpState _bothCollapsed, _selectorShown, _informatorShown, _bothShown;
+        private readonly HelpState _bothCollapsed, _selectorShown, _informatorShown, _bothShown;
 
         public HelpStateFinder(
             SlidingPanel informatorPanel,
             SlidingPanel selectorPanel,
-            IHelpState bothCollapsed,
-            IHelpState selectorShown,
-            IHelpState informatorShown,
-            IHelpState bothShown)
+            HelpState bothCollapsed,
+            HelpState selectorShown,
+            HelpState informatorShown,
+            HelpState bothShown)
         {
             Helper.AssertIsNotNull(informatorPanel, selectorPanel, bothCollapsed, selectorPanel, informatorPanel, bothShown);
 
@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.BattleScene.HelpLabels.States
             _bothShown = bothShown;
         }
 
-        public IHelpState FindHelpState()
+        public HelpState FindHelpState()
         {
             if (_informatorPanel.TargetState == PanelState.Shown)
             {

@@ -8,9 +8,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPHelpButton : PvPCanvasGroupButton
     {
         //private Image _leverOff, _leverOn;
-        private IHelpLabelManager _helpLabelManager;
+        private HelpLabelManager _helpLabelManager;
 
-        public void Initialise(SingleSoundPlayer soundPlayer, IHelpLabelManager helpLabelManager)
+        public void Initialise(SingleSoundPlayer soundPlayer, HelpLabelManager helpLabelManager)
         {
             base.Initialise(soundPlayer);
 
