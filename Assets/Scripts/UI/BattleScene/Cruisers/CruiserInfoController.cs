@@ -5,11 +5,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Cruisers
 {
-    public class CruiserInfoController : MonoBehaviour, ICruiserInfo
+    public class CruiserInfoController : MonoBehaviour
     {
         private HealthBarController _cruiserHealthBar;
 
-		private NumOfDronesController _numOfDrones;
+        private NumOfDronesController _numOfDrones;
         public IButton NumOfDronesButton => _numOfDrones;
 
         public void Initialise(ICruiser cruiser)
