@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     public class HintManagerTests
     {
         private HintManager _manager;
-        private IBuildingMonitor _enemyBuildingMonitor, _friendlyBuildingMonitor;
+        private BuildingMonitor _enemyBuildingMonitor, _friendlyBuildingMonitor;
         private FactoryMonitor _friendlyFactoryMonitor;
         private ICruiserDamageMonitor _playerCruiserDamageMonitor;
         private IDroneFocuser _playerCruiserDroneFocuser;
@@ -20,8 +20,8 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
         [SetUp]
         public void TestSetup()
         {
-            _enemyBuildingMonitor = Substitute.For<IBuildingMonitor>();
-            _friendlyBuildingMonitor = Substitute.For<IBuildingMonitor>();
+            _enemyBuildingMonitor = Substitute.For<BuildingMonitor>();
+            _friendlyBuildingMonitor = Substitute.For<BuildingMonitor>();
             _friendlyFactoryMonitor = Substitute.For<FactoryMonitor>();
             _playerCruiserDamageMonitor = Substitute.For<ICruiserDamageMonitor>();
             _playerCruiserDroneFocuser = Substitute.For<IDroneFocuser>();

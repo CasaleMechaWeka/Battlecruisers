@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.InGameHints
 {
-    public class BuildingMonitor : IBuildingMonitor
+    public class BuildingMonitor
     {
         private readonly ICruiserController _cruiser;
 

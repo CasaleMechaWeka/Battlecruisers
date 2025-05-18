@@ -12,8 +12,8 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
         private readonly IHintDisplayer _hintDisplayer;
 
         public HintManager(
-            IBuildingMonitor enemyBuildingMonitor,
-            IBuildingMonitor friendlyBuildingMonitor,
+            BuildingMonitor enemyBuildingMonitor,
+            BuildingMonitor friendlyBuildingMonitor,
             FactoryMonitor friendlyFactoryMonitor,
             ICruiserDamageMonitor playerCruiserDamageMonitor,
             IDroneFocuser playerCruiserDroneFocuser,

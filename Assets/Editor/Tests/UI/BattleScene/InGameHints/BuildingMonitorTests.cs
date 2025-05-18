@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
 {
     public class BuildingMonitorTests
     {
-        private IBuildingMonitor _monitor;
+        private BuildingMonitor _monitor;
         private ICruiserController _cruiser;
         private IBuilding _airFactory, _navalFactory, _building;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
 
             Assert.AreEqual(1, eventCount);
         }
-        
+
         [Test]
         public void BuildingStarted_NavalFactory()
         {
@@ -47,7 +47,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
 
             Assert.AreEqual(1, eventCount);
         }
-        
+
         [Test]
         public void BuildingStarted_Offensive()
         {
