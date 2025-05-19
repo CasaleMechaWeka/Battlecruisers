@@ -117,11 +117,8 @@ namespace BattleCruisers.Data.Static
             { Hulls.TasDevil, 35 },
             { Hulls.BlackRig, 37 },
             { Hulls.Yeti, 40 },
-<<<<<<< Updated upstream
-            { Hulls.BasicRig, 95 }
-=======
+            { Hulls.BasicRig, 95 },
             { Hulls.Cricket, 95 }
->>>>>>> Stashed changes
         });
 
         private static ReadOnlyDictionary<BuildingKey, int> _buildingToCompletedSideQuest
@@ -331,11 +328,8 @@ namespace BattleCruisers.Data.Static
             Hulls.TasDevil,
             Hulls.Yeti,
             Hulls.FortressPrime,
-<<<<<<< Updated upstream
-            Hulls.BasicRig
-=======
-            Hulls.Cricket
->>>>>>> Stashed changes
+            Hulls.BasicRig,
+            Hulls.Cricket,
         });
         public static ReadOnlyCollection<UnitKey> UnitKeys { get; } = new ReadOnlyCollection<UnitKey>(new List<UnitKey>()
         {

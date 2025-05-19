@@ -136,20 +136,12 @@ namespace BattleCruisers.Data.Static
             public static HullKey Goatherd { get; } = new HullKey("Goatherd");
             public static HullKey Megalith { get; } = new HullKey("Megalith");
             public static HullKey FortressPrime { get; } = new HullKey("FortressPrime");
-<<<<<<< Updated upstream
             public static HullKey BasicRig { get; } = new HullKey("BasicRig");
-=======
             public static HullKey Cricket { get; } = new HullKey("Cricket");
->>>>>>> Stashed changes
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, Rockjaw, Trident, ManOfWarBoss, HuntressBoss,
-<<<<<<< Updated upstream
-                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime, BasicRig
-=======
-                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime, Cricket
->>>>>>> Stashed changes
+                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime, BasicRig, Cricket
             });
         }
 

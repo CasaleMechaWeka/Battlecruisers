@@ -136,20 +136,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPPistol { get; } = new PvPHullKey("PvPPistol");
             public static PvPHullKey PvPGoatherd { get; } = new PvPHullKey("PvPGoatherd");
             public static PvPHullKey PvPMegalith { get; } = new PvPHullKey("PvPMegalith");
-<<<<<<< Updated upstream
             public static PvPHullKey PvPBasicRig { get; } = new PvPHullKey("PvPBasicRig");
-=======
-            public static PvPHullKey PvPCricket { get; } = new PvPHullKey("PvPCricket"); 
->>>>>>> Stashed changes
+            public static PvPHullKey PvPCricket { get; } = new PvPHullKey("PvPCricket");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                PvPBullshark, PvPEagle, PvPHammerhead, PvPLongbow, PvPMegalodon, PvPRaptor, PvPRockjaw, PvPTrident,
-<<<<<<< Updated upstream
-                PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith, PvPBasicRig
-=======
-                PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith, PvPCricket
->>>>>>> Stashed changes
+                PvPBlackRig, PvPYeti, PvPRickshaw, PvPTasDevil, PvPFlea, PvPShepherd, PvPMicrolodon, PvPPistol, PvPGoatherd, PvPMegalith, PvPBasicRig, PvPCricket
             });
         }
 
