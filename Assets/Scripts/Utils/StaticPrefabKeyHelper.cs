@@ -30,6 +30,7 @@ namespace BattleCruisers.Utils
         Hull_Pistol = 0015,
         Hull_Goatherd = 0016,
         Hull_Megalith = 0017,
+        Hull_Cricket = 0018,
 
         Hull_BasicRig= 0018,
 

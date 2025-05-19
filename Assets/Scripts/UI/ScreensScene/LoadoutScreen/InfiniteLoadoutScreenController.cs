@@ -191,6 +191,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     return HullType.BasicRig;
                 case "Bullshark":
                     return HullType.Bullshark;
+                case "Cricket":
+                    return HullType.Cricket;
                 case "Eagle":
                     return HullType.Eagle;
                 case "Flea":

@@ -538,6 +538,8 @@ namespace BattleCruisers.Scenes
                     return HullType.BlackRig;
                 case "Bullshark":
                     return HullType.Bullshark;
+                case "Cricket":
+                    return HullType.Cricket;
                 case "Eagle":
                     return HullType.Eagle;
                 case "Goatherd":

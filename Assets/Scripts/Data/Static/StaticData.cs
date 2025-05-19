@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
+using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Data.Static
 {
@@ -116,7 +117,11 @@ namespace BattleCruisers.Data.Static
             { Hulls.TasDevil, 35 },
             { Hulls.BlackRig, 37 },
             { Hulls.Yeti, 40 },
+<<<<<<< Updated upstream
             { Hulls.BasicRig, 95 }
+=======
+            { Hulls.Cricket, 95 }
+>>>>>>> Stashed changes
         });
 
         private static ReadOnlyDictionary<BuildingKey, int> _buildingToCompletedSideQuest
@@ -306,9 +311,7 @@ namespace BattleCruisers.Data.Static
             {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning)},
         });
         public static ReadOnlyCollection<HullKey> HullKeys { get; } = new ReadOnlyCollection<HullKey>(new List<HullKey>()
-        {
-            // In order they are available to the user.  Means the loadout
-            // screen order is nice :)
+        { 
             Hulls.Trident,
             Hulls.Bullshark,
             Hulls.Raptor,
@@ -328,7 +331,11 @@ namespace BattleCruisers.Data.Static
             Hulls.TasDevil,
             Hulls.Yeti,
             Hulls.FortressPrime,
+<<<<<<< Updated upstream
             Hulls.BasicRig
+=======
+            Hulls.Cricket
+>>>>>>> Stashed changes
         });
         public static ReadOnlyCollection<UnitKey> UnitKeys { get; } = new ReadOnlyCollection<UnitKey>(new List<UnitKey>()
         {

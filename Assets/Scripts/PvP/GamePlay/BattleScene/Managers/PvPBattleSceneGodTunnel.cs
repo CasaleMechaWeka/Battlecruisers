@@ -68,6 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             { "BlackRig", 5800},
             { "BasicRig", 500},
             { "Bullshark", 4000},
+            { "Cricket", 5000 },
             { "Eagle", 2400},
             { "Flea", 4000},
             { "Goatherd", 5700},

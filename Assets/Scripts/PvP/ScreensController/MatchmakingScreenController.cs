@@ -59,6 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite BlackRig;
         public Sprite BasicRig;
         public Sprite Bullshark;
+        public Sprite Cricket;
         public Sprite Eagle;
         public Sprite Flea;
         public Sprite Goatherd;
@@ -146,6 +147,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("BlackRig", BlackRig);
             sprites.Add("BasicRig", BasicRig);
             sprites.Add("Bullshark", Bullshark);
+            sprites.Add("Cricket", Cricket);
             sprites.Add("Eagle", Eagle);
             sprites.Add("Flea", Flea);
             sprites.Add("Goatherd", Goatherd);
@@ -260,6 +262,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     return HullType.BasicRig;
                 case "Bullshark":
                     return HullType.Bullshark;
+                case "Cricket":
+                    return HullType.Cricket;
                 case "Eagle":
                     return HullType.Eagle;
                 case "Flea":

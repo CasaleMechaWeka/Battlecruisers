@@ -57,6 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             "BlackRig",
             "BasicRig",
             "Bullshark",
+            "Cricket",
             "Eagle",
             "Flea",
             "Goatherd",
