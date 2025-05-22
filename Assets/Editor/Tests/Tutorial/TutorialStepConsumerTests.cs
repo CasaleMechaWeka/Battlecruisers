@@ -9,16 +9,16 @@ namespace BattleCruisers.Tests.Tutorial
     public class TutorialStepConsumerTests
     {
         private ITutorialStepConsumer _consumer;
-        private Queue<ITutorialStep> _tutorialSteps;
-        private ITutorialStep _step1, _step2;
+        private Queue<TutorialStep> _tutorialSteps;
+        private TutorialStep _step1, _step2;
 
         [SetUp]
         public void SetuUp()
         {
-            _step1 = Substitute.For<ITutorialStep>();
-            _step2 = Substitute.For<ITutorialStep>();
+            _step1 = Substitute.For<TutorialStep>();
+            _step2 = Substitute.For<TutorialStep>();
 
-            _tutorialSteps = new Queue<ITutorialStep>();
+            _tutorialSteps = new Queue<TutorialStep>();
             _tutorialSteps.Enqueue(_step1);
             _tutorialSteps.Enqueue(_step2);
 

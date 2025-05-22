@@ -38,9 +38,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _aiCruiser = aiCruiser;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            List<ITutorialStep> steps = new List<ITutorialStep>();
+            List<TutorialStep> steps = new List<TutorialStep>();
 
             // Return build speed to normal
             steps.Add(
@@ -77,9 +77,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             return steps;
         }
 
-        private IList<ITutorialStep> CreateSteps_BoostArtillery()
+        private IList<TutorialStep> CreateSteps_BoostArtillery()
         {
-            return new List<ITutorialStep>()
+            return new List<TutorialStep>()
             {
                 new AddTurretAccuracyBoostStep(
                     _argsFactory.CreateTutorialStepArgs(),

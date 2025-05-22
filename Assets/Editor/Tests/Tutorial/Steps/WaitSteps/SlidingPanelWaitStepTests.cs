@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class SlidingPanelWaitStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
         private SlidingPanel _slidingPanel;
         private PanelState _desiredState;
 

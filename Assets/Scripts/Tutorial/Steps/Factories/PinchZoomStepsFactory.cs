@@ -27,9 +27,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            IList<ITutorialStep> steps = new List<ITutorialStep>();
+            IList<TutorialStep> steps = new List<TutorialStep>();
 
             // Enable pinch zoom & swiping
             steps.Add(_featurePermitterStepFactory.CreateStep(_pinchZoomPermitter, enableFeature: true));

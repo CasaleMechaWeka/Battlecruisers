@@ -25,9 +25,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _explanationDismissableStepFactory = explanationDismissableStepFactory;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            List<ITutorialStep> steps = new List<ITutorialStep>();
+            List<TutorialStep> steps = new List<TutorialStep>();
 
             string builderBayName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation).Buildable.Name;
             string promptBase = LocTableCache.TutorialTable.GetString("Steps/ConstructDroneStation/Prompt");

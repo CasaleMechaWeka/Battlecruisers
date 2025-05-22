@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
     public class BuildingButtonStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _clickStep;
+        private TutorialStep _clickStep;
         private IBuildableButton _buildableButton;
         private BuildingNameFilter _buildingPermitter;
         private IPrefabKey _buildingToAllow;

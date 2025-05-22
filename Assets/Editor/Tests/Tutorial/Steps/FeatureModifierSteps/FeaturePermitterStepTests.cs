@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.FeatureModifierSteps
         public void Start()
         {
             BroadcastingFilter permitter = new BroadcastingFilter(isMatch: false);
-            ITutorialStep step = new FeaturePermitterStep(_args, permitter, enableFeature: true);
+            TutorialStep step = new FeaturePermitterStep(_args, permitter, enableFeature: true);
 
             step.Start(_completionCallback);
 

@@ -45,12 +45,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _tutorialProvider = enemyUnitArgs.TutorialProvider;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
+            List<TutorialStep> enemyUnitDefenceSteps = new List<TutorialStep>();
 
             // 1. Create factory and start producing units
-            (IList<ITutorialStep> Steps, IItemProvider<IFactory> FactoryProvider) factoryStepsResult =
+            (IList<TutorialStep> Steps, IItemProvider<IFactory> FactoryProvider) factoryStepsResult =
                 _createProducingFactoryStepsFactory.CreateSteps(FactoryKey, UnitToBuild.Key);
 
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             string unitName = nOrNothing + " " + UnitToBuild.Name;
             string textToDisplayBase = LocTableCache.TutorialTable.GetString("Steps/UnitDefence/BuildingUnit");
             string textToDisplay = string.Format(textToDisplayBase, unitName);
-            ITutorialStepArgs clickUnitArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, UnitBuiltProvider);
+            TutorialStepArgs clickUnitArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, UnitBuiltProvider);
             enemyUnitDefenceSteps.Add(_explanationDismissableStepFactory.CreateStep(clickUnitArgs));
 
             // 4. Navigate back to player cruiser
@@ -74,7 +74,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             string defenceName = nOrNothing + " " + DefenceToBuild.Name;
             textToDisplayBase = LocTableCache.TutorialTable.GetString("Steps/UnitDefence/BuildingDefence");
             textToDisplay = string.Format(textToDisplayBase, defenceName);
-            IList<ITutorialStep> buildTurretSteps
+            IList<TutorialStep> buildTurretSteps
                 = _constructBuildingStepsFactory.CreateSteps(
                     BuildingCategory.Defence,
                     DefenceToBuild,
@@ -121,9 +121,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             return enemyUnitDefenceSteps;
         }
 
-        protected virtual IList<ITutorialStep> CreateSpeedBoostSteps(string unitUpcomingText)
+        protected virtual IList<TutorialStep> CreateSpeedBoostSteps(string unitUpcomingText)
         {
-            return new List<ITutorialStep>();
+            return new List<TutorialStep>();
         }
     }
 }

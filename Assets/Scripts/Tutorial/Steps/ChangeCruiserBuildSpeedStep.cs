@@ -9,7 +9,7 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly CompositeCalculator _buildSpeedController;
         private readonly BuildSpeed _buildSpeed;
 
-        public ChangeCruiserBuildSpeedStep(ITutorialStepArgs args, CompositeCalculator buildSpeedController, BuildSpeed buildSpeed)
+        public ChangeCruiserBuildSpeedStep(TutorialStepArgs args, CompositeCalculator buildSpeedController, BuildSpeed buildSpeed)
             : base(args)
         {
             Assert.IsNotNull(buildSpeedController);

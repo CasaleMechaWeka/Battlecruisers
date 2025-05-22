@@ -10,13 +10,13 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly IItemProvider<IClickableEmitter> _clickableProvider;
         private IClickableEmitter _clickableEmitter;
 
-        public ExplanationClickStep(ITutorialStepArgs args, IClickableEmitter clickable)
+        public ExplanationClickStep(TutorialStepArgs args, IClickableEmitter clickable)
             : this(args, new StaticProvider<IClickableEmitter>(clickable))
         {
             // empty
         }
 
-        public ExplanationClickStep(ITutorialStepArgs args, IItemProvider<IClickableEmitter> clickableProvider)
+        public ExplanationClickStep(TutorialStepArgs args, IItemProvider<IClickableEmitter> clickableProvider)
             : base(args)
         {
             Assert.IsNotNull(clickableProvider);

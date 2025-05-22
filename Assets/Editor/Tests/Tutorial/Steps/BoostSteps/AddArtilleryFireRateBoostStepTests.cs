@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.BoostSteps
 {
     public class AddArtilleryFireRateBoostStepTests : BoostStepTestsBase
     {
-        private ITutorialStep _boostStep;
+        private TutorialStep _boostStep;
 
         [SetUp]
         public override void SetuUp()

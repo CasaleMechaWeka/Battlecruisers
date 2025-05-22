@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
     public class CategoryButtonStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _clickStep;
+        private TutorialStep _clickStep;
         private IBuildingCategoryButton _buildingCategoryButton;
         private BuildingCategoryFilter _permitter;
 

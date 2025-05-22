@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class TargetDestroyedWaitStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
         private IItemProvider<ITarget> _targetProvider;
         private ITarget _target;
 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class DelayWaitStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
         private IDeferrer _deferrer;
         private float _waitTimeInS;
 

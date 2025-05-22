@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
     {
         private readonly IModalMenu _menu;
 
-        public MenuDismissedWaitStep(ITutorialStepArgs args, IModalMenu menu)
+        public MenuDismissedWaitStep(TutorialStepArgs args, IModalMenu menu)
             : base(args)
         {
             Assert.IsNotNull(menu);

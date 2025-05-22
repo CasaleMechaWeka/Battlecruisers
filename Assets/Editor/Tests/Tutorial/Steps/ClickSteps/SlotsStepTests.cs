@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
     public class SlotsStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _clickStep;
+        private TutorialStep _clickStep;
         private SpecificSlotsFilter _permitter;
         private ISlot _slot;
         private SlotProvider _slotProvider;

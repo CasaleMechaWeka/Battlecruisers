@@ -28,9 +28,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _messageKey = messageKey;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            IList<ITutorialStep> steps = new List<ITutorialStep>();
+            IList<TutorialStep> steps = new List<TutorialStep>();
 
             EnableNavigation(steps);
 
@@ -44,12 +44,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             return steps;
         }
 
-        protected virtual void EnableNavigation(IList<ITutorialStep> steps)
+        protected virtual void EnableNavigation(IList<TutorialStep> steps)
         {
             steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: true));
         }
 
-        protected virtual void DisableNavigation(IList<ITutorialStep> steps)
+        protected virtual void DisableNavigation(IList<TutorialStep> steps)
         {
             steps.Add(_featurePermitterStepFactory.CreateStep(_swipePermitter, enableFeature: false));
         }

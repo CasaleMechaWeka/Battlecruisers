@@ -15,7 +15,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         private readonly IItemProvider<IFactory> _factoryProvider;
 
         public StartConstructingUnitStep(
-            ITutorialStepArgs args,
+            TutorialStepArgs args,
             IPrefabKey unitToConstruct,
             IItemProvider<IFactory> factoryProvider)
             : base(args)

@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly BuildingCategory _category;
 
         public CategoryButtonStep(
-            ITutorialStepArgs args,
+            TutorialStepArgs args,
             IBuildingCategoryButton buildingCategoryButton,
             BuildingCategoryFilter permitter)
             : base(args, buildingCategoryButton)

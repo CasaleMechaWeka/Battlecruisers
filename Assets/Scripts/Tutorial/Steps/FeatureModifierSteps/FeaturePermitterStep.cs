@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
         private readonly IPermitter _featurePermitter;
         private readonly bool _enableFeature;
 
-        public FeaturePermitterStep(ITutorialStepArgs args, IPermitter featurePermitter, bool enableFeature)
+        public FeaturePermitterStep(TutorialStepArgs args, IPermitter featurePermitter, bool enableFeature)
             : base(args)
         {
             Assert.IsNotNull(featurePermitter);

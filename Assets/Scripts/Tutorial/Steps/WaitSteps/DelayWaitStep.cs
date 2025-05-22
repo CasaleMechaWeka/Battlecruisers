@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
 
         private const int MIN_WAIT_TIME_IN_S = 0;
 
-        public DelayWaitStep(ITutorialStepArgs args, IDeferrer defferer, float waitTimeInS)
+        public DelayWaitStep(TutorialStepArgs args, IDeferrer defferer, float waitTimeInS)
             : base(args)
         {
             Assert.IsNotNull(defferer);

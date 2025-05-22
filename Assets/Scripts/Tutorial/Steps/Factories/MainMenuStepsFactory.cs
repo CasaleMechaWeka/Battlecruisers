@@ -25,12 +25,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _mainMenu = mainMenu;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            IList<ITutorialStep> steps = new List<ITutorialStep>();
+            IList<TutorialStep> steps = new List<TutorialStep>();
 
             // Get user to open main menu
-            ITutorialStepArgs args
+            TutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     LocTableCache.TutorialTable.GetString("Steps/MainMenu"),
                     _modalMainMenuButton);

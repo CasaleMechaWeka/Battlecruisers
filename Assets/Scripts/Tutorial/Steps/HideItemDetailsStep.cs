@@ -8,7 +8,7 @@ namespace BattleCruisers.Tutorial.Steps
     {
         private readonly UIManager _uiManager;
 
-        public HideItemDetailsStep(ITutorialStepArgs args, UIManager uiManager)
+        public HideItemDetailsStep(TutorialStepArgs args, UIManager uiManager)
             : base(args)
         {
             Assert.IsNotNull(uiManager);

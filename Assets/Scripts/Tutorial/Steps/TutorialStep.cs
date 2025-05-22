@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    public abstract class TutorialStep : ITutorialStep
+    public abstract class TutorialStep
     {
         private readonly Highlighter _highlighter;
         private readonly string _textToDisplay;
@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly bool _shouldUnhighlight;
         private Action _completionCallback;
 
-        protected TutorialStep(ITutorialStepArgs args)
+        protected TutorialStep(TutorialStepArgs args)
         {
             Assert.IsNotNull(args);
 

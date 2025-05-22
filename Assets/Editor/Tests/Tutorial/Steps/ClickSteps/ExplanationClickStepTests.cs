@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
     public class ExplanationClickStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _clickStep;
+        private TutorialStep _clickStep;
         private IItemProvider<IClickableEmitter> _clickableProvider;
         private IClickableEmitter _clickable;
 

@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class MenuDismissedWaitStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
         private IModalMenu _menu;
 
         [SetUp]

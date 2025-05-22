@@ -37,9 +37,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             CreateFactories(highlighter, explanationPanel, deferrer, tutorialArgs);
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            List<ITutorialStep> steps = new List<ITutorialStep>();
+            List<TutorialStep> steps = new List<TutorialStep>();
 
             // 1. Player cruiser
             steps.AddRange(YourCruiserStepsFactory.CreateSteps());

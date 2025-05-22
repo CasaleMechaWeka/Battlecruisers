@@ -41,9 +41,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _uiManager = uiManager;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            List<ITutorialStep> steps = new List<ITutorialStep>();
+            List<TutorialStep> steps = new List<TutorialStep>();
 
             // Hide informator, in case it is visible
             steps.Add(

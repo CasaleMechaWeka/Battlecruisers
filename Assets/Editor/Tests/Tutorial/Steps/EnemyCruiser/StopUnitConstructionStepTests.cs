@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
 {
     public class StopUnitConstructionStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
         private IItemProvider<IFactory> _factoryProvider;
 
         [SetUp]

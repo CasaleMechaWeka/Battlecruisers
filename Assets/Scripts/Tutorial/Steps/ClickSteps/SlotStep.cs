@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         private readonly SpecificSlotsFilter _highlightableSlotPermitter;
 
         public SlotStep(
-            ITutorialStepArgs args,
+            TutorialStepArgs args,
             SpecificSlotsFilter highlightableSlotPermitter,
             SlotProvider slotProvider)
             : base(args, slotProvider)

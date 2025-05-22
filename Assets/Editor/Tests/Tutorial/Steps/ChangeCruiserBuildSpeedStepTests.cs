@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
 {
     public class ChangeCruiserBuildSpeedStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
         private CompositeCalculator _buildSpeedController;
         private BuildSpeed _buildSpeed;
 

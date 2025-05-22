@@ -31,14 +31,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _aiCruiser = aiCruiser;
         }
 
-        public (IList<ITutorialStep> Steps, IItemProvider<IFactory> FactoryProvider) CreateSteps(IPrefabKey factoryKey, IPrefabKey unitKey)
+        public (IList<TutorialStep> Steps, IItemProvider<IFactory> FactoryProvider) CreateSteps(IPrefabKey factoryKey, IPrefabKey unitKey)
         {
-            IList<ITutorialStep> factorySteps = new List<ITutorialStep>();
+            IList<TutorialStep> factorySteps = new List<TutorialStep>();
 
             // These steps should complete very quickly and require no user input.
             // There is no need to display any text to the user or highlight any
             // elements.
-            ITutorialStepArgs commonArgs = _argsFactory.CreateTutorialStepArgs();
+            TutorialStepArgs commonArgs = _argsFactory.CreateTutorialStepArgs();
 
             // 1. Change build speed to super fast
             factorySteps.Add(_changeCruiserBuildSpeedStepFactory.CreateStep(

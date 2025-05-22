@@ -18,7 +18,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _displayer = displayer;
         }
 
-        public ITutorialStepArgs CreateTutorialStepArgs(
+        public TutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay = null,
             IHighlightable highlightable = null,
             bool shouldUnhighlight = true)
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     shouldUnhighlight);
         }
 
-        public ITutorialStepArgs CreateTutorialStepArgs(
+        public TutorialStepArgs CreateTutorialStepArgs(
             string textToDisplay,
             IItemProvider<IHighlightable> highlightableProvider,
             bool shouldUnhighlight = true)

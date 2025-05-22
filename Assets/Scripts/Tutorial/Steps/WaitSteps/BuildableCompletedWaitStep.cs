@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial.Steps.WaitSteps
         private readonly IItemProvider<IBuildable> _buildableProvider;
         private IBuildable _buildable;
 
-        public BuildableCompletedWaitStep(ITutorialStepArgs args, IItemProvider<IBuildable> buildableProvider)
+        public BuildableCompletedWaitStep(TutorialStepArgs args, IItemProvider<IBuildable> buildableProvider)
             : base(args)
         {
             Assert.IsNotNull(buildableProvider);

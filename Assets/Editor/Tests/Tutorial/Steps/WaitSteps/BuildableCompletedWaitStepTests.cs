@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class BuildableCompletedWaitStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _tutorialStep;
+        private TutorialStep _tutorialStep;
 
         private IItemProvider<IBuildable> _buildableProvider;
         private IBuildable _buildable;

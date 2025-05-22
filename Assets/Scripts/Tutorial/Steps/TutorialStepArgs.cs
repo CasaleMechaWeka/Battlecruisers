@@ -4,7 +4,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps
 {
-    public class TutorialStepArgs : ITutorialStepArgs
+    public class TutorialStepArgs
     {
         public Highlighter Highlighter { get; }
         public string TextToDisplay { get; }

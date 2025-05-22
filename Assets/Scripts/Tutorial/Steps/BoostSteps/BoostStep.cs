@@ -11,7 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.BoostSteps
         protected readonly IBoostProvider _boostProvider;
 
         protected BoostStep(
-            ITutorialStepArgs args,
+            TutorialStepArgs args,
             GlobalBoostProviders globalBoostProviders,
             IBoostProvider boostProvider)
             : base(args)

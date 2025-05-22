@@ -10,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // empty
         }
 
-        public ITutorialStep CreateStep(CompositeCalculator speedController, BuildSpeed buildSpeed)
+        public TutorialStep CreateStep(CompositeCalculator speedController, BuildSpeed buildSpeed)
         {
             return
                 new ChangeCruiserBuildSpeedStep(

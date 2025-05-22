@@ -57,11 +57,11 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);
         }
 
-        protected override IList<ITutorialStep> CreateSpeedBoostSteps(string unitUpcomingText)
+        protected override IList<TutorialStep> CreateSpeedBoostSteps(string unitUpcomingText)
         {
             IBoostProvider boostProvider = new BoostProvider(boostMultiplier: 8);
 
-            return new List<ITutorialStep>()
+            return new List<TutorialStep>()
             {
                 new AddAircraftBoostStep(
                     _argsFactory.CreateTutorialStepArgs(unitUpcomingText),

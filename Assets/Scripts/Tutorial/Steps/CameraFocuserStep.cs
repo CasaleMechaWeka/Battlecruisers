@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps
         private readonly ICameraFocuser _cameraFocuser;
         private readonly CameraFocuserTarget _target;
 
-        public CameraFocuserStep(ITutorialStepArgs args, ICameraFocuser cameraFocuser, CameraFocuserTarget target)
+        public CameraFocuserStep(TutorialStepArgs args, ICameraFocuser cameraFocuser, CameraFocuserTarget target)
             : base(args)
         {
             Assert.IsNotNull(cameraFocuser);

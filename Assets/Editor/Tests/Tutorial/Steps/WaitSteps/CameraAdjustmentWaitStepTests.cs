@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.WaitSteps
 {
     public class CameraAdjustmentWaitStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _step;
+        private TutorialStep _step;
         private CameraAdjuster _cameraAdjuster;
 
         [SetUp]

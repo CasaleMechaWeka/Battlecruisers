@@ -10,7 +10,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
 {
     public abstract class TutorialStepTestsBase
     {
-        protected ITutorialStepArgs _args;
+        protected TutorialStepArgs _args;
         protected Highlighter _highlighter;
         protected string _textToDisplay;
         protected ITextDisplayer _displayer;

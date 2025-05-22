@@ -21,9 +21,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _cameraComponents = cameraComponents;
         }
 
-        public IList<ITutorialStep> CreateSteps(CameraFocuserTarget cameraFocuserTarget)
+        public IList<TutorialStep> CreateSteps(CameraFocuserTarget cameraFocuserTarget)
         {
-            IList<ITutorialStep> steps = new List<ITutorialStep>();
+            IList<TutorialStep> steps = new List<TutorialStep>();
 
             steps.Add(
                 new CameraFocuserStep(

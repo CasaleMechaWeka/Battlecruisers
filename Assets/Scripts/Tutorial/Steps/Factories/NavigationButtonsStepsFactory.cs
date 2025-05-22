@@ -32,9 +32,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _cameraComponents = cameraComponents;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            IList<ITutorialStep> steps = new List<ITutorialStep>();
+            IList<TutorialStep> steps = new List<TutorialStep>();
 
             // Enable navigation buttons
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationButtonsPermitter, enableFeature: true));

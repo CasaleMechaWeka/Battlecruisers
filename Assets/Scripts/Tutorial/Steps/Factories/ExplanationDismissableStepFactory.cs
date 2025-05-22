@@ -20,12 +20,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _doneButton = doneButton;
         }
 
-        public ITutorialStep CreateStep(ITutorialStepArgs args)
+        public TutorialStep CreateStep(TutorialStepArgs args)
         {
             return new ExplanationDismissableStep(args, _okButton);
         }
 
-        public ITutorialStep CreateStepWithSecondaryButton(ITutorialStepArgs args)
+        public TutorialStep CreateStepWithSecondaryButton(TutorialStepArgs args)
         {
             return new ExplanationDismissableStep(args, _doneButton);
         }

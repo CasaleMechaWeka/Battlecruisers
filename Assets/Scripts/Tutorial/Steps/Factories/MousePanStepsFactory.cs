@@ -25,13 +25,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _scrollWheelPermitter = scrollWheelPermitter;
         }
 
-        protected override void EnableNavigation(IList<ITutorialStep> steps)
+        protected override void EnableNavigation(IList<TutorialStep> steps)
         {
             base.EnableNavigation(steps);
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: true));
         }
 
-        protected override void DisableNavigation(IList<ITutorialStep> steps)
+        protected override void DisableNavigation(IList<TutorialStep> steps)
         {
             base.DisableNavigation(steps);
             steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));

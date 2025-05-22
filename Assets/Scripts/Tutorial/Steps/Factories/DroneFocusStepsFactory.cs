@@ -58,9 +58,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            List<ITutorialStep> steps = new List<ITutorialStep>();
+            List<TutorialStep> steps = new List<TutorialStep>();
 
             // Navigate to player cruiser
             steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));

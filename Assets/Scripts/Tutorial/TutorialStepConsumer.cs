@@ -7,11 +7,11 @@ namespace BattleCruisers.Tutorial
 {
     public class TutorialStepConsumer : ITutorialStepConsumer
     {
-        private readonly Queue<ITutorialStep> _tutorialSteps;
-		
-		public event EventHandler Completed;
+        private readonly Queue<TutorialStep> _tutorialSteps;
 
-        public TutorialStepConsumer(Queue<ITutorialStep> tutorialSteps)
+        public event EventHandler Completed;
+
+        public TutorialStepConsumer(Queue<TutorialStep> tutorialSteps)
         {
             Assert.IsNotNull(tutorialSteps);
             _tutorialSteps = tutorialSteps;
@@ -19,7 +19,7 @@ namespace BattleCruisers.Tutorial
 
         public void StartConsuming()
         {
-			StartNextTask();
+            StartNextTask();
         }
 
         private void StartNextTask()

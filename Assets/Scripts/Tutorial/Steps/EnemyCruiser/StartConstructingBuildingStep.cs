@@ -19,7 +19,7 @@ namespace BattleCruisers.Tutorial.Steps.EnemyCruiser
         private IBuilding _building;
 
         public StartConstructingBuildingStep(
-            ITutorialStepArgs args,
+            TutorialStepArgs args,
             IPrefabKey buildingToConstruct,
             ICruiserController parentCruiser)
             : base(args)

@@ -32,14 +32,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _navigationPermitter = navigationPermitter;
         }
 
-        public IList<ITutorialStep> CreateSteps()
+        public IList<TutorialStep> CreateSteps()
         {
-            IList<ITutorialStep> steps = new List<ITutorialStep>();
+            IList<TutorialStep> steps = new List<TutorialStep>();
 
             steps.Add(_featurePermitterStepFactory.CreateStep(_navigationPermitter, enableFeature: false));
             steps.Add(_cameraAdjustmentWaitStepFactory.CreateStep());
 
-            ITutorialStepArgs args
+            TutorialStepArgs args
                 = _argsFactory.CreateTutorialStepArgs(
                     LocTableCache.TutorialTable.GetString("Steps/YourCruiser"),
                     _playerCruiser);

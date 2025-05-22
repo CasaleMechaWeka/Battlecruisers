@@ -20,7 +20,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start_PlayerCruiserTarget()
         {
-            ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.PlayerCruiser);
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.PlayerCruiser);
             step.Start(_completionCallback);
 
             _cameraFocuser.Received().FocusOnLeftCruiser();
@@ -30,7 +30,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start_AICruiserTarget()
         {
-            ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiser);
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiser);
             step.Start(_completionCallback);
 
             _cameraFocuser.Received().FocusOnRightCruiser();
@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start_AICruiserNavalFactoryTarget()
         {
-            ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiserNavalFactory);
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiserNavalFactory);
             step.Start(_completionCallback);
 
             _cameraFocuser.Received().FocusOnRightNavalFactory();
@@ -50,7 +50,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start_MidLeftTarget()
         {
-            ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.MidLeft);
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.MidLeft);
             step.Start(_completionCallback);
 
             _cameraFocuser.Received().FocusMidLeft();
@@ -60,7 +60,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [Test]
         public void Start_OverviewTarget()
         {
-            ITutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.Overview);
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.Overview);
             step.Start(_completionCallback);
 
             _cameraFocuser.Received().FocusOnOverview();

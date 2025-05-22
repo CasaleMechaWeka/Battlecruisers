@@ -35,7 +35,7 @@ namespace BattleCruisers.Tutorial
                     tutorialArgs.Components.Deferrer,
                     tutorialArgs);
 
-            Queue<ITutorialStep> steps = new Queue<ITutorialStep>(stepsFactory.CreateSteps());
+            Queue<TutorialStep> steps = new Queue<TutorialStep>(stepsFactory.CreateSteps());
             _consumer = new TutorialStepConsumer(steps);
             _consumer.Completed += _consumer_Completed;
 

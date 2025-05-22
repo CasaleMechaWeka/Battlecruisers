@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 {
     public class ExplanationDismissableStepTests : TutorialStepTestsBase
     {
-        private ITutorialStep _step;
+        private TutorialStep _step;
         private ExplanationDismissButton _dismissButton;
 
         [SetUp]

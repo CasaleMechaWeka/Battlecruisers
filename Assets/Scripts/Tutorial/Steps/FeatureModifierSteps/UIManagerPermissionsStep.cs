@@ -11,7 +11,7 @@ namespace BattleCruisers.Tutorial.Steps.FeatureModifierSteps
         private readonly bool _canDismissItemDetails;
 
         public UIManagerPermissionsStep(
-            ITutorialStepArgs args,
+            TutorialStepArgs args,
             UIManagerPermissions permissions,
             bool canShowItemDetails,
             bool canDismissItemDetails)

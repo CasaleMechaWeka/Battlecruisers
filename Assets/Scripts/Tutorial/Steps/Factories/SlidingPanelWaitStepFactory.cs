@@ -20,7 +20,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _informator = informator;
         }
 
-        public ITutorialStep CreateInformatorShownWaitStep()
+        public TutorialStep CreateInformatorShownWaitStep()
         {
             return
                 new SlidingPanelWaitStep(
@@ -29,7 +29,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     desiredState: PanelState.Shown);
         }
 
-        public ITutorialStep CreateSelectorShownWaitStep()
+        public TutorialStep CreateSelectorShownWaitStep()
         {
             return
                 new SlidingPanelWaitStep(
@@ -38,7 +38,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     desiredState: PanelState.Shown);
         }
 
-        public ITutorialStep CreateSelectorHiddenWaitStep()
+        public TutorialStep CreateSelectorHiddenWaitStep()
         {
             return
                 new SlidingPanelWaitStep(

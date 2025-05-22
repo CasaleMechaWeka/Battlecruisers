@@ -42,19 +42,19 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
         }
 
-        public IList<ITutorialStep> CreateSteps(
+        public IList<TutorialStep> CreateSteps(
             BuildingCategory buildingCategory,
             BuildableInfo buildingToConstruct,
             ISlotSpecification slotSpecification,
             string constructBuildingInstruction,
             bool waitForBuildingToComplete = true)
         {
-            IList<ITutorialStep> constructionSteps = new List<ITutorialStep>();
+            IList<TutorialStep> constructionSteps = new List<TutorialStep>();
 
             // Select building category
             IBuildingCategoryButton buildingCategoryButton = _leftPanelComponents.BuildMenu.GetBuildingCategoryButton(buildingCategory);
             Assert.IsNotNull(buildingCategoryButton);
-            ITutorialStepArgs buildingCategoryArgs = _argsFactory.CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton, shouldUnhighlight: false);
+            TutorialStepArgs buildingCategoryArgs = _argsFactory.CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton, shouldUnhighlight: false);
             constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialProvider.BuildingCategoryPermitter));
 
             // Wait for selector panel to slide out
@@ -63,7 +63,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             // Select building
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
-            ITutorialStepArgs buldingButtonArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, buildingButton);
+            TutorialStepArgs buldingButtonArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, buildingButton);
             SlotProvider slotProvider = new SlotProvider(_playerCruiser.SlotAccessor, slotSpecification);
             constructionSteps.Add(
                 new BuildingButtonStep(
@@ -75,7 +75,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
                     _tutorialProvider.SlotPermitter));
 
             // Select a slot
-            ITutorialStepArgs buildingSlotsArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, slotProvider);
+            TutorialStepArgs buildingSlotsArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, slotProvider);
             constructionSteps.Add(
                 new SlotStep(
                     buildingSlotsArgs,
@@ -109,9 +109,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             return buildableButton;
         }
 
-        private ITutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
+        private TutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
         {
-            ITutorialStepArgs args = _argsFactory.CreateTutorialStepArgs(textToDisplay);
+            TutorialStepArgs args = _argsFactory.CreateTutorialStepArgs(textToDisplay);
             return new BuildableCompletedWaitStep(args, _lastPlayerIncompleteBuildingStartedProvider);
         }
     }
