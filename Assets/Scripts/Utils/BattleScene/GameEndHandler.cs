@@ -27,7 +27,7 @@ namespace BattleCruisers.Utils.BattleScene
         private readonly CruiserDeathCameraFocuser _cameraFocuser;
         private readonly IPermitter _navigationPermitter;
         private readonly UIManager _uiManager;
-        private readonly ITargetIndicator _targetIndicator;
+        private readonly TargetIndicatorController _targetIndicator;
         private readonly WindManager _windManager;
         private readonly BuildingCategoryFilter _buildingCategoryPermitter;
         private readonly ToggleButtonGroup _speedButtonGroup;
@@ -45,7 +45,7 @@ namespace BattleCruisers.Utils.BattleScene
             CruiserDeathCameraFocuser cameraFocuser,
             IPermitter navigationPermitter,
             UIManager uiManager,
-            ITargetIndicator targetIndicator,
+            TargetIndicatorController targetIndicator,
             WindManager windManager,
             BuildingCategoryFilter buildingCategoryPermitter,
             ToggleButtonGroup speedButtonGroup)

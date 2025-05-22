@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
         public TargetIndicatorController targetIndicator;
-        public ITargetIndicator TargetIndicator => targetIndicator;
+        public TargetIndicatorController TargetIndicator => targetIndicator;
 
         public PvPHotkeyInitialiser hotkeyInitialiser;
         public PvPHotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;

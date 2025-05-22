@@ -7,9 +7,9 @@ namespace BattleCruisers.Scenes.Test.UI
 {
     public class TargetButton : MonoBehaviour, IPointerClickHandler
     {
-        private ITargetIndicator _targetIndicator;
+        private TargetIndicatorController _targetIndicator;
 
-        public void Initialise(ITargetIndicator targetIndicator)
+        public void Initialise(TargetIndicatorController targetIndicator)
         {
             Assert.IsNotNull(targetIndicator);
             _targetIndicator = targetIndicator;

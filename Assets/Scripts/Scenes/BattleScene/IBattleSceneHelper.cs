@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ITargetIndicator targetIndicator);
+            TargetIndicatorController targetIndicator);
         Task<string> GetEnemyNameAsync(int levelNum);
         Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
         IPrefabKey GetAiCruiserKey();

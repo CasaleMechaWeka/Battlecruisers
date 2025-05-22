@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ITargetIndicator targetIndicator)
+            TargetIndicatorController targetIndicator)
         {
             PvPHelper.AssertIsNotNull(playerCruiserUserChosenTargetManager);
 

@@ -44,7 +44,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public IClickableEmitter BackgroundClickableEmitter => backgroundClickableEmitter;
 
         public TargetIndicatorController targetIndicator;
-        public ITargetIndicator TargetIndicator => targetIndicator;
+        public TargetIndicatorController TargetIndicator => targetIndicator;
 
         public HotkeyInitialiser hotkeyInitialiser;
         public HotkeyInitialiser HotkeyInitialiser => hotkeyInitialiser;

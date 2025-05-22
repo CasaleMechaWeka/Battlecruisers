@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene
 {
-    public class TargetIndicatorController : MonoBehaviour, ITargetIndicator
+    public class TargetIndicatorController : MonoBehaviour
     {
         private Animator _animation;
 

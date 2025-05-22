@@ -163,7 +163,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ITargetIndicator targetIndicator)
+            TargetIndicatorController targetIndicator)
         {
             Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
 

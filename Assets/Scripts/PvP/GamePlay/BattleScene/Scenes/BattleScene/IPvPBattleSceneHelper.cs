@@ -51,7 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ITargetIndicator targetIndicator
+            TargetIndicatorController targetIndicator
                                 );
         IManagedDisposable CreateDroneEventSoundPlayer(IPvPCruiser playerCruiser, IDeferrer deferrer);
         Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);

@@ -14,7 +14,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
         private IUserChosenTargetHelper _targetHelper;
         private IUserChosenTargetManager _targetManager;
         private IPrioritisedSoundPlayer _soundPlayer;
-        private ITargetIndicator _targetIndicator;
+        private TargetIndicatorController _targetIndicator;
         private RankedTarget _target1, _target2;
 
         [SetUp]
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
         {
             _targetManager = Substitute.For<IUserChosenTargetManager>();
             _soundPlayer = Substitute.For<IPrioritisedSoundPlayer>();
-            _targetIndicator = Substitute.For<ITargetIndicator>();
+            _targetIndicator = Substitute.For<TargetIndicatorController>();
             _targetHelper = new UserChosenTargetHelper(_targetManager, _soundPlayer, _targetIndicator);
 
             _target1 = new RankedTarget(Substitute.For<ITarget>(), rank: 17);

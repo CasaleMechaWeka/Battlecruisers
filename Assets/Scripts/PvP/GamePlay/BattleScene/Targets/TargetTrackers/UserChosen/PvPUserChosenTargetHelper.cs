@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     {
         private readonly IUserChosenTargetManager _userChosenTargetManager;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
-        private readonly ITargetIndicator _targetIndicator;
+        private readonly TargetIndicatorController _targetIndicator;
 
         public ITarget UserChosenTarget => _userChosenTargetManager.HighestPriorityTarget?.Target;
 
@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
         public PvPUserChosenTargetHelper(
             IUserChosenTargetManager userChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ITargetIndicator targetIndicator
+            TargetIndicatorController targetIndicator
     )
         {
             PvPHelper.AssertIsNotNull(userChosenTargetManager, soundPlayer, targetIndicator);

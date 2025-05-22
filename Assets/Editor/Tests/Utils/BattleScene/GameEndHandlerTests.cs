@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private CruiserDeathCameraFocuser _cameraFocuser;
         private BroadcastingFilter _navigationPermitter;
         private UIManager _uiManager;
-        private ITargetIndicator _targetIndicator;
+        private TargetIndicatorController _targetIndicator;
         private IPrioritisedSoundPlayer _soundPlayer;
         private WindManager _windManager;
         private BuildingCategoryFilter _buildingCategoryPermitter;
@@ -57,7 +57,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             _cameraFocuser = Substitute.For<CruiserDeathCameraFocuser>();
             _navigationPermitter = new BroadcastingFilter(isMatch: true);
             _uiManager = Substitute.For<UIManager>();
-            _targetIndicator = Substitute.For<ITargetIndicator>();
+            _targetIndicator = Substitute.For<TargetIndicatorController>();
             _windManager = Substitute.For<WindManager>();
             _buildingCategoryPermitter = Substitute.For<BuildingCategoryFilter>();
             _speedButtonGroup = Substitute.For<ToggleButtonGroup>();

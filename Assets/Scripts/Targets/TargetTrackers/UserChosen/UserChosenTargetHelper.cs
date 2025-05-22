@@ -11,7 +11,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
     {
         private readonly IUserChosenTargetManager _userChosenTargetManager;
         private readonly IPrioritisedSoundPlayer _soundPlayer;
-        private readonly ITargetIndicator _targetIndicator;
+        private readonly TargetIndicatorController _targetIndicator;
 
         public ITarget UserChosenTarget => _userChosenTargetManager.HighestPriorityTarget?.Target;
 
@@ -20,7 +20,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
         public UserChosenTargetHelper(
             IUserChosenTargetManager userChosenTargetManager,
             IPrioritisedSoundPlayer soundPlayer,
-            ITargetIndicator targetIndicator)
+            TargetIndicatorController targetIndicator)
         {
             Helper.AssertIsNotNull(userChosenTargetManager, soundPlayer, targetIndicator);
 
