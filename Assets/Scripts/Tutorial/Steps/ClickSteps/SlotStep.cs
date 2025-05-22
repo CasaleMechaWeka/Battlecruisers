@@ -14,7 +14,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
         public SlotStep(
             ITutorialStepArgs args,
             SpecificSlotsFilter highlightableSlotPermitter,
-            ISlotProvider slotProvider)
+            SlotProvider slotProvider)
             : base(args, slotProvider)
         {
             Assert.IsNotNull(highlightableSlotPermitter);

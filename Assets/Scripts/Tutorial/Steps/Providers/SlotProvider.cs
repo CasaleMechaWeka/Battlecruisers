@@ -7,7 +7,10 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
-    public class SlotProvider : ISlotProvider
+    public class SlotProvider :
+        IItemProvider<ISlot>,
+        IItemProvider<IHighlightable>,
+        IItemProvider<IClickableEmitter>
     {
         private readonly SlotAccessor _slotAccessor;
         private readonly ISlotSpecification _slotSpecification;

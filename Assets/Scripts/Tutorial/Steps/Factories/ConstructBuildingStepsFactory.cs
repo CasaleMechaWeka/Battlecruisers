@@ -64,7 +64,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
             string textToDisplay = null;  // Means previous text is displayed
             ITutorialStepArgs buldingButtonArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, buildingButton);
-            ISlotProvider slotProvider = new SlotProvider(_playerCruiser.SlotAccessor, slotSpecification);
+            SlotProvider slotProvider = new SlotProvider(_playerCruiser.SlotAccessor, slotSpecification);
             constructionSteps.Add(
                 new BuildingButtonStep(
                     buldingButtonArgs,

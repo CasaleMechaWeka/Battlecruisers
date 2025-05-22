@@ -19,7 +19,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         private IPrefabKey _buildingToAllow;
         private SpecificSlotsFilter _slotPermitter;
         private ISlot _slot;
-        private ISlotProvider _slotProvider;
+        private SlotProvider _slotProvider;
         private IItemProvider<ISlot> _explicitSlotProvider;
 
         [SetUp]
@@ -34,7 +34,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
             _slotPermitter = Substitute.For<SpecificSlotsFilter>();
 
             _slot = Substitute.For<ISlot>();
-            _slotProvider = Substitute.For<ISlotProvider>();
+            _slotProvider = Substitute.For<SlotProvider>();
 
             _explicitSlotProvider = _slotProvider;
             _explicitSlotProvider.FindItem().Returns(_slot);
