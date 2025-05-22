@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Explanation
 {
-    public class ExplanationPanel : MonoBehaviourWrapper, IExplanationPanel
+    public class ExplanationPanel : MonoBehaviourWrapper
     {
         private RectTransform _transform;
         private RectTransform _textDisplayerTransform;
@@ -24,10 +24,10 @@ namespace BattleCruisers.Tutorial.Explanation
         public ITextDisplayer TextDisplayer => textDisplayer;
 
         public ExplanationDismissButton okButton;
-        public IExplanationDismissButton OkButton => okButton;
+        public ExplanationDismissButton OkButton => okButton;
 
         public ExplanationDismissButton doneButton;
-        public IExplanationDismissButton DoneButton => doneButton;
+        public ExplanationDismissButton DoneButton => doneButton;
 
         public void Initialise(SingleSoundPlayer soundPlayer)
         {

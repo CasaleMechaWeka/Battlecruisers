@@ -9,14 +9,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
     public class ExplanationDismissableStepTests : TutorialStepTestsBase
     {
         private ITutorialStep _step;
-        private IExplanationDismissButton _dismissButton;
+        private ExplanationDismissButton _dismissButton;
 
         [SetUp]
         public override void SetuUp()
         {
             base.SetuUp();
 
-            _dismissButton = Substitute.For<IExplanationDismissButton>();
+            _dismissButton = Substitute.For<ExplanationDismissButton>();
             _step = new ExplanationDismissableStep(_args, _dismissButton);
         }
 

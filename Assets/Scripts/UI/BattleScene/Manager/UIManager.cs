@@ -28,11 +28,11 @@ namespace BattleCruisers.UI.BattleScene.Manager
         private int lastClickedType = -1; //-1 is for nothing, 0 is for buildings and 1 is for units
 
         private ITarget _shownItem;
-        private IExplanationPanel _explanationPanel;
+        private ExplanationPanel _explanationPanel;
         private IHintDisplayer _hintDisplayer;
         private BuildingCategory _currentBuildingCategory;
 
-        public void SetExplanationPanel(IExplanationPanel explanationPanelValue)
+        public void SetExplanationPanel(ExplanationPanel explanationPanelValue)
         {
             _explanationPanel = explanationPanelValue;
         }

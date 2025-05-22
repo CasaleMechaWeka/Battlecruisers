@@ -6,9 +6,9 @@ namespace BattleCruisers.UI.BattleScene.InGameHints
 {
     public class HintDisplayer : IHintDisplayer
     {
-        private readonly IExplanationPanel _explanationPanel;
+        private readonly ExplanationPanel _explanationPanel;
 
-        public HintDisplayer(IExplanationPanel explanationPanel)
+        public HintDisplayer(ExplanationPanel explanationPanel)
         {
             Assert.IsNotNull(explanationPanel);
 

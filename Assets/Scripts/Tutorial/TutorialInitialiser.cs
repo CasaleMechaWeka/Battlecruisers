@@ -36,10 +36,7 @@ namespace BattleCruisers.Tutorial
             }
 
             explanationPanel.Initialise(FactoryProvider.Sound.UISoundPlayer);
-            _explanationPanelHeightManager
-                = new ExplanationPanelHeightManager(
-                    explanationPanel,
-                    new HeightDecider());
+            _explanationPanelHeightManager = new ExplanationPanelHeightManager(explanationPanel);
 
             if (ApplicationModel.IsTutorial)
             {

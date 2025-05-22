@@ -27,7 +27,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 
         public TutorialStepsFactoriesProvider(
             IHighlighter highlighter,
-            IExplanationPanel explanationPanel,
+            ExplanationPanel explanationPanel,
             IDeferrer deferrer,
             ITutorialArgs tutorialArgs)
         {

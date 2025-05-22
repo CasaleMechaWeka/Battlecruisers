@@ -6,9 +6,9 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
 {
     public class ExplanationDismissableStep : ExplanationClickStep
     {
-        private readonly IExplanationDismissButton _dismissButton;
+        private readonly ExplanationDismissButton _dismissButton;
 
-        public ExplanationDismissableStep(ITutorialStepArgs args, IExplanationDismissButton dismissButton)
+        public ExplanationDismissableStep(ITutorialStepArgs args, ExplanationDismissButton dismissButton)
             : base(args, dismissButton)
         {
             Assert.IsNotNull(dismissButton);

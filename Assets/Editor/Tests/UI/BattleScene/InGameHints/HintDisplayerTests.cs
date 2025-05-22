@@ -8,13 +8,13 @@ namespace BattleCruisers.Tests.UI.BattleScene.InGameHints
     public class HintDisplayerTests
     {
         private IHintDisplayer _hintDisplayer;
-        private IExplanationPanel _explanationPanel;
+        private ExplanationPanel _explanationPanel;
         private string _hint1, _hint2;
 
         [SetUp]
         public void TestSetup()
         {
-            _explanationPanel = Substitute.For<IExplanationPanel>();
+            _explanationPanel = Substitute.For<ExplanationPanel>();
             _hintDisplayer = new HintDisplayer(_explanationPanel);
 
             _hint1 = "monkas";

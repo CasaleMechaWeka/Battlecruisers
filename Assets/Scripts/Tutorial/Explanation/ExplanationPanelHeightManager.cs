@@ -5,15 +5,16 @@ namespace BattleCruisers.Tutorial.Explanation
 {
     public class ExplanationPanelHeightManager
     {
-        private readonly IExplanationPanel _explanationPanel;
-        private readonly IHeightDecider _heightDecider;
+        private readonly ExplanationPanel _explanationPanel;
 
-        public ExplanationPanelHeightManager(IExplanationPanel explanationPanel, IHeightDecider heightDecider)
+        private const float SHRUNK_CHARACTER_COUNT = 38;
+
+
+        public ExplanationPanelHeightManager(ExplanationPanel explanationPanel)
         {
-            Helper.AssertIsNotNull(explanationPanel, heightDecider);
+            Helper.AssertIsNotNull(explanationPanel);
 
             _explanationPanel = explanationPanel;
-            _heightDecider = heightDecider;
 
             _explanationPanel.DoneButton.EnabledChange += UpdatePanelHeight;
             _explanationPanel.OkButton.EnabledChange += UpdatePanelHeight;
@@ -24,7 +25,9 @@ namespace BattleCruisers.Tutorial.Explanation
         {
             Logging.Log(Tags.TUTORIAL_EXPLANATION_PANEL, $"sender: {sender}");
 
-            if (_heightDecider.CanShrinkPanel(_explanationPanel.DoneButton, _explanationPanel.OkButton, _explanationPanel.TextDisplayer.Text))
+            if (!_explanationPanel.DoneButton.Enabled
+                && !_explanationPanel.OkButton.Enabled
+                && _explanationPanel.TextDisplayer.Text.Length < SHRUNK_CHARACTER_COUNT)
             {
                 _explanationPanel.ShrinkHeight();
             }

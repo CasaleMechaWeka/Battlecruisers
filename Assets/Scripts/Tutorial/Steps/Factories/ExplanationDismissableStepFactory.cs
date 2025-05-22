@@ -6,12 +6,12 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class ExplanationDismissableStepFactory : TutorialFactoryBase
     {
-        private readonly IExplanationDismissButton _okButton, _doneButton;
+        private readonly ExplanationDismissButton _okButton, _doneButton;
 
         public ExplanationDismissableStepFactory(
             TutorialStepArgsFactory argsFactory,
-            IExplanationDismissButton okButton,
-            IExplanationDismissButton doneButton)
+            ExplanationDismissButton okButton,
+            ExplanationDismissButton doneButton)
             : base(argsFactory)
         {
             Helper.AssertIsNotNull(okButton, doneButton);

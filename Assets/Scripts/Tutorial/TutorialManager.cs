@@ -13,7 +13,7 @@ namespace BattleCruisers.Tutorial
     public class TutorialManager : MonoBehaviour, ITutorialManager
     {
         private ITutorialStepConsumer _consumer;
-        private IExplanationPanel _explanationPanel;
+        private ExplanationPanel _explanationPanel;
         private GameEndMonitor _gameEndMonitor;
 
         public void Initialise(ITutorialArgs tutorialArgs, HighlighterInitialiser highlighterInitialiser)
