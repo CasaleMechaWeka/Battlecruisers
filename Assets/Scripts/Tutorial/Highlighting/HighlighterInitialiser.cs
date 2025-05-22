@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Tutorial.Highlighting.Arrows;
-using BattleCruisers.Tutorial.Highlighting.FourSquare;
+﻿using BattleCruisers.Tutorial.Highlighting.FourSquare;
 using BattleCruisers.Tutorial.Highlighting.Masked;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -28,9 +27,7 @@ namespace BattleCruisers.Tutorial.Highlighting
             inverseHighlighter.Initialise();
             fourSquareHighlighter.Initialise();
 
-            arrowHighlighter
-                .Initialise(
-                     new ArrowCalculator(camera));
+            arrowHighlighter.Initialise(camera);
 
             return new CompositeHighlighter(inverseHighlighter, fourSquareHighlighter, arrowHighlighter);
         }
