@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
-    public class CreateProducingFactoryStepsFactory : TutorialFactoryBase, ICreateProducingFactoryStepsFactory
+    public class CreateProducingFactoryStepsFactory : TutorialFactoryBase
     {
         private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ITutorialProvider _tutorialProvider;
@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             _aiCruiser = aiCruiser;
         }
 
-        public FactoryStepsResult CreateSteps(IPrefabKey factoryKey, IPrefabKey unitKey)
+        public (IList<ITutorialStep> Steps, IItemProvider<IFactory> FactoryProvider) CreateSteps(IPrefabKey factoryKey, IPrefabKey unitKey)
         {
             IList<ITutorialStep> factorySteps = new List<ITutorialStep>();
 
@@ -70,7 +70,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
                     unitKey,
                     factoryProvider));
 
-            return new FactoryStepsResult(factorySteps, factoryProvider);
+            return new(factorySteps, factoryProvider);
         }
     }
 }

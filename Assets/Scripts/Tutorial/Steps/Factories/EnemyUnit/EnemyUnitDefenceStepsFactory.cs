@@ -1,7 +1,9 @@
 ﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
@@ -14,7 +16,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public abstract class EnemyUnitDefenceStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
     {
-        private readonly ICreateProducingFactoryStepsFactory _createProducingFactoryStepsFactory;
+        private readonly CreateProducingFactoryStepsFactory _createProducingFactoryStepsFactory;
         private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
         private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
@@ -48,7 +50,9 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
             List<ITutorialStep> enemyUnitDefenceSteps = new List<ITutorialStep>();
 
             // 1. Create factory and start producing units
-            FactoryStepsResult factoryStepsResult = _createProducingFactoryStepsFactory.CreateSteps(FactoryKey, UnitToBuild.Key);
+            (IList<ITutorialStep> Steps, IItemProvider<IFactory> FactoryProvider) factoryStepsResult =
+                _createProducingFactoryStepsFactory.CreateSteps(FactoryKey, UnitToBuild.Key);
+
             enemyUnitDefenceSteps.AddRange(factoryStepsResult.Steps);
 
             // 2. Navigate to enemey cruiser

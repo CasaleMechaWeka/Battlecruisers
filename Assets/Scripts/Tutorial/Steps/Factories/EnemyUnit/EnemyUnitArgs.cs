@@ -4,7 +4,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
     public class EnemyUnitArgs
     {
-        public ICreateProducingFactoryStepsFactory CreateProducingFactoryStepsFactory { get; }
+        public CreateProducingFactoryStepsFactory CreateProducingFactoryStepsFactory { get; }
         public AutoNavigationStepFactory AutoNavigationStepFactory { get; }
         public ExplanationDismissableStepFactory ExplanationDismissableStepFactory { get; }
         public ConstructBuildingStepsFactory ConstructBuildingStepsFactory { get; }
@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         public ITutorialProvider TutorialProvider { get; }
 
         public EnemyUnitArgs(
-           ICreateProducingFactoryStepsFactory createProducingFactoryStepsFactory,
+           CreateProducingFactoryStepsFactory createProducingFactoryStepsFactory,
            AutoNavigationStepFactory autoNavigationStepFactory,
            ExplanationDismissableStepFactory explanationDismissableStepFactory,
            ConstructBuildingStepsFactory constructBuildingStepsFactory,
