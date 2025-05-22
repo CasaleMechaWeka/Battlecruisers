@@ -6,14 +6,14 @@ namespace BattleCruisers.Tutorial.Steps
 {
     public class TutorialStepArgs : ITutorialStepArgs
     {
-        public IHighlighter Highlighter { get; }
+        public Highlighter Highlighter { get; }
         public string TextToDisplay { get; }
         public ITextDisplayer Displayer { get; }
-		public IItemProvider<IHighlightable> HighlightableProvider { get; }
+        public IItemProvider<IHighlightable> HighlightableProvider { get; }
         public bool ShouldUnhighlight { get; }
 
         public TutorialStepArgs(
-            IHighlighter highlighter,
+            Highlighter highlighter,
             string textToDisplay,
             ITextDisplayer displayer,
             IItemProvider<IHighlightable> highlightableProvider,

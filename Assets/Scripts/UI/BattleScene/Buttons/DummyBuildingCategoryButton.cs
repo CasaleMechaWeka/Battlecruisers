@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.BattleScene.Buttons
         public event EventHandler Clicked;
 #pragma warning restore 67  // Unused event
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             return null;
         }

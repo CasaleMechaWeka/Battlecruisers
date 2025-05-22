@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -256,7 +255,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return pvp_Health.Value < maxHealth;
         }
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
         }

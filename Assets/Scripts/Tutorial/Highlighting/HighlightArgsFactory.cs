@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Tutorial.Highlighting
 {
-    public class HighlightArgsFactory : IHighlightArgsFactory
+    public class HighlightArgsFactory
     {
         private readonly ICamera _camera;
 
@@ -54,7 +54,7 @@ namespace BattleCruisers.Tutorial.Highlighting
 
         public HighlightArgs CreateForInGameObject(Vector2 objectWorldPosition, Vector2 objectWorldSize)
         {
-            HighlightArgs noBorderArgs 
+            HighlightArgs noBorderArgs
                 = new HighlightArgs(
                     _camera.WorldToScreenPoint(objectWorldPosition),
                     FindBottomLeftScreenPosition(objectWorldPosition, objectWorldSize),

@@ -7,9 +7,9 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
 {
     public class HighlighterTests
     {
-        private IHighlighter _highlighter;
+        private Highlighter _highlighter;
         private ICoreHighlighter _coreHighlighter;
-        private IHighlightArgsFactory _highlightArgsFactory;
+        private HighlightArgsFactory _highlightArgsFactory;
         private IHighlightable _highlightable;
         private HighlightArgs _highlightArgs;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Tutorial.Highlighting
         public void SetuUp()
         {
             _coreHighlighter = Substitute.For<ICoreHighlighter>();
-            _highlightArgsFactory = Substitute.For<IHighlightArgsFactory>();
+            _highlightArgsFactory = Substitute.For<HighlightArgsFactory>();
 
             _highlighter = new Highlighter(_coreHighlighter, _highlightArgsFactory);
 

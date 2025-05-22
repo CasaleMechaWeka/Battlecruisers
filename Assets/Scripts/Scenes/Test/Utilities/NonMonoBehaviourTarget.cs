@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public event EventHandler<DestroyedEventArgs> Destroyed;
 #pragma warning restore 67  // Unused event
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             throw new NotImplementedException();
         }

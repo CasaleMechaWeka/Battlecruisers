@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
     public abstract class TutorialStepTestsBase
     {
         protected ITutorialStepArgs _args;
-        protected IHighlighter _highlighter;
+        protected Highlighter _highlighter;
         protected string _textToDisplay;
         protected ITextDisplayer _displayer;
         protected IItemProvider<IHighlightable> _highlightableProvider;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         [SetUp]
         public virtual void SetuUp()
         {
-            _highlighter = Substitute.For<IHighlighter>();
+            _highlighter = Substitute.For<Highlighter>();
             _textToDisplay = "Staub";
             _displayer = Substitute.For<ITextDisplayer>();
 

@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public event EventHandler Dismissed;
 #pragma warning restore 67  // Unused event
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             return null;
         }

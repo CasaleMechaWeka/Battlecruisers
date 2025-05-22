@@ -26,7 +26,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public ITutorialStepsFactory EndgameStepsFactory { get; }
 
         public TutorialStepsFactoriesProvider(
-            IHighlighter highlighter,
+            Highlighter highlighter,
             ExplanationPanel explanationPanel,
             IDeferrer deferrer,
             ITutorialArgs tutorialArgs)

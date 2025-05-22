@@ -12,7 +12,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly TutorialStepsFactoriesProvider _factoriesProvider;
 
         public MasterTutorialStepsFactory(
-            IHighlighter highlighter,
+            Highlighter highlighter,
             ExplanationPanel explanationPanel,
             IDeferrer deferrer,
             ITutorialArgs tutorialArgs)

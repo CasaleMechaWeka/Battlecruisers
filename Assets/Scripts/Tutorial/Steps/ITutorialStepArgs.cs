@@ -5,10 +5,10 @@ namespace BattleCruisers.Tutorial.Steps
 {
     public interface ITutorialStepArgs
     {
-        IHighlighter Highlighter { get; }
+        Highlighter Highlighter { get; }
         string TextToDisplay { get; }
         ITextDisplayer Displayer { get; }
-		IItemProvider<IHighlightable> HighlightableProvider { get; }
+        IItemProvider<IHighlightable> HighlightableProvider { get; }
         bool ShouldUnhighlight { get; }
     }
 }

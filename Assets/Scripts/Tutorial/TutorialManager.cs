@@ -23,7 +23,7 @@ namespace BattleCruisers.Tutorial
             _explanationPanel = tutorialArgs.ExplanationPanel;
 
             ICoreHighlighter coreHighlighter = highlighterInitialiser.CreateHighlighter(tutorialArgs.CameraComponents.MainCamera);
-            IHighlighter highlighter
+            Highlighter highlighter
                 = new Highlighter(
                     coreHighlighter,
                     new HighlightArgsFactory(tutorialArgs.CameraComponents.MainCamera));

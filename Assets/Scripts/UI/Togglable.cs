@@ -92,7 +92,7 @@ namespace BattleCruisers.UI
             }
         }
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForOnCanvasObject(_rectTransform, highlightSizeMultiplier);
         }

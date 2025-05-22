@@ -7,10 +7,10 @@ namespace BattleCruisers.Tutorial.Steps.Factories
 {
     public class TutorialStepArgsFactory
     {
-        private readonly IHighlighter _highlighter;
+        private readonly Highlighter _highlighter;
         private readonly ITextDisplayer _displayer;
 
-        public TutorialStepArgsFactory(IHighlighter highlighter, ITextDisplayer displayer)
+        public TutorialStepArgsFactory(Highlighter highlighter, ITextDisplayer displayer)
         {
             Helper.AssertIsNotNull(highlighter, displayer);
 

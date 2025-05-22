@@ -174,7 +174,7 @@ namespace BattleCruisers.Buildables
             return Health < maxHealth;
         }
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Position, MaskHighlightableSize);
         }

@@ -15,7 +15,6 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BattleCruisers.Effects.Explosions;
 
-
 namespace BattleCruisers.Cruisers.Slots
 {
     public class Slot : MonoBehaviour, ISlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
@@ -196,7 +195,7 @@ namespace BattleCruisers.Cruisers.Slots
             //Debug.Log("Nullified slot");
         }
 
-        public HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory)
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
         {
             return highlightArgsFactory.CreateForInGameObject(Transform.Position, _size);
         }

@@ -11,7 +11,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
     public abstract class MovingHighlightableTestGod : MonoBehaviour
     {
         private ICoreHighlighter _highlighter;
-        private IHighlightArgsFactory _highlightArgsFactory;
+        private HighlightArgsFactory _highlightArgsFactory;
         private ICircularList<Button> _onCanvasButtons;
         private ICircularList<SpriteRenderer> _inGameObjects;
 
@@ -36,7 +36,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
             SpriteRenderer[] inGameObjects = FindObjectsOfType<SpriteRenderer>();
             Assert.AreEqual(EXPECTED_NUM_OF_IN_GAME_OBJECTS, inGameObjects.Length);
             _inGameObjects = new CircularList<SpriteRenderer>(inGameObjects);
-            
+
             if (highlightGameObjects)
             {
                 HighlightNextInGameObject();

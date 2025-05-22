@@ -2,6 +2,6 @@
 {
     public interface IHighlightable
     {
-        HighlightArgs CreateHighlightArgs(IHighlightArgsFactory highlightArgsFactory);
+        HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory);
     }
 }
