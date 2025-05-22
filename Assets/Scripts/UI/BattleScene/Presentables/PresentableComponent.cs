@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.UI.BattleScene.Presentables
 {
-    public sealed class PresentableComponent : IPresentableComponent
+    public sealed class PresentableComponent
     {
         private readonly IList<IPresentable> _childPresentables;
 

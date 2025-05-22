@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public abstract class PvPClickablePresentableController : PvPElementWithClickSound, IPresentable
     {
-        private IPresentableComponent _presentableComponent;
+        private PresentableComponent _presentableComponent;
 
         public event EventHandler Dismissed;
 
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         {
             base.Initialise(soundPlayer, parent: parent);
 
-            _presentableComponent = new PvPPresentableComponent();
+            _presentableComponent = new PresentableComponent();
         }
 
         public virtual void OnPresenting(object activationParameter)

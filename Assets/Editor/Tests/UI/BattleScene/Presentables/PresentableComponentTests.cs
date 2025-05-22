@@ -6,7 +6,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.Presentables
 {
     public class PresentableComponentTests
     {
-        private IPresentableComponent _component;
+        private PresentableComponent _component;
         private IPresentable _presentable1, _presentable2;
         private object _activationArgs;
         private int _dismissedCount;

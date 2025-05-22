@@ -5,7 +5,7 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 {
     public abstract class PresentableController : MonoBehaviourWrapper, IPresentable
     {
-        private IPresentableComponent _presentableComponent;
+        private PresentableComponent _presentableComponent;
 
         public event EventHandler Dismissed;
 

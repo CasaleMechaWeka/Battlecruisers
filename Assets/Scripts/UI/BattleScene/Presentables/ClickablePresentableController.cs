@@ -7,7 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Presentables
 {
     public abstract class ClickablePresentableController : ElementWithClickSound, IPresentable
     {
-        private IPresentableComponent _presentableComponent;
+        private PresentableComponent _presentableComponent;
 
         public event EventHandler Dismissed;
 
