@@ -141,7 +141,10 @@ namespace BattleCruisers.Data.Static
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                BlackRig, Yeti, Rickshaw, TasDevil, Flea, Shepherd, Microlodon, Pistol, Goatherd, Megalith, FortressPrime, BasicRig, Cricket
+                Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor,
+                Rockjaw, Trident, ManOfWarBoss, HuntressBoss, TasDevil, Yeti,
+                Rickshaw, BlackRig, Flea, Shepherd, Microlodon, Pistol,
+                Goatherd, Megalith, FortressPrime, BasicRig, Cricket
             });
         }
 
