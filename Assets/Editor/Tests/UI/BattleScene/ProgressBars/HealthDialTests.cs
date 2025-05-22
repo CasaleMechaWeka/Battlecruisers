@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.UI.BattleScene.ProgressBars
 {
     public class HealthDialTests
     {
-        private IHealthDial<IDamagable> _healthDial;
+        private HealthDial<IDamagable> _healthDial;
         private Image _fillableImage;
         private IFilter<IDamagable> _visibilityFilter;
         private IDamagable _damagable1, _damagable2;

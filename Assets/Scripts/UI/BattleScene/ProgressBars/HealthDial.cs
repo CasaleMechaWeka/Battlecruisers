@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.BattleScene.ProgressBars
 {
-    public class HealthDial<TDamagable> : IHealthDial<TDamagable> where TDamagable : IDamagable
+    public class HealthDial<TDamagable> where TDamagable : IDamagable
     {
         private readonly Image _healthDialImage;
         private readonly IFilter<TDamagable> _visibilityFilter;

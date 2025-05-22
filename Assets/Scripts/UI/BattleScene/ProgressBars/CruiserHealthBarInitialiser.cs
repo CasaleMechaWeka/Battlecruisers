@@ -32,7 +32,7 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
 
             IFilter<ICruiser> visibilityFilter = new StaticFilter<ICruiser>(isMatch: true);
 
-            IHealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(fillableImage, visibilityFilter, damageTakenIndicator);
+            HealthDial<ICruiser> healthDial = new HealthDial<ICruiser>(fillableImage, visibilityFilter, damageTakenIndicator);
             healthDial.Damagable = cruiser;
 
             //_lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");
