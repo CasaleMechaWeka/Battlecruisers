@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         protected TutorialStepArgs _args;
         protected Highlighter _highlighter;
         protected string _textToDisplay;
-        protected ITextDisplayer _displayer;
+        protected TextDisplayer _displayer;
         protected IItemProvider<IHighlightable> _highlightableProvider;
         protected IHighlightable _highlightable;
         protected Action _completionCallback;
@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps
         {
             _highlighter = Substitute.For<Highlighter>();
             _textToDisplay = "Staub";
-            _displayer = Substitute.For<ITextDisplayer>();
+            _displayer = Substitute.For<TextDisplayer>();
 
             _highlightable = Substitute.For<IHighlightable>();
             _highlightableProvider = Substitute.For<IItemProvider<IHighlightable>>();

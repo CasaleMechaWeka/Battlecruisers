@@ -21,7 +21,7 @@ namespace BattleCruisers.Tutorial
         public MainMenuButtonController modalMainMenuButton;
 
         public void Initialise(
-            ITutorialArgsBase baseArgs,
+            TutorialArgsBase baseArgs,
             bool showInGameHints,
             ICruiserDamageMonitor playerCruiserDamageMonitor)
         {
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tutorial
                 DataProvider.GameModel.HasAttemptedTutorial = true;
                 DataProvider.SaveGame();
 
-                ITutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton);
+                TutorialArgs tutorialArgs = new TutorialArgs(baseArgs, explanationPanel, modalMainMenuButton);
                 tutorialManager.Initialise(tutorialArgs, highlighterInitialiser);
                 tutorialManager.StartTutorial();
             }

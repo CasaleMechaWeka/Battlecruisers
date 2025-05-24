@@ -2,6 +2,7 @@
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
@@ -19,7 +20,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     public class ConstructBuildingStepsFactory : TutorialFactoryBase
     {
         private readonly LeftPanelComponents _leftPanelComponents;
-        private readonly ITutorialProvider _tutorialProvider;
+        private readonly TutorialHelper _tutorialProvider;
         private readonly ICruiser _playerCruiser;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly SlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
@@ -27,7 +28,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         public ConstructBuildingStepsFactory(
             TutorialStepArgsFactory argsFactory,
             LeftPanelComponents leftPanelComponents,
-            ITutorialProvider tutorialProvider,
+            TutorialHelper tutorialProvider,
             ICruiser playerCruiser,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             SlidingPanelWaitStepFactory slidingPanelWaitStepFactory)

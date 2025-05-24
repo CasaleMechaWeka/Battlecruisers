@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Tutorial
 {
     public class TutorialStepConsumerTests
     {
-        private ITutorialStepConsumer _consumer;
+        private TutorialStepConsumer _consumer;
         private Queue<TutorialStep> _tutorialSteps;
         private TutorialStep _step1, _step2;
 

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tutorial.Steps
     {
         private readonly Highlighter _highlighter;
         private readonly string _textToDisplay;
-        private readonly ITextDisplayer _displayer;
+        private readonly TextDisplayer _displayer;
         private readonly IItemProvider<IHighlightable> _highlightableProvider;
         private readonly bool _shouldUnhighlight;
         private Action _completionCallback;

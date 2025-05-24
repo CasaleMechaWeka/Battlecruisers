@@ -10,13 +10,13 @@ using UnityEngine;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialManager : MonoBehaviour, ITutorialManager
+    public class TutorialManager : MonoBehaviour
     {
-        private ITutorialStepConsumer _consumer;
+        private TutorialStepConsumer _consumer;
         private ExplanationPanel _explanationPanel;
         private GameEndMonitor _gameEndMonitor;
 
-        public void Initialise(ITutorialArgs tutorialArgs, HighlighterInitialiser highlighterInitialiser)
+        public void Initialise(TutorialArgs tutorialArgs, HighlighterInitialiser highlighterInitialiser)
         {
             Helper.AssertIsNotNull(tutorialArgs, highlighterInitialiser);
 

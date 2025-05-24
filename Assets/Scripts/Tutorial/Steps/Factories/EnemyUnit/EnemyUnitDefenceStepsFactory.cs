@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Buildings.Factories;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
         private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
-        private readonly ITutorialProvider _tutorialProvider;
+        private readonly TutorialHelper _tutorialProvider;
 
         protected abstract IPrefabKey FactoryKey { get; }
         protected abstract BuildableInfo UnitToBuild { get; }

@@ -4,13 +4,13 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialArgs : TutorialArgsBase, ITutorialArgs
+    public class TutorialArgs : TutorialArgsBase
     {
         public ExplanationPanel ExplanationPanel { get; }
         public IButton ModalMainMenuButton { get; }
 
         public TutorialArgs(
-            ITutorialArgsBase baseArgs,
+            TutorialArgsBase baseArgs,
             ExplanationPanel explanationPanel,
             IButton modalMainMenuButton)
             : base(baseArgs)

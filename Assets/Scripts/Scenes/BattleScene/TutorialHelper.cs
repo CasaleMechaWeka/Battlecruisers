@@ -6,7 +6,6 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
-using BattleCruisers.Tutorial;
 using BattleCruisers.Tutorial.Steps.Providers;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
@@ -22,7 +21,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
-    public class TutorialHelper : BattleSceneHelper, ITutorialProvider
+    public class TutorialHelper : BattleSceneHelper
     {
         private readonly SpecificSlotsFilter _slotFilter;
         private readonly BuildingNameFilter _buildingNameFilter;

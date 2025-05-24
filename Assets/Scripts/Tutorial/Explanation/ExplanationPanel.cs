@@ -21,7 +21,7 @@ namespace BattleCruisers.Tutorial.Explanation
         private const float TEXT_RECT_BOTTOM_BUTTON = 150;
 
         public TextDisplayer textDisplayer;
-        public ITextDisplayer TextDisplayer => textDisplayer;
+        public TextDisplayer TextDisplayer => textDisplayer;
 
         public ExplanationDismissButton okButton;
         public ExplanationDismissButton OkButton => okButton;

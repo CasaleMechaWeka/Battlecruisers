@@ -8,14 +8,14 @@ namespace BattleCruisers.Tutorial.Steps
     {
         public Highlighter Highlighter { get; }
         public string TextToDisplay { get; }
-        public ITextDisplayer Displayer { get; }
+        public TextDisplayer Displayer { get; }
         public IItemProvider<IHighlightable> HighlightableProvider { get; }
         public bool ShouldUnhighlight { get; }
 
         public TutorialStepArgs(
             Highlighter highlighter,
             string textToDisplay,
-            ITextDisplayer displayer,
+            TextDisplayer displayer,
             IItemProvider<IHighlightable> highlightableProvider,
             bool shouldUnhighlight)
         {

@@ -31,7 +31,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             Highlighter highlighter,
             ExplanationPanel explanationPanel,
             IDeferrer deferrer,
-            ITutorialArgs tutorialArgs)
+            TutorialArgs tutorialArgs)
         {
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
             CreateFactories(highlighter, explanationPanel, deferrer, tutorialArgs);
@@ -93,7 +93,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             Highlighter highlighter,
             ExplanationPanel explanationPanel,
             IDeferrer deferrer,
-            ITutorialArgs tutorialArgs)
+            TutorialArgs tutorialArgs)
         {
             Helper.AssertIsNotNull(highlighter, explanationPanel, deferrer, tutorialArgs);
 

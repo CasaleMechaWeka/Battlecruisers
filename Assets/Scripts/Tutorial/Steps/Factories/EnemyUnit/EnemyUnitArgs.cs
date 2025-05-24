@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Utils;
+﻿using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Utils;
 
 namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
 {
@@ -9,7 +10,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
         public ExplanationDismissableStepFactory ExplanationDismissableStepFactory { get; }
         public ConstructBuildingStepsFactory ConstructBuildingStepsFactory { get; }
         public ChangeCruiserBuildSpeedStepFactory ChangeCruiserBuildSpeedStepFactory { get; }
-        public ITutorialProvider TutorialProvider { get; }
+        public TutorialHelper TutorialProvider { get; }
 
         public EnemyUnitArgs(
            CreateProducingFactoryStepsFactory createProducingFactoryStepsFactory,
@@ -17,7 +18,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
            ExplanationDismissableStepFactory explanationDismissableStepFactory,
            ConstructBuildingStepsFactory constructBuildingStepsFactory,
            ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
-           ITutorialProvider tutorialProvider)
+           TutorialHelper tutorialProvider)
         {
             Helper.AssertIsNotNull(
                 createProducingFactoryStepsFactory,

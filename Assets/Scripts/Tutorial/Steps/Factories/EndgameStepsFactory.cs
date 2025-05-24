@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.BoostSteps;
 using BattleCruisers.Tutorial.Steps.WaitSteps;
@@ -17,14 +18,14 @@ namespace BattleCruisers.Tutorial.Steps.Factories
     {
         private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
-        private readonly ITutorialProvider _tutorialProvider;
+        private readonly TutorialHelper _tutorialProvider;
         private readonly ICruiser _playerCruiser, _aiCruiser;
 
         public EndgameStepsFactory(
             TutorialStepArgsFactory argsFactory,
             ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             AutoNavigationStepFactory autoNavigationStepFactory,
-            ITutorialProvider tutorialProvider,
+            TutorialHelper tutorialProvider,
             ICruiser playerCruiser,
             ICruiser aiCruiser)
             : base(argsFactory)

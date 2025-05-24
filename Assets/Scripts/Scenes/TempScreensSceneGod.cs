@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes
         private SingleSoundPlayer _soundPlayer;
         private bool _isPlaying;
         private readonly IBattleSceneHelper _battleSceneHelper;
-        private ITutorialProvider _tutorialProvider;
+        private TutorialHelper _tutorialProvider;
         private BattleSceneGodComponents components;
         private NavigationPermitters navigationPermitters;
         private IBattleSceneHelper helper;

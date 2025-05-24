@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial.Steps.ClickSteps;
 using BattleCruisers.Tutorial.Steps.FeatureModifierSteps;
 using BattleCruisers.Tutorial.Steps.Providers;
@@ -20,7 +21,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
         private readonly ExplanationDismissableStepFactory _explanationDismissableStepFactory;
         private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
         private readonly ConstructBuildingStepsFactory _constructBuildingStepsFactory;
-        private readonly ITutorialProvider _tutorialProvider;
+        private readonly TutorialHelper _tutorialProvider;
         private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
         private readonly RightPanelComponents _rightPanelComponents;
         private readonly SlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
@@ -31,7 +32,7 @@ namespace BattleCruisers.Tutorial.Steps.Factories
             ExplanationDismissableStepFactory explanationDismissableStepFactory,
             ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
             ConstructBuildingStepsFactory constructBuildingStepsFactory,
-            ITutorialProvider tutorialProvider,
+            TutorialHelper tutorialProvider,
             ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
             RightPanelComponents rightPanelComponents,
             SlidingPanelWaitStepFactory slidingPanelWaitStepFactory)

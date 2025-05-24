@@ -8,11 +8,11 @@ using BattleCruisers.Utils.BattleScene;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TutorialArgsBase : ITutorialArgsBase
+    public class TutorialArgsBase
     {
         public ICruiser PlayerCruiser { get; }
         public ICruiser AICruiser { get; }
-        public ITutorialProvider TutorialProvider { get; }
+        public TutorialHelper TutorialProvider { get; }
         public BattleSceneGodComponents Components { get; }
         public CameraComponents CameraComponents { get; }
         public TopPanelComponents TopPanelComponents { get; }
@@ -21,7 +21,7 @@ namespace BattleCruisers.Tutorial
         public UIManager UIManager { get; }
         public GameEndMonitor GameEndMonitor { get; }
 
-        public TutorialArgsBase(ITutorialArgsBase baseArgs)
+        public TutorialArgsBase(TutorialArgsBase baseArgs)
             : this(
                 baseArgs.PlayerCruiser,
                 baseArgs.AICruiser,
@@ -38,7 +38,7 @@ namespace BattleCruisers.Tutorial
         public TutorialArgsBase(
             ICruiser playerCruiser,
             ICruiser aiCruiser,
-            ITutorialProvider tutorialProvider,
+            TutorialHelper tutorialProvider,
             BattleSceneGodComponents battleSceneGodComponents,
             CameraComponents cameraComponents,
             TopPanelComponents topPanelComponents,

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Tutorial
 {
-    public class TextDisplayer : MonoBehaviour, ITextDisplayer
+    public class TextDisplayer : MonoBehaviour
     {
         private GameObject _parent;
 

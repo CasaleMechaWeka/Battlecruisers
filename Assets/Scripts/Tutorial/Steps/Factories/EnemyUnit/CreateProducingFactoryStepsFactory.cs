@@ -2,6 +2,7 @@
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Tutorial.Providers;
 using BattleCruisers.Tutorial.Steps.EnemyCruiser;
 using BattleCruisers.Tutorial.Steps.Providers;
@@ -14,13 +15,13 @@ namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
     public class CreateProducingFactoryStepsFactory : TutorialFactoryBase
     {
         private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
-        private readonly ITutorialProvider _tutorialProvider;
+        private readonly TutorialHelper _tutorialProvider;
         private readonly ICruiser _aiCruiser;
 
         public CreateProducingFactoryStepsFactory(
             TutorialStepArgsFactory argsFactory,
             ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
-            ITutorialProvider tutorialProvider,
+            TutorialHelper tutorialProvider,
             ICruiser aiCruiser)
             : base(argsFactory)
         {

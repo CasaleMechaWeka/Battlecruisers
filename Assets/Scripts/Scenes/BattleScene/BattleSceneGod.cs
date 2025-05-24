@@ -53,7 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private static GameEndMonitor _gameEndMonitor;
         // Hold references to avoid garbage collection
         private AudioInitialiser _audioInitialiser;
-        private ITutorialProvider _tutorialProvider;
+        private TutorialHelper _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
         private BuildableButtonColourController _buildableButtonColourController;
         private CruiserDeathManager _cruiserDeathManager;
@@ -372,7 +372,7 @@ namespace BattleCruisers.Scenes.BattleScene
             cheater?.Initialise(playerCruiser, aiCruiser);
 
             // Tutorial
-            ITutorialArgsBase tutorialArgs
+            TutorialArgsBase tutorialArgs
                 = new TutorialArgsBase(
                     playerCruiser,
                     aiCruiser,
