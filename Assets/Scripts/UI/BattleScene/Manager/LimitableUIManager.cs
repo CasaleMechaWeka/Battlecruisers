@@ -25,6 +25,7 @@ namespace BattleCruisers.UI.BattleScene.Manager
             SingleSoundPlayer uiSoundPlayer,
             UIManagerPermissions permissions)
         {
+            base.Initialise(playerCruiser, aiCruiser, buildMenu, detailsManager, soundPlayer, uiSoundPlayer);
             Assert.IsNotNull(permissions);
             _permissions = permissions;
         }
