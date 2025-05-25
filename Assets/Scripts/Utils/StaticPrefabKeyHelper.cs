@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils
         Hull_Megalith = 0017,
         Hull_Cricket = 0018,
 
-        Hull_BasicRig= 0018,
+        Hull_BasicRig= 0019,
 
         // === Buildings ===
         // Factories
