@@ -101,7 +101,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
 
         private void Fire(float fireAngleInDegrees)
         {
-            Debug.Log("MisFighter: Fire");
+            //Debug.Log("MisFighter: Fire");
             Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  fireAngleInDegrees: {fireAngleInDegrees}");
 
             _barrelFirer.Fire(fireAngleInDegrees);
