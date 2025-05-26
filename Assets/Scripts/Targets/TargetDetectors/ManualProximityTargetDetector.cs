@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    public class ManualProximityTargetDetector : IManualProximityTargetDetector
+    public class ManualProximityTargetDetector : ITargetDetector
     {
         private readonly ITransform _parentTransform;
         private readonly IReadOnlyCollection<ITarget> _potentialTargets;
@@ -20,8 +20,8 @@ namespace BattleCruisers.Targets.TargetDetectors
         public event EventHandler<TargetEventArgs> TargetExited;
 
         public ManualProximityTargetDetector(
-            ITransform parentTransform, 
-            IReadOnlyCollection<ITarget> potentialTargets, 
+            ITransform parentTransform,
+            IReadOnlyCollection<ITarget> potentialTargets,
             float detectionRange,
             IRangeCalculator rangeCalculator)
         {
@@ -76,7 +76,7 @@ namespace BattleCruisers.Targets.TargetDetectors
         private IList<ITarget> DetectExitedTargets(ISet<ITarget> newInRangeTargets)
         {
             _exitedTargets.Clear();
-            
+
             foreach (ITarget currentInRangeTarget in _currentInRangeTargets)
             {
                 if (!newInRangeTargets.Contains(currentInRangeTarget))

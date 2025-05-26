@@ -7,7 +7,7 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
 {
     public class TargetColliderHandlerTests
     {
-        private ITargetColliderHandler _colliderHandler;
+        private TargetColliderHandler _colliderHandler;
         private ITargetDetectorEventEmitter _eventEmitter;
         private ITarget _target;
 

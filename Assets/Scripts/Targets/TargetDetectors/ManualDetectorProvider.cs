@@ -10,9 +10,9 @@ namespace BattleCruisers.Targets.TargetDetectors
     {
         private readonly ManualDetectorPoller _detectorPoller;
 
-        public IManualProximityTargetDetector TargetDetector { get; }
+        public ManualProximityTargetDetector TargetDetector { get; }
 
-        public ManualDetectorProvider(ManualDetectorPoller detectorPoller, IManualProximityTargetDetector targetDetector)
+        public ManualDetectorProvider(ManualDetectorPoller detectorPoller, ManualProximityTargetDetector targetDetector)
         {
             Helper.AssertIsNotNull(detectorPoller, targetDetector);
 

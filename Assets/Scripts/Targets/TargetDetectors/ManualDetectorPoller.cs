@@ -6,10 +6,10 @@ namespace BattleCruisers.Targets.TargetDetectors
 {
     public class ManualDetectorPoller : IManagedDisposable
     {
-        private readonly IManualDetector _manualDetector;
+        private readonly ManualProximityTargetDetector _manualDetector;
         private readonly IUpdater _updater;
 
-        public ManualDetectorPoller(IManualDetector manualDetector, IUpdater updater)
+        public ManualDetectorPoller(ManualProximityTargetDetector manualDetector, IUpdater updater)
         {
             Helper.AssertIsNotNull(manualDetector, updater);
 

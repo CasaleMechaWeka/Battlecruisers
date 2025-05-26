@@ -8,13 +8,13 @@ namespace BattleCruisers.Tests.Targets.TargetDetectors
     public class ManualDetectorPollerTests
     {
         private ManualDetectorPoller _detectorPoller;
-        private IManualDetector _manualDetector;
+        private ManualProximityTargetDetector _manualDetector;
         private IUpdater _updater;
 
         [SetUp]
         public void TestSetup()
         {
-            _manualDetector = Substitute.For<IManualDetector>();
+            _manualDetector = Substitute.For<ManualProximityTargetDetector>();
             _updater = Substitute.For<IUpdater>();
 
             _detectorPoller = new ManualDetectorPoller(_manualDetector, _updater);

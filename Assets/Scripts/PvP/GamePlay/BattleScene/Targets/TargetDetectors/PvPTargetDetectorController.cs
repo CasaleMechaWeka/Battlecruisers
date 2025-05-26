@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
 {
     public class PvPTargetDetectorController : MonoBehaviour, ITargetDetector, ITargetDetectorEventEmitter
     {
-        private ITargetColliderHandler _targetColliderHandler;
+        private TargetColliderHandler _targetColliderHandler;
 
         public event EventHandler<TargetEventArgs> TargetEntered;
         public event EventHandler<TargetEventArgs> TargetExited;

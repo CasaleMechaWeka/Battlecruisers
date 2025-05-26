@@ -8,10 +8,10 @@ namespace BattleCruisers.Targets.TargetDetectors
 {
     public class TargetDetectorController : MonoBehaviour, ITargetDetector, ITargetDetectorEventEmitter
     {
-        private ITargetColliderHandler _targetColliderHandler;
+        private TargetColliderHandler _targetColliderHandler;
 
-		public event EventHandler<TargetEventArgs> TargetEntered;
-		public event EventHandler<TargetEventArgs> TargetExited;
+        public event EventHandler<TargetEventArgs> TargetEntered;
+        public event EventHandler<TargetEventArgs> TargetExited;
 
         //private float lastTargetEnteredTime;
         //private float targetEnteredThrottleTime = 0.3f; // Adjust this value as needed
@@ -31,28 +31,28 @@ namespace BattleCruisers.Targets.TargetDetectors
             // our events.
         }
 
-		void OnTriggerEnter2D(Collider2D collider)
-		{
-			Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
+        void OnTriggerEnter2D(Collider2D collider)
+        {
+            Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             ITarget target = GetTarget(collider);
             _targetColliderHandler.OnTargetColliderEntered(target);
-		}
+        }
 
         void OnTriggerExit2D(Collider2D collider)
-		{
-			Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
+        {
+            Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             ITarget target = GetTarget(collider);
             _targetColliderHandler.OnTargetColliderExited(target);
-		}
+        }
 
         private ITarget GetTarget(Collider2D collider)
-		{
-			ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+        {
+            ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
             Assert.IsNotNull(target, "Should only collide with game objects that have a ITargetProxy component.");
-			return target;
-		}
+            return target;
+        }
 
         public void InvokeTargetEnteredEvent(ITarget target)
         {

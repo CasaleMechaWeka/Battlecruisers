@@ -51,7 +51,7 @@ namespace BattleCruisers.Targets.Factories
             IReadOnlyCollection<ITarget> potentialTargets,
             IUpdater updater)
         {
-            IManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);
+            ManualProximityTargetDetector targetDetector = new ManualProximityTargetDetector(parentTransform, potentialTargets, detectionRange, rangeCalculator);
             ManualDetectorPoller poller = new ManualDetectorPoller(targetDetector, updater);
             return new ManualDetectorProvider(poller, targetDetector);
         }

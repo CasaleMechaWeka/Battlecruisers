@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetDetectors
 {
-    public class TargetColliderHandler : ITargetColliderHandler
+    public class TargetColliderHandler
     {
         private readonly ITargetDetectorEventEmitter _eventEmitter;
 
