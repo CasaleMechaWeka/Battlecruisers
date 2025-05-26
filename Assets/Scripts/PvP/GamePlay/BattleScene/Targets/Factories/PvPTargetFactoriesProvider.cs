@@ -5,7 +5,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
     public static class PvPTargetFactoriesProvider
     {
         public static TargetRankerFactory RankerFactory = new TargetRankerFactory();
-        public static IPvPTargetHelperFactory HelperFactory = new PvPTargetHelperFactory();
         public static RangeCalculatorProvider RangeCalculatorProvider = new RangeCalculatorProvider();
     }
 }

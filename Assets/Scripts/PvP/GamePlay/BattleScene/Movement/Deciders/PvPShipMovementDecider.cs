@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
 using System;
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Deciders
 {
@@ -24,9 +25,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         private readonly IPvPShip _ship;
         private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
-        private readonly ITargetRangeHelper _rangeHelper;
 
         private ITarget _highestPriorityTarget;
+
+        private const float IN_RANGE_LEEWAY_IN_M = 0.2f;
+
         public ITarget Target
         {
             set
@@ -42,17 +45,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IBroadcastingTargetProvider blockingEnemyProvider,
             IBroadcastingTargetProvider blockingFriendlyProvider,
             ITargetTracker inRangeTargetTracker,
-            ITargetTracker shipBlockerTargetTracker,
-            ITargetRangeHelper rangeHelper)
+            ITargetTracker shipBlockerTargetTracker)
         {
-            Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, shipBlockerTargetTracker, rangeHelper);
+            Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, shipBlockerTargetTracker);
 
             _ship = ship;
             _blockingEnemyProvider = blockingEnemyProvider;
             _blockingFriendlyProvider = blockingFriendlyProvider;
             _inRangeTargetTracker = inRangeTargetTracker;
             _shipBlockerTargetTracker = shipBlockerTargetTracker;
-            _rangeHelper = rangeHelper;
 
             _blockingEnemyProvider.TargetChanged += TriggerDecideMovement;
             _blockingFriendlyProvider.TargetChanged += TriggerDecideMovement;
@@ -101,8 +102,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         private bool IsHighestPriorityTargetInRange()
         {
             return
-                _highestPriorityTarget != null
-                && _rangeHelper.IsTargetInRange(_highestPriorityTarget);
+                _highestPriorityTarget != null && IsTargetInRange(_highestPriorityTarget);
+        }
+
+        private bool IsTargetInRange(ITarget target)
+        {
+            float distanceCenterToCenter = Vector2.Distance(target.Position, _ship.Position);
+            float distanceCenterToEdge = distanceCenterToCenter - target.Size.x / 2;
+            float adjustedDistanceToTarget = distanceCenterToEdge - IN_RANGE_LEEWAY_IN_M;
+
+            // Logging.Log(Tags.TARGET_RANGE_HELPER, $"Target: {target}  Distance: {adjustedDistanceToTarget}  Range: {_ship.OptimalArmamentRangeInM}");
+
+            return adjustedDistanceToTarget <= _ship.OptimalArmamentRangeInM;
         }
 
         private bool HaveReachedEnemyCruiser()
