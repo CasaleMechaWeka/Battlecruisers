@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         protected ITarget _parent;
         protected ProjectileStats _projectileStats;
-        protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
+        protected PvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected ITarget _enemyCruiser;
 
         protected AudioClipWrapper _impactSound;

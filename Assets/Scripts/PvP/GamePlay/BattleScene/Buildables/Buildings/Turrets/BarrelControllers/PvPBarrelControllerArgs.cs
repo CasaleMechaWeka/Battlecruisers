@@ -24,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IAngleCalculator AngleCalculator { get; }
         public AccuracyAdjuster AccuracyAdjuster { get; }
         public IRotationMovementController RotationMovementController { get; }
-        public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
+        public PvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public FacingMinRangePositionValidator TargetPositionValidator { get; }
         public AngleLimiter AngleLimiter { get; }
         public ITarget Parent { get; }
@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IRotationMovementController rotationMovementController,
             FacingMinRangePositionValidator targetPositionValidator,
             AngleLimiter angleLimiter,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            PvPCruiserSpecificFactories cruiserSpecificFactories,
             ITarget parent,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,

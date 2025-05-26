@@ -48,7 +48,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected PvPUIManager _uiManager;
         protected IDroneConsumerProvider _droneConsumerProvider;
         protected AircraftProvider _aircraftProvider;
-        protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
+        protected PvPCruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
         // Boost resulting from adjacent local boosters
@@ -336,7 +336,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _healthBar.Initialise(this, followDamagable: true);
         }
 
-        public virtual void Activate(IPvPCruiser parentCruiser, IPvPCruiser enemyCruiser, IPvPCruiserSpecificFactories cruiserSpecificFactories)
+        public virtual void Activate(IPvPCruiser parentCruiser, IPvPCruiser enemyCruiser, PvPCruiserSpecificFactories cruiserSpecificFactories)
         {
             _parent.SetActive(true);
             if (_parent.GetComponent<PvPBuildingWrapper>() is not null && IsServer)

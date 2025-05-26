@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public DroneManager DroneManager { get; }
         public IPvPDroneFocuser DroneFocuser { get; }
         public IDroneConsumerProvider DroneConsumerProvider { get; }
-        public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
+        public PvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
         public PvPFogStrength FogStrength { get; }
@@ -44,8 +44,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             DroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
-           Direction facingDirection,
+            PvPCruiserSpecificFactories cruiserSpecificFactories,
+            Direction facingDirection,
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
             IPvPCruiserHelper helper,
@@ -95,11 +95,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPCruiserArgs(
             Faction faction,
             IPvPCruiser enemyCruiser,
-            // PvPUIManager uiManager,
             DroneManager droneManager,
             IPvPDroneFocuser droneFocuser,
             IDroneConsumerProvider droneConsumerProvider,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            PvPCruiserSpecificFactories cruiserSpecificFactories,
             Direction facingDirection,
             IRepairManager repairManager,
             PvPFogStrength fogStrength,

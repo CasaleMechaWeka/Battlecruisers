@@ -118,7 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Direction Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
+        public PvPCruiserSpecificFactories CruiserSpecificFactories { get; private set; }
         private PvPFogOfWar _fog;
         public IGameObject Fog => _fog;
         public IRepairManager RepairManager { get; private set; }

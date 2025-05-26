@@ -1,10 +1,10 @@
-﻿using BattleCruisers.Targets.Factories;
+﻿using System;
+using BattleCruisers.Targets.Factories;
 using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Targets.TargetTrackers.Ranking;
-using BattleCruisers.Targets.TargetTrackers.Ranking.Wrappers;
 using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 
@@ -16,6 +16,7 @@ namespace BattleCruisers.Targets.TargetProcessors
         private IRankedTargetTracker _targetTracker;
 
         public bool considerUserChosenTarget;
+        public TargetRankerType targetRankerType;
 
         protected override ITargetProcessor CreateTargetProcessorInternal(TargetProcessorArgs args)
         {
@@ -36,9 +37,13 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         protected ITargetRanker CreateTargetRanker(TargetRankerFactory rankerFactory)
         {
-            ITargetRankerWrapper targetRankerWrapper = GetComponent<ITargetRankerWrapper>();
-            Assert.IsNotNull(targetRankerWrapper);
-            return targetRankerWrapper.CreateTargetRanker(rankerFactory);
+            return targetRankerType switch
+            {
+                TargetRankerType.Equal => rankerFactory.EqualTargetRanker,
+                TargetRankerType.Offensive => rankerFactory.OffensiveBuildableTargetRanker,
+                TargetRankerType.Ship => rankerFactory.ShipTargetRanker,
+                _ => throw new ArgumentException(),
+            };
         }
 
         protected virtual ITargetFinder CreateTargetFinder(TargetProcessorArgs args)
@@ -62,5 +67,12 @@ namespace BattleCruisers.Targets.TargetProcessors
             _targetTracker?.DisposeManagedState();
             _targetTracker = null;
         }
+    }
+
+    public enum TargetRankerType
+    {
+        Equal = 0,
+        Offensive = 1,
+        Ship = 2
     }
 }

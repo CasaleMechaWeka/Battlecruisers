@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public ITarget Parent { get; }
         public ProjectileStats ProjectileStats { get; }
         public int BurstSize { get; }
-        public IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
+        public PvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public IPvPCruiser EnempCruiser { get; }
 
         public PvPProjectileSpawnerArgs(
@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             ITarget parent,
             ProjectileStats projectileStats,
             int burstSize,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            PvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPCruiser enemyCruiser)
         {
             PvPHelper.AssertIsNotNull(parent, projectileStats, cruiserSpecificFactories, enemyCruiser);

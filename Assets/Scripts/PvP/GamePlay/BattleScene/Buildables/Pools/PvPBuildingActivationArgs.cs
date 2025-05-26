@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBuildingActivationArgs(
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            PvPCruiserSpecificFactories cruiserSpecificFactories,
             IPvPSlot parentSlot,
             IDoubleClickHandler<IPvPBuilding> doubleClickHandler,
             int variantIndex)

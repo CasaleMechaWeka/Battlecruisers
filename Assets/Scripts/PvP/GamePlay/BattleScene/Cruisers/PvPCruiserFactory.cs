@@ -164,7 +164,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             bool isPlayerCruiser)
         {
 
-            IPvPCruiserSpecificFactories cruiserSpecificFactories
+            PvPCruiserSpecificFactories cruiserSpecificFactories
                 = new PvPCruiserSpecificFactories(
                     cruiser,
                     enemyCruiser,

@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected PvPBarrelController[] _barrels;
         private PvPTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _targetProcessor;
-        protected IPvPCruiserSpecificFactories _cruiserSpecificFactories;
+        protected PvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
         private IPvPBuildable _parent;
@@ -129,7 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by server
         public void Initialise(
             IPvPBuildable parent,
-            IPvPCruiserSpecificFactories cruiserSpecificFactories,
+            PvPCruiserSpecificFactories cruiserSpecificFactories,
             SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,

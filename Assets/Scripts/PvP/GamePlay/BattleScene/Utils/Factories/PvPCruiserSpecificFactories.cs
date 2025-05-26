@@ -14,7 +14,7 @@ using BattleCruisers.Utils.BattleScene.Update;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
-    public class PvPCruiserSpecificFactories : IPvPCruiserSpecificFactories
+    public class PvPCruiserSpecificFactories
     {
         public AircraftProvider AircraftProvider { get; }
         public IPrioritisedSoundPlayer BuildableEffectsSoundPlayer { get; }

@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         ITarget Parent { get; }
         ProjectileStats ProjectileStats { get; }
         int BurstSize { get; }
-        IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
+        PvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         IPvPCruiser EnempCruiser { get; }
     }
 }

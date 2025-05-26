@@ -30,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         IRepairManager RepairManager { get; }
         int NumOfDrones { get; }
         IPvPBuildProgressCalculator BuildProgressCalculator { get; }
-        IPvPCruiserSpecificFactories CruiserSpecificFactories { get; }
+        PvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         bool IsPlayerCruiser { get; }
         PvPCruiserDeathExplosion DeathPrefab { get; }
 
