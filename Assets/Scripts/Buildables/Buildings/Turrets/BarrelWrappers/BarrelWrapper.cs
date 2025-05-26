@@ -149,7 +149,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 InitialiseBarrelController(barrel, barrelArgs);
             }
 
-            ITargetProcessorArgs args
+            TargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
                     FactoryProvider.Targets,

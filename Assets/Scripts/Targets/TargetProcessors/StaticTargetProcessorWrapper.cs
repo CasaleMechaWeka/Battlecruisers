@@ -2,7 +2,7 @@
 {
     public class StaticTargetProcessorWrapper : TargetProcessorWrapper
     {
-        protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(TargetProcessorArgs args)
         {
             return args.CruiserSpecificFactories.Targets.ProcessorFactory.StaticTargetProcessor;
         }

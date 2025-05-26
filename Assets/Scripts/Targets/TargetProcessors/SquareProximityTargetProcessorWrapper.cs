@@ -7,7 +7,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public class SquareProximityTargetProcessorWrapper : ProximityTargetProcessorWrapper
     {
-        protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
+        protected override ITargetFinder CreateTargetFinder(TargetProcessorArgs args)
         {
             TargetDetectorController enemyDetector = GetComponentInChildren<TargetDetectorController>();
             Assert.IsNotNull(enemyDetector);

@@ -9,7 +9,7 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         private ManualDetectorProvider _manualDetectorProvider;
 
-        protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
+        protected override ITargetFinder CreateTargetFinder(TargetProcessorArgs args)
         {
             Assert.IsNull(_manualDetectorProvider, "Should only be called once.");
 

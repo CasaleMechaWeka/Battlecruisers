@@ -7,7 +7,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 {
     public class MinRangeProximityTargetProcessorWrapper : ProximityTargetProcessorWrapper
     {
-        protected override ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
+        protected override ITargetFinder CreateTargetFinder(TargetProcessorArgs args)
         {
             CircleTargetDetectorController maxRangeDetector = transform.FindNamedComponent<CircleTargetDetectorController>("MaxRangeDetector");
             maxRangeDetector.Initialise(args.MaxRangeInM);

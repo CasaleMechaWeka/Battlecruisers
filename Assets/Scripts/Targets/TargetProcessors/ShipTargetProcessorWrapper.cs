@@ -12,7 +12,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public ITargetFinder InRangeTargetFinder { get; private set; }
 
-        protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(TargetProcessorArgs args)
         {
             Assert.IsNotNull(args.ParentTarget);
 

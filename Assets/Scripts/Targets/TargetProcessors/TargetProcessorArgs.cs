@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Targets.TargetProcessors
 {
-    public class TargetProcessorArgs : ITargetProcessorArgs
+    public class TargetProcessorArgs
     {
         public CruiserSpecificFactories CruiserSpecificFactories { get; }
         public TargetFactoriesProvider TargetFactories { get; }

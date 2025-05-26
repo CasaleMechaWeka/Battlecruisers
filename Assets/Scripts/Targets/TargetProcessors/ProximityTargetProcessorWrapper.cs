@@ -17,7 +17,7 @@ namespace BattleCruisers.Targets.TargetProcessors
 
         public bool considerUserChosenTarget;
 
-        protected override ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args)
+        protected override ITargetProcessor CreateTargetProcessorInternal(TargetProcessorArgs args)
         {
             _targetFinder = CreateTargetFinder(args);
             ITargetRanker targetRanker = CreateTargetRanker(args.TargetFactories.RankerFactory);
@@ -41,7 +41,7 @@ namespace BattleCruisers.Targets.TargetProcessors
             return targetRankerWrapper.CreateTargetRanker(rankerFactory);
         }
 
-        protected virtual ITargetFinder CreateTargetFinder(ITargetProcessorArgs args)
+        protected virtual ITargetFinder CreateTargetFinder(TargetProcessorArgs args)
         {
             CircleTargetDetectorController enemyDetector = gameObject.GetComponentInChildren<CircleTargetDetectorController>();
             Assert.IsNotNull(enemyDetector);

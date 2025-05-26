@@ -141,7 +141,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private void SetupTargetDetection()
         {
             // Create target processor => For following enemies
-            ITargetProcessorArgs args
+            TargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
                     FactoryProvider.Targets,

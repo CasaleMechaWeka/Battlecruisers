@@ -158,7 +158,7 @@ namespace BattleCruisers.Buildables.Units.Ships
             if (KeepDistanceFromEnemyCruiser)
                 targetProcessorTargetTypes.Add(TargetType.Cruiser);
 
-            ITargetProcessorArgs args
+            TargetProcessorArgs args
                 = new TargetProcessorArgs(
                     _cruiserSpecificFactories,
                     FactoryProvider.Targets,

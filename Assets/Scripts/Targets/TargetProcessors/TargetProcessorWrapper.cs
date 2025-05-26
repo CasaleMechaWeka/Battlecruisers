@@ -13,15 +13,15 @@ namespace BattleCruisers.Targets.TargetProcessors
     {
         private ITargetProcessor _targetProcessor;
 
-        public ITargetProcessor CreateTargetProcessor(ITargetProcessorArgs args)
+        public ITargetProcessor CreateTargetProcessor(TargetProcessorArgs args)
         {
             _targetProcessor = CreateTargetProcessorInternal(args);
             return _targetProcessor;
         }
 
-        protected abstract ITargetProcessor CreateTargetProcessorInternal(ITargetProcessorArgs args);
+        protected abstract ITargetProcessor CreateTargetProcessorInternal(TargetProcessorArgs args);
 
-        public virtual void DisposeManagedState() 
+        public virtual void DisposeManagedState()
         {
             _targetProcessor?.DisposeManagedState();
             _targetProcessor = null;
