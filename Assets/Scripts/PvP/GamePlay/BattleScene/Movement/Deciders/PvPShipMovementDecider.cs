@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Movement.Deciders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
-using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
@@ -23,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     public class PvPShipMovementDecider : IMovementDecider
     {
         private readonly IPvPShip _ship;
-        private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
 
         private ITarget _highestPriorityTarget;
@@ -42,8 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
 
         public PvPShipMovementDecider(
             IPvPShip ship,
-            IBroadcastingTargetProvider blockingEnemyProvider,
-            IBroadcastingTargetProvider blockingFriendlyProvider,
+            BroadcastingTargetProvider blockingEnemyProvider,
+            BroadcastingTargetProvider blockingFriendlyProvider,
             ITargetTracker inRangeTargetTracker,
             ITargetTracker shipBlockerTargetTracker)
         {

@@ -22,12 +22,12 @@ namespace BattleCruisers.Targets.Factories
             return new StaticTargetProvider(target);
         }
 
-        public IBroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
+        public BroadcastingTargetProvider CreateShipBlockingEnemyProvider(ITargetDetector enemyDetector, IUnit parentUnit)
         {
             return new ShipBlockingEnemyProvider(_targetFactoriesProvider, enemyDetector, parentUnit);
         }
 
-        public IBroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
+        public BroadcastingTargetProvider CreateShipBlockingFriendlyProvider(ITargetDetector friendlyDetector, IUnit parentUnit)
         {
             return new ShipBlockingFriendlyProvider(_targetFactoriesProvider, friendlyDetector, parentUnit);
         }

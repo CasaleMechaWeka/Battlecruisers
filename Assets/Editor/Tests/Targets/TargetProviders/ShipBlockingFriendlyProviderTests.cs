@@ -12,7 +12,7 @@ namespace BattleCruisers.Tests.Targets.TargetProviders
 {
     public class ShipBlockingFriendlyProviderTests
     {
-        private IBroadcastingTargetProvider _targetProvider;
+        private BroadcastingTargetProvider _targetProvider;
         private ITargetFinder _friendFinder;
         private ITargetFilter _isInFrontFilter;
         private ITarget _target, _target2;

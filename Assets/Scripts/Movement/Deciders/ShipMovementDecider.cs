@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units.Ships;
-using BattleCruisers.Targets.Helpers;
 using BattleCruisers.Targets.TargetProviders;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.Utils;
@@ -22,7 +21,7 @@ namespace BattleCruisers.Movement.Deciders
     public class ShipMovementDecider : IMovementDecider
     {
         private readonly IShip _ship;
-        private readonly IBroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
+        private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
 
         private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
@@ -41,8 +40,8 @@ namespace BattleCruisers.Movement.Deciders
 
         public ShipMovementDecider(
             IShip ship,
-            IBroadcastingTargetProvider blockingEnemyProvider,
-            IBroadcastingTargetProvider blockingFriendlyProvider,
+            BroadcastingTargetProvider blockingEnemyProvider,
+            BroadcastingTargetProvider blockingFriendlyProvider,
             ITargetTracker inRangeTargetTracker,
             ITargetTracker shipBlockerTargetTracker)
         {
