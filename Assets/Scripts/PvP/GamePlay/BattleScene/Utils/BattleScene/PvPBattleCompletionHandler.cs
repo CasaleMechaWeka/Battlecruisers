@@ -18,7 +18,7 @@ using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
-    public class PvPBattleCompletionHandler : IPvPBattleCompletionHandler
+    public class PvPBattleCompletionHandler
     {
         public static bool _isCompleted = false;
 

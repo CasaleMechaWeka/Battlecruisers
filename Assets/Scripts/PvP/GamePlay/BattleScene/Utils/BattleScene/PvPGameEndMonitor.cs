@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     /// 1. A cruiser is destroyed
     /// 2. The user quits
     /// </summary>
-    public class PvPGameEndMonitor : IPvPGameEndMonitor
+    public class PvPGameEndMonitor
     {
         private readonly ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;

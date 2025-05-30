@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
     public class PvPBattleSceneGodTunnel : NetworkBehaviour
     {
-        public IPvPBattleCompletionHandler battleCompletionHandler;
+        public PvPBattleCompletionHandler battleCompletionHandler;
         // left player
         private List<BuildingKey> _unlockedBuildings_LeftPlayer = new List<BuildingKey>();
         private List<UnitKey> _unlockedUnits_LeftPlayer = new List<UnitKey>();

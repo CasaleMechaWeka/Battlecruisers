@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Mus
         public PvPLevelMusicPlayer(
             LayeredMusicPlayer musicPlayer,
             DangerMonitorSummariser dangerMonitorSummariser,
-            IPvPBattleCompletionHandler battleCompletionHandler)
+            PvPBattleCompletionHandler battleCompletionHandler)
         {
             PvPHelper.AssertIsNotNull(musicPlayer, dangerMonitorSummariser, battleCompletionHandler);
 

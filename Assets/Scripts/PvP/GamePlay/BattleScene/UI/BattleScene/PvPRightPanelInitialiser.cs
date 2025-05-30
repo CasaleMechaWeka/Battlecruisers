@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IUpdater perFrameUpdater,
             PauseGameManager pauseGameManager,
-            IPvPBattleCompletionHandler battleCompletionHandler,
+            PvPBattleCompletionHandler battleCompletionHandler,
             SingleSoundPlayer soundPlayer,
             NavigationPermitterManager navigationPermitterManager
             )

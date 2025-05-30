@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
     [RequireComponent(typeof(NetcodeHooks))]
     public class PvPBattleSceneGodServer : MonoBehaviour
     {
-        private static IPvPGameEndMonitor _gameEndMonitor;
+        private static PvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private PvPBattleSceneGodComponents components;
         private PvPCruiser playerACruiser;

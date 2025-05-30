@@ -88,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private bool isCompletedBattleByFlee = false;
         private bool isStartedPvP = false;
         public bool wasOpponentDisconnected = false;
-        public IPvPBattleCompletionHandler battleCompletionHandler;
+        public PvPBattleCompletionHandler battleCompletionHandler;
         public PvPMessageBox messageBox;
 
         // we need to have all UI refernece here to handle disconnection

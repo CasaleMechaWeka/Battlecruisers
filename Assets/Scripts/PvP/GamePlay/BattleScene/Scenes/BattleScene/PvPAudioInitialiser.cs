@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,
             ITime time,
-            IPvPBattleCompletionHandler battleCompletionHandler,
+            PvPBattleCompletionHandler battleCompletionHandler,
             ICruiserDamageMonitor playerCruiserDamageMonitor,
             IGameObject popLimitReachedFeedback)
         {
@@ -52,7 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             IDeferrer deferrer,
-            IPvPBattleCompletionHandler battleCompletionHandler)
+            PvPBattleCompletionHandler battleCompletionHandler)
         {
             IDangerMonitor dangerMonitor
                 = new PvPDangerMonitor
