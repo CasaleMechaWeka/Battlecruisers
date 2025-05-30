@@ -38,6 +38,7 @@ using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
+using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Scenes
 {
@@ -337,8 +338,12 @@ namespace BattleCruisers.Scenes
             captainSelectorPanel.Initialize(_soundPlayer);
 
             DataProvider.SaveGame();
-
-            if (ApplicationModel.ShowPostBattleScreen)
+            if (MatchmakingScreenController.MatchmakingFailed)
+            {
+                MatchmakingScreenController.MatchmakingFailed = false;
+                GotoHubScreen();
+            }
+            else if (ApplicationModel.ShowPostBattleScreen)
             {
                 ApplicationModel.ShowPostBattleScreen = false;
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
