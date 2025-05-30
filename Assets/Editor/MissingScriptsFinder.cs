@@ -211,18 +211,17 @@ public class MissingScriptsFinder : EditorWindow
         );
 
         // "Replace All" button
-        if (GUILayout.Button("Replace All", GUILayout.Width(80)))
+        bool hasAnyMissingComponents =
+            missingScriptEntries.Any(e => e.objectName.StartsWith("Missing Component"));
+        EditorGUI.BeginDisabledGroup(!hasAnyMissingComponents && replacementScript == null);
+        if (GUILayout.Button(replacementScript ? "Replace All" : "Remove All", GUILayout.Width(80)))
         {
-            // Only do the replacement if a script is assigned
             if (replacementScript != null)
-            {
                 ReplaceAllMissing(replacementScript);
-            }
             else
-            {
-                Debug.LogWarning("No replacement script selected.");
-            }
+                RemoveAllMissing();   // implement analogously if desired
         }
+        EditorGUI.EndDisabledGroup();
 
         EditorGUILayout.EndHorizontal();
 
@@ -344,13 +343,24 @@ public class MissingScriptsFinder : EditorWindow
 
                 if (hasMissingComponent)
                 {
-                    EditorGUI.BeginDisabledGroup(replacementScript == null);
-                    if (GUILayout.Button("Replace", GUILayout.Width(60)))
+                    if (replacementScript == null)
                     {
-                        ReplaceMissingAssetGroup(single.assetPath, replacementScript);
-                        Repaint();
+                        // REMOVE
+                        if (GUILayout.Button("Remove", GUILayout.Width(60)))
+                        {
+                            RemoveMissingAssetGroup(single.assetPath);
+                            Repaint();
+                        }
                     }
-                    EditorGUI.EndDisabledGroup();
+                    else
+                    {
+                        // REPLACE
+                        if (GUILayout.Button("Replace", GUILayout.Width(60)))
+                        {
+                            ReplaceMissingAssetGroup(single.assetPath, replacementScript);
+                            Repaint();
+                        }
+                    }
                 }
 
                 if (GUILayout.Button("Jump", GUILayout.Width(50)))
@@ -395,13 +405,22 @@ public class MissingScriptsFinder : EditorWindow
 
             if (hasMissingComponent)
             {
-                EditorGUI.BeginDisabledGroup(replacementScript == null);
-                if (GUILayout.Button("Replace", GUILayout.Width(60)))
+                if (replacementScript == null)
                 {
-                    ReplaceMissingAssetGroup(assetPath, replacementScript);
-                    Repaint();
+                    if (GUILayout.Button("Remove", GUILayout.Width(60)))
+                    {
+                        RemoveMissingAssetGroup(assetPath);
+                        Repaint();
+                    }
                 }
-                EditorGUI.EndDisabledGroup();
+                else
+                {
+                    if (GUILayout.Button("Replace", GUILayout.Width(60)))
+                    {
+                        ReplaceMissingAssetGroup(assetPath, replacementScript);
+                        Repaint();
+                    }
+                }
             }
 
             if (GUILayout.Button("Jump", GUILayout.Width(50)))
@@ -991,6 +1010,88 @@ public class MissingScriptsFinder : EditorWindow
             ReplaceMissingAssetGroup(kvp.Key, replacementScript);
         }
     }
+
+    #endregion
+    #region Removal
+
+    private void RemoveMissingComponentsRecursively(GameObject root)
+    {
+        foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
+            RemoveMissingReferencesFromGameObject(t.gameObject);   // already does the actual removal
+    }
+
+    /// <summary>
+    /// Strip missing components from the asset at <paramref name="assetPath"/> without adding anything.
+    /// Mirrors ReplaceMissingAssetGroup but skips the AddComponent step.
+    /// </summary>
+    private void RemoveMissingAssetGroup(string assetPath)
+    {
+        // remember user context
+        UnityEngine.Object[] keepSelection = Selection.objects;
+        Scene keepActiveScene = EditorSceneManager.GetActiveScene();
+
+        if (assetPath.EndsWith(".prefab"))
+        {
+            PrefabStage stage = PrefabStageUtility.GetCurrentPrefabStage();
+
+            if (stage != null && stage.assetPath == assetPath)
+            {
+                RemoveMissingComponentsRecursively(stage.prefabContentsRoot);
+                PrefabUtility.SaveAsPrefabAsset(stage.prefabContentsRoot, assetPath);
+                stage.ClearDirtiness();
+            }
+            else
+            {
+                GameObject tmp = PrefabUtility.LoadPrefabContents(assetPath);
+                RemoveMissingComponentsRecursively(tmp);
+                PrefabUtility.SaveAsPrefabAsset(tmp, assetPath);
+                PrefabUtility.UnloadPrefabContents(tmp);
+            }
+        }
+        else if (assetPath.EndsWith(".unity"))
+        {
+            Scene target = SceneManager.GetSceneByPath(assetPath);
+            bool wasLoaded = target.isLoaded;
+            if (!wasLoaded)
+                target = EditorSceneManager.OpenScene(assetPath, OpenSceneMode.Additive);
+
+            foreach (GameObject root in target.GetRootGameObjects())
+                RemoveMissingComponentsRecursively(root);
+
+            EditorSceneManager.MarkSceneDirty(target);
+            EditorSceneManager.SaveScene(target);
+            if (!wasLoaded)
+                EditorSceneManager.CloseScene(target, true);
+        }
+
+        // restore context and refresh list
+        Selection.objects = keepSelection;
+        EditorSceneManager.SetActiveScene(keepActiveScene);
+        missingScriptEntries.RemoveAll(e =>
+            e.assetPath == assetPath &&
+            e.objectName.StartsWith("Missing Component"));
+        Repaint();
+    }
+
+    private void RemoveAllMissing()
+    {
+        // distinct list so we don’t hit the same prefab / scene twice
+        var assetPaths = missingScriptEntries
+            .Where(e => e.objectName.StartsWith("Missing Component"))
+            .Select(e => e.assetPath)
+            .Distinct()
+            .ToArray();
+
+        foreach (string path in assetPaths)
+            RemoveMissingAssetGroup(path);   // already handles context & UI refresh
+
+        // safety: make sure the list is cleared once everything is done
+        missingScriptEntries.Clear();
+        Repaint();
+    }
+
+    #endregion
+    #region Preprocess
 
     private void ProcessAssetForMissingReferences(GameObject root, Type newType)
     {
