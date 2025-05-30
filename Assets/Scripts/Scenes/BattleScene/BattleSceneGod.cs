@@ -38,6 +38,8 @@ using System.Collections.Generic;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Timers;
+using BattleCruisers.Cruisers.Construction;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -51,8 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
     public class BattleSceneGod : MonoBehaviour
     {
         private static GameEndMonitor _gameEndMonitor;
-        // Hold references to avoid garbage collection
-        private AudioInitialiser _audioInitialiser;
+        // Hold references to avoid garbage collectio
         private TutorialHelper _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
         private BuildableButtonColourController _buildableButtonColourController;
@@ -295,16 +296,30 @@ namespace BattleCruisers.Scenes.BattleScene
                     currentLevel.MusicKeys,
                     DataProvider.SettingsManager);
             ICruiserDamageMonitor playerCruiserDamageMonitor = new CruiserDamageMonitor(playerCruiser);
-            _audioInitialiser
-                = new AudioInitialiser(
-                    helper,
+
+            _ = new LevelMusicPlayer(
                     layeredMusicPlayer,
+                    new DangerMonitorSummariser(new DangerMonitor(
+                    components.Deferrer,
                     playerCruiser,
                     aiCruiser,
-                    components.Deferrer,
-                    time,
-                    battleCompletionHandler,
+                    new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
+                    new HealthThresholdMonitor(aiCruiser, thresholdProportion: 0.3f))),
+                    battleCompletionHandler);
+            _ = helper.CreateDroneEventSoundPlayer(playerCruiser, components.Deferrer);
+            _ = new CruiserEventMonitor(
+                    new HealthThresholdMonitor(playerCruiser, thresholdProportion: 0.3f),
                     playerCruiserDamageMonitor,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
+                    new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
+            _ = new UltrasConstructionMonitor(
+                    aiCruiser,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
+                    new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30));
+            _ = new PopulationLimitAnnouncer(
+                    playerCruiser.PopulationLimitMonitor,
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
+                    new Debouncer(time.RealTimeSinceGameStartProvider, debounceTimeInS: 30),
                     leftPanelComponents.PopLimitReachedFeedback);
 
             WindManager windManager
