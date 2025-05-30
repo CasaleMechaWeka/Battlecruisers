@@ -7,7 +7,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
     public class TogglableUserChosenTargetHelper : IUserChosenTargetHelper
     {
         private readonly IUserChosenTargetHelper _baseHelper;
-        private readonly IUserChosenTargetHelperPermissions _permissions;
+        private readonly bool _isEnabled;
 
         public ITarget UserChosenTarget => _baseHelper.UserChosenTarget;
 
@@ -17,17 +17,17 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
             remove { _baseHelper.UserChosenTargetChanged -= value; }
         }
 
-        public TogglableUserChosenTargetHelper(IUserChosenTargetHelper baseHelper, IUserChosenTargetHelperPermissions permissions)
+        public TogglableUserChosenTargetHelper(IUserChosenTargetHelper baseHelper, bool isEnabled)
         {
-            Helper.AssertIsNotNull(baseHelper, permissions);
+            Helper.AssertIsNotNull(baseHelper);
 
             _baseHelper = baseHelper;
-            _permissions = permissions;
+            _isEnabled = isEnabled;
         }
 
         public void ToggleChosenTarget(ITarget target)
         {
-            if (_permissions.IsEnabled)
+            if (_isEnabled)
             {
                 _baseHelper.ToggleChosenTarget(target);
             }

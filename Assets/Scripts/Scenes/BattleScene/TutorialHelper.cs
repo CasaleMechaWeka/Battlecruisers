@@ -47,7 +47,6 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public CompositeCalculator PlayerCruiserBuildSpeedController { get; }
         public CompositeCalculator AICruiserBuildSpeedController { get; }
-        public IUserChosenTargetHelperSettablePermissions UserChosenTargetPermissions { get; private set; }
 
         public TutorialHelper(NavigationPermitters navigationPermitters)
             : base()
@@ -164,13 +163,10 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
 
-            UserChosenTargetHelperPermissions permissions = new UserChosenTargetHelperPermissions(isEnabled: false);
-            UserChosenTargetPermissions = permissions;
-
             return
                 new TogglableUserChosenTargetHelper(
                     new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator),
-                    permissions);
+                    false);
         }
 
         public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
