@@ -28,7 +28,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         private IBarrelWrapper _minigunBarrelWrapper;
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
-        private ITargetTracker _inRangeTargetTracker;
+        private TargetTracker _inRangeTargetTracker;
         private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
         public List<Sprite> allSprites = new List<Sprite>();

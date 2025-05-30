@@ -16,12 +16,12 @@ namespace BattleCruisers.Targets.Factories
             UserChosenTargetTracker = userChosenTargetTracker;
         }
 
-        public ITargetTracker CreateTargetTracker(ITargetFinder targetFinder)
+        public TargetTracker CreateTargetTracker(ITargetFinder targetFinder)
         {
             return new TargetTracker(targetFinder);
         }
 
-        public IRankedTargetTracker CreateUserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker)
+        public IRankedTargetTracker CreateUserChosenInRangeTargetTracker(TargetTracker inRangeTargetTracker)
         {
             return new UserChosenInRangeTargetTracker(inRangeTargetTracker, UserChosenTargetTracker);
         }

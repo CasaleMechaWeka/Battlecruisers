@@ -20,7 +20,7 @@ namespace BattleCruisers.Cruisers
         ICruiserUnitMonitor UnitMonitor { get; }
         IPopulationLimitMonitor PopulationLimitMonitor { get; }
         IUnitTargets UnitTargets { get; }
-        ITargetTracker BlockedShipsTracker { get; }
+        TargetTracker BlockedShipsTracker { get; }
 
         event EventHandler<BuildingStartedEventArgs> BuildingStarted;
 

@@ -33,7 +33,7 @@ namespace BattleCruisers.Scenes.Test.Naval
 
             EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = FindObjectOfType<EnemyShipBlockerInitialiser>();
             Assert.IsNotNull(enemyShipBlockerInitialiser);
-            ITargetTracker enemyShipBlockerTargetTracker
+            TargetTracker enemyShipBlockerTargetTracker
                 = enemyShipBlockerInitialiser.Initialise(
                     FactoryProvider.Targets,
                     redArgs.CruiserSpecificFactories.Targets.TrackerFactory,

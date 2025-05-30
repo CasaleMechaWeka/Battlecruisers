@@ -11,12 +11,12 @@ namespace BattleCruisers.Targets.TargetTrackers
     /// <summary>
     /// Keeps track of all targets found by the given ITargetFinder.
     /// </summary>
-    public class TargetTracker : ITargetTracker
-	{
+    public class TargetTracker
+    {
         private readonly ITargetFinder _targetFinder;
         private readonly IList<ITarget> _targets;
 
-		public event EventHandler TargetsChanged;
+        public event EventHandler TargetsChanged;
 
         public TargetTracker(ITargetFinder targetFinder)
         {
@@ -39,7 +39,7 @@ namespace BattleCruisers.Targets.TargetTrackers
             {
                 _targets.Add(e.Target);
                 EmitTargetsChangedEvent();
-			}
+            }
         }
 
         private void _targetFinder_TargetLost(object sender, TargetEventArgs e)
@@ -48,11 +48,11 @@ namespace BattleCruisers.Targets.TargetTrackers
 
             // Should always be the case but defensive programming because rarely it is 
             // NOT the case :/
-			if (_targets.Contains(e.Target))
+            if (_targets.Contains(e.Target))
             {
                 _targets.Remove(e.Target);
                 EmitTargetsChangedEvent();
-			}
+            }
         }
 
         private void EmitTargetsChangedEvent()
@@ -63,7 +63,7 @@ namespace BattleCruisers.Targets.TargetTrackers
         // PERF  Hashset instead of list?
         public bool ContainsTarget(ITarget target)
         {
-            bool result =_targets.Contains(target);
+            bool result = _targets.Contains(target);
             Logging.Log(Tags.TARGET_TRACKER, $"result: {result}  _targets.Count: {_targets.Count}");
             return result;
         }

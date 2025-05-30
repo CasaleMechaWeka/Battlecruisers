@@ -6,7 +6,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 {
     public class UserChosenInRangeTargetTracker : IRankedTargetTracker
     {
-        private readonly ITargetTracker _inRangeTargetTracker;
+        private readonly TargetTracker _inRangeTargetTracker;
         private readonly IRankedTargetTracker _userChosenTargetTracker;
 
         private RankedTarget _highestPriorityTarget;
@@ -26,7 +26,7 @@ namespace BattleCruisers.Targets.TargetTrackers.UserChosen
 
         public event EventHandler HighestPriorityTargetChanged;
 
-        public UserChosenInRangeTargetTracker(ITargetTracker inRangeTargetTracker, IRankedTargetTracker userChosenTargetTracker)
+        public UserChosenInRangeTargetTracker(TargetTracker inRangeTargetTracker, IRankedTargetTracker userChosenTargetTracker)
         {
             Helper.AssertIsNotNull(inRangeTargetTracker, userChosenTargetTracker);
 

@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     {
         private readonly IPvPShip _ship;
         private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
-        private readonly ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
+        private readonly TargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
 
         private ITarget _highestPriorityTarget;
 
@@ -43,8 +43,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
             IPvPShip ship,
             BroadcastingTargetProvider blockingEnemyProvider,
             BroadcastingTargetProvider blockingFriendlyProvider,
-            ITargetTracker inRangeTargetTracker,
-            ITargetTracker shipBlockerTargetTracker)
+            TargetTracker inRangeTargetTracker,
+            TargetTracker shipBlockerTargetTracker)
         {
             Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, shipBlockerTargetTracker);
 

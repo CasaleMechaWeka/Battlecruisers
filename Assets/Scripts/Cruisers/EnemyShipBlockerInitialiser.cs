@@ -13,7 +13,7 @@ namespace BattleCruisers.Cruisers
 {
     public class EnemyShipBlockerInitialiser : MonoBehaviour
     {
-        public ITargetTracker Initialise(
+        public TargetTracker Initialise(
             TargetFactoriesProvider targetFactoriesProvider,
             TargetTrackerFactory targetTrackerFactory,
             Faction enemyFaction)

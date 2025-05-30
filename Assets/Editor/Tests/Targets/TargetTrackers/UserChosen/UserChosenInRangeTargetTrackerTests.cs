@@ -10,14 +10,14 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers.UserChosen
     public class UserChosenInRangeTargetTrackerTests
     {
         private IRankedTargetTracker _userChosenInRangeTargetTracker, _userChosenTargetTracker;
-        private ITargetTracker _inRangeTargetTracker;
+        private TargetTracker _inRangeTargetTracker;
         private RankedTarget _rankedTarget;
 
         [SetUp]
         public void TestSetup()
         {
             _userChosenTargetTracker = Substitute.For<IRankedTargetTracker>();
-            _inRangeTargetTracker = Substitute.For<ITargetTracker>();
+            _inRangeTargetTracker = Substitute.For<TargetTracker>();
 
             _userChosenInRangeTargetTracker = new UserChosenInRangeTargetTracker(_inRangeTargetTracker, _userChosenTargetTracker);
 

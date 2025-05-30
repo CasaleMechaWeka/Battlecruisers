@@ -102,7 +102,7 @@ namespace BattleCruisers.Cruisers
         public ICruiserUnitMonitor UnitMonitor { get; private set; }
         public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
         public IUnitTargets UnitTargets { get; private set; }
-        public ITargetTracker BlockedShipsTracker { get; private set; }
+        public TargetTracker BlockedShipsTracker { get; private set; }
 
         public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;

@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Targets.TargetTrackers
 {
     public class TargetTrackerTests
     {
-        private ITargetTracker _targetTracker;
+        private TargetTracker _targetTracker;
         private ITargetFinder _targetFinder;
         private ITarget _target;
         private int _targetsChangedCount;

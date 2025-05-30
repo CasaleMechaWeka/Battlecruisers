@@ -22,7 +22,7 @@ namespace BattleCruisers.Movement.Deciders
     {
         private readonly IShip _ship;
         private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
-        private readonly ITargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
+        private readonly TargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
 
         private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
 
@@ -42,8 +42,8 @@ namespace BattleCruisers.Movement.Deciders
             IShip ship,
             BroadcastingTargetProvider blockingEnemyProvider,
             BroadcastingTargetProvider blockingFriendlyProvider,
-            ITargetTracker inRangeTargetTracker,
-            ITargetTracker shipBlockerTargetTracker)
+            TargetTracker inRangeTargetTracker,
+            TargetTracker shipBlockerTargetTracker)
         {
             Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, shipBlockerTargetTracker);
 
