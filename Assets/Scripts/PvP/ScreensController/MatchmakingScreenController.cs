@@ -93,6 +93,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public float playerRating;
         public int playerABodykit;
         public string playerASelectedVariants;
+        public static bool MatchmakingFailed;
 
         private CaptainExo charlie;
         public GameObject characterOfCharlie;
@@ -563,6 +564,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (GameObject.Find("NetworkManager") != null)
                 GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
+            MatchmakingFailed = true;
             SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
             SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
 
