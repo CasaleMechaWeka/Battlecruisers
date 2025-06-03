@@ -25,7 +25,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
-using UnityEngine;
+using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -46,14 +46,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             _buildingCategoryFilter.AllowAllCategories();
 
             _loadout = new Loadout(DataProvider.GameModel.PlayerLoadout.Hull,
-                                   DataProvider.GameModel.PlayerLoadout.GetAllBuildings(),
-                                   DataProvider.GameModel.PlayerLoadout.GetAllUnits());
+                                   DataProvider.GameModel.PlayerLoadout.SelectedBuildings.SelectMany(x => x.Value).ToList(),
+                                   DataProvider.GameModel.PlayerLoadout.SelectedUnits.SelectMany(x => x.Value).ToList());
 
-            foreach (BuildingKey building in StaticData.GetBuildingsUnlockedBeforeLevel(32))
+            foreach (BuildingKey building in StaticData.BuildingsUnlockedBeforeLevel(32))
                 _loadout.AddBuilding(building);
 
 
-            foreach (UnitKey unit in StaticData.GetUnitsUnlockedBeforeLevel(32))
+            foreach (UnitKey unit in StaticData.UnitsUnlockedBeforeLevel(32))
                 _loadout.AddUnit(unit);
 
             _loadout.AddUnit(StaticPrefabKeys.Units.Broadsword);

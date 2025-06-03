@@ -753,7 +753,7 @@ namespace BattleCruisers.Data.Static
             return GetBuildablesUnlockedInLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
 
-        public static IList<UnitKey> GetUnitsUnlockedBeforeLevel(int levelFirstAvailableIn)
+        public static IList<UnitKey> UnitsUnlockedBeforeLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedBeforeLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
@@ -763,7 +763,7 @@ namespace BattleCruisers.Data.Static
             return GetBuildablesUnlockedInLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
 
-        public static IList<BuildingKey> GetBuildingsUnlockedBeforeLevel(int levelFirstAvailableIn)
+        public static IList<BuildingKey> BuildingsUnlockedBeforeLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedBeforeLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }

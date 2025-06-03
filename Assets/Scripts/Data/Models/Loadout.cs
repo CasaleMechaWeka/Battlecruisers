@@ -28,13 +28,13 @@ namespace BattleCruisers.Data.Models
         private List<BuildingKey> _buildings;
 
         [SerializeField]
-        private Dictionary<BuildingCategory, List<BuildingKey>> _builds;
+        public Dictionary<BuildingCategory, List<BuildingKey>> SelectedBuildings { get; private set; }
 
         [SerializeField]
         private List<UnitKey> _units;
 
         [SerializeField]
-        private Dictionary<UnitCategory, List<UnitKey>> _unit;
+        public Dictionary<UnitCategory, List<UnitKey>> SelectedUnits { get; private set; }
 
         public HullKey Hull
         {
@@ -126,7 +126,7 @@ namespace BattleCruisers.Data.Models
                 { BuildingCategory.Tactical, tactical },
                 { BuildingCategory.Ultra, Ultra }
             };
-            _builds = buildables;
+            SelectedBuildings = buildables;
 
             List<UnitKey> ships = new();
             List<UnitKey> aircraft = new();
@@ -144,7 +144,7 @@ namespace BattleCruisers.Data.Models
                 {UnitCategory.Naval, ships },
                 {UnitCategory.Aircraft, aircraft }
             };
-            _unit = unitlimit;
+            SelectedUnits = unitlimit;
 
             _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain
             _selectedBodykit = -1;
@@ -153,7 +153,7 @@ namespace BattleCruisers.Data.Models
 
         public bool Is_buildsNull()
         {
-            return _builds == null;
+            return SelectedBuildings == null;
         }
 
         public VariantPrefab GetSelectedUnitVariant(IUnit unit)
@@ -306,7 +306,7 @@ namespace BattleCruisers.Data.Models
                 { BuildingCategory.Tactical, tactical },
                 { BuildingCategory.Ultra, Ultra }
             };
-            _builds = buildables;
+            SelectedBuildings = buildables;
 
             List<UnitKey> units = _units;
             List<UnitKey> ships = new();
@@ -325,7 +325,7 @@ namespace BattleCruisers.Data.Models
                 { UnitCategory.Naval, ships },
                 { UnitCategory.Aircraft, aircraft }
             };
-            _unit = unitlimit;
+            SelectedUnits = unitlimit;
         }
         public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
         {
@@ -384,16 +384,16 @@ namespace BattleCruisers.Data.Models
         //functions to handle the lists for the buildables
         public void AddBuildingItem(BuildingCategory category, BuildingKey keyToAdd)
         {
-            List<BuildingKey> builds = _builds[category];
+            List<BuildingKey> builds = SelectedBuildings[category];
             builds.Add(keyToAdd);
-            _builds[category] = builds;
+            SelectedBuildings[category] = builds;
         }
 
         public void AddUnitItem(UnitCategory category, UnitKey keyToAdd)
         {
-            List<UnitKey> unitList = _unit[category];
+            List<UnitKey> unitList = SelectedUnits[category];
             unitList.Add(keyToAdd);
-            _unit[category] = unitList;
+            SelectedUnits[category] = unitList;
         }
 
         private static List<int> UnlockedHeckles()
@@ -413,47 +413,47 @@ namespace BattleCruisers.Data.Models
 
         public void RemoveBuildItem(BuildingCategory category, BuildingKey keyToRemove)
         {
-            List<BuildingKey> builds = _builds[category];
+            List<BuildingKey> builds = SelectedBuildings[category];
             bool removedSuccessfully = builds.Remove(keyToRemove);
             Assert.IsTrue(removedSuccessfully);
-            _builds[category] = builds;
+            SelectedBuildings[category] = builds;
         }
 
         public void RemoveUnitItem(UnitCategory category, UnitKey keyToRemove)
         {
-            List<UnitKey> unitList = _unit[category];
+            List<UnitKey> unitList = SelectedUnits[category];
             bool removedSuccessfully = unitList.Remove(keyToRemove);
             Assert.IsTrue(removedSuccessfully);
-            _unit[category] = unitList;
+            SelectedUnits[category] = unitList;
         }
 
         public List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory)
         {
-            List<BuildingKey> builds = _builds[buildingCategory].ToList();
+            List<BuildingKey> builds = SelectedBuildings[buildingCategory].ToList();
             Assert.IsNotNull(builds);
             return builds;
         }
         public List<UnitKey> GetUnitKeys(UnitCategory unitCategory)
         {
-            List<UnitKey> unitList = _unit[unitCategory];
+            List<UnitKey> unitList = SelectedUnits[unitCategory];
             return unitList;
         }
 
         public int GetBuildingListSize(BuildingCategory category)
         {
-            List<BuildingKey> builds = _builds[category];
+            List<BuildingKey> builds = SelectedBuildings[category];
             return builds.Count;
         }
 
         public int GetUnitListSize(UnitCategory category)
         {
-            List<UnitKey> unitList = _unit[category];
+            List<UnitKey> unitList = SelectedUnits[category];
             return unitList.Count;
         }
 
         public bool IsBuildingInList(BuildingCategory category, BuildingKey key)
         {
-            List<BuildingKey> buildingKeys = _builds[category];
+            List<BuildingKey> buildingKeys = SelectedBuildings[category];
             if (buildingKeys.Contains(key))
                 return true;
             return false;
@@ -461,7 +461,7 @@ namespace BattleCruisers.Data.Models
 
         public bool IsUnitInList(UnitCategory category, UnitKey key)
         {
-            List<UnitKey> unitKeys = _unit[category];
+            List<UnitKey> unitKeys = SelectedUnits[category];
             if (unitKeys.Contains(key))
                 return true;
             return false;
@@ -490,12 +490,12 @@ namespace BattleCruisers.Data.Models
 
         public Dictionary<BuildingCategory, List<BuildingKey>> GetBuildLimits()
         {
-            return _builds;
+            return SelectedBuildings;
         }
 
         public Dictionary<UnitCategory, List<UnitKey>> GetUnitLimits()
         {
-            return _unit;
+            return SelectedUnits;
         }
 
         public override bool Equals(object obj)
