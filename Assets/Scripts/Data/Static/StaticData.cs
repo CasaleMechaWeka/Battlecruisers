@@ -753,9 +753,19 @@ namespace BattleCruisers.Data.Static
             return GetBuildablesUnlockedInLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
 
+        public static IList<UnitKey> GetUnitsUnlockedBeforeLevel(int levelFirstAvailableIn)
+        {
+            return GetBuildablesUnlockedBeforeLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
+        }
+
         public static IList<BuildingKey> GetBuildingsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedInLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
+        }
+
+        public static IList<BuildingKey> GetBuildingsUnlockedBeforeLevel(int levelFirstAvailableIn)
+        {
+            return GetBuildablesUnlockedBeforeLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }
 
         /// <summary>
@@ -768,6 +778,16 @@ namespace BattleCruisers.Data.Static
             return
                 buildableToUnlockedLevel
                     .Where(buildableToLevel => buildableToLevel.Value == levelFirstAvailableIn)
+                    .Select(buildableToLevel => buildableToLevel.Key)
+                    .ToList();
+        }
+
+        private static IList<TKey> GetBuildablesUnlockedBeforeLevel<TKey>(IDictionary<TKey, int> buildableToUnlockedLevel, int levelFirstAvailableIn)
+        where TKey : IPrefabKey
+        {
+            return
+                buildableToUnlockedLevel
+                    .Where(buildableToLevel => buildableToLevel.Value <= levelFirstAvailableIn)
                     .Select(buildableToLevel => buildableToLevel.Key)
                     .ToList();
         }

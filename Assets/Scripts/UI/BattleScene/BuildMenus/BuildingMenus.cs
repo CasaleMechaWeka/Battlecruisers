@@ -35,9 +35,9 @@ namespace BattleCruisers.UI.BattleScene.BuildMenus
             BuildingsMenuController menu,
             UIManager uiManager,
             ButtonVisibilityFilters buttonVisibilityFilters,
-            IList<IBuildableWrapper<IBuilding>> buildables)
+            IList<IBuildableWrapper<IBuilding>> buildings)
         {
-            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _clickHandler);
+            menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildings, _clickHandler);
         }
     }
 }
