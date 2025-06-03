@@ -50,10 +50,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                                    DataProvider.GameModel.PlayerLoadout.GetAllUnits());
 
             foreach (BuildingKey building in StaticData.GetBuildingsUnlockedBeforeLevel(32))
-            {
                 _loadout.AddBuilding(building);
-                Debug.Log(building.ToString() + " " + _loadout.GetAllBuildings().Contains(building));
-            }
 
 
             foreach (UnitKey unit in StaticData.GetUnitsUnlockedBeforeLevel(32))
