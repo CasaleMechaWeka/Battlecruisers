@@ -23,6 +23,8 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -32,6 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override BuildingCategoryFilter BuildingCategoryPermitter => _buildingCategoryFilter;
+        private ILoadout _loadout;
 
         public PvPBattleHelper() : base()
         {
@@ -40,6 +43,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // For the real game want to enable all building categories :)
             _buildingCategoryFilter = new BuildingCategoryFilter();
             _buildingCategoryFilter.AllowAllCategories();
+
+            _loadout = new Loadout(DataProvider.GameModel.PlayerLoadout.Hull,
+                                   DataProvider.GameModel.PlayerLoadout.GetAllBuildings(),
+                                   DataProvider.GameModel.PlayerLoadout.GetAllUnits());
+
+            foreach (BuildingKey building in StaticData.GetBuildingsUnlockedInLevel(32))
+                _loadout.AddBuilding(building);
+
+            foreach (UnitKey unit in StaticData.GetUnitsUnlockedInLevel(32))
+                _loadout.AddUnit(unit);
+
+            _loadout.AddUnit(StaticPrefabKeys.Units.Broadsword);
         }
 
         public override PvPUIManager CreateUIManager()
@@ -74,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         public override ILoadout GetPlayerLoadout()
         {
-            return DataProvider.GameModel.PlayerLoadout;
+            return _loadout;
         }
 
         public override IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator()
