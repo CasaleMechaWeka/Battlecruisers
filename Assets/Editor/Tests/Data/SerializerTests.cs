@@ -82,9 +82,7 @@ namespace BattleCruisers.Tests.Data
 			return new Loadout(
 				hull: new HullKey("Schule"),
 				buildings: CreateUnlockedBuildings(),
-				units: CreateUnlockedUnits(),
-				builds,
-				unitkey);
+				units: CreateUnlockedUnits());
 		}
 
 		private BattleResult CreateBattleResult()

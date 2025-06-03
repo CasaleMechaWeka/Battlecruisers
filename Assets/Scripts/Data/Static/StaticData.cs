@@ -308,7 +308,7 @@ namespace BattleCruisers.Data.Static
             {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning)},
         });
         public static ReadOnlyCollection<HullKey> HullKeys { get; } = new ReadOnlyCollection<HullKey>(new List<HullKey>()
-        { 
+        {
             Hulls.Trident,
             Hulls.Bullshark,
             Hulls.Raptor,
@@ -675,7 +675,7 @@ namespace BattleCruisers.Data.Static
             // TEMP  For final game, don't add ALL the prefabs :D
             //Loadout playerLoadout = new Loadout(initialHull, AllBuildingKeys(), AllUnitKeys());
 
-            Loadout playerLoadout = new Loadout(Hulls.Trident, GetInitialBuildings(), GetInitialUnits(), GetInitialbuildingLimit(), GetInitialUnitLimit());
+            Loadout playerLoadout = new Loadout(Hulls.Trident, GetInitialBuildings(), GetInitialUnits());
 
             bool hasAttemptedTutorial = false;
             bool HasSyncdShop = false;
@@ -700,70 +700,6 @@ namespace BattleCruisers.Data.Static
             //unlockedHulls: AllHullKeys(),
             //unlockedBuildings: AllBuildingKeys(),
             //unlockedUnits: AllUnitKeys());
-        }
-
-        private static Dictionary<BuildingCategory, List<BuildingKey>> GetInitialbuildingLimit()
-        {
-            List<BuildingKey> limit = GetInitialBuildings();
-            List<BuildingKey> factories = new List<BuildingKey>();
-            List<BuildingKey> defence = new List<BuildingKey>();
-            List<BuildingKey> offense = new List<BuildingKey>();
-            List<BuildingKey> tactical = new List<BuildingKey>();
-            List<BuildingKey> Ultra = new List<BuildingKey>();
-            foreach (BuildingKey key in limit)
-            {
-                switch (key.BuildingCategory)
-                {
-                    case BuildingCategory.Factory:
-                        factories.Add(key);
-                        break;
-                    case BuildingCategory.Defence:
-                        defence.Add(key);
-                        break;
-                    case BuildingCategory.Offence:
-                        offense.Add(key);
-                        break;
-                    case BuildingCategory.Tactical:
-                        tactical.Add(key);
-                        break;
-                    case BuildingCategory.Ultra:
-                        Ultra.Add(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
-            {
-                { BuildingCategory.Factory, factories },
-                { BuildingCategory.Defence, defence },
-                { BuildingCategory.Offence, offense },
-                { BuildingCategory.Tactical, tactical },
-                { BuildingCategory.Ultra, Ultra }
-            };
-            return buildables;
-        }
-
-        private static Dictionary<UnitCategory, List<UnitKey>> GetInitialUnitLimit()
-        {
-            List<UnitKey> units = GetInitialUnits();
-            List<UnitKey> ships = new();
-            List<UnitKey> aircraft = new();
-            foreach (UnitKey unit in units)
-            {
-                if (unit.UnitCategory == UnitCategory.Naval)
-                    ships.Add(unit);
-                else if (unit.UnitCategory == UnitCategory.Aircraft)
-                    aircraft.Add(unit);
-                else
-                    break;
-            }
-            Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
-            {
-                {UnitCategory.Naval, ships },
-                {UnitCategory.Aircraft, aircraft }
-            };
-            return unitlimit;
         }
 
         private static List<BuildingKey> GetInitialBuildings()
@@ -812,12 +748,12 @@ namespace BattleCruisers.Data.Static
                     buildingKeys: GetBuildingsUnlockedInSideQuest(availabilitySideQuestNum));
         }
 
-        private static IList<UnitKey> GetUnitsUnlockedInLevel(int levelFirstAvailableIn)
+        public static IList<UnitKey> GetUnitsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedInLevel(_unitToUnlockedLevel, levelFirstAvailableIn);
         }
 
-        private static IList<BuildingKey> GetBuildingsUnlockedInLevel(int levelFirstAvailableIn)
+        public static IList<BuildingKey> GetBuildingsUnlockedInLevel(int levelFirstAvailableIn)
         {
             return GetBuildablesUnlockedInLevel(_buildingToUnlockedLevel, levelFirstAvailableIn);
         }

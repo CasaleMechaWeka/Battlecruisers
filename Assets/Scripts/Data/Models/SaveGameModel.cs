@@ -356,7 +356,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // loadout construction actually happens finally:
-            game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits, game);
+            game.PlayerLoadout = new Loadout(cHull, buildings, units);
 
             // current variants
             if (_selectedVariants != null)

@@ -83,16 +83,69 @@ namespace BattleCruisers.Data.Models
         public Loadout(
             HullKey hull,
             List<BuildingKey> buildings,
-            List<UnitKey> units,
-            Dictionary<BuildingCategory, List<BuildingKey>> buildLimt,
-            Dictionary<UnitCategory, List<UnitKey>> unitLimit,
-            GameModel gameModel = null)
+            List<UnitKey> units)
         {
             Hull = hull;
             _buildings = buildings;
             _units = units;
-            _builds = buildLimt;
-            _unit = unitLimit;
+
+            List<BuildingKey> limit = buildings;
+            List<BuildingKey> factories = new List<BuildingKey>();
+            List<BuildingKey> defence = new List<BuildingKey>();
+            List<BuildingKey> offense = new List<BuildingKey>();
+            List<BuildingKey> tactical = new List<BuildingKey>();
+            List<BuildingKey> Ultra = new List<BuildingKey>();
+            foreach (BuildingKey key in limit)
+            {
+                switch (key.BuildingCategory)
+                {
+                    case BuildingCategory.Factory:
+                        factories.Add(key);
+                        break;
+                    case BuildingCategory.Defence:
+                        defence.Add(key);
+                        break;
+                    case BuildingCategory.Offence:
+                        offense.Add(key);
+                        break;
+                    case BuildingCategory.Tactical:
+                        tactical.Add(key);
+                        break;
+                    case BuildingCategory.Ultra:
+                        Ultra.Add(key);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
+            {
+                { BuildingCategory.Factory, factories },
+                { BuildingCategory.Defence, defence },
+                { BuildingCategory.Offence, offense },
+                { BuildingCategory.Tactical, tactical },
+                { BuildingCategory.Ultra, Ultra }
+            };
+            _builds = buildables;
+
+            List<UnitKey> ships = new();
+            List<UnitKey> aircraft = new();
+            foreach (UnitKey unit in _units)
+            {
+                if (unit.UnitCategory == UnitCategory.Naval)
+                    ships.Add(unit);
+                else if (unit.UnitCategory == UnitCategory.Aircraft)
+                    aircraft.Add(unit);
+                else
+                    break;
+            }
+            Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
+            {
+                {UnitCategory.Naval, ships },
+                {UnitCategory.Aircraft, aircraft }
+            };
+            _unit = unitlimit;
+
             _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain
             _selectedBodykit = -1;
             _selectedVariants = new List<int>();
@@ -284,12 +337,12 @@ namespace BattleCruisers.Data.Models
             return _units.Where(unitKey => unitKey.UnitCategory == unitCategory).ToList();
         }
 
-        public IList<BuildingKey> GetAllBuildings()
+        public List<BuildingKey> GetAllBuildings()
         {
             return _buildings.ToList();
         }
 
-        public IList<UnitKey> GetAllUnits()
+        public List<UnitKey> GetAllUnits()
         {
             return _units.ToList();
         }

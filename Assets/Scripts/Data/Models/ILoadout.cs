@@ -13,8 +13,8 @@ namespace BattleCruisers.Data.Models
 
         IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory);
         IList<UnitKey> GetUnits(UnitCategory unitCategory);
-        IList<BuildingKey> GetAllBuildings();
-        IList<UnitKey> GetAllUnits();
+        List<BuildingKey> GetAllBuildings();
+        List<UnitKey> GetAllUnits();
 
 
         List<BuildingKey> GetBuildingKeys(BuildingCategory buildingCategory);
