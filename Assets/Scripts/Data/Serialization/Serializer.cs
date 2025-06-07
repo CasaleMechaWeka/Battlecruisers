@@ -15,6 +15,8 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Models.PrefabKeys;
 using System.Linq;
 using System.Reflection;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
 
 
 namespace BattleCruisers.Data.Serialization
@@ -83,8 +85,20 @@ namespace BattleCruisers.Data.Serialization
 
             Loadout loadout = (Loadout)plo;
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || compatiblePurchasables != purchasableCategories.Length ||
-            ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+            bool validLoadoutCatrgories = true;
+
+            if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5 ||
+               loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5 ||
+               loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5 ||
+               loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5 ||
+               loadout.SelectedUnits[UnitCategory.Naval].Count > 5 ||
+               loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
+            {
+                validLoadoutCatrgories = false;
+            }
+
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || !validLoadoutCatrgories || compatiblePurchasables != purchasableCategories.Length ||
+                ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -106,6 +120,7 @@ namespace BattleCruisers.Data.Serialization
 
         private GameModel MakeCompatible(object gameData)
         {
+            Debug.Log("MakeCompatible");
             // vars
             var tut = gameData.GetType().GetProperty("HasAttemptedTutorial").GetValue(gameData);
             var lds = gameData.GetType().GetProperty("LifetimeDestructionScore").GetValue(gameData);
@@ -136,7 +151,9 @@ namespace BattleCruisers.Data.Serialization
             bool _hasAttemptedTutorial = (bool)tut;
             long _lifetimeDestructionScore = (long)lds;
             long _bestDestructionScore = (long)bds;
-            Loadout _playerLoadout = (Loadout)plo;
+            Loadout _loadout = (Loadout)plo;
+            _loadout.ValidateSelectedBuildables();
+
             BattleResult _lastBattleResult = (BattleResult)lbr;
             bool _premiumState = (bool)pre;
 
@@ -148,7 +165,7 @@ namespace BattleCruisers.Data.Serialization
                 _hasAttemptedTutorial,
                 _lifetimeDestructionScore,
                 _bestDestructionScore,
-                _playerLoadout,
+                _loadout,
                 _lastBattleResult,
                 _unlockedHulls,
                 _unlockedBuildings,
@@ -162,14 +179,14 @@ namespace BattleCruisers.Data.Serialization
             // ##############################################
 
             // Selected Captain
-            if (_playerLoadout.CurrentCaptain == null)
+            if (_loadout.CurrentCaptain == null)
             {
                 compatibleGameModel.PlayerLoadout.PurchaseExo("CaptainExo000");
                 compatibleGameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
             }
 
             // Heckles
-            if (_playerLoadout.CurrentHeckles == null)
+            if (_loadout.CurrentHeckles == null)
             {
                 compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
             }
@@ -264,8 +281,8 @@ namespace BattleCruisers.Data.Serialization
             }
 
             // Variants
-            if (_playerLoadout.SelectedVariants == null)
-                _playerLoadout.SelectedVariants = new List<int>();
+            if (_loadout.SelectedVariants == null)
+                _loadout.SelectedVariants = new List<int>();
 
             // Player Name
             string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;

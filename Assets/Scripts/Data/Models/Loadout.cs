@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace BattleCruisers.Data.Models
         private List<BuildingKey> _buildings;
 
         [SerializeField]
-        public Dictionary<BuildingCategory, List<BuildingKey>> SelectedBuildings { get; private set; }
+        public Dictionary<BuildingCategory, List<BuildingKey>> SelectedBuildings { get; set; }
 
         [SerializeField]
         private List<UnitKey> _units;
@@ -83,68 +83,81 @@ namespace BattleCruisers.Data.Models
         public Loadout(
             HullKey hull,
             List<BuildingKey> buildings,
-            List<UnitKey> units)
+            List<UnitKey> units,
+            Dictionary<BuildingCategory, List<BuildingKey>> buildingsToCategory = null,
+            Dictionary<UnitCategory, List<UnitKey>> unitsToCatrgory = null)
         {
             Hull = hull;
             _buildings = buildings;
             _units = units;
 
-            List<BuildingKey> limit = buildings;
-            List<BuildingKey> factories = new List<BuildingKey>();
-            List<BuildingKey> defence = new List<BuildingKey>();
-            List<BuildingKey> offense = new List<BuildingKey>();
-            List<BuildingKey> tactical = new List<BuildingKey>();
-            List<BuildingKey> Ultra = new List<BuildingKey>();
-            foreach (BuildingKey key in limit)
+            if (buildingsToCategory != null)
+                SelectedBuildings = buildingsToCategory;
+            else
             {
-                switch (key.BuildingCategory)
+
+                List<BuildingKey> limit = buildings;
+                List<BuildingKey> factories = new List<BuildingKey>();
+                List<BuildingKey> defence = new List<BuildingKey>();
+                List<BuildingKey> offense = new List<BuildingKey>();
+                List<BuildingKey> tactical = new List<BuildingKey>();
+                List<BuildingKey> Ultra = new List<BuildingKey>();
+                foreach (BuildingKey key in limit)
                 {
-                    case BuildingCategory.Factory:
-                        factories.Add(key);
-                        break;
-                    case BuildingCategory.Defence:
-                        defence.Add(key);
-                        break;
-                    case BuildingCategory.Offence:
-                        offense.Add(key);
-                        break;
-                    case BuildingCategory.Tactical:
-                        tactical.Add(key);
-                        break;
-                    case BuildingCategory.Ultra:
-                        Ultra.Add(key);
-                        break;
-                    default:
+                    switch (key.BuildingCategory)
+                    {
+                        case BuildingCategory.Factory:
+                            factories.Add(key);
+                            break;
+                        case BuildingCategory.Defence:
+                            defence.Add(key);
+                            break;
+                        case BuildingCategory.Offence:
+                            offense.Add(key);
+                            break;
+                        case BuildingCategory.Tactical:
+                            tactical.Add(key);
+                            break;
+                        case BuildingCategory.Ultra:
+                            Ultra.Add(key);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
+                {
+                    { BuildingCategory.Factory, factories },
+                    { BuildingCategory.Defence, defence },
+                    { BuildingCategory.Offence, offense },
+                    { BuildingCategory.Tactical, tactical },
+                    { BuildingCategory.Ultra, Ultra }
+                };
+                SelectedBuildings = buildables;
+            }
+
+            if (unitsToCatrgory != null)
+                SelectedUnits = unitsToCatrgory;
+            else
+            {
+                List<UnitKey> ships = new();
+                List<UnitKey> aircraft = new();
+                foreach (UnitKey unit in _units)
+                {
+                    if (unit.UnitCategory == UnitCategory.Naval)
+                        ships.Add(unit);
+                    else if (unit.UnitCategory == UnitCategory.Aircraft)
+                        aircraft.Add(unit);
+                    else
                         break;
                 }
+                Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
+                {
+                    {UnitCategory.Naval, ships },
+                    {UnitCategory.Aircraft, aircraft }
+                };
+                SelectedUnits = unitlimit;
             }
-            Dictionary<BuildingCategory, List<BuildingKey>> buildables = new()
-            {
-                { BuildingCategory.Factory, factories },
-                { BuildingCategory.Defence, defence },
-                { BuildingCategory.Offence, offense },
-                { BuildingCategory.Tactical, tactical },
-                { BuildingCategory.Ultra, Ultra }
-            };
-            SelectedBuildings = buildables;
-
-            List<UnitKey> ships = new();
-            List<UnitKey> aircraft = new();
-            foreach (UnitKey unit in _units)
-            {
-                if (unit.UnitCategory == UnitCategory.Naval)
-                    ships.Add(unit);
-                else if (unit.UnitCategory == UnitCategory.Aircraft)
-                    aircraft.Add(unit);
-                else
-                    break;
-            }
-            Dictionary<UnitCategory, List<UnitKey>> unitlimit = new()
-            {
-                {UnitCategory.Naval, ships },
-                {UnitCategory.Aircraft, aircraft }
-            };
-            SelectedUnits = unitlimit;
 
             _currentCaptain = new CaptainExoKey("CaptainExo000");  // "CaptainExo000" is Charlie, the default captain
             _selectedBodykit = -1;
@@ -506,6 +519,17 @@ namespace BattleCruisers.Data.Models
                 && Hull.SmartEquals(other.Hull)
                 && Enumerable.SequenceEqual(_buildings, other._buildings)
                 && Enumerable.SequenceEqual(_units, other._units);
+        }
+
+        public void ValidateSelectedBuildables()
+        {
+            SelectedBuildings[BuildingCategory.Factory] = SelectedBuildings[BuildingCategory.Factory].Take(5).ToList();
+            SelectedBuildings[BuildingCategory.Defence] = SelectedBuildings[BuildingCategory.Defence].Take(5).ToList();
+            SelectedBuildings[BuildingCategory.Offence] = SelectedBuildings[BuildingCategory.Offence].Take(5).ToList();
+            SelectedBuildings[BuildingCategory.Tactical] = SelectedBuildings[BuildingCategory.Tactical].Take(5).ToList();
+            SelectedBuildings[BuildingCategory.Ultra] = SelectedBuildings[BuildingCategory.Ultra].Take(5).ToList();
+            SelectedUnits[UnitCategory.Naval] = SelectedUnits[UnitCategory.Naval].Take(5).ToList();
+            SelectedUnits[UnitCategory.Aircraft] = SelectedUnits[UnitCategory.Aircraft].Take(5).ToList();
         }
 
         public override int GetHashCode()
