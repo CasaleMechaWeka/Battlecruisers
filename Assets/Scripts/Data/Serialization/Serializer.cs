@@ -108,6 +108,26 @@ namespace BattleCruisers.Data.Serialization
                 game = (GameModel)output;
             }
 
+            // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
+            if (game.PlayerLoadout.SelectedVariants != null && game.PlayerLoadout.SelectedVariants.Count > 0)
+            {
+                int restoredCount = 0;
+                foreach (int selectedVariantId in game.PlayerLoadout.SelectedVariants)
+                {
+                    if (!game.PurchasedVariants.Contains(selectedVariantId))
+                    {
+                        game.AddVariant(selectedVariantId);
+                        restoredCount++;
+                        Debug.Log($"RECOVERY: Restored missing purchased variant {selectedVariantId} (found in SelectedVariants)");
+                    }
+                }
+                
+                if (restoredCount > 0)
+                {
+                    Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
+                }
+            }
+
 #if PREMIUM_EDITION
             game.PremiumEdition = true;
             game.AddBodykit(0);
