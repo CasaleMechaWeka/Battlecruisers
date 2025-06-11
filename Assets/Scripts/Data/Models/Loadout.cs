@@ -340,6 +340,7 @@ namespace BattleCruisers.Data.Models
             };
             SelectedUnits = unitlimit;
         }
+
         public IList<BuildingKey> GetBuildings(BuildingCategory buildingCategory)
         {
             return _buildings.Where(buildingKey => buildingKey.BuildingCategory == buildingCategory).ToList();
@@ -446,6 +447,7 @@ namespace BattleCruisers.Data.Models
             Assert.IsNotNull(builds);
             return builds;
         }
+
         public List<UnitKey> GetUnitKeys(UnitCategory unitCategory)
         {
             List<UnitKey> unitList = SelectedUnits[unitCategory];
@@ -530,6 +532,7 @@ namespace BattleCruisers.Data.Models
             SelectedBuildings[BuildingCategory.Ultra] = SelectedBuildings[BuildingCategory.Ultra].Take(5).ToList();
             SelectedUnits[UnitCategory.Naval] = SelectedUnits[UnitCategory.Naval].Take(5).ToList();
             SelectedUnits[UnitCategory.Aircraft] = SelectedUnits[UnitCategory.Aircraft].Take(5).ToList();
+            _selectedVariants = new List<int>();
         }
 
         public override int GetHashCode()

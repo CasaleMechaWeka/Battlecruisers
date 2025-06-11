@@ -18,7 +18,6 @@ using System.Reflection;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 
-
 namespace BattleCruisers.Data.Serialization
 {
     public class Serializer : ISerializer
@@ -216,7 +215,7 @@ namespace BattleCruisers.Data.Serialization
                     {
                         if (purchasableProperty.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
                             foreach (int j in purchasableItems)
-                                purchasableOperations[i](purchasableItems[j]);
+                                purchasableOperations[i](j);
                         else
                             Debug.LogError("Property \"Purchased" + purchasableCategories[i] + "\" was not in the expected format List<int>");
                     }
