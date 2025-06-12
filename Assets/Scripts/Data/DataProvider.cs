@@ -29,7 +29,6 @@ namespace BattleCruisers.Data
         public static ILockedInformation LockedInfo { get; private set; }
 
         private static GameModel _gameModel;
-
         public static GameModel GameModel => _gameModel;
         public static List<VirtualPurchaseDefinition> m_VirtualPurchaseDefinitions { get; set; }
         public static VirtualShopConfig virtualShopConfig { get; set; }
@@ -38,28 +37,42 @@ namespace BattleCruisers.Data
         public static bool pvpServerAvailable { get; set; }
         static DataProvider()
         {
-            if (_serializer.DoesSavedGameExist())
+            LandingSceneGod.Instance.LogToScreen("DP-START... 0");
+            try
             {
-                _gameModel = _serializer.LoadGame();
-                if (_gameModel.PlayerLoadout.Is_buildsNull())
+                if (_serializer.DoesSavedGameExist())
                 {
-                    _gameModel.PlayerLoadout.Create_buildsAnd_units();
-                    SaveGame();
+                    _gameModel = _serializer.LoadGame();
+                    if (_gameModel.PlayerLoadout.Is_buildsNull())
+                    {
+                        _gameModel.PlayerLoadout.Create_buildsAnd_units();
+                        SaveGame();
+                    }
+                    if (_gameModel.PremiumEdition)
+                    {
+                        _gameModel.AddBodykit(0);  // Trident Bodykit000
+                        SaveGame();
+                    }
                 }
-                if (_gameModel.PremiumEdition)
+                else
                 {
-                    _gameModel.AddBodykit(0);  // Trident Bodykit000
+                    // First time run
+                    _gameModel = StaticData.InitialGameModel;
                     SaveGame();
                 }
             }
-            else
+            catch
             {
-                // First time run
                 _gameModel = StaticData.InitialGameModel;
                 SaveGame();
             }
 
+            LandingSceneGod.Instance.LogToScreen("DP-START... 1");
+
+
             SettingsManager = new SettingsManager();
+
+            LandingSceneGod.Instance.LogToScreen("DP-START... 2");
 
             LockedInfo = new LockedInformation(GameModel);
         }

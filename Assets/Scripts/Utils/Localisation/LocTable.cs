@@ -19,7 +19,7 @@ namespace BattleCruisers.Utils.Localisation
         public string GetString(string key)
         {
             Assert.IsFalse(string.IsNullOrEmpty(key));
-            Assert.IsTrue(Handle.IsValid(), $"Handle has been released :/");
+            Assert.IsTrue(Handle.IsValid(), $"Handle has been released :/ KEY: " + key);
             //Debug.Log(key);
             if (Handle.Result == null)
             {

@@ -36,6 +36,7 @@ using AppleAuth.Native;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace BattleCruisers.Scenes
 {
@@ -95,9 +96,13 @@ namespace BattleCruisers.Scenes
 
         async void Start()
         {
+            LogToScreen("Starting Battlecruisers... -1"); // SCREEN START
+
 #if PLATFORM_ANDROID
             Application.targetFrameRate = 60;
 #endif
+            LogToScreen("Starting Battlecruisers... -0"); // SCREEN START
+
 
             if (Instance == null)
             {
@@ -110,7 +115,7 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(spinGoogle, spinGuest);
             Helper.AssertIsNotNull(labelGoogle, labelGuest);
             Helper.AssertIsNotNull(messageHandler);
-            LogToScreen("Starting Battlecruisers"); // SCREEN START
+            LogToScreen("Starting Battlecruisers... 0"); // SCREEN START
 
             //loading loc tables in parallel is about 40-100% faster
             //Starting these tasks here saves ~100 ms avg
@@ -118,9 +123,14 @@ namespace BattleCruisers.Scenes
             _ = LocTableCache.LoadTableAsync(TableName.HECKLES);
             _ = LocTableCache.LoadTableAsync(TableName.SCREENS_SCENE);
 
+            LogToScreen("Starting Battlecruisers... 1");
+
             _ = PrefabCache.CreatePrefabCacheAsync();       //starting this here instead of in ScreensSceneGod saves ~2s
+            LogToScreen("Starting Battlecruisers... 1-1");
+
 
             HasInternetConnection = await CheckForInternetConnection();
+            LogToScreen("Starting Battlecruisers... 1-2");
 
             AudioSource platformAudioSource = GetComponent<AudioSource>();
             Assert.IsNotNull(platformAudioSource);
@@ -130,6 +140,8 @@ namespace BattleCruisers.Scenes
                     DataProvider.SettingsManager);
 
             soundPlayer = new SingleSoundPlayer(audioSource);
+
+            LogToScreen("Starting Battlecruisers... 2");
 
             try
             {
@@ -171,9 +183,13 @@ namespace BattleCruisers.Scenes
                 // messageHandler.ShowMessage("Please check Internet connection!");
             }
 
+            LogToScreen("Starting Battlecruisers... 3");
+
             messagebox.Initialize(soundPlayer);
             MusicPlayer = CreateMusicPlayer();
             DontDestroyOnLoad(gameObject);
+
+            LogToScreen("Starting Battlecruisers... 4");
 
             try
             {
@@ -189,12 +205,17 @@ namespace BattleCruisers.Scenes
                 Debug.LogError("Auth events failed the register");
             }
 
+            LogToScreen("Starting Battlecruisers... 5");
+
             if (HasInternetConnection)
             {
 #if PLATFORM_ANDROID
+                LogToScreen("Starting Battlecruisers... 6");
+
                 _GoogleAuthentication = new GoogleAuthentication();
                 _GoogleAuthentication.InitializePlayGamesLogin();
                 //await GoogleAttemptSilentSigningAsync(soundPlayer);
+
                 ShowSignInScreen();
 
 #elif PLATFORM_IOS
@@ -226,13 +247,19 @@ namespace BattleCruisers.Scenes
             }
             else
             {
+                LogToScreen("Starting Battlecruisers... 7");
+
                 ShowSignInScreen();
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
+
+            LogToScreen("Starting Battlecruisers... 8");
         }
 
-        private void ShowSignInScreen()
+        private async void ShowSignInScreen()
         {
+            LogToScreen("ShowSignInScreen... 0");
+
             landingCanvas.SetActive(true);
             loginPanel.SetActive(true);
 
@@ -248,9 +275,15 @@ namespace BattleCruisers.Scenes
             appleBtn.gameObject.SetActive(false);
             guestBtn.gameObject.SetActive(false);
 
+            LogToScreen("ShowSignInScreen... 1");
+
             //below is code to localise the logo
+            await LocalizationSettings.InitializationOperation.Task;
             string locName = LocalizationSettings.SelectedLocale.name;
+            LogToScreen("ShowSignInScreen... 1-1");
+
             Transform[] ts = logos.GetComponentsInChildren<Transform>(includeInactive: true);
+            LogToScreen("ShowSignInScreen... 1-2");
             foreach (Transform t in ts)
             {
                 if (t.gameObject.name == locName)
@@ -260,10 +293,14 @@ namespace BattleCruisers.Scenes
                 }
             }
 
+            LogToScreen("ShowSignInScreen... 2");
+
             guestBtn.Initialise(soundPlayer, AnonymousLogin);
             guestBtn.gameObject.SetActive(true);
             // we probably want to await the task to finish for performance reasons
             guestBtn.GetComponentInChildren<TMP_Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/HomeScreen/PlayButton");
+
+            LogToScreen("ShowSignInScreen... 3");
 
             if (HasInternetConnection)
             {
@@ -281,6 +318,8 @@ namespace BattleCruisers.Scenes
             {
                 AnonymousLogin();
             }
+
+            LogToScreen("ShowSignInScreen... 4");
 
             LogToScreen("All assets loaded"); // ALL ASSETS LOADED
         }

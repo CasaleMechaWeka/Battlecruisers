@@ -95,7 +95,6 @@ namespace BattleCruisers.Data.Models
                 SelectedBuildings = buildingsToCategory;
             else
             {
-
                 List<BuildingKey> limit = buildings;
                 List<BuildingKey> factories = new List<BuildingKey>();
                 List<BuildingKey> defence = new List<BuildingKey>();

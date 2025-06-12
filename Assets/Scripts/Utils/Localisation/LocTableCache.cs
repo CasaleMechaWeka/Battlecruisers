@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BattleCruisers.Data;
+using BattleCruisers.Scenes;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;
@@ -59,11 +60,22 @@ namespace BattleCruisers.Utils.Localisation
                     LocalizationSettings.InitializationOperation.WaitForCompletion();
 
                 foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
-                    if (locale.name == DataProvider.SettingsManager.Language)
+                {
+                    try
                     {
-                        _locale = locale;
+                        if (locale.name == DataProvider.SettingsManager.Language)
+                        {
+                            _locale = locale;
+                            LocalizationSettings.SelectedLocale = _locale;
+                        }
+                    }
+                    catch
+                    {
+                        _locale.name = "English (en)";
+                        LandingSceneGod.Instance.LogToScreen("DEFAULT TO EN LOC");
                         LocalizationSettings.SelectedLocale = _locale;
                     }
+                }
             }
 
             var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, _locale);
@@ -81,9 +93,18 @@ namespace BattleCruisers.Utils.Localisation
             {
                 await LocalizationSettings.InitializationOperation.Task;
                 foreach (Locale locale in LocalizationSettings.AvailableLocales.Locales)
-                    if (locale.name == DataProvider.SettingsManager.Language)
+                    try
                     {
-                        _locale = locale;
+                        if (locale.name == DataProvider.SettingsManager.Language)
+                        {
+                            _locale = locale;
+                            LocalizationSettings.SelectedLocale = _locale;
+                        }
+                    }
+                    catch
+                    {
+                        _locale.name = "English (en)";
+                        LandingSceneGod.Instance.LogToScreen("DEFAULT TO EN LOC");
                         LocalizationSettings.SelectedLocale = _locale;
                     }
             }
