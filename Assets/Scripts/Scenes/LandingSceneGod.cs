@@ -109,7 +109,6 @@ namespace BattleCruisers.Scenes
             Helper.AssertIsNotNull(spinGoogle, spinGuest);
             Helper.AssertIsNotNull(labelGoogle, labelGuest);
             Helper.AssertIsNotNull(messageHandler);
-            LogToScreen("Starting Battlecruisers... 0"); // SCREEN START
 
             //loading loc tables in parallel is about 40-100% faster
             //Starting these tasks here saves ~100 ms avg
@@ -230,8 +229,6 @@ namespace BattleCruisers.Scenes
                 ShowSignInScreen();
                 LogToScreen("No internet, continue offline"); // NO INTERNET
             }
-
-            LogToScreen("Starting Battlecruisers... 8");
         }
 
         private async void ShowSignInScreen()

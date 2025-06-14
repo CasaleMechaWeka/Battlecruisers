@@ -161,21 +161,15 @@ namespace BattleCruisers.Data.Serialization
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
             foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
-            {
                 _unlockedHulls.Add(hull);
-            }
 
             List<BuildingKey> _unlockedBuildings = new List<BuildingKey>();
             foreach (var building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
-            {
                 _unlockedBuildings.Add(building);
-            }
 
             List<UnitKey> _unlockedUnits = new List<UnitKey>();
             foreach (var unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
-            {
                 _unlockedUnits.Add(unit);
-            }
 
             // compiler doesn't like them being cast when they're assigned, so they're cast here
             bool _hasAttemptedTutorial = (bool)tut;
