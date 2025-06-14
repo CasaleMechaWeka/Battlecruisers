@@ -54,6 +54,7 @@ namespace BattleCruisers.Data.Serialization
             using (FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open))
             {
                 _binaryFormatter.Deserialize(file);
+                output = _binaryFormatter.Deserialize(file);
                 file.Close();
             }
 
