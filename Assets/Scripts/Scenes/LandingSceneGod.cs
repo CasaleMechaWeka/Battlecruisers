@@ -36,7 +36,6 @@ using AppleAuth.Native;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 using System.Security.Cryptography;
-using System.Threading;
 
 namespace BattleCruisers.Scenes
 {

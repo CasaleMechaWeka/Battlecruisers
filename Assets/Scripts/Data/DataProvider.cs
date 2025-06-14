@@ -37,17 +37,18 @@ namespace BattleCruisers.Data
         public static bool pvpServerAvailable { get; set; }
         static DataProvider()
         {
-            LandingSceneGod.Instance.LogToScreen("DP-START... 0");
             try
             {
                 if (_serializer.DoesSavedGameExist())
                 {
                     _gameModel = _serializer.LoadGame();
+
                     if (_gameModel.PlayerLoadout.Is_buildsNull())
                     {
                         _gameModel.PlayerLoadout.Create_buildsAnd_units();
                         SaveGame();
                     }
+
                     if (_gameModel.PremiumEdition)
                     {
                         _gameModel.AddBodykit(0);  // Trident Bodykit000
@@ -64,15 +65,11 @@ namespace BattleCruisers.Data
             catch
             {
                 _gameModel = StaticData.InitialGameModel;
+
                 SaveGame();
             }
 
-            LandingSceneGod.Instance.LogToScreen("DP-START... 1");
-
-
             SettingsManager = new SettingsManager();
-
-            LandingSceneGod.Instance.LogToScreen("DP-START... 2");
 
             LockedInfo = new LockedInformation(GameModel);
         }
@@ -82,6 +79,7 @@ namespace BattleCruisers.Data
             try
             {
                 if (_gameModel.NumOfLevelsCompleted > 1)
+                {
                     for (int i = 1; i < _gameModel.NumOfLevelsCompleted; i++)
                     {
                         ILoot unlockedLoot = StaticData.GetLevelLoot(i);
@@ -90,12 +88,12 @@ namespace BattleCruisers.Data
                                 foreach (ILootItem lootItem in unlockedLoot.Items)
                                     lootItem.UnlockItem(_gameModel);
                     }
+                }
             }
             catch (Exception ex)
             {
-                Debug.Log(ex);
+                LandingSceneGod.Instance.LogToScreen(ex.Message);
             }
-
             _serializer.SaveGame(_gameModel);
         }
 

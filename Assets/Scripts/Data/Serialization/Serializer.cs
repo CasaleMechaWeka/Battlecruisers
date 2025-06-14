@@ -17,6 +17,7 @@ using System.Linq;
 using System.Reflection;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Data.Serialization
 {
@@ -38,19 +39,30 @@ namespace BattleCruisers.Data.Serialization
 
         public void SaveGame(GameModel game)
         {
-            FileStream file = File.Create(_modelFilePathProvider.GameModelFilePath);
-            _binaryFormatter.Serialize(file, game);
-            file.Close();
+            using (FileStream file = File.Create(_modelFilePathProvider.GameModelFilePath))
+            {
+                _binaryFormatter.Serialize(file, game);
+
+                file.Close();
+            }
         }
 
         public GameModel LoadGame()
         {
             Assert.IsTrue(DoesSavedGameExist());
+            object output = null;
+            using (FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open))
+            {
+                _binaryFormatter.Deserialize(file);
+                file.Close();
+            }
 
-            FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open);
-
-            object output = _binaryFormatter.Deserialize(file);
             GameModel game;
+            if (output == null)
+            {
+                LandingSceneGod.Instance.LogToScreen("output == null");
+                game = StaticData.InitialGameModel;
+            }
 
             // We need to track Save vs Install versions
             // since we don't do that right now, I'm just checking inside the Loadout to see whether the user has a captains set.
@@ -121,7 +133,7 @@ namespace BattleCruisers.Data.Serialization
                         Debug.Log($"RECOVERY: Restored missing purchased variant {selectedVariantId} (found in SelectedVariants)");
                     }
                 }
-                
+
                 if (restoredCount > 0)
                 {
                     Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
@@ -133,7 +145,6 @@ namespace BattleCruisers.Data.Serialization
             game.AddBodykit(0);
 #endif
 
-            file.Close();
             return game;
         }
 
