@@ -75,7 +75,7 @@ namespace BattleCruisers.Scenes.BattleScene
             AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
         }
 
-        public override ILoadout GetPlayerLoadout()
+        public override Loadout GetPlayerLoadout()
         {
             return StaticData.InitialGameModel.PlayerLoadout;
         }

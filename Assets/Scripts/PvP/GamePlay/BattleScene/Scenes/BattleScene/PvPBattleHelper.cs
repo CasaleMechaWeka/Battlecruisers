@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private readonly BuildingCategoryFilter _buildingCategoryFilter;
         public override BuildingCategoryFilter BuildingCategoryPermitter => _buildingCategoryFilter;
-        private ILoadout _loadout;
+        private Loadout _loadout;
 
         public PvPBattleHelper() : base()
         {
@@ -89,7 +89,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         }
 
 
-        public override ILoadout GetPlayerLoadout()
+        public override Loadout GetPlayerLoadout()
         {
             return _loadout;
         }

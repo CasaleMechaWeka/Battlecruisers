@@ -39,7 +39,7 @@ namespace BattleCruisers.Scenes.BattleScene
         IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
         ILevel GetLevel();
         SideQuestData GetSideQuest();
-        ILoadout GetPlayerLoadout();
+        Loadout GetPlayerLoadout();
         IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
         IFilter<ISlot> CreateHighlightableSlotFilter();
         ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);

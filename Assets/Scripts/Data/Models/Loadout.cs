@@ -19,7 +19,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class Loadout : ILoadout
+    public class Loadout
     {
         [SerializeField]
         private HullKey _hull;

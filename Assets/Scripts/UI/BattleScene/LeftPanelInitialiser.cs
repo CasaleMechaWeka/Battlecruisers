@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.BattleScene
             DroneManager droneManager,
             DroneManagerMonitor droneManagerMonitor,
             UIManager uiManager,
-            ILoadout playerLoadout,
+            Loadout playerLoadout,
             ButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -75,7 +75,7 @@ namespace BattleCruisers.UI.BattleScene
 
         private BuildMenu SetupBuildMenuController(
             UIManager uiManager,
-            ILoadout playerLoadout,
+            Loadout playerLoadout,
             ButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,

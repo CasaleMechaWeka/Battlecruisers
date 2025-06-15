@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             ICruiser displayedCruiser = _cruiserDetails.SelectedItem.Value;
             Assert.IsNotNull(displayedCruiser);
             _selectedHull.Value = _hullNameToKey.GetKey(displayedCruiser.Name);
-            ILoadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
+            Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
             if (!playerLoadout.Hull.Equals(_selectedHull.Value))
             {
                 playerLoadout.Hull = _selectedHull.Value;

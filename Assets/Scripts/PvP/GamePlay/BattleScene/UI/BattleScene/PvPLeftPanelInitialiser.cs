@@ -85,7 +85,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public PvPLeftPanelComponents Initialise(
             PvPCruiser playerCruiser,
             PvPUIManager uiManager,
-            ILoadout playerLoadout,
+            Loadout playerLoadout,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
@@ -135,7 +135,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         private IPvPBuildMenu SetupBuildMenuController(
             PvPCruiser playerCruiser,
             PvPUIManager uiManager,
-            ILoadout playerLoadout,
+            Loadout playerLoadout,
             IPvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,

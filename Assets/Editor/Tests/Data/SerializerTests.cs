@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.Data
 {
 	public class SeriliazerTests
 	{
-		private ISerializer _serializer;
+		private Serializer _serializer;
 
 		private IModelFilePathProvider _filePathProvider;
 		private GameModel _originalGameModel;

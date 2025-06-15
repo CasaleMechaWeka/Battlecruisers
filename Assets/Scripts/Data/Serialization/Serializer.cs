@@ -21,7 +21,7 @@ using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Data.Serialization
 {
-    public class Serializer : ISerializer
+    public class Serializer
     {
         private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;

@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         string[] PvPHullNames { get; }
         BuildingCategoryFilter BuildingCategoryPermitter { get; }
         IPvPLevel GetPvPLevel();
-        ILoadout GetPlayerLoadout();
+        Loadout GetPlayerLoadout();
         IFilter<IPvPSlot> CreateHighlightableSlotFilter();
         IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();

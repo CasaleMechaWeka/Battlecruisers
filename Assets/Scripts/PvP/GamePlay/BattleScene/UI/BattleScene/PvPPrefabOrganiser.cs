@@ -15,14 +15,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPPrefabOrganiser : IPvPPrefabOrganiser
     {
-        private readonly ILoadout _playerLoadout;
+        private readonly Loadout _playerLoadout;
 
         // User needs to be able to build at least one building
         private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
         // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
         private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
 
-        public PvPPrefabOrganiser(ILoadout playerLoadout)
+        public PvPPrefabOrganiser(Loadout playerLoadout)
         {
             PvPHelper.AssertIsNotNull(playerLoadout);
 
@@ -73,7 +73,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             }
         }
 
-        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(ILoadout loadout)
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(Loadout loadout)
         {
             IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
 

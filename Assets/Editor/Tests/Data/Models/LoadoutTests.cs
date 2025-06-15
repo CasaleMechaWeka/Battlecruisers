@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.Data.Models
 {
     public class LoadoutTests
     {
-        private ILoadout _loadout;
+        private Loadout _loadout;
 
         private HullKey _hullKey1, _hullKey2;
         private BuildingKey _offensiveBuildingKey, _defensiveBuildingKey, _ultraBuildingKey;

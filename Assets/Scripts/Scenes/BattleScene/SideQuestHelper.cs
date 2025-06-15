@@ -58,7 +58,7 @@ namespace BattleCruisers.Scenes.BattleScene
             _buildingCategoryFilter.AllowAllCategories();
         }
 
-        public override ILoadout GetPlayerLoadout()
+        public override Loadout GetPlayerLoadout()
         {
             return DataProvider.GameModel.PlayerLoadout;
         }

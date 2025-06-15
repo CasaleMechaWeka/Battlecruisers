@@ -48,7 +48,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract UIManager CreateUIManager();
         public abstract IUserChosenTargetHelper CreateUserChosenTargetHelper(IUserChosenTargetManager playerCruiserUserChosenTargetManager, IPrioritisedSoundPlayer soundPlayer, TargetIndicatorController targetIndicator);
         public abstract IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);
-        public abstract ILoadout GetPlayerLoadout();
+        public abstract Loadout GetPlayerLoadout();
         public abstract void InitialiseUIManager(ICruiser PlayerCruiser,
                                                  ICruiser AICruiser,
                                                  BuildMenu BuildMenu,
