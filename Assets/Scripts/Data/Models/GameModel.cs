@@ -223,7 +223,7 @@ namespace BattleCruisers.Data.Models
         public int ID_Bodykit_AIbot { get; set; }
         public bool HasAttemptedTutorial
         {
-            get { return _hasAttemptedTutorial; }
+            get { return _hasAttemptedTutorial || LifetimeDestructionScore > 0; }
             set { _hasAttemptedTutorial = value; }
         }
 
