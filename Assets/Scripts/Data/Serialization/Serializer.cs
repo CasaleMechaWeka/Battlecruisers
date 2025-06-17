@@ -39,11 +39,10 @@ namespace BattleCruisers.Data.Serialization
 
         public void SaveGame(GameModel game)
         {
+            Debug.Log(game.Coins);
             using (FileStream file = File.Create(_modelFilePathProvider.GameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
-
-                file.Close();
             }
         }
 
@@ -53,14 +52,13 @@ namespace BattleCruisers.Data.Serialization
             object output = null;
             using (FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open))
             {
-                _binaryFormatter.Deserialize(file);
                 output = _binaryFormatter.Deserialize(file);
-                file.Close();
             }
 
             GameModel game;
             if (output == null)
             {
+                Debug.LogError("output == null");
                 LandingSceneGod.Instance.LogToScreen("output == null");
                 game = StaticData.InitialGameModel;
             }
@@ -68,8 +66,12 @@ namespace BattleCruisers.Data.Serialization
             // We need to track Save vs Install versions
             // since we don't do that right now, I'm just checking inside the Loadout to see whether the user has a captains set.
             // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
+
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
+            var coins = output.GetType().GetProperty("Coins").GetValue(output);
+            Debug.Log("CCCCC " + coins != null);
+            Debug.Log("CCCCC " + coins);
 
             string[] purchasableCategories = new string[]
             {
@@ -145,6 +147,9 @@ namespace BattleCruisers.Data.Serialization
             game.PremiumEdition = true;
             game.AddBodykit(0);
 #endif
+
+            Debug.Log(game.Coins);
+
 
             return game;
         }
@@ -420,6 +425,7 @@ namespace BattleCruisers.Data.Serialization
             try
             {
                 Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string> { "GameModel" });
+
                 if (savedData != null && savedData.TryGetValue("GameModel", out string gameModelData) && !string.IsNullOrEmpty(gameModelData))
                 {
                     SaveGameModel saveModel = (SaveGameModel)DeserializeGameModel(gameModelData);
