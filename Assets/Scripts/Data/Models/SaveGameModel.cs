@@ -140,113 +140,81 @@ namespace BattleCruisers.Data.Models
 
             // Log completed levels
             foreach (var level in _levelsCompleted)
-            {
                 Debug.Log($"Completed Level: {level.Key}, Difficulty: {level.Value}");
-            }
 
             // Log completed side quests
             if (_sideQuestsCompleted != null)
-            {
                 foreach (var sideQuest in _sideQuestsCompleted)
-                {
                     Debug.Log($"Completed SideQuest: {sideQuest.Key}, Difficulty: {sideQuest.Value}");
-                }
-            }
 
             // Log unlocked hulls
             foreach (var hull in _unlockedHulls)
-            {
                 Debug.Log($"Unlocked Hull: {hull}");
-            }
 
             // Log unlocked buildings
             foreach (var building in _unlockedBuildings)
-            {
                 Debug.Log($"Unlocked Building: {building.Key}, Category: {building.Value}");
-            }
 
             // Log unlocked units
             foreach (var unit in _unlockedUnits)
-            {
                 Debug.Log($"Unlocked Unit: {unit.Key}, Category: {unit.Value}");
-            }
 
             // IAPs
             // Exos
             if (_purchasedExos != null)
             {
                 List<int> currentExos = game.PurchasedExos;
-                if (_purchasedExos.Count > 0)
-                {
-                    for (int i = 0; i <= _purchasedExos.Count - 1; i++)
-                    {
-                        // Add
-                        int index = _purchasedExos[i];
-                        if (!currentExos.Contains(index))
-                            game.AddExo(index);
-                    }
-                }
+
+                foreach (int exo in _purchasedExos)
+                    if (!currentExos.Contains(exo))
+                        game.AddExo(exo);
+
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentExos.Except(_purchasedExos).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveExo(entry);
             }
+
             // Heckles
             if (_purchasedHeckles != null)
             {
-                List<int> currentBodykits = game.PurchasedHeckles;
-                if (_purchasedHeckles.Count > 0)
-                {
-                    for (int i = 0; i <= _purchasedHeckles.Count - 1; i++)
-                    {
-                        // Add
-                        int index = _purchasedHeckles[i];
-                        if (!currentBodykits.Contains(index))
-                            game.AddHeckle(index);
-                    }
-                }
+                List<int> currentHeckles = game.PurchasedHeckles;
+                foreach (int heckle in _purchasedHeckles)
+                    if (!currentHeckles.Contains(heckle))
+                        game.AddHeckle(heckle);
+
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentBodykits.Except(_purchasedHeckles).ToList();
+                List<int> entriesToRemove = currentHeckles.Except(_purchasedHeckles).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveHeckle(entry);
             }
+
             // Bodykits
             if (_purchasedBodykits != null)
             {
                 Debug.Log("CLOUDBODYKITS: " + _purchasedBodykits.Count);
                 List<int> currentBodykits = game.PurchasedBodykits;
                 Debug.Log("LOCALBODYKITS: " + currentBodykits.Count);
-                if (_purchasedBodykits.Count > 0)
-                {
-                    for (int i = 0; i <= _purchasedBodykits.Count - 1; i++)
-                    {
-                        // Add
-                        int index = _purchasedBodykits[i];
-                        if (!currentBodykits.Contains(index))
-                            game.AddBodykit(index);
-                    }
-                }
+                foreach (int bodykit in _purchasedBodykits)
+                    if (!currentBodykits.Contains(bodykit))
+                        game.AddBodykit(bodykit);
+
                 // Remove if they're not in the cloud save data:
                 List<int> entriesToRemove = currentBodykits.Except(_purchasedBodykits).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveBodykit(entry);
             }
+
             // Variants
             if (_purchasedVariants != null)
             {
-                List<int> currentList = game.PurchasedVariants;
-                if (_purchasedVariants.Count > 0)
-                {
-                    for (int i = 0; i <= _purchasedVariants.Count - 1; i++)
-                    {
-                        // Add
-                        int index = _purchasedVariants[i];
-                        if (!currentList.Contains(index))
-                            game.AddVariant(index);
-                    }
-                }
+                List<int> currentVariants = game.PurchasedVariants;
+                foreach (int variant in _purchasedVariants)
+                    if (!currentVariants.Contains(variant))
+                        game.AddVariant(variant);
+
                 // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentList.Except(_purchasedVariants).ToList();
+                List<int> entriesToRemove = currentVariants.Except(_purchasedVariants).ToList();
                 foreach (int entry in entriesToRemove)
                     game.RemoveVariant(entry);
             }
@@ -313,7 +281,7 @@ namespace BattleCruisers.Data.Models
                 units.Add(uk);
             }
 
-            // building limits
+            // selected buildings
             // the data structure here is pretty tough to process.
             Dictionary<BuildingCategory, List<BuildingKey>> buildLimits = new Dictionary<BuildingCategory, List<BuildingKey>>();
             foreach (string buildCat in _buildLimits.Keys)
@@ -334,7 +302,7 @@ namespace BattleCruisers.Data.Models
                 buildLimits.Add(bc, parsedBuildingKeys);
             }
 
-            // unit limits
+            // selected units
             // the data structure here is pretty tough to process.
             Dictionary<UnitCategory, List<UnitKey>> unitLimits = new Dictionary<UnitCategory, List<UnitKey>>();
             foreach (string unitCat in _unitLimits.Keys)
@@ -360,30 +328,22 @@ namespace BattleCruisers.Data.Models
 
             // current variants
             if (_selectedVariants != null)
-            {
                 game.PlayerLoadout.SelectedVariants = _selectedVariants;
-            }
             else
-            {
                 game.PlayerLoadout.SelectedVariants = new List<int>();
-            }
 
             // current bodykit
             if (_currentBodykit == -1 || game.PurchasedBodykits.Contains(_currentBodykit))
-            {
                 game.PlayerLoadout.SelectedBodykit = _currentBodykit;
-            }
             else
-            {
                 game.PlayerLoadout.SelectedBodykit = -1;
-            }
 
             // current heckles
             if (_currentHeckles != null)
             {
                 game.PlayerLoadout.CurrentHeckles = _currentHeckles;
-                foreach (int i in _currentHeckles)
-                    game.AddHeckle(_currentHeckles[i]);
+                foreach (int heckle in _currentHeckles)
+                    game.AddHeckle(heckle);
             }
             else
             {
@@ -392,23 +352,15 @@ namespace BattleCruisers.Data.Models
 
             // current captain
             if (_currentCaptain != null)
-            {
                 game.PlayerLoadout.CurrentCaptain = new CaptainExoKey(_currentCaptain);
-            }
             else
-            {
                 game.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
-            }
 
             // Tutorial status check
             if (_levelsCompleted.ContainsKey(1) || _hasAttemptedTutorial == true)
-            {
                 game.HasAttemptedTutorial = true;
-            }
             else
-            {
                 game.HasAttemptedTutorial = false;
-            }
         }
 
         private Dictionary<int, int> ComputeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
