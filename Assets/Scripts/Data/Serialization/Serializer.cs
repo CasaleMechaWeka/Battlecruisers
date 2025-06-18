@@ -40,7 +40,6 @@ namespace BattleCruisers.Data.Serialization
 
         public void SaveGame(GameModel game)
         {
-            Debug.Log(game.Coins);
             using (FileStream file = File.Create(gameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
@@ -71,8 +70,6 @@ namespace BattleCruisers.Data.Serialization
             // It should be changed to a version check though.
             var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
             var coins = output.GetType().GetProperty("Coins").GetValue(output);
-            Debug.Log("CCCCC " + coins != null);
-            Debug.Log("CCCCC " + coins);
 
             string[] purchasableCategories = new string[]
             {
@@ -148,9 +145,6 @@ namespace BattleCruisers.Data.Serialization
             game.PremiumEdition = true;
             game.AddBodykit(0);
 #endif
-
-            Debug.Log(game.Coins);
-
 
             return game;
         }
