@@ -23,24 +23,25 @@ namespace BattleCruisers.Data.Serialization
 {
     public class Serializer
     {
-        private readonly IModelFilePathProvider _modelFilePathProvider;
         private readonly BinaryFormatter _binaryFormatter;
 
-        public Serializer(IModelFilePathProvider modelFilePathProvider)
+        private readonly string gameModelFilePath;
+
+        public Serializer()
         {
-            _modelFilePathProvider = modelFilePathProvider;
+            gameModelFilePath = Application.persistentDataPath + "/GameModel.bcms";
             _binaryFormatter = new BinaryFormatter();
         }
 
         public bool DoesSavedGameExist()
         {
-            return File.Exists(_modelFilePathProvider.GameModelFilePath);
+            return File.Exists(gameModelFilePath);
         }
 
         public void SaveGame(GameModel game)
         {
             Debug.Log(game.Coins);
-            using (FileStream file = File.Create(_modelFilePathProvider.GameModelFilePath))
+            using (FileStream file = File.Create(gameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
             }
@@ -50,7 +51,7 @@ namespace BattleCruisers.Data.Serialization
         {
             Assert.IsTrue(DoesSavedGameExist());
             object output = null;
-            using (FileStream file = File.Open(_modelFilePathProvider.GameModelFilePath, FileMode.Open))
+            using (FileStream file = File.Open(gameModelFilePath, FileMode.Open))
             {
                 output = _binaryFormatter.Deserialize(file);
             }
@@ -369,7 +370,7 @@ namespace BattleCruisers.Data.Serialization
         {
             if (DoesSavedGameExist())
             {
-                File.Delete(_modelFilePathProvider.GameModelFilePath);
+                File.Delete(gameModelFilePath);
             }
         }
 

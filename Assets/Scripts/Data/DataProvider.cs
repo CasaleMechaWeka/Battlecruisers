@@ -23,7 +23,7 @@ namespace BattleCruisers.Data
 {
     public static class DataProvider
     {
-        private static readonly Serializer _serializer = new Serializer(new ModelFilePathProvider());       // functions for local read/write on disk and JSON serialization/deserialization
+        private static readonly Serializer _serializer = new Serializer();       // functions for local read/write on disk and JSON serialization/deserialization
 
         public static SettingsManager SettingsManager { get; private set; }
         public static ILockedInformation LockedInfo { get; private set; }

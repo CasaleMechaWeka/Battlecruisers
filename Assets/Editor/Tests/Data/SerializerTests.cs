@@ -6,7 +6,6 @@ using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
-using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +18,8 @@ namespace BattleCruisers.Tests.Data
 	{
 		private Serializer _serializer;
 
-		private IModelFilePathProvider _filePathProvider;
+		private string gameModelFilePath;
+
 		private GameModel _originalGameModel;
 		private string _filePath;
 		Dictionary<BuildingCategory, List<BuildingKey>> builds = new();
@@ -31,10 +31,9 @@ namespace BattleCruisers.Tests.Data
 			string fileName = "sweetTestFile" + Random.value;
 			_filePath = Application.persistentDataPath + "/" + fileName + ".bcms";
 
-			_filePathProvider = Substitute.For<IModelFilePathProvider>();
-			_filePathProvider.GameModelFilePath.Returns(_filePath);
+			gameModelFilePath = Application.persistentDataPath + "/GameModel.bcms";
 
-			_serializer = new Serializer(_filePathProvider);
+			_serializer = new Serializer();
 
 			_originalGameModel = new GameModel(
 				hasSyncdShop: false,
@@ -135,7 +134,7 @@ namespace BattleCruisers.Tests.Data
 		[Test]
 		public void DoesSavedGameExist_True()
 		{
-			FileStream savedGameFile = File.Create(_filePathProvider.GameModelFilePath);
+			FileStream savedGameFile = File.Create(gameModelFilePath);
 			savedGameFile.Dispose();
 			Assert.IsTrue(_serializer.DoesSavedGameExist());
 		}
@@ -164,7 +163,7 @@ namespace BattleCruisers.Tests.Data
 		[Test]
 		public void DeleteSavedGame()
 		{
-			FileStream savedGameFile = File.Create(_filePathProvider.GameModelFilePath);
+			FileStream savedGameFile = File.Create(gameModelFilePath);
 			savedGameFile.Dispose();
 
 			_serializer.DeleteSavedGame();
