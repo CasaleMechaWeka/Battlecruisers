@@ -25,7 +25,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
-    public abstract class PvPBattleSceneHelper : IPvPBattleSceneHelper
+    public abstract class PvPBattleSceneHelper
     {
         protected readonly PvPBuildProgressCalculatorFactory _calculatorFactory;
 

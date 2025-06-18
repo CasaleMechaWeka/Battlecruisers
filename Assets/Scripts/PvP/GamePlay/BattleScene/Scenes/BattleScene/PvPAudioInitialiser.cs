@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private readonly PvPPopulationLimitAnnouncer _populationLimitAnnouncer;
 
         public PvPAudioInitialiser(
-            IPvPBattleSceneHelper helper,
+            PvPBattleSceneHelper helper,
             LayeredMusicPlayer musicPlayer,
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,

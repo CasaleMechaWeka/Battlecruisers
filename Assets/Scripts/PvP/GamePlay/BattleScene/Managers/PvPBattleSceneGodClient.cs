@@ -67,7 +67,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPLeftPanelInitialiser leftPanelInitialiser;
         public PvPRightPanelInitialiser rightPanelInitialiser;
         public PvPBattleSceneGodComponents components;
-        private IPvPBattleSceneHelper pvpBattleHelper;
+        private PvPBattleSceneHelper pvpBattleHelper;
         private IPvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
         private ITime time;
@@ -867,7 +867,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        private IPvPBattleSceneHelper CreatePvPBattleHelper()
+        private PvPBattleSceneHelper CreatePvPBattleHelper()
         {
             return new PvPBattleHelper();
         }

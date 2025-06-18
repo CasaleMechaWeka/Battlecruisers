@@ -28,14 +28,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public class PvPCruiserFactory : IPvPCruiserFactory
     {
-        private readonly IPvPBattleSceneHelper _helper;
+        private readonly PvPBattleSceneHelper _helper;
         private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
         private readonly PvPUIManager _uiManager;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
-        public PvPCruiserFactory(IPvPBattleSceneHelper helper)
+        public PvPCruiserFactory(PvPBattleSceneHelper helper)
         {
             PvPHelper.AssertIsNotNull(helper/*, uiManager*/);
 

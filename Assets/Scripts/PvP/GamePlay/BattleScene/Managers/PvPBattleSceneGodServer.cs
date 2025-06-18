@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerB;
         private static float difficultyDestructionScoreMultiplier;
         private static bool GameOver;
-        private IPvPBattleSceneHelper pvpBattleHelper;
+        private PvPBattleSceneHelper pvpBattleHelper;
         public IUserChosenTargetManager playerACruiserUserChosenTargetManager;
         public IUserChosenTargetManager playerBCruiserUserChosenTargetManager;
 
