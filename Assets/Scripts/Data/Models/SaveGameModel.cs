@@ -61,6 +61,7 @@ namespace BattleCruisers.Data.Models
         // Status tracking
         public bool _hasAttemptedTutorial;
         public bool _isDoneMigration;
+        public bool _premiumEdition;
 
         public SaveGameModel()
         { // this is the constructor for cloud load
@@ -113,6 +114,7 @@ namespace BattleCruisers.Data.Models
             // Status tracking:
             _hasAttemptedTutorial = game.HasAttemptedTutorial;
             _isDoneMigration = game.IsDoneMigration;
+            _premiumEdition = game.PremiumEdition;
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
@@ -361,6 +363,8 @@ namespace BattleCruisers.Data.Models
                 game.HasAttemptedTutorial = true;
             else
                 game.HasAttemptedTutorial = false;
+
+            game.PremiumEdition = _premiumEdition || game.PremiumEdition;
         }
 
         private Dictionary<int, int> ComputeCompletedLevels(IReadOnlyCollection<CompletedLevel> levels)
