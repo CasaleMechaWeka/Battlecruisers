@@ -232,7 +232,7 @@ namespace BattleCruisers.Scenes
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log(ex.Message);
+                    Debug.LogError(ex.Message);
                 }
             }
             else
