@@ -105,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPHelper.AssertIsNotNull(dronesPanelInitialiser, buildMenuInitialiser, popLimitReachedFeedback);
 
             IHighlightable numberOfDronesHighlightable = SetupDronesPanel(playerCruiser);
-            IPvPBuildMenu buildMenu
+            PvPBuildMenu buildMenu
                 = SetupBuildMenuController(
                     playerCruiser,
                     uiManager,
@@ -132,7 +132,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return dronesPanelInitialiser.Initialise(playerCruiser);
         }
 
-        private IPvPBuildMenu SetupBuildMenuController(
+        private PvPBuildMenu SetupBuildMenuController(
             PvPCruiser playerCruiser,
             PvPUIManager uiManager,
             Loadout playerLoadout,

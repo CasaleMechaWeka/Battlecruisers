@@ -22,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
 
-        public IPvPBuildMenu Initialise(
+        public PvPBuildMenu Initialise(
             PvPCruiser playerCruiser,
             PvPUIManager uiManager,
             IList<IPvPBuildingGroup> buildingGroups,

@@ -8,10 +8,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPLeftPanelComponents
     {
         public IHighlightable NumberOfDronesHighlightable { get; }
-        public IPvPBuildMenu BuildMenu { get; }
+        public PvPBuildMenu BuildMenu { get; }
         public IGameObject PopLimitReachedFeedback { get; }
 
-        public PvPLeftPanelComponents(IHighlightable numberOfDronesHighlightable, IPvPBuildMenu buildMenu, IGameObject popLimitReachedFeedback)
+        public PvPLeftPanelComponents(IHighlightable numberOfDronesHighlightable, PvPBuildMenu buildMenu, IGameObject popLimitReachedFeedback)
         {
             PvPHelper.AssertIsNotNull(numberOfDronesHighlightable, buildMenu, popLimitReachedFeedback);
 

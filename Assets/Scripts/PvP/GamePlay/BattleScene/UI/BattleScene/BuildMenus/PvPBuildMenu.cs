@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus
 {
-    public class PvPBuildMenu : IPvPBuildMenu
+    public class PvPBuildMenu
     {
         private readonly IBuildingCategoriesMenu _buildingCategoriesMenu;
         private readonly IPvPBuildableMenus<BuildingCategory> _buildingMenus;

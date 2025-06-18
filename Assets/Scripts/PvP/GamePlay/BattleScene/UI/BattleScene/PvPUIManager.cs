@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPUIManager
     {
         private PvPCruiser _playerCruiser, _enemyCruiser;
-        private IPvPBuildMenu _buildMenu;
+        private PvPBuildMenu _buildMenu;
         private IPvPItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
         private SingleSoundPlayer _uiSoundPlayer;
@@ -59,7 +59,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
-            IPvPBuildMenu buildMenu,
+            PvPBuildMenu buildMenu,
             IPvPItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer)

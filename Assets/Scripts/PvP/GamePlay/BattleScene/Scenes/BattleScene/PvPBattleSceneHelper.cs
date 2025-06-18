@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public abstract void InitialiseUIManager(
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
-            IPvPBuildMenu buildMenu,
+            PvPBuildMenu buildMenu,
             IPvPItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer);
