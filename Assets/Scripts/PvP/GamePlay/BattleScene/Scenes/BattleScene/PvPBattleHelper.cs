@@ -109,7 +109,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             return Difficulty.Harder;
         }
 
-        public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
+        public override PvPButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
         {
             return
                 new PvPButtonVisibilityFilters(
@@ -121,7 +121,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                     new StaticBroadcastingFilter(isMatch: true));
         }
 
-        public override IPvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser)
+        public override PvPButtonVisibilityFilters CreateButtonVisibilityFilters(PvPCruiser playerCruiser)
         {
             return
                 new PvPButtonVisibilityFilters(

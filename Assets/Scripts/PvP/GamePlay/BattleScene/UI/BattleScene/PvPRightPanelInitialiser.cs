@@ -38,7 +38,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPUIManager uiManager,
             IPvPCruiser playerCruiser,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IUpdater perFrameUpdater,
             PauseGameManager pauseGameManager,
             PvPBattleCompletionHandler battleCompletionHandler,
@@ -81,7 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             IPvPCruiser playerCruiser,
             IUpdater perFrameUpdater,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             SingleSoundPlayer soundPlayer)
         {
             PvPInformatorPanelController informator = GetComponentInChildren<PvPInformatorPanelController>();
@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             return informator;
         }
 
-        private PvPSpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, IPvPButtonVisibilityFilters buttonVisibilityFilters)
+        private PvPSpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, PvPButtonVisibilityFilters buttonVisibilityFilters)
         {
             PvPSpeedPanelController speedPanelInitialiser = GetComponentInChildren<PvPSpeedPanelController>();
             Assert.IsNotNull(speedPanelInitialiser);

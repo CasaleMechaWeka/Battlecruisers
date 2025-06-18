@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             IPvPDroneFocuser droneFocuser,
             IRepairManager repairManager,
             IUserChosenTargetHelper userChosenTargetHelper,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             SingleSoundPlayer soundPlayer,
             SlidingPanel informatorPanel,
             IUpdater updater,
@@ -59,9 +59,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             repairButton.Initialise(soundPlayer, droneFocuser, repairManager);
             deleteButton.Initialise(soundPlayer, uiManager, buttonVisibilityFilters.DeletButtonVisiblityFilter, updater);
         }
-
-
-
-
     }
 }

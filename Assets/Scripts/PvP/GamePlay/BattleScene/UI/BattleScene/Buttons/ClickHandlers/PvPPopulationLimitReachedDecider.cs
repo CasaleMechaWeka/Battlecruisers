@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers
 {
-    public class PvPPopulationLimitReachedDecider : IPvPPopulationLimitReachedDecider
+    public class PvPPopulationLimitReachedDecider
     {
         private readonly IPopulationLimitMonitor _populationLimitMonitor;
 

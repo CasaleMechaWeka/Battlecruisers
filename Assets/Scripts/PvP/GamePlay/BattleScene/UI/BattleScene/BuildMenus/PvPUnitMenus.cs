@@ -12,15 +12,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 {
     public class PvPUnitMenus : PvPBuildableMenus<IPvPUnit, UnitCategory, PvPUnitsMenuController>
     {
-        private IPvPUnitClickHandler _clickHandler;
+        private PvPUnitClickHandler _clickHandler;
 
         public void Initialise(
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> buildables,
             PvPUIManager uiManager,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IPvPBuildableSorter<IPvPUnit> buildableSorter,
             SingleSoundPlayer soundPlayer,
-            IPvPUnitClickHandler clickHandler)
+            PvPUnitClickHandler clickHandler)
         {
             // Need this for abstract method called by base.Initialise().  Codesmell :P
             Assert.IsNotNull(clickHandler);
@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             SingleSoundPlayer soundPlayer,
             PvPUnitsMenuController menu,
             PvPUIManager uiManager,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPUnit>> buildables)
         {
             menu.Initialise(soundPlayer, uiManager, buttonVisibilityFilters, buildables, _clickHandler);

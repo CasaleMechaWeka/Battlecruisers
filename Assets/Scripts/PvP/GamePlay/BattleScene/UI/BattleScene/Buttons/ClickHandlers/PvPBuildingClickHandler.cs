@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers
 {
-    public class PvPBuildingClickHandler : PvPBuildableClickHandler, IPvPBuildingClickHandler
+    public class PvPBuildingClickHandler : PvPBuildableClickHandler
     {
         private readonly IPlayerCruiserFocusHelper _playerCruiserFocusHelper;
         private readonly AudioClipWrapper _buildingSelectedSound;

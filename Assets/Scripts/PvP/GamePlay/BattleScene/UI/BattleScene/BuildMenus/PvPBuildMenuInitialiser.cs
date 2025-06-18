@@ -27,7 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPUIManager uiManager,
             IList<IPvPBuildingGroup> buildingGroups,
             IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IPlayerCruiserFocusHelper playerCruiserFocusHelper,
             IPrioritisedSoundPlayer eventSoundPlayer,
             SingleSoundPlayer uiSoundPlayer,
@@ -61,7 +61,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             Assert.IsNotNull(buildingMenus);
             IPvPBuildableSorter<IPvPBuilding> buildingSorter = new PvPBuildingUnlockedLevelSorter();
             IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
-            IPvPBuildingClickHandler buildingClickHandler
+            PvPBuildingClickHandler buildingClickHandler
                 = new PvPBuildingClickHandler(
                     uiManager,
                     eventSoundPlayer,
@@ -71,7 +71,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, uiSoundPlayer, buildingClickHandler, flipClickAndDragIcon);
 
             // Unit menus
-            IPvPUnitClickHandler unitClickHandler
+            PvPUnitClickHandler unitClickHandler
                 = new PvPUnitClickHandler(
                     playerCruiser,
                     uiManager,

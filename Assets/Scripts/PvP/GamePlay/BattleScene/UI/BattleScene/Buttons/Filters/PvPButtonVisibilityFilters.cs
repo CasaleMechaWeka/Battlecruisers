@@ -7,7 +7,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters
 {
-    public class PvPButtonVisibilityFilters : IPvPButtonVisibilityFilters
+    public class PvPButtonVisibilityFilters
     {
         public IBroadcastingFilter<IPvPBuildable> BuildableButtonVisibilityFilter { get; }
         public IBroadcastingFilter<BuildingCategory> CategoryButtonVisibilityFilter { get; }

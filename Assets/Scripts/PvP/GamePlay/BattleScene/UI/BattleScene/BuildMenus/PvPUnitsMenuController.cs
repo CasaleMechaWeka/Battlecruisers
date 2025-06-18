@@ -15,15 +15,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPUnitsMenuController : PvPBuildablesMenuController<PvPUnitButtonController, IPvPUnit>
     {
         private SingleSoundPlayer _soundPlayer;
-        private IPvPUnitClickHandler _unitClickHandler;
+        private PvPUnitClickHandler _unitClickHandler;
         private IPvPFactory _factory;
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             PvPUIManager uiManager,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPUnit>> units,
-            IPvPUnitClickHandler clickHandler)
+            PvPUnitClickHandler clickHandler)
         {
             // Need _unitClickHandler for abstract method called by base.Initialise().  Codesmell :P
             PvPHelper.AssertIsNotNull(soundPlayer, clickHandler);

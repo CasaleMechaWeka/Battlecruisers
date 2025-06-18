@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         // The unit wrapper is always the same for this button.  In contrast 
         // the factory can change
         private IPvPBuildableWrapper<IPvPUnit> _unitWrapper;
-        private IPvPUnitClickHandler _unitClickHandler;
+        private PvPUnitClickHandler _unitClickHandler;
         private PvPUnitBuildProgressTrigger _unitBuildProgress;
 
         private IPvPFactory _currentFactory;
@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             SingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPUnit> unitWrapper,
             IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
-            IPvPUnitClickHandler unitClickHandler)
+            PvPUnitClickHandler unitClickHandler)
         {
             PvPHelper.AssertIsNotNull(unitWrapper, unitClickHandler);
             base.ApplyVariantIfExist(unitWrapper.Buildable);

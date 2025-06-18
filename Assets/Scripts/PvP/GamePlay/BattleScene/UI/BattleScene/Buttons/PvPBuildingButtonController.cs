@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPBuildingButtonController : PvPBuildableButtonController, IPointerDownHandler, IEndDragHandler, IDragHandler
     {
         private IPvPBuildableWrapper<IPvPBuilding> _buildingWrapper;
-        private IPvPBuildingClickHandler _clickHandler;
+        private PvPBuildingClickHandler _clickHandler;
         private Transform _clickAndDragIcon;
         private Vector3 _originalClickAndDragPosition;
         private PvPBuildableClickAndDrag _buildableClickAndDrag;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IPvPBuildableWrapper<IPvPBuilding> buildingWrapper,
-            IPvPBuildingClickHandler clickHandler,
+            PvPBuildingClickHandler clickHandler,
             IBroadcastingFilter<IPvPBuildable> shouldBeEnabledFilter,
             bool flipClickAndDragIcon)
         {

@@ -10,9 +10,9 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers
 {
-    public class PvPUnitClickHandler : PvPBuildableClickHandler, IPvPUnitClickHandler
+    public class PvPUnitClickHandler : PvPBuildableClickHandler
     {
-        private readonly IPvPPopulationLimitReachedDecider _populationLimitReachedDecider;
+        private readonly PvPPopulationLimitReachedDecider _populationLimitReachedDecider;
         private PvPCruiser _playerCruiser;
 
         public PvPUnitClickHandler(
@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPUIManager uiManager,
             IPrioritisedSoundPlayer eventSoundPlayer,
             SingleSoundPlayer uiSoundPlayer,
-            IPvPPopulationLimitReachedDecider populationLimitReachedDecider)
+            PvPPopulationLimitReachedDecider populationLimitReachedDecider)
             : base(uiManager, eventSoundPlayer, uiSoundPlayer)
         {
             Assert.IsNotNull(populationLimitReachedDecider);

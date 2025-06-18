@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
         public virtual void Initialise(
             PvPUIManager uiManager,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<TBuildable>> buildables)
         {
             base.Initialise();

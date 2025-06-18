@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     public class PvPBuildingsMenuController : PvPBuildablesMenuController<PvPBuildingButtonController, IPvPBuilding>
     {
         private SingleSoundPlayer _soundPlayer;
-        private IPvPBuildingClickHandler _clickHandler;
+        private PvPBuildingClickHandler _clickHandler;
         private bool _flipClickAndDragIcon;
 
         public PvPBuildingCategoryButton buildingCategoryButton;
@@ -20,9 +20,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             PvPUIManager uiManager,
-            IPvPButtonVisibilityFilters buttonVisibilityFilters,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
             IList<IPvPBuildableWrapper<IPvPBuilding>> buildings,
-            IPvPBuildingClickHandler clickHandler,
+            PvPBuildingClickHandler clickHandler,
             bool flipClickAndDragIcon)
         {
             // Need these for abstract method called by base.Initialise().  Codesmell :P
