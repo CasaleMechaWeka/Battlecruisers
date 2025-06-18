@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             SettingsManager settingsManager,
             IHotkeysModel hotkeysModel)

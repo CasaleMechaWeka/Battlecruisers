@@ -8,11 +8,11 @@ namespace BattleCruisers.UI.ScreensScene
 {
     public class ScreenController : PresentableController
     {
-        protected IScreensSceneGod _screensSceneGod;
+        protected ScreensSceneGod _screensSceneGod;
         protected IMultiplayScreensSceneGod _multiplayScreensSceneGod;
         public bool IsInitialised => _screensSceneGod != null;
 
-        public void Initialise(IScreensSceneGod screensSceneGod)
+        public void Initialise(ScreensSceneGod screensSceneGod)
         {
             base.Initialise();
 

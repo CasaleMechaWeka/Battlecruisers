@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public GameObject secretLevelsHint;
 
         public async Task InitialiseAsync(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
@@ -72,7 +72,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         private async Task InitialiseLevelSetsAsync(
             SingleSoundPlayer soundPlayer,
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             IList<LevelInfo> levels,
             int numOfLevelsUnlocked,
             Sprite[] difficultyIndicators,

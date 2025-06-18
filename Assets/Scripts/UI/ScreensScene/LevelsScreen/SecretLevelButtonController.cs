@@ -8,7 +8,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class SecretLevelButtonController : ElementWithClickSound
     {
-        private IScreensSceneGod _screensSceneGod;
+        private ScreensSceneGod _screensSceneGod;
 
         [SerializeField]
         private int _levelNum;
@@ -18,7 +18,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         protected override SoundKey ClickSound => SoundKeys.UI.Click;
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             int numOfLevelUnlocked)
         {

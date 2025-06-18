@@ -43,7 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ButtonController navRightButton;
         public ButtonController navLeftButton;
         public GameObject loadingSpinner;
-        private IScreensSceneGod _screenSceneGod;
+        private ScreensSceneGod _screenSceneGod;
 
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public MessageBoxBig messageBoxBig;
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer)
         {
             loadingSpinner.SetActive(false);

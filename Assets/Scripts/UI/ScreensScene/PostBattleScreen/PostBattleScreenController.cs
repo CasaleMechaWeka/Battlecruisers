@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private GameMode _gameMode;
 
         public async Task InitialiseAsync(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             MusicPlayer musicPlayer,
             Sprite[] difficultyIndicators,

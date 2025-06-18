@@ -13,7 +13,7 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         private BattleResult _lastBattleResult;
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);

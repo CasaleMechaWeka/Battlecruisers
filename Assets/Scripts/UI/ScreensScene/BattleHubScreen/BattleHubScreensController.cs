@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text skirmishTitle;
         public Text openingSoonText;
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);

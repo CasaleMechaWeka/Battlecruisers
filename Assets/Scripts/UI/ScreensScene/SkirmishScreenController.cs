@@ -45,7 +45,7 @@ namespace BattleCruisers.UI.ScreensScene
         public StringDropdown strategyDropdown, playerCruiserDropdown, aiCruiserDropdown;
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);

@@ -44,13 +44,13 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
 
         private SingleSoundPlayer _soundPlayer;
-        IScreensSceneGod _screensSceneGod;
+        ScreensSceneGod _screensSceneGod;
         private IList<ItemButton> _itemButtons = new List<ItemButton>();
 
 
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer)
         {
             _soundPlayer = soundPlayer;

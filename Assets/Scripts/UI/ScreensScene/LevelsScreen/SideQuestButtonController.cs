@@ -10,7 +10,7 @@ using BattleCruisers.Data;
 public class SideQuestButtonController : ElementWithClickSound
 {
     private bool isButtonEnabled;
-    private IScreensSceneGod _screensSceneGod;
+    private ScreensSceneGod _screensSceneGod;
     public int sideQuestID;
     protected override SoundKey ClickSound => SoundKeys.UI.Click;
     private GameObject checkmark;
@@ -24,7 +24,7 @@ public class SideQuestButtonController : ElementWithClickSound
     private LevelsSetController levelsSetController;
 
     public void Initialise(
-        IScreensSceneGod screensSceneGod,
+        ScreensSceneGod screensSceneGod,
         SingleSoundPlayer soundPlayer,
         int numOfLevelsUnlocked,
         bool completed)

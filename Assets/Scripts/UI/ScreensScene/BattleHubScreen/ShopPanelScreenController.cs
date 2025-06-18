@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private List<CaptainExo> captains = new List<CaptainExo>();
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             bool hasInternetonnection = false)
         {

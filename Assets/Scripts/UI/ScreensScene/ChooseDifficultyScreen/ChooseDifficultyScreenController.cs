@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.ChooseDifficultyScreen
         public DifficultyButtonController harderButton, hardButton, normalButton;
 
         public void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             SettingsManager settingsManager)
         {

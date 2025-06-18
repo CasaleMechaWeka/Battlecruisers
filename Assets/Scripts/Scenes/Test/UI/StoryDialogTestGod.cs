@@ -25,7 +25,7 @@ namespace BattleCruisers.Scenes.Test.UI
 
             trashScreen
                 .Initialise(
-                    Substitute.For<IScreensSceneGod>(),
+                    Substitute.For<ScreensSceneGod>(),
                     Substitute.For<SingleSoundPlayer>(),
                     trashDataList,
                     trashDataList,

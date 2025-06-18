@@ -11,7 +11,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
     public class LevelButtonController : ElementWithClickSound
     {
         private LevelInfo _level;
-        private IScreensSceneGod _screensSceneGod;
+        private ScreensSceneGod _screensSceneGod;
 
         public Text levelNumberText, levelNameText;
         public LevelStatsController levelStatsController;
@@ -24,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             LevelInfo level,
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             Sprite[] difficultyIndicators,
             int numOfLevelsUnlocked,
             TrashTalkData trashTalkData,

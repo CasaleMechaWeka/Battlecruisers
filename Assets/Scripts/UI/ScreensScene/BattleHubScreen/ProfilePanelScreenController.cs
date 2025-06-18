@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private string playerID;
 
         public async void Initialise(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer)
         {
             base.Initialise(screensSceneGod);

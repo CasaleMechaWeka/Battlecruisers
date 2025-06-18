@@ -22,7 +22,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public GameObject[] trails;
 
         public async Task InitialiseAsync(
-            IScreensSceneGod screensSceneGod,
+            ScreensSceneGod screensSceneGod,
             LevelsScreenController levelsScreen,
             IList<LevelInfo> allLevels,
             int numOfLevelsUnlocked,

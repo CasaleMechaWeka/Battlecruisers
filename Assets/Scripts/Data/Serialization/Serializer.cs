@@ -136,9 +136,7 @@ namespace BattleCruisers.Data.Serialization
                 }
 
                 if (restoredCount > 0)
-                {
                     Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
-                }
             }
 
 #if PREMIUM_EDITION

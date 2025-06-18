@@ -42,7 +42,7 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 
 namespace BattleCruisers.Scenes
 {
-    public class ScreensSceneGod : MonoBehaviour, IScreensSceneGod
+    public class ScreensSceneGod : MonoBehaviour
     {
         private ScreenController _currentScreen;
         private GameModel _gameModel;

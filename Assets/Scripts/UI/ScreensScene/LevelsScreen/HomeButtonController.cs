@@ -6,9 +6,9 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
     public class HomeButtonController : TextButton
     {
-        private IScreensSceneGod _screensSceneGod;
+        private ScreensSceneGod _screensSceneGod;
 
-        public void Initialise(SingleSoundPlayer soundPlayer, IScreensSceneGod screensSceneGod, IDismissableEmitter parent)
+        public void Initialise(SingleSoundPlayer soundPlayer, ScreensSceneGod screensSceneGod, IDismissableEmitter parent)
         {
             base.Initialise(soundPlayer, parent);
 
