@@ -19,7 +19,7 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Scenes;
 
-namespace BattleCruisers.Data.Serialization
+namespace BattleCruisers.Data
 {
     public class Serializer
     {

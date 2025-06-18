@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Serialization;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.LevelLoot;
