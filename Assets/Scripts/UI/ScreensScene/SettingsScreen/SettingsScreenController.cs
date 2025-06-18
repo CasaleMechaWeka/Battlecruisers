@@ -59,7 +59,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudSaveToggle);
             Helper.AssertIsNotNull(cloudSaveLabel, accountHelpRow);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
-            Helper.AssertIsNotNull(soundPlayer, screensSceneGod, settingsManager, hotkeysModel);
+            Helper.AssertIsNotNull(soundPlayer, settingsManager, hotkeysModel);
 
             _settingsManager = settingsManager;
 
@@ -120,7 +120,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 .Initialise(
                     soundPlayer,
                     this,
-                    screensSceneGod,
                     _settingsManager,
                     difficultyDropdown,
                     languageDropdown,

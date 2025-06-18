@@ -10,7 +10,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 {
     public class SaveButton : ElementWithClickSound
     {
-        private ScreensSceneGod _screensSceneGod;
         private SettingsManager _settingsManager;
         private DifficultyDropdown _difficultyDropdown;
         private LanguageDropdown _languageDropdown;
@@ -26,7 +25,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             IDismissableEmitter parent,
-            ScreensSceneGod screensSceneGod,
             SettingsManager settingsManager,
             DifficultyDropdown difficultyDropdown,
             LanguageDropdown languageDropdown,
@@ -53,9 +51,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(soundPlayer, parent: parent);
 
-            Helper.AssertIsNotNull(screensSceneGod, settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, musicVolume, effectVolume, showInGameHints, hotkeysPanel);
+            Helper.AssertIsNotNull(settingsManager, difficultyDropdown, zoomSpeedLevel, scrollSpeedLevel, musicVolume, effectVolume, showInGameHints, hotkeysPanel);
 
-            _screensSceneGod = screensSceneGod;
             _settingsManager = settingsManager;
             _difficultyDropdown = difficultyDropdown;
             _languageDropdown = languageDropdown;
