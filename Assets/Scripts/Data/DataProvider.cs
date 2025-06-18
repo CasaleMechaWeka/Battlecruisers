@@ -118,30 +118,45 @@ namespace BattleCruisers.Data
 
         public static async Task CloudLoad()
         {
-            SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
-            if (saveModel == null || saveModel._lifetimeDestructionScore < _gameModel.LifetimeDestructionScore)
+            try
             {
-                //override cloud save with local save
-                Debug.Log("CloudSaveModel is null.");
-                List<Task> syncCurrencyToCloud = new List<Task>
+                SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
+                if (saveModel == null || saveModel._lifetimeDestructionScore < _gameModel.LifetimeDestructionScore)
                 {
-                    SyncCoinsToCloud(),
-                    SyncCreditsToCloud()
-                };
+                    //override cloud save with local save
+                    Debug.Log("CloudSaveModel is null.");
+                    List<Task> syncCurrencyToCloud = new List<Task>
+                    {
+                        SyncCoinsToCloud(),
+                        SyncCreditsToCloud()
+                    };
 
-                _gameModel.CoinsChange = 0;
-                _gameModel.CreditsChange = 0;
-                _gameModel._outstandingBodykitTransactions = new List<BodykitData>();
-                _gameModel._outstandingCaptainTransactions = new List<CaptainData>();
-                _gameModel._outstandingHeckleTransactions = new List<HeckleData>();
-                _gameModel._outstandingVariantTransactions = new List<VariantData>();
+                    _gameModel.CoinsChange = 0;
+                    _gameModel.CreditsChange = 0;
+                    _gameModel._outstandingBodykitTransactions = new List<BodykitData>();
+                    _gameModel._outstandingCaptainTransactions = new List<CaptainData>();
+                    _gameModel._outstandingHeckleTransactions = new List<HeckleData>();
+                    _gameModel._outstandingVariantTransactions = new List<VariantData>();
 
-                await Task.WhenAll(syncCurrencyToCloud);
+                    await Task.WhenAll(syncCurrencyToCloud);
+                }
+                else if (saveModel._lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
+                {
+                    // Preserve local settings before cloud overwrites them
+                    var localSettings = _gameModel.Settings;
+                    
+                    saveModel.AssignSaveToGameModel(_gameModel);
+                    
+                    // Restore local settings after cloud assignment
+                    _gameModel.Settings = localSettings;
+                    
+                    Debug.Log("Cloud save retrieved and applied.");
+                }
             }
-            else if (saveModel._lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
+            catch (Exception ex)
             {
-                saveModel.AssignSaveToGameModel(_gameModel);
-                Debug.Log("Cloud save retrieved and applied.");
+                Debug.LogError($"CloudLoad failed: {ex.Message}");
+                Debug.LogError("Continuing with local save data");
             }
         }
 
