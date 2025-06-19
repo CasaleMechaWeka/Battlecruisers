@@ -4,28 +4,28 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Data
 {
-    public class Level : ILevel
+    public class Level
     {
-		public int Num { get; }
+        public int Num { get; }
         public IPrefabKey Hull { get; }
         public SoundKeyPair MusicKeys { get; }
         public string SkyMaterialName { get; }
         public IPrefabKey Captains { get; }
 
         public Level(
-            int num, 
-            IPrefabKey hull, 
+            int num,
+            IPrefabKey hull,
             SoundKeyPair musicKeys,
             string skyMaterialName,
             IPrefabKey captain)
-		{
+        {
             Helper.AssertIsNotNull(hull, musicKeys);
 
-			Num = num;
+            Num = num;
             Hull = hull;
             MusicKeys = musicKeys;
             SkyMaterialName = skyMaterialName;
             Captains = captain;
-		}
-	}
+        }
+    }
 }

@@ -16,20 +16,20 @@ namespace BattleCruisers.Tests.Data
         private ILockedInformation _lockedInfo;
 
         private GameModel _gameModel;
-        private ReadOnlyCollection<ILevel> _levels;
+        private ReadOnlyCollection<Level> _levels;
 
         [SetUp]
         public void SetuUp()
         {
             _gameModel = Substitute.For<GameModel>();
 
-            IList<ILevel> levels = new List<ILevel>();
+            IList<Level> levels = new List<Level>();
             for (int i = 0; i < StaticData.NUM_OF_LEVELS_IN_DEMO + 1; ++i)
             {
-                levels.Add(Substitute.For<ILevel>());
+                levels.Add(Substitute.For<Level>());
             }
             ;
-            _levels = new ReadOnlyCollection<ILevel>(levels);
+            _levels = new ReadOnlyCollection<Level>(levels);
             StaticData.Levels.Returns(_levels);
 
             _lockedInfo = new LockedInformation(_gameModel);

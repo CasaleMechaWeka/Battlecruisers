@@ -573,13 +573,13 @@ namespace BattleCruisers.Scenes
                 levelTrashDataList);
         }
 
-        private IList<LevelInfo> CreateLevelInfo(IList<ILevel> staticLevels, IList<CompletedLevel> completedLevels)
+        private IList<LevelInfo> CreateLevelInfo(IList<Level> staticLevels, IList<CompletedLevel> completedLevels)
         {
             IList<LevelInfo> levels = new List<LevelInfo>();
 
             for (int i = 0; i < staticLevels.Count; ++i)
             {
-                ILevel staticLevel = staticLevels[i];
+                Level staticLevel = staticLevels[i];
                 CompletedLevel completedLevel = completedLevels.ElementAtOrDefault(i);
                 Difficulty? completedDifficulty = null;
 
@@ -649,7 +649,7 @@ namespace BattleCruisers.Scenes
             {
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
-                ILevel level = StaticData.Levels[levelNum - 1];
+                Level level = StaticData.Levels[levelNum - 1];
                 DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
                 //DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
                 DataProvider.SaveGame();

@@ -122,7 +122,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
             else
             {
                 int levelIndex = ApplicationModel.SelectedLevel - 1;
-                ILevel level = StaticData.Levels[levelIndex];
+                Level level = StaticData.Levels[levelIndex];
                 enemyCruiserPrefab = PrefabFactory.GetCruiserPrefab(level.Hull);
                 skyPath = SKY_SPRITE_ROOT_PATH + level.SkyMaterialName + SPRITES_FILE_EXTENSION;
 

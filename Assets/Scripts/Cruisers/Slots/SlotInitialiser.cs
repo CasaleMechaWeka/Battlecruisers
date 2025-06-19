@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Cruisers.Slots.BuildingPlacement;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +10,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
 
-        public IDictionary<SlotType, ReadOnlyCollection<ISlot>> InitialiseSlots(ICruiser parentCruiser, IList<ISlot> slots, IBuildingPlacer buildingPlacer)
+        public IDictionary<SlotType, ReadOnlyCollection<ISlot>> InitialiseSlots(ICruiser parentCruiser, IList<ISlot> slots)
         {
             Helper.AssertIsNotNull(parentCruiser, slots);
 
@@ -26,7 +25,7 @@ namespace BattleCruisers.Cruisers.Slots
             {
                 ISlot slot = slots[i];
                 ReadOnlyCollection<ISlot> neighbouringSlots = FindSlotNeighbours(slots, i);
-                slot.Initialise(parentCruiser, neighbouringSlots, buildingPlacer);
+                slot.Initialise(parentCruiser, neighbouringSlots);
                 slot.IsVisible = false;
             }
 

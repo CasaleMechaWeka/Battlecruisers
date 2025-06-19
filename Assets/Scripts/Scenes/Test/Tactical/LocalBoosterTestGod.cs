@@ -6,7 +6,6 @@ using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Scenes.Test.Utilities;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using NSubstitute;
@@ -38,16 +37,13 @@ namespace BattleCruisers.Scenes.Test.Tactical
             // Setup target
             helper.InitialiseBuilding(_target, Faction.Reds);
             _target.StartConstruction();
-			
-			
-			// Setup artillery slot
-			Slot slotToBoost = FindObjectOfType<Slot>();
+
+
+            // Setup artillery slot
+            Slot slotToBoost = FindObjectOfType<Slot>();
             ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
             ReadOnlyCollection<ISlot> emptyNeighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
-            IBuildingPlacer buildingPlacer 
-                = new BuildingPlacer(
-                    new BuildingPlacerCalculator());
-            slotToBoost.Initialise(parentCruiser, emptyNeighbouringSlots, buildingPlacer);
+            slotToBoost.Initialise(parentCruiser, emptyNeighbouringSlots);
 
 
             // Setup artillery
@@ -62,14 +58,14 @@ namespace BattleCruisers.Scenes.Test.Tactical
 
 
             // Setup local booster
-			ISlot localBoosterParentSlot = Substitute.For<ISlot>();
+            ISlot localBoosterParentSlot = Substitute.For<ISlot>();
 
             ObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>();
             localBoosterParentSlot.BoostProviders.Returns(boostProviders);
 
             ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { slotToBoost });
-			localBoosterParentSlot.NeighbouringSlots.Returns(neighbouringSlots);
-   
+            localBoosterParentSlot.NeighbouringSlots.Returns(neighbouringSlots);
+
             LocalBoosterController localBooster = FindObjectOfType<LocalBoosterController>();
             helper.InitialiseBuilding(localBooster, parentCruiser: parentCruiser, parentSlot: localBoosterParentSlot);
             localBooster.StartConstruction();

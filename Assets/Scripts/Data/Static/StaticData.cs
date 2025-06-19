@@ -187,7 +187,7 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_SIDEQUESTS = 31;
 
         public static GameModel InitialGameModel { get; } = CreateInitialGameModel();
-        public static ReadOnlyCollection<ILevel> Levels { get; } = new ReadOnlyCollection<ILevel>(new List<ILevel>()
+        public static ReadOnlyCollection<Level> Levels { get; } = new ReadOnlyCollection<Level>(new List<Level>()
         {
             // Set 1:  Raptor
             new Level(1, Hulls.Raptor, BackgroundMusic.Bobby, SkyMaterials.Morning, Exos.GetCaptainExoKey(1)),

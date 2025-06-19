@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Cruisers.Slots.BuildingPlacement;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
@@ -22,11 +21,8 @@ namespace BattleCruisers.Cruisers.Slots
         {
             Assert.IsNotNull(parentCruiser);
 
-            IBuildingPlacer buildingPlacer
-                = new BuildingPlacer(
-                    new BuildingPlacerCalculator());
             SlotInitialiser slotInitialiser = new SlotInitialiser();
-            IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+            IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots);
 
             return new SlotAccessor(typeToSlots);
         }

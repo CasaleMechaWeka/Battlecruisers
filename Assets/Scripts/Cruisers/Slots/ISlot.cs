@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -12,17 +11,17 @@ using UnityEngine;
 namespace BattleCruisers.Cruisers.Slots
 {
     public enum SlotType
-	{
+    {
         // Explicitly set integer values, because the Unity inspector binds
         // to the integer values.  So now, if I decide to get rid of a slot
         // type (yet again), I don't need to adjust every single prefab 
         // that has a slot type field.  Thanks Manya!
-        Utility = 1, 
-        Mast = 2, 
-        Bow = 3, 
-        Platform = 4, 
+        Utility = 1,
+        Mast = 2,
+        Bow = 3,
+        Platform = 4,
         Deck = 5
-	}
+    }
 
     public interface ISlot : IClickableEmitter, IHighlightable
     {
@@ -61,7 +60,7 @@ namespace BattleCruisers.Cruisers.Slots
         /// </summary>
         ReadOnlyCollection<ISlot> NeighbouringSlots { get; }
 
-        void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer);
+        void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots);
         void SetBuilding(IBuilding building);
 
         void controlBuildingPlacementFeedback(bool active);

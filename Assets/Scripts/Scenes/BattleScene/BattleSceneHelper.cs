@@ -59,7 +59,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
 
 
-        public virtual ILevel GetLevel()
+        public virtual Level GetLevel()
         {
             return StaticData.Levels[ApplicationModel.SelectedLevel - 1];
         }

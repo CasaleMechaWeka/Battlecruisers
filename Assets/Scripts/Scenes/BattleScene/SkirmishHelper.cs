@@ -29,14 +29,14 @@ namespace BattleCruisers.Scenes.BattleScene
             Assert.IsNotNull(_skirmish);
         }
 
-        public override ILevel GetLevel()
+        public override Level GetLevel()
         {
             int levelNum = 1;  // Unused for skirmish
-            
+
             // Use base.GetLevel() approach but modify for our needs
             ApplicationModel.SelectedLevel = _skirmish.BackgroundLevelNum;
-            ILevel backgroundLevel = base.GetLevel();
-            
+            Level backgroundLevel = base.GetLevel();
+
             return new Level(
                 levelNum,
                 _skirmish.AICruiser,

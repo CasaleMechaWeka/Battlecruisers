@@ -112,7 +112,7 @@ namespace BattleCruisers.Tests.Data.Static
         [Test]
         public void GetLevelLoot_NoneMoreThan2LootItems()
         {
-            foreach (ILevel level in StaticData.Levels)
+            foreach (Level level in StaticData.Levels)
             {
                 ILoot loot = StaticData.GetLevelLoot(level.Num);
                 Assert.IsTrue(loot.Items.Count <= 2);

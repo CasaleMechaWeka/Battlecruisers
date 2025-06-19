@@ -49,7 +49,7 @@ namespace BattleCruisers.Utils.Debugging
         public void UnlockEverything()
         {
             // Levels
-            foreach (ILevel level in StaticData.Levels)
+            foreach (Level level in StaticData.Levels)
             {
                 DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
             }
@@ -112,7 +112,7 @@ namespace BattleCruisers.Utils.Debugging
             // Unlock specified levels
             foreach (int levelNum in levelsToUnlock)
             {
-                ILevel level = StaticData.Levels.FirstOrDefault(l => l.Num == levelNum);
+                Level level = StaticData.Levels.FirstOrDefault(l => l.Num == levelNum);
                 if (level != null)
                 {
                     DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));

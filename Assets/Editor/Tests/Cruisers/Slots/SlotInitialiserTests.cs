@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         public void InitialiseSlots()
         {
             ICruiser parentCruiser = Substitute.For<ICruiser>();
-            IBuildingPlacer buildingPlacer = Substitute.For<IBuildingPlacer>();
 
             // Deck2, Deck1, Platform, Bow
             ISlot frontSlot = CreateSlot(index: 1, type: SlotType.Bow);
@@ -33,39 +31,35 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             SlotInitialiser slotInitialiser = new SlotInitialiser();
 
-            slotInitialiser.InitialiseSlots(parentCruiser, slots, buildingPlacer);
+            slotInitialiser.InitialiseSlots(parentCruiser, slots);
 
             frontSlot.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(middleSlot)
                     && !neighbours.Contains(deckSlot1)
                     && !neighbours.Contains(deckSlot2)
-            ),
-            buildingPlacer);
+            ));
 
             middleSlot.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(frontSlot)
                     && neighbours.Contains(deckSlot1)
                     && !neighbours.Contains(deckSlot2)
-            ),
-            buildingPlacer);
+            ));
 
             deckSlot1.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(middleSlot)
                     && neighbours.Contains(deckSlot2)
                     && !neighbours.Contains(frontSlot)
-            ),
-            buildingPlacer);
+            ));
 
             deckSlot2.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
                 neighbours =>
                     neighbours.Contains(deckSlot1)
                     && !neighbours.Contains(middleSlot)
                     && !neighbours.Contains(frontSlot)
-            ),
-            buildingPlacer);
+            ));
         }
 
         private ISlot CreateSlot(int index, SlotType type)

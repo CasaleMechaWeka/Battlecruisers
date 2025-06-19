@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Cruisers.Slots.Feedback;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.Utils;
@@ -23,7 +22,6 @@ namespace BattleCruisers.Cruisers.Slots
         private SpriteRenderer _renderer;
         private IPoolable<Vector3> _explosion;
         public ExplosionController _explosionController;
-        private IBuildingPlacer _buildingPlacer;
         private Vector2 _size;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -105,7 +103,29 @@ namespace BattleCruisers.Cruisers.Slots
 
                 if (_baseBuilding.Value != null)
                 {
-                    _buildingPlacer.PlaceBuilding(_baseBuilding.Value, this);
+                    IBuilding building = _baseBuilding.Value;
+
+                    _baseBuilding.Value.Rotation = Transform.Rotation;
+
+                    float verticalChange = building.Position.y - building.PuzzleRootPoint.y;
+                    float horizontalChange = building.Position.x - building.PuzzleRootPoint.x;
+
+                    building.Position = BuildingPlacementPoint
+                                        + (Transform.Up * verticalChange)
+                                        + (Transform.Right * horizontalChange);
+
+                    if (building.HealthBar.Offset.x == 0
+                        || !Transform.IsMirroredAcrossYAxis)
+                    {
+                        building.HealthBar.Offset = building.HealthBar.Offset;
+                    }
+                    else
+                    {
+                        building.HealthBar.Offset = new Vector2(
+                            -building.HealthBar.Offset.x,
+                            building.HealthBar.Offset.y);
+                    }
+
                     _baseBuilding.Value.Destroyed += OnBuildingDestroyed;
                 }
             }
@@ -113,13 +133,12 @@ namespace BattleCruisers.Cruisers.Slots
 
         public event EventHandler Clicked;
 
-        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots, IBuildingPlacer buildingPlacer)
+        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots)
         {
-            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, buildingPlacer);
+            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
             _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
-            _buildingPlacer = buildingPlacer;
 
             _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _explosion = _explosionController.Initialise();
@@ -139,7 +158,6 @@ namespace BattleCruisers.Cruisers.Slots
             SlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackMonitorInitialiser>();
             Assert.IsNotNull(boostFeedbackInitialiser);
             _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this);
-
 
             _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");
             _buildingPlacementBeacon = _renderer.gameObject.transform.Find("BuildingPlacementBeacon");
