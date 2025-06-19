@@ -15,7 +15,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     [Serializable]
-    public class GameModel : IPvPGameModel
+    public class GameModel
     {
         [SerializeField]
         private bool _hasAttemptedTutorial;

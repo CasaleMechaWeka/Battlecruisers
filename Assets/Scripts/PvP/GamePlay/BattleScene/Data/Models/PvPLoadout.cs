@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models
 {
     [Serializable]
-    public class PvPLoadout : IPvPLoadout
+    public class PvPLoadout
     {
         [SerializeField]
         private PvPHullKey _hull;

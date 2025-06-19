@@ -4,7 +4,7 @@ using BattleCruisers.UI.Sound;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data
 {
-    public class PvPLevel : IPvPLevel
+    public class PvPLevel
     {
         public int Num { get; }
         public IPrefabKey Hull { get; }

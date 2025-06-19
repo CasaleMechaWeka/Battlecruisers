@@ -86,7 +86,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                    new PvPBuildSpeedCalculator());
         }
 
-        public virtual IPvPLevel GetPvPLevel()
+        public virtual PvPLevel GetPvPLevel()
         {
             /*#if UNITY_EDITOR*/
             return StaticData.PvPLevels[(Map)DataProvider.GameModel.GameMap];

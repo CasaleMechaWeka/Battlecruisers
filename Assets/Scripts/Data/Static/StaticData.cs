@@ -286,7 +286,7 @@ namespace BattleCruisers.Data.Static
             new SideQuestData(false, Exos.GetCaptainExoKey(45), 4, 27, Hulls.Megalith, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, false, 29), //SpyPlane
             new SideQuestData(false, Exos.GetCaptainExoKey(11), 11, 29, Hulls.Pistol, BackgroundMusic.Juggernaut, SkyMaterials.Midday, false, 30) //Sledgehammer
         });
-        public static ReadOnlyDictionary<Map, IPvPLevel> PvPLevels { get; } = new ReadOnlyDictionary<Map, IPvPLevel>(new Dictionary<Map, IPvPLevel>()
+        public static ReadOnlyDictionary<Map, PvPLevel> PvPLevels { get; } = new ReadOnlyDictionary<Map, PvPLevel>(new Dictionary<Map, PvPLevel>()
         {
             // Practice Wreckyards
             {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, BackgroundMusic.Bobby, SkyMaterials.Morning)},

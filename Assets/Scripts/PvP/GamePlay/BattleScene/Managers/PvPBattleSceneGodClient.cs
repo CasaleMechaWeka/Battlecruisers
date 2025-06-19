@@ -68,7 +68,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public PvPRightPanelInitialiser rightPanelInitialiser;
         public PvPBattleSceneGodComponents components;
         private PvPBattleSceneHelper pvpBattleHelper;
-        private IPvPLevel currentLevel;
+        private PvPLevel currentLevel;
         private PvPLeftPanelComponents leftPanelComponents;
         private ITime time;
         private IDebouncer _debouncer;
