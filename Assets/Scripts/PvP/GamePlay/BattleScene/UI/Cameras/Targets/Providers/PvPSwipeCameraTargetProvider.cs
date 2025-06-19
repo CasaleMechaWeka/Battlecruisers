@@ -1,4 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Helpers.Calculators;
@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         private readonly ScrollCalculator _scrollCalculator;
         private readonly ZoomCalculator _zoomCalculator;
         private readonly ICamera _camera;
-        private readonly IPvPCameraCalculator _cameraCalculator;
+        private readonly PvPCameraCalculator _cameraCalculator;
         private readonly IDirectionalZoom _directionalZoom;
         private readonly IScrollRecogniser _scrollRecogniser;
         private readonly BufferClamper _cameraXPositionClamper;
@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ScrollCalculator scrollCalculator,
             ZoomCalculator zoomCalculator,
             ICamera camera,
-            IPvPCameraCalculator cameraCalculator,
+            PvPCameraCalculator cameraCalculator,
             IDirectionalZoom directionalZoom,
             IScrollRecogniser scrollRecogniser,
             BufferClamper cameraXPositionClamper)

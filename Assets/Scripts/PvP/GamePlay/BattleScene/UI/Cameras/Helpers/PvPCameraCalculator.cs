@@ -5,9 +5,9 @@ using BattleCruisers.Utils.DataStrctures;
 using BattleCruisers.Utils.PlatformAbstractions;
 using UnityEngine;
 
-namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers
 {
-    public class PvPCameraCalculator : IPvPCameraCalculator
+    public class PvPCameraCalculator
     {
         private readonly ICamera _camera;
         private readonly CameraCalculatorSettings _settings;

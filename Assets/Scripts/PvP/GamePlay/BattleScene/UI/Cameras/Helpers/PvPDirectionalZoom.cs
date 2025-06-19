@@ -1,5 +1,4 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers.Calculators;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Targets;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cameras.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Cameras.Targets;
@@ -12,10 +11,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
     public class PvPDirectionalZoom : IDirectionalZoom
     {
         private readonly ICamera _camera;
-        private readonly IPvPCameraCalculator _cameraCalculator;
+        private readonly PvPCameraCalculator _cameraCalculator;
         private readonly IRange<float> _validOrthographicSizes;
 
-        public PvPDirectionalZoom(ICamera camera, IPvPCameraCalculator cameraCalculator, IRange<float> validOrthographicSizes)
+        public PvPDirectionalZoom(ICamera camera, PvPCameraCalculator cameraCalculator, IRange<float> validOrthographicSizes)
         {
             PvPHelper.AssertIsNotNull(camera, cameraCalculator, validOrthographicSizes);
 
