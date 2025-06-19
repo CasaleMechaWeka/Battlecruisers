@@ -6,7 +6,7 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Data.Static.LevelLoot
 {
-    public class Loot : ILoot
+    public class Loot
     {
         public ReadOnlyCollection<ILootItem> Items { get; }
 

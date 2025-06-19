@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
         private ItemDetailsGroupController _middleDetailsGroup, _leftDetailsGroup, _rightDetailsGroup;
 
-        private ILoot _unlockedLoot;
+        private Loot _unlockedLoot;
         private IList<ILootItem> _lootItems;
         private ILootItem _item1, _item2;
 
@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
 
             _lootItems = new List<ILootItem>();
             ReadOnlyCollection<ILootItem> readonlyLootItems = new ReadOnlyCollection<ILootItem>(_lootItems);
-            _unlockedLoot = Substitute.For<ILoot>();
+            _unlockedLoot = Substitute.For<Loot>();
             _unlockedLoot.Items.Returns(readonlyLootItems);
 
             StaticData.GetLevelLoot(default).ReturnsForAnyArgs(_unlockedLoot);

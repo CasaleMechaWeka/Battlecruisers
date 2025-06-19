@@ -29,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowLevelLoot(int levelCompleted)
         {
-            ILoot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
+            Loot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
             bool containsNewLoot = false;
             if (unlockedLoot.Items.Count != 0)
                 for (int i = 0; i < unlockedLoot.Items.Count; i++)
@@ -44,7 +44,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         //have to do when SideQuest data is stored in StaticData
         public bool ShouldShowSideQuestLoot(int sideQuestID)
         {
-            ILoot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
+            Loot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
 
             bool containsNewLoot = unlockedLoot.Items.Any(item => !item.IsUnlocked(DataProvider.GameModel));
 
@@ -62,10 +62,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return containsNewLoot || !completedSideQuestIDs.Contains(sideQuestID);
         }
 
-        public ILoot UnlockLevelLoot(int levelCompleted)
+        public Loot UnlockLevelLoot(int levelCompleted)
         {
             Debug.Log($"UnlockLevelLoot called for level: {levelCompleted}");
-            ILoot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
+            Loot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
 
             if (unlockedLoot.Items.Count != 0)
             {
@@ -76,10 +76,10 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return unlockedLoot;
         }
 
-        public ILoot UnlockSideQuestLoot(int sideQuestID)
+        public Loot UnlockSideQuestLoot(int sideQuestID)
         {
             Debug.Log($"UnlockSideQuestLoot called for sideQuestID: {sideQuestID}");
-            ILoot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
+            Loot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
 
             if (unlockedLoot.Items.Count != 0)
             {
@@ -90,7 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return unlockedLoot;
         }
 
-        private void UnlockLootItems(ILoot unlockedLoot)
+        private void UnlockLootItems(Loot unlockedLoot)
         {
             foreach (ILootItem lootItem in unlockedLoot.Items)
             {
@@ -98,7 +98,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
         }
 
-        public void ShowLoot(ILoot unlockedLoot)
+        public void ShowLoot(Loot unlockedLoot)
         {
             Assert.IsNotNull(unlockedLoot);
 

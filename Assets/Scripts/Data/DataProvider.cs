@@ -25,7 +25,7 @@ namespace BattleCruisers.Data
         private static readonly Serializer _serializer = new Serializer();       // functions for local read/write on disk and JSON serialization/deserialization
 
         public static SettingsManager SettingsManager { get; private set; }
-        public static ILockedInformation LockedInfo { get; private set; }
+        public static LockedInformation LockedInfo { get; private set; }
 
         private static GameModel _gameModel;
         public static GameModel GameModel => _gameModel;
@@ -81,7 +81,7 @@ namespace BattleCruisers.Data
                 {
                     for (int i = 1; i < _gameModel.NumOfLevelsCompleted; i++)
                     {
-                        ILoot unlockedLoot = StaticData.GetLevelLoot(i);
+                        Loot unlockedLoot = StaticData.GetLevelLoot(i);
                         if (unlockedLoot != null)
                             if (unlockedLoot.Items.Count != 0)
                                 foreach (ILootItem lootItem in unlockedLoot.Items)
@@ -144,12 +144,12 @@ namespace BattleCruisers.Data
                 {
                     // Preserve local settings before cloud overwrites them
                     var localSettings = _gameModel.Settings;
-                    
+
                     saveModel.AssignSaveToGameModel(_gameModel);
-                    
+
                     // Restore local settings after cloud assignment
                     _gameModel.Settings = localSettings;
-                    
+
                     Debug.Log("Cloud save retrieved and applied.");
                 }
             }

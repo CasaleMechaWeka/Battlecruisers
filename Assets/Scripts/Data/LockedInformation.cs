@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Data
 {
-    public class LockedInformation : ILockedInformation
+    public class LockedInformation
     {
         private readonly GameModel _gameModel;
 

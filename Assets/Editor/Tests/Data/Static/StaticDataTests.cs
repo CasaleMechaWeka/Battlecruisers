@@ -60,8 +60,8 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_Unit()
         {
             // Archon
-            ILoot actualLoot = StaticData.GetLevelLoot(levelCompleted: 16);
-            ILoot expectedLoot = CreateLoot(unitKeys: new UnitKey[] { StaticPrefabKeys.Units.ArchonBattleship });
+            Loot actualLoot = StaticData.GetLevelLoot(levelCompleted: 16);
+            Loot expectedLoot = CreateLoot(unitKeys: new UnitKey[] { StaticPrefabKeys.Units.ArchonBattleship });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -70,8 +70,8 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_Building()
         {
             // Shield
-            ILoot actualLoot = StaticData.GetLevelLoot(levelCompleted: 1);
-            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.ShieldGenerator });
+            Loot actualLoot = StaticData.GetLevelLoot(levelCompleted: 1);
+            Loot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.ShieldGenerator });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -80,8 +80,8 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_2Buildings()
         {
             // Stealth generator, spy satellite launcher
-            ILoot actualLoot = StaticData.GetLevelLoot(levelCompleted: 15);
-            ILoot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher });
+            Loot actualLoot = StaticData.GetLevelLoot(levelCompleted: 15);
+            Loot expectedLoot = CreateLoot(buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.StealthGenerator, StaticPrefabKeys.Buildings.SpySatelliteLauncher });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -90,8 +90,8 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_Hull()
         {
             // Bullshark
-            ILoot actualLoot = StaticData.GetLevelLoot(levelCompleted: 3);
-            ILoot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor });
+            Loot actualLoot = StaticData.GetLevelLoot(levelCompleted: 3);
+            Loot expectedLoot = CreateLoot(hullKeys: new HullKey[] { StaticPrefabKeys.Hulls.Raptor });
 
             Assert.AreEqual(expectedLoot, actualLoot);
         }
@@ -100,8 +100,8 @@ namespace BattleCruisers.Tests.Data.Static
         public void GetLevelLoot_UnitAndBuilding()
         {
             // Mortar, frigate
-            ILoot actualLoot = StaticData.GetLevelLoot(levelCompleted: 2);
-            ILoot expectedLoot
+            Loot actualLoot = StaticData.GetLevelLoot(levelCompleted: 2);
+            Loot expectedLoot
                 = CreateLoot(
                     unitKeys: new UnitKey[] { StaticPrefabKeys.Units.Frigate },
                     buildingKeys: new BuildingKey[] { StaticPrefabKeys.Buildings.Mortar });
@@ -114,13 +114,13 @@ namespace BattleCruisers.Tests.Data.Static
         {
             foreach (Level level in StaticData.Levels)
             {
-                ILoot loot = StaticData.GetLevelLoot(level.Num);
+                Loot loot = StaticData.GetLevelLoot(level.Num);
                 Assert.IsTrue(loot.Items.Count <= 2);
             }
         }
         #endregion GetLevelLoot
 
-        private ILoot CreateLoot(
+        private Loot CreateLoot(
             IList<HullKey> hullKeys = null,
             IList<UnitKey> unitKeys = null,
             IList<BuildingKey> buildingKeys = null)

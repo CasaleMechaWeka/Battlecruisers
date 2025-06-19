@@ -720,7 +720,7 @@ namespace BattleCruisers.Data.Static
         /// Availability level number = loot level number + 1
         /// </summary>
 
-        public static ILoot GetLevelLoot(int levelCompleted)
+        public static Loot GetLevelLoot(int levelCompleted)
         {
             int availabilityLevelNum = levelCompleted + 1;
 
@@ -734,7 +734,7 @@ namespace BattleCruisers.Data.Static
                     buildingKeys: GetBuildingsUnlockedInLevel(availabilityLevelNum));
         }
 
-        public static ILoot GetSideQuestLoot(int sideQuestID)
+        public static Loot GetSideQuestLoot(int sideQuestID)
         {
             int availabilitySideQuestNum = sideQuestID;
             //hardcoded values while testing

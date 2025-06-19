@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Data
 {
     public class LockedInformationTests
     {
-        private ILockedInformation _lockedInfo;
+        private LockedInformation _lockedInfo;
 
         private GameModel _gameModel;
         private ReadOnlyCollection<Level> _levels;

@@ -14,7 +14,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
     public class VictoryState : PostBattleState
     {
         private LootManager _lootManager;
-        private ILoot _unlockedLoot;
+        private Loot _unlockedLoot;
         public const string VICTORY_TITLE_NO_LOOT_KEY = "UI/PostBattleScreen/Title/VictoryNoLoot";
         private const string VICTORY_TITLE_LOOT_KEY = "UI/PostBattleScreen/Title/VictoryLoot";
 
