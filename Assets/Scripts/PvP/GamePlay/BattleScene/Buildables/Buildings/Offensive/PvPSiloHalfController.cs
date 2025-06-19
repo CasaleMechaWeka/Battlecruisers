@@ -1,10 +1,10 @@
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Movement.Rotation;
+using BattleCruisers.Movement.Rotation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Offensive
 {
-    public class PvPSiloHalfController : PvPRotatingController
+    public class PvPSiloHalfController : RotatingController
     {
         public SpriteRenderer Renderer { get; private set; }
 
