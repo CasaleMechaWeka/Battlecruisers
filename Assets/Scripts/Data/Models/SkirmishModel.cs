@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class SkirmishModel : ISkirmishModel
+    public class SkirmishModel
     {
         [SerializeField]
         private Difficulty _difficulty;
@@ -46,11 +46,11 @@ namespace BattleCruisers.Data.Models
         public int BackgroundLevelNum => _backgroundLevelNum;
 
         public SkirmishModel(
-            Difficulty difficulty, 
+            Difficulty difficulty,
             bool wasRandomPlayerCruiser,
             HullKey playerCruiser,
             bool wasRandomAICruiser,
-            HullKey aiCruiser, 
+            HullKey aiCruiser,
             bool wasRandomStrategy,
             StrategyType aIStrategy,
             int backgroundLevelNum)

@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.ScreensScene
         private List<HullKey> _playableHulls;   //these also include the boss hulls
         private StrategyType[] _strategies;
 
-        private ISkirmishModel Skirmish => DataProvider.GameModel.Skirmish;
+        private SkirmishModel Skirmish => DataProvider.GameModel.Skirmish;
 
         private string _randomDropdownEntry;
 

@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class SkirmishHelper : NormalHelper
     {
-        private readonly ISkirmishModel _skirmish;
+        private readonly SkirmishModel _skirmish;
 
         public override bool ShowInGameHints => false;
         public override IPrefabKey PlayerCruiser => _skirmish.PlayerCruiser;

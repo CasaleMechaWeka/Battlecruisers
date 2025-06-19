@@ -7,7 +7,7 @@ using UnityEngine;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class CoinBattleModel : ICoinBattleModel
+    public class CoinBattleModel
     {
         [SerializeField]
         private Difficulty _difficulty;

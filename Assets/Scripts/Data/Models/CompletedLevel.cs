@@ -6,7 +6,7 @@ using UnityEngine;
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class CompletedLevel : ICompletedLevel
+    public class CompletedLevel
     {
         [SerializeField]
         private int _levelNum;

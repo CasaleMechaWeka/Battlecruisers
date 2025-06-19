@@ -7,7 +7,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class CoinBattleHelper : NormalHelper
     {
-        private readonly ICoinBattleModel _coinBattle;
+        private readonly CoinBattleModel _coinBattle;
 
         public CoinBattleHelper(IDeferrer deferrer)
             : base(deferrer)

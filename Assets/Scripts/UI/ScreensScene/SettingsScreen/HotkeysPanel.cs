@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
     public class HotkeysPanel : Panel
     {
-        private IHotkeysModel _hotkeysModel;
+        private HotkeysModel _hotkeysModel;
 
         [Header("Navigation")]
         public HotkeyRow playerCruiserRow;
@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         public event EventHandler<HotkeyRowEnabledEventArgs> RowEnabled;
 
-        public void Initialise(IHotkeysModel hotkeysModel)
+        public void Initialise(HotkeysModel hotkeysModel)
         {
             /*Helper.AssertIsNotNull(playerCruiserRow, overviewRow, enemyCruiserRow);
             Helper.AssertIsNotNull(slowMotionRow, normalSpeedRow, fastForwardRow);
@@ -467,7 +467,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ResetToModel(HotkeysModel.CreateDefault());
         }
 
-        private void ResetToModel(IHotkeysModel hotkeysModel)
+        private void ResetToModel(HotkeysModel hotkeysModel)
         {
             // Navigation
             playerCruiserRow.ResetToDefaults(hotkeysModel.PlayerCruiser);

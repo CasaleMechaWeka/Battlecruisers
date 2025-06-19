@@ -147,7 +147,7 @@ namespace BattleCruisers.Utils.Debugging
 
         public void DvorakHotkeys()
         {
-            IHotkeysModel hotkeys = DataProvider.GameModel.Hotkeys;
+            HotkeysModel hotkeys = DataProvider.GameModel.Hotkeys;
 
             // Navigation
             hotkeys.PlayerCruiser = KeyCode.Semicolon;

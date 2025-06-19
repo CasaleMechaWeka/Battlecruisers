@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             SettingsManager settingsManager,
-            IHotkeysModel hotkeysModel)
+            HotkeysModel hotkeysModel)
         {
             base.Initialise(screensSceneGod);
 
