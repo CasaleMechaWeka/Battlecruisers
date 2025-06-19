@@ -17,7 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
         public event EventHandler Deactivated;
 
-        public PvPExplosion(IGameObject explosionController, IBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
+        public PvPExplosion(IGameObject explosionController, IBroadcastingParticleSystem[] particleSystems, SynchronizedParticleSystemsController[] synchronizedSystems)
             : base(particleSystems, synchronizedSystems)
         {
             Assert.IsNotNull(explosionController);

@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Laser
 {
-    public class LaserImpact : MonoBehaviour, ILaserImpact
+    public class LaserImpact : MonoBehaviour
     {
         private IParticleSystemGroup _effects;
         private IDebouncer _debouncer;

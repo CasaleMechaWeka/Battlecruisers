@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Models;
 using BattleCruisers.Hotkeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
         public PvPBuildingCategoryButtonsHotkeyInitialiser buildingCategoryButtonsHotkeyInitialiser;
 
         public void Initialise(
-            IHotkeyList hotkeyList,
+            HotkeysModel hotkeyList,
             IInput input,
             IUpdater updater,
             IBroadcastingFilter hotkeyFilter,
@@ -45,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
+        private IHotkeyDetector CreateHotkeyDetector(HotkeysModel hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
         {
             if (SystemInfoBC.Instance.IsHandheld)
                 // Handheld devices have no hotkeys :)

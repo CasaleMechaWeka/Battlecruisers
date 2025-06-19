@@ -1,12 +1,11 @@
-﻿using BattleCruisers.Hotkeys;
-using BattleCruisers.Utils;
+﻿using BattleCruisers.Utils;
 using System;
 using UnityEngine;
 
 namespace BattleCruisers.Data.Models
 {
     [Serializable]
-    public class HotkeysModel : IHotkeyList
+    public class HotkeysModel
     {
         #region Navigation
         [SerializeField]

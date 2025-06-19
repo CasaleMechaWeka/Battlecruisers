@@ -12,9 +12,14 @@ namespace BattleCruisers.Effects.Smoke
     /// 
     /// in SmokeInitialiser.  Sigh, so not making it abstract :)
     /// </summary>
-    public class Smoke : MonoBehaviour, ISmoke
+    public enum SmokeStrength
     {
-        private ISmokeChanger _smokeChanger;
+        None, Weak, Normal, Strong
+    }
+
+    public class Smoke : MonoBehaviour
+    {
+        private SmokeChanger _smokeChanger;
         public ParticleSystem _particleSystem;
 
         private SmokeStrength _smokeStrength;
@@ -42,7 +47,7 @@ namespace BattleCruisers.Effects.Smoke
             }
         }
 
-        public void Initialise(ISmokeChanger smokeChanger)
+        public void Initialise(SmokeChanger smokeChanger)
         {
             Assert.IsNotNull(smokeChanger);
             _smokeChanger = smokeChanger;

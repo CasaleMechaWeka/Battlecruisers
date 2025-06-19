@@ -14,8 +14,8 @@ namespace BattleCruisers.Tests.Effects.Explosions
         private IGameObject _controller;
         private IBroadcastingParticleSystem _particleSystem1, _particleSystem2;
         private IBroadcastingParticleSystem[] _particleSystems;
-        private ISynchronizedParticleSystems _system1, _system2;
-        private ISynchronizedParticleSystems[] _synchronizedSystems;
+        private SynchronizedParticleSystemsController _system1, _system2;
+        private SynchronizedParticleSystemsController[] _synchronizedSystems;
         private int _deactivatedCount;
 
         [SetUp]
@@ -29,9 +29,9 @@ namespace BattleCruisers.Tests.Effects.Explosions
                 _particleSystem1,
                 _particleSystem2
             };
-            _system1 = Substitute.For<ISynchronizedParticleSystems>();
-            _system2 = Substitute.For<ISynchronizedParticleSystems>();
-            _synchronizedSystems = new ISynchronizedParticleSystems[]
+            _system1 = Substitute.For<SynchronizedParticleSystemsController>();
+            _system2 = Substitute.For<SynchronizedParticleSystemsController>();
+            _synchronizedSystems = new SynchronizedParticleSystemsController[]
             {
                 _system1,
                 _system2

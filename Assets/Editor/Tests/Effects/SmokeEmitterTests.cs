@@ -13,13 +13,13 @@ namespace BattleCruisers.Tests.Effects.Smoke
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         private IHealthStateMonitor _healthStateMonitor;
-        private ISmoke _smoke;
+        private BattleCruisers.Effects.Smoke.Smoke _smoke;
 
         [SetUp]
         public void TestSetup()
         {
             _healthStateMonitor = Substitute.For<IHealthStateMonitor>();
-            _smoke = Substitute.For<ISmoke>();
+            _smoke = Substitute.For<BattleCruisers.Effects.Smoke.Smoke>();
 
             _smokeEmitter = new SmokeEmitter(_healthStateMonitor, _smoke, showSmokeWhenDestroyed: default);
         }

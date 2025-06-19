@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Smoke
 {
-    public class SmokeChanger : ISmokeChanger
+    public class SmokeChanger
     {
         public void Change(ParticleSystem smoke, SmokeStatistics smokeStats)
         {

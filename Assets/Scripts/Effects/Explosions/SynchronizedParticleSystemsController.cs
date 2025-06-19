@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Effects.Explosions
 {
-    public class SynchronizedParticleSystemsController : MonoBehaviour, ISynchronizedParticleSystems
+    public class SynchronizedParticleSystemsController : MonoBehaviour
     {
         private static int _randomSeed;
         private ParticleSystem[] _particleSystems;

@@ -29,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             return particleSystems;
         }
 
-        protected ISynchronizedParticleSystems[] GetSynchronizedSystems()
+        protected SynchronizedParticleSystemsController[] GetSynchronizedSystems()
         {
             SynchronizedParticleSystemsController[] synchronizedSystems = GetComponentsInChildren<SynchronizedParticleSystemsController>();
 

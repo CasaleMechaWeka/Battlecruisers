@@ -1,4 +1,3 @@
-using BattleCruisers.Effects.Laser;
 using BattleCruisers.Effects.ParticleSystems;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -9,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Laser
 {
-    public class PvPLaserImpact : MonoBehaviour, ILaserImpact
+    public class PvPLaserImpact : MonoBehaviour
     {
         private IParticleSystemGroup _effects;
         private IDebouncer _debouncer;

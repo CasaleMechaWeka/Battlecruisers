@@ -10,12 +10,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
     public class PvPSmokeEmitter
     {
         private readonly IHealthStateMonitor _healthStateMonitor;
-        private readonly ISmoke _smoke;
+        private readonly BattleCruisers.Effects.Smoke.Smoke _smoke;
         private readonly bool _showSmokeWhenDestroyed;
         private PvPBuildable<PvPBuildableActivationArgs> _parentBuildable_buildable;
         private PvPBuildable<PvPBuildingActivationArgs> _parentBuildable_building;
 
-        public PvPSmokeEmitter(PvPBuildable<PvPBuildableActivationArgs> parentBuildable, IHealthStateMonitor healthStateMonitor, ISmoke smoke, bool showSmokeWhenDestroyed)
+        public PvPSmokeEmitter(PvPBuildable<PvPBuildableActivationArgs> parentBuildable, IHealthStateMonitor healthStateMonitor, BattleCruisers.Effects.Smoke.Smoke smoke, bool showSmokeWhenDestroyed)
         {
             Helper.AssertIsNotNull(healthStateMonitor, smoke);
 
@@ -28,7 +28,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
             _parentBuildable_buildable = parentBuildable;
         }
 
-        public PvPSmokeEmitter(PvPBuildable<PvPBuildingActivationArgs> parentBuildable, IHealthStateMonitor healthStateMonitor, ISmoke smoke, bool showSmokeWhenDestroyed)
+        public PvPSmokeEmitter(PvPBuildable<PvPBuildingActivationArgs> parentBuildable, IHealthStateMonitor healthStateMonitor, BattleCruisers.Effects.Smoke.Smoke smoke, bool showSmokeWhenDestroyed)
         {
             Helper.AssertIsNotNull(healthStateMonitor, smoke);
 

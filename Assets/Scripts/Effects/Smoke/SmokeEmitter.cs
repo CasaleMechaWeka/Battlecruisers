@@ -7,10 +7,10 @@ namespace BattleCruisers.Effects.Smoke
     public class SmokeEmitter
     {
         private readonly IHealthStateMonitor _healthStateMonitor;
-        private readonly ISmoke _smoke;
+        private readonly Smoke _smoke;
         private readonly bool _showSmokeWhenDestroyed;
 
-        public SmokeEmitter(IHealthStateMonitor healthStateMonitor, ISmoke smoke, bool showSmokeWhenDestroyed)
+        public SmokeEmitter(IHealthStateMonitor healthStateMonitor, Smoke smoke, bool showSmokeWhenDestroyed)
         {
             Helper.AssertIsNotNull(healthStateMonitor, smoke);
 

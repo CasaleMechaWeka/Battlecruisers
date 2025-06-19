@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.Filters;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.Filters;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
@@ -8,7 +9,7 @@ namespace BattleCruisers.Hotkeys
 {
     public class HotkeyDetector : IHotkeyDetector
     {
-        private readonly IHotkeyList _hotkeyList;
+        private readonly HotkeysModel _hotkeyList;
         private readonly IInput _input;
         private readonly IUpdater _updater;
         private readonly IBroadcastingFilter _filter;
@@ -44,7 +45,7 @@ namespace BattleCruisers.Hotkeys
         public event EventHandler ShipButton1, ShipButton2, ShipButton3, ShipButton4, ShipButton5;
 
         public HotkeyDetector(
-            IHotkeyList hotkeyList,
+            HotkeysModel hotkeyList,
             IInput input,
             IUpdater updater,
             IBroadcastingFilter filter)

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Hotkeys.BuildableButtons;
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Hotkeys.BuildableButtons;
 using BattleCruisers.UI.BattleScene.GameSpeed;
 using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.UI.BattleScene.Navigation;
@@ -21,7 +22,7 @@ namespace BattleCruisers.Hotkeys
         public BuildingCategoryButtonsHotkeyInitialiser buildingCategoryButtonsHotkeyInitialiser;
 
         public void Initialise(
-            IHotkeyList hotkeyList,
+            HotkeysModel hotkeyList,
             IInput input,
             IUpdater updater,
             IBroadcastingFilter hotkeyFilter,
@@ -45,7 +46,7 @@ namespace BattleCruisers.Hotkeys
             _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager);
         }
 
-        private IHotkeyDetector CreateHotkeyDetector(IHotkeyList hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
+        private IHotkeyDetector CreateHotkeyDetector(HotkeysModel hotkeyList, IInput input, IUpdater updater, IBroadcastingFilter hotkeyFilter)
         {
             if (SystemInfoBC.Instance.IsHandheld)
             {

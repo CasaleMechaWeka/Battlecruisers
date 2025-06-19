@@ -13,7 +13,7 @@ namespace BattleCruisers.Tests.Effects.Laser
     {
         private IManagedDisposable _laserCooldownEffect;
         private IBroadcastingProperty<bool> _isLaserFiring;
-        private ILaserFlap _laserFlap;
+        private LaserFlapController _laserFlap;
         private IParticleSystemGroup _overheatingSmoke;
         private IDebouncer _laserStoppdDebouncer;
         private Action _debouncedAction;
@@ -22,7 +22,7 @@ namespace BattleCruisers.Tests.Effects.Laser
         public void TestSetup()
         {
             _isLaserFiring = Substitute.For<IBroadcastingProperty<bool>>();
-            _laserFlap = Substitute.For<ILaserFlap>();
+            _laserFlap = Substitute.For<LaserFlapController>();
             _overheatingSmoke = Substitute.For<IParticleSystemGroup>();
             _laserStoppdDebouncer = Substitute.For<IDebouncer>();
 

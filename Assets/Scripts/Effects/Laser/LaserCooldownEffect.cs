@@ -9,7 +9,7 @@ namespace BattleCruisers.Effects.Laser
     public class LaserCooldownEffect : IManagedDisposable
     {
         private readonly IBroadcastingProperty<bool> _isLaserFiring;
-        private readonly ILaserFlap _laserFlap;
+        private readonly LaserFlapController _laserFlap;
         private readonly IParticleSystemGroup _overheatingSmoke;
         private readonly IDebouncer _laserStoppdDebouncer;
 
@@ -34,8 +34,8 @@ namespace BattleCruisers.Effects.Laser
         }
 
         public LaserCooldownEffect(
-            IBroadcastingProperty<bool> isLaserFiring, 
-            ILaserFlap laserFlap, 
+            IBroadcastingProperty<bool> isLaserFiring,
+            LaserFlapController laserFlap,
             IParticleSystemGroup overheatingSmoke,
             IDebouncer laserStoppedDebouncer)
         {

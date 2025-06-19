@@ -7,9 +7,9 @@ namespace BattleCruisers.Effects.ParticleSystems
     public class ParticleSystemGroup : IParticleSystemGroup
     {
         protected readonly IBroadcastingParticleSystem[] _particleSystems;
-        private readonly ISynchronizedParticleSystems[] _synchronizedSystems;
+        private readonly SynchronizedParticleSystemsController[] _synchronizedSystems;
 
-        public ParticleSystemGroup(IBroadcastingParticleSystem[] particleSystems, ISynchronizedParticleSystems[] synchronizedSystems)
+        public ParticleSystemGroup(IBroadcastingParticleSystem[] particleSystems, SynchronizedParticleSystemsController[] synchronizedSystems)
         {
             Helper.AssertIsNotNull(particleSystems, synchronizedSystems);
             Assert.IsTrue(particleSystems.Length != 0);
@@ -21,7 +21,7 @@ namespace BattleCruisers.Effects.ParticleSystems
 
         public void Play()
         {
-            foreach (ISynchronizedParticleSystems system in _synchronizedSystems)
+            foreach (SynchronizedParticleSystemsController system in _synchronizedSystems)
                 system.ResetSeed();
 
             foreach (IBroadcastingParticleSystem particleSystem in _particleSystems)
