@@ -12,12 +12,12 @@ using BattleCruisers.Utils.Properties;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
-    public class PvPItemDetailsManager : IPvPItemDetailsManager
+    public class PvPItemDetailsManager
     {
         private readonly PvPInformatorPanelController _informatorPanel;
-        private readonly IPvPComparableItemDetails<IPvPBuilding> _buildingDetails;
-        private readonly IPvPComparableItemDetails<IPvPUnit> _unitDetails;
-        private readonly IPvPComparableItemDetails<IPvPCruiser> _cruiserDetails;
+        private readonly PvPItemDetails<IPvPBuilding> _buildingDetails;
+        private readonly PvPItemDetails<IPvPUnit> _unitDetails;
+        private readonly PvPItemDetails<IPvPCruiser> _cruiserDetails;
 
         private ISettableBroadcastingProperty<ITarget> _selectedItem;
         public IBroadcastingProperty<ITarget> SelectedItem { get; }

@@ -21,13 +21,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
         public PvPDismissInformatorButtonController dismissButton;
 
         public PvPBuildingDetailsController buildingDetails;
-        public IPvPComparableItemDetails<IPvPBuilding> BuildingDetails => buildingDetails;
+        public PvPItemDetails<IPvPBuilding> BuildingDetails => buildingDetails;
 
         public PvPUnitDetailsController unitDetails;
-        public IPvPComparableItemDetails<IPvPUnit> UnitDetails => unitDetails;
+        public PvPItemDetails<IPvPUnit> UnitDetails => unitDetails;
 
         public PvPCruiserDetailsController cruiserDetails;
-        public IPvPComparableItemDetails<IPvPCruiser> CruiserDetails => cruiserDetails;
+        public PvPItemDetails<IPvPCruiser> CruiserDetails => cruiserDetails;
 
         public SlidingPanel informatorPanelExtended;
         public SlidingPanel ExtendedPanel => informatorPanelExtended;

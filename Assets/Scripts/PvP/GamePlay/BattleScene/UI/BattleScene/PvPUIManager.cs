@@ -18,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
     {
         private PvPCruiser _playerCruiser, _enemyCruiser;
         private PvPBuildMenu _buildMenu;
-        private IPvPItemDetailsManager _detailsManager;
+        private PvPItemDetailsManager _detailsManager;
         private IPrioritisedSoundPlayer _soundPlayer;
         private SingleSoundPlayer _uiSoundPlayer;
         private IPvPBuilding lastClickedBuilding;
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             PvPBuildMenu buildMenu,
-            IPvPItemDetailsManager detailsManager,
+            PvPItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer)
         {

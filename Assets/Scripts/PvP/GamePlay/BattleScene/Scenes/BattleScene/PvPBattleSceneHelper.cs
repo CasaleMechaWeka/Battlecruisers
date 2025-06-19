@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PvPCruiser playerCruiser,
             PvPCruiser enemyCruiser,
             PvPBuildMenu buildMenu,
-            IPvPItemDetailsManager detailsManager,
+            PvPItemDetailsManager detailsManager,
             IPrioritisedSoundPlayer soundPlayer,
             SingleSoundPlayer uiSoundPlayer);
         public abstract Loadout GetPlayerLoadout();

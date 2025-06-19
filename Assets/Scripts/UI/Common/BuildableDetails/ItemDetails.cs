@@ -55,6 +55,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
             gameObject.SetActive(true);
         }
+
         public virtual void ShowItemDetails(TItem item, VariantPrefab variant, TItem itemToCompareTo = default)
         {
             Assert.IsNotNull(item);

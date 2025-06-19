@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
 {
-    public abstract class PvPItemDetails<TItem> : MonoBehaviour, IPvPComparableItemDetails<TItem>
+    public abstract class PvPItemDetails<TItem> : MonoBehaviour
         where TItem : class, ITarget, IComparableItem
     {
         public Text itemName, itemDescription;
