@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Effects.Movement;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,7 +7,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 {
     public abstract class AnimatedShipController : ShipController
     {
-        private IMovementEffect _movementEffects;
+        private ShipMovementEffect _movementEffects;
         public MovementEffectInitialiser movementEffectInitialiser;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)

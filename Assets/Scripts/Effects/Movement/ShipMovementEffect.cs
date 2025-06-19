@@ -4,7 +4,7 @@ using BattleCruisers.Utils.PlatformAbstractions;
 
 namespace BattleCruisers.Effects.Movement
 {
-    public class ShipMovementEffect : IMovementEffect
+    public class ShipMovementEffect
     {
         private readonly IGameObject _gameObject;
         private readonly IAnimator _animator;

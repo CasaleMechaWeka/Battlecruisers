@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Effects.Movement
 {
     public class ShipMovementEffectTests
     {
-        private IMovementEffect _effect;
+        private ShipMovementEffect _effect;
         private IGameObject _gameObject;
         private IAnimator _animator;
         private IBroadcastingParticleSystem _particleSystem;

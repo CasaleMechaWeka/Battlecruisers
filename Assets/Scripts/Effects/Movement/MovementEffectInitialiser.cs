@@ -7,7 +7,7 @@ namespace BattleCruisers.Effects.Movement
 {
     public class MovementEffectInitialiser : MonoBehaviour
     {
-        public IMovementEffect CreateMovementEffects()
+        public ShipMovementEffect CreateMovementEffects()
         {
             Animator animator = GetComponent<Animator>();
             Assert.IsNotNull(animator);
@@ -19,7 +19,7 @@ namespace BattleCruisers.Effects.Movement
                 particleSystem.Initialise();
             }
 
-            IMovementEffect shipMovementEffect
+            ShipMovementEffect shipMovementEffect
                 = new ShipMovementEffect(
                     new GameObjectBC(gameObject),
                     new AnimatorBC(animator),
