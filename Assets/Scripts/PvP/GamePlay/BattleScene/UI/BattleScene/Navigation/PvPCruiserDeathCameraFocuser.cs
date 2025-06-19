@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Navigation
 {
-    public class PvPCruiserDeathCameraFocuser : IPvPCruiserDeathCameraFocuser
+    public class PvPCruiserDeathCameraFocuser
     {
         private readonly ICameraFocuser _cameraFocuser;
 

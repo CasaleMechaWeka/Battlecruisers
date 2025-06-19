@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
         public ICamera MainCamera { get; }
         public CameraAdjuster CameraAdjuster { get; }
         public ICameraFocuser CameraFocuser { get; }
-        public IPvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
+        public PvPCruiserDeathCameraFocuser CruiserDeathCameraFocuser { get; }
         public Skybox Skybox { get; }
         public CameraCalculatorSettings Settings { get; }
         public IHighlightable NavigationButtonsPanel { get; }
@@ -23,7 +23,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
             ICamera mainCamera,
             CameraAdjuster cameraAdjuster,
             ICameraFocuser cameraFocuser,
-            IPvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,
+            PvPCruiserDeathCameraFocuser cruiserDeathCameraFocuser,
             Skybox skybox,
             CameraCalculatorSettings settings,
             IHighlightable navigationButtonsPanel)

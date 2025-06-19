@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
 {
-    public class PvPPrefabOrganiser : IPvPPrefabOrganiser
+    public class PvPPrefabOrganiser
     {
         private readonly Loadout _playerLoadout;
 

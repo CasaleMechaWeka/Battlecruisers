@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
 
             IFilter<PvPTarget> visibilityFilter = new StaticFilter<PvPTarget>(isMatch: true);
 
-            IPvPHealthDial healthDial = new PvPHealthDial(fillableImage, visibilityFilter, damageTakenIndicator);
+            PvPHealthDial healthDial = new PvPHealthDial(fillableImage, visibilityFilter, damageTakenIndicator);
             healthDial.Damagable = cruiser;
 
             //_lowHealthFeedback = transform.FindNamedComponent<Image>("LowHealthFeedback");

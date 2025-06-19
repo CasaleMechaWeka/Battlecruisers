@@ -3,10 +3,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars
 {
-    public class PvPHealthDial : IPvPHealthDial
+    public class PvPHealthDial
     {
         private readonly Image _healthDialImage;
         private readonly IFilter<PvPTarget> _visibilityFilter;
