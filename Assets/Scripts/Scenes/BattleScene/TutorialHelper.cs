@@ -86,7 +86,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new DummyManagedDisposable();
         }
 
-        public override IFilter<ISlot> CreateHighlightableSlotFilter()
+        public override IFilter<Slot> CreateHighlightableSlotFilter()
         {
             return _slotFilter;
         }

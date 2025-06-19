@@ -8,12 +8,12 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public class SlotWrapperController : MonoBehaviour, ISlotNumProvider
     {
-        private IList<ISlot> _slots;
+        private IList<Slot> _slots;
 
         // For out of battle scene use
         public void StaticInitialise()
         {
-            _slots = GetComponentsInChildren<ISlot>(includeInactive: true).ToList();
+            _slots = GetComponentsInChildren<Slot>(includeInactive: true).ToList();
         }
 
         // For in battle scene use
@@ -22,7 +22,7 @@ namespace BattleCruisers.Cruisers.Slots
             Assert.IsNotNull(parentCruiser);
 
             SlotInitialiser slotInitialiser = new SlotInitialiser();
-            IDictionary<SlotType, ReadOnlyCollection<ISlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots);
+            IDictionary<SlotType, ReadOnlyCollection<Slot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots);
 
             return new SlotAccessor(typeToSlots);
         }

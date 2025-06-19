@@ -11,14 +11,14 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
 {
     public class SlotProviderTests
     {
-        private IItemProvider<ISlot> _slotProvider;
+        private IItemProvider<Slot> _slotProvider;
         private IItemProvider<IHighlightable> _highlightableProvider;
         private IItemProvider<IClickableEmitter> _clickableProvider;
 
         private SlotAccessor _slotAccessor;
         private ISlotSpecification _slotSpecification;
 
-        private ISlot _slot;
+        private Slot _slot;
 
         [SetUp]
         public void SetuUp()
@@ -32,7 +32,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.Providers
             _highlightableProvider = provider;
             _clickableProvider = provider;
 
-            _slot = Substitute.For<ISlot>();
+            _slot = Substitute.For<Slot>();
             _slotAccessor.GetFreeSlot(_slotSpecification).Returns(_slot);
         }
 

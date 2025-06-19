@@ -17,7 +17,7 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
         private ICamera _camera;
         private ICameraFocuser _cameraFocuser;
         private ICruiser _playerCruiser;
-        private ISlot _bowSlot;
+        private Slot _bowSlot;
 
         [SetUp]
         public void TestSetup()
@@ -28,8 +28,8 @@ namespace BattleCruisers.Tests.UI.Cameras.Helpers
 
             _helper = new PlayerCruiserFocusHelper(_camera, _cameraFocuser, _playerCruiser, isTutorial: true);
 
-            _bowSlot = Substitute.For<ISlot>();
-            ReadOnlyCollection<ISlot> bowSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { _bowSlot });
+            _bowSlot = Substitute.For<Slot>();
+            ReadOnlyCollection<Slot> bowSlots = new ReadOnlyCollection<Slot>(new List<Slot>() { _bowSlot });
             _playerCruiser.SlotAccessor
                 .GetSlots(Arg.Is<ISlotSpecification>(s => s.SlotType == SlotType.Bow))
                 .Returns(bowSlots);

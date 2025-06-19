@@ -43,8 +43,8 @@ namespace BattleCruisers.Scenes.Test.Cruisers
                 BuildingKey buildingKey = BCUtils.StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingKeyName);
                 IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(buildingKey);
 
-                IList<ISlot> freeSlots = Cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
-                foreach (ISlot slot in freeSlots)
+                IList<Slot> freeSlots = Cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
+                foreach (Slot slot in freeSlots)
                 {
                     Cruiser.ConstructBuilding(building, slot);
                 }

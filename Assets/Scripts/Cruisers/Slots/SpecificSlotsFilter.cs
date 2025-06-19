@@ -3,15 +3,15 @@ using BattleCruisers.Utils;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class SpecificSlotsFilter : IFilter<ISlot>
+    public class SpecificSlotsFilter : IFilter<Slot>
     {
-        public ISlot PermittedSlot { private get; set; }
+        public Slot PermittedSlot { private get; set; }
 
-        public bool IsMatch(ISlot slot)
+        public bool IsMatch(Slot slot)
         {
             return PermittedSlot == slot;
         }
-        public bool IsMatch(ISlot slot, VariantPrefab variant)
+        public bool IsMatch(Slot slot, VariantPrefab variant)
         {
             return PermittedSlot == slot;
         }

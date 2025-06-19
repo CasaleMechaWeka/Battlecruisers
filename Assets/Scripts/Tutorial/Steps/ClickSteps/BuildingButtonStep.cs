@@ -15,7 +15,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
     {
         private readonly BuildingNameFilter _buildingPermitter;
         private readonly IPrefabKey _buildingToAllow;
-        private readonly IItemProvider<ISlot> _slotProvider;
+        private readonly IItemProvider<Slot> _slotProvider;
         private readonly SpecificSlotsFilter _highlightableSlotPermitter;
 
         public BuildingButtonStep(
@@ -23,7 +23,7 @@ namespace BattleCruisers.Tutorial.Steps.ClickSteps
             IBuildableButton buildableButton,
             BuildingNameFilter buildingPermitter,
             IPrefabKey buildingToAllow,
-            IItemProvider<ISlot> slotProvider,
+            IItemProvider<Slot> slotProvider,
             SpecificSlotsFilter highlightableSlotPermitter)
             : base(args, buildableButton)
         {

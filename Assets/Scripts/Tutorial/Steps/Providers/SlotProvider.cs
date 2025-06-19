@@ -8,15 +8,15 @@ using UnityEngine.Assertions;
 namespace BattleCruisers.Tutorial.Steps.Providers
 {
     public class SlotProvider :
-        IItemProvider<ISlot>,
+        IItemProvider<Slot>,
         IItemProvider<IHighlightable>,
         IItemProvider<IClickableEmitter>
     {
         private readonly SlotAccessor _slotAccessor;
         private readonly ISlotSpecification _slotSpecification;
 
-        private ISlot _slot;
-        private ISlot Slot
+        private Slot _slot;
+        private Slot Slot
         {
             get
             {
@@ -48,7 +48,7 @@ namespace BattleCruisers.Tutorial.Steps.Providers
             return Slot;
         }
 
-        public ISlot FindItem()
+        public Slot FindItem()
         {
             return Slot;
         }

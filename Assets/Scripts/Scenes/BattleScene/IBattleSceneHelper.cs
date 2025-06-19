@@ -41,7 +41,7 @@ namespace BattleCruisers.Scenes.BattleScene
         SideQuestData GetSideQuest();
         Loadout GetPlayerLoadout();
         IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
-        IFilter<ISlot> CreateHighlightableSlotFilter();
+        IFilter<Slot> CreateHighlightableSlotFilter();
         ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager);
         IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer);
         IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser);

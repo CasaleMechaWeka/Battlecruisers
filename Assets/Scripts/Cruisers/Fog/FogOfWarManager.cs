@@ -18,7 +18,6 @@ namespace BattleCruisers.Cruisers.Fog
     public class FogOfWarManager : IManagedDisposable
     {
         private readonly IGameObject _fog;
-        private readonly IFogVisibilityDecider _visibilityDecider;
         private readonly ICruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly ICruiserUnitMonitor _enemyUnitMonitor;
         private readonly IList<StealthGenerator> _friendlyIStealthGenerators;
@@ -27,15 +26,13 @@ namespace BattleCruisers.Cruisers.Fog
 
         public FogOfWarManager(
             IGameObject fog,
-            IFogVisibilityDecider visibilityDecider,
             ICruiserBuildingMonitor friendlyBuildingMonitor,
             ICruiserBuildingMonitor enemyBuildingMonitor,
             ICruiserUnitMonitor enemyUnitMonitor)
         {
-            Helper.AssertIsNotNull(fog, visibilityDecider, friendlyBuildingMonitor, enemyBuildingMonitor, enemyUnitMonitor);
+            Helper.AssertIsNotNull(fog, friendlyBuildingMonitor, enemyBuildingMonitor, enemyUnitMonitor);
 
             _fog = fog;
-            _visibilityDecider = visibilityDecider;
             _friendlyBuildingMonitor = friendlyBuildingMonitor;
             _enemyBuildingMonitor = enemyBuildingMonitor;
             _enemyUnitMonitor = enemyUnitMonitor;
@@ -152,7 +149,7 @@ namespace BattleCruisers.Cruisers.Fog
 
         private void UpdateFogState()
         {
-            _fog.IsVisible = _visibilityDecider.ShouldFogBeVisible(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count, _enemySpyPlanes.Count);
+            _fog.IsVisible = _friendlyIStealthGenerators.Count != 0 && _enemySpySatellites.Count == 0 && _enemySpyPlanes.Count == 0;
         }
 
         public void DisposeManagedState()

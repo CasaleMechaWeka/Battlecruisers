@@ -13,10 +13,24 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using BattleCruisers.Effects.Explosions;
+using BattleCruisers.UI;
 
 namespace BattleCruisers.Cruisers.Slots
 {
-    public class Slot : MonoBehaviour, ISlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
+    public enum SlotType
+    {
+        // Explicitly set integer values, because the Unity inspector binds
+        // to the integer values.  So now, if I decide to get rid of a slot
+        // type (yet again), I don't need to adjust every single prefab 
+        // that has a slot type field.  Thanks Manya!
+        Utility = 1,
+        Mast = 2,
+        Bow = 3,
+        Platform = 4,
+        Deck = 5
+    }
+
+    public class Slot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler, IClickableEmitter, IHighlightable
     {
         private ICruiser _parentCruiser;
         private SpriteRenderer _renderer;
@@ -42,7 +56,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public bool IsFree => _baseBuilding.Value == null;
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
-        public ReadOnlyCollection<ISlot> NeighbouringSlots { get; private set; }
+        public ReadOnlyCollection<Slot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         public Vector3 BuildingPlacementPoint { get; private set; }
         public Vector2 Position => transform.position;
@@ -133,7 +147,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public event EventHandler Clicked;
 
-        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<ISlot> neighbouringSlots)
+        public void Initialise(ICruiser parentCruiser, ReadOnlyCollection<Slot> neighbouringSlots)
         {
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 

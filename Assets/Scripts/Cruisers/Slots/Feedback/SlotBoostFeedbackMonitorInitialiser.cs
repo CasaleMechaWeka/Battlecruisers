@@ -7,7 +7,7 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
 {
     public class SlotBoostFeedbackMonitorInitialiser : MonoBehaviour
     {
-        public SlotBoostFeedbackMonitor CreateFeedbackMonitor(ISlot slot)
+        public SlotBoostFeedbackMonitor CreateFeedbackMonitor(Slot slot)
         {
             Assert.IsNotNull(slot);
 

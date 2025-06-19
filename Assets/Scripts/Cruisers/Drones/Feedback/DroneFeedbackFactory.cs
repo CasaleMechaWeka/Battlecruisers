@@ -8,11 +8,11 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     public class DroneFeedbackFactory
     {
         private readonly IDroneFactory _droneFactory;
-        private readonly ISpawnPositionFinder _spawnPositionFinder;
+        private readonly SpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
 
         public DroneFeedbackFactory(
-            ISpawnPositionFinder spawnPositionFinder,
+            SpawnPositionFinder spawnPositionFinder,
             IDroneFactory droneFactory,
             Faction faction)
         {

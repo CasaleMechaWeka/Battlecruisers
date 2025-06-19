@@ -34,7 +34,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
             Logging.Log(Tags.LOCAL_BOOSTER, $"About to boost {_parentSlot.NeighbouringSlots.Count} slots :D");
 
-            foreach (ISlot slot in _parentSlot.NeighbouringSlots)
+            foreach (Slot slot in _parentSlot.NeighbouringSlots)
             {
                 slot.BoostProviders.Add(_boostProvider);
             }
@@ -46,7 +46,7 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         {
             base.OnDestroyed();
 
-            foreach (ISlot slot in _parentSlot.NeighbouringSlots)
+            foreach (Slot slot in _parentSlot.NeighbouringSlots)
             {
                 slot.BoostProviders.Remove(_boostProvider);
             }

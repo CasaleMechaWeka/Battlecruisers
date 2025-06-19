@@ -4,11 +4,11 @@ namespace BattleCruisers.Cruisers.Slots.Feedback
 {
     public class SlotBoostFeedbackMonitor
     {
-        private readonly ISlot _parentSlot;
-        private readonly IBoostStateFinder _boostStateFinder;
+        private readonly Slot _parentSlot;
+        private readonly BoostStateFinder _boostStateFinder;
         private readonly IBoostFeedback _boostFeedback;
 
-        public SlotBoostFeedbackMonitor(ISlot parentSlot, IBoostStateFinder boostStateFinder, IBoostFeedback boostFeedback)
+        public SlotBoostFeedbackMonitor(Slot parentSlot, BoostStateFinder boostStateFinder, IBoostFeedback boostFeedback)
         {
             Helper.AssertIsNotNull(parentSlot, boostStateFinder, boostFeedback);
 

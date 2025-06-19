@@ -49,7 +49,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
             }
 
             IBuildableWrapper<IBuilding> navalFactory = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.NavalFactory);
-            ISlot bowSlot = cruiser.SlotAccessor.GetFreeSlot(navalFactory.Buildable.SlotSpecification);
+            Slot bowSlot = cruiser.SlotAccessor.GetFreeSlot(navalFactory.Buildable.SlotSpecification);
             cruiser.ConstructBuilding(navalFactory, bowSlot);
 
             IBuildableWrapper<IBuilding> droneStation = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.DroneStation);

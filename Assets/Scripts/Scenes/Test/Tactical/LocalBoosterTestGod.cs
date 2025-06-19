@@ -42,7 +42,7 @@ namespace BattleCruisers.Scenes.Test.Tactical
             // Setup artillery slot
             Slot slotToBoost = FindObjectOfType<Slot>();
             ICruiser parentCruiser = helper.CreateCruiser(Direction.Right, Faction.Blues);
-            ReadOnlyCollection<ISlot> emptyNeighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
+            ReadOnlyCollection<Slot> emptyNeighbouringSlots = new ReadOnlyCollection<Slot>(new List<Slot>());
             slotToBoost.Initialise(parentCruiser, emptyNeighbouringSlots);
 
 
@@ -58,12 +58,12 @@ namespace BattleCruisers.Scenes.Test.Tactical
 
 
             // Setup local booster
-            ISlot localBoosterParentSlot = Substitute.For<ISlot>();
+            Slot localBoosterParentSlot = Substitute.For<Slot>();
 
             ObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>();
             localBoosterParentSlot.BoostProviders.Returns(boostProviders);
 
-            ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>() { slotToBoost });
+            ReadOnlyCollection<Slot> neighbouringSlots = new ReadOnlyCollection<Slot>(new List<Slot>() { slotToBoost });
             localBoosterParentSlot.NeighbouringSlots.Returns(neighbouringSlots);
 
             LocalBoosterController localBooster = FindObjectOfType<LocalBoosterController>();

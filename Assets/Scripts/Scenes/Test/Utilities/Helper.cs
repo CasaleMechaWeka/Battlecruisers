@@ -95,7 +95,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
             FlightPointsProviderFactory flightPointsProviderFactory = null,
             GlobalBoostProviders globalBoostProviders = null,
             Direction parentCruiserDirection = Direction.Right,
-            ISlot parentSlot = null,
+            Slot parentSlot = null,
             IUserChosenTargetManager userChosenTargetManager = null)
         {
             BuildableInitialisationArgs args
@@ -120,7 +120,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
         public void InitialiseBuilding(
             IBuilding building,
             BuildableInitialisationArgs initialisationArgs,
-            ISlot parentSlot = null)
+            Slot parentSlot = null)
         {
             BuildingWrapper buildingWrapper = building.GameObject.GetComponentInInactiveParent<BuildingWrapper>();
             HealthBarController healthBar = buildingWrapper.GetComponentInChildren<HealthBarController>(includeInactive: true);
@@ -352,14 +352,14 @@ namespace BattleCruisers.Scenes.Test.Utilities
             return provider;
         }
 
-        private ISlot CreateParentSlot()
+        private Slot CreateParentSlot()
         {
-            ISlot parentSlot = Substitute.For<ISlot>();
+            Slot parentSlot = Substitute.For<Slot>();
 
             ObservableCollection<IBoostProvider> boostProviders = new ObservableCollection<IBoostProvider>();
             parentSlot.BoostProviders.Returns(boostProviders);
 
-            ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
+            ReadOnlyCollection<Slot> neighbouringSlots = new ReadOnlyCollection<Slot>(new List<Slot>());
             parentSlot.NeighbouringSlots.Returns(neighbouringSlots);
 
             return parentSlot;
@@ -474,7 +474,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     repairManager: Substitute.For<IRepairManager>(),
                     fogStrength: BattleCruisers.Cruisers.Fog.FogStrength.Weak,
                     helper: Substitute.For<ICruiserHelper>(),
-                    highlightableFilter: Substitute.For<IFilter<ISlot>>(),
+                    highlightableFilter: Substitute.For<IFilter<Slot>>(),
                     buildProgressCalculator: new LinearCalculator(_buildSpeedMultiplier),
                     buildingDoubleClickHandler: Substitute.For<IDoubleClickHandler<IBuilding>>(),
                     cruiserDoubleClickHandler: Substitute.For<IDoubleClickHandler<ICruiser>>(),

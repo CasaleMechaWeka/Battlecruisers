@@ -30,7 +30,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     {
         private readonly PvPBattleSceneHelper _helper;
         private readonly IFilter<PvPSlot> _highlightableSlotFilter;
-        private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -41,7 +40,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _helper = helper;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             // _uiManager = uiManager;
-            _fogVisibilityDecider = new FogVisibilityDecider();
         }
 
         public PvPCruiser CreatePlayerACruiser(Team team)
@@ -175,7 +173,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             DroneManager droneManager = new DroneManager();
             IPvPDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager /*, _factoryProvider.Sound.IPrioritisedSoundPlayer*/);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            PvPFogOfWarManager fogOfWarManager = new PvPFogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
+            PvPFogOfWarManager fogOfWarManager = new PvPFogOfWarManager(cruiser.Fog, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
 
             PvPRepairManager repairManager = new PvPRepairManager(cruiserSpecificFactories.DroneFeedbackFactory, droneConsumerProvider, cruiser);
             if (!isPlayerCruiser)

@@ -15,36 +15,36 @@ namespace BattleCruisers.Tests.Cruisers.Slots
     {
         private SlotHighlighter _slotHighlighter;
         private SlotAccessor _slotAccessor;
-        private IFilter<ISlot> _highlightableFilter;
+        private IFilter<Slot> _highlightableFilter;
         private ICruiserBuildingMonitor _parentCruiserBuildingMonitor;
-        private ISlot _slot1, _slot2;
+        private Slot _slot1, _slot2;
         private ISlotSpecification _slotSpec1, _slotSpec2;
-        private ReadOnlyCollection<ISlot> _slotsToReturn1, _slotsToReturn2;
-        private IList<ISlot> _mutableSlotsToReturn1, _mutableSlotsToReturn2;
+        private ReadOnlyCollection<Slot> _slotsToReturn1, _slotsToReturn2;
+        private IList<Slot> _mutableSlotsToReturn1, _mutableSlotsToReturn2;
         private IBuilding _building;
 
         [SetUp]
         public void SetuUp()
         {
             _slotAccessor = Substitute.For<SlotAccessor>();
-            _highlightableFilter = Substitute.For<IFilter<ISlot>>();
+            _highlightableFilter = Substitute.For<IFilter<Slot>>();
             _parentCruiserBuildingMonitor = Substitute.For<ICruiserBuildingMonitor>();
 
             _slotHighlighter = new SlotHighlighter(_slotAccessor, _highlightableFilter, _parentCruiserBuildingMonitor);
 
-            _slot1 = Substitute.For<ISlot>();
+            _slot1 = Substitute.For<Slot>();
             _slot1.Type.Returns(SlotType.Deck);
             _slotSpec1 = new SlotSpecification(_slot1.Type);
 
-            _slot2 = Substitute.For<ISlot>();
+            _slot2 = Substitute.For<Slot>();
             _slot2.Type.Returns(SlotType.Platform);
             _slotSpec2 = new SlotSpecification(_slot2.Type);
 
-            _mutableSlotsToReturn1 = new List<ISlot>();
-            _slotsToReturn1 = new ReadOnlyCollection<ISlot>(_mutableSlotsToReturn1);
+            _mutableSlotsToReturn1 = new List<Slot>();
+            _slotsToReturn1 = new ReadOnlyCollection<Slot>(_mutableSlotsToReturn1);
 
-            _mutableSlotsToReturn2 = new List<ISlot>();
-            _slotsToReturn2 = new ReadOnlyCollection<ISlot>(_mutableSlotsToReturn2);
+            _mutableSlotsToReturn2 = new List<Slot>();
+            _slotsToReturn2 = new ReadOnlyCollection<Slot>(_mutableSlotsToReturn2);
 
             _building = Substitute.For<IBuilding>();
         }
@@ -161,7 +161,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void HighlightBuildingSlot_NoSlotForBuilding_Throws()
         {
-            _slotAccessor.GetSlot(_building).Returns((ISlot)null);
+            _slotAccessor.GetSlot(_building).Returns((Slot)null);
             Assert.Throws<UnityAsserts.AssertionException>(() => _slotHighlighter.HighlightBuildingSlot(_building));
         }
         #endregion HighlightBuildingSlot

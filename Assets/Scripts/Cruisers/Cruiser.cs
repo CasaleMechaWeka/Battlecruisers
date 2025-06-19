@@ -270,7 +270,7 @@ namespace BattleCruisers.Cruisers
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, ISlot slot)
+        public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot)
         {
             Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
@@ -278,7 +278,7 @@ namespace BattleCruisers.Cruisers
             return ConstructSelectedBuilding(slot);
         }
 
-        public IBuilding ConstructSelectedBuilding(ISlot slot)
+        public IBuilding ConstructSelectedBuilding(Slot slot)
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);

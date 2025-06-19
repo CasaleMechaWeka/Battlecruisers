@@ -30,7 +30,7 @@ namespace BattleCruisers.Cruisers
         bool IsPlayerCruiser { get; }
         CruiserDeathExplosion DeathPrefab { get; }
 
-        IBuilding ConstructSelectedBuilding(ISlot slot);
+        IBuilding ConstructSelectedBuilding(Slot slot);
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
         bool IsCruiser();

@@ -88,7 +88,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return new DefaultStrategyFactory(StaticData.Strategies, StaticData.SideQuestStrategies, currentLevelNum, ApplicationModel.Mode == GameMode.SideQuest);
         }
 
-        public override IFilter<ISlot> CreateHighlightableSlotFilter()
+        public override IFilter<Slot> CreateHighlightableSlotFilter()
         {
             return new FreeSlotFilter();
         }

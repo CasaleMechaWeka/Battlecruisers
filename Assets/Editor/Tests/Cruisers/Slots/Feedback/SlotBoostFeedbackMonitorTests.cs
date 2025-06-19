@@ -10,19 +10,19 @@ namespace BattleCruisers.Tests.Cruisers.Slots.Feedback
     public class SlotBoostFeedbackMonitorTests
     {
         private SlotBoostFeedbackMonitor _feedbackMonitor;
-        private ISlot _parentSlot;
-        private IBoostStateFinder _boostStateFinder;
+        private Slot _parentSlot;
+        private BoostStateFinder _boostStateFinder;
         private IBoostFeedback _boostFeedback;
         private ObservableCollection<IBoostProvider> _slotBoostProviders;
 
         [SetUp]
         public void TestSetup()
         {
-            _parentSlot = Substitute.For<ISlot>();
+            _parentSlot = Substitute.For<Slot>();
             _slotBoostProviders = new ObservableCollection<IBoostProvider>();
             _parentSlot.BoostProviders.Returns(_slotBoostProviders);
 
-            _boostStateFinder = Substitute.For<IBoostStateFinder>();
+            _boostStateFinder = Substitute.For<BoostStateFinder>();
             _boostFeedback = Substitute.For<IBoostFeedback>();
 
             _feedbackMonitor = new SlotBoostFeedbackMonitor(_parentSlot, _boostStateFinder, _boostFeedback);

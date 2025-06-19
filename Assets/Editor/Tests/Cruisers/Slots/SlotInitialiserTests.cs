@@ -15,13 +15,13 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             ICruiser parentCruiser = Substitute.For<ICruiser>();
 
             // Deck2, Deck1, Platform, Bow
-            ISlot frontSlot = CreateSlot(index: 1, type: SlotType.Bow);
-            ISlot middleSlot = CreateSlot(index: 2, type: SlotType.Platform);
-            ISlot deckSlot1 = CreateSlot(index: 3, type: SlotType.Deck);
-            ISlot deckSlot2 = CreateSlot(index: 4, type: SlotType.Deck);
+            Slot frontSlot = CreateSlot(index: 1, type: SlotType.Bow);
+            Slot middleSlot = CreateSlot(index: 2, type: SlotType.Platform);
+            Slot deckSlot1 = CreateSlot(index: 3, type: SlotType.Deck);
+            Slot deckSlot2 = CreateSlot(index: 4, type: SlotType.Deck);
 
             // Create slots out of order on purpose, because slot wrapper should order slots
-            IList<ISlot> slots = new List<ISlot>()
+            IList<Slot> slots = new List<Slot>()
             {
                 middleSlot,
                 frontSlot,
@@ -33,28 +33,28 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 
             slotInitialiser.InitialiseSlots(parentCruiser, slots);
 
-            frontSlot.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
+            frontSlot.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<Slot>>(
                 neighbours =>
                     neighbours.Contains(middleSlot)
                     && !neighbours.Contains(deckSlot1)
                     && !neighbours.Contains(deckSlot2)
             ));
 
-            middleSlot.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
+            middleSlot.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<Slot>>(
                 neighbours =>
                     neighbours.Contains(frontSlot)
                     && neighbours.Contains(deckSlot1)
                     && !neighbours.Contains(deckSlot2)
             ));
 
-            deckSlot1.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
+            deckSlot1.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<Slot>>(
                 neighbours =>
                     neighbours.Contains(middleSlot)
                     && neighbours.Contains(deckSlot2)
                     && !neighbours.Contains(frontSlot)
             ));
 
-            deckSlot2.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<ISlot>>(
+            deckSlot2.Received().Initialise(parentCruiser, Arg.Is<ReadOnlyCollection<Slot>>(
                 neighbours =>
                     neighbours.Contains(deckSlot1)
                     && !neighbours.Contains(middleSlot)
@@ -62,9 +62,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             ));
         }
 
-        private ISlot CreateSlot(int index, SlotType type)
+        private Slot CreateSlot(int index, SlotType type)
         {
-            ISlot slot = Substitute.For<ISlot>();
+            Slot slot = Substitute.For<Slot>();
             slot.Index.Returns(index);
             slot.Type.Returns(type);
             return slot;

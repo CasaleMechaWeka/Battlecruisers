@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
 {
     public class SpawnPositionFinderTests
     {
-        private ISpawnPositionFinder _positionFinder;
+        private SpawnPositionFinder _positionFinder;
         private DroneConsumerInfo _droneConsumerInfo;
 
         [SetUp]

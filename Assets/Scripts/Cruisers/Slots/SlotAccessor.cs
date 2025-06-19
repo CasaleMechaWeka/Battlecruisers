@@ -8,10 +8,10 @@ namespace BattleCruisers.Cruisers.Slots
 {
     public class SlotAccessor
     {
-        private readonly IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
-        private readonly ReadOnlyCollection<ISlot> _antiShipSlots;
+        private readonly IDictionary<SlotType, ReadOnlyCollection<Slot>> _slots;
+        private readonly ReadOnlyCollection<Slot> _antiShipSlots;
 
-        public SlotAccessor(IDictionary<SlotType, ReadOnlyCollection<ISlot>> slots)
+        public SlotAccessor(IDictionary<SlotType, ReadOnlyCollection<Slot>> slots)
         {
             Assert.IsNotNull(slots);
 
@@ -32,11 +32,11 @@ namespace BattleCruisers.Cruisers.Slots
 
         public bool IsSlotAvailableForPlayer(ISlotSpecification slotSpecification)
         {
-            ReadOnlyCollection<ISlot> slots = GetSlots(slotSpecification);
+            ReadOnlyCollection<Slot> slots = GetSlots(slotSpecification);
             return slots.Any(slot => slot.IsFree);
         }
 
-        public ReadOnlyCollection<ISlot> GetSlots(ISlotSpecification slotSpecification)
+        public ReadOnlyCollection<Slot> GetSlots(ISlotSpecification slotSpecification)
         {
             Assert.IsNotNull(slotSpecification);
             Assert.IsTrue(_slots.ContainsKey(slotSpecification.SlotType));
@@ -52,7 +52,7 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
-        public IList<ISlot> GetFreeSlots(SlotType slotType)
+        public IList<Slot> GetFreeSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
 
@@ -62,14 +62,14 @@ namespace BattleCruisers.Cruisers.Slots
                     .ToList();
         }
 
-        public ISlot GetFreeSlot(ISlotSpecification slotSpecification)
+        public Slot GetFreeSlot(ISlotSpecification slotSpecification)
         {
             return slotSpecification.PreferFromFront ?
                 _slots[slotSpecification.SlotType].First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :
                 _slots[slotSpecification.SlotType].Last(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
         }
 
-        private bool FreeSlotFilter(ISlot slot, BuildingFunction desiredBuildingFunction)
+        private bool FreeSlotFilter(Slot slot, BuildingFunction desiredBuildingFunction)
         {
             return
                 slot.IsFree
@@ -77,7 +77,7 @@ namespace BattleCruisers.Cruisers.Slots
                     || slot.BuildingFunctionAffinity == desiredBuildingFunction);
         }
 
-        public ISlot GetSlot(IBuilding building)
+        public Slot GetSlot(IBuilding building)
         {
             Assert.IsTrue(_slots.ContainsKey(building.SlotSpecification.SlotType));
 

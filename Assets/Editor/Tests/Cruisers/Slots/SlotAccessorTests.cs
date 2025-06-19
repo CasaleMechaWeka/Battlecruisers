@@ -12,8 +12,8 @@ namespace BattleCruisers.Tests.Cruisers.Slots
     public class SlotAccessorTests
     {
         private SlotAccessor _slotAccessor;
-        private IDictionary<SlotType, ReadOnlyCollection<ISlot>> _slots;
-        private ISlot _platformSlot, _genericDeckSlot, _antiShipDeckSlot;
+        private IDictionary<SlotType, ReadOnlyCollection<Slot>> _slots;
+        private Slot _platformSlot, _genericDeckSlot, _antiShipDeckSlot;
         private IBuilding _building;
 
         [SetUp]
@@ -23,15 +23,15 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _genericDeckSlot = CreateSlot(index: 3, type: SlotType.Deck, BuildingFunction.Generic);
             _antiShipDeckSlot = CreateSlot(index: 4, type: SlotType.Deck, BuildingFunction.AntiShip);
 
-            _slots = new Dictionary<SlotType, ReadOnlyCollection<ISlot>>();
+            _slots = new Dictionary<SlotType, ReadOnlyCollection<Slot>>();
 
-            ReadOnlyCollection<ISlot> platformSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>()
+            ReadOnlyCollection<Slot> platformSlots = new ReadOnlyCollection<Slot>(new List<Slot>()
             {
                 _platformSlot
             });
             _slots.Add(SlotType.Platform, platformSlots);
 
-            ReadOnlyCollection<ISlot> deckSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>()
+            ReadOnlyCollection<Slot> deckSlots = new ReadOnlyCollection<Slot>(new List<Slot>()
             {
                 _genericDeckSlot,
                 _antiShipDeckSlot
@@ -43,9 +43,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _building = Substitute.For<IBuilding>();
         }
 
-        private ISlot CreateSlot(int index, SlotType type, BuildingFunction slotAffinity)
+        private Slot CreateSlot(int index, SlotType type, BuildingFunction slotAffinity)
         {
-            ISlot slot = Substitute.For<ISlot>();
+            Slot slot = Substitute.For<Slot>();
             slot.Index.Returns(index);
             slot.Type.Returns(type);
             slot.BuildingFunctionAffinity.Returns(slotAffinity);
@@ -103,9 +103,9 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _antiShipDeckSlot.IsFree.Returns(true);
             _genericDeckSlot.IsFree.Returns(false);
 
-            IList<ISlot> freeSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
+            IList<Slot> freeSlots = _slotAccessor.GetFreeSlots(SlotType.Deck);
 
-            IList<ISlot> expectedFreeSlots = new List<ISlot>()
+            IList<Slot> expectedFreeSlots = new List<Slot>()
             {
                 _antiShipDeckSlot
             };
@@ -122,7 +122,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
         [Test]
         public void GetSlots_ExistantSlotType_ReturnsSlots()
         {
-            ReadOnlyCollection<ISlot> deckSlots = _slotAccessor.GetSlots(new SlotSpecification(SlotType.Deck));
+            ReadOnlyCollection<Slot> deckSlots = _slotAccessor.GetSlots(new SlotSpecification(SlotType.Deck));
             Assert.AreSame(_slots[SlotType.Deck], deckSlots);
         }
         #endregion GetSlots
@@ -158,7 +158,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _genericDeckSlot.IsFree.Returns(true);
             _antiShipDeckSlot.IsFree.Returns(true);
 
-            ISlot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
+            Slot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
 
             Assert.AreSame(_genericDeckSlot, freeSlot);
         }
@@ -171,7 +171,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _genericDeckSlot.IsFree.Returns(true);
             _antiShipDeckSlot.IsFree.Returns(true);
 
-            ISlot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
+            Slot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
 
             Assert.AreSame(_antiShipDeckSlot, freeSlot);
         }
@@ -184,7 +184,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots
             _genericDeckSlot.IsFree.Returns(false);
             _antiShipDeckSlot.IsFree.Returns(true);
 
-            ISlot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
+            Slot freeSlot = _slotAccessor.GetFreeSlot(desiredSpecification);
 
             Assert.AreSame(_antiShipDeckSlot, freeSlot);
         }

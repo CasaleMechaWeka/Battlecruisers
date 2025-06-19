@@ -57,7 +57,7 @@ namespace BattleCruisers.UI.Cameras.Helpers
 
         private bool IsCameraRoughlyOnPlayerNavalFactory()
         {
-            ISlot bowSlot
+            Slot bowSlot
                 = _playerCruiser.SlotAccessor
                     .GetSlots(new SlotSpecification(SlotType.Bow))
                     .FirstOrDefault();

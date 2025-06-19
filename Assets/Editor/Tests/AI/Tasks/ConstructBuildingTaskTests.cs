@@ -21,7 +21,7 @@ namespace BattleCruisers.Tests.AI.Tasks
         private SlotAccessor _slotAccessor;
         private IBuildableWrapper<IBuilding> _prefab;
         private IBuilding _building;
-        private ISlot _slot;
+        private Slot _slot;
 
         private int _numOfCompletedEvents;
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Tests.AI.Tasks
             _building.SlotSpecification.Returns(slotSpecification);
             _prefab = Substitute.For<IBuildableWrapper<IBuilding>>();
             _prefab.Buildable.Returns(_building);
-            _slot = Substitute.For<ISlot>();
+            _slot = Substitute.For<Slot>();
 
             _numOfCompletedEvents = 0;
         }

@@ -3,7 +3,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Slots.Feedback
 {
-    public class BoostStateFinder : IBoostStateFinder
+    public class BoostStateFinder
     {
         public BoostState FindState(int numOfLocalBoosters, IBuilding building)
         {

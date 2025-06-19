@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
-    public class SpawnPositionFinder : ISpawnPositionFinder
+    public class SpawnPositionFinder
     {
         private readonly float _waterLine;
 

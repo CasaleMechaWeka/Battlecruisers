@@ -13,7 +13,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
         private void Start()
         {
             ICruiser parentCruiser = Substitute.For<ICruiser>();
-            ReadOnlyCollection<ISlot> neighbouringSlots = new ReadOnlyCollection<ISlot>(new List<ISlot>());
+            ReadOnlyCollection<Slot> neighbouringSlots = new ReadOnlyCollection<Slot>(new List<Slot>());
             IBoostProvider boostProvider = Substitute.For<IBoostProvider>();
 
             Slot[] slots = FindObjectsOfType<Slot>();

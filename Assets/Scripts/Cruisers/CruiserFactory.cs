@@ -25,12 +25,11 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Cruisers
 {
-    public class CruiserFactory : ICruiserFactory
+    public class CruiserFactory
     {
         private readonly IBattleSceneHelper _helper;
-        private readonly IFilter<ISlot> _highlightableSlotFilter;
+        private readonly IFilter<Slot> _highlightableSlotFilter;
         private readonly UIManager _uiManager;
-        private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
 
@@ -43,7 +42,6 @@ namespace BattleCruisers.Cruisers
             _helper = helper;
             _highlightableSlotFilter = helper.CreateHighlightableSlotFilter();
             _uiManager = uiManager;
-            _fogVisibilityDecider = new FogVisibilityDecider();
         }
 
         public Cruiser CreatePlayerCruiser()
@@ -144,7 +142,7 @@ namespace BattleCruisers.Cruisers
             Faction faction,
             Direction facingDirection,
             FogStrength fogStrength,
-            IFilter<ISlot> highlightableFilter,
+            IFilter<Slot> highlightableFilter,
             IBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IDoubleClickHandler<IBuilding> buildingDoubleClickHandler,
@@ -164,7 +162,7 @@ namespace BattleCruisers.Cruisers
             DroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, FactoryProvider.Sound.IPrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, _fogVisibilityDecider, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
+            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
 
             RepairManager repairManager = new RepairManager(cruiserSpecificFactories.DroneFeedbackFactory, droneConsumerProvider, cruiser);
             if (!isPlayerCruiser)

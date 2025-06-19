@@ -7,14 +7,14 @@ namespace BattleCruisers.Tests.Cruisers.Slots
 {
     public class FreeSlotFilterTests
     {
-        private IFilter<ISlot> _filter;
-        private ISlot _slot;
+        private IFilter<Slot> _filter;
+        private Slot _slot;
 
         [SetUp]
         public void SetuUp()
         {
             _filter = new FreeSlotFilter();
-            _slot = Substitute.For<ISlot>();
+            _slot = Substitute.For<Slot>();
         }
 
         [Test]

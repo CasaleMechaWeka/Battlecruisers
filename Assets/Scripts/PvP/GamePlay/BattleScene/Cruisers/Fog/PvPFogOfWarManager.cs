@@ -21,7 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPFogOfWarManager : IManagedDisposable
     {
         private readonly IGameObject _fog;
-        private readonly IFogVisibilityDecider _visibilityDecider;
         private readonly IPvPCruiserBuildingMonitor _friendlyBuildingMonitor, _enemyBuildingMonitor;
         private readonly IPvPCruiserUnitMonitor _enemyUnitMonitor;
         private readonly IList<PvPStealthGenerator> _friendlyIStealthGenerators;
@@ -30,15 +29,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPFogOfWarManager(
             IGameObject fog,
-            IFogVisibilityDecider visibilityDecider,
             IPvPCruiserBuildingMonitor friendlyBuildingMonitor,
             IPvPCruiserBuildingMonitor enemyBuildingMonitor,
             IPvPCruiserUnitMonitor enemyUnitMonitor)
         {
-            PvPHelper.AssertIsNotNull(fog, visibilityDecider, friendlyBuildingMonitor, enemyBuildingMonitor, enemyUnitMonitor);
+            PvPHelper.AssertIsNotNull(fog, friendlyBuildingMonitor, enemyBuildingMonitor, enemyUnitMonitor);
 
             _fog = fog;
-            _visibilityDecider = visibilityDecider;
             _friendlyBuildingMonitor = friendlyBuildingMonitor;
             _enemyBuildingMonitor = enemyBuildingMonitor;
             _enemyUnitMonitor = enemyUnitMonitor;
@@ -153,7 +150,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void UpdateFogState()
         {
-            _fog.IsVisible = _visibilityDecider.ShouldFogBeVisible(_friendlyIStealthGenerators.Count, _enemySpySatellites.Count, _enemySpyPlanes.Count);
+            _fog.IsVisible = _friendlyIStealthGenerators.Count != 0 && _enemySpySatellites.Count == 0 && _enemySpyPlanes.Count == 0;
+
         }
 
         public void DisposeManagedState()

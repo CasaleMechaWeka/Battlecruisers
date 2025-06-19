@@ -9,14 +9,14 @@ namespace BattleCruisers.Buildables.Pools
 {
     public class BuildingActivationArgs : BuildableActivationArgs
     {
-        public ISlot ParentSlot { get; }
+        public Slot ParentSlot { get; }
         public IDoubleClickHandler<IBuilding> DoubleClickHandler { get; }
 
         public BuildingActivationArgs(
             ICruiser parentCruiser,
             ICruiser enemyCruiser,
             CruiserSpecificFactories cruiserSpecificFactories,
-            ISlot parentSlot,
+            Slot parentSlot,
             IDoubleClickHandler<IBuilding> doubleClickHandler)
             : base(parentCruiser, enemyCruiser, cruiserSpecificFactories)
         {

@@ -144,7 +144,7 @@ namespace BattleCruisers.Scenes.BattleScene
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
             FactoryProvider.Initialise(components, DataProvider.SettingsManager);
             PrefabFactory.CreatePools();
-            ICruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
+            CruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();

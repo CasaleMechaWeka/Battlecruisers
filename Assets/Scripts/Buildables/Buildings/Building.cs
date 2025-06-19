@@ -24,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings
         private Collider2D _collider;
 
         private IDoubleClickHandler<IBuilding> _doubleClickHandler;
-        protected ISlot _parentSlot;
+        protected Slot _parentSlot;
 
         private AudioClipWrapper _placementSound;
         public AudioClip placementSound;

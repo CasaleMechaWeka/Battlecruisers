@@ -18,9 +18,9 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
         private BuildingNameFilter _buildingPermitter;
         private IPrefabKey _buildingToAllow;
         private SpecificSlotsFilter _slotPermitter;
-        private ISlot _slot;
+        private Slot _slot;
         private SlotProvider _slotProvider;
-        private IItemProvider<ISlot> _explicitSlotProvider;
+        private IItemProvider<Slot> _explicitSlotProvider;
 
         [SetUp]
         public override void SetuUp()
@@ -33,7 +33,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
 
             _slotPermitter = Substitute.For<SpecificSlotsFilter>();
 
-            _slot = Substitute.For<ISlot>();
+            _slot = Substitute.For<Slot>();
             _slotProvider = Substitute.For<SlotProvider>();
 
             _explicitSlotProvider = _slotProvider;

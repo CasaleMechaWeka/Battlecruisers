@@ -8,11 +8,11 @@ namespace BattleCruisers.Cruisers.Slots
     public class SlotHighlighter
     {
         private readonly SlotAccessor _slotAccessor;
-        private readonly IFilter<ISlot> _highlightableFilter;
+        private readonly IFilter<Slot> _highlightableFilter;
         private ISlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
-        private ISlot _highlightedSlot;
-        private ISlot HighlightedSlot
+        private Slot _highlightedSlot;
+        private Slot HighlightedSlot
         {
             get { return _highlightedSlot; }
             set
@@ -33,7 +33,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public SlotHighlighter(
             SlotAccessor slotAccessor,
-            IFilter<ISlot> highlightableFilter,
+            IFilter<Slot> highlightableFilter,
             ICruiserBuildingMonitor parentCruiserBuildingMonitor)
         {
             Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);
@@ -65,7 +65,7 @@ namespace BattleCruisers.Cruisers.Slots
             bool wasAnySlotHighlighted = false;
             _highlightedSlotSpec = slotSpecification;
 
-            foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
+            foreach (Slot slot in _slotAccessor.GetSlots(slotSpecification))
             {
                 if (_highlightableFilter.IsMatch(slot))
                 {
@@ -94,7 +94,7 @@ namespace BattleCruisers.Cruisers.Slots
 
             _highlightedSlotSpec = slotSpecification;
 
-            foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
+            foreach (Slot slot in _slotAccessor.GetSlots(slotSpecification))
             {
                 slot.IsVisible = true;
             }
@@ -115,7 +115,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         private void UnhighlightSlots(ISlotSpecification slotSpecification)
         {
-            foreach (ISlot slot in _slotAccessor.GetSlots(slotSpecification))
+            foreach (Slot slot in _slotAccessor.GetSlots(slotSpecification))
             {
                 slot.IsVisible = false;
             }

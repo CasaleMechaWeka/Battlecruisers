@@ -8,7 +8,7 @@ namespace BattleCruisers.Tests.Cruisers.Slots.Feedback
 {
     public class BoostStateFinderTests
     {
-        private IBoostStateFinder _stateFinder;
+        private BoostStateFinder _stateFinder;
         private IBuilding _building;
 
         [SetUp]

@@ -39,7 +39,7 @@ namespace BattleCruisers.Tests.Tutorial.Steps.EnemyCruiser
                 .IsSlotAvailable(buildingWrapper.Buildable.SlotSpecification)
                 .Returns(true);
 
-            ISlot slot = Substitute.For<ISlot>();
+            Slot slot = Substitute.For<Slot>();
             _parentCruiser.SlotAccessor
                 .GetFreeSlot(buildingWrapper.Buildable.SlotSpecification)
                 .Returns(slot);
