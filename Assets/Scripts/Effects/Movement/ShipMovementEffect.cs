@@ -14,7 +14,7 @@ namespace BattleCruisers.Effects.Movement
 
         public ShipMovementEffect(
             IGameObject gameObject,
-            IAnimator animator, 
+            IAnimator animator,
             IBroadcastingParticleSystem particleSystem)
         {
             Helper.AssertIsNotNull(gameObject, animator, particleSystem);

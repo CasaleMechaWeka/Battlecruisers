@@ -1,5 +1,4 @@
 using BattleCruisers.Effects.Movement;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public abstract class PvPAnimatedShipController : PvPShipController
     {
         private IMovementEffect _movementEffects;
-        public PvPMovementEffectInitialiser movementEffectInitialiser;
+        public MovementEffectInitialiser movementEffectInitialiser;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {

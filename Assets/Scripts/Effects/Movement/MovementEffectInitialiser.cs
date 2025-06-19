@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Effects.Movement
 {
-    public class MovementEffectInitialiser : MonoBehaviour, IMovementEffectInitialiser
+    public class MovementEffectInitialiser : MonoBehaviour
     {
         public IMovementEffect CreateMovementEffects()
         {
@@ -24,7 +24,7 @@ namespace BattleCruisers.Effects.Movement
                     new GameObjectBC(gameObject),
                     new AnimatorBC(animator),
                     (IBroadcastingParticleSystem)particleSystem ?? new DummyBroadcastingParticleSystem());
-            
+
             shipMovementEffect.ResetAndHide();
             return shipMovementEffect;
         }
