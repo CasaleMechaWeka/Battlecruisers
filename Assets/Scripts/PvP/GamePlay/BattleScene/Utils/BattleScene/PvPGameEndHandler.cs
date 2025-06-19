@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
-    public class PvPGameEndHandler : IPvPGameEndHandler
+    public class PvPGameEndHandler
     {
         private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
         private IManagedDisposable _ai_LeftPlayer;

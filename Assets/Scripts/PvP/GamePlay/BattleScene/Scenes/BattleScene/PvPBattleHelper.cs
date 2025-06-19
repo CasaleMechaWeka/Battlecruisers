@@ -83,7 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 uiSoundPlayer);
         }
 
-        public override IFilter<IPvPSlot> CreateHighlightableSlotFilter()
+        public override IFilter<PvPSlot> CreateHighlightableSlotFilter()
         {
             return new PvPFreeSlotFilter();
         }

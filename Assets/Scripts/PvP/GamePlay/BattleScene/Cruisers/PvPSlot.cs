@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.Feedback;
 using BattleCruisers.Utils;
 using System;
@@ -26,13 +25,12 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
 {
-    public class PvPSlot : NetworkBehaviour, IPvPSlot, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
+    public class PvPSlot : NetworkBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDropHandler, IDragHandler
     {
         private IPvPCruiser _parentCruiser;
         private SpriteRenderer _renderer;
         private IPoolable<Vector3> _explosion;
         public PvPExplosionController _explosionController;
-        private IPvPBuildingPlacer _buildingPlacer;
         private Vector2 _size;
         // Hold reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
@@ -68,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
         public NetworkVariable<int> pvp_BoostProviders_Num = new NetworkVariable<int>();
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
-        public ReadOnlyCollection<IPvPSlot> NeighbouringSlots { get; private set; }
+        public ReadOnlyCollection<PvPSlot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
         private Vector3 _buildingPlacementPoint;
         public Vector3 BuildingPlacementPoint
@@ -208,7 +206,27 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     }
 
                     pvp_Building_NetworkObjectID.Value = objectId;
-                    _buildingPlacer.PlaceBuilding(_baseBuilding.Value, this);
+
+                    _baseBuilding.Value.Rotation = Transform.Rotation;
+
+                    float verticalChange = _baseBuilding.Value.Position.y - _baseBuilding.Value.PuzzleRootPoint.y;
+                    float horizontalChange = _baseBuilding.Value.Position.x - _baseBuilding.Value.PuzzleRootPoint.x;
+                    _baseBuilding.Value.Position = BuildingPlacementPoint
+                                                + (Transform.Up * verticalChange)
+                                                + (Transform.Right * horizontalChange);
+
+                    if (_baseBuilding.Value.HealthBar.Offset.x == 0
+                        || !Transform.IsMirroredAcrossYAxis)
+                    {
+                        _baseBuilding.Value.HealthBar.Offset = _baseBuilding.Value.HealthBar.Offset;
+                    }
+                    else
+                    {
+                        _baseBuilding.Value.HealthBar.Offset = new Vector2(
+                            -_baseBuilding.Value.HealthBar.Offset.x,
+                            _baseBuilding.Value.HealthBar.Offset.y);
+                    }
+
                     _baseBuilding.Value.Destroyed += OnBuildingDestroyed;
                     if (IsHost)
                         pvp_IsFree.Value = false;
@@ -226,18 +244,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void SetSlotBuildingOutline(PvPBuildableOutlineController outline)
         {
-            _buildingPlacer.PlaceOutline(outline, this);
+            outline.Rotation = Transform.Rotation;
+
+            float verticalChange = outline.Position.y - outline.PuzzleRootPoint.y;
+            float horizontalChange = outline.Position.x - outline.PuzzleRootPoint.x;
+
+            outline.Position = BuildingPlacementPoint
+                                + (Transform.Up * verticalChange)
+                                + (Transform.Right * horizontalChange);
         }
 
         public event EventHandler Clicked;
 
-        public void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<IPvPSlot> neighbouringSlots, IPvPBuildingPlacer buildingPlacer)
+        public void Initialise(IPvPCruiser parentCruiser, ReadOnlyCollection<PvPSlot> neighbouringSlots)
         {
-            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots, buildingPlacer);
+            Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
             _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
-            _buildingPlacer = buildingPlacer;
 
             _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _explosion = _explosionController.Initialise();

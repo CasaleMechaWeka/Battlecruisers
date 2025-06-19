@@ -29,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
         public PvPFogStrength FogStrength { get; }
-        public IPvPCruiserHelper Helper { get; }
-        public IFilter<IPvPSlot> HighlightableFilter { get; }
+        public PvPCruiserHelper Helper { get; }
+        public IFilter<PvPSlot> HighlightableFilter { get; }
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; }
         public IDoubleClickHandler<IPvPBuilding> BuildingDoubleClickHandler { get; }
         public IDoubleClickHandler<IPvPCruiser> CruiserDoubleClickHandler { get; }
@@ -48,8 +48,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Direction facingDirection,
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
-            IPvPCruiserHelper helper,
-            IFilter<IPvPSlot> highlightableFilter,
+            PvPCruiserHelper helper,
+            IFilter<PvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,
@@ -102,8 +102,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             Direction facingDirection,
             IRepairManager repairManager,
             PvPFogStrength fogStrength,
-            IPvPCruiserHelper helper,
-            IFilter<IPvPSlot> highlightableFilter,
+            PvPCruiserHelper helper,
+            IFilter<PvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
             IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler,

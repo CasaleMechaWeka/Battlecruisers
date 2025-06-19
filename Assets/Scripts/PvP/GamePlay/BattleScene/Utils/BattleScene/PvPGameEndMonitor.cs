@@ -16,13 +16,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
     {
         private readonly ICruiserDestroyedMonitor _cruiserDestroyedMonitor;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
-        private readonly IPvPGameEndHandler _gameEndHandler;
+        private readonly PvPGameEndHandler _gameEndHandler;
 
         public event EventHandler GameEnded;
         public PvPGameEndMonitor(
             ICruiserDestroyedMonitor cruiserDestroyedMonitor,
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
-            IPvPGameEndHandler gameEndHandler)
+            PvPGameEndHandler gameEndHandler)
         {
             PvPHelper.AssertIsNotNull(cruiserDestroyedMonitor, battleSceneGodTunnel, gameEndHandler);
 

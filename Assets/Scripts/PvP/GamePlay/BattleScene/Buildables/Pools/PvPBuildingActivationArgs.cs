@@ -9,14 +9,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPBuildingActivationArgs : PvPBuildableActivationArgs
     {
-        public IPvPSlot ParentSlot { get; }
+        public PvPSlot ParentSlot { get; }
         public IDoubleClickHandler<IPvPBuilding> DoubleClickHandler { get; }
 
         public PvPBuildingActivationArgs(
             IPvPCruiser parentCruiser,
             IPvPCruiser enemyCruiser,
             PvPCruiserSpecificFactories cruiserSpecificFactories,
-            IPvPSlot parentSlot,
+            PvPSlot parentSlot,
             IDoubleClickHandler<IPvPBuilding> doubleClickHandler,
             int variantIndex)
             : base(parentCruiser, enemyCruiser, cruiserSpecificFactories, variantIndex)

@@ -54,7 +54,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected IPvPCruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
-        private IPvPCruiserHelper _helper;
+        private PvPCruiserHelper _helper;
         private PvPSlotWrapperController _slotWrapperController;
         private ClickHandler _clickHandler;
         private IDoubleClickHandler<IPvPBuilding> _buildingDoubleClickHandler;
@@ -209,7 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        public async void Initialise_Client_PvP(PvPUIManager uiManager, IPvPCruiserHelper helper)
+        public async void Initialise_Client_PvP(PvPUIManager uiManager, PvPCruiserHelper helper)
         {
             _uiManager = uiManager;
             _helper = helper;
@@ -396,13 +396,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, IPvPSlot slot)
+        public IPvPBuilding ConstructBuilding(IPvPBuildableWrapper<IPvPBuilding> buildingPrefab, PvPSlot slot)
         {
             SelectedBuildingPrefab = buildingPrefab;
             return ConstructSelectedBuilding(slot);
         }
 
-        public IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot)
+        public IPvPBuilding ConstructSelectedBuilding(PvPSlot slot)
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);

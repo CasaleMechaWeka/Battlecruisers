@@ -64,14 +64,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     .ToList();
         }
 
-        public IPvPSlot GetFreeSlot(ISlotSpecification slotSpecification)
+        public PvPSlot GetFreeSlot(ISlotSpecification slotSpecification)
         {
             return slotSpecification.PreferFromFront ?
                 _slots[slotSpecification.SlotType].First(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction)) :
                 _slots[slotSpecification.SlotType].Last(slot => FreeSlotFilter(slot, slotSpecification.BuildingFunction));
         }
 
-        private bool FreeSlotFilter(IPvPSlot slot, BuildingFunction desiredBuildingFunction)
+        private bool FreeSlotFilter(PvPSlot slot, BuildingFunction desiredBuildingFunction)
         {
             return
                 slot.IsFree
@@ -79,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     || slot.BuildingFunctionAffinity == desiredBuildingFunction);
         }
 
-        public IPvPSlot GetSlot(IPvPBuilding building)
+        public PvPSlot GetSlot(IPvPBuilding building)
         {
             Assert.IsTrue(_slots.ContainsKey(building.SlotSpecification.SlotType));
 

@@ -4,7 +4,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.Feedback
 {
-    public class PvPBoostStateFinder : IPvPBoostStateFinder
+    public class PvPBoostStateFinder
     {
         public BoostState FindState(int numOfLocalBoosters, IPvPBuilding building)
         {

@@ -6,7 +6,7 @@ using BattleCruisers.UI.BattleScene.Navigation;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers
 {
-    public abstract class PvPCruiserHelper : IPvPCruiserHelper
+    public abstract class PvPCruiserHelper
     {
         protected readonly PvPUIManager _uiManager;
         protected readonly ICameraFocuser _cameraFocuser;

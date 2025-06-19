@@ -1,5 +1,4 @@
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots.BuildingPlacement;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPSlotWrapperController : MonoBehaviour, ISlotNumProvider
     {
         private IList<PvPSlot> _slots;
-        public Dictionary<string, IPvPSlot> _slotsByName = new Dictionary<string, IPvPSlot>();
+        public Dictionary<string, PvPSlot> _slotsByName = new Dictionary<string, PvPSlot>();
         // For out of battle scene use
         public void StaticInitialise()
         {
@@ -22,9 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPSlotAccessor Initialise(IPvPCruiser parentCruiser)
         {
             Assert.IsNotNull(parentCruiser);
-            IPvPBuildingPlacer buildingPlacer
-                = new PvPBuildingPlacer(
-                    new PvPBuildingPlacerCalculator());
             PvPSlotInitialiser slotInitialiser = new PvPSlotInitialiser();
             for (int i = 0; i < _slots.Count; ++i)
             {
@@ -33,7 +29,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     _slotsByName.Add(_slots[i].gameObject.name, _slots[i]);
                 }
             }
-            IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots, buildingPlacer);
+            IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = slotInitialiser.InitialiseSlots(parentCruiser, _slots);
 
             return new PvPSlotAccessor(typeToSlots);
         }

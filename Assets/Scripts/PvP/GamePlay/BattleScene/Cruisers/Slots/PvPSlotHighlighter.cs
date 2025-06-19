@@ -9,11 +9,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPSlotHighlighter
     {
         private readonly PvPSlotAccessor _slotAccessor;
-        private readonly IFilter<IPvPSlot> _highlightableFilter;
+        private readonly IFilter<PvPSlot> _highlightableFilter;
         private ISlotSpecification _highlightedSlotSpec;
         public bool isHighlighting = false;
-        private IPvPSlot _highlightedSlot;
-        private IPvPSlot HighlightedSlot
+        private PvPSlot _highlightedSlot;
+        private PvPSlot HighlightedSlot
         {
             get { return _highlightedSlot; }
             set
@@ -34,7 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         public PvPSlotHighlighter(
             PvPSlotAccessor slotAccessor,
-            IFilter<IPvPSlot> highlightableFilter,
+            IFilter<PvPSlot> highlightableFilter,
             IPvPCruiserBuildingMonitor parentCruiserBuildingMonitor)
         {
             Helper.AssertIsNotNull(slotAccessor, highlightableFilter, parentCruiserBuildingMonitor);
@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             bool wasAnySlotHighlighted = false;
             _highlightedSlotSpec = slotSpecification;
 
-            foreach (IPvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
+            foreach (PvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
             {
                 if (_highlightableFilter.IsMatch(slot))
                 {
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             _highlightedSlotSpec = slotSpecification;
 
-            foreach (IPvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
+            foreach (PvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
             {
                 slot.IsVisibleRederer = true;
             }
@@ -115,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private void UnhighlightSlots(ISlotSpecification slotSpecification)
         {
-            foreach (IPvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
+            foreach (PvPSlot slot in _slotAccessor.GetSlots(slotSpecification))
             {
                 slot.IsVisibleRederer = false;
             }

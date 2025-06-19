@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         [SerializeField]
         private List<GameObject> additionalRenderers = new List<GameObject>(); // Added for handling additional renderers
         private IDoubleClickHandler<IPvPBuilding> _doubleClickHandler;
-        protected IPvPSlot _parentSlot;
+        protected PvPSlot _parentSlot;
 
         private AudioClipWrapper _placementSound;
         public AudioClip placementSound;

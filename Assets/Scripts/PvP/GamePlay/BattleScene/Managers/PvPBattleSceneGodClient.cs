@@ -367,7 +367,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 PvPFactoryProvider.Sound.UISoundPlayer,
                 SynchedServerData.Instance.GetTeam()
             );
-            IPvPCruiserHelper helper = CreatePlayerHelper(uiManager, cameraComponents.CameraFocuser);
+            PvPCruiserHelper helper = CreatePlayerHelper(uiManager, cameraComponents.CameraFocuser);
             playerCruiser.Initialise_Client_PvP(uiManager, helper);
             enemyCruiser.Initialise_Client_PvP(uiManager, helper);
             currentLevel = pvpBattleHelper.GetPvPLevel();
@@ -720,7 +720,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             windManager?.DisposeManagedState();
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
+        private PvPCruiserHelper CreatePlayerHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             return new PvPPlayerCruiserHelper(uiManager, cameraFocuser);
         }

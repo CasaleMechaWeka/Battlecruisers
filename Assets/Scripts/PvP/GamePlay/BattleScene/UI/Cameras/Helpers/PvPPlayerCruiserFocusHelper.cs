@@ -66,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Cam
 
         private bool IsCameraRoughlyOnPlayerNavalFactory()
         {
-            IPvPSlot bowSlot
+            PvPSlot bowSlot
                 = _playerCruiser.SlotAccessor
                     .GetSlots(new PvPSlotSpecification(SlotType.Bow))
                     .FirstOrDefault();

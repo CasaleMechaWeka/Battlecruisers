@@ -9,10 +9,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
     public class PvPSlotBoostFeedbackMonitor
     {
         private readonly PvPSlot _parentSlot;
-        private readonly IPvPBoostStateFinder _boostStateFinder;
+        private readonly PvPBoostStateFinder _boostStateFinder;
         private readonly IBoostFeedback _boostFeedback;
 
-        public PvPSlotBoostFeedbackMonitor(PvPSlot parentSlot, IPvPBoostStateFinder boostStateFinder, IBoostFeedback boostFeedback, bool isHost)
+        public PvPSlotBoostFeedbackMonitor(PvPSlot parentSlot, PvPBoostStateFinder boostStateFinder, IBoostFeedback boostFeedback, bool isHost)
         {
             Helper.AssertIsNotNull(parentSlot, boostStateFinder, boostFeedback);
 

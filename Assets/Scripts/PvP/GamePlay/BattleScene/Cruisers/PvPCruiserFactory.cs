@@ -26,11 +26,10 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
-    public class PvPCruiserFactory : IPvPCruiserFactory
+    public class PvPCruiserFactory
     {
         private readonly PvPBattleSceneHelper _helper;
-        private readonly IFilter<IPvPSlot> _highlightableSlotFilter;
-        private readonly PvPUIManager _uiManager;
+        private readonly IFilter<PvPSlot> _highlightableSlotFilter;
         private readonly IFogVisibilityDecider _fogVisibilityDecider;
 
         private const int CRUISER_OFFSET_IN_M = 35;
@@ -89,7 +88,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             PvPHelper.AssertIsNotNull(playerACruiser, playerBCruiser,/* cameraFocuser,*/ userChosenTargetTracker);
 
-            IPvPCruiserHelper helper = CreatePlayerHelper(/*_uiManager , cameraFocuser*/);
+            PvPCruiserHelper helper = CreatePlayerHelper(/*_uiManager , cameraFocuser*/);
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
             PvPFogStrength fogStrength = PvPFogStrength.Weak;
@@ -122,7 +121,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         {
             PvPHelper.AssertIsNotNull(playerBCruiser, playerACruiser, userChosenTargetTracker /*, userChosenTargetHelper*/);
 
-            IPvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
+            PvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
             Faction faction = Faction.Reds;
             Direction facingDirection = Direction.Left;
             PvPFogStrength fogStrength = PvPFogStrength.Strong;
@@ -151,11 +150,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiser cruiser,
             IPvPCruiser enemyCruiser,
             // PvPUIManager uiManager,
-            IPvPCruiserHelper helper,
+            PvPCruiserHelper helper,
             Faction faction,
             Direction facingDirection,
             PvPFogStrength fogStrength,
-            IFilter<IPvPSlot> highlightableFilter,
+            IFilter<PvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
             IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler,
@@ -219,7 +218,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
+        private PvPCruiserHelper CreatePlayerBHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             // if (ApplicationModel.IsTutorial)
             // {
@@ -231,7 +230,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerBHelper(/*PvPUIManager uiManager  , ICameraFocuser cameraFocuser*/)
+        private PvPCruiserHelper CreatePlayerBHelper(/*PvPUIManager uiManager  , ICameraFocuser cameraFocuser*/)
         {
             // if (ApplicationModel.IsTutorial)
             // {
@@ -243,7 +242,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             // }
         }
 
-        private IPvPCruiserHelper CreatePlayerHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
+        private PvPCruiserHelper CreatePlayerHelper(PvPUIManager uiManager, ICameraFocuser cameraFocuser)
         {
             // if (ApplicationModel.IsTutorial)
             // {
@@ -256,7 +255,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         }
 
 
-        private IPvPCruiserHelper CreatePlayerHelper(/*PvPUIManager uiManager , ICameraFocuser cameraFocuser*/)
+        private PvPCruiserHelper CreatePlayerHelper(/*PvPUIManager uiManager , ICameraFocuser cameraFocuser*/)
         {
             // if (ApplicationModel.IsTutorial)
             // {

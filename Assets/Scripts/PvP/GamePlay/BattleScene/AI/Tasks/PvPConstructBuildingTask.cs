@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.AI.Tas
                 && _parentCruiser.SlotAccessor.IsSlotAvailable(buildingWrapperPrefab.Buildable.SlotSpecification)
                 && buildingWrapperPrefab.Buildable.NumOfDronesRequired <= _parentCruiser.DroneManager.NumOfDrones)
             {
-                IPvPSlot slot = _parentCruiser.SlotAccessor.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
+                PvPSlot slot = _parentCruiser.SlotAccessor.GetFreeSlot(buildingWrapperPrefab.Buildable.SlotSpecification);
                 Assert.IsNotNull(slot);
 
                 _building = _parentCruiser.ConstructBuilding(buildingWrapperPrefab.UnityObject, slot);

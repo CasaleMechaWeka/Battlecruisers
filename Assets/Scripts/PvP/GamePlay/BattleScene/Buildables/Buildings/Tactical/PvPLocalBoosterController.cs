@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 // Logging.Log(Tags.LOCAL_BOOSTER, $"About to boost {_parentSlot.NeighbouringSlots.Count} slots :D");
 
-                foreach (IPvPSlot slot in _parentSlot.NeighbouringSlots)
+                foreach (PvPSlot slot in _parentSlot.NeighbouringSlots)
                 {
                     slot.BoostProviders.Add(_boostProvider);
                 }
@@ -60,7 +60,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnDestroyed();
 
-            foreach (IPvPSlot slot in _parentSlot.NeighbouringSlots)
+            foreach (PvPSlot slot in _parentSlot.NeighbouringSlots)
             {
                 slot.BoostProviders.Remove(_boostProvider);
             }

@@ -19,7 +19,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 {
     public interface IPvPCruiser : IPvPCruiserController, ITarget, IComparableItem, IClickableEmitter
     {
-
         IPvPBuildableWrapper<IPvPBuilding> SelectedBuildingPrefab { get; set; }
         PvPBuildableOutlineController SelectedBuildableOutlinePrefab { get; set; }
         IDroneConsumerProvider DroneConsumerProvider { get; }
@@ -34,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         bool IsPlayerCruiser { get; }
         PvPCruiserDeathExplosion DeathPrefab { get; }
 
-        IPvPBuilding ConstructSelectedBuilding(IPvPSlot slot);
+        IPvPBuilding ConstructSelectedBuilding(PvPSlot slot);
         void MakeInvincible();
         void AdjustStatsByDifficulty(Difficulty AIDifficulty);
         bool IsPvPCruiser();

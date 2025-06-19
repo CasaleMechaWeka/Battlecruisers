@@ -32,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerAPrefabName.Value) ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerAPrefabName.Value);
         public virtual IPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : string.IsNullOrEmpty(SynchedServerData.Instance.playerBPrefabName.Value) ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : new PvPHullKey("PvP" + SynchedServerData.Instance.playerBPrefabName.Value);
         public abstract BuildingCategoryFilter BuildingCategoryPermitter { get; }
-        public abstract IFilter<IPvPSlot> CreateHighlightableSlotFilter();
+        public abstract IFilter<PvPSlot> CreateHighlightableSlotFilter();
         public abstract IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
         public abstract IPvPBuildProgressCalculator CreatePlayerBCruiserBuildProgressCalculator();
         public abstract PvPUIManager CreateUIManager();
