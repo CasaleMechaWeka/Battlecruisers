@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Hotkeys.Escape;
+﻿using BattleCruisers.Hotkeys;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions;
 using NSubstitute;
@@ -9,7 +9,7 @@ namespace BattleCruisers.Tests.Hotkeys.Escape
 {
     public class EscapeDetectorTests
     {
-        private IEscapeDetector _escapeDetector;
+        private EscapeDetector _escapeDetector;
         private IInput _input;
         private IUpdater _updater;
         private int _escapeCount;
@@ -49,7 +49,7 @@ namespace BattleCruisers.Tests.Hotkeys.Escape
             _input.GetKeyUp(KeyCode.Escape).Returns(true);
 
             _updater.Updated += Raise.Event();
-            
+
             Assert.AreEqual(0, _escapeCount);
         }
     }

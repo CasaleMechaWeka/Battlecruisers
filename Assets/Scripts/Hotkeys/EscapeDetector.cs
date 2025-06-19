@@ -4,9 +4,9 @@ using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using UnityEngine;
 
-namespace BattleCruisers.Hotkeys.Escape
+namespace BattleCruisers.Hotkeys
 {
-    public class EscapeDetector : IEscapeDetector
+    public class EscapeDetector
     {
         private readonly IInput _input;
         private readonly IUpdater _updater;

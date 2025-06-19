@@ -1,5 +1,4 @@
 using BattleCruisers.Hotkeys;
-using BattleCruisers.Hotkeys.Escape;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys.BuildableButtons;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.UI.BattleScene.MainMenu;
@@ -42,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
             buildingCategoryButtonsHotkeyInitialiser.Initialise(hotkeyDetector);
 
             // Escape (all platforms)
-            IEscapeDetector escapeDetector = new EscapeDetector(input, updater);
+            EscapeDetector escapeDetector = new EscapeDetector(input, updater);
             _escapeHandler = new EscapeHandler(escapeDetector, mainMenuManager);
         }
 

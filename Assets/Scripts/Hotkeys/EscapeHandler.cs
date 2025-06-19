@@ -2,14 +2,14 @@ using BattleCruisers.UI.BattleScene.MainMenu;
 using BattleCruisers.Utils;
 using System;
 
-namespace BattleCruisers.Hotkeys.Escape
+namespace BattleCruisers.Hotkeys
 {
     public class EscapeHandler
     {
-        private readonly IEscapeDetector _escapeDetector;
+        private readonly EscapeDetector _escapeDetector;
         private readonly IMainMenuManager _mainMenuManager;
 
-        public EscapeHandler(IEscapeDetector escapeDetector, IMainMenuManager mainMenuManager)
+        public EscapeHandler(EscapeDetector escapeDetector, IMainMenuManager mainMenuManager)
         {
             Helper.AssertIsNotNull(escapeDetector, mainMenuManager);
 
