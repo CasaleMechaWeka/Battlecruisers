@@ -33,7 +33,9 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override void OnBuildableCompleted()
         {
             Assert.IsTrue(DronesPerMinute > 0);
-            updater = new MultiFrameUpdater(FactoryProvider.UpdaterProvider.PhysicsUpdater, TimeBC.Instance, 1 / DronesPerMinute * 60);
+            updater = new MultiFrameUpdater(FactoryProvider.UpdaterProvider.PhysicsUpdater,
+                                            TimeBC.Instance,
+                                            1 / DronesPerMinute * 60);
             updater.Updated += UpdaterUpdate;
 
             base.OnBuildableCompleted();
@@ -41,7 +43,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public void UpdaterUpdate(object sender, EventArgs e)
         {
-            Debug.Log("UpdaterUpdate");
             ParentCruiser.DroneManager.NumOfDrones++;
             totalDronesProvided++;
 
