@@ -8,7 +8,6 @@ using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
-using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -16,7 +15,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public class DroneFactory : Building
     {
         public float DronesPerMinute;
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
+        private readonly PrioritisedSoundKey DroneCompletionSound = PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
         private IUpdater updater;
@@ -46,7 +45,7 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             ParentCruiser.DroneManager.NumOfDrones++;
             totalDronesProvided++;
 
-            _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+            _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(DroneCompletionSound);
         }
         protected override void OnDestroyed()
         {
