@@ -20,6 +20,7 @@ namespace BattleCruisers.Data.Static
             public static BuildingKey DroneStation4 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay4");
             public static BuildingKey DroneStation6 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay6");
             public static BuildingKey DroneStation8 { get; } = new BuildingKey(BuildingCategory.Factory, "EngineeringBay8");
+            public static BuildingKey DroneFactory { get; } = new BuildingKey(BuildingCategory.Factory, "DroneFactory");
 
             // Tactical
             public static BuildingKey ShieldGenerator { get; } = new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator");
@@ -66,7 +67,7 @@ namespace BattleCruisers.Data.Static
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 // Factories
-                AirFactory, NavalFactory, DroneStation, DroneStation4, DroneStation6, DroneStation8,
+                AirFactory, NavalFactory, DroneStation, DroneStation4, DroneStation6, DroneStation8, DroneFactory,
                 // Tactical
                 ShieldGenerator, StealthGenerator, SpySatelliteLauncher, LocalBooster, ControlTower, GrapheneBarrier,
                 // Defence
@@ -148,7 +149,7 @@ namespace BattleCruisers.Data.Static
             });
         }
 
-        public static class Ranks
+        public static class Ranks   // TODO get rid of this shit
         {
             // Ranks
             public static RankData rank00 { get; } = new RankData("Rank00BoatThief", "00", "Rank0");

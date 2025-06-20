@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils
         Hull_Megalith = 0017,
         Hull_Cricket = 0018,
 
-        Hull_BasicRig= 0019,
+        Hull_BasicRig = 0019,
 
         // === Buildings ===
         // Factories
@@ -42,6 +42,7 @@ namespace BattleCruisers.Utils
         Building_DroneStation4 = 0103,
         Building_DroneStation6 = 0105,
         Building_DroneStation8 = 0104,
+        Building_DroneFactory = 0106,
 
         // Tactical
         Building_ShieldGenerator = 0200,

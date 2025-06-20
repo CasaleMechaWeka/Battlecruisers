@@ -33,6 +33,7 @@ namespace BattleCruisers.Data.Static
             { Buildings.DroneStation4, 27 },
             { Buildings.DroneStation6, 95 },
             { Buildings.DroneStation8, 31 },
+            { Buildings.DroneFactory, 95 },
 
             // Tactical
             { Buildings.ShieldGenerator, 2 },
@@ -74,7 +75,7 @@ namespace BattleCruisers.Data.Static
             { Buildings.UltraCIWS, 95 },
             { Buildings.GlobeShield, 95 },
             { Buildings.Sledgehammer, 95 },
-            { Buildings.RailCannon, 95 }//Set to 95: way past the highest main story level, so that the sidequest unlocks it instead.
+            { Buildings.RailCannon, 95 }    //Set to 95: way past the highest main story level, so that the sidequest unlocks it instead.
         });
         private static ReadOnlyDictionary<UnitKey, int> _unitToUnlockedLevel
         = new ReadOnlyDictionary<UnitKey, int>(new Dictionary<UnitKey, int>()
@@ -366,6 +367,7 @@ namespace BattleCruisers.Data.Static
             Buildings.DroneStation4,
             Buildings.DroneStation6,
             Buildings.DroneStation8,
+            Buildings.DroneFactory,
 
             // Tactical
             Buildings.ShieldGenerator,
