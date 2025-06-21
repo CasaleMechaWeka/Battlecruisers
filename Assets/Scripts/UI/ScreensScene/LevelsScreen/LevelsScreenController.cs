@@ -5,13 +5,11 @@ using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
@@ -43,7 +41,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public event EventHandler VisibleSetChanged;
 
-        public GameObject secretLevelsHint;
 
         public async Task InitialiseAsync(
             ScreensSceneGod screensSceneGod,
@@ -89,12 +86,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 levelsSet.IsVisible = false;
                 _levelSets.Add(levelsSet);
             }
-            secretLevelsHint.GetComponentInChildren<Text>(false).text = LocTableCache.ScreensSceneTable.GetString("SecretLevelHintText");
-            if (numOfLevelsUnlocked < 31)
-                secretLevelsHint.SetActive(false);
-            else
-                secretLevelsHint.SetActive(true);
-
         }
 
         public override void OnPresenting(object activationParameter)
