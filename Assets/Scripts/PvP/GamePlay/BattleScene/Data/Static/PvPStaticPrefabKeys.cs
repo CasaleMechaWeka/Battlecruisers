@@ -22,6 +22,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPBuildingKey PvPDroneStation4 { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay4");
             public static PvPBuildingKey PvPDroneStation6 { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay6");
             public static PvPBuildingKey PvPDroneStation8 { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPEngineeringBay8");
+            public static PvPBuildingKey PvPDroneFactory { get; } = new PvPBuildingKey(BuildingCategory.Factory, "PvPDroneFactory");
 
             // Tactical
             public static PvPBuildingKey PvPShieldGenerator { get; } = new PvPBuildingKey(BuildingCategory.Tactical, "PvPShieldGenerator");
@@ -68,7 +69,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 // Factories
-                PvPAirFactory, PvPNavalFactory, PvPDroneStation, PvPDroneStation4, PvPDroneStation6, PvPDroneStation8,
+                PvPAirFactory, PvPNavalFactory, PvPDroneStation, PvPDroneStation4, PvPDroneStation6, PvPDroneStation8, PvPDroneFactory,
                 // Tactical
                 PvPShieldGenerator, PvPStealthGenerator, PvPSpySatelliteLauncher, PvPLocalBooster, PvPControlTower, PvPGrapheneBarrier,
                 // Defence
