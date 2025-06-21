@@ -5,7 +5,6 @@ using BattleCruisers.Utils;
 using UnityEngine;
 using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
-using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
@@ -14,13 +13,11 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using System;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Scenes;
-using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
@@ -29,9 +26,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
     {
         private GameModel _gameModel;
         public Animator animator;
-        public TrashTalkBubblesController trashTalkBubbles;
-        public PvPMessageBox messageBox;
 
+        public PvPMessageBox messageBox;
 
         public Text leftPlayerName;
         public Image leftPlayerRankImage;
@@ -74,7 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Sprite Yeti;
 
         private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
-        public Action CanceledMatchmaking;
+
         public GameObject fleeButton;
         public GameObject vsAIButton;
 
@@ -86,13 +82,13 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public string captainAPrefabName;
         public float playerRating;
         public int playerABodykit;
-        public string playerASelectedVariants;
+
         public static bool MatchmakingFailed;
 
         private CaptainExo charlie;
         public GameObject characterOfCharlie;
         public Transform ContainerCaptain;
-        public GameObject cameraOfCharacter;
+
         public RawImage leftCaptain, rightCaptain;
         public RenderTexture hostTexture, clientTexture;
         public AudioSource backgroundMusic;
@@ -128,7 +124,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
         }
         public GameObject[] connection_qualities;
-        private RateLimitCooldown m_TimeLimitLookingVictim;
+
         public override void OnPresenting(object activationParameter)
         {
 
@@ -231,9 +227,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             {
                 backgroundMusic.Play();
                 if (enemyFoundMusic.isPlaying && enemyFoundMusic != null)
-                {
                     enemyFoundMusic.Stop();
-                }
             }
         }
 
@@ -404,35 +398,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 backgroundMusic.Stop();
         }
 
-        public void VsAI()
-        {
-            vsAIButton.SetActive(false);
-            ApplicationModel.Mode = Data.GameMode.CoinBattle;
-            SaveCoinBattleSettings();
-            int maxLevel = DataProvider.GameModel.NumOfLevelsCompleted; //might need null or not-0 check?
-            int levelIndex = UnityEngine.Random.Range(1, maxLevel);
-            LandingSceneGod.Instance.coinBattleLevelNum = levelIndex;
-            if (PvPBattleSceneGodClient.Instance != null)
-            {
-                PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
-                PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
-            }
-            if (GameObject.Find("ConnectionManager") != null)
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
-
-            if (backgroundMusic.isPlaying)
-                backgroundMusic.Stop();
-        }
-
-        private void SaveCoinBattleSettings()
-        {
-            DataProvider.GameModel.CoinBattle
-                = new CoinBattleModel(
-                    DataProvider.SettingsManager.AIDifficulty,
-                    DataProvider.GameModel.PlayerLoadout.Hull
-                    );
-            DataProvider.SaveGame();
-        }
         public async void FoundCompetitor()
         {
             leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
@@ -489,7 +454,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
             {
                 rightCaptain.texture = clientTexture;
-
             }
             else
             {
@@ -498,15 +462,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
 
             if (backgroundMusic != null && backgroundMusic.isPlaying)
-            {
                 backgroundMusic.Stop();
-            }
 
             if (enemyFoundMusic != null)
-            {
                 enemyFoundMusic.Play();
-            }
-            await Task.Delay(100);
+
+            await Task.Delay(50);   // TODO why do we have this here?
             animator.SetBool("Found", true);
             LeaveLobby();
         }
@@ -565,12 +526,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             Animator animator = GetComponent<Animator>();
             if (animator != null)
-            {
                 foreach (Transform child in animator.transform)
-                {
                     child.gameObject.SetActive(false);
-                }
-            }
         }
     }
 }
