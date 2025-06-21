@@ -15,6 +15,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     public class DroneFactory : Building
     {
         public float DronesPerMinute;
+        public int MaxDrones;
+
         private readonly PrioritisedSoundKey DroneCompletionSound = PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
@@ -32,6 +34,8 @@ namespace BattleCruisers.Buildables.Buildings.Factories
         protected override void OnBuildableCompleted()
         {
             Assert.IsTrue(DronesPerMinute > 0);
+            Assert.IsTrue(MaxDrones > 0);
+
             updater = new MultiFrameUpdater(FactoryProvider.UpdaterProvider.PhysicsUpdater,
                                             TimeBC.Instance,
                                             1 / DronesPerMinute * 60);
@@ -42,11 +46,15 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public void UpdaterUpdate(object sender, EventArgs e)
         {
-            ParentCruiser.DroneManager.NumOfDrones++;
-            totalDronesProvided++;
+            if (totalDronesProvided < MaxDrones)
+            {
+                ParentCruiser.DroneManager.NumOfDrones++;
+                totalDronesProvided++;
 
-            _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(DroneCompletionSound);
+                _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(DroneCompletionSound);
+            }
         }
+
         protected override void OnDestroyed()
         {
             if (BuildableState == BuildableState.Completed)
