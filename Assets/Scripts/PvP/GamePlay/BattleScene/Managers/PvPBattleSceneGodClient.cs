@@ -354,7 +354,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             battleCompletionHandler.registeredTime = Time.time;
             MatchmakingScreenController.Instance.isProcessing = false;
             MatchmakingScreenController.Instance.isLoaded = true;
-            MatchmakingScreenController.Instance.AddProgress(1000);
+
             playerCruiser.StaticInitialise();
             enemyCruiser.StaticInitialise();
 

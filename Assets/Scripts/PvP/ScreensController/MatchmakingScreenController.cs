@@ -19,7 +19,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
-using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.UnityServices;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
@@ -29,7 +28,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
     public class MatchmakingScreenController : ScreenController
     {
         private GameModel _gameModel;
-        private TrashTalkData _trashTalkData;
         public Animator animator;
         public TrashTalkBubblesController trashTalkBubbles;
         public PvPMessageBox messageBox;
@@ -51,10 +49,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Text vsTitile;
         public Text LookingForOpponentsText;
         public Text FoundOpponentText;
-        public Slider LoadingBar;
-        public GameObject LoadingBarParent;
-
-        // private ILocTable commonStrings;
 
         public Sprite BlackRig;
         public Sprite BasicRig;
@@ -144,7 +138,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             Instance = this;
             Connection_Quality = ConnectionQuality.HIGH;
-            LoadingBarParent.SetActive(false);
             sprites.Add("BlackRig", BlackRig);
             sprites.Add("BasicRig", BasicRig);
             sprites.Add("Bullshark", Bullshark);
@@ -327,8 +320,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (isLoaded)
                 return;
 
-            NetworkObject[] objs = GameObject.FindObjectsOfType<NetworkObject>();
-            LoadingBar.value = objs.Length;
             isProcessing = false;
         }
 
@@ -385,7 +376,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void SetFoundVictimString()
         {
             SetMMStatus(MMStatus.LOADING_ASSETS);
-            LoadingBarParent.SetActive(true);
             // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
             {
@@ -395,14 +385,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     animator.SetTrigger("happy");
             }
             LockLobby();
-        }
-        public void AddProgress(int step)
-        {
-            LoadingBar.value += step;
-        }
-        public void SetTraskTalkData(TrashTalkData trashTalkData)
-        {
-            _trashTalkData = trashTalkData;
         }
 
         public void OnFlee()

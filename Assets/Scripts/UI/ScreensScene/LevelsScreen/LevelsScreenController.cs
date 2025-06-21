@@ -102,13 +102,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             int levelSetToShow = 0;
 
             foreach (LevelsSetController levelSet in levelSets)
-            {
                 if (levelSet.ContainsLevel(levelToShow))
                 {
                     levelSetToShow = levelSet.SetIndex;
                     break;
                 }
-            }
 
             ShowSet(levelSetToShow);
         }
@@ -120,7 +118,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             VisibleLevelsSet.IsVisible = false;
             VisibleSetIndex = setIndex;
             VisibleLevelsSet.IsVisible = true;
-
         }
 
         private void NextSetCommandExecute()

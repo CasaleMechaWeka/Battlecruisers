@@ -57,7 +57,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         private int k_minCPUFreq = 1200;
         private bool k_meetsCPUReq = true;
 
-        public TrashTalkDataList trashDataList;
         [SerializeField]
         private AudioSource _uiAudioSource;
 
@@ -584,12 +583,8 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                             return;*/
             if (Instance == null)
                 Instance = this;
-            Helper.AssertIsNotNull(_uiAudioSource, trashDataList);
+            Helper.AssertIsNotNull(_uiAudioSource);
             Logging.Log(Tags.Multiplay_SCREENS_SCENE_GOD, "START");
-
-            trashDataList.Initialise();
-            TrashTalkData trashTalkData = await trashDataList.GetTrashTalkAsync(/*_gameModel.SelectedLevel*/1);
-            MatchmakingScreenController.Instance.SetTraskTalkData(trashTalkData);
 
             // cheat code for local test
             k_DefaultLobbyName = m_NameGenerationData.GenerateName();
