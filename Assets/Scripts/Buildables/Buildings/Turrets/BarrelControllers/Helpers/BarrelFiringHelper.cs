@@ -78,8 +78,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                     //if is between the tolerance
                     if (Mathf.Abs(fireAngleInDegrees - barrelAdjustmentResult.DesiredAngleInDegrees) <= angleTolerance)
                     {
-                        Debug.Log($"MisFighter: Within Tolerance - Fire Angle (Degrees): {fireAngleInDegrees}");
-                        Debug.Log($"MisFighter: Desired Angle (Degrees): {barrelAdjustmentResult.DesiredAngleInDegrees}");
+                        // Debug.Log($"MisFighter: Within Tolerance - Fire Angle (Degrees): {fireAngleInDegrees}");
+                        // Debug.Log($"MisFighter: Desired Angle (Degrees): {barrelAdjustmentResult.DesiredAngleInDegrees}");
                         Fire(fireAngleInDegrees);
                         return true;
                     }
