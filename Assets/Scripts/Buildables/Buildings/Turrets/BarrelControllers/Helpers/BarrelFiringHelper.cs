@@ -59,7 +59,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                             barrelAdjustmentResult.PredictedTargetPosition,
                             _barrelController.IsSourceMirrored);
 
-                    Debug.Log($"MisFighter: Burst Mode - Fire Angle (Degrees): {fireAngleInDegrees}");
+                    // Debug.Log($"MisFighter: Burst Mode - Fire Angle (Degrees): {fireAngleInDegrees}");
 
                     Fire(fireAngleInDegrees);
                     return true;
