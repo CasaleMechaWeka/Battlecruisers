@@ -13,21 +13,21 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly SpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
         private readonly IList<IDroneController> _drones;
-        private readonly IDroneFactory _droneFactory;
+        private readonly DroneMonitor _droneMonitor;
 
         public IDroneConsumer DroneConsumer => _droneConsumerInfo.DroneConsumer;
 
         public DroneFeedback(
             DroneConsumerInfo droneConsumerInfo,
             SpawnPositionFinder spawnPositionFinder,
-            IDroneFactory droneFactory,
+            DroneMonitor droneMonitor,
             Faction faction)
         {
-            Helper.AssertIsNotNull(droneConsumerInfo, droneFactory, spawnPositionFinder);
+            Helper.AssertIsNotNull(droneConsumerInfo, droneMonitor, spawnPositionFinder);
 
             _droneConsumerInfo = droneConsumerInfo;
             _spawnPositionFinder = spawnPositionFinder;
-            _droneFactory = droneFactory;
+            _droneMonitor = droneMonitor;
             _faction = faction;
             _drones = new List<IDroneController>();
 
@@ -41,9 +41,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
             Assert.IsTrue(e.NewNumOfDrones >= 0, $"It does not make sense to have a negative number of drones: {e.NewNumOfDrones}");
 
             if (e.NewNumOfDrones == _drones.Count)
-            {
                 return;
-            }
 
             AddDronesIfNeeded(e.NewNumOfDrones);
             RemoveDronesIfNeeded(e.NewNumOfDrones);
@@ -57,7 +55,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                     = new DroneActivationArgs(
                         position: _spawnPositionFinder.FindSpawnPosition(_droneConsumerInfo),
                         _faction);
-                IDroneController droneToAdd = _droneFactory.CreateItem();
+                IDroneController droneToAdd = _droneMonitor.CreateItem();
                 droneToAdd.Activate(activationArgs);
                 _drones.Add(droneToAdd);
             }

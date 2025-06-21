@@ -1,6 +1,4 @@
-using BattleCruisers.Cruisers.Drones.Feedback;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories
 {
@@ -11,22 +9,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public PvPUnitToPoolMap UnitToPoolMap { get; }
 
-        public PvPPoolProviders(IDroneFactory droneFactory)
+        public PvPPoolProviders()
         {
-            PvPHelper.AssertIsNotNull(droneFactory);
-
-            _unitPoolProvider = new PvPUnitPoolProvider();
-
-            UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);
-        }
-
-
-        public PvPPoolProviders(
-            PvPUIManager uiManager,
-            IDroneFactory droneFactory)
-        {
-            PvPHelper.AssertIsNotNull(uiManager, droneFactory);
-
             _unitPoolProvider = new PvPUnitPoolProvider();
 
             UnitToPoolMap = new PvPUnitToPoolMap(UnitPoolProvider);

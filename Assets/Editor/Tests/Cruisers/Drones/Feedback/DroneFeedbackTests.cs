@@ -31,7 +31,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _dronePool = Substitute.For<Pool<IDroneController, DroneActivationArgs>>();
             _spawnPositionFinder = Substitute.For<SpawnPositionFinder>();
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _spawnPositionFinder, FactoryProvider.DroneFactory, Faction.Reds);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _spawnPositionFinder, FactoryProvider.DroneMonitor, Faction.Reds);
 
             _spawnPosition1 = new Vector2(4, 3);
             _spawnPosition2 = new Vector2(6, 7);
@@ -52,7 +52,7 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
         {
             _droneConsumer.NumOfDrones.Returns(2);
 
-            _feedback = new DroneFeedback(_droneConsumerInfo, _spawnPositionFinder, FactoryProvider.DroneFactory, Faction.Reds);
+            _feedback = new DroneFeedback(_droneConsumerInfo, _spawnPositionFinder, FactoryProvider.DroneMonitor, Faction.Reds);
 
             // Create feedback for initial number of drones
             _spawnPositionFinder.Received(2).FindSpawnPosition(_droneConsumerInfo);
