@@ -92,7 +92,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.OnPresenting(activationParameter);
 
-            int levelNumToShow = DataProvider.GameModel.NumOfLevelsCompleted < 31 ? DataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
+            int levelNumToShow = DataProvider.GameModel.SelectedLevel <= 31 ? DataProvider.GameModel.SelectedLevel : 1;
             Debug.Log($"Presenting LevelsScreen with levelNumToShow: {levelNumToShow}");
             ShowLastPlayedLevelSet(_levelSets, levelNumToShow);
         }
