@@ -1,4 +1,5 @@
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones.Feedback;
 using BattleCruisers.Projectiles.FlightPoints;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
@@ -18,6 +19,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static PvPPoolProviders PoolProviders { get; private set; }
         public static ISoundFactoryProvider Sound { get; private set; }
+        public static PvPDroneFactory DroneFactory { get; private set; }
 
         private static PvPPoolProviders poolProviders;
 
@@ -33,9 +35,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 
         public static void Initialise()
         {
-            DroneMonitor = new DroneMonitor();
+            DroneFactory = new PvPDroneFactory();
+            DroneMonitor = new DroneMonitor(DroneFactory);
             Sound = new PvPSoundFactoryProvider(_components /*, poolProviders */);
-            poolProviders = new PvPPoolProviders();
+            poolProviders = new PvPPoolProviders(DroneFactory);
             PoolProviders = poolProviders;
             poolProviders.SetInitialCapacities();
         }

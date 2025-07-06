@@ -10,12 +10,14 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
     public class DroneMonitorTests
     {
         private DroneMonitor _droneMonitor;
+        private IDroneFactory _droneFactory;
         private IDroneController _redDrone1, _redDrone2, _blueDrone1, _blueDrone2;
 
         [SetUp]
         public void TestSetup()
         {
-            _droneMonitor = new DroneMonitor();
+            _droneFactory = Substitute.For<IDroneFactory>();
+            _droneMonitor = new DroneMonitor(_droneFactory);
 
             _redDrone1 = Substitute.For<IDroneController>();
             _redDrone1.Faction.Returns(Faction.Reds);
@@ -29,10 +31,10 @@ namespace BattleCruisers.Tests.Cruisers.Drones.Feedback
             _blueDrone2 = Substitute.For<IDroneController>();
             _blueDrone2.Faction.Returns(Faction.Blues);
 
-            _droneMonitor.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_redDrone1));
-            _droneMonitor.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_redDrone2));
-            _droneMonitor.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_blueDrone1));
-            _droneMonitor.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_blueDrone2));
+            _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_redDrone1));
+            _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_redDrone2));
+            _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_blueDrone1));
+            _droneFactory.DroneCreated += Raise.EventWith(new DroneCreatedEventArgs(_blueDrone2));
         }
 
         [Test]

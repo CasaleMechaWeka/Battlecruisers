@@ -7,19 +7,19 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 {
     public class DroneFeedbackFactory
     {
-        private readonly DroneMonitor _droneMonitor;
+        private readonly IDroneFactory _droneFactory;
         private readonly SpawnPositionFinder _spawnPositionFinder;
         private readonly Faction _faction;
 
         public DroneFeedbackFactory(
             SpawnPositionFinder spawnPositionFinder,
-            DroneMonitor droneMonitor,
+            IDroneFactory droneFactory,
             Faction faction)
         {
-            Helper.AssertIsNotNull(spawnPositionFinder, droneMonitor, faction);
+            Helper.AssertIsNotNull(spawnPositionFinder, droneFactory, faction);
 
             _spawnPositionFinder = spawnPositionFinder;
-            _droneMonitor = droneMonitor;
+            _droneFactory = droneFactory;
             _faction = faction;
         }
 
@@ -30,7 +30,7 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
                 new DroneFeedback(
                     new DroneConsumerInfo(droneConsumer, position, size),
                     _spawnPositionFinder,
-                    _droneMonitor,
+                    _droneFactory,
                     _faction);
         }
 

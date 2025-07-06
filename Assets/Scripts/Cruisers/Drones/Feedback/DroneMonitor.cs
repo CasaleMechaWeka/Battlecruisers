@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
-using BattleCruisers.Utils.Fetchers;
+
 
 namespace BattleCruisers.Cruisers.Drones.Feedback
 {
@@ -14,21 +14,9 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
     /// If you have a lot of drones they make a heck of a racket.  So limit the number
     /// of drones that make a sound.
     /// </summary>
-
-    public class DroneCreatedEventArgs : EventArgs
-    {
-        public IDroneController Drone { get; }
-
-        public DroneCreatedEventArgs(IDroneController drone)
-        {
-            Assert.IsNotNull(drone);
-            Drone = drone;
-        }
-    }
-
     public class DroneMonitor
     {
-        public event EventHandler<DroneCreatedEventArgs> DroneCreated;
+        private readonly IDroneFactory _droneFactory;
 
         private readonly IDictionary<Faction, int> _factionToActiveDroneNum;
         public IReadOnlyDictionary<Faction, int> FactionToActiveDroneNum { get; }
@@ -39,9 +27,12 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
         private readonly ISettableBroadcastingProperty<bool> _rightCruiserHasActiveDrones;
         public IBroadcastingProperty<bool> RightCruiserHasActiveDrones { get; }
 
-        public DroneMonitor()
+        public DroneMonitor(IDroneFactory droneFactory)
         {
-            DroneCreated += _droneFactory_DroneCreated;
+            Assert.IsNotNull(droneFactory);
+
+            _droneFactory = droneFactory;
+            _droneFactory.DroneCreated += _droneFactory_DroneCreated;
 
             _factionToActiveDroneNum = new Dictionary<Faction, int>()
             {
@@ -55,13 +46,6 @@ namespace BattleCruisers.Cruisers.Drones.Feedback
 
             _rightCruiserHasActiveDrones = new SettableBroadcastingProperty<bool>(false);
             RightCruiserHasActiveDrones = new BroadcastingProperty<bool>(_rightCruiserHasActiveDrones);
-        }
-
-        public IDroneController CreateItem()
-        {
-            IDroneController newDrone = PrefabFactory.GetDrone();
-            DroneCreated?.Invoke(this, new DroneCreatedEventArgs(newDrone));
-            return newDrone;
         }
 
         private void _droneFactory_DroneCreated(object sender, DroneCreatedEventArgs e)
