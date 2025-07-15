@@ -114,7 +114,7 @@ namespace BattleCruisers.Data.Models
             // Status tracking:
             _hasAttemptedTutorial = game.HasAttemptedTutorial;
             _isDoneMigration = game.IsDoneMigration;
-            _premiumEdition = game.PremiumEdition;
+            _premiumEdition = game.PremiumEdition || game.PurchasedBodykits.Contains(0);
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel

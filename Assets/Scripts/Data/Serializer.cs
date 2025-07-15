@@ -139,6 +139,8 @@ namespace BattleCruisers.Data
                     Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
             }
 
+            game.PremiumEdition |= game.PurchasedBodykits.Contains(0);
+
 #if PREMIUM_EDITION
             game.PremiumEdition = true;
             game.AddBodykit(0);
