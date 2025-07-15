@@ -1,5 +1,6 @@
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene;
+using BattleCruisers.Scenes;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
@@ -15,6 +16,8 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     public const string large_coin_pack = "coins1000_pack";
     public const string medium_coin_pack = "coins500_pack";
     public const string extralarge_coin_pack = "coins5000_pack";
+
+
 
     //************************** Adjust these methods **************************************
     public void InitializePurchasing()
@@ -118,37 +121,135 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
     public void RestorePurchases()
     {
+        Debug.Log("RestorePurchaseTrace: === RESTORE PURCHASES START ===");
+        
         if (!IsInitialized())
         {
-            Debug.Log("RestorePurchases FAIL. Not initialized.");
+            Debug.Log("RestorePurchaseTrace: RestorePurchases FAIL. Not initialized.");
             return;
+        }
+
+        Debug.Log("RestorePurchaseTrace: IAP Manager is initialized. Store controller: " + (storeController != null));
+        Debug.Log("RestorePurchaseTrace: Available products count: " + storeController.products.all.Length);
+        
+        foreach (var product in storeController.products.all)
+        {
+            Debug.Log($"RestorePurchaseTrace: Product: {product.definition.id}, Type: {product.definition.type}, HasReceipt: {product.hasReceipt}");
         }
 
         if (Application.platform == RuntimePlatform.IPhonePlayer ||
             Application.platform == RuntimePlatform.OSXPlayer)
         {
-            Debug.Log("RestorePurchases started ...");
+            Debug.Log("RestorePurchaseTrace: RestorePurchases started for iOS/macOS...");
 
             var apple = _StoreExtensionProvider.GetExtension<IAppleExtensions>();
             apple.RestoreTransactions((bool success, string error) =>
             {
-                Debug.Log("RestorePurchases continuing: " + success + ". If no further messages, no purchases available to restore.");
+                Debug.Log("RestorePurchaseTrace: iOS RestoreTransactions callback - Success: " + success + ", Error: " + error);
+                if (success)
+                {
+                    Debug.Log("RestorePurchaseTrace: iOS restore succeeded, calling ProcessRestoredPurchases...");
+                    ProcessRestoredPurchases();
+                }
+                else
+                {
+                    Debug.Log("RestorePurchaseTrace: iOS restore failed: " + error);
+                }
             });
         }
         else if (Application.platform == RuntimePlatform.Android)
         {
-            Debug.Log("RestorePurchases started ...");
+            Debug.Log("RestorePurchaseTrace: RestorePurchases started for Android...");
 
             var android = _StoreExtensionProvider.GetExtension<IGooglePlayStoreExtensions>();
             android.RestoreTransactions((bool success, string error) =>
             {
-                Debug.Log("RestorePurchases continuing: " + success + ". If no further messages, no purchases available to restore.");
+                Debug.Log("RestorePurchaseTrace: Android RestoreTransactions callback - Success: " + success + ", Error: " + error);
+                if (success)
+                {
+                    Debug.Log("RestorePurchaseTrace: Android restore succeeded, calling ProcessRestoredPurchases...");
+                    ProcessRestoredPurchases();
+                }
+                else
+                {
+                    Debug.Log("RestorePurchaseTrace: Android restore failed: " + error);
+                }
             });
         }
         else
         {
-            Debug.Log("RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform);
+            Debug.Log("RestorePurchaseTrace: RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform);
         }
+        
+        Debug.Log("RestorePurchaseTrace: === RESTORE PURCHASES END ===");
+    }
+
+    private void ProcessRestoredPurchases()
+    {
+        Debug.Log("RestorePurchaseTrace: === PROCESS RESTORED PURCHASES START ===");
+        Debug.Log("RestorePurchaseTrace: Checking " + storeController.products.all.Length + " products for restored purchases...");
+        
+        int processedCount = 0;
+        
+        foreach (var product in storeController.products.all)
+        {
+            Debug.Log($"RestorePurchaseTrace: Checking product: {product.definition.id}");
+            Debug.Log($"RestorePurchaseTrace:   - Type: {product.definition.type}");
+            Debug.Log($"RestorePurchaseTrace:   - HasReceipt: {product.hasReceipt}");
+            Debug.Log($"RestorePurchaseTrace:   - AvailableToPurchase: {product.availableToPurchase}");
+            
+            if (product.hasReceipt && product.definition.type == ProductType.NonConsumable)
+            {
+                Debug.Log($"RestorePurchaseTrace: *** FOUND RESTORED NON-CONSUMABLE: {product.definition.id} ***");
+                
+                try
+                {
+                    Debug.Log("RestorePurchaseTrace: Processing restored purchase directly...");
+                    
+                    if (product.definition.id == premium_version_product)
+                    {
+                        Debug.Log("RestorePurchaseTrace: Applying Premium Edition...");
+                        DataProvider.GameModel.PremiumEdition = true;
+                        DataProvider.GameModel.AddBodykit(0);
+                        DataProvider.SaveGame();
+                        Debug.Log("RestorePurchaseTrace: Premium Edition applied successfully");
+                    }
+                    else
+                    {
+                        Debug.Log($"RestorePurchaseTrace: Unknown non-consumable product: {product.definition.id}");
+                    }
+                    
+                    processedCount++;
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"RestorePurchaseTrace: Failed to process restored purchase {product.definition.id}: {e.Message}");
+                    Debug.LogError($"RestorePurchaseTrace: Exception type: {e.GetType().Name}");
+                    Debug.LogError($"RestorePurchaseTrace: Stack trace: {e.StackTrace}");
+                }
+            }
+            else
+            {
+                Debug.Log($"RestorePurchaseTrace: Skipping product {product.definition.id} - HasReceipt: {product.hasReceipt}, Type: {product.definition.type}");
+            }
+        }
+        
+        Debug.Log($"RestorePurchaseTrace: === PROCESS RESTORED PURCHASES END - Processed {processedCount} items ===");
+        
+        // Show one-line summary on screen
+        if (processedCount > 0)
+        {
+            LogToScreen($"Restore complete: {processedCount} item(s) restored");
+        }
+        else
+        {
+            LogToScreen("Restore complete: No items found to restore");
+        }
+    }
+
+    private void LogToScreen(string message)
+    {
+        Debug.Log("IAP Restore: " + message);
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
