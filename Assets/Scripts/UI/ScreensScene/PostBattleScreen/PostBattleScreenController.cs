@@ -199,7 +199,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     if (ApplicationModel.SelectedLevel == DataProvider.GameModel.CompletedLevels.Count + 1 && DataProvider.SettingsManager.AIDifficulty != Difficulty.Normal && ApplicationModel.Mode == GameMode.Campaign)
                     {
                         DataProvider.GameModel.TimesLostOnLastLevel += 1;
-                        if (DataProvider.GameModel.TimesLostOnLastLevel == 2)
+                        if (DataProvider.GameModel.TimesLostOnLastLevel == 3)
                         {
                             if (defeatMessage.activeSelf)
                                 defeatMessage.SetActive(false);
