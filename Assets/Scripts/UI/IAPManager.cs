@@ -1,6 +1,5 @@
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene;
-using BattleCruisers.Scenes;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
@@ -40,16 +39,10 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         return storeController != null && _StoreExtensionProvider != null;
     }
 
-
-    //Step 3 Create methods
-
-
-
-
     //Step 4 modify purchasing
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        if (args.purchasedProduct.definition.id == premium_version_product)//allowing for just the single IAP at this stage
+        if (args.purchasedProduct.definition.id == premium_version_product) //allowing for just the single IAP at this stage
         {
             DataProvider.GameModel.PremiumEdition = true;
             DataProvider.GameModel.AddBodykit(0);
@@ -79,8 +72,8 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         return PurchaseProcessingResult.Complete;
     }
 
-
     //**************************** Dont worry about these methods ***********************************
+    // We should probably worry about these methods!!!
     private void Awake()
     {
         TestSingleton();
@@ -121,21 +114,14 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
 
     public void RestorePurchases()
     {
-        Debug.Log("RestorePurchaseTrace: === RESTORE PURCHASES START ===");
-        
         if (!IsInitialized())
         {
             Debug.Log("RestorePurchaseTrace: RestorePurchases FAIL. Not initialized.");
             return;
         }
 
-        Debug.Log("RestorePurchaseTrace: IAP Manager is initialized. Store controller: " + (storeController != null));
-        Debug.Log("RestorePurchaseTrace: Available products count: " + storeController.products.all.Length);
-        
         foreach (var product in storeController.products.all)
-        {
             Debug.Log($"RestorePurchaseTrace: Product: {product.definition.id}, Type: {product.definition.type}, HasReceipt: {product.hasReceipt}");
-        }
 
         if (Application.platform == RuntimePlatform.IPhonePlayer ||
             Application.platform == RuntimePlatform.OSXPlayer)
@@ -180,32 +166,31 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
         {
             Debug.Log("RestorePurchaseTrace: RestorePurchases FAIL. Not supported on this platform. Current = " + Application.platform);
         }
-        
+
         Debug.Log("RestorePurchaseTrace: === RESTORE PURCHASES END ===");
     }
 
     private void ProcessRestoredPurchases()
     {
-        Debug.Log("RestorePurchaseTrace: === PROCESS RESTORED PURCHASES START ===");
         Debug.Log("RestorePurchaseTrace: Checking " + storeController.products.all.Length + " products for restored purchases...");
-        
+
         int processedCount = 0;
-        
+
         foreach (var product in storeController.products.all)
         {
             Debug.Log($"RestorePurchaseTrace: Checking product: {product.definition.id}");
             Debug.Log($"RestorePurchaseTrace:   - Type: {product.definition.type}");
             Debug.Log($"RestorePurchaseTrace:   - HasReceipt: {product.hasReceipt}");
             Debug.Log($"RestorePurchaseTrace:   - AvailableToPurchase: {product.availableToPurchase}");
-            
+
             if (product.hasReceipt && product.definition.type == ProductType.NonConsumable)
             {
                 Debug.Log($"RestorePurchaseTrace: *** FOUND RESTORED NON-CONSUMABLE: {product.definition.id} ***");
-                
+
                 try
                 {
                     Debug.Log("RestorePurchaseTrace: Processing restored purchase directly...");
-                    
+
                     if (product.definition.id == premium_version_product)
                     {
                         Debug.Log("RestorePurchaseTrace: Applying Premium Edition...");
@@ -218,7 +203,7 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                     {
                         Debug.Log($"RestorePurchaseTrace: Unknown non-consumable product: {product.definition.id}");
                     }
-                    
+
                     processedCount++;
                 }
                 catch (System.Exception e)
@@ -233,9 +218,9 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
                 Debug.Log($"RestorePurchaseTrace: Skipping product {product.definition.id} - HasReceipt: {product.hasReceipt}, Type: {product.definition.type}");
             }
         }
-        
+
         Debug.Log($"RestorePurchaseTrace: === PROCESS RESTORED PURCHASES END - Processed {processedCount} items ===");
-        
+
         // Show one-line summary on screen
         if (processedCount > 0)
         {
