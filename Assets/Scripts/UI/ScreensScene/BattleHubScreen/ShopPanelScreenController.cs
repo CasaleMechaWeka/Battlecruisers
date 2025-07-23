@@ -17,7 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class ShopPanelScreenController : ScreenController
     {
-        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, infoButton;
+        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton;
         public CanvasGroupButton captainsButton, hecklesButton, bodykitButton, variantsButton;
         public Transform captainItemContainer, heckleItemContainer, bodykitItemContainer, variantsItemContainer;
         public GameObject captainItemPrefab, heckleItemPrefab, bodykitItemPrefab, variantItemPrefab;
@@ -57,7 +57,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
             bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
             variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
-            infoButton.Initialise(_soundPlayer, InfoButton_OnClick);
             captainsContainer.Initialize(_soundPlayer);
             hecklesContainer.Initialize(_soundPlayer);
             bodykitsContainer.Initialize(_soundPlayer);
