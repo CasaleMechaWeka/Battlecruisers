@@ -61,8 +61,9 @@ namespace BattleCruisers.Data
                     SaveGame();
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Debug.LogError(e);
                 _gameModel = StaticData.InitialGameModel;
 
                 SaveGame();
