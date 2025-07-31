@@ -121,7 +121,7 @@ namespace BattleCruisers.Data
             try
             {
                 SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
-                if (saveModel == null || saveModel._lifetimeDestructionScore < _gameModel.LifetimeDestructionScore)
+                if (saveModel == null || saveModel.lifetimeDestructionScore < _gameModel.LifetimeDestructionScore)
                 {
                     //override cloud save with local save
                     Debug.Log("CloudSaveModel is null.");
@@ -140,7 +140,7 @@ namespace BattleCruisers.Data
 
                     await Task.WhenAll(syncCurrencyToCloud);
                 }
-                else if (saveModel._lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
+                else if (saveModel.lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
                 {
                     // Preserve local settings before cloud overwrites them
                     var localSettings = _gameModel.Settings;

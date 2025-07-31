@@ -695,7 +695,7 @@ namespace BattleCruisers.Data.Static
                 unlockedUnits: GetInitialUnits()
                 );
 
-            foreach (int i in playerLoadout.CurrentHeckles)
+            foreach (int i in playerLoadout.SelectedHeckles)
                 game.AddHeckle(i);
 
             return game;

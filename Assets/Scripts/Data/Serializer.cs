@@ -97,20 +97,23 @@ namespace BattleCruisers.Data
 
             Loadout loadout = (Loadout)plo;
 
-            bool validLoadoutCatrgories = true;
+            bool validLoadoutCategories = true;
 
-            if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5 ||
-               loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5 ||
-               loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5 ||
-               loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5 ||
-               loadout.SelectedUnits[UnitCategory.Naval].Count > 5 ||
-               loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
+            if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5
+                || loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5
+                || loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5
+                || loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5
+                || loadout.SelectedUnits[UnitCategory.Naval].Count > 5
+                || loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
             {
-                validLoadoutCatrgories = false;
+                validLoadoutCategories = false;
             }
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || !validLoadoutCatrgories || compatiblePurchasables != purchasableCategories.Length ||
-                ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+            if (loadout.CurrentCaptain == null
+                || loadout.SelectedVariants == null
+                || !validLoadoutCategories
+                || compatiblePurchasables != purchasableCategories.Length
+                || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -119,6 +122,30 @@ namespace BattleCruisers.Data
             {
                 // assign as was previously done
                 game = (GameModel)output;
+            }
+
+            if (game.PurchasedHeckles == null)
+                game.PurchasedHeckles.Add(UnityEngine.Random.Range(0, 279));
+
+            if (game.PlayerLoadout.SelectedHeckles == null && game.PurchasedHeckles != null)
+                game.PlayerLoadout.SelectedHeckles.Add(game.PurchasedHeckles[0]);
+
+            // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
+            if (game.PlayerLoadout.SelectedHeckles != null && game.PlayerLoadout.SelectedHeckles.Count > 0)
+            {
+                int restoredCount = 0;
+                foreach (int selectedHeckleId in game.PlayerLoadout.SelectedHeckles)
+                {
+                    if (!game.PurchasedHeckles.Contains(selectedHeckleId))
+                    {
+                        game.AddHeckle(selectedHeckleId);
+                        restoredCount++;
+                        Debug.Log($"RECOVERY: Restored missing purchased heckle {selectedHeckleId} (found in SelectedHeckles)");
+                    }
+                }
+
+                if (restoredCount > 0)
+                    Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
             }
 
             // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
@@ -161,15 +188,15 @@ namespace BattleCruisers.Data
             var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
-            foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
+            foreach (HullKey hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
                 _unlockedHulls.Add(hull);
 
             List<BuildingKey> _unlockedBuildings = new List<BuildingKey>();
-            foreach (var building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
+            foreach (BuildingKey building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
                 _unlockedBuildings.Add(building);
 
             List<UnitKey> _unlockedUnits = new List<UnitKey>();
-            foreach (var unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
+            foreach (UnitKey unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
                 _unlockedUnits.Add(unit);
 
             // compiler doesn't like them being cast when they're assigned, so they're cast here
@@ -211,9 +238,9 @@ namespace BattleCruisers.Data
             }
 
             // Heckles
-            if (_loadout.CurrentHeckles == null)
+            if (_loadout.SelectedHeckles == null)
             {
-                compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
+                compatibleGameModel.PlayerLoadout.SelectedHeckles = new List<int> { 0, 1, 2 };
             }
 
             PropertyInfo[] properties = gameData.GetType().GetProperties();
@@ -427,13 +454,26 @@ namespace BattleCruisers.Data
                     Debug.Log(gameModelData);
 
                     //saveModel.AssignSaveToGameModel(game); <-- Moved to CloudLoad() method in DataProvider
-                    if (saveModel._lifetimeDestructionScore >= game.LifetimeDestructionScore)
+                    if (saveModel.lifetimeDestructionScore >= game.LifetimeDestructionScore)
                     {
                         Debug.Log("Cloud save up to date");
                         return saveModel;
                     }
                     else
                     {
+                        if (saveModel.purchasedBodykits != null)
+                            foreach (int bodykitIndex in saveModel.purchasedBodykits)
+                                game.AddBodykit(bodykitIndex);
+                        if (saveModel.purchasedExos != null)
+                            foreach (int exoIndex in saveModel.purchasedExos)
+                                game.AddExo(exoIndex);
+                        if (saveModel.purchasedHeckles != null)
+                            foreach (int heckleIndex in saveModel.purchasedHeckles)
+                                game.AddHeckle(heckleIndex);
+                        if (saveModel.purchasedVariants != null)
+                            foreach (int variantIndex in saveModel.purchasedVariants)
+                                game.AddVariant(variantIndex);
+
                         Debug.Log("Cloud save not up to date");
                         return null;
                     }

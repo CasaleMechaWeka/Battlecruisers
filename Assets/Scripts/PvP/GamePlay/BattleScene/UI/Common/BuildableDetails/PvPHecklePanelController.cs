@@ -35,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             hecklesButton.Initialise(_soundPlayer, OnHeckleButtonClicked);
             hecklePanel.Initialise();
             await Task.Delay(10);
-            foreach (int i in DataProvider.GameModel.PlayerLoadout.CurrentHeckles)
+            foreach (int i in DataProvider.GameModel.PlayerLoadout.SelectedHeckles)
             {
                 PvPHeckleButton heckleButton = Instantiate(heckleButtonPrefab, hecklesParent);
                 heckleButton.StaticInitialise(soundPlayer, StaticData.Heckles[i], this);
