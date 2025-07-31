@@ -128,7 +128,7 @@ namespace BattleCruisers.Data
                 game.AddHeckle(UnityEngine.Random.Range(0, 279));
 
             if (game.PlayerLoadout.SelectedHeckles == null && game.PurchasedHeckles != null)
-                game.PlayerLoadout.SelectedHeckles.Add(game.PurchasedHeckles[0]);
+                game.PlayerLoadout.SelectedHeckles = new List<int> { game.PurchasedHeckles[0] };
 
             // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
             if (game.PlayerLoadout.SelectedHeckles != null && game.PlayerLoadout.SelectedHeckles.Count > 0)
