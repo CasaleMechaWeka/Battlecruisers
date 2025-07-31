@@ -125,10 +125,10 @@ namespace BattleCruisers.Data
             }
 
             if (game.PurchasedHeckles == null && game.PlayerLoadout.SelectedHeckles == null)
+            {
                 game.AddHeckle(UnityEngine.Random.Range(0, 279));
-
-            if (game.PlayerLoadout.SelectedHeckles == null && game.PurchasedHeckles != null)
                 game.PlayerLoadout.SelectedHeckles = new List<int> { game.PurchasedHeckles[0] };
+            }
 
             // If any heckle is in SelectedHeckles but missing from PurchasedHeckles, restore it
             if (game.PlayerLoadout.SelectedHeckles != null && game.PlayerLoadout.SelectedHeckles.Count > 0)
