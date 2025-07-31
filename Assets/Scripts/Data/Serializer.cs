@@ -124,28 +124,26 @@ namespace BattleCruisers.Data
                 game = (GameModel)output;
             }
 
-            if (game.PurchasedHeckles == null)
+            if (game.PurchasedHeckles == null && game.PlayerLoadout.SelectedHeckles == null)
                 game.AddHeckle(UnityEngine.Random.Range(0, 279));
 
             if (game.PlayerLoadout.SelectedHeckles == null && game.PurchasedHeckles != null)
                 game.PlayerLoadout.SelectedHeckles = new List<int> { game.PurchasedHeckles[0] };
 
-            // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
+            // If any heckle is in SelectedHeckles but missing from PurchasedHeckles, restore it
             if (game.PlayerLoadout.SelectedHeckles != null && game.PlayerLoadout.SelectedHeckles.Count > 0)
             {
                 int restoredCount = 0;
                 foreach (int selectedHeckleId in game.PlayerLoadout.SelectedHeckles)
-                {
                     if (!game.PurchasedHeckles.Contains(selectedHeckleId))
                     {
                         game.AddHeckle(selectedHeckleId);
                         restoredCount++;
                         Debug.Log($"RECOVERY: Restored missing purchased heckle {selectedHeckleId} (found in SelectedHeckles)");
                     }
-                }
 
                 if (restoredCount > 0)
-                    Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
+                    Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased heckles from SelectedHeckles");
             }
 
             // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
@@ -153,14 +151,12 @@ namespace BattleCruisers.Data
             {
                 int restoredCount = 0;
                 foreach (int selectedVariantId in game.PlayerLoadout.SelectedVariants)
-                {
                     if (!game.PurchasedVariants.Contains(selectedVariantId))
                     {
                         game.AddVariant(selectedVariantId);
                         restoredCount++;
                         Debug.Log($"RECOVERY: Restored missing purchased variant {selectedVariantId} (found in SelectedVariants)");
                     }
-                }
 
                 if (restoredCount > 0)
                     Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
