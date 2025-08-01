@@ -53,11 +53,11 @@ namespace BattleCruisers.Data.Models
             get => _currentCaptain;
             set => _currentCaptain = value;
         }
-        private List<int> _selectedHeckles = UnlockedHeckles();
-        public List<int> SelectedHeckles
+        private List<int> _currentHeckles = UnlockedHeckles();
+        public List<int> CurrentHeckles
         {
-            get => _selectedHeckles;
-            set => _selectedHeckles = value;
+            get => _currentHeckles;
+            set => _currentHeckles = value;
         }
 
         [SerializeField]

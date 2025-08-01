@@ -104,7 +104,7 @@ namespace BattleCruisers.Data.Models
             currentHullKey = game.PlayerLoadout.Hull.PrefabName;
             currentBuildings = ComputeLoadoutBuildings(game.PlayerLoadout);
             currentUnits = ComputeLoadoutUnits(game.PlayerLoadout);
-            currentHeckles = game.PlayerLoadout.SelectedHeckles;
+            currentHeckles = game.PlayerLoadout.CurrentHeckles;
             currentCaptain = game.PlayerLoadout.CurrentCaptain.PrefabName;
             buildingsToCategories = ComputeBuildLimits(game.PlayerLoadout.GetBuildLimits());
             unitsToCategories = ComputeUnitLimits(game.PlayerLoadout.GetUnitLimits());
@@ -343,13 +343,13 @@ namespace BattleCruisers.Data.Models
             // current heckles
             if (currentHeckles != null)
             {
-                game.PlayerLoadout.SelectedHeckles = currentHeckles;
+                game.PlayerLoadout.CurrentHeckles = currentHeckles;
                 foreach (int heckle in currentHeckles)
                     game.AddHeckle(heckle);
             }
             else
             {
-                game.PlayerLoadout.SelectedHeckles = ComputeUnlockedHeckles(game);
+                game.PlayerLoadout.CurrentHeckles = ComputeUnlockedHeckles(game);
             }
 
             // current captain

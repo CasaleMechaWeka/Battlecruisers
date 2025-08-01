@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             {
                 this.gameObject.SetActive(true);
                 displayText.text = HeckleLimit.ToString();
-                limitText.text = loadout.SelectedHeckles.Count.ToString();
+                limitText.text = loadout.CurrentHeckles.Count.ToString();
             }
             else if (_familyTracker.ComparingFamily.Value == null)
             {

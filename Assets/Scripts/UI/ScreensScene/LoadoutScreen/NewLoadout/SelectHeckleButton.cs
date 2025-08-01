@@ -61,19 +61,19 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
 
 
-            if (!playerLoadout.SelectedHeckles.Contains(index))
+            if (!playerLoadout.CurrentHeckles.Contains(index))
             {
-                if (playerLoadout.SelectedHeckles.Count < heckleLimit)
-                    playerLoadout.SelectedHeckles.Add(index);
+                if (playerLoadout.CurrentHeckles.Count < heckleLimit)
+                    playerLoadout.CurrentHeckles.Add(index);
                 DataProvider.SaveGame();
-                limit.text = playerLoadout.SelectedHeckles.Count.ToString();
+                limit.text = playerLoadout.CurrentHeckles.Count.ToString();
                 UpdateSelectText(true);
             }
             else
             {
-                playerLoadout.SelectedHeckles.Remove(index);
+                playerLoadout.CurrentHeckles.Remove(index);
                 DataProvider.SaveGame();
-                limit.text = playerLoadout.SelectedHeckles.Count.ToString();
+                limit.text = playerLoadout.CurrentHeckles.Count.ToString();
                 UpdateSelectText(false);
             }
 
@@ -131,9 +131,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             if (heckleData != null)
             {
                 Loadout playerLoadout = DataProvider.GameModel.PlayerLoadout;
-                limit.text = playerLoadout.SelectedHeckles.Count.ToString();
+                limit.text = playerLoadout.CurrentHeckles.Count.ToString();
 
-                if (playerLoadout.SelectedHeckles.Contains(heckleData.Index))
+                if (playerLoadout.CurrentHeckles.Contains(heckleData.Index))
                     UpdateSelectText(true);
                 else
                     UpdateSelectText(false);
@@ -145,8 +145,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout loadout = DataProvider.GameModel.PlayerLoadout;
             if (_heckleDetails.SelectedItem.Value != null)
             {
-                if (((loadout.SelectedHeckles.Count == heckleLimit) && selectText.activeSelf)
-                     || (loadout.SelectedHeckles.Count == 1 && deselectText.activeSelf))
+                if (((loadout.CurrentHeckles.Count == heckleLimit) && selectText.activeSelf)
+                     || (loadout.CurrentHeckles.Count == 1 && deselectText.activeSelf))
                 {
                     return false;
                 }

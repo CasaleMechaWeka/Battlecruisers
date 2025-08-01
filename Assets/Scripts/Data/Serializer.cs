@@ -124,17 +124,17 @@ namespace BattleCruisers.Data
                 game = (GameModel)output;
             }
 
-            if (game.PurchasedHeckles == null && game.PlayerLoadout.SelectedHeckles == null)
+            if (game.PurchasedHeckles == null && game.PlayerLoadout.CurrentHeckles == null)
                 game.AddHeckle(UnityEngine.Random.Range(0, 279));
 
-            if (game.PlayerLoadout.SelectedHeckles == null && game.PurchasedHeckles != null)
-                game.PlayerLoadout.SelectedHeckles = new List<int> { game.PurchasedHeckles[0] };
+            if (game.PlayerLoadout.CurrentHeckles == null && game.PurchasedHeckles != null)
+                game.PlayerLoadout.CurrentHeckles = new List<int> { game.PurchasedHeckles[0] };
 
             // If any heckle is in SelectedHeckles but missing from PurchasedHeckles, restore it
-            if (game.PlayerLoadout.SelectedHeckles != null && game.PlayerLoadout.SelectedHeckles.Count > 0)
+            if (game.PlayerLoadout.CurrentHeckles != null && game.PlayerLoadout.CurrentHeckles.Count > 0)
             {
                 int restoredCount = 0;
-                foreach (int selectedHeckleId in game.PlayerLoadout.SelectedHeckles)
+                foreach (int selectedHeckleId in game.PlayerLoadout.CurrentHeckles)
                     if (!game.PurchasedHeckles.Contains(selectedHeckleId))
                     {
                         game.AddHeckle(selectedHeckleId);
@@ -234,9 +234,9 @@ namespace BattleCruisers.Data
             }
 
             // Heckles
-            if (_loadout.SelectedHeckles == null)
+            if (_loadout.CurrentHeckles == null)
             {
-                compatibleGameModel.PlayerLoadout.SelectedHeckles = new List<int> { 0, 1, 2 };
+                compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
             }
 
             PropertyInfo[] properties = gameData.GetType().GetProperties();

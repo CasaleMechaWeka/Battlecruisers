@@ -77,8 +77,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         }
         private void UpdateSelectedFeedback()
         {
-            if (_gameModel.PlayerLoadout.SelectedHeckles != null)
-                _selectedFeedback.gameObject.SetActive(_gameModel.PlayerLoadout.SelectedHeckles.Contains(_heckleData.Index));
+            if (_gameModel.PlayerLoadout.CurrentHeckles != null)
+                _selectedFeedback.gameObject.SetActive(_gameModel.PlayerLoadout.CurrentHeckles.Contains(_heckleData.Index));
             else
                 _selectedFeedback.gameObject.SetActive(false);
         }
