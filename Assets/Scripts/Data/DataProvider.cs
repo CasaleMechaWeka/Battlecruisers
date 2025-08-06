@@ -83,10 +83,9 @@ namespace BattleCruisers.Data
                     for (int i = 1; i < _gameModel.NumOfLevelsCompleted; i++)
                     {
                         Loot unlockedLoot = StaticData.GetLevelLoot(i);
-                        if (unlockedLoot != null)
-                            if (unlockedLoot.Items.Count != 0)
-                                foreach (ILootItem lootItem in unlockedLoot.Items)
-                                    lootItem.UnlockItem(_gameModel);
+                        if (unlockedLoot != null && unlockedLoot.Items.Count != 0)
+                            foreach (ILootItem lootItem in unlockedLoot.Items)
+                                lootItem.UnlockItem(_gameModel);
                     }
                 }
             }

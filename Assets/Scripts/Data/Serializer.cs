@@ -324,9 +324,7 @@ namespace BattleCruisers.Data
                 compatibleGameModel.CreditsChange = (int)gameData.GetType().GetProperty("CreditsChange").GetValue(gameData);
 
             if (gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData) != null)
-            {
                 compatibleGameModel.TimesLostOnLastLevel = (int)gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData);
-            }
 
             // Variants
             if (_loadout.SelectedVariants == null)
@@ -349,9 +347,7 @@ namespace BattleCruisers.Data
 
             // What levels have been completed, and at what difficulty
             for (int i = 0; i < completedLevelsCount; i++)
-            {
                 compatibleGameModel.AddCompletedLevel(completedLevels.ElementAt(i));
-            }
 
             List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
 
@@ -545,7 +541,7 @@ namespace BattleCruisers.Data
             }
             catch (EconomyRateLimitedException e)
             {
-                balanceResult = await BattleCruisers.Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
+                balanceResult = await Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
                 if (this == null) return false;
                 if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)

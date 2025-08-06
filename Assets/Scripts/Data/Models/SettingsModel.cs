@@ -244,7 +244,6 @@ namespace BattleCruisers.Data.Models
                 _resolutionWidth = (int)value.x;
                 _resolutionHeight = (int)value.y;
             }
-
         }
 
         [SerializeField]
@@ -293,7 +292,8 @@ namespace BattleCruisers.Data.Models
 
             AltDroneSounds = false;
 
-            Resolution = new Vector2(640, 360);
+            Resolution = new Vector2(Screen.width, Screen.height);
+            FullScreen = true;
 
 #if !UNITY_EDITOR   //this should circumvent Unity being stupid and serializing fields it shouldn't serialize
             InitialiseGraphicsSettings();
@@ -305,13 +305,16 @@ namespace BattleCruisers.Data.Models
         public void InitialiseGraphicsSettings()
         {
             VSync = false;
-            FullScreen = true;
-            if (Screen.currentResolution.width < 600)
+            if (Screen.currentResolution.width < 640)
             {
-                Screen.SetResolution(600, 400, FullScreenMode.Windowed);
+                Screen.SetResolution(640, 480, FullScreenMode.Windowed);
                 FullScreen = false;
             }
-            Resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
+            if (ResolutionWidth == 0 || ResolutionHeight == 0)
+                Resolution = new Vector2(Screen.width, Screen.height);
+            else
+                Resolution = new Vector2(ResolutionWidth, ResolutionHeight);
+
             _initialisedGraphics = true;
         }
 
@@ -335,9 +338,7 @@ namespace BattleCruisers.Data.Models
             else if (_version == ModelVersion.WithMusicVolume)
             {
                 if (_aiDifficulty == Difficulty.Easy)
-                {
                     _aiDifficulty = Difficulty.Normal;
-                }
 
                 _version = ModelVersion.RemovedEasyDifficulty;
             }

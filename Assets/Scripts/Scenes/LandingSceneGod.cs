@@ -607,9 +607,7 @@ namespace BattleCruisers.Scenes
             labelApple.SetActive(true);
             labelGuest.SetActive(true);
             foreach (GameObject i in disableOnSceneTransition)
-            {
                 i.SetActive(false);
-            }
             SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
         }
@@ -641,9 +639,7 @@ namespace BattleCruisers.Scenes
         {
 #if PLATFORM_IOS
             if (_AppleAuthManager != null)
-            {
                 _AppleAuthManager.Update();
-            }
 #endif
         }
 
@@ -665,7 +661,7 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.KeepAlive = false;
                 request.Timeout = timeoutMs;
                 using (await request.GetResponseAsync())

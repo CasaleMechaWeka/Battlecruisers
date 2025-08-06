@@ -78,7 +78,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
             resolutionDropdown.Initialise(_settingsManager.Resolution);
 
-
             IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
             zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
 
