@@ -100,20 +100,20 @@ namespace BattleCruisers.Data
             bool validLoadoutCategories = true;
 
             if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5
-                || loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5
-                || loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5
-                || loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5
-                || loadout.SelectedUnits[UnitCategory.Naval].Count > 5
-                || loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
+             || loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5
+             || loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5
+             || loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5
+             || loadout.SelectedUnits[UnitCategory.Naval].Count > 5
+             || loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
             {
                 validLoadoutCategories = false;
             }
 
             if (loadout.CurrentCaptain == null
-                || loadout.SelectedVariants == null
-                || !validLoadoutCategories
-                || compatiblePurchasables != purchasableCategories.Length
-                || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+             || loadout.SelectedVariants == null
+             || !validLoadoutCategories
+             || compatiblePurchasables != purchasableCategories.Length
+             || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -465,6 +465,42 @@ namespace BattleCruisers.Data
                         if (saveModel.purchasedVariants != null)
                             foreach (int variantIndex in saveModel.purchasedVariants)
                                 game.AddVariant(variantIndex);
+
+                        if (saveModel.levelsCompleted != null)
+                            foreach (KeyValuePair<int, int> level in saveModel.levelsCompleted)
+                            {
+                                CompletedLevel cLevel = new CompletedLevel(level.Key,
+                                                                           (Settings.Difficulty)level.Value);
+                                game.AddCompletedLevel(cLevel);
+                            }
+                        if (saveModel.sideQuestsCompleted != null)
+                            foreach (KeyValuePair<int, int> sideQuest in saveModel.sideQuestsCompleted)
+                            {
+                                CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key,
+                                                                               (Settings.Difficulty)sideQuest.Value);
+                                game.AddCompletedSideQuest(cSideQuest);
+                            }
+
+                        if (saveModel.unlockedHulls != null)
+                            foreach (string hull in saveModel.unlockedHulls)
+                            {
+                                HullKey hullKey = new HullKey(hull);
+                                game.AddUnlockedHull(hullKey);
+                            }
+                        if (saveModel.unlockedBuildings != null)
+                            foreach (KeyValuePair<string, string> building in saveModel.unlockedBuildings)
+                            {
+                                Enum.TryParse(building.Value, out BuildingCategory category);
+                                BuildingKey buildingKey = new BuildingKey(category, building.Key);
+                                game.AddUnlockedBuilding(buildingKey);
+                            }
+                        if (saveModel.unlockedUnits != null)
+                            foreach (KeyValuePair<string, string> unit in saveModel.unlockedUnits)
+                            {
+                                Enum.TryParse(unit.Value, out UnitCategory category);
+                                UnitKey unitKey = new UnitKey(category, unit.Key);
+                                game.AddUnlockedUnit(unitKey);
+                            }
 
                         Debug.Log("Cloud save not up to date");
                         return null;

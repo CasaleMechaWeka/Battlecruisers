@@ -118,6 +118,8 @@ namespace BattleCruisers.Data
 
         public static async Task CloudLoad()
         {
+            if (SettingsManager.CloudSaveDisabled)
+                return;
             try
             {
                 SaveGameModel saveModel = await _serializer.CloudLoad(_gameModel);
@@ -143,7 +145,7 @@ namespace BattleCruisers.Data
                 else if (saveModel.lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
                 {
                     // Preserve local settings before cloud overwrites them
-                    var localSettings = _gameModel.Settings;
+                    SettingsModel localSettings = _gameModel.Settings;
 
                     saveModel.AssignSaveToGameModel(_gameModel);
 
@@ -226,7 +228,6 @@ namespace BattleCruisers.Data
             }
         }
 
-
         public static void MigrateInventory()
         {
             //captain exos
@@ -272,6 +273,7 @@ namespace BattleCruisers.Data
 
             await Task.CompletedTask;
         }
+
         private static async Task FetchConfigs()
         {
             try

@@ -451,9 +451,7 @@ namespace BattleCruisers.Data.Models
                 CompletedLevel currentLevel = _completedLevels[completedLevel.LevelNum - 1];
 
                 if (completedLevel.HardestDifficulty > currentLevel.HardestDifficulty)
-                {
                     currentLevel.HardestDifficulty = completedLevel.HardestDifficulty;
-                }
             }
         }
 

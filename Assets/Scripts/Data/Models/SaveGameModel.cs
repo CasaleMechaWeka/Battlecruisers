@@ -222,21 +222,21 @@ namespace BattleCruisers.Data.Models
             }
 
             // levels completed
-            foreach (var level in levelsCompleted)
+            foreach (KeyValuePair<int, int> level in levelsCompleted)
             {
                 CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
                 game.AddCompletedLevel(cLevel);
             }
 
             if (sideQuestsCompleted != null)
-                foreach (var sideQuest in sideQuestsCompleted)
+                foreach (KeyValuePair<int, int> sideQuest in sideQuestsCompleted)
                 {
                     CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key, (Settings.Difficulty)sideQuest.Value);
                     game.AddCompletedSideQuest(cSideQuest);
                 }
 
             // unlocked hulls
-            foreach (var hull in unlockedHulls)
+            foreach (string hull in unlockedHulls)
             {
                 HullKey hk = new HullKey(hull);
                 game.AddUnlockedHull(hk);
@@ -246,7 +246,7 @@ namespace BattleCruisers.Data.Models
             // unique. The AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
 
             // unlocked buildings
-            foreach (var building in unlockedBuildings)
+            foreach (KeyValuePair<string, string> building in unlockedBuildings)
             {
                 Enum.TryParse(building.Value, out BuildingCategory bc);
                 BuildingKey bk = new BuildingKey(bc, building.Key);
@@ -254,7 +254,7 @@ namespace BattleCruisers.Data.Models
             }
 
             // unlocked units
-            foreach (var unit in unlockedUnits)
+            foreach (KeyValuePair<string, string> unit in unlockedUnits)
             {
                 Enum.TryParse(unit.Value, out UnitCategory uc);
                 UnitKey uk = new UnitKey(uc, unit.Key);
