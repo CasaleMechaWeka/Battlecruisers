@@ -5,6 +5,7 @@ using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
@@ -59,7 +60,9 @@ namespace BattleCruisers.UI.ScreensScene
 
         private async void Purchase()
         {
-            ScreensSceneGod.Instance.processingPanel.SetActive(true);
+            await TransactionLocker.ProcessTransaction(currentCaptainData.Index, async () =>
+            {
+                ScreensSceneGod.Instance.processingPanel.SetActive(true);
             if (DataProvider.GameModel.Coins >= currentCaptainData.CaptainCost)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
@@ -153,6 +156,7 @@ namespace BattleCruisers.UI.ScreensScene
                 ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCoins"), GotoBlackMarket, LocTableCache.ScreensSceneTable.GetString("GetCoins"));
 #endif
             }
+            });
         }
 
         private void OnCaptainItemClick(object sender, CaptainDataEventArgs e)

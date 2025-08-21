@@ -9,6 +9,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
@@ -55,7 +56,9 @@ namespace BattleCruisers.UI.ScreensScene
 
         private async void Purchase()
         {
-            ScreensSceneGod.Instance.processingPanel.SetActive(true);
+            await TransactionLocker.ProcessTransaction(currentVariantData.Index, async () =>
+            {
+                ScreensSceneGod.Instance.processingPanel.SetActive(true);
             if (DataProvider.GameModel.Credits >= currentVariantData.VariantCredits)
             {
                 if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
@@ -136,8 +139,8 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 ScreensSceneGod.Instance.processingPanel.SetActive(false);
                 ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"), null, null);
-                return;
             }
+            });
         }
 
         private void OnVariantItemClick(object sender, VariantDataEventArgs e)
