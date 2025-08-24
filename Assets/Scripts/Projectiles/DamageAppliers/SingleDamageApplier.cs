@@ -14,7 +14,18 @@ namespace BattleCruisers.Projectiles.DamageAppliers
 
         public void ApplyDamage(ITarget target, Vector2 collisionPoint, ITarget damageSource)
 		{
-            target.TakeDamage(_damage, damageSource);
+            if (target == null || target.IsDestroyed)
+            {
+                return;
+            }
+            try
+            {
+                target.TakeDamage(_damage, damageSource);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"DAMAGE_FAILED target={target} dmg={_damage:F1} error={ex.Message}");
+            }
 		}
 	}
 }
