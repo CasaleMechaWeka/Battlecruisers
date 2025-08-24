@@ -74,7 +74,8 @@ namespace BattleCruisers.Projectiles.Stats
                 damage = damage <= 0 ? 0.1f : damage;
                 maxVelocityInMPerS = maxVelocityInMPerS <= 0 ? 0.1f : maxVelocityInMPerS;
                 gravityScale = gravityScale < 0 ? 0 : gravityScale;
-                damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
+                // This forced ALL weapons to use AreaOfEffectDamageApplier, resulting in zero damage bug in slowmo.
+                // damageRadiusInM = damageRadiusInM <= 0 ? 0.1f : damageRadiusInM;
 
                 cruisingAltitudeInM += statVariant.cruising_altitude;
 

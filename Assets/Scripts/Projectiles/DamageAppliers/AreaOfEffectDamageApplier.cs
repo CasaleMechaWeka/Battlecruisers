@@ -42,6 +42,9 @@ namespace BattleCruisers.Projectiles.DamageAppliers
                 secondaryColliders = Physics2D.OverlapCircleAll(collisionPoint, _damageStats.SecondaryRadiusInM, _targetLayerMask);
             }
 
+            int primaryHits = 0;
+            int secondaryHits = 0;
+
             foreach (Collider2D collider in colliders)
             {
                 ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
@@ -56,6 +59,7 @@ namespace BattleCruisers.Projectiles.DamageAppliers
                 {
                     target.TakeDamage(_damageStats.Damage, damageSource);
                     damagedTargets.Add(target);
+                    primaryHits++;
                 }
             }
 
@@ -73,11 +77,17 @@ namespace BattleCruisers.Projectiles.DamageAppliers
                 {
                     target.TakeDamage(_damageStats.SecondaryDamage, damageSource);
                     damagedTargets.Add(target);
+                    secondaryHits++;
                 }
             }
 
             // Clear the set of damaged targets for the next call to ApplyDamage()
             damagedTargets.Clear();
+
+            if (primaryHits == 0 && secondaryHits == 0)
+            {
+                Debug.LogWarning($"AOE_NO_DAMAGE base={baseTarget} r={_damageStats.DamageRadiusInM:F2} sr={_damageStats.SecondaryRadiusInM:F2} ts={UnityEngine.Time.timeScale:F3}x");
+            }
         }
     }
 }
