@@ -67,6 +67,7 @@ namespace BattleCruisers.Scenes
         public const string AuthProfileCommandLineArg = "-AuthProfile";
 
         public static LandingSceneGod Instance;
+        private static bool _seededThisSession;
 
         public ErrorMessageHandler messageHandler;
         public bool HasInternetConnection { get; private set; }
@@ -609,6 +610,7 @@ namespace BattleCruisers.Scenes
             foreach (GameObject i in disableOnSceneTransition)
                 i.SetActive(false);
             SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            _ = TrySeedCloudOnce();
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
         }
 
@@ -646,6 +648,22 @@ namespace BattleCruisers.Scenes
         public void OnQuit()
         {
             Application.Quit();
+        }
+
+        private static async System.Threading.Tasks.Task TrySeedCloudOnce()
+        {
+            if (_seededThisSession) return;
+            // Skip seeding if a local save already exists; let CloudLoad handle reconciliation
+            if (new BattleCruisers.Data.Serializer().DoesSavedGameExist()) return;
+            _seededThisSession = true;
+            try
+            {
+                await BattleCruisers.Data.DataProvider.CloudSave();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Log(ex.Message);
+            }
         }
 
         void OnDestroy()

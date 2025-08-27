@@ -106,8 +106,17 @@ namespace BattleCruisers.Data
         {
             if (!SettingsManager.CloudSaveDisabled)
             {
-                await _serializer.CloudSave(_gameModel);
-                Debug.Log("Cloud saved.");
+                if (Unity.Services.Core.UnityServices.State == Unity.Services.Core.ServicesInitializationState.Initialized
+                    && Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
+                {
+                    await _serializer.CloudSave(_gameModel);
+                    Debug.Log("Cloud saved.");
+                }
+                else
+                {
+                    _serializer.SaveGame(_gameModel);
+                    Debug.Log("Cloud not ready; saved locally.");
+                }
             }
             else
             {
@@ -141,6 +150,7 @@ namespace BattleCruisers.Data
                     _gameModel._outstandingVariantTransactions = new List<VariantData>();
 
                     await Task.WhenAll(syncCurrencyToCloud);
+                    await CloudSave();
                 }
                 else if (saveModel.lifetimeDestructionScore > _gameModel.LifetimeDestructionScore)
                 {
