@@ -221,6 +221,32 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     return HullType.Shepherd;
                 case "TasDevil":
                     return HullType.TasDevil;
+                case "FortNova":
+                    return HullType.FortNova;
+                case "Zumwalt":
+                    return HullType.Zumwalt;
+                case "Yucalux":
+                    return HullType.Yucalux;
+                case "Teknosis":
+                    return HullType.Teknosis;
+                case "Pebblethrow":
+                    return HullType.Pebblethrow;
+                case "Orac":
+                    return HullType.Orac;
+                case "Middlodon":
+                    return HullType.Middlodon;
+                case "Essex":
+                    return HullType.Essex;
+                case "Axiom":
+                    return HullType.Axiom;
+                case "October":
+                    return HullType.October;
+                case "EndlessWall":
+                    return HullType.EndlessWall;
+                case "AlphaSpace":
+                    return HullType.AlphaSpace;
+                case "Arkdeso":
+                    return HullType.Arkdeso;
                 default:
                     return HullType.Yeti;
             }

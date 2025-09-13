@@ -690,6 +690,8 @@ namespace BattleCruisers.Scenes
                     return HullType.Trident;
                 case "BlackRig":
                     return HullType.BlackRig;
+                case "BasicRig":
+                    return HullType.BasicRig;
                 case "Bullshark":
                     return HullType.Bullshark;
                 case "Cricket":
@@ -724,6 +726,32 @@ namespace BattleCruisers.Scenes
                     return HullType.TasDevil;
                 case "Yeti":
                     return HullType.Yeti;
+                case "FortNova":
+                    return HullType.FortNova;
+                case "Zumwalt":
+                    return HullType.Zumwalt;
+                case "Yucalux":
+                    return HullType.Yucalux;
+                case "Teknosis":
+                    return HullType.Teknosis;
+                case "Pebblethrow":
+                    return HullType.Pebblethrow;
+                case "Orac":
+                    return HullType.Orac;
+                case "Middlodon":
+                    return HullType.Middlodon;
+                case "Essex":
+                    return HullType.Essex;
+                case "Axiom":
+                    return HullType.Axiom;
+                case "October":
+                    return HullType.October;
+                case "EndlessWall":
+                    return HullType.EndlessWall;
+                case "AlphaSpace":
+                    return HullType.AlphaSpace;
+                case "Arkdeso":
+                    return HullType.Arkdeso;
             }
             return HullType.None;
         }

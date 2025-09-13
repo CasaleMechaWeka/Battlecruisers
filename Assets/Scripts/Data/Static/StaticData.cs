@@ -119,7 +119,21 @@ namespace BattleCruisers.Data.Static
             { Hulls.BlackRig, 37 },
             { Hulls.Yeti, 40 },
             { Hulls.BasicRig, 95 },
-            { Hulls.Cricket, 95 }
+            { Hulls.Cricket, 95 },
+            // New PvE-only hulls unlock over later missions
+            { Hulls.FortNova, 95 },
+            { Hulls.Zumwalt, 95 },
+            { Hulls.Yucalux, 95 },
+            { Hulls.Teknosis, 95 },
+            { Hulls.Pebblethrow, 95 },
+            { Hulls.Orac, 95 },
+            { Hulls.Middlodon, 95 },
+            { Hulls.Essex, 95 },
+            { Hulls.Axiom, 95 },
+            { Hulls.October, 95 },
+            { Hulls.EndlessWall, 95 },
+            { Hulls.AlphaSpace, 95 },
+            { Hulls.Arkdeso, 95 }
         });
 
         private static ReadOnlyDictionary<BuildingKey, int> _buildingToCompletedSideQuest
@@ -331,6 +345,19 @@ namespace BattleCruisers.Data.Static
             Hulls.FortressPrime,
             Hulls.BasicRig,
             Hulls.Cricket,
+            Hulls.FortNova,
+            Hulls.Zumwalt,
+            Hulls.Yucalux,
+            Hulls.Teknosis,
+            Hulls.Pebblethrow,
+            Hulls.Orac,
+            Hulls.Middlodon,
+            Hulls.Essex,
+            Hulls.Axiom,
+            Hulls.October,
+            Hulls.EndlessWall,
+            Hulls.AlphaSpace,
+            Hulls.Arkdeso,
         });
         public static ReadOnlyCollection<UnitKey> UnitKeys { get; } = new ReadOnlyCollection<UnitKey>(new List<UnitKey>()
         {

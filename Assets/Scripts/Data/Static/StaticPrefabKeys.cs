@@ -139,13 +139,28 @@ namespace BattleCruisers.Data.Static
             public static HullKey FortressPrime { get; } = new HullKey("FortressPrime");
             public static HullKey BasicRig { get; } = new HullKey("BasicRig");
             public static HullKey Cricket { get; } = new HullKey("Cricket");
+            public static HullKey FortNova { get; } = new HullKey("FortNova");
+            public static HullKey Zumwalt { get; } = new HullKey("Zumwalt");
+            public static HullKey Yucalux { get; } = new HullKey("Yucalux");
+            public static HullKey Teknosis { get; } = new HullKey("Teknosis");
+            public static HullKey Pebblethrow { get; } = new HullKey("Pebblethrow");
+            public static HullKey Orac { get; } = new HullKey("Orac");
+            public static HullKey Middlodon { get; } = new HullKey("Middlodon");
+            public static HullKey Essex { get; } = new HullKey("Essex");
+            public static HullKey Axiom { get; } = new HullKey("Axiom");
+            public static HullKey October { get; } = new HullKey("October");
+            public static HullKey EndlessWall { get; } = new HullKey("EndlessWall");
+            public static HullKey AlphaSpace { get; } = new HullKey("AlphaSpace");
+            public static HullKey Arkdeso { get; } = new HullKey("Arkdeso");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor,
                 Rockjaw, Trident, ManOfWarBoss, HuntressBoss, TasDevil, Yeti,
                 Rickshaw, BlackRig, Flea, Shepherd, Microlodon, Pistol,
-                Goatherd, Megalith, FortressPrime, BasicRig, Cricket
+                Goatherd, Megalith, FortressPrime, BasicRig, Cricket,
+                FortNova, Zumwalt, Yucalux, Teknosis, Pebblethrow, Orac,
+                Middlodon, Essex, Axiom, October, EndlessWall, AlphaSpace, Arkdeso
             });
         }
 

@@ -33,6 +33,19 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         Megalith,
         BasicRig,
         Cricket,
+        FortNova,
+        Zumwalt,
+        Yucalux,
+        Teknosis,
+        Pebblethrow,
+        Orac,
+        Middlodon,
+        Essex,
+        Axiom,
+        October,
+        EndlessWall,
+        AlphaSpace,
+        Arkdeso,
         None   //  no bodykit
     }
 }
