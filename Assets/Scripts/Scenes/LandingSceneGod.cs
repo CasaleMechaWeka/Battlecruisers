@@ -653,16 +653,32 @@ namespace BattleCruisers.Scenes
         private static async System.Threading.Tasks.Task TrySeedCloudOnce()
         {
             if (_seededThisSession) return;
-            // Skip seeding if a local save already exists; let CloudLoad handle reconciliation
-            if (new BattleCruisers.Data.Serializer().DoesSavedGameExist()) return;
+
+            // Only seed if no cloud save exists for this player
+            try
+            {
+                var serializer = new BattleCruisers.Data.Serializer();
+                if (await serializer.DoesCloudSaveExistAsync())
+                {
+                    Debug.Log("Cloud save already exists, skipping seed.");
+                    return;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.Log($"Failed to check cloud save existence: {ex.Message}");
+                // Continue with seeding attempt on error
+            }
+
             _seededThisSession = true;
             try
             {
                 await BattleCruisers.Data.DataProvider.CloudSave();
+                Debug.Log("Cloud save seeded successfully.");
             }
             catch (System.Exception ex)
             {
-                Debug.Log(ex.Message);
+                Debug.Log($"Cloud save seeding failed: {ex.Message}");
             }
         }
 

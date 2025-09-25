@@ -14,6 +14,19 @@ public class CloudSaveWrapper : ISaveClient
         return false; //todo
     }
 
+    public async Task<bool> DoesCloudSaveExistAsync(string key)
+    {
+        try
+        {
+            var query = await Call(_client.LoadAsync(new HashSet<string> { key }));
+            return query.ContainsKey(key) && query[key] != null && !string.IsNullOrEmpty(query[key].ToString());
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public async Task Save(string key, object value)
     {
         var data = new Dictionary<string, object> { { key, value } };

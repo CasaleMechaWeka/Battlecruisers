@@ -434,6 +434,12 @@ namespace BattleCruisers.Data
             }
         }
 
+        public async Task<bool> DoesCloudSaveExistAsync()
+        {
+            var cloudSaveWrapper = new CloudSaveWrapper();
+            return await cloudSaveWrapper.DoesCloudSaveExistAsync("GameModel");
+        }
+
         public async Task<SaveGameModel> CloudLoad(GameModel game)
         {
             try
