@@ -33,6 +33,19 @@ namespace BattleCruisers.Utils
         Hull_Cricket = 0018,
 
         Hull_BasicRig = 0019,
+        Hull_FortNova = 0020,
+        Hull_Zumwalt = 0021,
+        Hull_Yucalux = 0022,
+        Hull_Teknosis = 0023,
+        Hull_Pebblethrow = 0024,
+        Hull_Orac = 0025,
+        Hull_Middlodon = 0026,
+        Hull_Essex = 0027,
+        Hull_Axiom = 0028,
+        Hull_October = 0029,
+        Hull_EndlessWall = 0030,
+        Hull_AlphaSpace = 0031,
+        Hull_Arkdeso = 0032,
 
         // === Buildings ===
         // Factories
