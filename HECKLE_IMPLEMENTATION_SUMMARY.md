@@ -77,6 +77,7 @@ new Level(15,
    - Rename to `EnemyHeckleMessage.prefab`
    - Remove `PvPHeckleMessage` component
    - Add `HeckleMessage` component
+   - **Add `HeckleVisibilityController` component** (respects settings!)
    - Assign Text field in inspector
    - Set `hideTime` to `5`
 
@@ -89,6 +90,8 @@ new Level(15,
    - Select the BattleSceneGod GameObject
    - Find the `enemyHeckleMessage` field in the inspector
    - Drag the `EnemyHeckleMessage` prefab instance to this field
+
+**Note:** The `HeckleVisibilityController` will automatically hide the heckles if the player has disabled them in Settings > "Heckles Allowed" toggle. This works exactly like PvP heckles!
 
 ### Testing
 1. Start any level
