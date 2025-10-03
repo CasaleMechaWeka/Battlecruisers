@@ -80,7 +80,7 @@ namespace BattleCruisers.Buildables
         public ICruiser ParentCruiser { get; private set; }
         public ICruiser EnemyCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
-        public string PrefabName => _parent.name;
+        public string PrefabName => _parent.name.Replace("(Clone)", "").Trim();
 
         private HealthBarController _healthBar;
         public HealthBarController HealthBar => _healthBar;
@@ -406,14 +406,12 @@ namespace BattleCruisers.Buildables
                 // Apply build time multiplier
                 buildTimeInS *= modifiers.buildTimeMultiplier;
                 
-                // Recalculate derived values
-                _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
-                HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
-                
-                // Apply health multiplier to base health
+                // Apply health multiplier to base health (BEFORE it gets used in calculations)
                 maxHealthBase *= modifiers.healthMultiplier;
-                maxHealth = maxHealthBase * HealthBoostable.BoostMultiplier;
-                _healthTracker.OverrideMaxHealth(maxHealth);
+                
+                // Recalculate derived values with modified stats
+                _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+                HealthGainPerDroneS = maxHealthBase / _buildTimeInDroneSeconds;
             }
         }
 

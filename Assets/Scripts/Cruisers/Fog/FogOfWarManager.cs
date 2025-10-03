@@ -23,12 +23,14 @@ namespace BattleCruisers.Cruisers.Fog
         private readonly IList<StealthGenerator> _friendlyIStealthGenerators;
         private readonly IList<SpySatelliteLauncherController> _enemySpySatellites;
         private readonly IList<SpyPlaneController> _enemySpyPlanes;
+        private readonly bool _startsWithFogActive;
 
         public FogOfWarManager(
             IGameObject fog,
             ICruiserBuildingMonitor friendlyBuildingMonitor,
             ICruiserBuildingMonitor enemyBuildingMonitor,
-            ICruiserUnitMonitor enemyUnitMonitor)
+            ICruiserUnitMonitor enemyUnitMonitor,
+            bool startsWithFogActive = false)
         {
             Helper.AssertIsNotNull(fog, friendlyBuildingMonitor, enemyBuildingMonitor, enemyUnitMonitor);
 
@@ -36,6 +38,7 @@ namespace BattleCruisers.Cruisers.Fog
             _friendlyBuildingMonitor = friendlyBuildingMonitor;
             _enemyBuildingMonitor = enemyBuildingMonitor;
             _enemyUnitMonitor = enemyUnitMonitor;
+            _startsWithFogActive = startsWithFogActive;
 
             _friendlyBuildingMonitor.BuildingCompleted += FriendlyBuildingMonitorBuildingCompleted;
             _enemyBuildingMonitor.BuildingCompleted += EnemyBuildingMonitorBuildingCompleted;
@@ -44,6 +47,15 @@ namespace BattleCruisers.Cruisers.Fog
             _friendlyIStealthGenerators = new List<StealthGenerator>();
             _enemySpySatellites = new List<SpySatelliteLauncherController>();
             _enemySpyPlanes = new List<SpyPlaneController>();
+        }
+        
+        public void ActivateStartingFog()
+        {
+            // Called after fog initialization to activate starting fog
+            if (_startsWithFogActive)
+            {
+                _fog.IsVisible = true;
+            }
         }
 
         private void FriendlyBuildingMonitorBuildingCompleted(object sender, BuildingCompletedEventArgs e)
@@ -149,7 +161,9 @@ namespace BattleCruisers.Cruisers.Fog
 
         private void UpdateFogState()
         {
-            _fog.IsVisible = _friendlyIStealthGenerators.Count != 0 && _enemySpySatellites.Count == 0 && _enemySpyPlanes.Count == 0;
+            // Fog is visible if: (cruiser starts with fog OR has stealth generators) AND enemy has no spy satellites or spy planes
+            bool hasStealth = _startsWithFogActive || _friendlyIStealthGenerators.Count != 0;
+            _fog.IsVisible = hasStealth && _enemySpySatellites.Count == 0 && _enemySpyPlanes.Count == 0;
         }
 
         public void DisposeManagedState()

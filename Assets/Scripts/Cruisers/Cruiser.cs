@@ -58,6 +58,7 @@ namespace BattleCruisers.Cruisers
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
         public HullType hullType;
+        public bool startsWithFogOfWar;
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
@@ -165,6 +166,12 @@ namespace BattleCruisers.Cruisers
             RepairManager = args.RepairManager;
 
             _fog.Initialise(args.FogStrength);
+            
+            // Activate starting fog if cruiser has this perk (AFTER fog initialization)
+            if (args.FogOfWarManager is Fog.FogOfWarManager pveManager)
+            {
+                pveManager.ActivateStartingFog();
+            }
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);

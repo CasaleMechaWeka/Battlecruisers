@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IPvPCruiser ParentCruiser { get; set; }
         public IPvPCruiser EnemyCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
-        public string PrefabName => _parent.name;
+        public string PrefabName => _parent.name.Replace("(Clone)", "").Trim();
 
         private PvPHealthBarController _healthBar;
         public PvPHealthBarController HealthBar => _healthBar;
@@ -450,11 +450,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 // Apply build time multiplier
                 buildTimeInS *= modifiers.buildTimeMultiplier;
                 
-                // Recalculate derived values
-                _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
-                
-                // Apply health multiplier
+                // Apply health multiplier (PvP buildables don't have maxHealthBase)
                 maxHealth *= modifiers.healthMultiplier;
+                
+                // Recalculate derived values with modified stats
+                _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
                 HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             }
         }

@@ -162,7 +162,7 @@ namespace BattleCruisers.Cruisers
             DroneManager droneManager = new DroneManager();
             IDroneFocuser droneFocuser = CreateDroneFocuser(isPlayerCruiser, droneManager, FactoryProvider.Sound.IPrioritisedSoundPlayer);
             IDroneConsumerProvider droneConsumerProvider = new DroneConsumerProvider(droneManager);
-            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor);
+            FogOfWarManager fogOfWarManager = new FogOfWarManager(cruiser.Fog, cruiser.BuildingMonitor, enemyCruiser.BuildingMonitor, enemyCruiser.UnitMonitor, cruiser.startsWithFogOfWar);
 
             RepairManager repairManager = new RepairManager(cruiserSpecificFactories.DroneFeedbackFactory, droneConsumerProvider, cruiser);
             if (!isPlayerCruiser)
