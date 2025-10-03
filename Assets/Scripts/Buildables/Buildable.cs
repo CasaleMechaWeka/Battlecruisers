@@ -320,6 +320,10 @@ namespace BattleCruisers.Buildables
             _cumulativeBuildProgressInDroneS = 0;
 
             _localBoosterBoostableGroup = new BoostableGroup();
+            
+            // Apply specialized buildable modifiers BEFORE creating boost groups
+            ApplySpecializedModifiers(_cruiserSpecificFactories.GlobalBoostProviders);
+            
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
             _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
             _healthBoostableGroup.BoostChanged += HealthBoostChanged;
@@ -385,6 +389,32 @@ namespace BattleCruisers.Buildables
             IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);
+        }
+
+        private void ApplySpecializedModifiers(GlobalBoostProviders globalBoostProviders)
+        {
+            if (globalBoostProviders.SpecializedBuildableBoosts.TryGetValue(PrefabName, out var modifiers))
+            {
+                Logging.Log(Tags.BOOST, $"Applying specialized modifiers to {PrefabName}");
+                
+                // Apply drone requirement override
+                if (modifiers.droneRequirementOverride > 0)
+                {
+                    numOfDronesRequired = modifiers.droneRequirementOverride;
+                }
+                
+                // Apply build time multiplier
+                buildTimeInS *= modifiers.buildTimeMultiplier;
+                
+                // Recalculate derived values
+                _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+                HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
+                
+                // Apply health multiplier to base health
+                maxHealthBase *= modifiers.healthMultiplier;
+                maxHealth = maxHealthBase * HealthBoostable.BoostMultiplier;
+                _healthTracker.OverrideMaxHealth(maxHealth);
+            }
         }
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)

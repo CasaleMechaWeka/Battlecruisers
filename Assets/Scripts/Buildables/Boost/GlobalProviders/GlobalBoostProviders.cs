@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
@@ -24,6 +25,8 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
 
         public BuildingHealthlBoostProviders BuildingHealth { get; }
 
+        public Dictionary<string, SpecializedBuildableModifiers> SpecializedBuildableBoosts { get; }
+
         public GlobalBoostProviders()
         {
             AircraftBoostProviders = new ObservableCollection<IBoostProvider>();
@@ -40,6 +43,8 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
             UnitBuildRate = new UnitBuildRatelBoostProviders();
 
             BuildingHealth = new BuildingHealthlBoostProviders();
+
+            SpecializedBuildableBoosts = new Dictionary<string, SpecializedBuildableModifiers>();
         }
     }
 }

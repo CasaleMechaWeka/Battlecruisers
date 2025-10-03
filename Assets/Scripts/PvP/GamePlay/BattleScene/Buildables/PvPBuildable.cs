@@ -390,6 +390,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _cumulativeBuildProgressInDroneS = 0;
 
             _localBoosterBoostableGroup = new BoostableGroup();
+            
+            // Apply specialized buildable modifiers BEFORE creating boost groups
+            ApplySpecializedModifiers(_cruiserSpecificFactories.GlobalBoostProviders);
+            
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
         }
 
@@ -429,6 +433,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             Logging.Log(Tags.BOOST, this);
+        }
+
+        private void ApplySpecializedModifiers(GlobalBoostProviders globalBoostProviders)
+        {
+            if (globalBoostProviders.SpecializedBuildableBoosts.TryGetValue(PrefabName, out var modifiers))
+            {
+                Logging.Log(Tags.BOOST, $"Applying specialized modifiers to {PrefabName}");
+                
+                // Apply drone requirement override
+                if (modifiers.droneRequirementOverride > 0)
+                {
+                    numOfDronesRequired = modifiers.droneRequirementOverride;
+                }
+                
+                // Apply build time multiplier
+                buildTimeInS *= modifiers.buildTimeMultiplier;
+                
+                // Recalculate derived values
+                _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
+                
+                // Apply health multiplier
+                maxHealth *= modifiers.healthMultiplier;
+                HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
+            }
         }
 
         private void ClickHandler_SingleClick(object sender, EventArgs e)
