@@ -11,6 +11,7 @@ using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.Buttons;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.UI.BattleScene.Heckles;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.UI.Cameras;
@@ -95,6 +96,11 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject EnemyName;
 
         public GameObject[] ilegalTutorialSettings;
+        
+        // Heckle system
+        public HeckleMessage enemyHeckleMessage;
+        private NPCHeckleManager _npcHeckleManager;
+        
         public static BattleSceneGod Instance;
         private void Awake()
         {
@@ -385,6 +391,31 @@ namespace BattleCruisers.Scenes.BattleScene
             // Cheater is only there in debug builds
             Cheater cheater = GetComponentInChildren<Cheater>(includeInactive: true);
             cheater?.Initialise(playerCruiser, aiCruiser);
+
+            // Initialize NPC Heckle System
+            Logging.Log(Tags.BATTLE_SCENE, "Heckle system setup");
+            if (enemyHeckleMessage != null)
+            {
+                enemyHeckleMessage.Initialise();
+                
+                // Get heckle config from current level or side quest
+                HeckleConfig heckleConfig = null;
+                if (ApplicationModel.Mode == GameMode.SideQuest)
+                {
+                    heckleConfig = currentSideQuest?.HeckleConfig;
+                }
+                else if (currentLevel != null)
+                {
+                    heckleConfig = currentLevel.HeckleConfig;
+                }
+
+                // Create and initialize the heckle manager
+                if (heckleConfig != null && heckleConfig.enableHeckles)
+                {
+                    _npcHeckleManager = gameObject.AddComponent<NPCHeckleManager>();
+                    _npcHeckleManager.Initialise(enemyHeckleMessage, heckleConfig, aiCruiser, playerCruiser);
+                }
+            }
 
             // Tutorial
             TutorialArgsBase tutorialArgs

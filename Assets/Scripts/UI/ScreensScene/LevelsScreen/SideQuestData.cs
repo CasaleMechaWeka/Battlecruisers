@@ -43,6 +43,10 @@ namespace BattleCruisers.Data
         private int _sideLevelNum;
         public int SideLevelNum => _sideLevelNum;
 
+        [SerializeField]
+        private HeckleConfig _heckleConfig;
+        public HeckleConfig HeckleConfig => _heckleConfig ?? new HeckleConfig();
+
         public SideQuestData(
         bool playerTalksFirst,
         IPrefabKey enemyCaptainExo,
@@ -52,7 +56,8 @@ namespace BattleCruisers.Data
         SoundKeyPair musicBackgroundKey,
         string skyMaterial,
         bool isCompleted,
-        int sideLevelNum
+        int sideLevelNum,
+        HeckleConfig heckleConfig = null
         )
         {
             _playerTalksFirst = playerTalksFirst;
@@ -64,6 +69,7 @@ namespace BattleCruisers.Data
             _musicBackgroundKey = musicBackgroundKey;
             _isCompleted = isCompleted;
             _sideLevelNum = sideLevelNum;
+            _heckleConfig = heckleConfig;
         }
         //Set vars, functions, check screenscenegod for trashtalk, pass all the parameters to battlescenegod
         /*Step 1: secure that the button is receiving input
