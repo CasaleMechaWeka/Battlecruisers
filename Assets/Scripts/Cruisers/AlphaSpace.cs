@@ -5,7 +5,7 @@ namespace BattleCruisers.Cruisers
 {
     /// <summary>
     /// Perks:
-    /// + Increases aircraft build speed
+    /// + Decreases aircraft build speed
     /// + Increases missile/rocket fire rate
     /// </summary>
     public class AlphaSpace : Cruiser
