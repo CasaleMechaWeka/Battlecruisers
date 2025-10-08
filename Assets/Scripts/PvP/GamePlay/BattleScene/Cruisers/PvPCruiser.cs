@@ -70,6 +70,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition;
 
+        [Tooltip("GameObjects that persist in the scene after this cruiser is destroyed (e.g., CivBuildings)")]
+        public GameObject[] persistentObjects;
+
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
@@ -532,6 +535,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
+            
+            // Persist specified GameObjects in the scene after cruiser destruction
+            if (persistentObjects != null && persistentObjects.Length > 0)
+            {
+                foreach (GameObject persistentObj in persistentObjects)
+                {
+                    if (persistentObj != null)
+                    {
+                        // Unparent to prevent destruction with cruiser
+                        persistentObj.transform.SetParent(null);
+                    }
+                }
+            }
+            
             _CruiserHasActiveDrones.ValueChanged -= CruiserHasActiveDrones_ValueChanged;
             if (Faction == Faction.Reds)
             {
