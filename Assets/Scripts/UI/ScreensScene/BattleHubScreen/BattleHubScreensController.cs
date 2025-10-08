@@ -131,7 +131,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 if (ScreensSceneGod.Instance.cameraOfCaptains != null)
                     ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
                 if (ScreensSceneGod.Instance.cameraOfCharacter != null)
-                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(true);
             }
 
             GoToScreen(battlePanel);
@@ -345,9 +345,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             playerInfoPanelController.gameObject.SetActive(true);
 
             if (ScreensSceneGod.Instance.cameraOfCaptains != null)
-                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
+                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(true);
             if (ScreensSceneGod.Instance.cameraOfCharacter != null)
-                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
+                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(true);
 
             _screensSceneGod.GotoBlackMarketScreen();
             UnselectAll();
