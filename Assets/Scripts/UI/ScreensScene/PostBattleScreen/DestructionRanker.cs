@@ -24,7 +24,7 @@ namespace BattleCruisers.PostBattleScreen
             }
         }
 
-        public int CalculateRank(long score)
+        public static int CalculateRank(long score)
         {
             for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
             {
@@ -40,7 +40,7 @@ namespace BattleCruisers.PostBattleScreen
 
         // return what the x value will be in CalculateRank()
         // used for setting the max val of any XP progress bars
-        public long CalculateLevelXP(int i)
+        public static long CalculateLevelXP(int i)
         {
             long x = 2500 + 2500 * i * i;
             return x;

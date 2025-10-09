@@ -30,24 +30,20 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public SelectCruiserButton selectCruiserButton;
         public SelectBuildingButton selectBuildingButton;
         public SelectUnitButton selectUnitButton;
-        public SelectHeckleButton selectHeckleButton;
         public CancelButtonController homeButton;
         public LimitDisplayer limitDisplayer;
 
-        public HeckleDetailsController _heckleDetails;
-        public BodykitDetailController _bodykitDetails;
-        public BuildingDetailController _buildingDetails;
-        public UnitDetailController _unitDetails;
+        public ProfileDetailsController profileDetails;
+        public BodykitDetailController bodykitDetails;
+        public BuildingDetailController buildingDetails;
+        public UnitDetailController unitDetails;
 
         public CanvasGroupButton heckleButton;
         public CanvasGroupButton shopButton;
 
 
         private SingleSoundPlayer _soundPlayer;
-        ScreensSceneGod _screensSceneGod;
         private IList<ItemButton> _itemButtons = new List<ItemButton>();
-
-
 
         public void Initialise(
             ScreensSceneGod screensSceneGod,
@@ -77,9 +73,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 = new ItemDetailsDisplayer<ICruiser>(
                     itemDetailsPanel.LeftCruiserDetails,
                     itemDetailsPanel.RightCruiserDetails);
-            _heckleDetails.Initialize();
-            _itemDetailsManager = new LoadoutScreen.ItemDetails.ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
-            _itemDetailsManager.HeckleDetails = _heckleDetails;
+            _ = profileDetails.Initialize(soundPlayer);
+            _itemDetailsManager = new ItemDetails.ItemDetailsManager(buildingDetails, unitDetails, cruiserDetails);
+            _itemDetailsManager.ProfileDetails = profileDetails;
 
             _comparingFamilyTracker = new ComparingItemFamilyTracker();
             ComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
@@ -106,13 +102,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 _comparingFamilyTracker.ComparingFamily,
                 _comparingFamilyTracker);
 
-            selectHeckleButton.Initialise(soundPlayer, _heckleDetails, _comparingFamilyTracker.ComparingFamily,
-                _comparingFamilyTracker);
-
             limitDisplayer.Initialise(
                 buildingDetails,
                 unitDetails,
-                _heckleDetails,
+                profileDetails,
                 _comparingFamilyTracker);
 
             IList<ItemButton> itemButtons
@@ -124,7 +117,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     soundPlayer);
 
             _itemButtons = itemButtons;
-            _bodykitDetails.RegisterSelectedHull(selectCruiserButton.SelectedHull);
+            bodykitDetails.RegisterSelectedHull(selectCruiserButton.SelectedHull);
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, DataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
@@ -181,81 +174,49 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private HullType GetHullType(HullKey hullKey)
         {
-            switch (hullKey.PrefabName)
+            return hullKey.PrefabName switch
             {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "BasicRig":
-                    return HullType.BasicRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Cricket":
-                    return HullType.Cricket;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Flea":
-                    return HullType.Flea;
-                case "Goatherd":
-                    return HullType.Goatherd;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Megalith":
-                    return HullType.Megalith;
-                case "Microlodon":
-                    return HullType.Microlodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "Pistol":
-                    return HullType.Pistol;
-                case "Shepherd":
-                    return HullType.Shepherd;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                case "FortNova":
-                    return HullType.FortNova;
-                case "Zumwalt":
-                    return HullType.Zumwalt;
-                case "Yucalux":
-                    return HullType.Yucalux;
-                case "Teknosis":
-                    return HullType.Teknosis;
-                case "Pebblethrow":
-                    return HullType.Pebblethrow;
-                case "Orac":
-                    return HullType.Orac;
-                case "Middlodon":
-                    return HullType.Middlodon;
-                case "Essex":
-                    return HullType.Essex;
-                case "Axiom":
-                    return HullType.Axiom;
-                case "October":
-                    return HullType.October;
-                case "EndlessWall":
-                    return HullType.EndlessWall;
-                case "AlphaSpace":
-                    return HullType.AlphaSpace;
-                case "Arkdeso":
-                    return HullType.Arkdeso;
-                default:
-                    return HullType.Yeti;
-            }
+                "Trident" => HullType.Trident,
+                "BlackRig" => HullType.BlackRig,
+                "BasicRig" => HullType.BasicRig,
+                "Bullshark" => HullType.Bullshark,
+                "Cricket" => HullType.Cricket,
+                "Eagle" => HullType.Eagle,
+                "Flea" => HullType.Flea,
+                "Goatherd" => HullType.Goatherd,
+                "Hammerhead" => HullType.Hammerhead,
+                "Longbow" => HullType.Longbow,
+                "Megalodon" => HullType.Megalodon,
+                "Megalith" => HullType.Megalith,
+                "Microlodon" => HullType.Microlodon,
+                "Raptor" => HullType.Raptor,
+                "Rickshaw" => HullType.Rickshaw,
+                "Rockjaw" => HullType.Rockjaw,
+                "Pistol" => HullType.Pistol,
+                "Shepherd" => HullType.Shepherd,
+                "TasDevil" => HullType.TasDevil,
+                "FortNova" => HullType.FortNova,
+                "Zumwalt" => HullType.Zumwalt,
+                "Yucalux" => HullType.Yucalux,
+                "Teknosis" => HullType.Teknosis,
+                "Pebblethrow" => HullType.Pebblethrow,
+                "Orac" => HullType.Orac,
+                "Middlodon" => HullType.Middlodon,
+                "Essex" => HullType.Essex,
+                "Axiom" => HullType.Axiom,
+                "October" => HullType.October,
+                "EndlessWall" => HullType.EndlessWall,
+                "AlphaSpace" => HullType.AlphaSpace,
+                "Arkdeso" => HullType.Arkdeso,
+                _ => HullType.Yeti,
+            };
+
         }
 
         public override void Cancel()
         {
             DataProvider.SaveGame();
-            DataProvider.CloudSave();
+            _ = DataProvider.CloudSave();
             _comparingFamilyTracker.SetComparingFamily(null);
             _screensSceneGod.GotoHubScreen();
         }

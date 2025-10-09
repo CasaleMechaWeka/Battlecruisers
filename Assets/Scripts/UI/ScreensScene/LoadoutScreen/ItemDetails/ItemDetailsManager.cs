@@ -1,11 +1,9 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
-using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Properties;
 using UnityEngine.Assertions;
@@ -18,18 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
         private readonly ItemDetailsDisplayer<IUnit> _unitDetails;
         private readonly ItemDetailsDisplayer<ICruiser> _cruiserDetails;
 
-        private HeckleDetailsController _heckleDetails;
-        public HeckleDetailsController HeckleDetails
-        {
-            set
-            {
-                _heckleDetails = value;
-            }
-            get
-            {
-                return _heckleDetails;
-            }
-        }
+        public ProfileDetailsController ProfileDetails;
 
         public ItemFamily? SelectedItemFamily { get; private set; }
 
@@ -100,11 +87,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             ShowDetails(_cruiserDetails, hullType);
         }
 
-        public void ShowDetails(HeckleData heckleData)
+        public void ShowProfile()
         {
             HideDetails();
-            SelectedItemFamily = ItemFamily.Heckles;
-            _heckleDetails.ShowHeckle(heckleData);
+            SelectedItemFamily = ItemFamily.Profile;
+            ProfileDetails.ShowProfile();
             //  itemDetails.SelectItem(item);
             //  _selectedItem.Value = item;
             _numOfDetailsShown.Value = 1;
@@ -160,7 +147,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails
             _buildingDetails.HideDetails();
             _unitDetails.HideDetails();
             _cruiserDetails.HideDetails();
-            _heckleDetails.HideDetails();
+            ProfileDetails.HideDetails();
             _selectedItem.Value = null;
             _comparingItem.Value = null;
             _numOfDetailsShown.Value = 0;

@@ -107,7 +107,7 @@ namespace BattleCruisers.Data
             if (!SettingsManager.CloudSaveDisabled)
             {
                 if (Unity.Services.Core.UnityServices.State == Unity.Services.Core.ServicesInitializationState.Initialized
-                    && Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
+                    && AuthenticationService.Instance.IsSignedIn)
                 {
                     await _serializer.CloudSave(_gameModel);
                     Debug.Log("Cloud saved.");

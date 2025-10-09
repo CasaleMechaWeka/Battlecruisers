@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene;
-using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 

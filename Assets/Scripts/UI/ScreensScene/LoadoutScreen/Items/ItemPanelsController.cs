@@ -20,6 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private ItemsPanel _currentlyShownPanel;
 
         private List<ItemButton> _allItemButtons = new List<ItemButton>();
+        private ItemDetailsManager _itemDetailsManager;
         public ItemsPanel CurrentlyShownPanel
         {
             get { return _currentlyShownPanel; }
@@ -53,6 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker, selectedHull, soundPlayer);
 
             _typeToPanel = new Dictionary<ItemType, ItemsPanel>();
+            _itemDetailsManager = itemDetailsManager;
 
             ItemsPanel[] panels = GetComponentsInChildren<ItemsPanel>(includeInactive: true);
             List<ItemButton> allItemButtons = new List<ItemButton>();
@@ -81,10 +83,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public void ShowItemsPanel(ItemType itemType)
         {
-            Assert.IsTrue(_typeToPanel.ContainsKey(itemType));
+            if (!_typeToPanel.ContainsKey(itemType))
+            {
+                Debug.LogWarning($"No Panel for {itemType}");
+                return;
+            }
+
             CurrentlyShownPanel = _typeToPanel[itemType];
             ItemsPanel itemsPanel = _typeToPanel[itemType];
-            itemsPanel.GetFirstItemButton().ShowDetails();
+            if (itemType == ItemType.Profile)
+                _itemDetailsManager.ShowProfile();
+            else
+                itemsPanel.GetFirstItemButton().ShowDetails();
         }
 
         public ItemsPanel GetPanel(ItemType itemType)

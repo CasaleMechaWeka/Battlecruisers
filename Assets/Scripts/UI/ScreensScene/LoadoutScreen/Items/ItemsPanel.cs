@@ -25,7 +25,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
         public Transform heckleParent;
-        public SelectHeckleButton toggleHeckleSelectionButton;
         private IList<ItemButton> buttons = new List<ItemButton>();
         private ItemDetailsManager _itemDetailsManager;
         private ComparingItemFamilyTracker _comparingFamiltyTracker;
@@ -55,7 +54,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             {
                 HeckleItemContainerV2 heckleContainer = Instantiate(HeckleItemContainerV2Prefab, heckleParent);
                 heckleContainer.heckleData = heckleData;
-                heckleContainer.toggleSelectionButton = toggleHeckleSelectionButton;
                 ItemButton button = heckleContainer.Initialise(this, _itemDetailsManager, _comparingFamiltyTracker, DataProvider.GameModel, _selectedHull, _soundPlayer);
                 buttons.Add(button);
                 heckleContainer.gameObject.SetActive(true);
@@ -122,12 +120,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         Factory, Defense, Offensive, Tactical, Ultra,
         // Units
         Ship, Aircraft,
-        // Heckle
-        Heckle
+        // Profile
+        Profile, Heckle, Captain
     }
 
     public enum ItemFamily
     {
-        Hulls, Buildings, Units, Heckles
+        Hulls, Buildings, Units, Profile, Heckles, Captains
     }
 }

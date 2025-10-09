@@ -74,7 +74,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         private void OnDisable()
         {
-            if (_itemButton == _itemsPanel.GetFirstItemButton())
+            if (_itemsPanel.GetFirstItemButton() != null && _itemButton == _itemsPanel.GetFirstItemButton())
             {
                 MakeOld(_gameModel);
                 UpdateNewItemMarkVisibility();

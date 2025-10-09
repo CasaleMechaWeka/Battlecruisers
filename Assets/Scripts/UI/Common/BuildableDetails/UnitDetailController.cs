@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private void SetInitVariant()
         {
             _selectedVariant = DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(_selectedUnit);
-            if (_unlockedVariants.ContainsKey(_selectedUnit))
+            if (_unlockedVariants != null && _unlockedVariants.ContainsKey(_selectedUnit))
             {
                 if (_unlockedVariants[_selectedUnit].Count > 0)
                 {

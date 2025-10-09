@@ -9,7 +9,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
 using BattleCruisers.Buildables.Units;
 using TMPro;
 using BattleCruisers.Buildables.Buildings;
-using BattleCruisers.UI.Common.BuildableDetails;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -17,7 +16,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
     {
         private ItemDetailsDisplayer<IBuilding> _displayer;
         private ItemDetailsDisplayer<IUnit> _unit;
-        private HeckleDetailsController _heckle;
+        private ProfileDetailsController _profile;
         private ComparingItemFamilyTracker _familyTracker;
         private IBuildingNameToKey _buildingName;
         private IUnitNameToKey _unitName;
@@ -30,14 +29,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public void Initialise(
             ItemDetailsDisplayer<IBuilding> buildingDetails,
             ItemDetailsDisplayer<IUnit> unitDetails,
-            HeckleDetailsController heckleDetails,
+            ProfileDetailsController profileDetails,
             ComparingItemFamilyTracker comparingItemFamily)
         //IBuildingNameToKey buildingNameToKey,
         //IUnitNameToKey unitNameToKey)
         {
             _displayer = buildingDetails;
             _unit = unitDetails;
-            _heckle = heckleDetails;
+            _profile = profileDetails;
             _familyTracker = comparingItemFamily;
             //_buildingName = buildingNameToKey;
             //_unitName = unitNameToKey;
@@ -53,23 +52,21 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             Loadout loadout = DataProvider.GameModel.PlayerLoadout;
             if (_familyTracker.ComparingFamily.Value == ItemFamily.Buildings)
             {
-                this.gameObject.SetActive(true);
+                gameObject.SetActive(true);
                 displayText.text = BuildableLimit.ToString();
             }
             else if (_familyTracker.ComparingFamily.Value == ItemFamily.Units)
             {
-                this.gameObject.SetActive(true);
+                gameObject.SetActive(true);
                 displayText.text = BuildableLimit.ToString();
             }
             else if (_familyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
-                this.gameObject.SetActive(false);
+                gameObject.SetActive(false);
             }
-            else if (_familyTracker.ComparingFamily.Value == ItemFamily.Heckles)
+            else if (_familyTracker.ComparingFamily.Value == ItemFamily.Profile)
             {
-                this.gameObject.SetActive(true);
-                displayText.text = HeckleLimit.ToString();
-                limitText.text = loadout.CurrentHeckles.Count.ToString();
+                gameObject.SetActive(false);
             }
             else if (_familyTracker.ComparingFamily.Value == null)
             {

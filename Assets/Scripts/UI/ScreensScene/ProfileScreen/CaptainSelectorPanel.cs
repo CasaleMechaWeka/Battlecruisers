@@ -23,7 +23,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
         private SingleSoundPlayer _soundPlayer;
 
-        public Transform captainCamContainer;
+        // public Transform captainCamContainer;
         public List<GameObject> visualOfCaptains = new List<GameObject>();
         public EventHandler<CaptainDataEventArgs> captainDataChanged;
 
@@ -46,7 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
             }
             visualOfCaptains.Clear();
         }
-        public void DisplayOwnedCaptains()
+        public void DisplayExoList()
         {
             CaptainSelectionItemController[] items = itemContainer.gameObject.GetComponentsInChildren<CaptainSelectionItemController>();
             foreach (CaptainSelectionItemController item in items)
@@ -64,15 +64,15 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
 
                     GameObject captainItem = Instantiate(captainItemPrefab, itemContainer) as GameObject;
                     CaptainExo captainExoPrefab = PrefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(i));
-                    CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
+                    CaptainExo captainExo = Instantiate(captainExoPrefab);
                     captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
                     captainExo.gameObject.SetActive(false);
                     visualOfCaptains.Add(captainExo.gameObject);
-                    captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[i], this, ii);
+                    //captainItem.GetComponent<CaptainSelectionItemController>().StaticInitialise(_soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[i], this, ii);
 
                     if (StaticData.Captains[i].NameStringKeyBase == DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName)  // the first item should be clicked :)
                     {
-                        captainItem.GetComponent<CaptainSelectionItemController>()._clickedFeedback.SetActive(true);
+                        captainItem.GetComponent<CaptainSelectionItemController>().ClickedFeedback.SetActive(true);
                         currentItem = captainItem.GetComponent<CaptainSelectionItemController>();
                         captainExo.gameObject.SetActive(true);
                     }
@@ -85,7 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         public void ShowCurrentCaptain()
         {
             CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
-            CaptainExo charlie = Instantiate(charliePrefab, captainCamContainer);
+            CaptainExo charlie = Instantiate(charliePrefab);
             charlie.gameObject.transform.localScale = Vector3.one * 0.5f;
             visualOfCaptains.Add(charlie.gameObject);
         }
@@ -94,7 +94,7 @@ namespace BattleCruisers.UI.ScreensScene.ProfileScreen
         {
             if (currentItem != null)
             {
-                currentItem._clickedFeedback.SetActive(false);
+                currentItem.ClickedFeedback.SetActive(false);
                 visualOfCaptains[currentItem._index].SetActive(false);
                 currentItem.CaptainName.gameObject.SetActive(false);
             }
