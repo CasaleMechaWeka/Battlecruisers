@@ -349,7 +349,7 @@ namespace BattleCruisers.Scenes
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync();
 #if !THIRD_PARTY_PUBLISHER
-                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+                fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
 #endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
@@ -371,7 +371,7 @@ namespace BattleCruisers.Scenes
                 ApplicationModel.ShowPostBattleScreen = false;
                 //ApplicationModel.Mode = GameMode.Campaign;
 #if !THIRD_PARTY_PUBLISHER
-                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+                fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
 #endif
                 GotoHubScreen();
             }
@@ -384,9 +384,9 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().bodykitDetails.Initialise(_soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().buildingDetails.Initialize(_soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.Initialize(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_soundPlayer);
             loadoutScreen.Initialise(this, _soundPlayer);
 
             // TEMP  Go to specific screen :)
@@ -461,7 +461,7 @@ namespace BattleCruisers.Scenes
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
             await postBattleScreen.InitialiseAsync(this, _soundPlayer, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
-            //--->CODE CHANGED BY ANUJ
+            //--->
             if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
                 GoToScreen(hubScreen);
@@ -481,7 +481,7 @@ namespace BattleCruisers.Scenes
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(true);
             cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(false);
+            cameraOfCaptains.SetActive(true);
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             GoToScreen(homeScreen);
@@ -507,13 +507,13 @@ namespace BattleCruisers.Scenes
             homeScreen.gameObject.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
-            characterOfCharlie.SetActive(false);
-            cameraOfCharacter.SetActive(false);
+            characterOfCharlie.SetActive(true);
+            cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
-            homeScreenArt.SetActive(false);
-            environmentArt.SetActive(false);
+            homeScreenArt.SetActive(true);
+            environmentArt.SetActive(true);
             _musicPlayer.PlayScreensSceneMusic();
-            fullScreenads.CloseAdvert();
+            fullScreenads.CloseAdvert();           
             GoToScreen(hubScreen);
         }
 
@@ -531,7 +531,9 @@ namespace BattleCruisers.Scenes
             characterOfShop.SetActive(true);
             characterOfCharlie.SetActive(false);
             cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(true);
+            cameraOfCaptains.SetActive(true);            
+            homeScreenArt.SetActive(false);
+            environmentArt.SetActive(false);
             fullScreenads.CloseAdvert();
             GoToScreen(shopPanelScreen);
             shopPanelScreen.InitiaiseCaptains();
@@ -546,6 +548,9 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(true);
             fullScreenads.CloseAdvert();
+                    
+            homeScreenArt.SetActive(false);
+            environmentArt.SetActive(false);
             GoToScreen(blackMarketScreen);
             blackMarketScreen.InitialiseIAPs();
             //AdvertisingBanner.startAdvert();
@@ -603,10 +608,13 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(false);
             cameraOfCaptains.SetActive(false);
             fullScreenads.CloseAdvert();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().bodykitDetails.CollectUnlockedBodykits();
+                    
+            homeScreenArt.SetActive(false);
+            environmentArt.SetActive(false);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().buildingDetails.CollectUnlockedBuildingVariant();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.CollectUnlockedUnitVariant();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.CollectUnlockedBuildingVariant();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.CollectUnlockedUnitVariant();
             GoToScreen(loadoutScreen);
         }
 
