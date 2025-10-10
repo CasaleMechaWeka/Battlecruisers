@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -82,6 +83,21 @@ public class MissingScriptsFinder : EditorWindow
     static readonly GUIContent GC_MissingComponents = new GUIContent("Missing Components");
     static readonly GUIContent GC_MissingReferences = new GUIContent("Missing References");
 
+
+    static readonly GUIContent GC_Remove = EditorGUIUtility.TrTextContent("Remove");
+    static readonly GUIContent GC_Replace = EditorGUIUtility.TrTextContent("Replace");
+    static readonly GUIContent GC_Jump = EditorGUIUtility.TrTextContent("Jump");
+    static readonly GUIContent GC_Ignore = EditorGUIUtility.TrTextContent("Ignore");
+    static readonly GUIContent GC_RemoveAll = EditorGUIUtility.TrTextContent("Remove All");
+
+
+    static readonly GUILayoutOption[] OPT_ROW = { GUILayout.Height(EditorGUIUtility.singleLineHeight) };
+    static readonly GUILayoutOption[] OPT_ICON = { GUILayout.Width(18f), GUILayout.Height(18f) };
+    static readonly GUILayoutOption[] OPT_W50 = { GUILayout.Width(50f) };
+    static readonly GUILayoutOption[] OPT_W60 = { GUILayout.Width(60f) };
+    static readonly GUILayoutOption[] OPT_W70 = { GUILayout.Width(70f) };
+    static readonly GUILayoutOption[] OPT_W135 = { GUILayout.Width(135f) };
+
     #endregion
 
     #region GUI
@@ -150,8 +166,8 @@ public class MissingScriptsFinder : EditorWindow
         DrawFilterButton(ref scanPrefabs, GC_Prefabs, GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
         DrawFilterButton(ref filterMissingPrefabs,    GC_MissingPrefabs,    GUILayout.Width(115));
-        DrawFilterButton(ref filterMissingComponents, GC_MissingComponents, GUILayout.Width(135));
-        DrawFilterButton(ref filterMissingReferences, GC_MissingReferences, GUILayout.Width(135));
+        DrawFilterButton(ref filterMissingComponents, GC_MissingComponents, OPT_W135);
+        DrawFilterButton(ref filterMissingReferences, GC_MissingReferences, OPT_W135);
 
         // Script field (MonoScript)
         // Note: You can choose to show a label or not. For example, "Replacement Script" or just the field
@@ -209,172 +225,152 @@ public class MissingScriptsFinder : EditorWindow
             string assetPath = kvp.Key;
             List<MissingScriptEntry> allEntries = kvp.Value;
 
-            bool isScene = assetPath.EndsWith(".unity");
-            bool isPrefab = assetPath.EndsWith(".prefab");
+            bool isScene = assetPath.EndsWith(".unity", StringComparison.OrdinalIgnoreCase);
+            bool isPrefab = assetPath.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase);
 
-            // Apply scene/prefab filter
+            // apply scene/prefab filter
             if ((isScene && !scanScenes) || (isPrefab && !scanPrefabs))
                 continue;
 
-            // 3) Now filter each entry inside the group individually
-            List<MissingScriptEntry> filteredEntries = new List<MissingScriptEntry>();
+            // per-type filter (FIXED mapping: Component -> MissingComponent, Reference -> MissingReference)
+            List<MissingScriptEntry> filteredEntries = new List<MissingScriptEntry>(allEntries.Count);
             foreach (MissingScriptEntry e in allEntries)
-            {   // If the user wants to see missing components and this entry is a missing component,
-                // or the user wants to see missing references and this entry is a missing reference,
-                // then we keep this entry.
-                if ((filterMissingComponents && e.missingType == MissingType.MissingReference)
-                 || (filterMissingReferences && e.missingType == MissingType.MissingComponent)
-                 || (filterMissingPrefabs    && e.missingType == MissingType.MissingPrefab))
-                {
+                if (PassesTypeFilter(e.missingType, filterMissingComponents, filterMissingReferences, filterMissingPrefabs))
                     filteredEntries.Add(e);
-                }
-            }
 
-            // If no entries remain after the filter, skip this asset entirely
-            if (filteredEntries.Count == 0)
-                continue;
+            if (filteredEntries.Count == 0) continue;
 
-            bool hasMissingComponent = filteredEntries.Any(e => e.missingType == MissingType.MissingComponent);
+            bool hasMissingComponent = false;
+            for (int i = 0; i < filteredEntries.Count; i++)
+                if (filteredEntries[i].missingType == MissingType.MissingComponent) { hasMissingComponent = true; break; }
 
-            // Get short name & icon
             string displayName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
-            GUIContent icon = isPrefab
-                ? EditorGUIUtility.IconContent("Prefab Icon")
-                : isScene
-                    ? EditorGUIUtility.IconContent("SceneAsset Icon")
-                    : null;
+            Texture2D iconTex = isPrefab ? IconPrefab : isScene ? IconScene : null;
 
-            // If we only have one entry left to show, just draw that row
+            // single row
             if (filteredEntries.Count == 1)
             {
                 MissingScriptEntry single = filteredEntries[0];
-                EditorGUILayout.BeginHorizontal(GUILayout.Height(EditorGUIUtility.singleLineHeight));
-
-                if (icon != null)
-                    GUILayout.Label(icon, GUILayout.Width(18), GUILayout.Height(18));
-
+                EditorGUILayout.BeginHorizontal(OPT_ROW);
+                if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
                 EditorGUILayout.LabelField($"{displayName} → {single.uniquePath}", GUILayout.ExpandWidth(true));
 
-                if (hasMissingComponent)
-                    if (replacementScript == null)
-                        // REMOVE
-                        if (GUILayout.Button("Remove", GUILayout.Width(60)))
-                        {
-                            RemoveMissingAssetGroup(single.assetPath);
-                            Repaint();
-                        }
-                    else
-                        // REPLACE
-                        if (GUILayout.Button("Replace", GUILayout.Width(60)))
-                        {
-                            ReplaceMissingAssetGroup(single.assetPath, replacementScript);
-                            Repaint();
-                        }
-
-                if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                    JumpToReference(single.assetPath, single.uniquePath);
-
-                string btnText = isIgnore ? "Remove" : "Ignore";
-
-                if (GUILayout.Button(btnText, GUILayout.Width(50)))
-                    if (isIgnore)
-                    {
-                        ignoreList.Remove(single);
-                        missingScriptEntries.Add(single);
-                    }
-                    else
-                    {
-                        if (!ignoreList.Contains(single))
-                            ignoreList.Add(single);
-                        missingScriptEntries.Remove(single);
-                    }
+                if (single.missingType == MissingType.MissingComponent)
+                    DrawRemoveAndReplace(single.assetPath, replacementScript);
+                DrawJumpForEntry(single);
+                DrawIgnoreForEntry(single, isIgnore);
 
                 EditorGUILayout.EndHorizontal();
                 continue;
             }
 
-            // Otherwise, we have multiple entries in this group, so use a foldout
-            EditorGUILayout.BeginHorizontal(GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            if (icon != null)
-                GUILayout.Label(icon, GUILayout.Width(18), GUILayout.Height(18));
+            // group header (foldout)
+            EditorGUILayout.BeginHorizontal(OPT_ROW);
+            if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
 
-            if (!assetFoldoutStates.TryGetValue(assetPath, out bool expanded))
-                assetFoldoutStates[assetPath] = false;
+            bool expanded = assetFoldoutStates.TryGetValue(assetPath, out var wasExpanded) && wasExpanded;
+            bool newExpanded = EditorGUILayout.Foldout(expanded, $"{displayName} ({filteredEntries.Count})", true);
 
-            assetFoldoutStates[assetPath] = EditorGUILayout.Foldout(
-                assetFoldoutStates[assetPath],
-                $"{displayName} ({filteredEntries.Count})",
-                true
-            );
+            // Always store back so the key exists for next frame
+            assetFoldoutStates[assetPath] = newExpanded;
 
             GUILayout.FlexibleSpace();
 
             if (hasMissingComponent)
-                if (replacementScript == null)
-                    if (GUILayout.Button("Remove", GUILayout.Width(60)))
-                    {
-                        RemoveMissingAssetGroup(assetPath);
-                        Repaint();
-                    }
-                else
-                    if (GUILayout.Button("Replace", GUILayout.Width(60)))
-                    {
-                        ReplaceMissingAssetGroup(assetPath, replacementScript);
-                        Repaint();
-                    }
-
-            if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                OpenAssetAndSelectRoot(assetPath);
-
-            string groupBtnText = isIgnore ? "Remove All" : "Ignore";
-
-            if (GUILayout.Button(groupBtnText, GUILayout.Width(50)))
-                if (isIgnore)
-                {
-                    foreach (MissingScriptEntry entry in filteredEntries)
-                        missingScriptEntries.Add(entry);
-                    ignoreList.RemoveAll(e => e.assetPath == assetPath);
-                }
-                else
-                    foreach (MissingScriptEntry entry in filteredEntries)
-                    {
-                        if (!ignoreList.Contains(entry))
-                            ignoreList.Add(entry);
-                        missingScriptEntries.Remove(entry);
-                    }
+                DrawRemoveAndReplace(assetPath, replacementScript);
+            DrawJumpForAsset(assetPath);
+            DrawIgnoreForGroup(assetPath, filteredEntries, isIgnore);
 
             EditorGUILayout.EndHorizontal();
 
-            // Show each filtered entry in the foldout
-            if (assetFoldoutStates[assetPath])
+            // Use the local variable, not the dictionary indexer
+            if (newExpanded)
             {
                 EditorGUI.indentLevel++;
-                foreach (MissingScriptEntry entry in filteredEntries)
+                for (int i = 0; i < filteredEntries.Count; i++)
                 {
-                    EditorGUILayout.BeginHorizontal(GUILayout.Height(EditorGUIUtility.singleLineHeight));
+                    MissingScriptEntry entry = filteredEntries[i];
+                    EditorGUILayout.BeginHorizontal(OPT_ROW);
                     EditorGUILayout.LabelField(entry.uniquePath, GUILayout.ExpandWidth(true));
-
-                    if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                        JumpToReference(entry.assetPath, entry.uniquePath);
-
-                    if (GUILayout.Button(isIgnore ? "Remove" : "Ignore", GUILayout.Width(50)))
-                        if (isIgnore)
-                        {
-                            ignoreList.Remove(entry);
-                            missingScriptEntries.Add(entry);
-                        }
-                        else
-                        {
-                            if (!ignoreList.Contains(entry))
-                                ignoreList.Add(entry);
-                            missingScriptEntries.Remove(entry);
-                        }
-
+                    if (entry.missingType == MissingType.MissingComponent)
+                        DrawRemoveAndReplace(entry.assetPath, replacementScript);
+                    DrawJumpForEntry(entry);
+                    DrawIgnoreForEntry(entry, isIgnore);
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUI.indentLevel--;
             }
         }
+    }
+
+    void DrawRemoveAndReplace(string assetPath, MonoScript replacementScript)
+    {
+        // Remove (always enabled)
+        if (GUILayout.Button(GC_Remove, OPT_W60))
+        {
+            RemoveMissingAssetGroup(assetPath);
+            Repaint();
+        }
+
+        // Replace (disabled when no script selected)
+        using (new EditorGUI.DisabledScope(replacementScript == null))
+        {
+            if (GUILayout.Button(GC_Replace, OPT_W60))
+            {
+                ReplaceMissingAssetGroup(assetPath, replacementScript);
+                Repaint();
+            }
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static bool PassesTypeFilter(MissingType t, bool fComp, bool fRef, bool fPrefab) =>
+       (fComp && t == MissingType.MissingComponent)
+    || (fRef && t == MissingType.MissingReference)
+    || (fPrefab && t == MissingType.MissingPrefab);
+
+    void DrawJumpForEntry(in MissingScriptEntry e)
+    {
+        if (GUILayout.Button(GC_Jump, OPT_W50))
+            JumpToReference(e.assetPath, e.uniquePath);
+    }
+
+    void DrawJumpForAsset(string assetPath)
+    {
+        if (GUILayout.Button(GC_Jump, OPT_W50))
+            OpenAssetAndSelectRoot(assetPath);
+    }
+
+    void DrawIgnoreForEntry(in MissingScriptEntry e, bool isIgnore)
+    {
+        if (GUILayout.Button(isIgnore ? GC_Remove : GC_Ignore, OPT_W50))
+            if (isIgnore)
+            {
+                ignoreList.Remove(e);
+                missingScriptEntries.Add(e);
+            }
+            else
+            {
+                if (!ignoreList.Contains(e))
+                    ignoreList.Add(e);
+                missingScriptEntries.Remove(e);
+            }
+    }
+
+    void DrawIgnoreForGroup(string assetPath, List<MissingScriptEntry> entries, bool isIgnore)
+    {
+        if (GUILayout.Button(isIgnore ? GC_RemoveAll : GC_Ignore, OPT_W50))
+            if (isIgnore)
+            {
+                foreach (MissingScriptEntry e in entries) missingScriptEntries.Add(e);
+                ignoreList.RemoveAll(e => e.assetPath == assetPath);
+            }
+            else
+                foreach (MissingScriptEntry e in entries)
+                {
+                    if (!ignoreList.Contains(e)) ignoreList.Add(e);
+                    missingScriptEntries.Remove(e);
+                }
     }
 
     void DisplayIgnoreList()
@@ -1076,7 +1072,7 @@ public class MissingScriptsFinder : EditorWindow
     void SaveIgnoreList()
     {
         List<string> serializedEntries = new List<string>(ignoreList.Count);
-        foreach (var entry in ignoreList)
+        foreach (MissingScriptEntry entry in ignoreList)
             serializedEntries.Add($"{entry.assetPath}|{(int)entry.missingType}|{entry.uniquePath}");
 
         string serializedList = string.Join(";", serializedEntries);
@@ -1090,7 +1086,7 @@ public class MissingScriptsFinder : EditorWindow
         try
         {
             List<string> serializedEntries = new List<string>(assetCache.Count);
-            foreach (var kvp in assetCache)
+            foreach (KeyValuePair<string, CacheEntry> kvp in assetCache)
             {
                 string assetPath = kvp.Key;
                 long lastWrite = kvp.Value.lastWriteTime.ToBinary();
@@ -1098,7 +1094,7 @@ public class MissingScriptsFinder : EditorWindow
                 List<string> entryData = new List<string>(kvp.Value.entries?.Count ?? 0);
                 if (kvp.Value.entries != null)
                 {
-                    foreach (var entry in kvp.Value.entries)
+                    foreach (MissingScriptEntry entry in kvp.Value.entries)
                         entryData.Add($"{entry.assetPath}|{(int)entry.missingType}|{entry.uniquePath}");
                 }
 
