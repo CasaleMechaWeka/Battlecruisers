@@ -384,9 +384,9 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().bodykitDetails.Initialise(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().buildingDetails.Initialize(_soundPlayer);
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.Initialize(_soundPlayer);
             loadoutScreen.Initialise(this, _soundPlayer);
 
             // TEMP  Go to specific screen :)
@@ -611,10 +611,10 @@ namespace BattleCruisers.Scenes
                     
             homeScreenArt.SetActive(false);
             environmentArt.SetActive(false);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().bodykitDetails.CollectUnlockedBodykits();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.CollectUnlockedBuildingVariant();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.CollectUnlockedUnitVariant();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().buildingDetails.CollectUnlockedBuildingVariant();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.CollectUnlockedUnitVariant();
             GoToScreen(loadoutScreen);
         }
 
