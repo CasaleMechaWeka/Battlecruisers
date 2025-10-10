@@ -33,8 +33,8 @@ public class MissingScriptsFinder : EditorWindow
     bool keepIgnoreList = true;
     bool skipTestingScenes = true;
     bool skipTrashScenes = true;
-    bool filterScenes = true;
-    bool filterPrefabs = true;
+    bool scanScenes = true;
+    bool scanPrefabs = true;
 
     bool filterMissingPrefabs = true;
     bool filterMissingComponents = true;
@@ -58,6 +58,20 @@ public class MissingScriptsFinder : EditorWindow
 
     #endregion
 
+    #region  "GUI Vars"
+
+    static Texture2D IconScene;
+    static Texture2D IconPrefab;
+
+    static GUIContent GC_Scenes;
+    static GUIContent GC_Prefabs;
+
+    static readonly GUIContent GC_MissingPrefabs = new GUIContent("Missing Prefabs");
+    static readonly GUIContent GC_MissingComponents = new GUIContent("Missing Components");
+    static readonly GUIContent GC_MissingReferences = new GUIContent("Missing References");
+
+    #endregion
+
     #region GUI
     [MenuItem("Tools/Find Missing Components")] // Renamed in menu
     public static void ShowWindow()
@@ -68,6 +82,12 @@ public class MissingScriptsFinder : EditorWindow
 
     void OnEnable()
     {
+        IconScene = (Texture2D)EditorGUIUtility.IconContent("SceneAsset Icon").image;
+        IconPrefab = (Texture2D)EditorGUIUtility.IconContent("Prefab Icon").image;
+
+        GC_Scenes = new GUIContent("", IconScene, "Toggle scene scanning on/off");
+        GC_Prefabs = new GUIContent("", IconPrefab, "Toggle prefab scanning on/off");
+
         LoadIgnoreList();
         LoadCacheFromDisk();
 
@@ -105,71 +125,24 @@ public class MissingScriptsFinder : EditorWindow
 
         // Scenes button
         int sceneCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".unity"));
-        GUIContent sceneButtonContent = new GUIContent(
-            $"  {sceneCount}",
-            EditorGUIUtility.IconContent("SceneAsset Icon").image,
-            "Toggle scene scanning on/off"
-        );
-        bool newFilterScenes = GUILayout.Toggle(filterScenes, sceneButtonContent,
-            "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
-        if (newFilterScenes != filterScenes)
-        {
-            filterScenes = newFilterScenes;
-            Repaint();
-        }
+        GC_Scenes.text = $"  {sceneCount}";
+        DrawFilterButton(ref scanScenes, GC_Scenes, GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
         // Prefabs button
         int prefabCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".prefab"));
-        GUIContent prefabButtonContent = new GUIContent(
-            $"  {prefabCount}",
-            EditorGUIUtility.IconContent("Prefab Icon").image,
-            "Toggle prefab scanning on/off"
-        );
-        bool newFilterPrefabs = GUILayout.Toggle(filterPrefabs, prefabButtonContent,
-            "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
-        if (newFilterPrefabs != filterPrefabs)
-        {
-            filterPrefabs = newFilterPrefabs;
-            Repaint();
-        }
+        GC_Prefabs.text = $"  {prefabCount}";
+        DrawFilterButton(ref scanPrefabs, GC_Prefabs, GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
-        // Missing Prefabs button
-        GUIContent prefabBtnContent = new GUIContent("Missing Prefabs");
-        bool newFilterMissingPrefabs = GUILayout.Toggle(filterMissingPrefabs, prefabBtnContent,
-            "Button", GUILayout.Width(115));
-        if (newFilterMissingPrefabs != filterMissingPrefabs)
-        {
-            filterMissingPrefabs = newFilterMissingPrefabs;
-            Repaint();
-        }
-
-        // Missing Components button
-        GUIContent compButtonContent = new GUIContent("Missing Components");
-        bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent,
-            "Button", GUILayout.Width(135));
-        if (newFilterMissingComponents != filterMissingComponents)
-        {
-            filterMissingComponents = newFilterMissingComponents;
-            Repaint();
-        }
-
-        // Missing References button
-        GUIContent refsButtonContent = new GUIContent("Missing References");
-        bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent,
-            "Button", GUILayout.Width(135));
-        if (newFilterMissingReferences != filterMissingReferences)
-        {
-            filterMissingReferences = newFilterMissingReferences;
-            Repaint();
-        }
+        DrawFilterButton(ref filterMissingPrefabs,    GC_MissingPrefabs,    GUILayout.Width(115));
+        DrawFilterButton(ref filterMissingComponents, GC_MissingComponents, GUILayout.Width(135));
+        DrawFilterButton(ref filterMissingReferences, GC_MissingReferences, GUILayout.Width(135));
 
         // Script field (MonoScript)
         // Note: You can choose to show a label or not. For example, "Replacement Script" or just the field
         replacementScript = (MonoScript)EditorGUILayout.ObjectField(
             replacementScript,             // current value
             typeof(MonoScript),            // type filter
-            false,                         // allowSceneObjects?
-            GUILayout.Width(296)           // adjust as you like
+            false                          // allowSceneObjects?
         );
 
         // "Replace All" button
@@ -257,7 +230,7 @@ public class MissingScriptsFinder : EditorWindow
             bool isPrefab = assetPath.EndsWith(".prefab");
 
             // Apply scene/prefab filter
-            if ((isScene && !filterScenes) || (isPrefab && !filterPrefabs))
+            if ((isScene && !scanScenes) || (isPrefab && !scanPrefabs))
                 continue;
 
             // 3) Now filter each entry inside the group individually
@@ -431,10 +404,21 @@ public class MissingScriptsFinder : EditorWindow
         if (GUILayout.Button("Clear All", GUILayout.Width(80)))
             if (EditorUtility.DisplayDialog("Clear Ignore List", "Are you sure you want to clear the ignore list?", "Yes", "No"))
                 ignoreList.Clear();
-        
+
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         DisplayEntryList(ignoreList, true);
         EditorGUILayout.EndScrollView();
+    }
+
+    void DrawFilterButton(ref bool flag, GUIContent content, params GUILayoutOption[] opts)
+    {
+        EditorGUI.BeginChangeCheck();
+        bool v = GUILayout.Toggle(flag, content, "Button", opts);
+        if (EditorGUI.EndChangeCheck())
+        {
+            flag = v; 
+            Repaint(); 
+        }
     }
 
     #endregion
