@@ -50,7 +50,7 @@ namespace BattleCruisers.Utils
             where T : class
         {
             Transform namedTransform = transform.Find(componentName);
-            Assert.IsNotNull(namedTransform);
+            Assert.IsNotNull(namedTransform, $"Cannot find component '{componentName}' in {transform.name}");
 
             T namedComponent = namedTransform.gameObject.GetComponent<T>();
             Assert.IsNotNull(namedComponent);

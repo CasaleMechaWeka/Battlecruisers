@@ -40,9 +40,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 button.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, gameModel, itemButtons, itemFamilyTracker);
             }
 
-            HeckleCategoryButton heckleButton = transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton");
-            Assert.IsNotNull(heckleButton);
-            heckleButton.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, itemFamilyTracker);
+            ProfileCategoryButton profileButton = transform.FindNamedComponent<ProfileCategoryButton>("ProfileButton");
+            Assert.IsNotNull(profileButton);
+            profileButton.Initialise(soundPlayer, itemPanels, itemFamilyToCompare, itemFamilyTracker);
             changeCategorySlider.onValueChanged.AddListener(ChangeCategory);
         }
 
@@ -69,7 +69,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                         _buttons[category].OnClickedAction();
                 }
                 else if (category == 8)
-                    transform.FindNamedComponent<HeckleCategoryButton>("HeckleButton").OnClickedAction();
+                    transform.FindNamedComponent<ProfileCategoryButton>("ProfileButton").OnClickedAction();
             }
         }
 

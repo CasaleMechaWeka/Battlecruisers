@@ -11,6 +11,7 @@ using Unity.Services.Authentication;
 using System;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils.Localisation;
+using UnityEngine.Events;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -22,16 +23,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject spinner;
         public GameObject btnLabel;
 
-        private ScreensSceneGod _screenSceneGod;
         private SingleSoundPlayer _soundPlayer;
         private CaptainExoKey loadedCaptain;
+        public static UnityEvent NameChangedCallback = new UnityEvent();
 
         public void Initialise(
-        ScreensSceneGod screensSceneGod,
         SingleSoundPlayer soundPlayer)
         {
-            Helper.AssertIsNotNull(screensSceneGod, soundPlayer);
-            _screenSceneGod = screensSceneGod;
+            Helper.AssertIsNotNull(soundPlayer);
             _soundPlayer = soundPlayer;
 
             applyBtn.Initialise(_soundPlayer, ApplyName);
@@ -82,14 +81,16 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     }
 
                     PlayerInfoPanelController.Instance?.UpdateInfo();
-                    ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
+                    //ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
+                    NameChangedCallback.Invoke();
                 }
                 catch (Exception ex)
                 {
                     DataProvider.GameModel.PlayerName = oldPlayerName;
                     DataProvider.SaveGame();
                     PlayerInfoPanelController.Instance?.UpdateInfo();
-                    ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
+                    //ProfilePanelScreenController.Instance.playerName.text = DataProvider.GameModel.PlayerName;
+                    NameChangedCallback.Invoke();
                     Debug.LogException(ex);
                 }
 

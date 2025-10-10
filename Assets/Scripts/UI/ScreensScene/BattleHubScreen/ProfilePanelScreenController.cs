@@ -40,7 +40,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private Text levelXPString;
         [SerializeField]
         private Text totalDamage;
-        private String million, billion, trillion, quadrillion;
+        private string million, billion, trillion, quadrillion;
         public GameObject currentCaptainImage;
         public Image badgeIcon, medalIcon;
         public Text rankTitle;
@@ -63,7 +63,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             trillion = LocTableCache.CommonTable.GetString("Trillion");
             quadrillion = LocTableCache.CommonTable.GetString("Quadrillion");
 
-            captainNamePopupPanel.Initialise(screensSceneGod, soundPlayer);
+            captainNamePopupPanel.Initialise(soundPlayer);
             captainEditButton.Initialise(_soundPlayer, OnClickCaptainEditBtn);
             playerNameEditButton.Initialise(_soundPlayer, OnClickNameEditBtn);
             selectButton.Initialise(_soundPlayer, OnClickSelectButton);
@@ -161,7 +161,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         void OnClickCaptainEditBtn()
         {
             captainsPanel.gameObject.SetActive(true);
-            captainsPanel.DisplayOwnedCaptains();
+            captainsPanel.DisplayExoList();
         }
 
         async void OnClickSelectButton()

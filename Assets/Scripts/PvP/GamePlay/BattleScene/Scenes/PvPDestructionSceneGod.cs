@@ -332,10 +332,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             scoreText.text = "";
 
             // Set starting rank values:
-            rank = ranker.CalculateRank(prevAllTimeVal);
+            rank = DestructionRanker.CalculateRank(prevAllTimeVal);
 
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
-            nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+            nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
@@ -346,7 +346,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             // Set XP bar current/max values:
-            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
+            if (DestructionRanker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
             {
                 levelBar.maxValue = 1;
                 levelBar.value = 1;
@@ -414,10 +414,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             scoreText.text = "";
 
             // Set starting rank values:
-            rank = ranker.CalculateRank(prevAllTimeVal);
+            rank = DestructionRanker.CalculateRank(prevAllTimeVal);
 
             currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
-            nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+            nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
             rankGraphic.sprite = ranker.destructionRanks[rank].transform.Find("RankImage").GetComponent<Image>().sprite; // UGLY looking Find + Get
@@ -425,7 +425,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             coinsText.text = "+" + coinsToAward.ToString();
 
             // Set XP bar current/max values:
-            if (ranker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
+            if (DestructionRanker.CalculateRank(allTimeVal) == ranker.destructionRanks.Length - 1)
             {
                 levelBar.maxValue = 1;
                 levelBar.value = 1;
@@ -470,7 +470,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 if (xpToAdd + currentXP >= nextLevelXP)
                 {
                     // Only deal with it if the player isn't max rank:
-                    if (ranker.CalculateRank(allTimeVal) < ranker.destructionRanks.Length - 1)
+                    if (DestructionRanker.CalculateRank(allTimeVal) < ranker.destructionRanks.Length - 1)
                     {
                         while (xpToAdd > 0)
                         {
@@ -503,7 +503,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
                                 // Get the next level's XP and overwrite the nextLevelXP var
                                 rank++;
-                                nextLevelXP = (int)ranker.CalculateLevelXP(rank);
+                                nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
                                 levelBar.maxValue = nextLevelXP;
                             }
                             else

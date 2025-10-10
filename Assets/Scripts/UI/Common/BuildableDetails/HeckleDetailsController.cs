@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using DG.Tweening;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils.Properties;
-using BattleCruisers.Data;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
 

@@ -19,13 +19,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private GameModel _gameModel;
         private ItemsPanel _itemsPanel;
 
-        public SelectHeckleButton selectHeckleButton;
         public Button toggleSelectionButton;
 
         public override void ShowDetails()
         {
             //  _itemDetailsManager.ShowDetails(null);
-            _itemDetailsManager.ShowDetails(_heckleData);
             _itemsPanel.CurrentHeckleButton = this;
         }
 
@@ -60,7 +58,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _comparingFamiltyTracker.SetComparingFamily(itemFamily);
             if (_comparingFamiltyTracker.ComparingFamily.Value == itemFamily)
             {
-                _itemDetailsManager.ShowDetails(_heckleData);
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
@@ -91,9 +88,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         {
             if (!GetComponentInChildren<ClickedFeedBack>(true).gameObject.activeInHierarchy)
                 OnClicked();
-
-            selectHeckleButton.ToggleHeckleSelection();
-
         }
     }
 }

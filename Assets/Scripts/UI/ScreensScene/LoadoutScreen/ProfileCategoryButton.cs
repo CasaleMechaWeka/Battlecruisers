@@ -7,11 +7,11 @@ using System;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
-    public class HeckleCategoryButton : CanvasGroupButton
+    public class ProfileCategoryButton : CanvasGroupButton
     {
         private ItemPanelsController _itemPanels;
         public ItemType itemType;
-        private ItemFamily ItemFamily => ItemFamily.Heckles;
+        private ItemFamily ItemFamily => ItemFamily.Profile;
         private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
         private ComparingItemFamilyTracker _itemFamilyTracker;
         public void Initialise(

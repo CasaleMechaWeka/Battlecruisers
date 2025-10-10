@@ -109,7 +109,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             if (_comparingFamily.Value == ItemFamily.Units)
                 flag = true;
-            else if (_comparingFamily.Value == ItemFamily.Buildings || _comparingFamily.Value == ItemFamily.Hulls || _comparingFamily.Value == ItemFamily.Heckles)
+            else if (_comparingFamily.Value == ItemFamily.Buildings || _comparingFamily.Value == ItemFamily.Hulls || _comparingFamily.Value == ItemFamily.Profile)
                 flag = false;
             else if (_comparingFamily.Value == null)
             {

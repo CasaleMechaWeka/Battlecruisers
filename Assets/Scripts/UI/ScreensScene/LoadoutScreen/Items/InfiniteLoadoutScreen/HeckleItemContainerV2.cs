@@ -12,7 +12,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public class HeckleItemContainerV2 : ItemContainer
     {
         public HeckleData heckleData;
-        public SelectHeckleButton toggleSelectionButton;
 
         protected override ItemButton InitialiseItemButton(
             ItemDetailsManager itemDetailsManager,
@@ -24,7 +23,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             HeckleButtonV2 heckleButton = GetComponentInChildren<HeckleButtonV2>(includeInactive: true);
             Assert.IsNotNull(heckleButton);
             heckleButton.Initialise(_itemsPanel, soundPlayer, heckleData, itemDetailsManager, comparingFamilyTracker, gameModel);
-            heckleButton.selectHeckleButton = toggleSelectionButton;
             return heckleButton;
         }
 
