@@ -71,6 +71,8 @@ namespace BattleCruisers.Scenes
         public GameObject processingPanel;
         public GameObject environmentArt;
         public GameObject homeScreenArt;
+        public GameObject homeMenu;
+        public GameObject versionText;
         public IAPPremiumConfirmation premiumConfirmationScreen;
 
         public Animator thankYouPlane;
@@ -349,7 +351,7 @@ namespace BattleCruisers.Scenes
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
                 await GoToPostBattleScreenAsync();
 #if !THIRD_PARTY_PUBLISHER
-                fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
+                fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
 #endif
                 Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
             }
@@ -384,9 +386,9 @@ namespace BattleCruisers.Scenes
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
             await InitialiseLevelsScreenAsync();
             Logging.Log(Tags.SCREENS_SCENE_GOD, "After initialise levels screen");
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.Initialise(_soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.Initialize(_soundPlayer);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.Initialize(_soundPlayer);
+            loadoutScreen.bodykitDetails.Initialise(_soundPlayer);
+            loadoutScreen.buildingDetails.Initialize(_soundPlayer);
+            loadoutScreen.unitDetails.Initialize(_soundPlayer);
             loadoutScreen.Initialise(this, _soundPlayer);
 
             // TEMP  Go to specific screen :)
@@ -513,7 +515,7 @@ namespace BattleCruisers.Scenes
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             _musicPlayer.PlayScreensSceneMusic();
-            fullScreenads.CloseAdvert();           
+            fullScreenads.CloseAdvert();    
             GoToScreen(hubScreen);
         }
 
@@ -611,10 +613,10 @@ namespace BattleCruisers.Scenes
                     
             homeScreenArt.SetActive(false);
             environmentArt.SetActive(false);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._bodykitDetails.CollectUnlockedBodykits();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._buildingDetails.CollectUnlockedBuildingVariant();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>()._unitDetails.CollectUnlockedUnitVariant();
+            loadoutScreen.bodykitDetails.CollectUnlockedBodykits();
+            loadoutScreen.RefreshBodykitsUI();
+            loadoutScreen.buildingDetails.CollectUnlockedBuildingVariant();
+            loadoutScreen.unitDetails.CollectUnlockedUnitVariant();
             GoToScreen(loadoutScreen);
         }
 
