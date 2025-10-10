@@ -71,7 +71,7 @@ public class MissingScriptsFinder : EditorWindow
         LoadIgnoreList();
         LoadCacheFromDisk();
 
-        frameBudget = Mathf.Min(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
+        frameBudget = Mathf.Max(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
     }
 
     void OnDisable()
@@ -89,88 +89,78 @@ public class MissingScriptsFinder : EditorWindow
     void OnGUI()
     {
         EditorGUILayout.BeginHorizontal();
-        // Renamed button label
         if (GUILayout.Button("Find Missing Components"))
             FindMissingScripts();
         
         if (GUILayout.Button("Clear Cache", GUILayout.Width(100)))
             ClearCache();
-        
+
         if (GUILayout.Button(viewIgnoreList ? $"View Main List ({missingScriptEntries.Count})" : $"View Ignore List ({ignoreList.Count})", GUILayout.Width(150)))
             viewIgnoreList = !viewIgnoreList;
+            
         EditorGUILayout.EndHorizontal();
 
         //onlyScanBuildScenes = EditorGUILayout.Toggle("Only Scan Scenes in Build Settings", onlyScanBuildScenes);
         EditorGUILayout.BeginHorizontal();
 
         // Scenes button
+        int sceneCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".unity"));
+        GUIContent sceneButtonContent = new GUIContent(
+            $"  {sceneCount}",
+            EditorGUIUtility.IconContent("SceneAsset Icon").image,
+            "Toggle scene scanning on/off"
+        );
+        bool newFilterScenes = GUILayout.Toggle(filterScenes, sceneButtonContent,
+            "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
+        if (newFilterScenes != filterScenes)
         {
-            int sceneCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".unity"));
-            GUIContent sceneButtonContent = new GUIContent(
-                $"  {sceneCount}",
-                EditorGUIUtility.IconContent("SceneAsset Icon").image,
-                "Toggle scene filtering on/off"
-            );
-            bool newFilterScenes = GUILayout.Toggle(filterScenes, sceneButtonContent,
-                "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            if (newFilterScenes != filterScenes)
-            {
-                filterScenes = newFilterScenes;
-                Repaint();
-            }
+            filterScenes = newFilterScenes;
+            Repaint();
         }
 
         // Prefabs button
+        int prefabCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".prefab"));
+        GUIContent prefabButtonContent = new GUIContent(
+            $"  {prefabCount}",
+            EditorGUIUtility.IconContent("Prefab Icon").image,
+            "Toggle prefab scanning on/off"
+        );
+        bool newFilterPrefabs = GUILayout.Toggle(filterPrefabs, prefabButtonContent,
+            "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
+        if (newFilterPrefabs != filterPrefabs)
         {
-            int prefabCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".prefab"));
-            GUIContent prefabButtonContent = new GUIContent(
-                $"  {prefabCount}",
-                EditorGUIUtility.IconContent("Prefab Icon").image,
-                "Toggle prefab filtering on/off"
-            );
-            bool newFilterPrefabs = GUILayout.Toggle(filterPrefabs, prefabButtonContent,
-                "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            if (newFilterPrefabs != filterPrefabs)
-            {
-                filterPrefabs = newFilterPrefabs;
-                Repaint();
-            }
+            filterPrefabs = newFilterPrefabs;
+            Repaint();
         }
 
         // Missing Prefabs button
+        GUIContent prefabBtnContent = new GUIContent("Missing Prefabs");
+        bool newFilterMissingPrefabs = GUILayout.Toggle(filterMissingPrefabs, prefabBtnContent,
+            "Button", GUILayout.Width(115));
+        if (newFilterMissingPrefabs != filterMissingPrefabs)
         {
-            GUIContent prefabBtnContent = new GUIContent("Missing Prefabs");
-            bool newFilterMissingPrefabs = GUILayout.Toggle(filterMissingPrefabs, prefabBtnContent,
-                "Button", GUILayout.Width(115));
-            if (newFilterMissingPrefabs != filterMissingPrefabs)
-            {
-                filterMissingPrefabs = newFilterMissingPrefabs;
-                Repaint();
-            }
+            filterMissingPrefabs = newFilterMissingPrefabs;
+            Repaint();
         }
 
         // Missing Components button
+        GUIContent compButtonContent = new GUIContent("Missing Components");
+        bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent,
+            "Button", GUILayout.Width(135));
+        if (newFilterMissingComponents != filterMissingComponents)
         {
-            GUIContent compButtonContent = new GUIContent("Missing Components");
-            bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent,
-                "Button", GUILayout.Width(135));
-            if (newFilterMissingComponents != filterMissingComponents)
-            {
-                filterMissingComponents = newFilterMissingComponents;
-                Repaint();
-            }
+            filterMissingComponents = newFilterMissingComponents;
+            Repaint();
         }
 
         // Missing References button
+        GUIContent refsButtonContent = new GUIContent("Missing References");
+        bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent,
+            "Button", GUILayout.Width(135));
+        if (newFilterMissingReferences != filterMissingReferences)
         {
-            GUIContent refsButtonContent = new GUIContent("Missing References");
-            bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent,
-                "Button", GUILayout.Width(135));
-            if (newFilterMissingReferences != filterMissingReferences)
-            {
-                filterMissingReferences = newFilterMissingReferences;
-                Repaint();
-            }
+            filterMissingReferences = newFilterMissingReferences;
+            Repaint();
         }
 
         // Script field (MonoScript)
