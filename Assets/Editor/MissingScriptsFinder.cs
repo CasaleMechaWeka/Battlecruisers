@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 
 public class MissingScriptsFinder : EditorWindow
@@ -44,6 +45,7 @@ public class MissingScriptsFinder : EditorWindow
     bool skipTrashScenes = true;
     bool scanScenes = true;
     bool scanPrefabs = true;
+    const bool StopAtFirstRefPerComponent = false;
 
     bool filterMissingPrefabs = true;
     bool filterMissingComponents = true;
@@ -409,50 +411,89 @@ public class MissingScriptsFinder : EditorWindow
     // Modified to label missing scripts as “Missing Component” and references as “Missing Reference: ...”
     void CollectMissingReferences(GameObject obj, string assetPath, List<MissingScriptEntry> output)
     {
-        PrefabInstanceStatus status = PrefabUtility.GetPrefabInstanceStatus(obj);
-        if (status == PrefabInstanceStatus.MissingAsset)
-        {
-            string uniquePath = GetUniquePath(obj);
-            MissingScriptEntry entry = new MissingScriptEntry(assetPath, MissingType.MissingPrefab, uniquePath);
-            if (!output.Contains(entry))
-                output.Add(entry);
-            return;    // no need to scan its components
-        }
+        // Per-asset de-dupe: "path|type"
+        HashSet<string> seen = new HashSet<string>(128);
+        Traverse(obj, assetPath, output, seen, obj.name);
+    }
 
-        Component[] comps = obj.GetComponents<Component>();
-        foreach (Component comp in comps)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static string EntryKey(string uniquePath, MissingType t) => uniquePath + "|" + (int)t;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static void AddOnce(List<MissingScriptEntry> dst, HashSet<string> seen, string assetPath, string uniquePath, MissingType kind)
+    {
+        if (seen.Add(EntryKey(uniquePath, kind)))
+            dst.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
+    }
+
+    void Traverse(GameObject go, string assetPath, List<MissingScriptEntry> output, HashSet<string> seen, string currentPath)
+{
+        // Missing prefab instance? Record once and skip this subtree.
+        if (PrefabUtility.GetPrefabInstanceStatus(go) == PrefabInstanceStatus.MissingAsset)
         {
+            AddOnce(output, seen, assetPath, currentPath, MissingType.MissingPrefab);
+            return;
+        }
+        // Components on this GameObject
+        Component[] comps = go.GetComponents<Component>();
+        bool hasMissingComponentHere = false;
+        for (int i = 0; i < comps.Length; i++)
+        {
+            Component comp = comps[i];
             if (comp == null)
             {
-                // Missing script → rename to “Missing Component”
-                string uniquePath = GetUniquePath(obj);
-                MissingScriptEntry entry = new MissingScriptEntry(assetPath, MissingType.MissingComponent, uniquePath);
-                if (!output.Contains(entry))
-                    output.Add(entry);
+                hasMissingComponentHere = true;
+                continue;
+            }
+            SerializedObject so = new SerializedObject(comp);
+            SerializedProperty prop = so.GetIterator();
+            bool enterChildren = true;
+            // Scan only until the first missing reference on this component.
+            while (prop.NextVisible(enterChildren))
+            {
+                enterChildren &= !StopAtFirstRefPerComponent;
+                if (prop.propertyType == SerializedPropertyType.ObjectReference &&
+                    prop.objectReferenceInstanceIDValue != 0 &&
+                    prop.objectReferenceValue == null)
+                {
+                    AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
+                }
+            }
+        }
+        if (hasMissingComponentHere)
+            AddOnce(output, seen, assetPath, currentPath, MissingType.MissingComponent);
+        // Children: compute stable unique paths in one pass
+        Transform tr = go.transform;
+        int childCount = tr.childCount;
+        if (childCount == 0) return;
+        // Count how many children share each name
+        Dictionary<string, int> counts = new Dictionary<string, int>(childCount);
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = tr.GetChild(i);
+            counts.TryGetValue(child.name, out int c);
+            counts[child.name] = c + 1;
+        }
+        // Assign indices for duplicate names as we walk
+        Dictionary<string, int> used = new Dictionary<string, int>(counts.Count);
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = tr.GetChild(i);
+            string name = child.name;
+            counts.TryGetValue(name, out int total);
+            string childPath;
+            if (total <= 1)
+            {
+                childPath = currentPath + "/" + name;
             }
             else
             {
-                // Check for missing references in serialized fields
-                SerializedObject so = new SerializedObject(comp);
-                SerializedProperty prop = so.GetIterator();
-                while (prop.NextVisible(true))
-                    if (prop.propertyType == SerializedPropertyType.ObjectReference
-                     && prop.objectReferenceValue == null 
-                     && prop.objectReferenceInstanceIDValue != 0)
-                    {
-                        // Label as “Missing Reference”
-                        string displayName =
-                            $"Missing Reference: {comp.gameObject.name} ({comp.GetType().Name}:{prop.name})";
-                        string uniquePath = GetUniquePath(comp.gameObject);
-                        MissingScriptEntry entry = new MissingScriptEntry(assetPath, MissingType.MissingReference, uniquePath);
-                        if (!output.Contains(entry))
-                            output.Add(entry);
-                    }
+                used.TryGetValue(name, out int idx);
+                childPath = $"{currentPath}/{name}[{idx}]";
+                used[name] = idx + 1;
             }
+            Traverse(child.gameObject, assetPath, output, seen, childPath);
         }
-        // Recurse
-        foreach (Transform child in obj.transform)
-            CollectMissingReferences(child.gameObject, assetPath, output);
     }
 
     void ClearCache()
@@ -590,8 +631,21 @@ public class MissingScriptsFinder : EditorWindow
 
         // Progress bar
         float progress = (float)scanIndex / scanAssets.Count;
-        EditorUtility.DisplayProgressBar("Finding Missing Components",
-            $"Scanning {scanIndex}/{scanAssets.Count}", progress);
+        string current =
+            (scanIndex > 0 && scanIndex <= scanAssets.Count)
+                ? System.IO.Path.GetFileName(scanAssets[scanIndex - 1])
+                : string.Empty;
+
+        bool canceled = EditorUtility.DisplayCancelableProgressBar(
+            "Finding Missing Components",
+            $"Scanning {scanIndex}/{scanAssets.Count}  {current}",
+            progress);
+
+        if (canceled)
+        {
+            CancelScan();
+            return;
+        }
 
         // UI repaint throttled to 0.5 s
         if (EditorApplication.timeSinceStartup - lastUIRefresh > k_UI_REFRESH_INTERVAL)
@@ -640,6 +694,15 @@ public class MissingScriptsFinder : EditorWindow
         }
 
         return $"{parentPath}/{go.name}[{index}]";
+    }
+
+    void CancelScan()
+    {
+        isScanning = false;
+        EditorApplication.update -= ScanStep;
+        EditorUtility.ClearProgressBar();
+        SaveCacheToDisk();   // keep whatever we’ve already scanned
+        Repaint();
     }
 
     #endregion
@@ -1062,7 +1125,6 @@ public class MissingScriptsFinder : EditorWindow
                     // Safe default
                     kind = MissingType.MissingReference;
             }
-
 
             ignoreList.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
         }
