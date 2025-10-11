@@ -254,7 +254,7 @@ public class MissingScriptsFinder : EditorWindow
                 MissingScriptEntry single = filteredEntries[0];
                 EditorGUILayout.BeginHorizontal(OPT_ROW);
                 if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
-                EditorGUILayout.LabelField($"{displayName} → {single.uniquePath}", GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField(FormatPathRootArrow(single.uniquePath), GUILayout.ExpandWidth(true));
 
                 if (single.missingType == MissingType.MissingComponent)
                     DrawRemoveAndReplace(single.assetPath, replacementScript);
@@ -302,6 +302,14 @@ public class MissingScriptsFinder : EditorWindow
                 EditorGUI.indentLevel--;
             }
         }
+    }
+
+    static string FormatPathRootArrow(string uniquePath)
+    {
+        if (string.IsNullOrEmpty(uniquePath)) return string.Empty;
+        int i = uniquePath.IndexOf('/');
+        if (i < 0) return uniquePath;                // root only
+        return uniquePath[..i] + " → " + uniquePath[(i + 1)..];
     }
 
     void DrawRemoveAndReplace(string assetPath, MonoScript replacementScript)
@@ -444,12 +452,12 @@ public class MissingScriptsFinder : EditorWindow
         bool hasMissingComponentHere = false;
         for (int i = 0; i < s_Comps.Count; i++)
         {
-            var comp = s_Comps[i];
+            Component comp = s_Comps[i];
             if (comp == null) { hasMissingComponentHere = true; continue; }
             if (comp is Transform) continue;
 
             var so = new SerializedObject(comp);
-            var it = so.GetIterator();
+            SerializedProperty it = so.GetIterator();
             while (it.NextVisible(true))
             {
                 if (it.propertyType == SerializedPropertyType.ObjectReference &&
