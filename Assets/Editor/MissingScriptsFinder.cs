@@ -425,6 +425,8 @@ public class MissingScriptsFinder : EditorWindow
             dst.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
     }
 
+    static readonly List<Component> s_Comps = new List<Component>(8);
+
     void Traverse(GameObject go, string assetPath, List<MissingScriptEntry> output, HashSet<string> seen, string currentPath)
     {
         // Missing prefab instance? Record once and skip this subtree.
@@ -433,43 +435,36 @@ public class MissingScriptsFinder : EditorWindow
             AddOnce(output, seen, assetPath, currentPath, MissingType.MissingPrefab);
             return;
         }
+
         // Components on this GameObject
-        // Components on this GameObject
-        Component[] comps = go.GetComponents<Component>();
+
+        s_Comps.Clear();
+        go.GetComponents(s_Comps);              // no array alloc
+
         bool hasMissingComponentHere = false;
-
-        for (int i = 0; i < comps.Length; i++)
+        for (int i = 0; i < s_Comps.Count; i++)
         {
-            Component comp = comps[i];
+            var comp = s_Comps[i];
+            if (comp == null) { hasMissingComponentHere = true; continue; }
+            if (comp is Transform) continue;
 
-            // Missing component slot (old script removed) → mark and continue
-            if (comp == null)
-            {
-                hasMissingComponentHere = true;
-                continue;
-            }
-
-            // Skip Transform & RectTransform (and any Transform-derivatives)
-            if (comp is Transform) // RectTransform is-a Transform
-                continue;
-
-            // Deep-scan this component's serialized properties for missing object refs
             var so = new SerializedObject(comp);
-            var prop = so.GetIterator();
-
-            while (prop.NextVisible(true))
+            var it = so.GetIterator();
+            while (it.NextVisible(true))
             {
-                if (prop.propertyType == SerializedPropertyType.ObjectReference &&
-                    prop.objectReferenceInstanceIDValue != 0 &&
-                    prop.objectReferenceValue == null)
+                if (it.propertyType == SerializedPropertyType.ObjectReference &&
+                    it.objectReferenceInstanceIDValue != 0 &&
+                    it.objectReferenceValue == null)
                 {
                     AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
-                    if (StopAtFirstRefPerComponent) break; // optional early-exit toggle
+                    if (StopAtFirstRefPerComponent) break;
                 }
             }
         }
         if (hasMissingComponentHere)
             AddOnce(output, seen, assetPath, currentPath, MissingType.MissingComponent);
+
+            
         // Children: compute stable unique paths in one pass
         Transform tr = go.transform;
         int childCount = tr.childCount;
