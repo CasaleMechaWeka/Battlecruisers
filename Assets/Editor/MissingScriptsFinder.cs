@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 
 public class MissingScriptsFinder : EditorWindow
@@ -435,32 +434,37 @@ public class MissingScriptsFinder : EditorWindow
             return;
         }
         // Components on this GameObject
+        // Components on this GameObject
         Component[] comps = go.GetComponents<Component>();
         bool hasMissingComponentHere = false;
+
         for (int i = 0; i < comps.Length; i++)
         {
             Component comp = comps[i];
+
+            // Missing component slot (old script removed) → mark and continue
             if (comp == null)
             {
                 hasMissingComponentHere = true;
                 continue;
             }
 
-            if (comp is Transform)
+            // Skip Transform & RectTransform (and any Transform-derivatives)
+            if (comp is Transform) // RectTransform is-a Transform
                 continue;
 
-            SerializedObject so = new SerializedObject(comp);
-            SerializedProperty prop = so.GetIterator();
-            bool enterChildren = true;
-            // Scan only until the first missing reference on this component.
-            while (prop.NextVisible(enterChildren))
+            // Deep-scan this component's serialized properties for missing object refs
+            var so = new SerializedObject(comp);
+            var prop = so.GetIterator();
+
+            while (prop.NextVisible(true))
             {
-                enterChildren &= !StopAtFirstRefPerComponent;
                 if (prop.propertyType == SerializedPropertyType.ObjectReference &&
                     prop.objectReferenceInstanceIDValue != 0 &&
                     prop.objectReferenceValue == null)
                 {
                     AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
+                    if (StopAtFirstRefPerComponent) break; // optional early-exit toggle
                 }
             }
         }
