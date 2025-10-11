@@ -1,82 +1,104 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 
 public class MissingScriptsFinder : EditorWindow
 {
+
+    enum MissingType
+    {
+        MissingReference = 0,
+        MissingComponent = 1,
+        MissingPrefab = 2,
+    }
+
     #region Data Structures
     // Stores a unique path for each missing reference.
-    private struct MissingScriptEntry
+    struct MissingScriptEntry
     {
         public string assetPath;
-        public string objectName;    // The GameObject's name or a label for the missing item.
+        public MissingType missingType;    // The GameObject's name or a label for the missing item.
         public string uniquePath;    // Full unique hierarchy path.
 
-        public MissingScriptEntry(string assetPath, string objectName, string uniquePath)
+        public MissingScriptEntry(string assetPath, MissingType missingType, string uniquePath)
         {
             this.assetPath = assetPath;
-            this.objectName = objectName;
+            this.missingType = missingType;
             this.uniquePath = uniquePath;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is MissingScriptEntry other)
-            {
-                // Use asset path and uniquePath for equality.
-                return assetPath == other.assetPath && uniquePath == other.uniquePath;
-            }
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return (assetPath + uniquePath).GetHashCode();
         }
     }
     #endregion
 
     #region Fields
-    private List<MissingScriptEntry> missingScriptEntries = new List<MissingScriptEntry>();
-    private List<MissingScriptEntry> ignoreList = new List<MissingScriptEntry>();
-    private int ignoredItemsFound = 0;
-    private Vector2 scrollPosition;
-    private bool viewIgnoreList = false;
-    private bool keepIgnoreList = true;
-    private bool onlyScanBuildScenes = false; // Default: scan all scenes
-    private bool skipTestingScenes = true;
-    private bool skipTrashScenes = true;
-    private bool skipTestPrefabs = true;
+    List<MissingScriptEntry> missingScriptEntries = new List<MissingScriptEntry>();
+    List<MissingScriptEntry> ignoreList = new List<MissingScriptEntry>();
+    Vector2 scrollPosition;
+    bool viewIgnoreList = false;
+    bool keepIgnoreList = true;
+    bool skipTestingScenes = true;
+    bool skipTrashScenes = true;
+    bool scanScenes = true;
+    bool scanPrefabs = true;
+    const bool StopAtFirstRefPerComponent = false;
 
-    private bool filterScenes = true;
-    private bool filterPrefabs = true;
+    bool filterMissingPrefabs = true;
+    bool filterMissingComponents = true;
+    bool filterMissingReferences = true;
 
-    private bool filterMissingPrefabs = true;
-    private bool filterMissingComponents = true;
-    private bool filterMissingReferences = true;
 
-    private bool showSceneDropdown = false; // Controls dropdown visibility
-    private Dictionary<string, bool> sceneSelection = new Dictionary<string, bool>();
-    private Vector2 sceneDropdownScroll = Vector2.zero;
+    MonoScript replacementScript = null;
 
-    private MonoScript replacementScript = null;
+    Dictionary<string, bool> assetFoldoutStates = new Dictionary<string, bool>();
+    Dictionary<string, bool> ignoreFoldoutStates = new Dictionary<string, bool>();
 
-    private Dictionary<string, bool> assetFoldoutStates = new Dictionary<string, bool>();
-    private Dictionary<string, bool> ignoreFoldoutStates = new Dictionary<string, bool>();
-
-    private const string IgnoreListKey = "MissingScriptsIgnoreList";
+    const string IgnoreListKey = "MissingScriptsIgnoreList";
 
     // --- incremental scanning ---
-    private bool isScanning = false;
-    private List<string> scanAssets = new List<string>();
-    private int scanIndex = 0;
-    private double lastUIRefresh = 0.0;
-    private const float k_UI_REFRESH_INTERVAL = 0.5f;   // seconds
-    private float frameBudget = 0.1f;
+    bool isScanning = false;
+    List<string> scanAssets = new List<string>();
+    int scanIndex = 0;
+    double lastUIRefresh = 0.0;
+    const float k_UI_REFRESH_INTERVAL = 0.5f;   // seconds
+    float frameBudget = 0.1f;
+
+    #endregion
+
+    #region GUI Vars
+
+    static Texture2D IconScene;
+    static Texture2D IconPrefab;
+
+    static GUIContent GC_Scenes;
+    static GUIContent GC_Prefabs;
+
+    static readonly GUIContent GC_FindMissingComponents = EditorGUIUtility.TrTextContent("Find Missing Components");
+    static readonly GUIContent GC_ClearCache = EditorGUIUtility.TrTextContent("Clear Cache");
+    static readonly GUIContent GC_ViewList = new GUIContent();
+
+    static readonly GUIContent GC_MissingPrefabs = new GUIContent("Missing Prefabs");
+    static readonly GUIContent GC_MissingComponents = new GUIContent("Missing Components");
+    static readonly GUIContent GC_MissingReferences = new GUIContent("Missing References");
+
+
+    static readonly GUIContent GC_Remove = EditorGUIUtility.TrTextContent("Remove");
+    static readonly GUIContent GC_Replace = EditorGUIUtility.TrTextContent("Replace");
+    static readonly GUIContent GC_Jump = EditorGUIUtility.TrTextContent("Jump");
+    static readonly GUIContent GC_Ignore = EditorGUIUtility.TrTextContent("Ignore");
+    static readonly GUIContent GC_RemoveAll = EditorGUIUtility.TrTextContent("Remove All");
+
+
+    static readonly GUILayoutOption[] OPT_ROW = { GUILayout.Height(EditorGUIUtility.singleLineHeight) };
+    static readonly GUILayoutOption[] OPT_ICON = { GUILayout.Width(18f), GUILayout.Height(18f) };
+    static readonly GUILayoutOption[] OPT_W50 = { GUILayout.Width(50f) };
+    static readonly GUILayoutOption[] OPT_W60 = { GUILayout.Width(60f) };
+    static readonly GUILayoutOption[] OPT_W70 = { GUILayout.Width(70f) };
+    static readonly GUILayoutOption[] OPT_W135 = { GUILayout.Width(135f) };
 
     #endregion
 
@@ -88,15 +110,21 @@ public class MissingScriptsFinder : EditorWindow
         GetWindow<MissingScriptsFinder>("Missing Components Finder");
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
+        IconScene = (Texture2D)EditorGUIUtility.IconContent("SceneAsset Icon").image;
+        IconPrefab = (Texture2D)EditorGUIUtility.IconContent("Prefab Icon").image;
+
+        GC_Scenes = new GUIContent("", IconScene, "Toggle scene scanning on/off");
+        GC_Prefabs = new GUIContent("", IconPrefab, "Toggle prefab scanning on/off");
+
         LoadIgnoreList();
         LoadCacheFromDisk();
 
-        frameBudget = Mathf.Min(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
+        frameBudget = Mathf.Max(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         if (isScanning)
         {
@@ -105,179 +133,88 @@ public class MissingScriptsFinder : EditorWindow
         }
 
         if (keepIgnoreList)
-        {
             SaveIgnoreList();
-        }
     }
 
-    private void OnGUI()
+    void OnGUI()
     {
         EditorGUILayout.BeginHorizontal();
-        // Renamed button label
-        if (GUILayout.Button("Find Missing Components"))
-        {
+        if (GUILayout.Button(GC_FindMissingComponents))
             FindMissingScripts();
-        }
-        if (GUILayout.Button("Clear Cache", GUILayout.Width(100)))
-        {
+
+        if (GUILayout.Button(GC_ClearCache, GUILayout.Width(100)))
             ClearCache();
-        }
-        if (GUILayout.Button(viewIgnoreList ? $"View Main List ({missingScriptEntries.Count})" : $"View Ignore List ({ignoreList.Count})", GUILayout.Width(150)))
-        {
+
+        GC_ViewList.text = viewIgnoreList
+            ? $"View Main List ({missingScriptEntries.Count})"
+            : $"View Ignore List ({ignoreList.Count})";
+
+        if (GUILayout.Button(GC_ViewList, GUILayout.Width(150)))
             viewIgnoreList = !viewIgnoreList;
-        }
+
         EditorGUILayout.EndHorizontal();
 
         //onlyScanBuildScenes = EditorGUILayout.Toggle("Only Scan Scenes in Build Settings", onlyScanBuildScenes);
         EditorGUILayout.BeginHorizontal();
 
         // Scenes button
-        {
-            int sceneCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".unity"));
-            GUIContent sceneButtonContent = new GUIContent(
-                $"  {sceneCount}",
-                EditorGUIUtility.IconContent("SceneAsset Icon").image,
-                "Toggle scene filtering on/off"
-            );
-            bool newFilterScenes = GUILayout.Toggle(filterScenes, sceneButtonContent,
-                "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            if (newFilterScenes != filterScenes)
-            {
-                filterScenes = newFilterScenes;
-                Repaint();
-            }
-        }
+        int sceneCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".unity"));
+        GC_Scenes.text = $"  {sceneCount}";
+        DrawFilterButton(ref scanScenes, GC_Scenes, GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
         // Prefabs button
-        {
-            int prefabCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".prefab"));
-            GUIContent prefabButtonContent = new GUIContent(
-                $"  {prefabCount}",
-                EditorGUIUtility.IconContent("Prefab Icon").image,
-                "Toggle prefab filtering on/off"
-            );
-            bool newFilterPrefabs = GUILayout.Toggle(filterPrefabs, prefabButtonContent,
-                "Button", GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            if (newFilterPrefabs != filterPrefabs)
-            {
-                filterPrefabs = newFilterPrefabs;
-                Repaint();
-            }
-        }
+        int prefabCount = missingScriptEntries.Count(e => e.assetPath.EndsWith(".prefab"));
+        GC_Prefabs.text = $"  {prefabCount}";
+        DrawFilterButton(ref scanPrefabs, GC_Prefabs, GUILayout.Width(70), GUILayout.Height(EditorGUIUtility.singleLineHeight));
 
-        // Missing Prefabs button
-        {
-            GUIContent prefabBtnContent = new GUIContent("Missing Prefabs");
-            bool newFilterMissingPrefabs = GUILayout.Toggle(filterMissingPrefabs, prefabBtnContent,
-                "Button", GUILayout.Width(115));
-            if (newFilterMissingPrefabs != filterMissingPrefabs)
-            {
-                filterMissingPrefabs = newFilterMissingPrefabs;
-                Repaint();
-            }
-        }
-
-        // Missing Components button
-        {
-            GUIContent compButtonContent = new GUIContent("Missing Components");
-            bool newFilterMissingComponents = GUILayout.Toggle(filterMissingComponents, compButtonContent,
-                "Button", GUILayout.Width(135));
-            if (newFilterMissingComponents != filterMissingComponents)
-            {
-                filterMissingComponents = newFilterMissingComponents;
-                Repaint();
-            }
-        }
-
-        // Missing References button
-        {
-            GUIContent refsButtonContent = new GUIContent("Missing References");
-            bool newFilterMissingReferences = GUILayout.Toggle(filterMissingReferences, refsButtonContent,
-                "Button", GUILayout.Width(135));
-            if (newFilterMissingReferences != filterMissingReferences)
-            {
-                filterMissingReferences = newFilterMissingReferences;
-                Repaint();
-            }
-        }
+        DrawFilterButton(ref filterMissingPrefabs,    GC_MissingPrefabs,    GUILayout.Width(115));
+        DrawFilterButton(ref filterMissingComponents, GC_MissingComponents, OPT_W135);
+        DrawFilterButton(ref filterMissingReferences, GC_MissingReferences, OPT_W135);
 
         // Script field (MonoScript)
         // Note: You can choose to show a label or not. For example, "Replacement Script" or just the field
         replacementScript = (MonoScript)EditorGUILayout.ObjectField(
             replacementScript,             // current value
             typeof(MonoScript),            // type filter
-            false,                         // allowSceneObjects?
-            GUILayout.Width(296)           // adjust as you like
+            false                          // allowSceneObjects?
         );
 
         // "Replace All" button
         bool hasAnyMissingComponents =
-            missingScriptEntries.Any(e => e.objectName.StartsWith("Missing Component"));
+            missingScriptEntries.Any(e => e.missingType == MissingType.MissingComponent);
         EditorGUI.BeginDisabledGroup(!hasAnyMissingComponents && replacementScript == null);
+
         if (GUILayout.Button(replacementScript ? "Replace All" : "Remove All", GUILayout.Width(80)))
-        {
             if (replacementScript != null)
                 ReplaceAllMissing(replacementScript);
             else
                 RemoveAllMissing();   // implement analogously if desired
-        }
-        EditorGUI.EndDisabledGroup();
 
+        EditorGUI.EndDisabledGroup();
         EditorGUILayout.EndHorizontal();
 
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+
         if (viewIgnoreList)
             DisplayIgnoreList();
         else
             DisplayEntryList(missingScriptEntries, false);
+
         EditorGUILayout.EndScrollView();
     }
 
-    // Helper: Recursively build a unique path for a GameObject.
-    private string GetUniquePath(GameObject go)
-    {
-        if (go.transform.parent == null)
-            return go.name;
-
-        string parentPath = GetUniquePath(go.transform.parent.gameObject);
-        Transform parent = go.transform.parent;
-
-        int totalSiblingsWithSameName = 0;
-        foreach (Transform sibling in parent)
-        {
-            if (sibling.gameObject.name == go.name)
-                totalSiblingsWithSameName++;
-        }
-
-        if (totalSiblingsWithSameName == 1)
-            return $"{parentPath}/{go.name}";
-
-        int index = 0;
-        foreach (Transform sibling in parent)
-        {
-            if (sibling == go)
-                break;
-            if (sibling.gameObject.name == go.name)
-                index++;
-        }
-
-        return $"{parentPath}/{go.name}[{index}]";
-    }
-
     // This is where we handle filters and grouping.
-    private void DisplayEntryList(List<MissingScriptEntry> list, bool isIgnore)
+    void DisplayEntryList(List<MissingScriptEntry> list, bool isIgnore)
     {
         if (list.Count == 0)
         {
-            EditorGUILayout.LabelField(isIgnore
-                ? "No ignored references found."
-                : "No missing items found.");
+            EditorGUILayout.LabelField("No missing items found.");
             return;
         }
 
         // 1) Group by asset path
         Dictionary<string, List<MissingScriptEntry>> grouped = new Dictionary<string, List<MissingScriptEntry>>();
-        foreach (var entry in list)
+        foreach (MissingScriptEntry entry in list)
         {
             if (!grouped.ContainsKey(entry.assetPath))
                 grouped[entry.assetPath] = new List<MissingScriptEntry>();
@@ -285,196 +222,82 @@ public class MissingScriptsFinder : EditorWindow
         }
 
         // 2) Iterate groups
-        foreach (var kvp in grouped)
+        foreach (KeyValuePair<string, List<MissingScriptEntry>> kvp in grouped)
         {
             string assetPath = kvp.Key;
             List<MissingScriptEntry> allEntries = kvp.Value;
 
-            bool isScene = assetPath.EndsWith(".unity");
-            bool isPrefab = assetPath.EndsWith(".prefab");
+            bool isScene = assetPath.EndsWith(".unity", StringComparison.OrdinalIgnoreCase);
+            bool isPrefab = assetPath.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase);
 
-            // Apply scene/prefab filter
-            if ((isScene && !filterScenes) || (isPrefab && !filterPrefabs))
+            // apply scene/prefab filter
+            if ((isScene && !scanScenes) || (isPrefab && !scanPrefabs))
                 continue;
 
-            // 3) Now filter each entry inside the group individually
-            var filteredEntries = new List<MissingScriptEntry>();
-            foreach (var e in allEntries)
-            {
-                bool isMissingPrefab = e.objectName.StartsWith("Missing Prefab");
-                bool isMissingComponent = e.objectName.StartsWith("Missing Component");
-                bool isMissingReference = e.objectName.StartsWith("Missing Reference");
-
-                // If the user wants to see missing components and this entry is a missing component,
-                // or the user wants to see missing references and this entry is a missing reference,
-                // then we keep this entry.
-                if ((filterMissingComponents && isMissingComponent)
-                    || (filterMissingReferences && isMissingReference)
-                    || (filterMissingPrefabs && isMissingPrefab))
-                {
+            // per-type filter (FIXED mapping: Component -> MissingComponent, Reference -> MissingReference)
+            List<MissingScriptEntry> filteredEntries = new List<MissingScriptEntry>(allEntries.Count);
+            foreach (MissingScriptEntry e in allEntries)
+                if (PassesTypeFilter(e.missingType, filterMissingComponents, filterMissingReferences, filterMissingPrefabs))
                     filteredEntries.Add(e);
-                }
-            }
 
-            // If no entries remain after the filter, skip this asset entirely
-            if (filteredEntries.Count == 0)
-                continue;
+            if (filteredEntries.Count == 0) continue;
 
-            bool hasMissingComponent = filteredEntries.Any(e => e.objectName.StartsWith("Missing Component"));
+            bool hasMissingComponent = false;
+            for (int i = 0; i < filteredEntries.Count; i++)
+                if (filteredEntries[i].missingType == MissingType.MissingComponent) { hasMissingComponent = true; break; }
 
-            // Get short name & icon
             string displayName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
-            GUIContent icon = isPrefab
-                ? EditorGUIUtility.IconContent("Prefab Icon")
-                : isScene
-                    ? EditorGUIUtility.IconContent("SceneAsset Icon")
-                    : null;
+            Texture2D iconTex = isPrefab ? IconPrefab : isScene ? IconScene : null;
 
-            // If we only have one entry left to show, just draw that row
+            // single row
             if (filteredEntries.Count == 1)
             {
-                var single = filteredEntries[0];
-                EditorGUILayout.BeginHorizontal(GUILayout.Height(EditorGUIUtility.singleLineHeight));
-
-                if (icon != null)
-                    GUILayout.Label(icon, GUILayout.Width(18), GUILayout.Height(18));
-
+                MissingScriptEntry single = filteredEntries[0];
+                EditorGUILayout.BeginHorizontal(OPT_ROW);
+                if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
                 EditorGUILayout.LabelField($"{displayName} → {single.uniquePath}", GUILayout.ExpandWidth(true));
 
-                if (hasMissingComponent)
-                {
-                    if (replacementScript == null)
-                    {
-                        // REMOVE
-                        if (GUILayout.Button("Remove", GUILayout.Width(60)))
-                        {
-                            RemoveMissingAssetGroup(single.assetPath);
-                            Repaint();
-                        }
-                    }
-                    else
-                    {
-                        // REPLACE
-                        if (GUILayout.Button("Replace", GUILayout.Width(60)))
-                        {
-                            ReplaceMissingAssetGroup(single.assetPath, replacementScript);
-                            Repaint();
-                        }
-                    }
-                }
-
-                if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                    JumpToReference(single.assetPath, single.uniquePath);
-
-                string btnText = isIgnore ? "Remove" : "Ignore";
-                if (GUILayout.Button(btnText, GUILayout.Width(50)))
-                {
-                    if (isIgnore)
-                    {
-                        ignoreList.Remove(single);
-                        missingScriptEntries.Add(single);
-                    }
-                    else
-                    {
-                        if (!ignoreList.Contains(single))
-                            ignoreList.Add(single);
-                        missingScriptEntries.Remove(single);
-                    }
-                }
+                if (single.missingType == MissingType.MissingComponent)
+                    DrawRemoveAndReplace(single.assetPath, replacementScript);
+                DrawJumpForEntry(single);
+                DrawIgnoreForEntry(single, isIgnore);
 
                 EditorGUILayout.EndHorizontal();
                 continue;
             }
 
-            // Otherwise, we have multiple entries in this group, so use a foldout
-            EditorGUILayout.BeginHorizontal(GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            if (icon != null)
-                GUILayout.Label(icon, GUILayout.Width(18), GUILayout.Height(18));
+            // group header (foldout)
+            EditorGUILayout.BeginHorizontal(OPT_ROW);
+            if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
 
-            bool expanded = false;
-            if (!assetFoldoutStates.TryGetValue(assetPath, out expanded))
-                assetFoldoutStates[assetPath] = false;
+            bool expanded = assetFoldoutStates.TryGetValue(assetPath, out var wasExpanded) && wasExpanded;
+            bool newExpanded = EditorGUILayout.Foldout(expanded, $"{displayName} ({filteredEntries.Count})", true);
 
-            assetFoldoutStates[assetPath] = EditorGUILayout.Foldout(
-                assetFoldoutStates[assetPath],
-                $"{displayName} ({filteredEntries.Count})",
-                true
-            );
+            // Always store back so the key exists for next frame
+            assetFoldoutStates[assetPath] = newExpanded;
 
             GUILayout.FlexibleSpace();
 
             if (hasMissingComponent)
-            {
-                if (replacementScript == null)
-                {
-                    if (GUILayout.Button("Remove", GUILayout.Width(60)))
-                    {
-                        RemoveMissingAssetGroup(assetPath);
-                        Repaint();
-                    }
-                }
-                else
-                {
-                    if (GUILayout.Button("Replace", GUILayout.Width(60)))
-                    {
-                        ReplaceMissingAssetGroup(assetPath, replacementScript);
-                        Repaint();
-                    }
-                }
-            }
-
-            if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                OpenAssetAndSelectRoot(assetPath);
-
-            string groupBtnText = isIgnore ? "Remove All" : "Ignore";
-            if (GUILayout.Button(groupBtnText, GUILayout.Width(50)))
-            {
-                if (isIgnore)
-                {
-                    foreach (var entry in filteredEntries)
-                        missingScriptEntries.Add(entry);
-                    ignoreList.RemoveAll(e => e.assetPath == assetPath);
-                }
-                else
-                {
-                    foreach (var entry in filteredEntries)
-                    {
-                        if (!ignoreList.Contains(entry))
-                            ignoreList.Add(entry);
-                        missingScriptEntries.Remove(entry);
-                    }
-                }
-            }
+                DrawRemoveAndReplace(assetPath, replacementScript);
+            DrawJumpForAsset(assetPath);
+            DrawIgnoreForGroup(assetPath, filteredEntries, isIgnore);
 
             EditorGUILayout.EndHorizontal();
 
-            // Show each filtered entry in the foldout
-            if (assetFoldoutStates[assetPath])
+            // Use the local variable, not the dictionary indexer
+            if (newExpanded)
             {
                 EditorGUI.indentLevel++;
-                foreach (var entry in filteredEntries)
+                for (int i = 0; i < filteredEntries.Count; i++)
                 {
-                    EditorGUILayout.BeginHorizontal(GUILayout.Height(EditorGUIUtility.singleLineHeight));
+                    MissingScriptEntry entry = filteredEntries[i];
+                    EditorGUILayout.BeginHorizontal(OPT_ROW);
                     EditorGUILayout.LabelField(entry.uniquePath, GUILayout.ExpandWidth(true));
-
-                    if (GUILayout.Button("Jump", GUILayout.Width(50)))
-                        JumpToReference(entry.assetPath, entry.uniquePath);
-
-                    if (GUILayout.Button(isIgnore ? "Remove" : "Ignore", GUILayout.Width(50)))
-                    {
-                        if (isIgnore)
-                        {
-                            ignoreList.Remove(entry);
-                            missingScriptEntries.Add(entry);
-                        }
-                        else
-                        {
-                            if (!ignoreList.Contains(entry))
-                                ignoreList.Add(entry);
-                            missingScriptEntries.Remove(entry);
-                        }
-                    }
-
+                    if (entry.missingType == MissingType.MissingComponent)
+                        DrawRemoveAndReplace(entry.assetPath, replacementScript);
+                    DrawJumpForEntry(entry);
+                    DrawIgnoreForEntry(entry, isIgnore);
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUI.indentLevel--;
@@ -482,90 +305,205 @@ public class MissingScriptsFinder : EditorWindow
         }
     }
 
-    private void DisplayIgnoreList()
+    void DrawRemoveAndReplace(string assetPath, MonoScript replacementScript)
+    {
+        // Remove (always enabled)
+        if (GUILayout.Button(GC_Remove, OPT_W60))
+        {
+            RemoveMissingAssetGroup(assetPath);
+            Repaint();
+        }
+
+        // Replace (disabled when no script selected)
+        using (new EditorGUI.DisabledScope(replacementScript == null))
+        {
+            if (GUILayout.Button(GC_Replace, OPT_W60))
+            {
+                ReplaceMissingAssetGroup(assetPath, replacementScript);
+                Repaint();
+            }
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static bool PassesTypeFilter(MissingType t, bool fComp, bool fRef, bool fPrefab) =>
+       (fComp && t == MissingType.MissingComponent)
+    || (fRef && t == MissingType.MissingReference)
+    || (fPrefab && t == MissingType.MissingPrefab);
+
+    void DrawJumpForEntry(in MissingScriptEntry e)
+    {
+        if (GUILayout.Button(GC_Jump, OPT_W50))
+            JumpToReference(e.assetPath, e.uniquePath);
+    }
+
+    void DrawJumpForAsset(string assetPath)
+    {
+        if (GUILayout.Button(GC_Jump, OPT_W50))
+            OpenAssetAndSelectRoot(assetPath);
+    }
+
+    void DrawIgnoreForEntry(in MissingScriptEntry e, bool isIgnore)
+    {
+        if (GUILayout.Button(isIgnore ? GC_Remove : GC_Ignore, OPT_W50))
+            if (isIgnore)
+            {
+                ignoreList.Remove(e);
+                missingScriptEntries.Add(e);
+            }
+            else
+            {
+                if (!ignoreList.Contains(e))
+                    ignoreList.Add(e);
+                missingScriptEntries.Remove(e);
+            }
+    }
+
+    void DrawIgnoreForGroup(string assetPath, List<MissingScriptEntry> entries, bool isIgnore)
+    {
+        if (GUILayout.Button(isIgnore ? GC_RemoveAll : GC_Ignore, OPT_W50))
+            if (isIgnore)
+            {
+                foreach (MissingScriptEntry e in entries) missingScriptEntries.Add(e);
+                ignoreList.RemoveAll(e => e.assetPath == assetPath);
+            }
+            else
+                foreach (MissingScriptEntry e in entries)
+                {
+                    if (!ignoreList.Contains(e)) ignoreList.Add(e);
+                    missingScriptEntries.Remove(e);
+                }
+    }
+
+    void DisplayIgnoreList()
     {
         if (GUILayout.Button("Clear All", GUILayout.Width(80)))
-        {
             if (EditorUtility.DisplayDialog("Clear Ignore List", "Are you sure you want to clear the ignore list?", "Yes", "No"))
                 ignoreList.Clear();
-        }
+
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         DisplayEntryList(ignoreList, true);
         EditorGUILayout.EndScrollView();
     }
 
+    void DrawFilterButton(ref bool flag, GUIContent content, params GUILayoutOption[] opts)
+    {
+        EditorGUI.BeginChangeCheck();
+        bool v = GUILayout.Toggle(flag, content, "Button", opts);
+        if (EditorGUI.EndChangeCheck())
+        {
+            flag = v; 
+            Repaint(); 
+        }
+    }
+
     #endregion
 
     #region Caching and Unified Scanning
-    private class CacheEntry
+    class CacheEntry
     {
         public DateTime lastWriteTime;
         public List<MissingScriptEntry> entries;
     }
-    private Dictionary<string, CacheEntry> assetCache = new Dictionary<string, CacheEntry>();
+
+    Dictionary<string, CacheEntry> assetCache = new Dictionary<string, CacheEntry>();
 
     // Modified to label missing scripts as “Missing Component” and references as “Missing Reference: ...”
-    private void CollectMissingReferences(GameObject obj, string assetPath, List<MissingScriptEntry> output)
+    void CollectMissingReferences(GameObject obj, string assetPath, List<MissingScriptEntry> output)
     {
-        var status = PrefabUtility.GetPrefabInstanceStatus(obj);
-        if (status == PrefabInstanceStatus.MissingAsset)
-        {
-            string uniquePath = GetUniquePath(obj);
-            var entry = new MissingScriptEntry(assetPath, "Missing Prefab", uniquePath);
-            if (!output.Contains(entry))
-                output.Add(entry);
-            return;    // no need to scan its components
-        }
+        // Per-asset de-dupe: "path|type"
+        HashSet<string> seen = new HashSet<string>(128);
+        Traverse(obj, assetPath, output, seen, obj.name);
+    }
 
-        Component[] comps = obj.GetComponents<Component>();
-        foreach (var comp in comps)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static string EntryKey(string uniquePath, MissingType t) => uniquePath + "|" + (int)t;
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static void AddOnce(List<MissingScriptEntry> dst, HashSet<string> seen, string assetPath, string uniquePath, MissingType kind)
+    {
+        if (seen.Add(EntryKey(uniquePath, kind)))
+            dst.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
+    }
+
+    void Traverse(GameObject go, string assetPath, List<MissingScriptEntry> output, HashSet<string> seen, string currentPath)
+{
+        // Missing prefab instance? Record once and skip this subtree.
+        if (PrefabUtility.GetPrefabInstanceStatus(go) == PrefabInstanceStatus.MissingAsset)
         {
+            AddOnce(output, seen, assetPath, currentPath, MissingType.MissingPrefab);
+            return;
+        }
+        // Components on this GameObject
+        Component[] comps = go.GetComponents<Component>();
+        bool hasMissingComponentHere = false;
+        for (int i = 0; i < comps.Length; i++)
+        {
+            Component comp = comps[i];
             if (comp == null)
             {
-                // Missing script → rename to “Missing Component”
-                string uniquePath = GetUniquePath(obj);
-                var entry = new MissingScriptEntry(assetPath, "Missing Component", uniquePath);
-                if (!output.Contains(entry))
-                    output.Add(entry);
+                hasMissingComponentHere = true;
+                continue;
             }
-            else
+            SerializedObject so = new SerializedObject(comp);
+            SerializedProperty prop = so.GetIterator();
+            bool enterChildren = true;
+            // Scan only until the first missing reference on this component.
+            while (prop.NextVisible(enterChildren))
             {
-                // Check for missing references in serialized fields
-                SerializedObject so = new SerializedObject(comp);
-                SerializedProperty prop = so.GetIterator();
-                while (prop.NextVisible(true))
+                enterChildren &= !StopAtFirstRefPerComponent;
+                if (prop.propertyType == SerializedPropertyType.ObjectReference &&
+                    prop.objectReferenceInstanceIDValue != 0 &&
+                    prop.objectReferenceValue == null)
                 {
-                    if (prop.propertyType == SerializedPropertyType.ObjectReference)
-                    {
-                        if (prop.objectReferenceValue == null && prop.objectReferenceInstanceIDValue != 0)
-                        {
-                            // Label as “Missing Reference”
-                            string displayName =
-                                $"Missing Reference: {comp.gameObject.name} ({comp.GetType().Name}:{prop.name})";
-                            string uniquePath = GetUniquePath(comp.gameObject);
-                            var entry = new MissingScriptEntry(assetPath, displayName, uniquePath);
-                            if (!output.Contains(entry))
-                                output.Add(entry);
-                        }
-                    }
+                    AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
                 }
             }
         }
-        // Recurse
-        foreach (Transform child in obj.transform)
+        if (hasMissingComponentHere)
+            AddOnce(output, seen, assetPath, currentPath, MissingType.MissingComponent);
+        // Children: compute stable unique paths in one pass
+        Transform tr = go.transform;
+        int childCount = tr.childCount;
+        if (childCount == 0) return;
+        // Count how many children share each name
+        Dictionary<string, int> counts = new Dictionary<string, int>(childCount);
+        for (int i = 0; i < childCount; i++)
         {
-            CollectMissingReferences(child.gameObject, assetPath, output);
+            Transform child = tr.GetChild(i);
+            counts.TryGetValue(child.name, out int c);
+            counts[child.name] = c + 1;
+        }
+        // Assign indices for duplicate names as we walk
+        Dictionary<string, int> used = new Dictionary<string, int>(counts.Count);
+        for (int i = 0; i < childCount; i++)
+        {
+            Transform child = tr.GetChild(i);
+            string name = child.name;
+            counts.TryGetValue(name, out int total);
+            string childPath;
+            if (total <= 1)
+            {
+                childPath = currentPath + "/" + name;
+            }
+            else
+            {
+                used.TryGetValue(name, out int idx);
+                childPath = $"{currentPath}/{name}[{idx}]";
+                used[name] = idx + 1;
+            }
+            Traverse(child.gameObject, assetPath, output, seen, childPath);
         }
     }
 
-    private void ClearCache()
+    void ClearCache()
     {
         assetCache.Clear();
         EditorPrefs.DeleteKey(CacheKey);
         Debug.Log("Cache cleared successfully.");
     }
 
-    private List<MissingScriptEntry> GetMissingReferencesForAsset(string assetPath)
+    List<MissingScriptEntry> GetMissingReferencesForAsset(string assetPath)
     {
         List<MissingScriptEntry> output = new List<MissingScriptEntry>();
 
@@ -603,13 +541,10 @@ public class MissingScriptsFinder : EditorWindow
                     Debug.LogError($"Error opening scene: {assetPath}\n{ex}");
                 }
                 if (scene.isLoaded)
-                {
                     try
                     {
                         foreach (GameObject root in scene.GetRootGameObjects())
-                        {
                             CollectMissingReferences(root, assetPath, output);
-                        }
                     }
                     catch (Exception ex)
                     {
@@ -619,7 +554,6 @@ public class MissingScriptsFinder : EditorWindow
                     {
                         try { EditorSceneManager.CloseScene(scene, true); } catch { }
                     }
-                }
             }
         }
         catch (Exception ex)
@@ -629,7 +563,7 @@ public class MissingScriptsFinder : EditorWindow
         return output;
     }
 
-    private void FindMissingScripts()
+    void FindMissingScripts()
     {
         if (isScanning) return;            // already running
 
@@ -640,17 +574,16 @@ public class MissingScriptsFinder : EditorWindow
         EditorApplication.update += ScanStep;
     }
 
-    private void PrepareScanAssetList()
+    void PrepareScanAssetList()
     {
         missingScriptEntries.Clear();
-        ignoredItemsFound = 0;
         assetFoldoutStates.Clear();
         ignoreFoldoutStates.Clear();
 
-        var prefabPaths = AssetDatabase.FindAssets("t:MonoBehaviour t:Prefab", new[] { "Assets" })
+        IEnumerable<string> prefabPaths = AssetDatabase.FindAssets("t:MonoBehaviour t:Prefab", new[] { "Assets" })
                                .Select(AssetDatabase.GUIDToAssetPath);
 
-        var buildScenePaths = EditorBuildSettings.scenes          // enabled build scenes only
+        IEnumerable<string> buildScenePaths = EditorBuildSettings.scenes          // enabled build scenes only
                                 .Where(s => s.enabled)
                                 .Select(s => s.path);
 
@@ -667,7 +600,7 @@ public class MissingScriptsFinder : EditorWindow
         scanIndex = 0;
     }
 
-    private void ScanStep()
+    void ScanStep()
     {
         if (!isScanning)
             return;
@@ -675,8 +608,8 @@ public class MissingScriptsFinder : EditorWindow
         double frameStart = EditorApplication.timeSinceStartup;
 
         // Process assets until we've used ~8 ms this frame
-        while (scanIndex < scanAssets.Count &&
-               EditorApplication.timeSinceStartup - frameStart < frameBudget)
+        while (scanIndex < scanAssets.Count
+         && EditorApplication.timeSinceStartup - frameStart < frameBudget)
         {
             string assetPath = scanAssets[scanIndex];
             scanIndex++;
@@ -698,8 +631,21 @@ public class MissingScriptsFinder : EditorWindow
 
         // Progress bar
         float progress = (float)scanIndex / scanAssets.Count;
-        EditorUtility.DisplayProgressBar("Finding Missing Components",
-            $"Scanning {scanIndex}/{scanAssets.Count}", progress);
+        string current =
+            (scanIndex > 0 && scanIndex <= scanAssets.Count)
+                ? System.IO.Path.GetFileName(scanAssets[scanIndex - 1])
+                : string.Empty;
+
+        bool canceled = EditorUtility.DisplayCancelableProgressBar(
+            "Finding Missing Components",
+            $"Scanning {scanIndex}/{scanAssets.Count}  {current}",
+            progress);
+
+        if (canceled)
+        {
+            CancelScan();
+            return;
+        }
 
         // UI repaint throttled to 0.5 s
         if (EditorApplication.timeSinceStartup - lastUIRefresh > k_UI_REFRESH_INTERVAL)
@@ -719,10 +665,50 @@ public class MissingScriptsFinder : EditorWindow
         }
     }
 
+    // Helper: Recursively build a unique path for a GameObject.
+    string GetUniquePath(GameObject go)
+    {
+        if (go.transform.parent == null)
+            return go.name;
+
+        string parentPath = GetUniquePath(go.transform.parent.gameObject);
+        Transform parent = go.transform.parent;
+
+        int totalSiblingsWithSameName = 0;
+
+        foreach (Transform sibling in parent)
+            if (sibling.gameObject.name == go.name)
+                totalSiblingsWithSameName++;
+
+        if (totalSiblingsWithSameName == 1)
+            return $"{parentPath}/{go.name}";
+
+        int index = 0;
+
+        foreach (Transform sibling in parent)
+        {
+            if (sibling == go)
+                break;
+            if (sibling.gameObject.name == go.name)
+                index++;
+        }
+
+        return $"{parentPath}/{go.name}[{index}]";
+    }
+
+    void CancelScan()
+    {
+        isScanning = false;
+        EditorApplication.update -= ScanStep;
+        EditorUtility.ClearProgressBar();
+        SaveCacheToDisk();   // keep whatever we’ve already scanned
+        Repaint();
+    }
+
     #endregion
 
     #region Jump/Select
-    private GameObject FindGameObjectByUniquePath(GameObject root, string uniquePath)
+    GameObject FindGameObjectByUniquePath(GameObject root, string uniquePath)
     {
         string[] parts = uniquePath.Split('/');
         if (parts.Length == 0)
@@ -730,8 +716,9 @@ public class MissingScriptsFinder : EditorWindow
 
         string rootName = parts[0];
         int bracket = rootName.IndexOf('[');
+        
         if (bracket >= 0)
-            rootName = rootName.Substring(0, bracket);
+            rootName = rootName[..bracket];
         if (root.name != rootName)
             return null;
 
@@ -744,19 +731,17 @@ public class MissingScriptsFinder : EditorWindow
             int bIndex = part.IndexOf('[');
             if (bIndex >= 0)
             {
-                childName = part.Substring(0, bIndex);
+                childName = part[..bIndex];
                 int endBracket = part.IndexOf(']', bIndex);
                 if (endBracket > bIndex)
-                {
                     int.TryParse(part.Substring(bIndex + 1, endBracket - bIndex - 1), out siblingIndex);
-                }
             }
+
             List<Transform> matches = new List<Transform>();
             foreach (Transform child in current.transform)
-            {
                 if (child.gameObject.name == childName)
                     matches.Add(child);
-            }
+            
             if (matches.Count <= siblingIndex)
                 return null;
             current = matches[siblingIndex].gameObject;
@@ -764,38 +749,33 @@ public class MissingScriptsFinder : EditorWindow
         return current;
     }
 
-    private void JumpToReference(string assetPath, string uniquePath)
+    void JumpToReference(string assetPath, string uniquePath)
     {
         if (assetPath.EndsWith(".prefab"))
-        {
             OpenPrefabAndSelect(assetPath, uniquePath);
-        }
         else if (assetPath.EndsWith(".unity"))
-        {
             OpenSceneAndSelect(assetPath, uniquePath);
-        }
     }
 
-    private void OpenPrefabAndSelect(string assetPath, string uniquePath)
+    void OpenPrefabAndSelect(string assetPath, string uniquePath)
     {
         PrefabStage currentStage = PrefabStageUtility.GetCurrentPrefabStage();
-        if (currentStage != null)
+        if (currentStage != null 
+        && (string.IsNullOrEmpty(assetPath) || currentStage.assetPath == assetPath))
         {
-            if (string.IsNullOrEmpty(assetPath) || currentStage.assetPath == assetPath)
+            GameObject prefabRoot = currentStage.prefabContentsRoot;
+            if (prefabRoot != null)
             {
-                GameObject prefabRoot = currentStage.prefabContentsRoot;
-                if (prefabRoot != null)
+                GameObject targetObject = FindGameObjectByUniquePath(prefabRoot, uniquePath);
+                if (targetObject != null)
                 {
-                    GameObject targetObject = FindGameObjectByUniquePath(prefabRoot, uniquePath);
-                    if (targetObject != null)
-                    {
-                        Selection.activeObject = targetObject;
-                        EditorGUIUtility.PingObject(targetObject);
-                        return;
-                    }
+                    Selection.activeObject = targetObject;
+                    EditorGUIUtility.PingObject(targetObject);
+                    return;
                 }
             }
         }
+
         PrefabStage prefabStage = PrefabStageUtility.OpenPrefab(assetPath);
         if (prefabStage != null)
         {
@@ -807,19 +787,15 @@ public class MissingScriptsFinder : EditorWindow
                 EditorGUIUtility.PingObject(targetObject);
             }
             else
-            {
                 Debug.LogWarning($"Could not find object with path {uniquePath} in prefab: {assetPath}");
-            }
         }
         else
-        {
             Debug.LogWarning($"Could not open prefab at {assetPath}");
-        }
     }
 
-    private void OpenSceneAndSelect(string scenePath, string uniquePath)
+    void OpenSceneAndSelect(string scenePath, string uniquePath)
     {
-        Scene currentScene = EditorSceneManager.GetActiveScene();
+        Scene currentScene = SceneManager.GetActiveScene();
         if ((string.IsNullOrEmpty(scenePath) || currentScene.path == scenePath) && currentScene.isLoaded)
         {
             GameObject targetObject = null;
@@ -855,12 +831,10 @@ public class MissingScriptsFinder : EditorWindow
             EditorGUIUtility.PingObject(found);
         }
         else
-        {
             Debug.LogWarning($"Could not find object with path {uniquePath} in scene: {scenePath}");
-        }
     }
 
-    private void OpenAssetAndSelectRoot(string assetPath)
+    void OpenAssetAndSelectRoot(string assetPath)
     {
         if (assetPath.EndsWith(".prefab"))
         {
@@ -874,14 +848,10 @@ public class MissingScriptsFinder : EditorWindow
                     EditorGUIUtility.PingObject(prefabRoot);
                 }
                 else
-                {
                     Debug.LogWarning($"Could not get prefab root for: {assetPath}");
-                }
             }
             else
-            {
                 Debug.LogWarning($"Could not open prefab at {assetPath}");
-            }
         }
         else if (assetPath.EndsWith(".unity"))
         {
@@ -895,14 +865,10 @@ public class MissingScriptsFinder : EditorWindow
                     EditorGUIUtility.PingObject(roots[0]);
                 }
                 else
-                {
                     Debug.LogWarning($"No root GameObjects found in scene: {assetPath}");
-                }
             }
             else
-            {
                 Debug.LogWarning($"Could not open scene: {assetPath}");
-            }
         }
     }
     #endregion
@@ -910,7 +876,7 @@ public class MissingScriptsFinder : EditorWindow
     #region Replacement
     // Replacement logic was left untouched—still references “missing scripts”.
     // You can rename or adjust it as needed if you want.
-    private void ReplaceMissingAssetGroup(string assetPath, MonoScript replacementScript)
+    void ReplaceMissingAssetGroup(string assetPath, MonoScript replacementScript)
     {
         if (replacementScript == null) return;
 
@@ -925,7 +891,7 @@ public class MissingScriptsFinder : EditorWindow
            Remember what the user’s inspecting right now
         -------------------------------------------------- */
         UnityEngine.Object[] keepSelection = Selection.objects;
-        Scene keepActiveScene = EditorSceneManager.GetActiveScene();
+        Scene keepActiveScene = SceneManager.GetActiveScene();
 
         /* --------------------------------------------------
            PREFAB ASSETS
@@ -983,7 +949,7 @@ public class MissingScriptsFinder : EditorWindow
            Put everything back exactly as the user left it
         -------------------------------------------------- */
         Selection.objects = keepSelection;
-        EditorSceneManager.SetActiveScene(keepActiveScene);
+        SceneManager.SetActiveScene(keepActiveScene);
 
         /* --------------------------------------------------
            Remove the fixed entries from the list and refresh
@@ -992,29 +958,27 @@ public class MissingScriptsFinder : EditorWindow
         Repaint();
     }
 
-    private void ReplaceAllMissing(MonoScript replacementScript)
+    void ReplaceAllMissing(MonoScript replacementScript)
     {
         Dictionary<string, List<MissingScriptEntry>> groupedEntries = new Dictionary<string, List<MissingScriptEntry>>();
-        foreach (var entry in missingScriptEntries)
+        foreach (MissingScriptEntry entry in missingScriptEntries)
         {
             // Skip pure missing‑reference rows
-            if (!entry.objectName.StartsWith("Missing Component"))
+            if (!(entry.missingType == MissingType.MissingComponent))
                 continue;
 
             if (!groupedEntries.ContainsKey(entry.assetPath))
                 groupedEntries[entry.assetPath] = new List<MissingScriptEntry>();
             groupedEntries[entry.assetPath].Add(entry);
         }
-        foreach (var kvp in groupedEntries)
-        {
+        foreach (KeyValuePair<string, List<MissingScriptEntry>> kvp in groupedEntries)
             ReplaceMissingAssetGroup(kvp.Key, replacementScript);
-        }
     }
 
     #endregion
     #region Removal
 
-    private void RemoveMissingComponentsRecursively(GameObject root)
+    void RemoveMissingComponentsRecursively(GameObject root)
     {
         foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
             RemoveMissingReferencesFromGameObject(t.gameObject);   // already does the actual removal
@@ -1024,11 +988,11 @@ public class MissingScriptsFinder : EditorWindow
     /// Strip missing components from the asset at <paramref name="assetPath"/> without adding anything.
     /// Mirrors ReplaceMissingAssetGroup but skips the AddComponent step.
     /// </summary>
-    private void RemoveMissingAssetGroup(string assetPath)
+    void RemoveMissingAssetGroup(string assetPath)
     {
         // remember user context
         UnityEngine.Object[] keepSelection = Selection.objects;
-        Scene keepActiveScene = EditorSceneManager.GetActiveScene();
+        Scene keepActiveScene = SceneManager.GetActiveScene();
 
         if (assetPath.EndsWith(".prefab"))
         {
@@ -1066,18 +1030,18 @@ public class MissingScriptsFinder : EditorWindow
 
         // restore context and refresh list
         Selection.objects = keepSelection;
-        EditorSceneManager.SetActiveScene(keepActiveScene);
+        SceneManager.SetActiveScene(keepActiveScene);
         missingScriptEntries.RemoveAll(e =>
             e.assetPath == assetPath &&
-            e.objectName.StartsWith("Missing Component"));
+            e.missingType == MissingType.MissingComponent);
         Repaint();
     }
 
-    private void RemoveAllMissing()
+    void RemoveAllMissing()
     {
         // distinct list so we don’t hit the same prefab / scene twice
-        var assetPaths = missingScriptEntries
-            .Where(e => e.objectName.StartsWith("Missing Component"))
+        string[] assetPaths = missingScriptEntries
+            .Where(e => e.missingType == MissingType.MissingComponent)
             .Select(e => e.assetPath)
             .Distinct()
             .ToArray();
@@ -1093,7 +1057,7 @@ public class MissingScriptsFinder : EditorWindow
     #endregion
     #region Preprocess
 
-    private void ProcessAssetForMissingReferences(GameObject root, Type newType)
+    void ProcessAssetForMissingReferences(GameObject root, Type newType)
     {
         Transform[] allTransforms = root.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in allTransforms)
@@ -1105,7 +1069,7 @@ public class MissingScriptsFinder : EditorWindow
         }
     }
 
-    private int RemoveMissingReferencesFromGameObject(GameObject go)
+    int RemoveMissingReferencesFromGameObject(GameObject go)
     {
         int totalRemoved = 0;
         int iteration = 0;
@@ -1123,103 +1087,161 @@ public class MissingScriptsFinder : EditorWindow
     #endregion
 
     #region Load/Save
-    private void LoadIgnoreList()
+    void LoadIgnoreList()
     {
         ignoreList.Clear();
         string serializedList = EditorPrefs.GetString(IgnoreListKey, "");
-        if (!string.IsNullOrEmpty(serializedList))
+        if (string.IsNullOrEmpty(serializedList))
+            return;
+
+        string[] entries = serializedList.Split(';');
+        foreach (string entry in entries)
         {
-            string[] entries = serializedList.Split(';');
-            foreach (string entry in entries)
+            if (string.IsNullOrEmpty(entry)) continue;
+
+            string[] parts = entry.Split('|');
+            if (parts.Length != 3) continue;
+
+            string assetPath = parts[0];
+            string typeToken = parts[1];
+            string uniquePath = parts[2];
+
+            MissingType kind;
+
+            // New format: integer enum value
+            if (int.TryParse(typeToken, out int intVal) && Enum.IsDefined(typeof(MissingType), intVal))
+                kind = (MissingType)intVal;
+            else
             {
-                if (!string.IsNullOrEmpty(entry))
-                {
-                    string[] parts = entry.Split('|');
-                    if (parts.Length == 3)
-                    {
-                        ignoreList.Add(new MissingScriptEntry(parts[0], parts[1], parts[2]));
-                    }
-                }
+                // Back-compat: old format stored a label like
+                // "Missing Component", "Missing Prefab", or "Missing Reference: ...".
+                if (typeToken.StartsWith("Missing Prefab", StringComparison.Ordinal))
+                    kind = MissingType.MissingPrefab;
+                else if (typeToken.StartsWith("Missing Component", StringComparison.Ordinal))
+                    kind = MissingType.MissingComponent;
+                else if (typeToken.StartsWith("Missing Reference", StringComparison.Ordinal))
+                    kind = MissingType.MissingReference;
+                else
+                    // Safe default
+                    kind = MissingType.MissingReference;
             }
+
+            ignoreList.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
         }
     }
 
-    private void SaveIgnoreList()
+
+    void SaveIgnoreList()
     {
-        List<string> serializedEntries = new List<string>();
-        foreach (var entry in ignoreList)
-        {
-            serializedEntries.Add($"{entry.assetPath}|{entry.objectName}|{entry.uniquePath}");
-        }
+        List<string> serializedEntries = new List<string>(ignoreList.Count);
+        foreach (MissingScriptEntry entry in ignoreList)
+            serializedEntries.Add($"{entry.assetPath}|{(int)entry.missingType}|{entry.uniquePath}");
+
         string serializedList = string.Join(";", serializedEntries);
         EditorPrefs.SetString(IgnoreListKey, serializedList);
     }
 
-    private const string CacheKey = "MissingScriptsCache";
+    const string CacheKey = "MissingScriptsCache";
 
-    private void SaveCacheToDisk()
+    void SaveCacheToDisk()
     {
         try
         {
-            List<string> serializedEntries = new List<string>();
-            foreach (var kvp in assetCache)
+            List<string> serializedEntries = new List<string>(assetCache.Count);
+            foreach (KeyValuePair<string, CacheEntry> kvp in assetCache)
             {
                 string assetPath = kvp.Key;
-                DateTime lastWriteTime = kvp.Value.lastWriteTime;
-                List<string> entryData = new List<string>();
+                long lastWrite = kvp.Value.lastWriteTime.ToBinary();
 
-                foreach (var entry in kvp.Value.entries)
+                List<string> entryData = new List<string>(kvp.Value.entries?.Count ?? 0);
+                if (kvp.Value.entries != null)
                 {
-                    entryData.Add($"{entry.assetPath}|{entry.objectName}|{entry.uniquePath}");
+                    foreach (MissingScriptEntry entry in kvp.Value.entries)
+                        entryData.Add($"{entry.assetPath}|{(int)entry.missingType}|{entry.uniquePath}");
                 }
 
-                string serialized = $"{assetPath}::{lastWriteTime.ToBinary()}::{string.Join(";", entryData)}";
-                serializedEntries.Add(serialized);
-            }
-
-            string serializedCache = string.Join("\n", serializedEntries);
-            EditorPrefs.SetString(CacheKey, serializedCache);
+                string serialized = $"{assetPath}::{lastWrite}::{string.Join(';', entryData)}";
+            serializedEntries.Add(serialized);
         }
-        catch (Exception ex)
+
+        string serializedCache = string.Join('\n', serializedEntries);
+            EditorPrefs.SetString(CacheKey, serializedCache);
+            }
+    catch (Exception ex)
         {
             Debug.LogError($"Failed to save cache: {ex.Message}");
         }
     }
 
-    private void LoadCacheFromDisk()
+    void LoadCacheFromDisk()
     {
         assetCache.Clear();
+
         try
         {
             string serializedCache = EditorPrefs.GetString(CacheKey, "");
-            if (!string.IsNullOrEmpty(serializedCache))
+            if (string.IsNullOrEmpty(serializedCache))
+                return;
+
+            // If we detect the *old* cache format (non-integer in type slot), nuke it and bail.
+            bool oldFormatDetected = false;
+
+            foreach (string line in serializedCache.Split('\n'))
             {
-                string[] entries = serializedCache.Split('\n');
-                foreach (string entry in entries)
+                if (string.IsNullOrEmpty(line)) continue;
+
+                string[] parts = line.Split(new[] { "::" }, StringSplitOptions.None);
+                if (parts.Length != 3) { oldFormatDetected = true; break; }
+
+                string assetPath = parts[0];
+
+                if (!long.TryParse(parts[1], out long binTime))
                 {
-                    if (!string.IsNullOrEmpty(entry))
+                    oldFormatDetected = true;
+                    break;
+                }
+                DateTime lastWriteTime = DateTime.FromBinary(binTime);
+
+                List<MissingScriptEntry> assetEntries = new List<MissingScriptEntry>();
+
+                string payload = parts[2];
+                if (!string.IsNullOrEmpty(payload))
+                {
+                    foreach (string item in payload.Split(';'))
                     {
-                        string[] parts = entry.Split(new[] { "::" }, StringSplitOptions.None);
-                        if (parts.Length == 3)
+                        if (string.IsNullOrEmpty(item)) continue;
+
+                        string[] itemParts = item.Split('|');
+                        if (itemParts.Length != 3) { oldFormatDetected = true; break; }
+
+                        // New format: assetPath | <int MissingType> | uniquePath
+                        if (!int.TryParse(itemParts[1], out int typeVal))
                         {
-                            string assetPath = parts[0];
-                            DateTime lastWriteTime = DateTime.FromBinary(long.Parse(parts[1]));
-                            List<MissingScriptEntry> assetEntries = new List<MissingScriptEntry>();
-
-                            string[] entryData = parts[2].Split(';');
-                            foreach (string data in entryData)
-                            {
-                                string[] itemParts = data.Split('|');
-                                if (itemParts.Length == 3)
-                                {
-                                    assetEntries.Add(new MissingScriptEntry(itemParts[0], itemParts[1], itemParts[2]));
-                                }
-                            }
-
-                            assetCache[assetPath] = new CacheEntry { lastWriteTime = lastWriteTime, entries = assetEntries };
+                            oldFormatDetected = true;
+                            break;
                         }
+
+                        MissingType kind = (MissingType)typeVal;
+                        string eAssetPath = itemParts[0];
+                        string uniquePath = itemParts[2];
+
+                        assetEntries.Add(new MissingScriptEntry(eAssetPath, kind, uniquePath));
                     }
                 }
+
+                if (oldFormatDetected) break;
+
+                assetCache[assetPath] = new CacheEntry
+                {
+                    lastWriteTime = lastWriteTime,
+                    entries = assetEntries
+                };
+            }
+
+            if (oldFormatDetected)
+            {
+                assetCache.Clear();
+                EditorPrefs.DeleteKey(CacheKey); // discard old cache outright
             }
         }
         catch (Exception ex)
