@@ -427,7 +427,7 @@ public class MissingScriptsFinder : EditorWindow
     }
 
     void Traverse(GameObject go, string assetPath, List<MissingScriptEntry> output, HashSet<string> seen, string currentPath)
-{
+    {
         // Missing prefab instance? Record once and skip this subtree.
         if (PrefabUtility.GetPrefabInstanceStatus(go) == PrefabInstanceStatus.MissingAsset)
         {
@@ -445,6 +445,10 @@ public class MissingScriptsFinder : EditorWindow
                 hasMissingComponentHere = true;
                 continue;
             }
+
+            if (comp is Transform)
+                continue;
+
             SerializedObject so = new SerializedObject(comp);
             SerializedProperty prop = so.GetIterator();
             bool enterChildren = true;
