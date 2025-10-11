@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace BattleCruisers.Scenes.Test.Utilities
+﻿namespace BattleCruisers.Scenes.Test.Utilities
 {
-    public class AnimationRestarter;
+    public class AnimationRestarter
     {
       
     }
