@@ -72,6 +72,7 @@ public class MissingScriptsFinder : EditorWindow
 
     static Texture2D IconScene;
     static Texture2D IconPrefab;
+    static Texture2D IconGameObject;
 
     static GUIContent GC_Scenes;
     static GUIContent GC_Prefabs;
@@ -113,6 +114,7 @@ public class MissingScriptsFinder : EditorWindow
     {
         IconScene = (Texture2D)EditorGUIUtility.IconContent("SceneAsset Icon").image;
         IconPrefab = (Texture2D)EditorGUIUtility.IconContent("Prefab Icon").image;
+        IconGameObject = (Texture2D)EditorGUIUtility.IconContent("GameObject Icon").image;
 
         GC_Scenes = new GUIContent("", IconScene, "Toggle scene scanning on/off");
         GC_Prefabs = new GUIContent("", IconPrefab, "Toggle prefab scanning on/off");
@@ -269,7 +271,7 @@ public class MissingScriptsFinder : EditorWindow
             EditorGUILayout.BeginHorizontal(OPT_ROW);
             if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
 
-            bool expanded = assetFoldoutStates.TryGetValue(assetPath, out var wasExpanded) && wasExpanded;
+            bool expanded = assetFoldoutStates.TryGetValue(assetPath, out bool wasExpanded) && wasExpanded;
             bool newExpanded = EditorGUILayout.Foldout(expanded, $"{displayName} ({filteredEntries.Count})", true);
 
             // Always store back so the key exists for next frame
@@ -285,18 +287,35 @@ public class MissingScriptsFinder : EditorWindow
             EditorGUILayout.EndHorizontal();
 
             // Use the local variable, not the dictionary indexer
-            if (newExpanded)
+            if (assetFoldoutStates[assetPath])
             {
-                EditorGUI.indentLevel++;
+                EditorGUI.indentLevel++; // you already do this for children
                 for (int i = 0; i < filteredEntries.Count; i++)
                 {
                     MissingScriptEntry entry = filteredEntries[i];
+                    string sub = SubPathAfterRoot(entry.uniquePath); // from earlier
+
                     EditorGUILayout.BeginHorizontal(OPT_ROW);
-                    EditorGUILayout.LabelField(entry.uniquePath, GUILayout.ExpandWidth(true));
+
+                    // indent the whole child row (icon + label + buttons)
+                    float indentPx = 15f * EditorGUI.indentLevel; // Unity's standard indent width ~15
+                    GUILayout.Space(indentPx);
+
+                    // indented GameObject icon
+                    GUILayout.Label(IconGameObject, OPT_ICON);
+
+                    // avoid double-indenting the label (since we spaced manually)
+                    int oldIndent = EditorGUI.indentLevel;
+                    EditorGUI.indentLevel = 0;
+                    EditorGUILayout.LabelField(string.IsNullOrEmpty(sub) ? displayName : sub, GUILayout.ExpandWidth(true));
+                    EditorGUI.indentLevel = oldIndent;
+
                     if (entry.missingType == MissingType.MissingComponent)
                         DrawRemoveAndReplace(entry.assetPath, replacementScript);
+
                     DrawJumpForEntry(entry);
                     DrawIgnoreForEntry(entry, isIgnore);
+
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUI.indentLevel--;
@@ -310,6 +329,12 @@ public class MissingScriptsFinder : EditorWindow
         int i = uniquePath.IndexOf('/');
         if (i < 0) return uniquePath;                // root only
         return uniquePath[..i] + " → " + uniquePath[(i + 1)..];
+    }
+
+    static string SubPathAfterRoot(string uniquePath)
+    {
+        int i = uniquePath.IndexOf('/');
+        return i < 0 ? string.Empty : uniquePath.Substring(i + 1);
     }
 
     void DrawRemoveAndReplace(string assetPath, MonoScript replacementScript)
