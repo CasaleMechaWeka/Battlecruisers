@@ -336,23 +336,14 @@ namespace BattleCruisers.Data.Static
         });
         public static ReadOnlyDictionary<Map, PvPLevel> PvPLevels { get; } = new ReadOnlyDictionary<Map, PvPLevel>(new Dictionary<Map, PvPLevel>()
         {
-            // Practice Wreckyards
             {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, BackgroundMusic.Bobby, SkyMaterials.Morning)},
-            // Oz Penitentiary
             {Map.OzPenitentiary,   new PvPLevel(2, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, BackgroundMusic.Juggernaut, SkyMaterials.Purple)},
-            // San Francisco Fight Club
             {Map.SanFranciscoFightClub, new PvPLevel(3, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, BackgroundMusic.Experimental, SkyMaterials.Dusk)},
-            // UAC Battle Night
             {Map.UACBattleNight, new PvPLevel(4, PvPStaticPrefabKeys.PvPHulls.PvPRockjaw, BackgroundMusic.Nothing, SkyMaterials.Cold) },
-            // Nuclear Dome
             {Map.NuclearDome,  new PvPLevel(5, PvPStaticPrefabKeys.PvPHulls.PvPBullshark, BackgroundMusic.Confusion, SkyMaterials.Midday)},
-            // UAC Arena
             {Map.UACArena, new PvPLevel(6, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, BackgroundMusic.Sleeper, SkyMaterials.Midnight)},
-            // Rio Battlesport
             {Map.RioBattlesport, new PvPLevel(7, PvPStaticPrefabKeys.PvPHulls.PvPTasDevil, BackgroundMusic.Bobby, SkyMaterials.Sunrise)},
-            // UAC Ultimate
             {Map.UACUltimate,  new PvPLevel(8, PvPStaticPrefabKeys.PvPHulls.PvPHammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold)},
-            // Mercenary One
             {Map.MercenaryOne,  new PvPLevel(9, PvPStaticPrefabKeys.PvPHulls.PvPEagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning)},
         });
         public static ReadOnlyCollection<HullKey> HullKeys { get; } = new ReadOnlyCollection<HullKey>(new List<HullKey>()

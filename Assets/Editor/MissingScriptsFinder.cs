@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 
 public class MissingScriptsFinder : EditorWindow
@@ -73,6 +72,7 @@ public class MissingScriptsFinder : EditorWindow
 
     static Texture2D IconScene;
     static Texture2D IconPrefab;
+    static Texture2D IconGameObject;
 
     static GUIContent GC_Scenes;
     static GUIContent GC_Prefabs;
@@ -114,6 +114,7 @@ public class MissingScriptsFinder : EditorWindow
     {
         IconScene = (Texture2D)EditorGUIUtility.IconContent("SceneAsset Icon").image;
         IconPrefab = (Texture2D)EditorGUIUtility.IconContent("Prefab Icon").image;
+        IconGameObject = (Texture2D)EditorGUIUtility.IconContent("GameObject Icon").image;
 
         GC_Scenes = new GUIContent("", IconScene, "Toggle scene scanning on/off");
         GC_Prefabs = new GUIContent("", IconPrefab, "Toggle prefab scanning on/off");
@@ -255,7 +256,7 @@ public class MissingScriptsFinder : EditorWindow
                 MissingScriptEntry single = filteredEntries[0];
                 EditorGUILayout.BeginHorizontal(OPT_ROW);
                 if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
-                EditorGUILayout.LabelField($"{displayName} → {single.uniquePath}", GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField(FormatPathRootArrow(single.uniquePath), GUILayout.ExpandWidth(true));
 
                 if (single.missingType == MissingType.MissingComponent)
                     DrawRemoveAndReplace(single.assetPath, replacementScript);
@@ -270,7 +271,7 @@ public class MissingScriptsFinder : EditorWindow
             EditorGUILayout.BeginHorizontal(OPT_ROW);
             if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
 
-            bool expanded = assetFoldoutStates.TryGetValue(assetPath, out var wasExpanded) && wasExpanded;
+            bool expanded = assetFoldoutStates.TryGetValue(assetPath, out bool wasExpanded) && wasExpanded;
             bool newExpanded = EditorGUILayout.Foldout(expanded, $"{displayName} ({filteredEntries.Count})", true);
 
             // Always store back so the key exists for next frame
@@ -286,23 +287,54 @@ public class MissingScriptsFinder : EditorWindow
             EditorGUILayout.EndHorizontal();
 
             // Use the local variable, not the dictionary indexer
-            if (newExpanded)
+            if (assetFoldoutStates[assetPath])
             {
-                EditorGUI.indentLevel++;
+                EditorGUI.indentLevel++; // you already do this for children
                 for (int i = 0; i < filteredEntries.Count; i++)
                 {
                     MissingScriptEntry entry = filteredEntries[i];
+                    string sub = SubPathAfterRoot(entry.uniquePath); // from earlier
+
                     EditorGUILayout.BeginHorizontal(OPT_ROW);
-                    EditorGUILayout.LabelField(entry.uniquePath, GUILayout.ExpandWidth(true));
+
+                    // indent the whole child row (icon + label + buttons)
+                    float indentPx = 15f * EditorGUI.indentLevel; // Unity's standard indent width ~15
+                    GUILayout.Space(indentPx);
+
+                    // indented GameObject icon
+                    GUILayout.Label(IconGameObject, OPT_ICON);
+
+                    // avoid double-indenting the label (since we spaced manually)
+                    int oldIndent = EditorGUI.indentLevel;
+                    EditorGUI.indentLevel = 0;
+                    EditorGUILayout.LabelField(string.IsNullOrEmpty(sub) ? displayName : sub, GUILayout.ExpandWidth(true));
+                    EditorGUI.indentLevel = oldIndent;
+
                     if (entry.missingType == MissingType.MissingComponent)
                         DrawRemoveAndReplace(entry.assetPath, replacementScript);
+
                     DrawJumpForEntry(entry);
                     DrawIgnoreForEntry(entry, isIgnore);
+
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUI.indentLevel--;
             }
         }
+    }
+
+    static string FormatPathRootArrow(string uniquePath)
+    {
+        if (string.IsNullOrEmpty(uniquePath)) return string.Empty;
+        int i = uniquePath.IndexOf('/');
+        if (i < 0) return uniquePath;                // root only
+        return uniquePath[..i] + " → " + uniquePath[(i + 1)..];
+    }
+
+    static string SubPathAfterRoot(string uniquePath)
+    {
+        int i = uniquePath.IndexOf('/');
+        return i < 0 ? string.Empty : uniquePath.Substring(i + 1);
     }
 
     void DrawRemoveAndReplace(string assetPath, MonoScript replacementScript)
@@ -426,42 +458,46 @@ public class MissingScriptsFinder : EditorWindow
             dst.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
     }
 
+    static readonly List<Component> s_Comps = new List<Component>(8);
+
     void Traverse(GameObject go, string assetPath, List<MissingScriptEntry> output, HashSet<string> seen, string currentPath)
-{
+    {
         // Missing prefab instance? Record once and skip this subtree.
         if (PrefabUtility.GetPrefabInstanceStatus(go) == PrefabInstanceStatus.MissingAsset)
         {
             AddOnce(output, seen, assetPath, currentPath, MissingType.MissingPrefab);
             return;
         }
+
         // Components on this GameObject
-        Component[] comps = go.GetComponents<Component>();
+
+        s_Comps.Clear();
+        go.GetComponents(s_Comps);              // no array alloc
+
         bool hasMissingComponentHere = false;
-        for (int i = 0; i < comps.Length; i++)
+        for (int i = 0; i < s_Comps.Count; i++)
         {
-            Component comp = comps[i];
-            if (comp == null)
+            Component comp = s_Comps[i];
+            if (comp == null) { hasMissingComponentHere = true; continue; }
+            if (comp is Transform) continue;
+
+            var so = new SerializedObject(comp);
+            SerializedProperty it = so.GetIterator();
+            while (it.NextVisible(true))
             {
-                hasMissingComponentHere = true;
-                continue;
-            }
-            SerializedObject so = new SerializedObject(comp);
-            SerializedProperty prop = so.GetIterator();
-            bool enterChildren = true;
-            // Scan only until the first missing reference on this component.
-            while (prop.NextVisible(enterChildren))
-            {
-                enterChildren &= !StopAtFirstRefPerComponent;
-                if (prop.propertyType == SerializedPropertyType.ObjectReference &&
-                    prop.objectReferenceInstanceIDValue != 0 &&
-                    prop.objectReferenceValue == null)
+                if (it.propertyType == SerializedPropertyType.ObjectReference &&
+                    it.objectReferenceInstanceIDValue != 0 &&
+                    it.objectReferenceValue == null)
                 {
                     AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
+                    if (StopAtFirstRefPerComponent) break;
                 }
             }
         }
         if (hasMissingComponentHere)
             AddOnce(output, seen, assetPath, currentPath, MissingType.MissingComponent);
+
+            
         // Children: compute stable unique paths in one pass
         Transform tr = go.transform;
         int childCount = tr.childCount;
