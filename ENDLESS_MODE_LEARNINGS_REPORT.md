@@ -7,6 +7,12 @@
 
 ---
 
+## Introduction to BattleCruisers
+
+BattleCruisers is a real-time strategy (RTS) game developed in Unity where players construct and manage a battlecruiser, equipping it with various buildings and units (ships and aircraft) to engage in tactical combat against an enemy cruiser. The core gameplay revolves around resource management (drones for building), strategic placement of offensive and defensive structures, and deploying units to attack the opponent. Each cruiser has a set number of slots where buildings can be placed, and a "shipblocker" that defines the forward boundary for player units.
+
+---
+
 ## Executive Summary
 
 This report documents the complete process of implementing a new "Endless Mode" game mode for BattleCruisers, including all mistakes, misconceptions, and successful discoveries. While the final implementation had visual issues (buildings spawned at original cruiser position while cruiser moved), the learning process revealed critical insights into the game's architecture that will be invaluable for future game mode development.
@@ -107,7 +113,7 @@ BattleSceneGod
 **Discovery:** Buildings are NOT children of the cruiser GameObject hierarchy. They are anchored to the cruiser's **spawn position**, not its current position.
 
 **Evidence:**
-- When cruiser moved from x=200 to x=35, buildings stayed at x=200
+- When the cruiser moved from x=200 to x=35, buildings stayed at x=200
 - Buildings appeared to float in mid-air as cruiser moved away
 - Building positions are set relative to cruiser position **at creation time**
 
