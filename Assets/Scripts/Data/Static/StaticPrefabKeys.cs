@@ -142,8 +142,8 @@ namespace BattleCruisers.Data.Static
             public static HullKey FortNova { get; } = new HullKey("FortNova");
             public static HullKey Zumwalt { get; } = new HullKey("Zumwalt");
             public static HullKey Yucalux { get; } = new HullKey("Yucalux");
-            public static HullKey Teknosis { get; } = new HullKey("Teknosis");
-            public static HullKey Pebblethrow { get; } = new HullKey("Pebblethrow");
+            public static HullKey TekGnosis { get; } = new HullKey("TekGnosis");
+            public static HullKey Salvage { get; } = new HullKey("Salvage");
             public static HullKey Orac { get; } = new HullKey("Orac");
             public static HullKey Middlodon { get; } = new HullKey("Middlodon");
             public static HullKey Essex { get; } = new HullKey("Essex");
@@ -159,7 +159,7 @@ namespace BattleCruisers.Data.Static
                 Rockjaw, Trident, ManOfWarBoss, HuntressBoss, TasDevil, Yeti,
                 Rickshaw, BlackRig, Flea, Shepherd, Microlodon, Pistol,
                 Goatherd, Megalith, FortressPrime, BasicRig, Cricket,
-                FortNova, Zumwalt, Yucalux, Teknosis, Pebblethrow, Orac,
+                FortNova, Zumwalt, Yucalux, TekGnosis, Salvage, Orac,
                 Middlodon, Essex, Axiom, October, EndlessWall, AlphaSpace, Arkdeso
             });
         }

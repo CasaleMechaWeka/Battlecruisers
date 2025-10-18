@@ -740,10 +740,10 @@ namespace BattleCruisers.Scenes
                     return HullType.Zumwalt;
                 case "Yucalux":
                     return HullType.Yucalux;
-                case "Teknosis":
-                    return HullType.Teknosis;
-                case "Pebblethrow":
-                    return HullType.Pebblethrow;
+                case "TekGnosis":
+                    return HullType.TekGnosis;
+                case "Salvage":
+                    return HullType.Salvage;
                 case "Orac":
                     return HullType.Orac;
                 case "Middlodon":
