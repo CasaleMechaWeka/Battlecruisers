@@ -9,7 +9,7 @@ namespace BattleCruisers.Cruisers
     /// + Increases tacticals build speed
     /// + SPECIALIZED: All buildings have massively inflated health but cost more to build
     /// </summary>
-    public class Teknosis : Cruiser
+    public class TekGnosis : Cruiser
     {
         public float tacticalsBuildRateBoost;
         public float buildingHealthMultiplier;
@@ -32,5 +32,7 @@ namespace BattleCruisers.Cruisers
         }
     }
 }
+
+
 
 

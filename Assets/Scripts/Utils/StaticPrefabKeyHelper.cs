@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using System;
 using UnityEngine.Assertions;
@@ -36,8 +36,8 @@ namespace BattleCruisers.Utils
         Hull_FortNova = 0020,
         Hull_Zumwalt = 0021,
         Hull_Yucalux = 0022,
-        Hull_Teknosis = 0023,
-        Hull_Pebblethrow = 0024,
+        Hull_TekGnosis = 0023,
+        Hull_Salvage = 0024,
         Hull_Orac = 0025,
         Hull_Middlodon = 0026,
         Hull_Essex = 0027,

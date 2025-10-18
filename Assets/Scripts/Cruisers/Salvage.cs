@@ -8,7 +8,7 @@ namespace BattleCruisers.Cruisers
     /// + Increases offence build speed
     /// + Increases offence fire rate
     /// </summary>
-    public class Pebblethrow : Cruiser
+    public class Salvage : Cruiser
     {
         public float offensivesBuildRateBoost;
         public float offenseFireRateBoost;
@@ -28,5 +28,7 @@ namespace BattleCruisers.Cruisers
         }
     }
 }
+
+
 
 
