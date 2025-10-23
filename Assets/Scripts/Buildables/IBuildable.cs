@@ -7,7 +7,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
-using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -36,8 +35,8 @@ namespace BattleCruisers.Buildables
         /// </summary>
         float BuildProgress { get; }
         BuildableState BuildableState { get; }
-        int NumOfDronesRequired { get; }
-        float BuildTimeInS { get; }
+        int NumOfDronesRequired { get; set; }
+        float BuildTimeInS { get; set; }
         IDroneConsumer DroneConsumer { get; }
         Command ToggleDroneConsumerFocusCommand { get; }
         float CostInDroneS { get; }

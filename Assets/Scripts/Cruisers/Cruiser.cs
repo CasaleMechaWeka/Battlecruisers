@@ -280,19 +280,29 @@ namespace BattleCruisers.Cruisers
             _cruiserDoubleClickHandler.OnDoubleClick(this);
         }
 
-        public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot)
+        public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot,
+                                           bool ignoreBuildTime = false,
+                                           bool ignoreDroneRequirement = false)
         {
             Logging.Log(Tags.CRUISER, buildingPrefab.Buildable.Name);
 
             SelectedBuildingPrefab = buildingPrefab;
-            return ConstructSelectedBuilding(slot);
+            return ConstructSelectedBuilding(slot, ignoreBuildTime, ignoreDroneRequirement);
         }
 
-        public IBuilding ConstructSelectedBuilding(Slot slot)
+        public IBuilding ConstructSelectedBuilding(Slot slot,
+                                                   bool ignoreBuildTime = false,
+                                                   bool ignoreDroneRequirement = false)
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
+            if (ignoreDroneRequirement)
+            {
+                building.BuildTimeInS *= building.NumOfDronesRequired;
+                building.NumOfDronesRequired = 1;
+            }
+
             /*       SetVariantIcon(building);*/
             building.Activate(
                 new BuildingActivationArgs(
@@ -301,6 +311,8 @@ namespace BattleCruisers.Cruisers
                     CruiserSpecificFactories,
                     slot,
                     _buildingDoubleClickHandler));
+            if (ignoreBuildTime)
+                building.BuildProgressBoostable.BoostMultiplier = 1e9f;
 
             slot.SetBuilding(building);
 

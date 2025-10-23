@@ -70,8 +70,8 @@ namespace BattleCruisers.Buildables
         #region Properties
         public BuildableState BuildableState { get; private set; }
         public float BuildProgress { get; private set; }
-        public int NumOfDronesRequired => numOfDronesRequired;
-        public float BuildTimeInS => buildTimeInS;
+        public int NumOfDronesRequired { get => numOfDronesRequired; set => numOfDronesRequired = value; }
+        public float BuildTimeInS { get => buildTimeInS; set => buildTimeInS = value; }
         public IBoostable BuildProgressBoostable { get; private set; }
         public IBoostable HealthBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
