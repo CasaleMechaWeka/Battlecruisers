@@ -8,7 +8,7 @@ public class PlayerEconomyEditor : EditorWindow
 {
 
     private string playerId;
-    private string base64_key_secret;
+    private string base64_key_secret = "ODk3NDIzODQtYjRkOC00MzVjLTg1YjUtYTk1NTUwNWJiODAyOmREeHB4d3Mwby1wRjNRYzdRWXlFU3FNeEpYTzcwSzlO";
 
 
     private string accessToken;
@@ -59,9 +59,15 @@ public class PlayerEconomyEditor : EditorWindow
         EditorGUI.EndDisabledGroup();
 
 
-        if (GUILayout.Button("Generate AccessToken"))
+        if (GUILayout.Button("1. Generate AccessToken"))
         {
             GenerateAccessToken();
+        }
+        GUILayout.Space(20);
+
+        if (GUILayout.Button("2. Load Player Data"))
+        {
+            LoadPlayerData();
         }
         GUILayout.Space(30);
 
@@ -72,13 +78,10 @@ public class PlayerEconomyEditor : EditorWindow
         credits = EditorGUILayout.IntField("Credits", credits);
 
         GUILayout.Space(10);
-        if (GUILayout.Button("Load Player Data"))
-        {
-            LoadPlayerData();
-        }
+
         EditorGUILayout.LabelField("Warning this will override the users values with what has been set in the textfields above.", EditorStyles.miniLabel);
 
-        if (GUILayout.Button("Save Player Data"))
+        if (GUILayout.Button("3. Save Player Data"))
         {
             SavePlayerData();
         }
