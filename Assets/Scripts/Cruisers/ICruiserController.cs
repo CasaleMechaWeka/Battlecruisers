@@ -24,6 +24,6 @@ namespace BattleCruisers.Cruisers
 
         event EventHandler<BuildingStartedEventArgs> BuildingStarted;
 
-        IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot);
+        IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot, bool ignoreBuildTime = false, bool ignoreDroneRequirement = false);
     }
 }
