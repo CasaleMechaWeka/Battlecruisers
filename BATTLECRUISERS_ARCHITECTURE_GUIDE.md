@@ -1,9 +1,11 @@
 # Battlecruisers Architecture Guide
 
-**Date:** October 10, 2025
+**Date:** October 22, 2025
 **Project:** BattleCruisers - Comprehensive Software Architecture Overview
 **Target Audience:** Software Engineers and Game Developers
 **Purpose:** Provide detailed technical documentation enabling independent feature development and system understanding
+
+Note (October 22, 2025): Updated with concise guidance for Firebase Analytics and IronSource integration, platform guards, consent gating, and resilient fallbacks. Additions preserve the interface-driven, modular design and avoid repetition.
 
 ---
 
@@ -48,9 +50,10 @@ This design enables:
 5. [AI and Strategy Systems](#ai-and-strategy-systems)
 6. [User Interface Architecture](#user-interface-architecture)
 7. [Save/Load and Progression](#saveload-and-progression)
-8. [Feature Integration Patterns](#feature-integration-patterns)
-9. [Common Extension Points](#common-extension-points)
-10. [Debugging and Testing](#debugging-and-testing)
+8. [Analytics and Monetization Systems](#analytics-and-monetization-systems)
+9. [Feature Integration Patterns](#feature-integration-patterns)
+10. [Common Extension Points](#common-extension-points)
+11. [Debugging and Testing](#debugging-and-testing)
 
 ---
 
@@ -285,6 +288,47 @@ using BattleCruisers.Buildables.Pools;  // ✅ BuildableActivationArgs lives her
 ```
 
 **Lesson:** Check the actual namespace for types - they're not always where intuition suggests.
+
+### Pitfall 9: Accessing Non-Existent Data Properties
+
+**Problem:** Assuming models expose fields that don't exist (e.g., duration/score on `BattleResult`).
+
+**Anti-Pattern:**
+```csharp
+FirebaseAnalyticsManager.Instance.LogLevelComplete(
+    levelNumber: result.LevelNum,
+    gameMode: ApplicationModel.Mode.ToString(),
+    duration: result.TimeElapsed,  // ❌ not defined
+    score: result.PlayerScore      // ❌ not defined
+);
+```
+
+**Correct Pattern:** Use available data or proxies and plan extensions explicitly.
+```csharp
+FirebaseAnalyticsManager.Instance.LogLevelComplete(
+    levelNumber: result.LevelNum,
+    gameMode: ApplicationModel.Mode.ToString(),
+    duration: 0f, // fallback
+    score: (int)DataProvider.GameModel.LifetimeDestructionScore
+);
+```
+
+**Lesson:** Verify model definitions before use; prefer composition or separate trackers over ad-hoc assumptions.
+
+### Pitfall 10: Platform-Specific SDK Calls Without Guards
+
+**Problem:** Initializing or calling third-party SDKs on unsupported platforms (Editor/iOS) causing failures.
+
+**Correct Pattern:**
+```csharp
+#if UNITY_ANDROID && !UNITY_EDITOR
+_ironSourceClass.CallStatic("init", appKey);
+#else
+Debug.Log("[Ads] Editor/unsupported platform simulation");
+#endif
+```
+
+**Lesson:** Guard all platform-specific calls; simulate in Editor to keep flows testable.
 
 ### System Diagrams
 
@@ -1034,6 +1078,52 @@ private void OnPlayerCruiserDestroyed(object sender, DestroyedEventArgs e)
 
 ---
 
+## Analytics and Monetization Systems
+
+### Analytics Architecture
+
+Analytics is optional and pluggable via `IAnalyticsManager`. Keep gameplay code decoupled by logging through a provider facade.
+
+```csharp
+public interface IAnalyticsManager
+{
+    Task InitializeAsync();
+    void LogEvent(string eventName, Dictionary<string, object> parameters = null);
+    void LogLevelStart(int levelNumber, string levelName, string gameMode);
+    void LogLevelComplete(int levelNumber, string gameMode, float duration, int score);
+    void LogLevelFail(int levelNumber, string gameMode, float duration, string failReason);
+}
+```
+
+Integration points:
+- `LandingSceneGod` – session/start funnels and progression.
+- `PostBattleScreenController` – victory/failure outcomes.
+
+Guidelines:
+- Use fallbacks when specific metrics are unavailable (e.g., duration=0, score from `LifetimeDestructionScore`).
+- Gate initialization with consent and platform readiness.
+
+### Monetization Architecture
+
+Ads integrate via `IMediationManager` with Editor simulation.
+
+```csharp
+public interface IMediationManager
+{
+    Task InitializeAsync(string appKey);
+    bool IsInterstitialReady();
+    void ShowInterstitial();
+    event Action OnInterstitialAdClosed;
+}
+```
+
+Guidelines:
+- Guard all SDK calls with `#if UNITY_ANDROID && !UNITY_EDITOR`.
+- Skip ads for premium users; respect GDPR consent.
+- Drive UI flows with events (e.g., close callbacks resume UI).
+
+---
+
 ## Save/Load and Progression
 
 ### DataProvider Singleton
@@ -1582,6 +1672,60 @@ public async Task TestWaveSurvivalMode()
 }
 ```
 
+### Pattern 5: Integrating Third-Party Analytics (Firebase Example)
+
+Summary: Define `IAnalyticsManager`, implement `FirebaseAnalyticsManager`, initialize behind consent, and log via a provider from controllers/UI.
+
+```csharp
+public static class AnalyticsProvider
+{
+    private static IAnalyticsManager _impl;
+
+    public static async Task InitializeAsync(bool enabled)
+    {
+        if (!enabled) { _impl = null; return; }
+        _impl = new FirebaseAnalyticsManager();
+        await _impl.InitializeAsync();
+    }
+
+    public static void LogLevelComplete(int level, string mode, float duration, int score)
+        => _impl?.LogLevelComplete(level, mode, duration, score);
+}
+```
+
+Usage in `PostBattleScreenController`:
+```csharp
+AnalyticsProvider.LogLevelComplete(
+    BattleResult.LevelNum,
+    ApplicationModel.Mode.ToString(),
+    0f,
+    (int)DataProvider.GameModel.LifetimeDestructionScore);
+```
+
+### Pattern 6: Integrating Monetization (IronSource Example)
+
+Summary: Wrap SDK in `IMediationManager`, guard with platform defines, simulate in Editor, and gate by consent/premium.
+
+```csharp
+public class FullScreenAdverts : MonoBehaviour
+{
+    private IMediationManager _ads;
+
+    private async void Start()
+    {
+        _ads = new IronSourceManager();
+        await _ads.InitializeAsync("APP_KEY");
+        _ads.OnInterstitialAdClosed += CloseAdvert;
+    }
+
+    public void OpenAdvert()
+    {
+        if (_ads.IsInterstitialReady()) _ads.ShowInterstitial();
+        else CloseAdvert();
+    }
+}
+```
+
 ---
 
 ## Common Extension Points
@@ -1763,7 +1907,7 @@ BattleCruisers represents a **sophisticated, interface-driven architecture** tha
 - **Maintainability:** Event-driven communication and dependency injection
 - **Testability:** Interface-based design enables comprehensive testing
 
-The architecture successfully balances **complexity** (supporting multiple game modes, extensive progression systems, and sophisticated AI) with **simplicity** (clear interfaces, consistent patterns, and modular components).
+The architecture successfully balances **complexity** (supporting multiple game modes, extensive progression systems, and sophisticated AI) with **simplicity** (clear interfaces, consistent patterns, and modular components). Recent analytics and monetization integrations illustrate how third-party systems can be added safely via interfaces and provider facades without coupling gameplay to SDKs.
 
 ### Key Takeaways for New Developers
 
@@ -1787,7 +1931,9 @@ IManagedDisposable (base for all disposable objects)
 │   ├── IBuilding (buildings)
 │   └── IUnit (units)
 ├── ICruiser (cruiser entities)
-└── IBattleSceneHelper (mode-specific behavior)
+├── IBattleSceneHelper (mode-specific behavior)
+├── IAnalyticsManager (analytics)
+└── IMediationManager (ads/mediation)
 ```
 
 ### Key Factories
@@ -1878,6 +2024,23 @@ This section provides detailed interface documentation for key systems, enabling
 | `UnitCategory Category { get; }` | Unit type category | None → UnitCategory |
 | `Direction Direction { get; set; }` | Movement direction | None → Direction |
 | `void CompleteBuildable()` | Manually completes construction | None |
+
+#### IAnalyticsManager
+| Method/Property | Description |
+|-----------------|-------------|
+| `Task InitializeAsync()` | Initialize analytics backend (consent/platform-aware) |
+| `void LogEvent(string, Dictionary<string, object>)` | Generic event logging |
+| `void LogLevelStart(int, string, string)` | Level/session start |
+| `void LogLevelComplete(int, string, float, int)` | Level completion with fallbacks |
+| `void LogLevelFail(int, string, float, string)` | Level failure reason logging |
+
+#### IMediationManager
+| Method/Property | Description |
+|-----------------|-------------|
+| `Task InitializeAsync(string appKey)` | Initialize mediation SDK (platform-guarded) |
+| `bool IsInterstitialReady()` | Readiness check (simulate in Editor) |
+| `void ShowInterstitial()` | Display interstitial ad |
+| `event Action OnInterstitialAdClosed` | Fired when interstitial closes |
 
 ### Key Classes
 
@@ -2026,12 +2189,17 @@ public class MyComponent : MonoBehaviour
 ### Third-Party Libraries
 - **Newtonsoft.Json** - JSON serialization/deserialization
 - **System.Runtime.Serialization** - Binary serialization
+- **Firebase Analytics (Android)** - Event tracking; configured via `Assets/google-services.json`
+- **IronSource (Android)** - Ad mediation; configured via resolver XML under `Assets/Editor/*Dependencies.xml`
 
 ### Custom Utilities
 - **Logging** - Centralized logging system with tags
 - **Helper.AssertIsNotNull()** - Runtime validation
 - **IDeferrer** - Async operation deferral
 - **IManagedDisposable** - Resource management
+
+Notes:
+- Prefer External Dependency Manager for Unity (EDM4U) to resolve Android libraries. Keep resolver XMLs under `Assets/Editor/` and run the resolver after changes.
 
 ---
 
@@ -2073,6 +2241,12 @@ private GameModel MakeCompatible(object gameData)
 2. **Reflection-Based Loading:** Use reflection to handle missing properties gracefully
 3. **Version Checks:** Compare loaded data version with current version
 4. **Graceful Degradation:** Provide fallback behavior for incompatible data
+
+### Dependency Resolution (EDM4U)
+
+- Maintain resolver XMLs under `Assets/Editor/` (e.g., `FirebaseDependencies.xml`, `IronSourceDependencies.xml`).
+- After changing dependencies, run the Android Resolver (Assets → External Dependency Manager → Android Resolver → Resolve).
+- Keep SDK versions pinned in XML to avoid unexpected API changes; update intentionally and test platform guards.
 
 ---
 
