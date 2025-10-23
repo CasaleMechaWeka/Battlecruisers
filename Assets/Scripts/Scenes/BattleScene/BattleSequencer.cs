@@ -42,6 +42,11 @@ namespace BattleCruisers.Scenes.BattleScene
                 IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(sq.PrefabKeyName));
                 Cruiser cruiser = Cruisers[(int)sq.Faction];
                 Slot slot = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType)[sq.SlotID];
+                if(slot == null)
+                {
+                    Debug.LogError($"{slot.type} Slot #{sq.SlotID} is already occupied!");
+                    return;
+                }
                 cruiser.ConstructBuilding(building, slot, sq.IgnoreDroneReq, sq.IgnoreBuildTime);
             }
             else
