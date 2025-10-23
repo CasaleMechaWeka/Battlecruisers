@@ -62,6 +62,7 @@ namespace BattleCruisers.Scenes.BattleScene
         private LifetimeManager _lifetimeManager;
         private InformatorDismisser _informatorDismisser;
         private PausableAudioListener _pausableAudioListener;
+        private BattleSequencer battleSequencer;
 
         public int defaultLevel;
         public int defaultSideQuest;
@@ -489,7 +490,10 @@ namespace BattleCruisers.Scenes.BattleScene
 
             GameOver = false;
             if (LandingSceneGod.Instance.coinBattleLevelNum > 0)
-                LandingSceneGod.Instance.coinBattleLevelNum = -2; //Erik - DestructionSceneGod will detect Coin battle mode through this
+                LandingSceneGod.Instance.coinBattleLevelNum = -2; //DestructionSceneGod will detect Coin battle mode through this
+
+            battleSequencer = GetComponent<BattleSequencer>();
+            battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
             /*
             string logName = "Battle_Begin";
             #if LOG_ANALYTICS

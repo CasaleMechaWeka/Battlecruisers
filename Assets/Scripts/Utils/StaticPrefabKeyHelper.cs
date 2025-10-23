@@ -137,23 +137,15 @@ namespace BattleCruisers.Utils
             string keyType = strAsArray[0];
             string keyName = strAsArray[1];
 
-            switch (keyType)
+            return keyType switch
             {
-                case "Hull":
-                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Hulls), keyName);
+                "Hull"       => GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Hulls), keyName),
+                "Building"   => GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Buildings), keyName),
+                "Unit"       => GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Units), keyName),
+                "CaptainExo" => GetPrefabKey<TKey>(typeof(StaticPrefabKeys.CaptainExos), keyName),
+                _ => throw new ArgumentException(),
+            };
 
-                case "Building":
-                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Buildings), keyName);
-
-                case "Unit":
-                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.Units), keyName);
-
-                case "CaptainExo":
-                    return GetPrefabKey<TKey>(typeof(StaticPrefabKeys.CaptainExos), keyName);
-
-                default:
-                    throw new ArgumentException();
-            }
         }
 
         private static TKey GetPrefabKey<TKey>(Type type, string keyName) where TKey : IPrefabKey
