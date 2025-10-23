@@ -494,6 +494,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             battleSequencer = GetComponent<BattleSequencer>();
             battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+            battleSequencer.StartF();
             /*
             string logName = "Battle_Begin";
             #if LOG_ANALYTICS
