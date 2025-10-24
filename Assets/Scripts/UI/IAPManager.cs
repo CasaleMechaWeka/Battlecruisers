@@ -1,3 +1,4 @@
+using BattleCruisers.Ads;
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene;
 using UnityEngine;
@@ -42,31 +43,45 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     //Step 4 modify purchasing
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        if (args.purchasedProduct.definition.id == premium_version_product) //allowing for just the single IAP at this stage
+        var product = args.purchasedProduct;
+        string productId = product.definition.id;
+        
+        // Track successful purchase with Firebase
+        if (FirebaseAnalyticsManager.Instance != null)
+        {
+            FirebaseAnalyticsManager.Instance.LogIAPSuccess(
+                productId,
+                product.definition.type.ToString(),
+                (double)(product.metadata.localizedPrice),
+                product.metadata.isoCurrencyCode
+            );
+        }
+        
+        if (productId == premium_version_product) //allowing for just the single IAP at this stage
         {
             DataProvider.GameModel.PremiumEdition = true;
             DataProvider.GameModel.AddBodykit(0);
             DataProvider.SaveGame();
         }
-        else if (args.purchasedProduct.definition.id == small_coin_pack)
+        else if (productId == small_coin_pack)
         {
             BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = small_coin_pack });
         }
-        else if (args.purchasedProduct.definition.id == medium_coin_pack)
+        else if (productId == medium_coin_pack)
         {
             BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = medium_coin_pack });
         }
-        else if (args.purchasedProduct.definition.id == large_coin_pack)
+        else if (productId == large_coin_pack)
         {
             BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = large_coin_pack });
         }
-        else if (args.purchasedProduct.definition.id == extralarge_coin_pack)
+        else if (productId == extralarge_coin_pack)
         {
             BlackMarketScreenController.Instance.purchasedIAP.Invoke(this, new IAPEventArgs() { CoinsPack = extralarge_coin_pack });
         }
         else
         {
-            Debug.Log(" ===> Purchase Failed ---> " + args.purchasedProduct.definition.id);
+            Debug.Log(" ===> Purchase Failed ---> " + productId);
         }
 
         return PurchaseProcessingResult.Complete;
@@ -99,6 +114,18 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
             if (product != null && product.availableToPurchase)
             {
                 Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
+                
+                // Track IAP attempt with Firebase
+                if (FirebaseAnalyticsManager.Instance != null)
+                {
+                    FirebaseAnalyticsManager.Instance.LogIAPAttempt(
+                        productId,
+                        product.definition.type.ToString(),
+                        (double)(product.metadata.localizedPrice),
+                        product.metadata.isoCurrencyCode
+                    );
+                }
+                
                 storeController.InitiatePurchase(product);
             }
             else
@@ -258,9 +285,27 @@ public class IAPManager : MonoBehaviour, IDetailedStoreListener
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
+        
+        // Track IAP failure with Firebase
+        if (FirebaseAnalyticsManager.Instance != null)
+        {
+            FirebaseAnalyticsManager.Instance.LogIAPFailed(
+                product.definition.id,
+                failureReason.ToString()
+            );
+        }
     }
     public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
     {
-
+        Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', Reason: {1}", product.definition.storeSpecificId, failureDescription.reason));
+        
+        // Track IAP failure with Firebase
+        if (FirebaseAnalyticsManager.Instance != null)
+        {
+            FirebaseAnalyticsManager.Instance.LogIAPFailed(
+                product.definition.id,
+                failureDescription.reason.ToString()
+            );
+        }
     }
 }

@@ -1,3 +1,4 @@
+using BattleCruisers.Ads;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
@@ -96,27 +97,21 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             if (desiredBehaviour == PostBattleScreenBehaviour.TutorialCompleted
                 || ApplicationModel.IsTutorial)
             {
-                /*
-                string logName = "Battle_End";
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                if (UnityServices.State != ServicesInitializationState.Uninitialized)
+                // Track tutorial completion with Firebase
+                if (FirebaseAnalyticsManager.Instance != null && BattleResult != null)
                 {
-                    try
+                    if (BattleResult.WasVictory)
                     {
-                        AnalyticsService.Instance.CustomData("Battle",
-                                                                            DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(),
-                                                                                                               logName,
-                                                                                                               ApplicationModel.UserWonSkirmish));
-                        AnalyticsService.Instance.Flush();
-                    }
-                    catch (ConsentCheckException e)
-                    {
-                        Debug.Log("Error reason = " + e.Reason.ToString());
+                        FirebaseAnalyticsManager.Instance.LogTutorialComplete("main_tutorial");
+                        FirebaseAnalyticsManager.Instance.LogLevelComplete(
+                            "tutorial_1",
+                            1,
+                            "Tutorial",
+                            0, // Time not tracked in BattleResult
+                            0  // Score not tracked in BattleResult
+                        );
                     }
                 }
-                */
 
                 postBattleState
                     = new TutorialCompletedState(
@@ -126,27 +121,32 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
             else if (ApplicationModel.Mode == GameMode.Skirmish || ApplicationModel.Mode == GameMode.CoinBattle)
             {
-                /*
-                string logName = "Battle_End";
-#if LOG_ANALYTICS
-    Debug.Log("Analytics: " + logName);
-#endif
-                if (UnityServices.State != ServicesInitializationState.Uninitialized)
+                // Track skirmish/coin battle with Firebase
+                if (FirebaseAnalyticsManager.Instance != null && BattleResult != null)
                 {
-                    try
+                    string gameMode = ApplicationModel.Mode == GameMode.Skirmish ? "Skirmish" : "CoinBattle";
+                    
+                    if (ApplicationModel.UserWonSkirmish)
                     {
-                        AnalyticsService.Instance.CustomData("Battle",
-                                                                            DataProvider.GameModel.Analytics(ApplicationModel.Mode.ToString(),
-                                                                                                               logName,
-                                                                                                               ApplicationModel.UserWonSkirmish));
-                        AnalyticsService.Instance.Flush();
+                        FirebaseAnalyticsManager.Instance.LogLevelComplete(
+                            $"skirmish_{BattleResult.LevelNum}",
+                            BattleResult.LevelNum,
+                            gameMode,
+                            0, // Time not tracked in BattleResult
+                            0  // Score not tracked in BattleResult
+                        );
                     }
-                    catch (ConsentCheckException e)
+                    else
                     {
-                        Debug.Log("Error reason = " + e.Reason.ToString());
+                        FirebaseAnalyticsManager.Instance.LogLevelFail(
+                            $"skirmish_{BattleResult.LevelNum}",
+                            BattleResult.LevelNum,
+                            gameMode,
+                            0, // Time not tracked in BattleResult
+                            "defeat"
+                        );
                     }
                 }
-                */
 
                 postBattleState
                     = new PostSkirmishState(
@@ -194,6 +194,21 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 unlockedItemSection.Initialise();
                 if (desiredBehaviour == PostBattleScreenBehaviour.Defeat || !BattleResult.WasVictory)
                 {
+                    // Track level failure with Firebase
+                    if (FirebaseAnalyticsManager.Instance != null)
+                    {
+                        string gameMode = ApplicationModel.Mode.ToString();
+                        string failReason = DataProvider.GameModel.TimesLostOnLastLevel >= 2 ? "multiple_attempts" : "defeat";
+                        
+                        FirebaseAnalyticsManager.Instance.LogLevelFail(
+                            $"level_{BattleResult.LevelNum}",
+                            BattleResult.LevelNum,
+                            gameMode,
+                            0, // Time not tracked in BattleResult
+                            failReason
+                        );
+                    }
+                    
                     postBattleState = new DefeatState(this, musicPlayer);
                     title.color = Color.white; // Set title text to white for defeat
                     if (ApplicationModel.SelectedLevel == DataProvider.GameModel.CompletedLevels.Count + 1 && DataProvider.SettingsManager.AIDifficulty != Difficulty.Normal && ApplicationModel.Mode == GameMode.Campaign)
@@ -213,6 +228,28 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 }
                 else
                 {
+                    // Track level completion with Firebase
+                    if (FirebaseAnalyticsManager.Instance != null)
+                    {
+                        string gameMode = ApplicationModel.Mode.ToString();
+                        
+                        FirebaseAnalyticsManager.Instance.LogLevelComplete(
+                            $"level_{BattleResult.LevelNum}",
+                            BattleResult.LevelNum,
+                            gameMode,
+                            0, // Time not tracked in BattleResult
+                            (int)DataProvider.GameModel.LifetimeDestructionScore // Use lifetime score
+                        );
+                        
+                        // Track player progression after victory
+                        FirebaseAnalyticsManager.Instance.LogPlayerProgression(
+                            DataProvider.GameModel.SelectedLevel,
+                            DataProvider.GameModel.NumOfLevelsCompleted,
+                            0, // TODO: Add total play time tracking
+                            DataProvider.GameModel.PremiumEdition
+                        );
+                    }
+                    
                     postBattleState
                         = new VictoryState(
                             this,
