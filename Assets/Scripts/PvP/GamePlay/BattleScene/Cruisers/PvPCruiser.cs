@@ -45,6 +45,8 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Boost;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers
 {
@@ -66,9 +68,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 #pragma warning restore CS0414  // Variable is assigned but never used
 
         public string stringKeyBase;
-        public int numOfDrones;
+        public int numOfDrones = 4;
         public float yAdjustmentInM;
-        public Vector2 trashTalkScreenPosition;
+        public Vector2 trashTalkScreenPosition = new Vector2(480, -28);
 
         [Tooltip("GameObjects that persist in the scene after this cruiser is destroyed (e.g., CivBuildings)")]
         public GameObject[] persistentObjects;
@@ -163,6 +165,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         private IBroadcastingProperty<bool> _CruiserHasActiveDrones;
         private bool IsAIBotMode = false;
+
+        [Serializable]
+        public class BoostStats
+        {
+            public BoostType boostType;
+            public float boostAmount = 1f;
+        }
+
+        public BoostStats[] Boosts;
 
         protected virtual void Start()
         {
@@ -377,6 +388,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             }
             */
+
+            if (Boosts != null)
+                foreach (BoostStats boost in Boosts)
+                    CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boost.boostType).Add(new BoostProvider(boost.boostAmount));
         }
 
 
