@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Ads;
+using BattleCruisers.Data;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
@@ -103,6 +104,9 @@ namespace BattleCruisers.Scenes
             {
                 Instance = this;
             }
+
+            // Initialize Firebase Analytics and IronSource
+            InitializeAnalyticsAndAds();
 
             LogToScreen(Application.platform.ToString());
             messagebox.HideMessage();
@@ -704,6 +708,84 @@ namespace BattleCruisers.Scenes
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Initialize Firebase Analytics and IronSource Ads managers
+        /// </summary>
+        private void InitializeAnalyticsAndAds()
+        {
+            // Create Firebase Analytics Manager if it doesn't exist
+            if (FirebaseAnalyticsManager.Instance == null)
+            {
+                GameObject analyticsObj = new GameObject("FirebaseAnalyticsManager");
+                analyticsObj.AddComponent<FirebaseAnalyticsManager>();
+                Debug.Log("[LandingScene] Firebase Analytics Manager created");
+            }
+
+            // Create Ad Config Manager if it doesn't exist
+            if (AdConfigManager.Instance == null)
+            {
+                GameObject adConfigObj = new GameObject("AdConfigManager");
+                adConfigObj.AddComponent<AdConfigManager>();
+                Debug.Log("[LandingScene] Ad Config Manager created");
+            }
+
+            // Create IronSource Manager if it doesn't exist
+            if (IronSourceManager.Instance == null)
+            {
+                GameObject adsObj = new GameObject("IronSourceManager");
+                adsObj.AddComponent<IronSourceManager>();
+                Debug.Log("[LandingScene] IronSource Manager created");
+            }
+
+            // Create UnityMainThreadDispatcher if it doesn't exist
+            if (UnityMainThreadDispatcher.Instance == null)
+            {
+                GameObject dispatcherObj = new GameObject("UnityMainThreadDispatcher");
+                dispatcherObj.AddComponent<UnityMainThreadDispatcher>();
+                Debug.Log("[LandingScene] UnityMainThreadDispatcher created");
+            }
+
+            // Track first app launch
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                // Track player progression
+                FirebaseAnalyticsManager.Instance.LogPlayerProgression(
+                    DataProvider.GameModel?.SelectedLevel ?? 0,
+                    DataProvider.GameModel?.NumOfLevelsCompleted ?? 0,
+                    0, // TODO: Add play time tracking to GameModel
+                    DataProvider.GameModel?.PremiumEdition ?? false
+                );
+
+                // Check for returning user
+                string lastSessionKey = "LastSessionDate";
+                string lastSessionStr = PlayerPrefs.GetString(lastSessionKey, "");
+                if (!string.IsNullOrEmpty(lastSessionStr))
+                {
+                    if (DateTime.TryParse(lastSessionStr, out DateTime lastSession))
+                    {
+                        int daysSinceLastSession = (int)(DateTime.Now - lastSession).TotalDays;
+                        if (daysSinceLastSession > 0)
+                        {
+                            FirebaseAnalyticsManager.Instance.LogReturnUser(daysSinceLastSession);
+                        }
+                    }
+                }
+                else
+                {
+                    // First time user - track install
+                    string firstInstallKey = "FirstInstallDate";
+                    if (!PlayerPrefs.HasKey(firstInstallKey))
+                    {
+                        PlayerPrefs.SetString(firstInstallKey, DateTime.Now.ToString());
+                    }
+                }
+                
+                // Save current session time
+                PlayerPrefs.SetString(lastSessionKey, DateTime.Now.ToString());
+                PlayerPrefs.Save();
             }
         }
     }

@@ -1,8 +1,10 @@
-﻿using BattleCruisers.Data;
+﻿using BattleCruisers.Ads;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +19,11 @@ namespace BattleCruisers.Utils.Debugging
 
         [SerializeField]
         private int levelToUnlock = 1; // The highest level to unlock, adjustable in the Inspector
+
+        [Header("Ad Testing")]
+        [SerializeField]
+        [Tooltip("Link FullScreenAdverts from ScreensScene hierarchy")]
+        private FullScreenAdverts fullScreenAdverts;
 
 
         void Start()
@@ -220,6 +227,84 @@ namespace BattleCruisers.Utils.Debugging
                 DataProvider.GameModel.Coins = 0;
             }
             DataProvider.SaveGame();
+        }
+
+        /// <summary>
+        /// Toggle between Premium and Free edition for ad testing
+        /// </summary>
+        public void TogglePremiumEdition()
+        {
+            DataProvider.GameModel.PremiumEdition = !DataProvider.GameModel.PremiumEdition;
+            DataProvider.SaveGame();
+            
+            string status = DataProvider.GameModel.PremiumEdition ? "PREMIUM" : "FREE";
+            Debug.Log($"[AdminPanel] Edition toggled to: {status}");
+            
+            // Log to Firebase for tracking
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.SetUserProperty("is_premium", DataProvider.GameModel.PremiumEdition.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Reset ad counters to force next ad to show
+        /// </summary>
+        public void ResetAdCounters()
+        {
+            PlayerPrefs.DeleteKey("AdCounterKey");
+            PlayerPrefs.DeleteKey("LastAdShowTime");
+            PlayerPrefs.Save();
+            Debug.Log("[AdminPanel] Ad counters reset - next battle will show ad");
+        }
+
+        /// <summary>
+        /// Force show an ad immediately (for testing IronSource integration)
+        /// </summary>
+        public void ForceShowAd()
+        {
+            if (fullScreenAdverts == null)
+            {
+                Debug.LogError("[AdminPanel] FullScreenAdverts not linked! Assign in Inspector.");
+                return;
+            }
+
+            ResetAdCounters();
+            Debug.Log("[AdminPanel] Forcing ad display...");
+            fullScreenAdverts.ForceShowAd();
+        }
+
+        /// <summary>
+        /// Show current ad configuration status
+        /// </summary>
+        public void ShowAdStatus()
+        {
+            bool isPremium = DataProvider.GameModel.PremiumEdition;
+            int levelsCompleted = DataProvider.GameModel.NumOfLevelsCompleted;
+            
+            string config = "=== AD STATUS ===\n";
+            config += $"Edition: {(isPremium ? "PREMIUM" : "FREE")}\n";
+            config += $"Levels Completed: {levelsCompleted}\n";
+            
+            if (AdConfigManager.Instance != null)
+            {
+                config += $"Min Level for Ads: {AdConfigManager.Instance.MinimumLevelForAds}\n";
+                config += $"Ad Frequency: {AdConfigManager.Instance.GetAdFrequencyForPlayer(levelsCompleted)}\n";
+                config += $"Ad Cooldown: {AdConfigManager.Instance.AdCooldownMinutes} min\n";
+                config += $"Veteran Player: {AdConfigManager.Instance.IsVeteranPlayer(levelsCompleted)}\n";
+            }
+            
+            if (fullScreenAdverts != null)
+            {
+                config += $"Counter Status: {fullScreenAdverts.GetAdCounterStatus()}\n";
+            }
+            else
+            {
+                config += "FullScreenAdverts: Not linked!\n";
+            }
+            
+            config += "================";
+            Debug.Log(config);
         }
     }
 }
