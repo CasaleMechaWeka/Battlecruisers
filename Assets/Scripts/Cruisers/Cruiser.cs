@@ -1,4 +1,6 @@
 ﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.BuildProgress;
 using BattleCruisers.Buildables.Pools;
@@ -28,6 +30,7 @@ using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -35,8 +38,8 @@ namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IComparableItem
     {
-        protected readonly float UltraCruiserUtilityModifier = 2.0f; //UltraCruiser base utility stat modifier
-        protected readonly float UltraCruiserHealthModifier = 1.25f; //UltraCruiser base health stat modifier        
+        protected readonly float UltraCruiserBoostModifier = 2.0f;
+        protected readonly float UltraCruiserHealthModifier = 1.25f;
         protected UIManager _uiManager;
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
@@ -54,9 +57,9 @@ namespace BattleCruisers.Cruisers
         private SettingsManager settingsManager;
 
         public string stringKeyBase;
-        public int numOfDrones;
+        public int numOfDrones = 4;
         public float yAdjustmentInM;
-        public Vector2 trashTalkScreenPosition;
+        public Vector2 trashTalkScreenPosition = new Vector2(480, -28);
         public HullType hullType;
         public bool startsWithFogOfWar;
 
@@ -115,11 +118,21 @@ namespace BattleCruisers.Cruisers
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
 
+        [Serializable]
+        public class BoostStats
+        {
+            public BoostType boostType;
+            public float boostAmount = 1f;
+        }
+
+        public BoostStats[] Boosts;
+        public List<int> UltraCruiserLevels;
+
         public override void StaticInitialise()
         {
             base.StaticInitialise();
 
-            Assert.IsNotNull(deathPrefab);
+            Assert.IsNotNull(deathPrefab, $"Death prefab for Cruiser {name} is null");
 
             _renderer = GetComponent<SpriteRenderer>();
             Assert.IsNotNull(_renderer);
@@ -169,9 +182,9 @@ namespace BattleCruisers.Cruisers
             RepairManager = args.RepairManager;
 
             _fog.Initialise(args.FogStrength);
-            
+
             // Activate starting fog if cruiser has this perk (AFTER fog initialization)
-            if (args.FogOfWarManager is Fog.FogOfWarManager pveManager)
+            if (args.FogOfWarManager is FogOfWarManager pveManager)
             {
                 pveManager.ActivateStartingFog();
             }
@@ -263,6 +276,19 @@ namespace BattleCruisers.Cruisers
                     }
                 }
             }
+            
+            if(UltraCruiserLevels.Contains(ApplicationModel.SelectedLevel))
+            {
+                SetUltraCruiserHealth(args);
+                if (Boosts != null)
+                    foreach (BoostStats boost in Boosts)
+                        boost.boostAmount = SetUltraCruiserBoost(args, boost.boostAmount);
+            }
+
+            if (Boosts != null)
+                foreach (BoostStats boost in Boosts)
+                    CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boost.boostType).Add(new BoostProvider(boost.boostAmount));
+
         }
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
@@ -346,8 +372,6 @@ namespace BattleCruisers.Cruisers
 
             return building;
         }
-
-
 
         private void Building_CompletedBuildable(object sender, EventArgs e)
         {
@@ -448,12 +472,12 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        protected float SetUltraCruiserUtility(CruiserArgs args, float cruiserBaseUtility)
+        protected float SetUltraCruiserBoost(CruiserArgs args, float cruiserBaseUtility)
         {
             if (args.Faction == Faction.Reds)
             {
                 //Debug.Log("Enemy utility value: "+cruiserBaseUtility * UltraCruiserUtilityModifier);
-                return cruiserBaseUtility * UltraCruiserUtilityModifier;
+                return cruiserBaseUtility * UltraCruiserBoostModifier;
             }
             else
             {
