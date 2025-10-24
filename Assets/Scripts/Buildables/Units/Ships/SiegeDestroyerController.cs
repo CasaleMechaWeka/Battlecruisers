@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// armament range be less than the longest range barrel.
         private float FindOptimalArmamentRangeInM()
         {
-            return _mortar.RangeInM - 0.2f;    //for safety margin
+            return _mortar.RangeInM - 1.1f;    //for safety margin
         }
 
         protected override IList<IBarrelWrapper> GetTurrets()
