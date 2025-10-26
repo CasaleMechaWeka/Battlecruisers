@@ -317,6 +317,48 @@ namespace BattleCruisers.Ads
             });
         }
 
+        public void LogRewardedAdOffered(string placement, int coinsReward, int creditsReward)
+        {
+            LogEvent("rewarded_ad_offered", new Dictionary<string, object>
+            {
+                { "placement", placement },
+                { "coins_reward", coinsReward },
+                { "credits_reward", creditsReward }
+            });
+        }
+
+        public void LogRewardedAdStarted(string placement)
+        {
+            LogEvent("rewarded_ad_started", new Dictionary<string, object>
+            {
+                { "placement", placement },
+                { "ad_platform", "ironsource" },
+                { "ad_type", "rewarded" }
+            });
+        }
+
+        public void LogRewardedAdCompleted(string placement, int coinsEarned, int creditsEarned)
+        {
+            LogEvent("rewarded_ad_completed", new Dictionary<string, object>
+            {
+                { "placement", placement },
+                { "ad_platform", "ironsource" },
+                { "ad_type", "rewarded" },
+                { "coins_earned", coinsEarned },
+                { "credits_earned", creditsEarned },
+                { "completed", true }
+            });
+        }
+
+        public void LogRewardedAdSkipped(string placement)
+        {
+            LogEvent("rewarded_ad_skipped", new Dictionary<string, object>
+            {
+                { "placement", placement },
+                { "completed", false }
+            });
+        }
+
         #endregion
 
         #region Player Progress (Churn Indicators)

@@ -7,6 +7,7 @@ using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.Ads;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -123,6 +124,19 @@ namespace BattleCruisers.Scenes
         [SerializeField]
         private Text nukesText;
 
+        // Rewarded ad variables:
+        [Header("Rewarded Ads")]
+        [SerializeField]
+        private GameObject rewardedAdButton;
+        [SerializeField]
+        private Text rewardedAdButtonText;
+        [SerializeField]
+        private float rewardedAdOfferDuration = 5f; // How long to show the button
+        
+        private bool watchedRewardedAd = false;
+        private const int COINS_MULTIPLIER = 2;
+        private const int CREDITS_MULTIPLIER = 3;
+
         async void Start()
         {
             LandingSceneGod.MusicPlayer.PlayVictoryMusic();
@@ -136,6 +150,20 @@ namespace BattleCruisers.Scenes
             nextButton.Initialise(_soundPlayer, Done);
             skipButton.Initialise(_soundPlayer, SkipAnim);
             SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
+
+            // Hide rewarded ad button by default
+            if (rewardedAdButton != null)
+            {
+                rewardedAdButton.SetActive(false);
+            }
+
+            // Register rewarded ad callbacks
+            if (IronSourceManager.Instance != null)
+            {
+                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+            }
 
             // Populate screen:
             if (BattleSceneGod.deadBuildables != null)
@@ -555,7 +583,24 @@ namespace BattleCruisers.Scenes
 
         private void CalculateRewards()
         {
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            // Calculate base rewards
+            int baseCoins = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            long baseCredits = CalculateCredits();
+
+            // Apply multipliers if user watched rewarded ad
+            if (watchedRewardedAd)
+            {
+                coinsToAward = baseCoins * COINS_MULTIPLIER;
+                creditsToAward = baseCredits * CREDITS_MULTIPLIER;
+                Debug.Log($"[Rewards] Multiplied: Coins {baseCoins} -> {coinsToAward}, Credits {baseCredits} -> {creditsToAward}");
+            }
+            else
+            {
+                coinsToAward = baseCoins;
+                creditsToAward = baseCredits;
+            }
+
+            // Update UI
             if (coinsToAward > 0)
             {
                 coinsCounter.SetActive(true);
@@ -566,7 +611,6 @@ namespace BattleCruisers.Scenes
                 coinsCounter.SetActive(false);
             }
 
-            creditsToAward = CalculateCredits();
             if (creditsToAward > 0)
             {
                 creditsCounter.SetActive(true);
@@ -586,6 +630,12 @@ namespace BattleCruisers.Scenes
             else
             {
                 nukesCounter.SetActive(false);
+            }
+
+            // Show rewarded ad offer if rewards exist and ad is available
+            if (!watchedRewardedAd && (baseCoins > 0 || baseCredits > 0))
+            {
+                ShowRewardedAdOffer(baseCoins, (int)baseCredits);
             }
         }
 
@@ -755,6 +805,146 @@ namespace BattleCruisers.Scenes
             }
         }
 
+        // ========== REWARDED AD METHODS ==========
+
+        private void ShowRewardedAdOffer(int baseCoins, int baseCredits)
+        {
+            if (rewardedAdButton == null || IronSourceManager.Instance == null)
+                return;
+
+            // Check if ad is ready
+            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            {
+                Debug.Log("[Rewards] Rewarded ad not available");
+                return;
+            }
+
+            // Calculate potential rewards
+            int bonusCoins = baseCoins * (COINS_MULTIPLIER - 1);
+            int bonusCredits = baseCredits * (CREDITS_MULTIPLIER - 1);
+
+            // Update button text
+            if (rewardedAdButtonText != null)
+            {
+                rewardedAdButtonText.text = $"Watch Ad\n+{bonusCoins} Coins, +{bonusCredits} Credits";
+            }
+
+            // Show button
+            rewardedAdButton.SetActive(true);
+
+            // Log to Firebase
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogRewardedAdOffered("destruction_screen", bonusCoins, bonusCredits);
+            }
+
+            // Start timer to hide button
+            StartCoroutine(HideRewardedAdOfferAfterDelay());
+
+            Debug.Log($"[Rewards] Offering rewarded ad: +{bonusCoins} coins, +{bonusCredits} credits");
+        }
+
+        private IEnumerator HideRewardedAdOfferAfterDelay()
+        {
+            yield return new WaitForSeconds(rewardedAdOfferDuration);
+            
+            if (!watchedRewardedAd && rewardedAdButton != null && rewardedAdButton.activeSelf)
+            {
+                rewardedAdButton.SetActive(false);
+                
+                // Log skip to Firebase
+                if (FirebaseAnalyticsManager.Instance != null)
+                {
+                    FirebaseAnalyticsManager.Instance.LogRewardedAdSkipped("destruction_screen");
+                }
+                
+                Debug.Log("[Rewards] Rewarded ad offer expired");
+            }
+        }
+
+        /// <summary>
+        /// Called when user clicks the rewarded ad button
+        /// </summary>
+        public void OnWatchRewardedAdButtonClicked()
+        {
+            if (IronSourceManager.Instance == null)
+            {
+                Debug.LogError("[Rewards] IronSourceManager not found");
+                return;
+            }
+
+            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            {
+                Debug.LogWarning("[Rewards] Rewarded ad not ready");
+                return;
+            }
+
+            // Hide button immediately
+            if (rewardedAdButton != null)
+            {
+                rewardedAdButton.SetActive(false);
+            }
+
+            // Log ad start to Firebase
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogRewardedAdStarted("destruction_screen");
+            }
+
+            // Show the ad
+            IronSourceManager.Instance.ShowRewardedAd("destruction_screen");
+            Debug.Log("[Rewards] Showing rewarded ad");
+        }
+
+        /// <summary>
+        /// Called when user completes watching the rewarded ad
+        /// </summary>
+        private void OnRewardedAdCompleted()
+        {
+            watchedRewardedAd = true;
+            Debug.Log("[Rewards] User watched ad - applying multipliers");
+
+            // Recalculate rewards with multipliers
+            CalculateRewards();
+
+            // Log completion to Firebase
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogRewardedAdCompleted(
+                    "destruction_screen", 
+                    coinsToAward, 
+                    (int)creditsToAward
+                );
+
+                // Track as virtual currency earned
+                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("coins", coinsToAward, "rewarded_ad");
+                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("credits", (int)creditsToAward, "rewarded_ad");
+            }
+        }
+
+        /// <summary>
+        /// Called when rewarded ad is closed (whether completed or not)
+        /// </summary>
+        private void OnRewardedAdClosed()
+        {
+            Debug.Log("[Rewards] Rewarded ad closed");
+            // Ad closed, rewards already applied if completed
+        }
+
+        /// <summary>
+        /// Called when rewarded ad fails to show
+        /// </summary>
+        private void OnRewardedAdFailed()
+        {
+            Debug.LogWarning("[Rewards] Rewarded ad failed to show");
+            
+            // Show button again if it was hidden
+            if (!watchedRewardedAd && rewardedAdButton != null)
+            {
+                rewardedAdButton.SetActive(true);
+            }
+        }
+
         void OnApplicationQuit()
         {
             DataProvider.SaveGame();
@@ -771,6 +961,17 @@ namespace BattleCruisers.Scenes
             catch (Exception ex)
             {
                 Debug.Log(ex);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // Unregister rewarded ad callbacks
+            if (IronSourceManager.Instance != null)
+            {
+                IronSourceManager.Instance.OnRewardedAdRewarded -= OnRewardedAdCompleted;
+                IronSourceManager.Instance.OnRewardedAdClosed -= OnRewardedAdClosed;
+                IronSourceManager.Instance.OnRewardedAdShowFailed -= OnRewardedAdFailed;
             }
         }
     }

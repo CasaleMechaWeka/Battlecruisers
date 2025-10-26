@@ -3,6 +3,8 @@ using Unity.Services.Economy.Model;
 using Unity.Services.Economy;
 using UnityEngine;
 using System;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 
 namespace BattleCruisers.Utils.UGS.Samples
 {
@@ -24,13 +26,34 @@ namespace BattleCruisers.Utils.UGS.Samples
         {
             try
             {
+                if (UnityServices.State != ServicesInitializationState.Initialized || !AuthenticationService.Instance.IsSignedIn)
+                {
+                    Debug.LogWarning($"UGS not ready. Skipping SetBalance for {currencyId}={balance}.");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(currencyId))
+                {
+                    Debug.LogError("SetEconomyBalance: currencyId is null or empty.");
+                    return;
+                }
+
+                if (balance < 0)
+                {
+                    Debug.LogWarning($"SetEconomyBalance: clamping negative {currencyId} from {balance} to 0.");
+                    balance = 0;
+                }
+
                 await EconomyService.Instance.PlayerBalances.SetBalanceAsync(currencyId, balance);
             }
-            catch
+            catch (EconomyException e)
             {
-                Debug.Log("Currencies not synche to cloud");
+                Debug.LogError($"SetEconomyBalance validation failed for {currencyId}={balance}: {e}");
             }
-
+            catch (Exception e)
+            {
+                Debug.LogError($"SetEconomyBalance failed for {currencyId}={balance}: {e}");
+            }
         }
 
         public static async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)

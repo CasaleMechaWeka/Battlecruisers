@@ -543,7 +543,22 @@ namespace BattleCruisers.Data
         {
             try
             {
-                await EconomyManager.SetEconomyBalance("COIN", DataProvider.GameModel.Coins);
+                if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized
+                    || !Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
+                {
+                    Debug.Log("SyncCoinsToCloud: UGS not ready; skipping.");
+                    return false;
+                }
+
+                long coins = DataProvider.GameModel.Coins;
+                if (coins < 0)
+                {
+                    Debug.LogWarning($"SyncCoinsToCloud: clamping negative coins {coins} to 0.");
+                    coins = 0;
+                    DataProvider.GameModel.Coins = 0;
+                }
+
+                await EconomyManager.SetEconomyBalance("COIN", coins);
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -570,13 +585,13 @@ namespace BattleCruisers.Data
                 if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
-                    if (balance.Balance > 0 && balance.CurrencyId == "COIN")
+                    if (balance.CurrencyId == "COIN")
                     {
-                        DataProvider.GameModel.Coins = balance.Balance;
+                        DataProvider.GameModel.Coins = Math.Max(0, balance.Balance);
                     }
-                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
+                    if (balance.CurrencyId == "CREDIT")
                     {
-                        DataProvider.GameModel.Credits = balance.Balance;
+                        DataProvider.GameModel.Credits = Math.Max(0, balance.Balance);
                     }
                 }
                 return true;
@@ -588,13 +603,13 @@ namespace BattleCruisers.Data
                 if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
-                    if (balance.Balance > 0 && balance.CurrencyId == "COIN")
+                    if (balance.CurrencyId == "COIN")
                     {
-                        DataProvider.GameModel.Coins = balance.Balance;
+                        DataProvider.GameModel.Coins = Math.Max(0, balance.Balance);
                     }
-                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
+                    if (balance.CurrencyId == "CREDIT")
                     {
-                        DataProvider.GameModel.Credits = balance.Balance;
+                        DataProvider.GameModel.Credits = Math.Max(0, balance.Balance);
                     }
                 }
                 return true;
@@ -674,7 +689,22 @@ namespace BattleCruisers.Data
         {
             try
             {
-                await EconomyManager.SetEconomyBalance("CREDIT", DataProvider.GameModel.Credits);
+                if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized
+                    || !Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
+                {
+                    Debug.Log("SyncCreditsToCloud: UGS not ready; skipping.");
+                    return false;
+                }
+
+                long credits = DataProvider.GameModel.Credits;
+                if (credits < 0)
+                {
+                    Debug.LogWarning($"SyncCreditsToCloud: clamping negative credits {credits} to 0.");
+                    credits = 0;
+                    DataProvider.GameModel.Credits = 0;
+                }
+
+                await EconomyManager.SetEconomyBalance("CREDIT", credits);
                 return true;
             }
             catch (EconomyRateLimitedException e)
