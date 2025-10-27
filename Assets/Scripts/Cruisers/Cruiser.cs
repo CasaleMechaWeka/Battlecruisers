@@ -45,7 +45,7 @@ namespace BattleCruisers.Cruisers
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
         private ICruiserHelper _helper;
-        private SlotWrapperController _slotWrapperController;
+        public SlotWrapperController SlotWrapperController;
         private ClickHandler _clickHandler;
         private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
@@ -142,10 +142,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(_collider);
 
 
-            _slotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
-            Assert.IsNotNull(_slotWrapperController);
-            _slotWrapperController.StaticInitialise();
-            SlotNumProvider = _slotWrapperController;
+            SlotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
+            Assert.IsNotNull(SlotWrapperController);
+            SlotWrapperController.StaticInitialise();
+            SlotNumProvider = SlotWrapperController;
 
             _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
             Assert.IsNotNull(_fog);
@@ -190,7 +190,7 @@ namespace BattleCruisers.Cruisers
                 pveManager.ActivateStartingFog();
             }
 
-            SlotAccessor = _slotWrapperController.Initialise(this);
+            SlotAccessor = SlotWrapperController.Initialise(this);
             SlotHighlighter = new SlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
 
             EnemyShipBlockerInitialiser enemyShipBlockerInitialiser = GetComponentInChildren<EnemyShipBlockerInitialiser>();
