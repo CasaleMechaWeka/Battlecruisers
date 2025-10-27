@@ -104,7 +104,10 @@ namespace BattleCruisers.Scenes.BattleScene
                         return;
                     }
                     if (prefabID < (int)Unit_Bomber)
+                    {
+                        Debug.LogError($"Invalid UnitAction: {unitAction}");
                         continue;
+                    }
 
                     if (unitAction.Amount == 1)
                         SpawnUnit(unitAction.PrefabKeyName, unitAction.Postion, cruiser);
@@ -199,6 +202,17 @@ namespace BattleCruisers.Scenes.BattleScene
             public Vector2 Postion;
             public Vector2 SpawnArea;
             [Min(1)] public byte Amount;
+
+            public override string ToString()
+            {
+                string s = "UnitAction: {\n +"
+                 + $"\tPrefabKey: {PrefabKeyName}\n"
+                 + $"\tPostion: {Postion}\n"
+                 + $"\tArea: {SpawnArea}\n"
+                 + $"\tAmount: {Amount}\n"
+                 + "}\n";
+                return s;
+            }
         }
 
         public override string ToString()
@@ -218,11 +232,21 @@ namespace BattleCruisers.Scenes.BattleScene
                 }
             if (BoostActions != null)
                 foreach (BoostAction boostAction in BoostActions)
+            {
+                s += "\tBoostActions: {\n"
+                 + $"\t\tOperation: {boostAction.Operation}\n"
+                 + $"\t\tBoostType: {boostAction.BoostType}\n"
+                 + $"\t\tBoostAmount: {boostAction.BoostAmount}\n"
+                 + "\t}\n";
+            }
+            if (UnitActions != null)
+                foreach (UnitAction unitAction in UnitActions)
                 {
-                    s += "\tBoostActions: {\n"
-                     + $"\t\tOperation: {boostAction.Operation}\n"
-                     + $"\t\tBoostType: {boostAction.BoostType}\n"
-                     + $"\t\tBoostAmount: {boostAction.BoostAmount}\n"
+                    s += "\tUnitAction: {\n +"
+                     + $"\t\tPrefabKey: {unitAction.PrefabKeyName}\n"
+                     + $"\t\tPostion: {unitAction.Postion}\n"
+                     + $"\t\tArea: {unitAction.SpawnArea}\n"
+                     + $"\t\tAmount: {unitAction.Amount}\n"
                      + "\t}\n";
                 }
             s += "}\n";
