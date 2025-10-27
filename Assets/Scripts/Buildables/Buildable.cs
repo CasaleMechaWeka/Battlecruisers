@@ -506,6 +506,14 @@ namespace BattleCruisers.Buildables
 
         protected virtual void OnUpdate() { }
 
+        public void FinishConstruction()
+        {
+            _cumulativeBuildProgressInDroneS = _buildTimeInDroneSeconds;
+            _healthTracker.SetHealth(MaxHealth);
+            BuildableProgress?.Invoke(this, new BuildProgressEventArgs(this));
+            OnBuildableCompleted();
+        } 
+
         protected virtual void OnBuildableCompleted()
         {
             Logging.Log(Tags.BUILDABLE, this);

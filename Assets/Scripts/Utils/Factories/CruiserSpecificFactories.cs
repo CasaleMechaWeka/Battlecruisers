@@ -19,6 +19,7 @@ namespace BattleCruisers.Utils.Factories
         public GlobalBoostProviders GlobalBoostProviders { get; }
         public ITurretStatsFactory TurretStatsFactory { get; }
         public CruiserTargetFactoriesProvider Targets { get; }
+        public ICruiser EnemyCruiser { get; }
 
         public CruiserSpecificFactories(
             ICruiser parentCruiser,
@@ -30,6 +31,7 @@ namespace BattleCruisers.Utils.Factories
         {
             Helper.AssertIsNotNull(parentCruiser, enemyCruiser, userChosenTargetTracker, updaterProvider);
 
+            EnemyCruiser = enemyCruiser;
             AircraftProvider = new AircraftProvider(parentCruiser.Position, enemyCruiser.Position, isTutorial);
             GlobalBoostProviders = new GlobalBoostProviders();
             TurretStatsFactory = new TurretStatsFactory(GlobalBoostProviders);

@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Pools;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
@@ -35,42 +37,47 @@ namespace BattleCruisers.Scenes.BattleScene
             if (sq.BuildingActions != null)
                 foreach (SequencePoint.BuildingAction buildingAction in sq.BuildingActions)
                 {
-                    if (buildingAction.Operation == SequencePoint.BuildingAction.BuildingOp.Remove)
+                    switch (buildingAction.Operation)
                     {
-                        foreach(Slot slot in cruiser.SlotWrapperController.Slots)
-                            if(slot.Index == buildingAction.SlotID)
-                                if (slot.Building.Value != null)
-                                    slot.Building.Value.Destroy();
-                    }
-                    else if (buildingAction.Operation == SequencePoint.BuildingAction.BuildingOp.Add)
-                    {
-                        int prefabID = (int)buildingAction.PrefabKeyName;
-                        if (prefabID < (int)Building_AirFactory)
-                        {
-                            Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{buildingAction}");
-                            return;
-                        }
+                        case SequencePoint.BuildingAction.BuildingOp.Destroy:
+                            foreach (Slot slot in cruiser.SlotWrapperController.Slots)
+                                if (slot.Index == buildingAction.SlotID)
+                                    if (slot.Building.Value != null)
+                                        slot.Building.Value.Destroy();
 
-                        if ((prefabID >= (int)Building_AirFactory)
-                         && (prefabID < (int)Unit_Bomber))
-                        {
-                            IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingAction.PrefabKeyName));
-                            IList<Slot> slots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
-                            Slot slot = slots[Math.Min(slots.Count - 1, buildingAction.SlotID)];
-                            if (slot == null)
+                            break;
+
+                        case SequencePoint.BuildingAction.BuildingOp.Add:
+                            int prefabID = (int)buildingAction.PrefabKeyName;
+                            if (prefabID < (int)Building_AirFactory)
                             {
-                                Debug.LogError($"{slot.type} Slot #{buildingAction.SlotID} is already occupied!");
+                                Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{buildingAction}");
                                 return;
                             }
-                            cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
-                        }
-                        else
-                        {
-                            Debug.LogError($"Invalid BuildingAction: {buildingAction}");
-                            return;
-                        }
+
+                            if ((prefabID >= (int)Building_AirFactory)
+                             && (prefabID < (int)Unit_Bomber))
+                            {
+                                IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingAction.PrefabKeyName));
+                                IList<Slot> slots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
+                                Slot slot = slots[Math.Min(slots.Count - 1, buildingAction.SlotID)];
+                                if (slot == null)
+                                {
+                                    Debug.LogError($"{slot.type} Slot #{buildingAction.SlotID} is already occupied!");
+                                    return;
+                                }
+                                cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
+                            }
+                            else
+                            {
+                                Debug.LogError($"Invalid BuildingAction: {buildingAction}");
+                                return;
+                            }
+
+                            break;
                     }
                 }
+
             if (sq.BoostActions != null)
                 foreach (SequencePoint.BoostAction boostAction in sq.BoostActions)
                 {
@@ -86,6 +93,51 @@ namespace BattleCruisers.Scenes.BattleScene
                             });
                     }
                 }
+
+            if (sq.UnitActions != null)
+                foreach (SequencePoint.UnitAction unitAction in sq.UnitActions)
+                {
+                    int prefabID = (int)unitAction.PrefabKeyName;
+                    if (prefabID < (int)Building_AirFactory)
+                    {
+                        Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{unitAction}");
+                        return;
+                    }
+                    if (prefabID < (int)Unit_Bomber)
+                        continue;
+
+                    if (unitAction.Amount == 1)
+                        SpawnUnit(unitAction.PrefabKeyName, unitAction.Postion, cruiser);
+                    else
+                    {
+                        for (int i = 0; i < unitAction.Amount; i++)
+                        {
+                            float x = UnityEngine.Random.Range(0, unitAction.SpawnArea.x);
+                            float y = UnityEngine.Random.Range(0, unitAction.SpawnArea.y);
+
+                            Vector2 pos = new Vector2(x + unitAction.Postion.x, y + unitAction.Postion.y);
+                            SpawnUnit(unitAction.PrefabKeyName, pos, cruiser);
+                        }
+                    }
+                }
+        }
+
+        public void SpawnUnit(PrefabKeyName prefabKey, Vector2 position, Cruiser cruiser)
+        {
+            IBuildableWrapper<IUnit> unitWrapper = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(prefabKey));
+            IUnit unit = PrefabFactory.CreateUnit(unitWrapper);
+            unit.Transform.Position = new Vector3(position.x, position.y, 0);
+            BuildableActivationArgs buildableActivationArgs = new BuildableActivationArgs(cruiser,
+                                                                                          cruiser.CruiserSpecificFactories.EnemyCruiser,
+                                                                                          cruiser.CruiserSpecificFactories);
+            unit.Activate(buildableActivationArgs);
+            int droneNum = unit.NumOfDronesRequired;
+            unit.NumOfDronesRequired = 1;
+            unit.BuildTimeInS *= droneNum;
+            unit.StartConstruction();
+            ((Buildable<BuildableActivationArgs>)unit).FinishConstruction();
+            unit.NumOfDronesRequired = droneNum;
+            unit.BuildTimeInS /= droneNum;
         }
     }
 
@@ -94,8 +146,9 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         public int DelayMS = 0;
         public Faction Faction;
-        public BuildingAction[] BuildingActions;
-        public BoostAction[] BoostActions;
+        public List<BuildingAction> BuildingActions;
+        public List<BoostAction> BoostActions;
+        public List<UnitAction> UnitActions;
 
         [Serializable]
         public class BuildingAction
@@ -104,7 +157,7 @@ namespace BattleCruisers.Scenes.BattleScene
             public enum BuildingOp
             {
                 Add = 0,
-                Remove = 1,
+                Destroy = 1,
             }
 
             public BuildingOp Operation;
@@ -137,6 +190,15 @@ namespace BattleCruisers.Scenes.BattleScene
             public BoostOp Operation;
             public BoostType BoostType;
             public float BoostAmount;
+        }
+
+        [Serializable]
+        public class UnitAction
+        {
+            public PrefabKeyName PrefabKeyName;
+            public Vector2 Postion;
+            public Vector2 SpawnArea;
+            [Min(1)] public byte Amount;
         }
 
         public override string ToString()
