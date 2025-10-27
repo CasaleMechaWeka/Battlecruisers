@@ -125,8 +125,9 @@ namespace BattleCruisers.Cruisers
             public float boostAmount = 1f;
         }
 
-        public BoostStats[] Boosts;
+        public List<BoostStats> Boosts;
         public List<int> UltraCruiserLevels;
+        List<IBoostProvider> BoostsProvided = new List<IBoostProvider>();
 
         public override void StaticInitialise()
         {
@@ -276,8 +277,8 @@ namespace BattleCruisers.Cruisers
                     }
                 }
             }
-            
-            if(UltraCruiserLevels.Contains(ApplicationModel.SelectedLevel))
+
+            if (UltraCruiserLevels.Contains(ApplicationModel.SelectedLevel))
             {
                 SetUltraCruiserHealth(args);
                 if (Boosts != null)
@@ -287,9 +288,33 @@ namespace BattleCruisers.Cruisers
 
             if (Boosts != null)
                 foreach (BoostStats boost in Boosts)
-                    CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boost.boostType).Add(new BoostProvider(boost.boostAmount));
+                {
+                    IBoostProvider boostProvider = new BoostProvider(boost.boostAmount);
+                    BoostsProvided.Add(boostProvider);
+                    CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boost.boostType).Add(boostProvider);
+                }
 
         }
+
+        public void AddBoost(BoostStats boost)
+        {
+            Boosts.Add(boost);
+            IBoostProvider boostProvider = new BoostProvider(boost.boostAmount);
+            BoostsProvided.Add(boostProvider);
+            CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boost.boostType).Add(boostProvider);
+        }
+
+        public void RemoveBoost(BoostStats boost)
+        {
+            for(int i = 0; i < Boosts.Count; i++)
+                if(Boosts[i].boostType == boost.boostType)
+                {
+                    Boosts.RemoveAt(i);
+                    CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boost.boostType).Remove(BoostsProvided[i]);
+                    BoostsProvided.RemoveAt(i);
+                }
+        }
+
         private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);
