@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Xml;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;
@@ -22,7 +21,7 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSequencer : MonoBehaviour
     {
-        public Cruiser[] Cruisers;
+        [HideInInspector] public Cruiser[] Cruisers;
 
         public SequencePoint[] sequencePoints;  // -> this is currently assigned in BattleScene!
         [Serializable] public class ScriptCallAction : UnityEvent { }
@@ -68,10 +67,10 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             if (sequencePoints != null)
                 foreach (SequencePoint pt in sequencePoints)
-                    ProcessSequencePoint(pt);
+                    await ProcessSequencePoint(pt);
         }
 
-        public async void ProcessSequencePoint(SequencePoint sq)
+        public async Task ProcessSequencePoint(SequencePoint sq)
         {
             await Task.Delay(sq.DelayMS);
             Cruiser cruiser = Cruisers[(int)sq.Faction];
