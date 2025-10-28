@@ -11,25 +11,66 @@ using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
+using static BattleCruisers.Scenes.BattleScene.BattleSequencer;
 using static BattleCruisers.Utils.PrefabKeyName;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSequencer : MonoBehaviour
     {
-        public Cruiser[] Cruisers;
+        [HideInInspector] public Cruiser[] Cruisers;
 
         public SequencePoint[] sequencePoints;  // -> this is currently assigned in BattleScene!
+        [Serializable] public class ScriptCallAction : UnityEvent { }
+
+#if UNITY_EDITOR
+        // Optional: toggle if you sometimes want to assign other targets
+        [SerializeField] bool autoBindEventTargetsToSelf = true;
+
+        void OnValidate()
+        {
+            if (!autoBindEventTargetsToSelf) return;
+
+            var so = new SerializedObject(this);
+            var it = so.GetIterator();
+            bool modified = false;
+
+            // Walk every serialized field (including inside nested classes/lists)
+            while (it.NextVisible(true))
+            {
+                if (it.propertyType != SerializedPropertyType.Generic) continue;
+
+                // UnityEvent fields have this structure
+                var calls = it.FindPropertyRelative("m_PersistentCalls.m_Calls");
+                if (calls == null) continue;
+
+                for (int i = 0; i < calls.arraySize; i++)
+                {
+                    var call = calls.GetArrayElementAtIndex(i);
+                    var target = call.FindPropertyRelative("m_Target");
+                    if (target != null && target.objectReferenceValue == null)
+                    {
+                        target.objectReferenceValue = this; // <- auto “self”
+                        modified = true;
+                    }
+                }
+            }
+
+            if (modified) so.ApplyModifiedPropertiesWithoutUndo();
+        }
+#endif
 
         public async void StartF()
         {
             if (sequencePoints != null)
                 foreach (SequencePoint pt in sequencePoints)
-                    ProcessSequencePoint(pt);
+                    await ProcessSequencePoint(pt);
         }
 
-        public async void ProcessSequencePoint(SequencePoint sq)
+        public async Task ProcessSequencePoint(SequencePoint sq)
         {
             await Task.Delay(sq.DelayMS);
             Cruiser cruiser = Cruisers[(int)sq.Faction];
@@ -123,6 +164,8 @@ namespace BattleCruisers.Scenes.BattleScene
                         }
                     }
                 }
+            if (sq.ScriptCallActions != null)
+                sq.ScriptCallActions.Invoke();
         }
 
         public void SpawnUnit(PrefabKeyName prefabKey, Vector2 position, Cruiser cruiser)
@@ -165,7 +208,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             public BuildingOp Operation;
             public PrefabKeyName PrefabKeyName;
-            public byte SlotID = 0;
+            public byte SlotID;
             public bool IgnoreDroneReq = false;
             public bool IgnoreBuildTime = false;
 
@@ -192,7 +235,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
             public BoostOp Operation;
             public BoostType BoostType;
-            public float BoostAmount;
+            public float BoostAmount = 1;
         }
 
         [Serializable]
@@ -201,7 +244,7 @@ namespace BattleCruisers.Scenes.BattleScene
             public PrefabKeyName PrefabKeyName;
             public Vector2 Postion;
             public Vector2 SpawnArea;
-            [Min(1)] public byte Amount;
+            [Min(1)] public byte Amount = 1;
 
             public override string ToString()
             {
@@ -214,6 +257,8 @@ namespace BattleCruisers.Scenes.BattleScene
                 return s;
             }
         }
+
+        public ScriptCallAction ScriptCallActions;
 
         public override string ToString()
         {
@@ -232,13 +277,13 @@ namespace BattleCruisers.Scenes.BattleScene
                 }
             if (BoostActions != null)
                 foreach (BoostAction boostAction in BoostActions)
-            {
-                s += "\tBoostActions: {\n"
-                 + $"\t\tOperation: {boostAction.Operation}\n"
-                 + $"\t\tBoostType: {boostAction.BoostType}\n"
-                 + $"\t\tBoostAmount: {boostAction.BoostAmount}\n"
-                 + "\t}\n";
-            }
+                {
+                    s += "\tBoostActions: {\n"
+                     + $"\t\tOperation: {boostAction.Operation}\n"
+                     + $"\t\tBoostType: {boostAction.BoostType}\n"
+                     + $"\t\tBoostAmount: {boostAction.BoostAmount}\n"
+                     + "\t}\n";
+                }
             if (UnitActions != null)
                 foreach (UnitAction unitAction in UnitActions)
                 {

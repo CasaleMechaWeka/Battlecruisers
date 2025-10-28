@@ -75,8 +75,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public TutorialInitialiser tutorialInitialiser;
         public WaterSplashVolumeController waterSplashVolumeController;
         public GameObject enemyCharacterImages;
-        private Cruiser playerCruiser;
-        private Cruiser aiCruiser;
+        public Cruiser playerCruiser;
+        public Cruiser aiCruiser;
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
         private CameraComponents cameraComponents;
