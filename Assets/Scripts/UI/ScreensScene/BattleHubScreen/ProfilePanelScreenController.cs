@@ -46,6 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public Text rankTitle;
         public Image rankImage;
         public Text notorietyScore;
+        public Text Bounty;
         private string playerID;
 
         public async void Initialise(
@@ -97,9 +98,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             currentXPString.text = FormatNumber(currentXP);
             levelXPString.text = FormatNumber(nextLevelXP);
 
-            Text scoreString = notorietyScore?.GetComponent<Text>();
-            scoreString.text = Mathf.Floor(DataProvider.GameModel.BattleWinScore).ToString();
-
+            notorietyScore.text = DataProvider.GameModel.BattleWinScore.ToString("F0");
+            Bounty.text = DataProvider.GameModel.Bounty.ToString("F0");
         }
 
         private int CalculateRank(long score)
