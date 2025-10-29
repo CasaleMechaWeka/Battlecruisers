@@ -25,6 +25,7 @@ namespace BattleCruisers.Data.Models
 
         // Number of times lost in the most recent level
         public int timesLostOnLastLevel;
+        public int bounty;
 
         // My callsign.
         public string playerName;
@@ -88,6 +89,7 @@ namespace BattleCruisers.Data.Models
             battleWinScore = game.BattleWinScore;
             playerName = game.PlayerName;
             timesLostOnLastLevel = game.TimesLostOnLastLevel;
+            bounty = game.Bounty;
             levelsCompleted = ComputeCompletedLevels(game.CompletedLevels);
             sideQuestsCompleted = ComputeCompletedSideQuests(game.CompletedSideQuests);
             unlockedHulls = ComputeUnlockedHulls(game.UnlockedHulls);
@@ -130,6 +132,9 @@ namespace BattleCruisers.Data.Models
 
             game.TimesLostOnLastLevel = timesLostOnLastLevel;
             Debug.Log($"Times lost on last level: {timesLostOnLastLevel}");
+
+            game.Bounty = bounty;
+            Debug.Log($"Player's bounty: {bounty}");
 
             if (game.PlayerName == "Charlie")
             {
