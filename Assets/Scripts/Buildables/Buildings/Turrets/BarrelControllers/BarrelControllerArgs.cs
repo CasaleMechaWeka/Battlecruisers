@@ -28,7 +28,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public ITarget Parent { get; }
         public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
         public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
-        public SoundKey SpawnerSoundKey { get; }
         public IAnimation BarrelFiringAnimation { get; }
         public ICruiser EnemyCruiser { get; }
 
@@ -46,7 +45,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             ICruiser enemyCruiser,
-            SoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)
         {
             Helper.AssertIsNotNull(
@@ -77,7 +75,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             LocalBoostProviders = localBoostProviders;
             GlobalFireRateBoostProviders = globalFireRateBoostProvider;
             EnemyCruiser = enemyCruiser;
-            SpawnerSoundKey = firingSound;
             BarrelFiringAnimation = barrelFiringAnimation ?? new DummyAnimation();
         }
     }

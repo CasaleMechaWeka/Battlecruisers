@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Spawners;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             foreach (ShellSpawner spawner in _shellSpawners)
             {
-                await spawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, args.TargetFilter, TurretStats.AttackCapabilities.ToList());
+                await spawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound), args.TargetFilter, TurretStats.AttackCapabilities.ToList());
             }
         }
 

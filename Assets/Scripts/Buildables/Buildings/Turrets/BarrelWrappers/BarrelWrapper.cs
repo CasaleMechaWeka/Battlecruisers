@@ -9,7 +9,6 @@ using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
@@ -119,7 +118,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public void Initialise(
             IBuildable parent,
             CruiserSpecificFactories cruiserSpecificFactories,
-            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
@@ -142,7 +140,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         parent,
                         targetFilter,
                         angleCalculator,
-                        firingSound,
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                         barrelFiringAnimation ?? GetBarrelAnimation());
@@ -170,7 +167,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            SoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
             ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
             IAnimation barrelFiringAnimation)
@@ -191,7 +187,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                 localBoostProviders,
                 globalFireRateBoostProvider,
                 _parent.EnemyCruiser,
-                firingSound,
                 barrelFiringAnimation);
         }
 

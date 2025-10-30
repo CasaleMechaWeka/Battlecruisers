@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,7 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
         protected IBarrelWrapper[] _barrelWrappers;
 
         // By default have null (no) sound
-        protected virtual SoundKey[] FiringSounds => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;
@@ -26,7 +24,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
             _barrelWrappers = gameObject.GetComponentsInChildren<IBarrelWrapper>().ToArray();
             Debug.Log("BRWPCNT:" + _barrelWrappers.Count().ToString());
             Assert.IsNotNull(_barrelWrappers);
-            Assert.IsTrue(_barrelWrappers.Length == FiringSounds.Length);
 
             for (int i = 0; i < _barrelWrappers.Count(); i++)
             {
@@ -49,7 +46,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
                     .Initialise(
                         this,
                         _cruiserSpecificFactories,
-                        FiringSounds[i],
                         _parentSlot.BoostProviders,
                         TurretFireRateBoostProviders,
                         _barrelAnimation);

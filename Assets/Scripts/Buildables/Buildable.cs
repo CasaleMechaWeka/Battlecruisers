@@ -8,6 +8,7 @@ using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Drones.Feedback;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Scenes.BattleScene;
 using BattleCruisers.Targets.Factories;
@@ -15,7 +16,6 @@ using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.Click;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;
@@ -76,7 +76,7 @@ namespace BattleCruisers.Buildables
         public IBoostable HealthBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
-        protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
+        public PrioritisedSoundKeys.CompletedSound CompletedSound = PrioritisedSoundKeys.CompletedSound.None;
         public ICruiser ParentCruiser { get; private set; }
         public ICruiser EnemyCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
@@ -525,9 +525,9 @@ namespace BattleCruisers.Buildables
 
             _smokeInitialiser.Initialise(this, ShowSmokeWhenDestroyed);
 
-            if (ConstructionCompletedSoundKey != null)
+            if (CompletedSound != PrioritisedSoundKeys.CompletedSound.None)
             {
-                _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+                _cruiserSpecificFactories.BuildableEffectsSoundPlayer.PlaySound(PrioritisedSoundKeys.Completed.CompletedSoundToKey(CompletedSound));
             }
 
             CompletedBuildable?.Invoke(this, EventArgs.Empty);

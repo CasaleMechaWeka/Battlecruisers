@@ -1,9 +1,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +13,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
     public class GrapheneBarrier : TacticalBuilding
     {
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
         public override TargetValue TargetValue => TargetValue.Low;
         public override bool IsBoostable => false;
         private Animator animator;

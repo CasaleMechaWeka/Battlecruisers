@@ -44,7 +44,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         protected virtual int NumOfBarrels => 1;
         public Transform Transform => transform;
         public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
-
+        public SoundKeys.FiringSound FiringSound;
 
         protected List<TargetType> attackCapabilities;
 

@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units.Aircraft;
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 {
     public class KamikazeSignal : Building
     {
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,

@@ -121,9 +121,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 parent,
                 _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
                 _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                EnemyCruiser,
-                SoundKeys.Firing.Missile
-            );
+                EnemyCruiser);
 
             await _barrelController.InitialiseAsync(args);
 

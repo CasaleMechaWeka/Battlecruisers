@@ -1,9 +1,7 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -15,7 +13,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
     {
         private ShieldController _shieldController;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
         public override TargetValue TargetValue => TargetValue.Medium;
         public override bool IsBoostable => true;
 

@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public abstract class OffenseTurret : TurretController
+    public class OffenseTurret : TurretController
     {
         protected override ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {

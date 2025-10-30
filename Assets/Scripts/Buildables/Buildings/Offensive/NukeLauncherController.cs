@@ -1,13 +1,11 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
@@ -34,7 +32,6 @@ namespace BattleCruisers.Buildables.Buildings.Offensive
         private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
         private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
         public override TargetValue TargetValue => TargetValue.High;
 
         protected override void AddBuildRateBoostProviders(

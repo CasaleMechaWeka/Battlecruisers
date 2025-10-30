@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,8 +37,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         protected override void InitialiseTurrets()
         {
             AddExtraFriendDetectionRange(1);
-            ak1.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-            ak2.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+            ak1.Initialise(this, _cruiserSpecificFactories);
+            ak2.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Spawners;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
             foreach (MissileSpawner missileSpawner in _missileSpawners.Items)
             {
-                await missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
+                await missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound));
             }
         }
 

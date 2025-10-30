@@ -4,6 +4,28 @@ namespace BattleCruisers.Data.Static
 {
     public static class PrioritisedSoundKeys
     {
+        public enum CompletedSound
+        {
+            None            = -1,
+            AirFactory      = 0,
+            AntiAirTurret   = 1,
+            AntiShipTurret  = 2,
+            Artillery       = 3,
+            Booster         = 4,
+            ControlTower    = 5,
+            DroneStation    = 6,
+            Mortar          = 7,
+            NavalFactory    = 8,
+            Railgun         = 9,
+            RocketLauncher  = 10,
+            SamSite         = 11,
+            Shields         = 12,
+            SpySatellite    = 13,
+            StealthGenerator= 14,
+            TeslaCoil       = 15,
+            Ultra           = 16,
+        }
+
         public static class Completed
         {
             public static class Buildings
@@ -13,20 +35,47 @@ namespace BattleCruisers.Data.Static
                 public static PrioritisedSoundKey AntiShipTurret = new PrioritisedSoundKey(SoundKeys.Completed.AntiShipTurret, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey Artillery = new PrioritisedSoundKey(SoundKeys.Completed.Artillery, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey Booster = new PrioritisedSoundKey(SoundKeys.Completed.Booster, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey DroneStation = new PrioritisedSoundKey(SoundKeys.Completed.DroneStation, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey ControlTower = new PrioritisedSoundKey(SoundKeys.Completed.ControlTower, SoundPriority.VeryLow);
+                public static PrioritisedSoundKey DroneStation = new PrioritisedSoundKey(SoundKeys.Completed.DroneStation, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey Mortar = new PrioritisedSoundKey(SoundKeys.Completed.Mortar, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey NavalFactory = new PrioritisedSoundKey(SoundKeys.Completed.NavalFactory, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey Railgun = new PrioritisedSoundKey(SoundKeys.Completed.Railgun, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey RocketLauncher = new PrioritisedSoundKey(SoundKeys.Completed.RocketLauncher, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey SamSite = new PrioritisedSoundKey(SoundKeys.Completed.SamSite, SoundPriority.VeryLow);
-                public static PrioritisedSoundKey SpySatellite = new PrioritisedSoundKey(SoundKeys.Completed.SpySatellite, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey Shields = new PrioritisedSoundKey(SoundKeys.Completed.Shields, SoundPriority.VeryLow);
+                public static PrioritisedSoundKey SpySatellite = new PrioritisedSoundKey(SoundKeys.Completed.SpySatellite, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey StealthGenerator = new PrioritisedSoundKey(SoundKeys.Completed.StealthGenerator, SoundPriority.VeryLow);
                 public static PrioritisedSoundKey TeslaCoil = new PrioritisedSoundKey(SoundKeys.Completed.TeslaCoil, SoundPriority.VeryLow);
             }
 
             public static PrioritisedSoundKey Ultra = new PrioritisedSoundKey(SoundKeys.Completed.Ultra, SoundPriority.VeryHigh);
+
+            static PrioritisedSoundKey[] All = new PrioritisedSoundKey[]
+            {
+                null,
+                Buildings.AirFactory,
+                Buildings.AntiAirTurret,
+                Buildings.AntiShipTurret,
+                Buildings.Artillery,
+                Buildings.Booster,
+                Buildings.ControlTower,
+                Buildings.DroneStation,
+                Buildings.Mortar,
+                Buildings.NavalFactory,
+                Buildings.Railgun,
+                Buildings.RocketLauncher,
+                Buildings.SamSite,
+                Buildings.Shields,
+                Buildings.SpySatellite,
+                Buildings.StealthGenerator,
+                Buildings.TeslaCoil,
+                          Ultra,
+            };
+
+            public static PrioritisedSoundKey CompletedSoundToKey(CompletedSound completedSound)
+            {
+                return All[1 + (int)completedSound];
+            }
         }
 
         public static class Events

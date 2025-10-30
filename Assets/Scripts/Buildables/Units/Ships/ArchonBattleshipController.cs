@@ -2,11 +2,9 @@
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -103,7 +101,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override IList<IBarrelWrapper> GetTurrets()
         {

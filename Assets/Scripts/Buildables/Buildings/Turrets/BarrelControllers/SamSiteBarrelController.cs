@@ -1,4 +1,5 @@
-﻿using BattleCruisers.Projectiles.Spawners;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             _exactMatchTargetFilter = targetFilter;
             IProjectileSpawnerArgs spawnerArgs = new ProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 
-            await _missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound));
         }
 
         public override void Fire(float angleInDegrees)
