@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Utils;
 
@@ -23,7 +24,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public BoostedBasicTurretStats(
             TStats baseStats,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders)
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders)
         {
             Helper.AssertIsNotNull(baseStats, localBoostProviders, globalFireRateBoostProviders);
 

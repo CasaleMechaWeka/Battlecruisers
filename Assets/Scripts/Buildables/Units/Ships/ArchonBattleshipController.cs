@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.Manager;
@@ -11,7 +9,6 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -83,14 +80,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
             base.OnShipCompleted();
-        }
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
         public override float OptimalArmamentRangeInM

@@ -31,7 +31,6 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
@@ -377,7 +376,6 @@ namespace BattleCruisers.Scenes.Test.Utilities
             CruiserSpecificFactories cruiserSpecificFactories = null,
             ITarget parent = null,
             ICruiser enemyCruiser = null,
-            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null)
         {
             BuildableInitialisationArgs initialisationArgs = new BuildableInitialisationArgs(this, deferrer: Deferrer);
@@ -395,7 +393,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     cruiserSpecificFactories ?? initialisationArgs.CruiserSpecificFactories,
                     parent ?? Substitute.For<ITarget>(),
                     localBoostProviders ?? new ObservableCollection<IBoostProvider>(),
-                    new ObservableCollection<IBoostProvider>(),
+                    new List<ObservableCollection<IBoostProvider>>(),
                     enemyCruiser ?? Substitute.For<ICruiser>());
         }
 

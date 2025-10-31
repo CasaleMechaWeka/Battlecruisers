@@ -1,10 +1,6 @@
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -18,14 +14,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private Animator animator;
 
         public GrapheneSectorShieldController _shieldController;
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
-        }
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {

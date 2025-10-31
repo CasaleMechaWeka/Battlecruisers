@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Targets;
 using BattleCruisers.Targets.TargetFinders;
@@ -120,7 +119,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                 _cruiserSpecificFactories,
                 parent,
                 _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                TurretFireRateBoostProviders,
                 EnemyCruiser);
 
             await _barrelController.InitialiseAsync(args);

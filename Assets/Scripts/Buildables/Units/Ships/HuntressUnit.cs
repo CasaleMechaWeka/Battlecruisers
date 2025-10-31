@@ -1,5 +1,3 @@
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Effects;
@@ -14,7 +12,6 @@ using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -119,14 +116,6 @@ namespace BattleCruisers.Buildables.Units.Ships
                 damageSource: null);
 
             RearingStarted?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
         public override float OptimalArmamentRangeInM

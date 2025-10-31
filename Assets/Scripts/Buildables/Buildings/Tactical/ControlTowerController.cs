@@ -1,8 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
 	public class ControlTowerController : TacticalBuilding
@@ -11,14 +8,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 
 
 		public float boostMultiplier;
-
-		protected override void AddBuildRateBoostProviders(
-			GlobalBoostProviders globalBoostProviders,
-			IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-		{
-			base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-			buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
-		}
 
 		public override void Initialise(UIManager uiManager)
 		{

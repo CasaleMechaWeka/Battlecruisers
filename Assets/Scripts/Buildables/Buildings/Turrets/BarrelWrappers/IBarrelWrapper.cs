@@ -23,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IBuildable parent,
             CruiserSpecificFactories cruiserSpecificFactories,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);
         void ApplyVariantStats(IBuilding building);
         void ApplyVariantStats(IUnit unit);

@@ -1,6 +1,5 @@
 ﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
@@ -11,7 +10,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils.BattleScene;
@@ -139,14 +137,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.OnBuildableCompleted();
             ActiveMovementController = PatrollingMovementController;
-        }
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.AircraftProviders);
         }
 
         protected abstract IList<IPatrolPoint> GetPatrolPoints();

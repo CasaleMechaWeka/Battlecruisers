@@ -87,7 +87,7 @@ namespace BattleCruisers.Buildables
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
-
+        public List<BoostType> BoostTypes = new List<BoostType>();
         private IDroneConsumer _droneConsumer;
         public IDroneConsumer DroneConsumer
         {
@@ -133,13 +133,7 @@ namespace BattleCruisers.Buildables
         public Command ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
 
-        protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
-        {
-            get
-            {
-                return _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders;
-            }
-        }
+        [HideInInspector] public List<ObservableCollection<IBoostProvider>> TurretFireRateBoostProviders = new List<ObservableCollection<IBoostProvider>>();
 
         public override Color Color
         {
@@ -288,11 +282,20 @@ namespace BattleCruisers.Buildables
             EnemyCruiser = enemyCruiser;
             _cruiserSpecificFactories = cruiserSpecificFactories;
 
+            foreach (BoostType boostType in BoostTypes)
+            {
+                if ((int)boostType >= 200 && (int)boostType < 300)   //fire rate boosts
+                    TurretFireRateBoostProviders.Add(_cruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
+            }
+
+            if (TurretFireRateBoostProviders == null || TurretFireRateBoostProviders.Count == 0)
+                TurretFireRateBoostProviders.Add(_cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders);
+
             Faction = ParentCruiser.Faction;
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
             _localBoosterBoostableGroup = new BoostableGroup();
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(HealthBoostable);
         }
 
         /// <summary>
@@ -320,12 +323,12 @@ namespace BattleCruisers.Buildables
             _cumulativeBuildProgressInDroneS = 0;
 
             _localBoosterBoostableGroup = new BoostableGroup();
-            
+
             // Apply specialized buildable modifiers BEFORE creating boost groups
             ApplySpecializedModifiers(_cruiserSpecificFactories.GlobalBoostProviders);
-            
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(HealthBoostable);
             _healthBoostableGroup.BoostChanged += HealthBoostChanged;
             HealthBoostChanged(this, EventArgs.Empty);
         }
@@ -337,16 +340,18 @@ namespace BattleCruisers.Buildables
             HealthBar.OverrideHealth(this);
         }
 
-        public void Activate(TActivationArgs activationArgs, Faction faction)
-        {
-        }
-        private IBoostableGroup CreateHealthBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
+        public virtual void Activate(TActivationArgs activationArgs, Faction faction) { }
+
+        private IBoostableGroup CreateHealthBoostableGroup(IBoostable healthBoostable)
         {
             IBoostableGroup healthBoostableGroup = new BoostableGroup();
             healthBoostableGroup.AddBoostable(healthBoostable);
 
             IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
-            AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
+
+            foreach (BoostType boostType in BoostTypes)
+                if ((int)boostType >= 300 && (int)boostType < 400)  //health boosts
+                    healthBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
 
             foreach (ObservableCollection<IBoostProvider> healthBoostProviders in healthBoostProvidersList)
             {
@@ -356,13 +361,16 @@ namespace BattleCruisers.Buildables
             return healthBoostableGroup;
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = new BoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
-            AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            
+            foreach (BoostType boostType in BoostTypes)
+                if ((int)boostType >= 100 && (int)boostType < 200)  //build rate boosts
+                    buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
 
             foreach (ObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
             {
@@ -370,25 +378,6 @@ namespace BattleCruisers.Buildables
             }
 
             return buildRateBoostableGroup;
-        }
-
-        /// <summary>
-        /// To allow multiple boost provider sources.  Eg, for the ShieldGenerator:
-        /// + Tacticals => Boost from Trident
-        /// + Shields   => Boost from Raptor
-        /// </summary>
-        protected virtual void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            Logging.Log(Tags.BOOST, this);
-        }
-
-        protected virtual void AddHealthBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
-        {
-            Logging.Log(Tags.BOOST, this);
         }
 
         private void ApplySpecializedModifiers(GlobalBoostProviders globalBoostProviders)

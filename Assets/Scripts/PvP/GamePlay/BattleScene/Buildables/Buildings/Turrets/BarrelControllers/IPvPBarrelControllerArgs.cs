@@ -12,6 +12,7 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.BattleScene.Update;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -29,7 +30,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ITarget Parent { get; }
         SoundKey SpawnerSoundKey { get; }
         ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
-        ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
+        List<ObservableCollection<IBoostProvider>> GlobalFireRateBoostProviders { get; }
         IAnimation BarrelFiringAnimation { get; }
         IPvPCruiser EnemyCruiser { get; }
     }

@@ -6,10 +6,10 @@ using BattleCruisers.Effects;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Targets.TargetFinders.Filters;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.Factories;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
@@ -27,7 +27,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
         public AngleLimiter AngleLimiter { get; }
         public ITarget Parent { get; }
         public ObservableCollection<IBoostProvider> LocalBoostProviders { get; }
-        public ObservableCollection<IBoostProvider> GlobalFireRateBoostProviders { get; }
+        public List<ObservableCollection<IBoostProvider>> GlobalFireRateBoostProviders { get; }
         public IAnimation BarrelFiringAnimation { get; }
         public ICruiser EnemyCruiser { get; }
 
@@ -43,7 +43,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             CruiserSpecificFactories cruiserSpecificFactories,
             ITarget parent,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProvider,
             ICruiser enemyCruiser,
             IAnimation barrelFiringAnimation = null)
         {

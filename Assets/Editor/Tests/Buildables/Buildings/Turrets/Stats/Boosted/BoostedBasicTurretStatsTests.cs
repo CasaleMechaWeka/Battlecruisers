@@ -51,7 +51,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 
         private IBasicTurretStats CreateTurretStats()
         {
-            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _localBoostProviders, _globalBoostProviders.DefenseFireRateBoostProviders);
+            return new BoostedBasicTurretStats<IBasicTurretStats>(_baseStats, _localBoostProviders, new System.Collections.Generic.List<System.Collections.ObjectModel.ObservableCollection<IBoostProvider>>() { _globalBoostProviders.DefenseFireRateBoostProviders });
         }
     }
 }

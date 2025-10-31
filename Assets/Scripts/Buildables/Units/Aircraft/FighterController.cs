@@ -120,7 +120,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
                     _cruiserSpecificFactories,
                     parent,
                     _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                    _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                    TurretFireRateBoostProviders,
                     EnemyCruiser);
 
             _ = _barrelController.InitialiseAsync(args);

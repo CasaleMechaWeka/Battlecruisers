@@ -17,6 +17,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -64,6 +65,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
                 return _damageCapability;
             }
         }
+        
+        public List<BoostType> BoostTypes = new List<BoostType>();
 
         public abstract Vector3 ProjectileSpawnerPosition { get; }
         public abstract bool CanFireWithoutTarget { get; }
@@ -142,6 +145,11 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         public async Task InitialiseAsync(BarrelControllerArgs args, bool doDebug = false)
         {
+            foreach (BoostType boostType in BoostTypes)
+            {
+                if ((int)boostType >= 200 && (int)boostType < 300)   //fire rate boosts
+                    args.GlobalFireRateBoostProviders.Add(args.CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
+            }
             Assert.IsNotNull(args);
 
             _parent = args.Parent;

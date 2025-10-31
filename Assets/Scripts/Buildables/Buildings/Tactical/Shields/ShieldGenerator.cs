@@ -1,9 +1,5 @@
 ﻿using BattleCruisers.Buildables.Pools;
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -16,13 +12,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         public override TargetValue TargetValue => TargetValue.Medium;
         public override bool IsBoostable => true;
 
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
-        }
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {

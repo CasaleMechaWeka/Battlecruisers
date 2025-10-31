@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
 using BattleCruisers.Movement.Velocity;
@@ -17,7 +15,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -92,14 +89,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             base.Activate(activationArgs);
             _isAtCruisingHeight = false;
-        }
-
-        protected override void AddBuildRateBoostProviders(
-    GlobalBoostProviders globalBoostProviders,
-    IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
         }
 
         protected override async void OnBuildableCompleted()

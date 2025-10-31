@@ -24,7 +24,7 @@ namespace BattleCruisers.Tests.Buildables.Buildings.Turrets.Stats.Boosted
 
             _fireRateGlobalBoostProviders = new ObservableCollection<IBoostProvider>();
 
-            _boostedStats = new BoostedTurretStats(_baseStats, _localBoostProviders, _fireRateGlobalBoostProviders, _globalBoostProviders);
+            _boostedStats = new BoostedTurretStats(_baseStats, _localBoostProviders, new System.Collections.Generic.List<ObservableCollection<IBoostProvider>>() { _fireRateGlobalBoostProviders }, _globalBoostProviders);
         }
 
         [Test]

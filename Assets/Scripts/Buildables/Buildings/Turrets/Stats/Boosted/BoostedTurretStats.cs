@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -22,7 +23,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.Stats.Boosted
         public BoostedTurretStats(
             ITurretStats baseStats,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders,
             GlobalBoostProviders globalBoostProviders)
             : base(baseStats, localBoostProviders, globalFireRateBoostProviders)
         {

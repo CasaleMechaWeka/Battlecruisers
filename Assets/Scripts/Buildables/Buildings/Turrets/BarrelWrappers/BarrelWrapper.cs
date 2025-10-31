@@ -119,7 +119,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             IBuildable parent,
             CruiserSpecificFactories cruiserSpecificFactories,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
         {
             Helper.AssertIsNotNull(parent, cruiserSpecificFactories);
@@ -141,7 +141,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
                         targetFilter,
                         angleCalculator,
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                        globalFireRateBoostProviders ?? new List<ObservableCollection<IBoostProvider>>() { cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders },
                         barrelFiringAnimation ?? GetBarrelAnimation());
                 InitialiseBarrelController(barrel, barrelArgs);
             }
@@ -168,7 +168,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProvider,
             IAnimation barrelFiringAnimation)
         {
             IUpdater updater = ChooseUpdater(FactoryProvider.UpdaterProvider);

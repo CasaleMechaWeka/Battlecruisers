@@ -60,11 +60,16 @@ namespace BattleCruisers.Buildables.Boost
             _boostProviders.Add(boostProviders);
 
             foreach (IBoostProvider provider in boostProviders)
-            {
                 provider.AddBoostConsumer(_boostConsumer);
-            }
 
             boostProviders.CollectionChanged += BoostProviders_CollectionChanged;
+        }
+
+
+        public void AddBoostProvidersList(List<ObservableCollection<IBoostProvider>> boostProviders)
+        {
+            foreach (ObservableCollection<IBoostProvider> boosts in boostProviders)
+                AddBoostProvidersList(boosts);
         }
 
         private void BoostProviders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

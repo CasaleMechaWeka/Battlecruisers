@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Pools;
+﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Common.Click;
@@ -10,7 +8,6 @@ using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using BattleCruisers.Data;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
@@ -250,8 +247,9 @@ namespace BattleCruisers.Buildables.Buildings
             _doubleClickHandler.OnDoubleClick(this);
         }
 
-        public void Activate(BuildingActivationArgs activationArgs, Faction faction)
+        public override void Activate(BuildingActivationArgs activationArgs, Faction faction)
         {
+            base.Activate(activationArgs);
         }
 
         public override void SetBuildingImmunity(bool boo)
@@ -262,20 +260,6 @@ namespace BattleCruisers.Buildables.Buildings
         public override bool IsBuildingImmune()
         {
             return isImmune;
-        }
-
-        protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
-        {
-            base.AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
-            healthBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders);
-        }
-
-        protected override void AddBuildRateBoostProviders(
-    GlobalBoostProviders globalBoostProviders,
-    IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Buildables.Boost
@@ -17,6 +18,7 @@ namespace BattleCruisers.Buildables.Boost
         bool RemoveBoostable(IBoostable boostable);
 
         void AddBoostProvidersList(ObservableCollection<IBoostProvider> boostProviders);
+        void AddBoostProvidersList(List<ObservableCollection<IBoostProvider>> boostProviders);
 
         void CleanUp();
     }

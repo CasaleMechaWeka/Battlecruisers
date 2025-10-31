@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -23,7 +24,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public PvPBoostedTurretStats(
             ITurretStats baseStats,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders,
             GlobalBoostProviders globalBoostProviders)
             : base(baseStats, localBoostProviders, globalFireRateBoostProviders)
         {

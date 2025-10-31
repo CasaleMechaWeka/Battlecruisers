@@ -1,9 +1,5 @@
-﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Buildings.Factories.Spawning;
+﻿using BattleCruisers.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Buildables.Units;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Factories
@@ -14,14 +10,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
 
         public override UnitCategory UnitCategory => UnitCategory.Naval;
         public override LayerMask UnitLayerMask => unitsLayerMask;
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.NavalFactoryProviders);
-        }
 
         protected override IUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
