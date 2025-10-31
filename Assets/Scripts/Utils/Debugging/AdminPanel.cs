@@ -306,5 +306,27 @@ namespace BattleCruisers.Utils.Debugging
             config += "================";
             Debug.Log(config);
         }
+
+        /// <summary>
+        /// Test Firebase Analytics by sending a test event
+        /// </summary>
+        public void TestFirebaseAnalytics()
+        {
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogEvent("admin_test_event", new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "test_param", "test_value" },
+                    { "timestamp", System.DateTime.Now.ToString() },
+                    { "levels_completed", DataProvider.GameModel.NumOfLevelsCompleted },
+                    { "is_premium", DataProvider.GameModel.PremiumEdition }
+                });
+                Debug.Log("[AdminPanel] ✅ Test event sent to Firebase Analytics! Check DebugView in Firebase Console.");
+            }
+            else
+            {
+                Debug.LogError("[AdminPanel] FirebaseAnalyticsManager not found!");
+            }
+        }
     }
 }
