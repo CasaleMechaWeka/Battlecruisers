@@ -9,12 +9,12 @@ namespace BattleCruisers.Scenes.Test.Projectiles
 {
     public class ProjectileVisibilityTestGod : NavigationTestGod
     {
-        private Artillery _artillery;
+        private OffenseTurret _artillery;
         private AirFactory _airFactory;
 
         protected override List<GameObject> GetGameObjects()
         {
-            _artillery = FindObjectOfType<Artillery>();
+            _artillery = FindObjectOfType<OffenseTurret>();
             _airFactory = FindObjectOfType<AirFactory>();
 
             return new List<GameObject>()
