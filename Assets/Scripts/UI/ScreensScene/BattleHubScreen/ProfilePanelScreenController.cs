@@ -205,19 +205,36 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         //taken from https://stackoverflow.com/questions/30180672/string-format-numbers-to-millions-thousands-with-rounding
         private string FormatNumber(long num)
         {
-            num = num * 1000;
-            long i = (long)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
-            num = num / i * i;
-            if (num >= 1000000000000)
-                return "$" + (num / 1000000000000D).ToString("0.##") + " " + quadrillion;
-            if (num >= 1000000000)
-                return "$" + (num / 1000000000D).ToString("0.##") + " " + trillion;
-            if (num >= 1000000)
-                return "$" + (num / 1000000D).ToString("0.##") + " " + billion;
-            if (num >= 1000)
-                return "$" + (num / 1000D).ToString("0.##") + " " + million;
+            if (num == 0)
+            {
+                return "$0";
+            }
 
-            return "$" + num.ToString("#,0");
+            bool isNegative = num < 0;
+            double adjustedNum = Math.Abs((double)num) * 1000d;
+
+            double rawLog = Math.Log10(adjustedNum);
+            int exponent = (int)Math.Max(0d, rawLog - 2d);
+            double divisor = Math.Pow(10d, exponent);
+            if (divisor <= 0d || double.IsNaN(divisor) || double.IsInfinity(divisor))
+            {
+                divisor = 1d;
+            }
+
+            adjustedNum = Math.Floor(adjustedNum / divisor) * divisor;
+
+            string prefix = isNegative ? "-$" : "$";
+
+            if (adjustedNum >= 1000000000000d)
+                return prefix + (adjustedNum / 1000000000000d).ToString("0.##") + " " + quadrillion;
+            if (adjustedNum >= 1000000000d)
+                return prefix + (adjustedNum / 1000000000d).ToString("0.##") + " " + trillion;
+            if (adjustedNum >= 1000000d)
+                return prefix + (adjustedNum / 1000000d).ToString("0.##") + " " + billion;
+            if (adjustedNum >= 1000d)
+                return prefix + (adjustedNum / 1000d).ToString("0.##") + " " + million;
+
+            return prefix + adjustedNum.ToString("#,0");
         }
     }
 }
