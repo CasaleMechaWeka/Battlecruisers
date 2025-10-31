@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
     {
         private IAnimation _barrelAnimation;
         protected IBarrelWrapper _barrelWrapper;
-        protected virtual bool HasSingleSprite => false;
+        public bool HasSingleSprite = false;
 
         public override bool IsBoostable => true;
 

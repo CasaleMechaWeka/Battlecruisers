@@ -11,11 +11,11 @@ namespace BattleCruisers.Scenes.Test.Balancing
 {
     public class TeslaCoilBalancingTestGod : OffensiveTurretTestGod
 	{
-        private TeslaCoil _tesla;
+        private TurretController _tesla;
 
         protected override List<GameObject> GetGameObjects()
         {
-            _tesla = FindObjectOfType<TeslaCoil>();
+            _tesla = FindObjectOfType<TurretController>();
 
             List<GameObject> gameObjects = base.GetGameObjects();
             gameObjects.Add(_tesla.GameObject);

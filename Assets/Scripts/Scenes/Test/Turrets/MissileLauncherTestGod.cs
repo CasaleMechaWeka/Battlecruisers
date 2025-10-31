@@ -12,7 +12,7 @@ namespace BattleCruisers.Scenes.Test
 {
     public class MissileLauncherTestGod : SmartMissileTestGod
 	{
-		public MissileLauncher missileLauncher;
+		public TurretController missileLauncher;
 
 		protected override List<GameObject> GetGameObjects()
 		{
