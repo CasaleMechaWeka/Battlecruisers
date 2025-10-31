@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public abstract class MultiTurretController : Building
+    public class MultiTurretController : Building
     {
         private IAnimation _barrelAnimation;
         protected IBarrelWrapper[] _barrelWrappers;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-    public class LocalBoosterController : TacticalBuilding
+    public class LocalBoosterController : Building
     {
         private IBoostProvider _boostProvider;
         private ParticleSystem _boosterGlow;

@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class RocketLauncherController : OffenseTurret
+    public class RocketLauncherController : TurretController
     {
         public ProjectileType projectileType = ProjectileType.Rocket;
     }

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
-    public class ShieldGenerator : TacticalBuilding
+    public class ShieldGenerator : Building
     {
         private ShieldController _shieldController;
 

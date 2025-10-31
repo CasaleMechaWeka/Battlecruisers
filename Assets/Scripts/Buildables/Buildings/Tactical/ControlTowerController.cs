@@ -2,7 +2,7 @@
 using BattleCruisers.UI.BattleScene.Manager;
 namespace BattleCruisers.Buildables.Buildings.Tactical
 {
-	public class ControlTowerController : TacticalBuilding
+	public class ControlTowerController : Building
 	{
 		private IBoostProvider _boostProvider;
 

@@ -2,7 +2,7 @@
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
 {
-    public class MissileLauncher : OffenseTurret
+    public class MissileLauncher : TurretController
     {
         protected override bool HasSingleSprite => true;
         public ProjectileType projectileType = ProjectileType.Rocket;

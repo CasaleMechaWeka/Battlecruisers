@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
-    public class SectorShieldGenerator : TacticalBuilding
+    public class SectorShieldGenerator : Building
     {
         public SectorShieldController _shieldController;
 

@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 {
-    public class GrapheneBarrier : TacticalBuilding
+    public class GrapheneBarrier : Building
     {
 
         public override TargetValue TargetValue => TargetValue.Low;
