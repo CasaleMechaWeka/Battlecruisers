@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets;
@@ -12,7 +11,6 @@ using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Targets.TargetTrackers;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using System;
@@ -99,21 +97,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             foreach (var barrelWrapper in barrelWrappers)
             {
-                SoundKey soundKey;
-                switch (barrelWrapper.firingSoundKey)
-                {
-                    case "AttackBoat":
-                        soundKey = SoundKeys.Firing.AttackBoat;
-                        break;
-                    case "Missile":
-                        soundKey = SoundKeys.Firing.Missile;
-                        break;
-                    // Add more cases for other sound keys as needed
-                    default:
-                        soundKey = SoundKeys.Firing.AttackBoat; // default sound key if no match is found
-                        break;
-                }
-                barrelWrapper.Initialise(this, _cruiserSpecificFactories, soundKey);
                 barrelWrapper.ApplyVariantStats(this);
             }
             List<Sprite> allSpriteWrappers = new List<Sprite>();

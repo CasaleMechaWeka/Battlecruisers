@@ -1,7 +1,6 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Buildables.Units.Aircraft.SpriteChoosers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Targets;
@@ -90,7 +89,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             SetupTargetDetection();
 
-            _barrelWrapper.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _barrelWrapper.Initialise(this, _cruiserSpecificFactories);
             List<Sprite> allSpriteWrappers = new List<Sprite>();
             foreach (Sprite sprite in allSprites)
             {

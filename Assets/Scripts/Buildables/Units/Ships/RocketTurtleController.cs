@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables.Buildings.Tactical.Shields;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +37,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            _missileLauncher.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.RocketLauncher);
+            _missileLauncher.Initialise(this, _cruiserSpecificFactories);
         }
 
 

@@ -1,8 +1,6 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using UnityEngine;
 
@@ -13,7 +11,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
         private IBoostProvider _boostProvider;
         private ParticleSystem _boosterGlow;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Booster;
         public override bool IsBoostable => true;
 
         public float boostMultiplier;

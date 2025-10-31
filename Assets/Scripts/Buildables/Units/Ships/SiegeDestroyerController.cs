@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -43,7 +42,7 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            _mortar.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _mortar.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override void OnBuildableCompleted()

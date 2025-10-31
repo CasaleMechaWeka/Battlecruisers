@@ -56,6 +56,9 @@ public class ProfileDetailsController : MonoBehaviour
     [Header("Elo")]
     public Text EloText;
     public GameObject EloContainer;
+    [Header("Bounty")]
+    public Text BountyText;
+    public GameObject BountyContainer;
 
     [Header("Player Name")]
     public Text PlayerNameText;
@@ -110,7 +113,7 @@ public class ProfileDetailsController : MonoBehaviour
                                HecklePreviewHighlights, CaptainCamera, CaptainRenderContainer, ExoContainer,
                                HeckleContainer, ExoButonPrefab, HeckleButonPrefab, EloText,
                                PlayerNameText, EditNameButton, NameInputOverlay, RankImage,
-                               RankNameText);
+                               RankNameText, BountyText, BountyContainer);
 
         Assert.IsTrue(HeckleButtons.Length == 3);
         Assert.IsTrue(HecklePreviews.Length == 3);
@@ -184,12 +187,14 @@ public class ProfileDetailsController : MonoBehaviour
         ShowHecklePreviews();
 
         EloText.text = DataProvider.GameModel.BattleWinScore.ToString("F0");
+        BountyText.text = DataProvider.GameModel.Bounty.ToString("F0");
         UpdatePlayerName();
     }
 
     void ShowHeckleSelector()
     {
         EloContainer.SetActive(false);
+        BountyContainer.SetActive(false);
         ExoSelectorPanel.SetActive(false);
         HeckleSelector.SetActive(true);
 
@@ -202,6 +207,7 @@ public class ProfileDetailsController : MonoBehaviour
     void ShowExoSelector()
     {
         EloContainer.SetActive(false);
+        BountyContainer.SetActive(false);
         HeckleSelector.SetActive(false);
         ExoSelectorPanel.SetActive(true);
 
@@ -216,6 +222,7 @@ public class ProfileDetailsController : MonoBehaviour
         LeftCancelZone.gameObject.SetActive(false);
         RightCancelZone.gameObject.SetActive(false);
         EloContainer.SetActive(true);
+        BountyContainer.SetActive(true);
         HeckleSelector.SetActive(false);
         ExoSelectorPanel.SetActive(false);
 
@@ -227,7 +234,7 @@ public class ProfileDetailsController : MonoBehaviour
         currentExoIndex = int.Parse(DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName[10..]);
         currentHeckleIndex = DataProvider.GameModel.PlayerLoadout.CurrentHeckles[currentHeckleSlotIndex];
 
-        ShowHeckleText(currentHeckleIndex); 
+        ShowHeckleText(currentHeckleIndex);
         ShowCurrentCaptain();
     }
 

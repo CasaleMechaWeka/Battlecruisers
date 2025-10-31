@@ -3,7 +3,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Effects;
 using BattleCruisers.Targets;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using System.Collections.Generic;
@@ -23,7 +22,6 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         void Initialise(
             IBuildable parent,
             CruiserSpecificFactories cruiserSpecificFactories,
-            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
             ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);

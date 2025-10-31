@@ -2,14 +2,12 @@ using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Cruisers;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.Projectiles.DamageAppliers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -139,8 +137,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
         }
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
-
         protected override IList<IBarrelWrapper> GetTurrets()
         {
             return new List<IBarrelWrapper>()
@@ -151,8 +147,8 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override void InitialiseTurrets()
         {
-            minigun.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-            _samSite.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
+            minigun.Initialise(this, _cruiserSpecificFactories);
+            _samSite.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

@@ -18,7 +18,6 @@ using BattleCruisers.Cruisers.Construction;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Helpers;
 using BattleCruisers.Cruisers.Slots;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Projectiles.FlightPoints;
@@ -397,8 +396,7 @@ namespace BattleCruisers.Scenes.Test.Utilities
                     parent ?? Substitute.For<ITarget>(),
                     localBoostProviders ?? new ObservableCollection<IBoostProvider>(),
                     new ObservableCollection<IBoostProvider>(),
-                    enemyCruiser ?? Substitute.For<ICruiser>(),
-                    firingSound ?? SoundKeys.Firing.BigCannon);
+                    enemyCruiser ?? Substitute.For<ICruiser>());
         }
 
         private IRotationMovementController CreateRotationMovementController(BarrelController barrel, IUpdater updater)

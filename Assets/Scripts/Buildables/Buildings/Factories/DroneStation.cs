@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -11,7 +9,6 @@ namespace BattleCruisers.Buildables.Buildings.Factories
     {
         public int numOfDronesProvided;
 
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
         protected override void AddBuildRateBoostProviders(

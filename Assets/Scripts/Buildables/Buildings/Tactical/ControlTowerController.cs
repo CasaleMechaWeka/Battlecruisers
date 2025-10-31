@@ -1,7 +1,5 @@
 ﻿using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Data.Static;
 using BattleCruisers.UI.BattleScene.Manager;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +9,6 @@ namespace BattleCruisers.Buildables.Buildings.Tactical
 	{
 		private IBoostProvider _boostProvider;
 
-		protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.ControlTower;
 
 		public float boostMultiplier;
 

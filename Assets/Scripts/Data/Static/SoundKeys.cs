@@ -5,21 +5,56 @@ namespace BattleCruisers.Data.Static
 {
     public static class SoundKeys
     {
+        public enum FiringSound
+        {
+            AntiAir,
+            Artillery,
+            AttackBoat,
+            BigCannon,
+            Broadsides,
+            Laser,
+            Lightning,
+            Missile,
+            PneumaticSlug,
+            RailCannon,
+            RocketLauncher,
+        }
+
         public static class Firing
         {
             public static SoundKey AntiAir { get; } = new SoundKey(SoundType.Firing, "anti-air");
             public static SoundKey Artillery { get; } = new SoundKey(SoundType.Firing, "artillery");
             public static SoundKey AttackBoat { get; } = new SoundKey(SoundType.Firing, "small-cannon");
-            public static SoundKey Broadsides { get; } = new SoundKey(SoundType.Firing, "broadsides");
             public static SoundKey BigCannon { get; } = new SoundKey(SoundType.Firing, "big-cannon");
+            public static SoundKey Broadsides { get; } = new SoundKey(SoundType.Firing, "broadsides");
             public static SoundKey Laser { get; } = new SoundKey(SoundType.Firing, "laser");
-            public static SoundKey RocketLauncher { get; } = new SoundKey(SoundType.Firing, "rocket-launcher");
-            public static SoundKey Missile { get; } = new SoundKey(SoundType.Firing, "SAMFiring");
             public static SoundKey Lightning { get; } = new SoundKey(SoundType.Firing, "TeslaCoil");
-            public static SoundKey RailCannon { get; } = new SoundKey(SoundType.Firing, "RailCannon");
-
+            public static SoundKey Missile { get; } = new SoundKey(SoundType.Firing, "SAMFiring");
             public static SoundKey PneumaticSlug { get; } = new SoundKey(SoundType.Firing, "PneumaticSlug");
+            public static SoundKey RailCannon { get; } = new SoundKey(SoundType.Firing, "RailCannon");
+            public static SoundKey RocketLauncher { get; } = new SoundKey(SoundType.Firing, "rocket-launcher");
+
+            static SoundKey[] All = new SoundKey[]
+            {
+                AntiAir,
+                Artillery,
+                AttackBoat,
+                BigCannon,
+                Broadsides,
+                Laser,
+                Lightning,
+                Missile,
+                PneumaticSlug,
+                RailCannon,
+                RocketLauncher,
+            };
+
+            public static SoundKey FiringSoundToKey(FiringSound firingSound)
+            {
+                return All[(int)firingSound];
+            }
         }
+
 
         public static class Explosions
         {
