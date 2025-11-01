@@ -216,7 +216,7 @@ namespace BattleCruisers.Buildables
             _smokeInitialiser = GetComponentInChildren<SmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
 
-            Assert.IsNotNull(deathSound);
+            Assert.IsNotNull(deathSound, $"Death sound is null for {parent.name}");
             _deathSound = new AudioClipWrapper(deathSound);
         }
 
