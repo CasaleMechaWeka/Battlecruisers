@@ -79,9 +79,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Bat
         public void OverrideHealth(IDamagable damagable)
         {
             Assert.IsNotNull(damagable);
-            Assert.IsTrue(damagable.Health > 0);
-            _maxHealth = _damagable.Health;
+            Assert.IsTrue(damagable.MaxHealth > 0);
+            _maxHealth = _damagable.MaxHealth;
         }
+
         void LateUpdate()
         {
             if (_followDamagable)

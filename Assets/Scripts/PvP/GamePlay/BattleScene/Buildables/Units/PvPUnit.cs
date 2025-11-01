@@ -307,6 +307,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Logging.Log(Tags.BUILDABLE, this);
             base.InternalDestroy();
         }
+        
+        public void AddHealthBoostProviders(ObservableCollection<IBoostProvider> boostProviders)
+        {
+            _healthBoostableGroup.AddBoostProvidersList(boostProviders);
+        }
 
         public void AddBuildRateBoostProviders(ObservableCollection<IBoostProvider> boostProviders)
         {

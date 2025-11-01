@@ -51,6 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected PvPCruiserSpecificFactories _cruiserSpecificFactories;
         // Boost resulting from global cruiser bonuses
         protected IBoostableGroup _buildRateBoostableGroup;
+        protected IBoostableGroup _healthBoostableGroup;
         // Boost resulting from adjacent local boosters
         protected IBoostableGroup _localBoosterBoostableGroup;
         protected PvPBuildableProgressController _buildableProgress;
@@ -61,6 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public float buildTimeInS;
 
         private AudioClipWrapper _deathSound;
+        private float maxHealthBase;
         [Header("Sounds")]
         public AudioClip deathSound;
 
@@ -85,6 +87,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public int NumOfDronesRequired => numOfDronesRequired;
         public float BuildTimeInS => buildTimeInS;
         public IBoostable BuildProgressBoostable { get; private set; }
+        public IBoostable HealthBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
         protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
@@ -195,10 +198,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler Deactivated;
 
 
-        protected virtual void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-
-        }
+        protected virtual void OnBuildableStateValueChanged(PvPBuildableState state) { }
 
         protected virtual void OnValueChangedIsEnableRenderes(bool isEnabled)
         {
@@ -206,10 +206,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 EnableRenderers(isEnabled);
         }
 
-        protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
-        {
-
-        }
+        protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable) { }
 
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
@@ -223,10 +220,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
                 CallRpc_SetHealthbarOffset(_healthBar.Offset);
         }
-        protected virtual void CallRpc_SetHealthbarOffset(Vector2 offset)
-        {
+        protected virtual void CallRpc_SetHealthbarOffset(Vector2 offset) { }
 
-        }
         public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
             base.StaticInitialise();
@@ -235,6 +230,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _parent = parent;
             _healthBar = healthBar;
+            maxHealthBase = MaxHealth;
             _healthBar.OffsetChanged += OnHealthbarOffsetChanged;
 
             _buildableProgress = gameObject.GetComponentInChildren<PvPBuildableProgressController>(includeInactive: true);
@@ -248,7 +244,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _clickHandler = clickHandlerWrapper.GetClickHandler();
 
             _damageCapabilities = new List<IDamageCapability>();
-            this.DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
+            DamageCapabilities = new ReadOnlyCollection<IDamageCapability>(_damageCapabilities);
             _smokeInitialiser = GetComponentInChildren<PvPSmokeInitialiser>(includeInactive: true);
             Assert.IsNotNull(_smokeInitialiser);
             Assert.IsNotNull(deathSound);
@@ -266,15 +262,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void UpdateAttackCapabilities()
         {
             foreach (IDamageCapability damageStat in _damageCapabilities)
-            {
                 foreach (TargetType attackCapability in damageStat.AttackCapabilities)
-                {
                     AddAttackCapability(attackCapability);
-                }
-            }
         }
-
-
 
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
@@ -300,6 +290,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = new Boostable(1);
+            HealthBoostable = new Boostable(1);
 
             _clickHandler.SingleClick += ClickHandler_SingleClick;
             _clickHandler.DoubleClick += ClickHandler_DoubleClick;
@@ -328,6 +319,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildTimeInDroneSeconds = numOfDronesRequired * buildTimeInS;
             HealthGainPerDroneS = maxHealth / _buildTimeInDroneSeconds;
             BuildProgressBoostable = new Boostable(1);
+            HealthBoostable = new Boostable(1);
             if (!IsHost)
             {
                 _clickHandler.SingleClick += ClickHandler_SingleClick;
@@ -356,6 +348,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
             _localBoosterBoostableGroup = new BoostableGroup();
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
         }
 
         /// <summary>
@@ -395,6 +388,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ApplySpecializedModifiers(_cruiserSpecificFactories.GlobalBoostProviders);
             
             _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _healthBoostableGroup.BoostChanged += HealthBoostChanged;
+            HealthBoostChanged(this, EventArgs.Empty);
+        }
+
+        private void HealthBoostChanged(object sender, EventArgs e)
+        {
+            maxHealth = maxHealthBase * HealthBoostable.BoostMultiplier;
+            _healthTracker.OverrideMaxHealth(maxHealth);
+            HealthBar.OverrideHealth(this);
         }
 
         public virtual void Activate_PvPClient()
@@ -403,8 +406,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _cumulativeBuildProgressInDroneS = 0;
         }
 
-        public void Activate(TPvPActivationArgs activationArgs, Faction faction)
+        public void Activate(TPvPActivationArgs activationArgs, Faction faction) { }
+
+        private IBoostableGroup CreateHealthBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
         {
+            IBoostableGroup healthBoostableGroup = new BoostableGroup();
+            healthBoostableGroup.AddBoostable(healthBoostable);
+
+            IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
+            AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
+
+            foreach (ObservableCollection<IBoostProvider> healthBoostProviders in healthBoostProvidersList)
+            {
+                healthBoostableGroup.AddBoostProvidersList(healthBoostProviders);
+            }
+
+            return healthBoostableGroup;
         }
 
         private IBoostableGroup CreateBuildRateBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
@@ -421,6 +438,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
 
             return buildRateBoostableGroup;
+        }
+
+        protected virtual void AddHealthBoostProviders(
+            GlobalBoostProviders globalBoostProviders,
+            IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
+        {
+            Logging.Log(Tags.BOOST, this);
         }
 
         /// <summary>
@@ -668,6 +692,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
+            _healthBoostableGroup.CleanUp();
 
             CallRpc_PlayDeathSound();
 

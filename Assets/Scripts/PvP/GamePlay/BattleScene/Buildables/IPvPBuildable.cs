@@ -44,6 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         float CostInDroneS { get; }
         ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; }
         IBoostable BuildProgressBoostable { get; }
+        IBoostable HealthBoostable { get; }
         bool IsInitialised { get; }
         IPvPCruiser ParentCruiser { get; set; }
         IPvPCruiser EnemyCruiser { get; }
