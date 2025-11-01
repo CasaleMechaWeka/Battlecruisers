@@ -62,7 +62,6 @@ namespace BattleCruisers.Buildables
         public int numOfDronesRequired;
         public float buildTimeInS;
         private AudioClipWrapper _deathSound;
-        public List<BoostType> BoostTypes = new List<BoostType>();
         [Header("Sounds")]
         public AudioClip deathSound;
 
@@ -88,6 +87,7 @@ namespace BattleCruisers.Buildables
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
+        public List<BoostType> BoostTypes = new List<BoostType>();
         private IDroneConsumer _droneConsumer;
         public IDroneConsumer DroneConsumer
         {
