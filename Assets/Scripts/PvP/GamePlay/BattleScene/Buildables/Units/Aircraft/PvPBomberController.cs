@@ -13,7 +13,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Buildables;
@@ -375,32 +374,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-        [ClientRpc]
-        private void OnSetTargetClientRpc(ulong objectId)
-        {
-            if (!IsHost)
-            {
-                if (objectId == ulong.MaxValue)
-                {
-                    _target = null;
-                }
-                else
-                {
-                    NetworkObject obj = PvPBattleSceneGodClient.Instance.GetNetworkObject(objectId);
-                    if (obj != null)
-                    {
-                        ITarget target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPBuilding>>()?.Buildable?.Parse<ITarget>();
-                        if (target == null)
-                        {
-                            target = obj.gameObject.GetComponent<PvPBuildableWrapper<IPvPUnit>>()?.Buildable?.Parse<ITarget>();
-                        }
-                        _target = target;
-                    }
-                }
-            }
-        }
-
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {

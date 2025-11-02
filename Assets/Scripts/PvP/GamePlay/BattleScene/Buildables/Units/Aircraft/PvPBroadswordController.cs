@@ -405,13 +405,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableCompleted();
-        }
-
-        [ClientRpc]
         protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
         {
             if (!IsHost)

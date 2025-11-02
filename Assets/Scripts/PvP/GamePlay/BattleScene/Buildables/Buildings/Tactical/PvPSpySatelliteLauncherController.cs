@@ -1,10 +1,8 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
@@ -217,12 +215,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 Faction = faction;
-        }
-
-        [ServerRpc(RequireOwnership = true)]
-        private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName)
-        {
-            PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
         }
 
         [ClientRpc]

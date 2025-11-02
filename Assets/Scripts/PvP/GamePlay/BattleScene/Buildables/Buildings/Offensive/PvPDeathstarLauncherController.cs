@@ -8,7 +8,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.Utils.Localisation;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Unity.Netcode;

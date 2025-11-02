@@ -338,16 +338,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnSetRotationClientRpc(Quaternion rotation)
-        {
-            if (!IsHost)
-            {
-                Rotation = rotation;
-            }
-
-        }
-
-        [ClientRpc]
         private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
         {
             if (!IsHost)

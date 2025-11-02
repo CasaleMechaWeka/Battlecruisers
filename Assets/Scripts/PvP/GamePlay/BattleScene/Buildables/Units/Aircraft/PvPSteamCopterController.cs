@@ -183,18 +183,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return patrolPoints;
         }
 
-        private void OnClearingLaunchStation()
-        {
-            // Stop moving
-            //ActiveMovementController = DummyMovementController;
-        }
-
-        private void OnFirstPatrolPointReached()
-        {
-            _isAtCruisingHeight = true;
-            UpdateMovementController();
-        }
-
         private void UpdateMovementController()
         {
             ActiveMovementController = ChooseMovementController();

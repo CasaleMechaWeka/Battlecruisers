@@ -205,15 +205,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CallRpc_ProgressControllerVisible(isEnabled);
         }
 
-
-
-        [ClientRpc]
-        private void OnActivatePvPClientRpc()
-        {
-            if (!IsHost)
-                Activate_PvPClient();
-        }
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
