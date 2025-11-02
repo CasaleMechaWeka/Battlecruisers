@@ -11,6 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPSiegeDestroyerController : PvPShipController
     {
         private IPvPBarrelWrapper _mortar;
+        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
@@ -48,8 +49,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         //------------------------------------ methods for sync, written by Sava ------------------------------//
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
@@ -78,15 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override void OnNetworkDespawn()
         {
             base.OnNetworkDespawn();
-        }
-
-        // Visibility 
-        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
-        {
-            if (IsServer)
-                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
-            else
-                base.OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         // ProgressController Visible
@@ -156,14 +146,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-        [ClientRpc]
-        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
-        {
-            if (!IsHost)
-                OnValueChangedIsEnableRenderes(isEnabled);
-        }
-
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
         {

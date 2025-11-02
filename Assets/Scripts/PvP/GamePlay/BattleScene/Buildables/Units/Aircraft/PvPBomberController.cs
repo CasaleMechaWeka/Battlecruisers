@@ -335,17 +335,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _targetProcessor = null;
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        // Visibility 
-        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
-        {
-            if (IsServer)
-                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
-            else
-                base.OnValueChangedIsEnableRenderes(isEnabled);
-        }
-
         // ProgressController Visible
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
@@ -421,12 +410,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     }
                 }
             }
-        }
-        [ClientRpc]
-        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
-        {
-            if (!IsHost)
-                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]

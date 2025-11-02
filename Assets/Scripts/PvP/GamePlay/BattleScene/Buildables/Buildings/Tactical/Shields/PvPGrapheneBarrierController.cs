@@ -105,22 +105,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-
-        // Visibility
-        protected override void OnValueChangedIsEnableRenderes(bool isEnabled)
-        {
-            if (IsServer)
-                OnValueChangedIsEnabledRendersClientRpc(isEnabled);
-            else
-                base.OnValueChangedIsEnableRenderes(isEnabled);
-        }
-
-        // Healthbar offset
-        protected override void CallRpc_SetHealthbarOffset(Vector2 offset)
-        {
-            OnSetHealthbarOffsetClientRpc(offset);
-        }
-
         // set Position of PvPBuildable
         protected override void CallRpc_SetPosition(Vector3 pos)
         {
@@ -296,20 +280,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 Rotation = rotation;
-        }
-
-        [ClientRpc]
-        private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
-        {
-            if (!IsHost)
-                HealthBar.Offset = offset;
-        }
-
-        [ClientRpc]
-        private void OnValueChangedIsEnabledRendersClientRpc(bool isEnabled)
-        {
-            if (!IsHost)
-                OnValueChangedIsEnableRenderes(isEnabled);
         }
 
         [ClientRpc]

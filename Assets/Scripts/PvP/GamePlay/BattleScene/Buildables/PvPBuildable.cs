@@ -27,6 +27,7 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.UI.Sound.Players;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -200,12 +201,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnBuildableStateValueChanged(PvPBuildableState state) { }
 
-        protected virtual void OnValueChangedIsEnableRenderes(bool isEnabled)
-        {
-            if (!IsHost)
-                EnableRenderers(isEnabled);
-        }
-
         protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable) { }
 
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
@@ -220,7 +215,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
                 CallRpc_SetHealthbarOffset(_healthBar.Offset);
         }
-        protected virtual void CallRpc_SetHealthbarOffset(Vector2 offset) { }
+        
+        void CallRpc_SetHealthbarOffset(Vector2 offset)
+        {
+            OnSetHealthbarOffsetClientRpc(offset);
+        }
+
+        [ClientRpc]
+        private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
+        {
+            if (!IsHost)
+                HealthBar.Offset = offset;
+        }
 
         public virtual void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
@@ -265,7 +271,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 foreach (TargetType attackCapability in damageStat.AttackCapabilities)
                     AddAttackCapability(attackCapability);
         }
-
+    
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
             SpriteRenderer mainRenderer = GetComponent<SpriteRenderer>();
@@ -639,17 +645,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        private void SetRenderersEnabled(bool enabled)
+        {
+            Logging.Log(Tags.BUILDING, $"Renderer count: {InGameRenderers.Count}  enabled: {enabled}");
+            foreach (SpriteRenderer r in InGameRenderers)
+                if (r != null) 
+                    r.enabled = enabled;
+        }
+
         private void EnableRenderers(bool enabled)
         {
+            if (IsClient)
+                SetRenderersEnabled(enabled);
             if (IsServer)
-                OnValueChangedIsEnableRenderes(enabled);
+                EnableRenderersClientRpc(enabled);
+        }
 
-            Logging.Log(Tags.BUILDING, $"Renderer count: {InGameRenderers.Count}  enabled: {enabled}");
-
-            foreach (Renderer renderer in InGameRenderers)
-            {
-                renderer.enabled = enabled;
-            }
+        [ClientRpc]
+        private void EnableRenderersClientRpc(bool enabled)
+        {
+            if (IsHost)
+                return;
+            SetRenderersEnabled(enabled);
         }
 
         protected override void InternalDestroy()
