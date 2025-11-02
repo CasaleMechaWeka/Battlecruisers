@@ -16,11 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        // Drone Focusing
-        protected override void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
-        {
-            OnShareIsDroneConsumerFocusableValueWithClientRpc(isFocusable);
-        }
 
         // Toggle Drone
         protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
@@ -146,12 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Rpcs
 
 
-        [ClientRpc]
-        private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
-        {
-            if (!IsHost)
-                IsDroneConsumerFocusable_PvPClient = isFocusable;
-        }
+
 
         [ServerRpc]
         private void OnToggleDroneConsumerFocusCommandExecuteServerRpc()

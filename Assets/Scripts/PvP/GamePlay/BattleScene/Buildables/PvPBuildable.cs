@@ -201,7 +201,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnBuildableStateValueChanged(PvPBuildableState state) { }
 
-        protected virtual void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable) { }
+        void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
+        {
+            OnShareIsDroneConsumerFocusableValueWithClientRpc(isFocusable);
+        }
+
+        [ClientRpc]
+        private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)
+        {
+            if (!IsHost)
+                IsDroneConsumerFocusable_PvPClient = isFocusable;
+        }
 
         protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
         {
