@@ -38,16 +38,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnActivatePvPClientRpc();
         }
 
-        protected override void OnBuildableCompleted()
-        {
-            if (IsServer)
-            {
-                base.OnBuildableCompleted();
-                OnBuildableCompletedClientRpc();
-            }
-            else
-                OnBuildableCompleted_PvPClient();
-        }
+        
+
 
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();

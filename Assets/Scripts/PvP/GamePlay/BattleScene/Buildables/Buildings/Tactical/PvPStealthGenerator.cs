@@ -22,16 +22,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
         }
 
-        protected override void OnBuildableCompleted()
-        {
-            if (IsServer)
-            {
-                base.OnBuildableCompleted();
-                OnBuildableCompletedClientRpc();
-            }
-            else
-                OnBuildableCompleted_PvPClient();
-        }
+        
+
 
 
         // BuildProgress 

@@ -159,16 +159,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnDestroyedEvent();
         }
 
-        protected override void OnBuildableCompleted()
-        {
-            if (IsServer)
-            {
-                base.OnBuildableCompleted();
-                OnBuildableCompletedClientRpc();
-            }
-            else
-                OnBuildableCompleted_PvPClient();
-        }
+        
+
 
         protected override void StartMovementEffectsOfClient()
         {

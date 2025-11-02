@@ -32,16 +32,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // Build Completed
-        protected override void OnBuildableCompleted()
-        {
-            if (IsServer)
-            {
-                base.OnBuildableCompleted();
-                OnBuildableCompletedClientRpc();
-            }
-            else
-                OnBuildableCompleted_PvPClient();
-        }
+        
+
 
         // Placement Sound
         protected override void PlayPlacementSound()
