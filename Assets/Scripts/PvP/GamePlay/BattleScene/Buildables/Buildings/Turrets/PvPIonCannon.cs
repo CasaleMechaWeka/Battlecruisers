@@ -20,18 +20,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        // Build Completed
-        protected override void OnBuildableCompleted()
-        {
-            if (IsServer)
-            {
-                //    ParentCruiser.DroneManager.NumOfDrones += numOfDronesProvided;
-                base.OnBuildableCompleted();
-                OnBuildableCompletedClientRpc();
-            }
-            else
-                OnBuildableCompleted_PvPClient();
-        }
+
+
 
         // Placement Sound
         protected override void PlayPlacementSound()

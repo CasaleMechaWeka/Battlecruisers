@@ -610,26 +610,33 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void OnUpdate() { }
 
+
         protected virtual void OnBuildableCompleted()
         {
-            Logging.Log(Tags.BUILDABLE, this);
-
             CleanUpDroneConsumer();
-
             EnableRenderers(true);
             BuildableState = PvPBuildableState.Completed;
             if (ConstructionCompletedSoundKey != null)
-            {
                 PlayBuildableConstructionCompletedSound();
-            }
+
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             OnCompletedBuildableEvent();
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
+
             if (Faction == Faction.Blues)
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
             else
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
+
+            OnBuildableCompletedClientRpc();
+        }
+
+        [ClientRpc]
+        private void OnBuildableCompletedClientRpc()
+        {
+            if (!IsHost)
+                OnBuildableCompleted_PvPClient();
         }
 
         protected virtual void OnBuildableCompleted_PvPClient()
@@ -640,6 +647,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             CallRpc_ProgressControllerVisible(false);
             RepairCommand.EmitCanExecuteChanged();
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
+
             if (Faction == Faction.Blues)
                 PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
             else
@@ -775,11 +783,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer) 
                 ServerToggleDroneConsumerFocus();
             else 
-                OnToggleDroneConsumerFocusServerRpc(); // hop to server
+                OnToggleDroneConsumerFocusServerRpc();
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void OnToggleDroneConsumerFocusServerRpc(ServerRpcParams rpcParams = default)
+        private void OnToggleDroneConsumerFocusServerRpc()
         {
             ServerToggleDroneConsumerFocus();
         }
