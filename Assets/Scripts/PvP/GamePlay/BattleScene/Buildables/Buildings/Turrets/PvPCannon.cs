@@ -14,11 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-        // Set Rotation of PvPBuildable
-        protected override void CallRpc_SetRotation(Quaternion rotation)
-        {
-            OnSetRotationClientRpc(rotation);
-        }
+
 
 
         // Drone Focusing
@@ -150,12 +146,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // Rpcs
-        [ClientRpc]
-        private void OnSetRotationClientRpc(Quaternion rotation)
-        {
-            if (!IsHost)
-                Rotation = rotation;
-        }
+
 
         [ClientRpc]
         private void OnShareIsDroneConsumerFocusableValueWithClientRpc(bool isFocusable)

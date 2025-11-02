@@ -295,11 +295,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.CallRpc_ProgressControllerVisible(isEnabled);
         }
 
-        // Set Rotation of PvPBuildable
-        protected override void CallRpc_SetRotation(Quaternion rotation)
-        {
-            OnSetRotationClientRpc(rotation);
-        }
+
         private void ActiveTrail()
         {
             _aircraftTrailObj.SetActive(true);

@@ -114,10 +114,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 Position = pos;
         }
 
-
-        protected virtual void CallRpc_SetRotation(Quaternion rotation)
+        void CallRpc_SetRotation(Quaternion rotation)
         {
+            OnSetRotationClientRpc(rotation);
+        }
+        
 
+        [ClientRpc]
+        private void OnSetRotationClientRpc(Quaternion rotation)
+        {
+            if (!IsHost)
+                Rotation = rotation;
         }
 
         protected virtual void CallRpc_ProgressControllerVisible(bool isEnabled)

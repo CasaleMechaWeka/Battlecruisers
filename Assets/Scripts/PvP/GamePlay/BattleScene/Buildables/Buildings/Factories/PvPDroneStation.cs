@@ -20,11 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
-        // Set Rotation of PvPBuildable
-        protected override void CallRpc_SetRotation(Quaternion rotation)
-        {
-            OnSetRotationClientRpc(rotation);
-        }
+
 
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,
@@ -207,12 +203,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted();
         }
 
-        [ClientRpc]
-        private void OnSetRotationClientRpc(Quaternion rotation)
-        {
-            if (!IsHost)
-                Rotation = rotation;
-        }
+
 
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)

@@ -206,11 +206,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.CallRpc_ProgressControllerVisible(isEnabled);
         }
 
-        // Set Rotation of PvPBuildable
-        protected override void CallRpc_SetRotation(Quaternion rotation)
-        {
-            OnSetRotationClientRpc(rotation);
-        }
+
 
         // BuildableStatus
         protected override void OnBuildableStateValueChanged(PvPBuildableState state)
@@ -269,12 +265,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CallRpc_ProgressControllerVisible(isEnabled);
         }
 
-        [ClientRpc]
-        private void OnSetRotationClientRpc(Quaternion rotation)
-        {
-            if (!IsHost)
-                Rotation = rotation;
-        }
+
 
         [ClientRpc]
         private void OnActivatePvPClientRpc()
