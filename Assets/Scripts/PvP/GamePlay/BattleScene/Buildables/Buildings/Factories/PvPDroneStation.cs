@@ -20,12 +20,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
-        // set Position of PvPBuildable
-        protected override void CallRpc_SetPosition(Vector3 pos)
-        {
-            OnSetPositionClientRpc(pos);
-        }
-
         // Set Rotation of PvPBuildable
         protected override void CallRpc_SetRotation(Quaternion rotation)
         {
@@ -211,13 +205,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnBuildableCompleted();
-        }
-
-        [ClientRpc]
-        private void OnSetPositionClientRpc(Vector3 pos)
-        {
-            if (!IsHost)
-                Position = pos;
         }
 
         [ClientRpc]

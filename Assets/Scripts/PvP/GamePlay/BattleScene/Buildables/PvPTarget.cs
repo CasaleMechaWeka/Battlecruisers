@@ -101,10 +101,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         ITarget ITargetProxy.Target => this;
 
 
-        protected virtual void CallRpc_SetPosition(Vector3 pos)
+        // set Position of PvPTarget
+        void CallRpc_SetPosition(Vector3 pos)
         {
-
+            OnSetPositionClientRpc(pos);
         }
+
+        [ClientRpc]
+        void OnSetPositionClientRpc(Vector3 pos)
+        {
+            if (!IsHost)
+                Position = pos;
+        }
+
 
         protected virtual void CallRpc_SetRotation(Quaternion rotation)
         {

@@ -215,14 +215,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
                 CallRpc_SetHealthbarOffset(_healthBar.Offset);
         }
-        
+
         void CallRpc_SetHealthbarOffset(Vector2 offset)
         {
             OnSetHealthbarOffsetClientRpc(offset);
         }
 
         [ClientRpc]
-        private void OnSetHealthbarOffsetClientRpc(Vector2 offset)
+        void OnSetHealthbarOffsetClientRpc(Vector2 offset)
         {
             if (!IsHost)
                 HealthBar.Offset = offset;

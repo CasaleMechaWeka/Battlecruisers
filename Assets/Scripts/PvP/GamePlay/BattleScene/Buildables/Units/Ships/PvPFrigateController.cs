@@ -103,13 +103,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.CallRpc_ProgressControllerVisible(isEnabled);
         }
 
-
-        // set Position of PvPBuildable
-        protected override void CallRpc_SetPosition(Vector3 pos)
-        {
-            //  OnSetPositionClientRpc(pos);
-        }
-
         // Set Rotation of PvPBuildable
         protected override void CallRpc_SetRotation(Quaternion rotation)
         {
@@ -164,13 +157,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildableProgress.gameObject.SetActive(isEnabled);
             if (!IsHost)
                 CallRpc_ProgressControllerVisible(isEnabled);
-        }
-
-        [ClientRpc]
-        private void OnSetPositionClientRpc(Vector3 pos)
-        {
-            if (!IsHost)
-                Position = pos;
         }
 
         [ClientRpc]
