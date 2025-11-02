@@ -110,12 +110,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
-        {
-            base.CallRpc_ToggleDroneConsumerFocusCommandExecute();
-            if (!IsHost)
-                OnToggleDroneConsumerFocusCommandExecuteServerRpc();
-        }
+
+
 
         protected override void PlayPlacementSound()
         {
@@ -209,11 +205,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ServerRpc]
-        private void OnToggleDroneConsumerFocusCommandExecuteServerRpc()
-        {
-            CallRpc_ToggleDroneConsumerFocusCommandExecute();
-        }
 
         [ClientRpc]
         private void PlayPlacementSoundClientRpc()

@@ -772,17 +772,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void ToggleDroneConsumerFocusCommandExecute()
         {
-            if (IsServer)
-                ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
-            else
-                CallRpc_ToggleDroneConsumerFocusCommandExecute();
+            if (IsServer) 
+                ServerToggleDroneConsumerFocus();
+            else 
+                OnToggleDroneConsumerFocusServerRpc(); // hop to server
         }
 
-
-        protected virtual void CallRpc_ToggleDroneConsumerFocusCommandExecute()
+        [ServerRpc(RequireOwnership = false)]
+        private void OnToggleDroneConsumerFocusServerRpc(ServerRpcParams rpcParams = default)
         {
-            if (IsServer)
-                ToggleDroneConsumerFocusCommandExecute();
+            ServerToggleDroneConsumerFocus();
+        }
+
+        private void ServerToggleDroneConsumerFocus()
+        {
+            if (DroneConsumer == null) return;
+            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(DroneConsumer, isTriggeredByPlayer: true);
         }
 
         protected virtual void CallRpc_PlayDeathSound()

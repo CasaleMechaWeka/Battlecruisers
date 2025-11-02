@@ -20,13 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
 
-        // Toggle Drone
-        protected override void CallRpc_ToggleDroneConsumerFocusCommandExecute()
-        {
-            base.CallRpc_ToggleDroneConsumerFocusCommandExecute();
-            if (!IsHost)
-                OnToggleDroneConsumerFocusCommandExecuteServerRpc();
-        }
+
 
         // Build Completed
         protected override void OnBuildableCompleted()
@@ -143,11 +137,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // Rpcs
 
 
-        [ServerRpc]
-        private void OnToggleDroneConsumerFocusCommandExecuteServerRpc()
-        {
-            CallRpc_ToggleDroneConsumerFocusCommandExecute();
-        }
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
