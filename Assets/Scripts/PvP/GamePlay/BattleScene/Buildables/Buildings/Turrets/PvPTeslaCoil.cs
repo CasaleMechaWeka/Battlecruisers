@@ -134,10 +134,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 pvp_Health.Value = maxHealth;
         }
 
-        public override void OnNetworkDespawn()
-        {
-            base.OnNetworkDespawn();
-        }
 
 
         // Rpcs

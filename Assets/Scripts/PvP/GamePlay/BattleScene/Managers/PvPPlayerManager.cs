@@ -27,10 +27,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
 
-        public override void OnNetworkDespawn()
-        {
-            base.OnNetworkDespawn();
-        }
 
         void Update()
         {

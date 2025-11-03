@@ -75,9 +75,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 Instance = this;
         }
 
-        public override void OnNetworkDespawn()
-        {
-            base.OnNetworkDespawn();
-        }
+
     }
 }
