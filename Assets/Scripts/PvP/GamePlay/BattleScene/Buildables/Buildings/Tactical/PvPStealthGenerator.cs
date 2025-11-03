@@ -24,13 +24,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-        protected override void PlayPlacementSound()
-        {
-            base.PlayPlacementSound();
 
-            if (IsServer)
-                PlayPlacementSoundClientRpc();
-        }
+
 
         protected override void DestroyMe()
         {

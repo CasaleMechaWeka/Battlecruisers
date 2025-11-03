@@ -236,15 +236,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected virtual void PlayPlacementSound()
+        public void PlayPlacementSound()
         {
+            if (IsServer)
+                OnPlayPlacementSoundClientRpc();
+
             if (IsClient && IsOwner)
-            {
                 PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
-            }
         }
 
-
+        [ClientRpc]
+        void OnPlayPlacementSoundClientRpc()
+        {
+            if (!IsHost && IsOwner)
+                PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+        }
 
         protected override void OnSingleClick()
         {

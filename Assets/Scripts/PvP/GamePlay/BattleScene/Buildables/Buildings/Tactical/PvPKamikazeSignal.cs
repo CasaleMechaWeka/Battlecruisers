@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Cruisers.Drones;
@@ -59,18 +58,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-
-
-
-
-
-
-        // Placement Sound
-        protected override void PlayPlacementSound()
-        {
-            if (IsServer)
-                PlayPlacementSoundClientRpc();
-        }
 
         // Destroy me
         protected override void DestroyMe()

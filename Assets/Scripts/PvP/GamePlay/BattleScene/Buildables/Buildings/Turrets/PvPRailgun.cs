@@ -19,14 +19,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        // Placement Sound
-        protected override void PlayPlacementSound()
-        {
-            base.PlayPlacementSound();
-
-            if (IsServer)
-                PlayPlacementSoundClientRpc();
-        }
 
         // Destroy me
         protected override void DestroyMe()

@@ -11,14 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override SoundKey FiringSound => SoundKeys.Firing.AntiAir;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AntiAirTurret;
 
-        // Placement Sound
-        protected override void PlayPlacementSound()
-        {
-            base.PlayPlacementSound();
-
-            if (IsServer)
-                PlayPlacementSoundClientRpc();
-        }
 
 
         // Destroy me
