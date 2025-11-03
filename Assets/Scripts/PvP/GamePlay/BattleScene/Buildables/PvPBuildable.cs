@@ -849,9 +849,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        protected virtual void CallRpc_SyncFaction(Faction faction)
+        void CallRpc_SyncFaction(Faction faction)
         {
+            if (IsServer)
+                SyncFactionClientRpc(faction);
+        }
 
+        [ClientRpc]
+        private void SyncFactionClientRpc(Faction faction)
+        {
+            if (!IsHost)
+                Faction = faction;
         }
     }
 }

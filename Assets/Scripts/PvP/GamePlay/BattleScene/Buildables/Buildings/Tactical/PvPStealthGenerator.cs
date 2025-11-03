@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical
 {
@@ -22,20 +21,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.MastStructureProviders);
         }
 
-        
-
-
-
         // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
-
-
-
-
-
-
 
         protected override void PlayPlacementSound()
         {
@@ -86,12 +73,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             PvP_RepairableButtonClickedServerRpc();
         }
-        protected override void CallRpc_SyncFaction(Faction faction)
-        {
-            OnSyncFationClientRpc(faction);
-        }
-
-
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
@@ -177,12 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
-        [ClientRpc]
-        private void OnSyncFationClientRpc(Faction faction)
-        {
-            if (!IsHost)
-                Faction = faction;
-        }
+
 
         [ClientRpc]
         private void OnEnableStealthGenClientRpc(bool enabled)

@@ -77,11 +77,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvP_RepairableButtonClickedServerRpc();
         }
 
-        // SyncFaction
-        protected override void CallRpc_SyncFaction(Faction faction)
-        {
-            OnSyncFationClientRpc(faction);
-        }
+
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
@@ -169,12 +165,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
-        [ClientRpc]
-        private void OnSyncFationClientRpc(Faction faction)
-        {
-            if (!IsHost)
-                Faction = faction;
-        }
+
 
         [ClientRpc]
         private void OnDestroyedEventClientRpc()
