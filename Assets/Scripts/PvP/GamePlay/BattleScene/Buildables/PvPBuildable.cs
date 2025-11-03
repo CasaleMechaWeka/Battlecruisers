@@ -633,7 +633,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
+        public void OnBuildableCompletedClientRpc()
         {
             if (!IsHost)
                 OnBuildableCompleted_PvPClient();
