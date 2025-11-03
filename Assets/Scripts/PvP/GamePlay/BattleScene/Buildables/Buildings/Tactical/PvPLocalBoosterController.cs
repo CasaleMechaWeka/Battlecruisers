@@ -1,3 +1,4 @@
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
@@ -88,15 +89,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-
-        protected override void DestroyMe()
-        {
-            if (IsServer)
-                base.DestroyMe();
-            else
-                OnDestroyMeServerRpc();
-        }
-
         protected override void CallRpc_PlayDeathSound()
         {
             if (IsServer)
@@ -173,12 +165,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.PlayPlacementSound();
         }
 
-        [ServerRpc(RequireOwnership = true)]
-        private void OnDestroyMeServerRpc()
-        {
-            DestroyMe();
-        }
-
         [ClientRpc]
         private void OnPlayDeathSoundClientRpc()
         {
@@ -217,7 +203,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
-
+        [ClientRpc]
+        private void OnSyncFationClientRpc(Faction faction)
+        {
+            if (!IsHost)
+                Faction = faction;
+        }
 
         [ClientRpc]
         private void OnEnableBoosterGlowClientRpc(bool enabled)

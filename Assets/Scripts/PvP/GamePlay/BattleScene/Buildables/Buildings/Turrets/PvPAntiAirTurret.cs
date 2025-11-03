@@ -13,15 +13,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        // Destroy me
-        protected override void DestroyMe()
-        {
-            if (IsServer)
-                base.DestroyMe();
-            else
-                OnDestroyMeServerRpc();
-        }
-
         // Death Sound
         protected override void CallRpc_PlayDeathSound()
         {
@@ -105,19 +96,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        private void PlayPlacementSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayPlacementSound();
-        }
 
 
-        [ServerRpc(RequireOwnership = true)]
-        private void OnDestroyMeServerRpc()
-        {
-            DestroyMe();
-        }
+
+
 
 
         [ClientRpc]
