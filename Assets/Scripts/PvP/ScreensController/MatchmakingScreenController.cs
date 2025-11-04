@@ -32,12 +32,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Text leftPlayerName;
         public Image leftPlayerRankImage;
         public Text leftPlayerRankName;
+        public Text leftPlayerBounty;
         public Text leftCruiserName;
         public Image leftCruiserImage;
 
         public Text rightPlayerName;
         public Image rightPlayerRankeImage;
         public Text rightPlayerRankeName;
+        public Text rightPlayerBounty;
         public Text rightCruiserName;
         public Image rightCruiserImage;
 
@@ -82,6 +84,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public string captainAPrefabName;
         public float playerRating;
         public int playerABodykit;
+        public int playerABounty;
 
         public static bool MatchmakingFailed;
 
@@ -165,6 +168,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
             leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
+            leftPlayerBounty.text = DataProvider.GameModel.Bounty.ToString();
             // show bodykit of left player in MM if owned
             int id_bodykitA = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
             if (id_bodykitA != -1)
@@ -401,6 +405,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public async void FoundCompetitor()
         {
             leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
+            leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
             int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
             leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
@@ -408,6 +413,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             //    leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
 
             rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
+            rightPlayerBounty.text = SynchedServerData.Instance.playerBBounty.Value.ToString();
             //    rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
             int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
             rightPlayerRankeImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");

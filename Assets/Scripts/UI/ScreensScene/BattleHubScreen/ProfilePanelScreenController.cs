@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel);
+            Helper.AssertIsNotNull(captainEditButton, playerNameEditButton, captainNamePopupPanel, Bounty);
             Helper.AssertIsNotNull(screensSceneGod, soundPlayer);
             _soundPlayer = soundPlayer;
 

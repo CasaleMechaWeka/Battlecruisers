@@ -41,8 +41,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         {
             var tmepId = Guid.NewGuid().ToString();
             var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData(DataProvider.GameModel.PlayerName, AuthenticationService.Instance.PlayerId, 0, DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo(), DataProvider.GameModel.LifetimeDestructionScore, DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName);
-
+            Data = new UserData(DataProvider.GameModel.PlayerName, AuthenticationService.Instance.PlayerId, 0, DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo(), DataProvider.GameModel.LifetimeDestructionScore, DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName, DataProvider.GameModel.Bounty);
 
             //cheat code
             Data.userGamePreferences.gameQueue = GameQueue.Casual;
@@ -114,9 +113,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public string hullPrefabName;
         public long score;
         public string captainPrefabName;
+        public int bounty;
         // public string lobbyId;
         public GameInfo userGamePreferences;
-        public UserData(string userName, string userAuthId, ulong networkId, string hullPrefabName, GameInfo userGamePreferences, long score, string captainPrefabName)
+        public UserData(string userName, string userAuthId, ulong networkId, string hullPrefabName, GameInfo userGamePreferences, long score, string captainPrefabName, int bounty)
         {
             this.userName = userName;
             this.userAuthId = userAuthId;
@@ -125,6 +125,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             this.userGamePreferences = userGamePreferences;
             this.score = score;
             this.captainPrefabName = captainPrefabName;
+            this.bounty = bounty;
             // this.lobbyId = lobbyId;
         }
 
