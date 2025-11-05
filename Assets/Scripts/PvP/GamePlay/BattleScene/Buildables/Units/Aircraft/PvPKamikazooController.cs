@@ -285,11 +285,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // only for PvPFighter :(
         public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
         private void LateUpdate()
         {
             if (IsServer)
@@ -396,11 +391,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnDestroyedEvent();
         }
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
     }
 }

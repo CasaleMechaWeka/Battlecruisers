@@ -256,11 +256,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelController.CleanUp();
         }
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
 
 
         // sava added
@@ -373,11 +368,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
     }
 }

@@ -87,11 +87,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.CallRpc_ProgressControllerVisible(isEnabled);
         }
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
 
         protected override void OnBuildableProgressEvent()
         {

@@ -285,12 +285,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         [ServerRpc(RequireOwnership = true)]
-        private void PvP_RepairableButtonClickedServerRpc()
+        void PvP_RepairableButtonClickedServerRpc()
         {
             IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
             ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            OnProgressControllerVisibleClientRpc(isEnabled);
+        }
+
+        [ClientRpc]
+        void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+        }
 
         protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {

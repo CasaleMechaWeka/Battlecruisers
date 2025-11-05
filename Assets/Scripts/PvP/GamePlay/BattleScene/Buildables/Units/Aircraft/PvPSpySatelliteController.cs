@@ -56,12 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        // ProgressController Visible
-        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
-        {
-            OnProgressControllerVisibleClientRpc(isEnabled);
-        }
-
         private void ActiveTrail()
         {
             _aircraftTrailObj.SetActive(true);
@@ -145,11 +139,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
     }
 }

@@ -183,11 +183,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             SwitchToBomberMovement();
         }
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
 
         private void SwitchToBomberMovement()
         {
@@ -435,11 +430,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
     }
 }

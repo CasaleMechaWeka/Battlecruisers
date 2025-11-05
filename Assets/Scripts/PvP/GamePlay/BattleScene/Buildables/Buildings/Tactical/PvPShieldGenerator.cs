@@ -97,15 +97,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.PlayBuildableConstructionCompletedSound();
         }
 
-        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
-        {
-            OnProgressControllerVisibleClientRpc(isEnabled);
-        }
 
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
 
         protected override void OnDestroyedEvent()
         {
@@ -168,20 +160,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shieldController.ApplyVariantStats(this);
         }
 
-
-
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-        }
-
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
 
 
 
