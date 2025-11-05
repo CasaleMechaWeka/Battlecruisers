@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Infrastructure;
@@ -27,9 +26,17 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 
         void Awake()
         {
-            if (s_Instance != null) throw new Exception("Invalid state, instance is not null");
-            s_Instance = this;
-            DontDestroyOnLoad(m_Canvas);
+            if (s_Instance == null)
+            {
+                s_Instance = this;
+                DontDestroyOnLoad(m_Canvas);
+            }
+            else if (s_Instance != this)
+            {
+                Debug.LogWarning($"PVP: PopupManager.Awake - Duplicate instance detected! Destroying duplicate canvas and manager.");
+                Destroy(m_Canvas);
+                Destroy(gameObject);
+            }
         }
 
         void OnDestroy()

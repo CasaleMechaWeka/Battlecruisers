@@ -1,36 +1,31 @@
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
     /// <summary>
     /// An abstraction layer between the direct calls into the Lobby API and the outcomes you actually want.
     /// </summary>
-    public class LobbyServiceFacade : IDisposable, IStartable
+    public class LobbyServiceFacade
     {
-        [Inject] LifetimeScope m_ParentScope;
-        [Inject] UpdateRunner m_UpdateRunner;
+        UpdateRunner m_UpdateRunner;
 
-        [Inject] LocalLobby m_LocalLobby;
-        [Inject] LocalLobbyUser m_LocalUser;
-        [Inject] ConnectionManager m_ConnectionManager;
-        [Inject] IPublisher<UnityServiceErrorMessage> m_UnityServiceErrorMessagePub;
-        [Inject] IPublisher<LobbyListFetchedMessage> m_LobbyListFetchedPub;
+        LocalLobby m_LocalLobby;
+        LocalLobbyUser m_LocalUser;
+        IPublisher<UnityServiceErrorMessage> m_UnityServiceErrorMessagePub;
+        IPublisher<LobbyListFetchedMessage> m_LobbyListFetchedPub;
 
 
         const float k_HeartbeatPeriod = 8; // The heartbeat must be rate-limited to 5 calls per 30 seconds. We'll aim for longer in case periods don't align.
         float m_HeartbeatTime = 0;
 
-        LifetimeScope m_ServiceScope;
         LobbyAPIInterface m_LobbyApiInterface;
         JoinedLobbyContentHeartbeat m_JoinedLobbyContentHeartbeat;
 
@@ -45,18 +40,28 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         bool m_IsTracking = false;
 
         public Action OnMatchMakingFailed;
-        public Action OnMatchMakingStarted;
 
-        public void Start()
+        public LobbyServiceFacade(
+            UpdateRunner updateRunner,
+            LocalLobby localLobby,
+            LocalLobbyUser localUser,
+            IPublisher<UnityServiceErrorMessage> unityServiceErrorMessagePub,
+            IPublisher<LobbyListFetchedMessage> lobbyListFetchedPub)
         {
-            m_ServiceScope = m_ParentScope.CreateChild(builder =>
-            {
-                builder.Register<JoinedLobbyContentHeartbeat>(Lifetime.Singleton);
-                builder.Register<LobbyAPIInterface>(Lifetime.Singleton);
-            });
+            m_UpdateRunner = updateRunner;
+            m_LocalLobby = localLobby;
+            m_LocalUser = localUser;
+            m_UnityServiceErrorMessagePub = unityServiceErrorMessagePub;
+            m_LobbyListFetchedPub = lobbyListFetchedPub;
 
-            m_LobbyApiInterface = m_ServiceScope.Container.Resolve<LobbyAPIInterface>();
-            m_JoinedLobbyContentHeartbeat = m_ServiceScope.Container.Resolve<JoinedLobbyContentHeartbeat>();
+            m_JoinedLobbyContentHeartbeat
+             = new JoinedLobbyContentHeartbeat(
+                m_LocalLobby,
+                m_LocalUser,
+                m_UpdateRunner,
+                this);
+
+            m_LobbyApiInterface = new LobbyAPIInterface();
 
             //See https://docs.unity.com/lobby/rate-limits.html
             m_RateLimitQuery = new RateLimitCooldown(1f);
@@ -65,18 +70,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             m_RateLimitHost = new RateLimitCooldown(3f);
             m_RateLimitLobbyQuery = new RateLimitCooldown(30f);
         }
-
-        public void Dispose()
-        {
-#pragma warning disable 4014
-            EndTracking();
-#pragma warning restore 4014
-            if (m_ServiceScope != null)
-            {
-                m_ServiceScope.Dispose();
-            }
-        }
-
 
         public void SetRemoteLobby(Lobby lobby)
         {
@@ -90,13 +83,20 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 m_IsTracking = true;
                 m_RateLimitLobbyQuery.PutOnCooldown();
-                // 2s update cadence is arbitrary and is here to demonstrate the fact that this update can be rather infrequent
-                // the actual rate limits are tracked via the RateLimitCooldown objects defined above
                 m_UpdateRunner.Subscribe(UpdateLobby, 3f);
                 m_JoinedLobbyContentHeartbeat.BeginTracking();
             }
         }
 
+        public void PauseTracking()
+        {
+            if (m_IsTracking)
+            {
+                m_UpdateRunner.Unsubscribe(UpdateLobby);
+                m_JoinedLobbyContentHeartbeat.EndTracking();
+                m_IsTracking = false;
+            }
+        }
         public async void LockLobby()
         {
             if (CurrentUnityLobby != null)
@@ -106,6 +106,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (result != null)
                 {
                     CurrentUnityLobby = result;
+                    m_LocalLobby.ApplyRemoteData(result);
                 }
             }
         }
@@ -236,24 +237,23 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
             return (false, null);
         }
-
-        /// <summary>
-        /// Attempt to join an existing lobby. Will try to join via code, if code is null - will try to join via ID.
-        /// </summary>
         public async Task<(bool Success, Lobby Lobby)> TryJoinLobbyAsync(string lobbyId, string lobbyCode)
         {
             if (!m_RateLimitJoin.CanCall ||
-                (lobbyId == null && lobbyCode == null))
+            (lobbyId == null && lobbyCode == null))
             {
                 Debug.LogWarning("Join Lobby hit the rate limit.");
                 return (false, null);
             }
+
+            Debug.Log("PVP: LobbyServiceFacade.TryJoinLobbyAsync - JOIN code: " + lobbyCode);
 
             try
             {
                 if (!string.IsNullOrEmpty(lobbyCode))
                 {
                     var lobby = await m_LobbyApiInterface.JoinLobbyByCode(AuthenticationService.Instance.PlayerId, lobbyCode, m_LocalUser.GetDataForUnityServices());
+                    Debug.Log("PVP: LobbyServiceFacade.TryJoinLobbyAsync - JoinLobbyByCode returned " + (lobby != null));
                     if (lobby != null)
                         return (true, lobby);
                     else
@@ -265,21 +265,14 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                     return (true, lobby);
                 }
             }
-            catch /*(LobbyServiceException e)*/
+            catch (System.Exception e)
             {
-                /*                if (e.Reason == LobbyExceptionReason.RateLimited)
-                                {
-                                    m_RateLimitJoin.PutOnCooldown();
-                                }
-                                else
-                                {
-                                    PublishError(e);
-                                }*/
+                Debug.LogError($"PVP: LobbyServiceFacade.TryJoinLobbyAsync - Exception: {e.GetType().Name} - {e.Message}");
+                Debug.LogError($"PVP: Exception StackTrace: {e.StackTrace}");
             }
 
             return (false, null);
         }
-
         /// <summary>
         /// Attempt to join the first lobby among the available lobbies that match the filtered onlineMode.
         /// </summary>
@@ -446,10 +439,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
             else
             {
-                Debug.Log("Only the host can delete a lobby.");
+                Debug.Log("PVP: LobbyServiceFacade.DeleteLobbyAsync - Only the host can delete a lobby.");
             }
         }
-
         /// <summary>
         /// Attempt to push a set of key-value pairs associated with the local player which will overwrite any existing data for these keys.
         /// </summary>
@@ -465,7 +457,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
                 if (result != null)
                 {
-                    CurrentUnityLobby = result; // Store the most up-to-date lobby now since we have it, instead of waiting for the next heartbeat.
+                    CurrentUnityLobby = result;
+                    m_LocalLobby.ApplyRemoteData(result);
                 }
             }
             catch
@@ -473,16 +466,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             }
         }
-
         /// <summary>
         /// Lobby can be provided info about Relay (or any other remote allocation) so it can add automatic disconnect handling.
         /// </summary>
         public async Task UpdatePlayerRelayInfoAsync(string allocationId, string connectionInfo)
         {
             if (!m_RateLimitQuery.CanCall)
-            {
                 return;
-            }
 
             try
             {
@@ -502,34 +492,23 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 //todo - retry logic? SDK is supposed to handle this eventually
             }
         }
-
-        /// <summary>
-        /// Attempt to update a set of key-value pairs associated with a given lobby.
-        /// </summary>
         public async Task UpdateLobbyDataAsync(Dictionary<string, DataObject> data)
         {
             if (!m_RateLimitQuery.CanCall)
-            {
                 return;
-            }
+
             if (CurrentUnityLobby == null)
                 return;
             var dataCurr = CurrentUnityLobby.Data ?? new Dictionary<string, DataObject>();
 
-            foreach (var dataNew in data)
-            {
-                if (dataCurr.ContainsKey(dataNew.Key))
-                {
-                    dataCurr[dataNew.Key] = dataNew.Value;
-                }
-                else
-                {
-                    dataCurr.Add(dataNew.Key, dataNew.Value);
-                }
-            }
+            string lobbyDataSummary = string.Join(", ", dataCurr.Select(kvp => $"{kvp.Key}={kvp.Value?.Value?.ToString() ?? "NULL"}"));
+            Debug.Log($"PVP: UpdateLobbyData ({lobbyDataSummary})");
 
-            //we would want to lock lobbies from appearing in queries if we're in relay mode and the relay isn't fully set up yet
-            // var shouldLock = string.IsNullOrEmpty(m_LocalLobby.RelayJoinCode);
+            foreach (var dataNew in data)
+                if (dataCurr.ContainsKey(dataNew.Key))
+                    dataCurr[dataNew.Key] = dataNew.Value;
+                else
+                    dataCurr.Add(dataNew.Key, dataNew.Value);
 
             try
             {
@@ -538,24 +517,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (result != null)
                 {
                     CurrentUnityLobby = result;
+                    m_LocalLobby.ApplyRemoteData(result);
                 }
             }
-            catch/* (LobbyServiceException e)*/
+            catch
             {
-                /*                if (e.Reason == LobbyExceptionReason.RateLimited)
-                                {
-                                    m_RateLimitQuery.PutOnCooldown();
-                                }
-                                else
-                                {
-                                    PublishError(e);
-                                }*/
-            }
-        }
 
-        /// <summary>
-        /// Lobby requires a periodic ping to detect rooms that are still active, in order to mitigate "zombie" lobbies.
-        /// </summary>
+            }
+        }/// <summary>
+         /// Lobby requires a periodic ping to detect rooms that are still active, in order to mitigate "zombie" lobbies.
+         /// </summary>
         public void DoLobbyHeartbeat(float dt)
         {
             m_HeartbeatTime += dt;
@@ -564,16 +535,13 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 m_HeartbeatTime -= k_HeartbeatPeriod;
                 try
                 {
-                    Debug.Log("heartbeat poing");
                     m_LobbyApiInterface.SendHeartbeatPing(CurrentUnityLobby.Id);
                 }
                 catch (LobbyServiceException e)
                 {
                     // If Lobby is not found and if we are not the host, it has already been deleted. No need to publish the error here.
                     if (e.Reason != LobbyExceptionReason.LobbyNotFound && !m_LocalUser.IsHost)
-                    {
                         PublishError(e);
-                    }
                 }
             }
         }

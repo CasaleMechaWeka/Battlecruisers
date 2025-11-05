@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Utils;
-using VContainer;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
@@ -13,16 +12,22 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     class OfflineState : ConnectionState
     {
-        [Inject]
         LobbyServiceFacade m_LobbyServiceFacade;
-        [Inject]
         ProfileManager m_ProfileManager;
-        [Inject]
         LocalLobby m_LocalLobby;
-        [Inject]
-        LocalLobbyUser m_LocalLobbyUser;
-        const string k_MainMenuSceneName = "ScreensScene";
 
+        public OfflineState(
+            LobbyServiceFacade lobbyServiceFacade,
+            ProfileManager profileManager,
+            LocalLobby localLobby,
+            ConnectionManager connectionManager,
+            IPublisher<ConnectStatus> connectStatusPublisher)
+            : base(connectionManager, connectStatusPublisher)
+        {
+            m_LobbyServiceFacade = lobbyServiceFacade;
+            m_ProfileManager = profileManager;
+            m_LocalLobby = localLobby;
+        }
         public override void Enter()
         {
 #pragma warning disable 4014
@@ -31,10 +36,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             if (MatchmakingScreenController.Instance != null)
             {
+                Debug.Log("PVP: Connection failed, calling MatchmakingScreen.FailedMatchmaking");
                 MatchmakingScreenController.Instance.FailedMatchmaking();
             }
             else
             {
+                Debug.LogWarning("PVP: No matchmaking controller found, falling back to ScreensScene");
                 if (GameObject.Find("ApplicationController") != null)
                     GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
 
@@ -52,35 +59,35 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
                 if (GameObject.Find("NetworkManager") != null)
                     GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
+
                 SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
             }
         }
-
         public override void Exit() { }
 
         public override void StartClientIP(string playerName, string ipaddress, int port)
         {
-            var connectionMethod = new ConnectionMethodIP(ipaddress, (ushort)port, m_ConnectionManager, m_ProfileManager, playerName);
+            ConnectionMethodIP connectionMethod = new ConnectionMethodIP(ipaddress, (ushort)port, m_ConnectionManager, m_ProfileManager, playerName);
             m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
         }
 
         public override void StartClientLobby(string playerName)
         {
-            var connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
+            ConnectionMethodLobby connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
             m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
         }
 
         public override void StartHostIP(string playerName, string ipaddress, int port)
         {
-            var connectionMethod = new ConnectionMethodIP(ipaddress, (ushort)port, m_ConnectionManager, m_ProfileManager, playerName);
+            ConnectionMethodIP connectionMethod = new ConnectionMethodIP(ipaddress, (ushort)port, m_ConnectionManager, m_ProfileManager, playerName);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingHost.Configure(connectionMethod));
         }
 
         public override void StartHostLobby(string playerName)
         {
-            var connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
+            ConnectionMethodLobby connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingHost.Configure(connectionMethod));
         }
     }

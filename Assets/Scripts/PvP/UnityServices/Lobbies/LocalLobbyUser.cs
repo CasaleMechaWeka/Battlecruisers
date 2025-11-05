@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
-// using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-
-
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
@@ -52,8 +49,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             ID = 4,
         }
 
-        UserMembers m_LastChanged;
-
         public bool IsHost
         {
             get { return m_UserData.IsHost; }
@@ -62,7 +57,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (m_UserData.IsHost != value)
                 {
                     m_UserData.IsHost = value;
-                    m_LastChanged = UserMembers.IsHost;
                     OnChanged();
                 }
             }
@@ -76,7 +70,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (m_UserData.DisplayName != value)
                 {
                     m_UserData.DisplayName = value;
-                    m_LastChanged = UserMembers.DisplayName;
                     OnChanged();
                 }
             }
@@ -90,12 +83,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 if (m_UserData.ID != value)
                 {
                     m_UserData.ID = value;
-                    m_LastChanged = UserMembers.ID;
                     OnChanged();
                 }
             }
         }
-
 
         public void CopyDataFrom(LocalLobbyUser lobby)
         {
@@ -111,7 +102,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
 
             m_UserData = data;
-            m_LastChanged = (UserMembers)lastChanged;
 
             OnChanged();
         }
@@ -127,12 +117,5 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {"DisplayName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, DisplayName)},
                 // I need to add here some fields for rank, score etc...
             };
-
-
-        // public Dictionary<string, PlayerDataObject> GetDataForUnityServices(GameInfo gameInfo) => new Dictionary<string, PlayerDataObject>()
-        // {
-        //     {"DisplayName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, DisplayName),}
-        // };
     }
 }
-

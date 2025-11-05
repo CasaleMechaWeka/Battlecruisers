@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Ads;
-using BattleCruisers.Data;
+﻿using BattleCruisers.Data;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
@@ -21,6 +20,7 @@ using System.Net;
 using BattleCruisers.Utils.Fetchers.Cache;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 #if PLATFORM_ANDROID
 using GooglePlayGames.BasicApi;
@@ -68,7 +68,6 @@ namespace BattleCruisers.Scenes
         public const string AuthProfileCommandLineArg = "-AuthProfile";
 
         public static LandingSceneGod Instance;
-        private static bool _seededThisSession;
 
         public ErrorMessageHandler messageHandler;
         public bool HasInternetConnection { get; private set; }
@@ -85,6 +84,7 @@ namespace BattleCruisers.Scenes
         public int coinBattleLevelNum = -1;
 
         public MessageBox messagebox;
+        private bool _hasNavigatedPostSignIn;
 
         public List<GameObject> disableOnSceneTransition;
         public void LogToScreen(string log)
@@ -104,9 +104,6 @@ namespace BattleCruisers.Scenes
             {
                 Instance = this;
             }
-
-            // Initialize Firebase Analytics and IronSource
-            InitializeAnalyticsAndAds();
 
             LogToScreen(Application.platform.ToString());
             messagebox.HideMessage();
@@ -603,6 +600,11 @@ namespace BattleCruisers.Scenes
 
         void SignedIn()
         {
+            string activeSceneName = SceneManager.GetActiveScene().name;
+            bool isAlreadyInScreensScene = activeSceneName == SceneNames.SCREENS_SCENE;
+            bool isLandingScene = activeSceneName == SceneNames.LANDING_SCENE;
+            bool isPvPFlowActive = GameObject.Find("ApplicationController") != null
+                                        || BattleCruisers.UI.ScreensScene.BattleHubScreen.ArenaSelectPanelScreenController.PrivateMatch;
             SetInteractable(true);
             loginPanel.SetActive(false);
             spinGuest.SetActive(false);
@@ -611,11 +613,62 @@ namespace BattleCruisers.Scenes
             labelGoogle.SetActive(true);
             labelApple.SetActive(true);
             labelGuest.SetActive(true);
+
+            if (_hasNavigatedPostSignIn)
+            {
+                return;
+            }
+
+            if (!isLandingScene || isAlreadyInScreensScene || isPvPFlowActive)
+            {
+                _hasNavigatedPostSignIn = true;
+                if (AuthenticationService.Instance != null)
+                {
+                    try
+                    {
+                        AuthenticationService.Instance.SignedIn -= SignedIn;
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogWarning($"Failed to unsubscribe from SignedIn event (non-critical): {e.Message}");
+                    }
+                }
+                return;
+            }
             foreach (GameObject i in disableOnSceneTransition)
+            {
                 i.SetActive(false);
+            }
             SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
-            _ = TrySeedCloudOnce();
+            _hasNavigatedPostSignIn = true;
+            if (AuthenticationService.Instance != null)
+            {
+                try
+                {
+                    AuthenticationService.Instance.SignedIn -= SignedIn;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"Failed to unsubscribe from SignedIn event (non-critical): {e.Message}");
+                }
+            }
             Debug.Log("=====> PlayerInfo --->" + AuthenticationService.Instance.PlayerId);
+        }
+
+        public void DisableAuthNavigation()
+        {
+            _hasNavigatedPostSignIn = true;
+            if (AuthenticationService.Instance != null)
+            {
+                try
+                {
+                    AuthenticationService.Instance.SignedIn -= SignedIn;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"Failed to unsubscribe from SignedIn event (non-critical): {e.Message}");
+                }
+            }
         }
 
         void SignedOut()
@@ -645,45 +698,15 @@ namespace BattleCruisers.Scenes
         {
 #if PLATFORM_IOS
             if (_AppleAuthManager != null)
+            {
                 _AppleAuthManager.Update();
+            }
 #endif
         }
 
         public void OnQuit()
         {
             Application.Quit();
-        }
-
-        private static async System.Threading.Tasks.Task TrySeedCloudOnce()
-        {
-            if (_seededThisSession) return;
-
-            // Only seed if no cloud save exists for this player
-            try
-            {
-                var serializer = new BattleCruisers.Data.Serializer();
-                if (await serializer.DoesCloudSaveExistAsync())
-                {
-                    Debug.Log("Cloud save already exists, skipping seed.");
-                    return;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Debug.Log($"Failed to check cloud save existence: {ex.Message}");
-                // Continue with seeding attempt on error
-            }
-
-            _seededThisSession = true;
-            try
-            {
-                await BattleCruisers.Data.DataProvider.CloudSave();
-                Debug.Log("Cloud save seeded successfully.");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.Log($"Cloud save seeding failed: {ex.Message}");
-            }
         }
 
         void OnDestroy()
@@ -699,7 +722,7 @@ namespace BattleCruisers.Scenes
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                var request = (HttpWebRequest)WebRequest.Create(url);
                 request.KeepAlive = false;
                 request.Timeout = timeoutMs;
                 using (await request.GetResponseAsync())
@@ -708,84 +731,6 @@ namespace BattleCruisers.Scenes
             catch (Exception)
             {
                 return false;
-            }
-        }
-
-        /// <summary>
-        /// Initialize Firebase Analytics and IronSource Ads managers
-        /// </summary>
-        private void InitializeAnalyticsAndAds()
-        {
-            // Create Firebase Analytics Manager if it doesn't exist
-            if (FirebaseAnalyticsManager.Instance == null)
-            {
-                GameObject analyticsObj = new GameObject("FirebaseAnalyticsManager");
-                analyticsObj.AddComponent<FirebaseAnalyticsManager>();
-                Debug.Log("[LandingScene] Firebase Analytics Manager created");
-            }
-
-            // Create Ad Config Manager if it doesn't exist
-            if (AdConfigManager.Instance == null)
-            {
-                GameObject adConfigObj = new GameObject("AdConfigManager");
-                adConfigObj.AddComponent<AdConfigManager>();
-                Debug.Log("[LandingScene] Ad Config Manager created");
-            }
-
-            // Create IronSource Manager if it doesn't exist
-            if (IronSourceManager.Instance == null)
-            {
-                GameObject adsObj = new GameObject("IronSourceManager");
-                adsObj.AddComponent<IronSourceManager>();
-                Debug.Log("[LandingScene] IronSource Manager created");
-            }
-
-            // Create UnityMainThreadDispatcher if it doesn't exist
-            if (UnityMainThreadDispatcher.Instance == null)
-            {
-                GameObject dispatcherObj = new GameObject("UnityMainThreadDispatcher");
-                dispatcherObj.AddComponent<UnityMainThreadDispatcher>();
-                Debug.Log("[LandingScene] UnityMainThreadDispatcher created");
-            }
-
-            // Track first app launch
-            if (FirebaseAnalyticsManager.Instance != null)
-            {
-                // Track player progression
-                FirebaseAnalyticsManager.Instance.LogPlayerProgression(
-                    DataProvider.GameModel?.SelectedLevel ?? 0,
-                    DataProvider.GameModel?.NumOfLevelsCompleted ?? 0,
-                    0, // TODO: Add play time tracking to GameModel
-                    DataProvider.GameModel?.PremiumEdition ?? false
-                );
-
-                // Check for returning user
-                string lastSessionKey = "LastSessionDate";
-                string lastSessionStr = PlayerPrefs.GetString(lastSessionKey, "");
-                if (!string.IsNullOrEmpty(lastSessionStr))
-                {
-                    if (DateTime.TryParse(lastSessionStr, out DateTime lastSession))
-                    {
-                        int daysSinceLastSession = (int)(DateTime.Now - lastSession).TotalDays;
-                        if (daysSinceLastSession > 0)
-                        {
-                            FirebaseAnalyticsManager.Instance.LogReturnUser(daysSinceLastSession);
-                        }
-                    }
-                }
-                else
-                {
-                    // First time user - track install
-                    string firstInstallKey = "FirstInstallDate";
-                    if (!PlayerPrefs.HasKey(firstInstallKey))
-                    {
-                        PlayerPrefs.SetString(firstInstallKey, DateTime.Now.ToString());
-                    }
-                }
-                
-                // Save current session time
-                PlayerPrefs.SetString(lastSessionKey, DateTime.Now.ToString());
-                PlayerPrefs.Save();
             }
         }
     }

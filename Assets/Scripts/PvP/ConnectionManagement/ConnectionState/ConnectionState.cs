@@ -6,11 +6,17 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     abstract class ConnectionState
     {
-        [Inject]
         protected ConnectionManager m_ConnectionManager;
 
-        [Inject]
         protected IPublisher<ConnectStatus> m_ConnectStatusPublisher;
+
+        public ConnectionState(
+            ConnectionManager connectionManager,
+            IPublisher<ConnectStatus> connectStatusPublisher)
+        {
+            m_ConnectionManager = connectionManager;
+            m_ConnectStatusPublisher = connectStatusPublisher;
+        }
 
         public abstract void Enter();
         public abstract void Exit();

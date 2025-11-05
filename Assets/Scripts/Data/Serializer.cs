@@ -25,22 +25,45 @@ namespace BattleCruisers.Data
     {
         private readonly BinaryFormatter _binaryFormatter;
 
-        private readonly string gameModelFilePath;
+        private readonly string defaultGameModelFilePath;
+        private readonly string betaGameModelFilePath;
+        private readonly string experimentalGameModelFilePath;
+        private readonly string preferredGameModelFilePath;
 
         public Serializer()
         {
-            gameModelFilePath = Application.persistentDataPath + "/GameModel.bcms";
+            defaultGameModelFilePath = Application.persistentDataPath + "/GameModel.bcms";
+            betaGameModelFilePath = Application.persistentDataPath + "/GameModelBeta.bcms";
+            experimentalGameModelFilePath = Application.persistentDataPath + "/GameModelExperimental.bcms";
+
+#if BETA_SAVE
+            preferredGameModelFilePath = betaGameModelFilePath;
+#elif EXPERIMENTAL_SAVE
+            preferredGameModelFilePath = experimentalGameModelFilePath;
+#else
+            preferredGameModelFilePath = defaultGameModelFilePath;
+#endif
+
             _binaryFormatter = new BinaryFormatter();
         }
 
-        public bool DoesSavedGameExist()
+        public bool DoesPreferredSaveGameExist()
         {
-            return File.Exists(gameModelFilePath);
+            return File.Exists(preferredGameModelFilePath);
+        }
+
+        public bool DoesSaveGameExist()
+        {
+#if BETA_SAVE || EXPERIMENTAL_SAVE
+            if (DoesPreferredSaveGameExist())
+                return File.Exists(preferredGameModelFilePath);
+#endif
+            return File.Exists(defaultGameModelFilePath);
         }
 
         public void SaveGame(GameModel game)
         {
-            using (FileStream file = File.Create(gameModelFilePath))
+            using (FileStream file = File.Create(preferredGameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
             }
@@ -48,9 +71,22 @@ namespace BattleCruisers.Data
 
         public GameModel LoadGame()
         {
-            Assert.IsTrue(DoesSavedGameExist());
+            Assert.IsTrue(DoesSaveGameExist());
+
+            string filePath = preferredGameModelFilePath;
+#if BETA_SAVE || EXPERIMENTAL_SAVE
+            if (!DoesPreferredSaveGameExist())
+            {
+                if (File.Exists(defaultGameModelFilePath))
+                {
+                    filePath = defaultGameModelFilePath;
+
+                    Debug.Log("No Beta save file found; defaulting to GameModel.bcms");
+                }
+            }
+#endif
             object output = null;
-            using (FileStream file = File.Open(gameModelFilePath, FileMode.Open))
+            using (FileStream file = File.Open(filePath, FileMode.Open))
             {
                 output = _binaryFormatter.Deserialize(file);
             }
@@ -97,23 +133,20 @@ namespace BattleCruisers.Data
 
             Loadout loadout = (Loadout)plo;
 
-            bool validLoadoutCategories = true;
+            bool validLoadoutCatrgories = true;
 
-            if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5
-             || loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5
-             || loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5
-             || loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5
-             || loadout.SelectedUnits[UnitCategory.Naval].Count > 5
-             || loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
+            if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5 ||
+               loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5 ||
+               loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5 ||
+               loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5 ||
+               loadout.SelectedUnits[UnitCategory.Naval].Count > 5 ||
+               loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
             {
-                validLoadoutCategories = false;
+                validLoadoutCatrgories = false;
             }
 
-            if (loadout.CurrentCaptain == null
-             || loadout.SelectedVariants == null
-             || !validLoadoutCategories
-             || compatiblePurchasables != purchasableCategories.Length
-             || ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || !validLoadoutCatrgories || compatiblePurchasables != purchasableCategories.Length ||
+                ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
             {
                 // make GameModel as compatible as possible
                 game = MakeCompatible(output);
@@ -124,45 +157,23 @@ namespace BattleCruisers.Data
                 game = (GameModel)output;
             }
 
-            if (game.PurchasedHeckles == null && game.PlayerLoadout.CurrentHeckles == null)
-                game.AddHeckle(UnityEngine.Random.Range(0, 279));
-
-            if (game.PlayerLoadout.CurrentHeckles == null && game.PurchasedHeckles != null)
-                game.PlayerLoadout.CurrentHeckles = new List<int> { game.PurchasedHeckles[0] };
-
-            // If any heckle is in SelectedHeckles but missing from PurchasedHeckles, restore it
-            if (game.PlayerLoadout.CurrentHeckles != null && game.PlayerLoadout.CurrentHeckles.Count > 0)
-            {
-                int restoredCount = 0;
-                foreach (int selectedHeckleId in game.PlayerLoadout.CurrentHeckles)
-                    if (!game.PurchasedHeckles.Contains(selectedHeckleId))
-                    {
-                        game.AddHeckle(selectedHeckleId);
-                        restoredCount++;
-                        Debug.Log($"RECOVERY: Restored missing purchased heckle {selectedHeckleId} (found in SelectedHeckles)");
-                    }
-
-                if (restoredCount > 0)
-                    Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased heckles from SelectedHeckles");
-            }
-
             // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
             if (game.PlayerLoadout.SelectedVariants != null && game.PlayerLoadout.SelectedVariants.Count > 0)
             {
                 int restoredCount = 0;
                 foreach (int selectedVariantId in game.PlayerLoadout.SelectedVariants)
+                {
                     if (!game.PurchasedVariants.Contains(selectedVariantId))
                     {
                         game.AddVariant(selectedVariantId);
                         restoredCount++;
                         Debug.Log($"RECOVERY: Restored missing purchased variant {selectedVariantId} (found in SelectedVariants)");
                     }
+                }
 
                 if (restoredCount > 0)
                     Debug.Log($"RECOVERY: Successfully restored {restoredCount} missing purchased variants from SelectedVariants");
             }
-
-            game.PremiumEdition |= game.PurchasedBodykits.Contains(0);
 
 #if PREMIUM_EDITION
             game.PremiumEdition = true;
@@ -184,15 +195,15 @@ namespace BattleCruisers.Data
             var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
-            foreach (HullKey hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
+            foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
                 _unlockedHulls.Add(hull);
 
             List<BuildingKey> _unlockedBuildings = new List<BuildingKey>();
-            foreach (BuildingKey building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
+            foreach (var building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
                 _unlockedBuildings.Add(building);
 
             List<UnitKey> _unlockedUnits = new List<UnitKey>();
-            foreach (UnitKey unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
+            foreach (var unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
                 _unlockedUnits.Add(unit);
 
             // compiler doesn't like them being cast when they're assigned, so they're cast here
@@ -324,7 +335,9 @@ namespace BattleCruisers.Data
                 compatibleGameModel.CreditsChange = (int)gameData.GetType().GetProperty("CreditsChange").GetValue(gameData);
 
             if (gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData) != null)
+            {
                 compatibleGameModel.TimesLostOnLastLevel = (int)gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData);
+            }
 
             if (gameData.GetType().GetProperty("Bounty").GetValue(gameData) != null)
                 compatibleGameModel.Bounty = (int)gameData.GetType().GetProperty("Bounty").GetValue(gameData);
@@ -350,7 +363,9 @@ namespace BattleCruisers.Data
 
             // What levels have been completed, and at what difficulty
             for (int i = 0; i < completedLevelsCount; i++)
+            {
                 compatibleGameModel.AddCompletedLevel(completedLevels.ElementAt(i));
+            }
 
             List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
 
@@ -384,9 +399,9 @@ namespace BattleCruisers.Data
 
         public void DeleteSavedGame()
         {
-            if (DoesSavedGameExist())
+            if (DoesPreferredSaveGameExist())
             {
-                File.Delete(gameModelFilePath);
+                File.Delete(preferredGameModelFilePath);
             }
         }
 
@@ -437,12 +452,6 @@ namespace BattleCruisers.Data
             }
         }
 
-        public async Task<bool> DoesCloudSaveExistAsync()
-        {
-            var cloudSaveWrapper = new CloudSaveWrapper();
-            return await cloudSaveWrapper.DoesCloudSaveExistAsync("GameModel");
-        }
-
         public async Task<SaveGameModel> CloudLoad(GameModel game)
         {
             try
@@ -462,55 +471,6 @@ namespace BattleCruisers.Data
                     }
                     else
                     {
-                        if (saveModel.purchasedBodykits != null)
-                            foreach (int bodykitIndex in saveModel.purchasedBodykits)
-                                game.AddBodykit(bodykitIndex);
-                        if (saveModel.purchasedExos != null)
-                            foreach (int exoIndex in saveModel.purchasedExos)
-                                game.AddExo(exoIndex);
-                        if (saveModel.purchasedHeckles != null)
-                            foreach (int heckleIndex in saveModel.purchasedHeckles)
-                                game.AddHeckle(heckleIndex);
-                        if (saveModel.purchasedVariants != null)
-                            foreach (int variantIndex in saveModel.purchasedVariants)
-                                game.AddVariant(variantIndex);
-
-                        if (saveModel.levelsCompleted != null)
-                            foreach (KeyValuePair<int, int> level in saveModel.levelsCompleted)
-                            {
-                                CompletedLevel cLevel = new CompletedLevel(level.Key,
-                                                                           (Settings.Difficulty)level.Value);
-                                game.AddCompletedLevel(cLevel);
-                            }
-                        if (saveModel.sideQuestsCompleted != null)
-                            foreach (KeyValuePair<int, int> sideQuest in saveModel.sideQuestsCompleted)
-                            {
-                                CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key,
-                                                                               (Settings.Difficulty)sideQuest.Value);
-                                game.AddCompletedSideQuest(cSideQuest);
-                            }
-
-                        if (saveModel.unlockedHulls != null)
-                            foreach (string hull in saveModel.unlockedHulls)
-                            {
-                                HullKey hullKey = new HullKey(hull);
-                                game.AddUnlockedHull(hullKey);
-                            }
-                        if (saveModel.unlockedBuildings != null)
-                            foreach (KeyValuePair<string, string> building in saveModel.unlockedBuildings)
-                            {
-                                Enum.TryParse(building.Value, out BuildingCategory category);
-                                BuildingKey buildingKey = new BuildingKey(category, building.Key);
-                                game.AddUnlockedBuilding(buildingKey);
-                            }
-                        if (saveModel.unlockedUnits != null)
-                            foreach (KeyValuePair<string, string> unit in saveModel.unlockedUnits)
-                            {
-                                Enum.TryParse(unit.Value, out UnitCategory category);
-                                UnitKey unitKey = new UnitKey(category, unit.Key);
-                                game.AddUnlockedUnit(unitKey);
-                            }
-
                         Debug.Log("Cloud save not up to date");
                         return null;
                     }
@@ -546,22 +506,7 @@ namespace BattleCruisers.Data
         {
             try
             {
-                if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized
-                    || !Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
-                {
-                    Debug.Log("SyncCoinsToCloud: UGS not ready; skipping.");
-                    return false;
-                }
-
-                long coins = DataProvider.GameModel.Coins;
-                if (coins < 0)
-                {
-                    Debug.LogWarning($"SyncCoinsToCloud: clamping negative coins {coins} to 0.");
-                    coins = 0;
-                    DataProvider.GameModel.Coins = 0;
-                }
-
-                await EconomyManager.SetEconomyBalance("COIN", coins);
+                await EconomyManager.SetEconomyBalance("COIN", DataProvider.GameModel.Coins);
                 return true;
             }
             catch (EconomyRateLimitedException e)
@@ -588,31 +533,31 @@ namespace BattleCruisers.Data
                 if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
-                    if (balance.CurrencyId == "COIN")
+                    if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
-                        DataProvider.GameModel.Coins = Math.Max(0, balance.Balance);
+                        DataProvider.GameModel.Coins = balance.Balance;
                     }
-                    if (balance.CurrencyId == "CREDIT")
+                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
-                        DataProvider.GameModel.Credits = Math.Max(0, balance.Balance);
+                        DataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
                 return true;
             }
             catch (EconomyRateLimitedException e)
             {
-                balanceResult = await Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
+                balanceResult = await BattleCruisers.Utils.UGS.Samples.Utils.RetryEconomyFunction(EconomyManager.GetEconomyBalances, e.RetryAfter);
                 if (this == null) return false;
                 if (balanceResult is null) return false;
                 foreach (var balance in balanceResult.Balances)
                 {
-                    if (balance.CurrencyId == "COIN")
+                    if (balance.Balance > 0 && balance.CurrencyId == "COIN")
                     {
-                        DataProvider.GameModel.Coins = Math.Max(0, balance.Balance);
+                        DataProvider.GameModel.Coins = balance.Balance;
                     }
-                    if (balance.CurrencyId == "CREDIT")
+                    if (balance.Balance > 0 && balance.CurrencyId == "CREDIT")
                     {
-                        DataProvider.GameModel.Credits = Math.Max(0, balance.Balance);
+                        DataProvider.GameModel.Credits = balance.Balance;
                     }
                 }
                 return true;
@@ -692,22 +637,7 @@ namespace BattleCruisers.Data
         {
             try
             {
-                if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized
-                    || !Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
-                {
-                    Debug.Log("SyncCreditsToCloud: UGS not ready; skipping.");
-                    return false;
-                }
-
-                long credits = DataProvider.GameModel.Credits;
-                if (credits < 0)
-                {
-                    Debug.LogWarning($"SyncCreditsToCloud: clamping negative credits {credits} to 0.");
-                    credits = 0;
-                    DataProvider.GameModel.Credits = 0;
-                }
-
-                await EconomyManager.SetEconomyBalance("CREDIT", credits);
+                await EconomyManager.SetEconomyBalance("CREDIT", DataProvider.GameModel.Credits);
                 return true;
             }
             catch (EconomyRateLimitedException e)

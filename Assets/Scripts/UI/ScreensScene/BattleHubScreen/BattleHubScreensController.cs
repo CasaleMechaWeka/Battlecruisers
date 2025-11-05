@@ -12,6 +12,7 @@ using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using System.Linq;
 using Unity.Services.Authentication;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class BattleHubScreensController : ScreenController
@@ -38,6 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public PlayerInfoPanelController playerInfoPanelController;
         public CanvasGroupButton continueButton, levelsButton, skirmishButton, battleButton, coinBattleButton;
+        public CanvasGroupButton privateMatchButton;
 
         public Text titleOfBattleButton;
 
@@ -85,6 +87,11 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             battleButton.Initialise(_soundPlayer, GotoPvPMode);
             coinBattleButton.Initialise(_soundPlayer, GotoCoinBattle);
 
+            if (privateMatchButton != null)
+            {
+                privateMatchButton.Initialise(_soundPlayer, ShowPrivateMatchPanel);
+            }
+
             battlePanel.Initialise(screensSceneGod);
             leaderboardPanel.Initialise(screensSceneGod);
             profilePanel.Initialise(screensSceneGod, _soundPlayer);
@@ -99,6 +106,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             skirmishTitle.text = LocTableCache.ScreensSceneTable.GetString("SkirmishMode");
             offlineOnlyText.text = LocTableCache.ScreensSceneTable.GetString("OfflineOnlySubtitle");
             openingSoonText.text = LocTableCache.ScreensSceneTable.GetString("ArenasOpenDecemberMessage");
+
+            if (privateMatchButton != null)
+            {
+                Text privateMatchText = privateMatchButton.GetComponentInChildren<Text>();
+                if (privateMatchText != null)
+                {
+                    privateMatchText.text = "Private Match";
+                }
+            }
         }
 
         private void GoHome()
@@ -131,7 +147,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 if (ScreensSceneGod.Instance.cameraOfCaptains != null)
                     ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
                 if (ScreensSceneGod.Instance.cameraOfCharacter != null)
-                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(true);
+                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             }
 
             GoToScreen(battlePanel);
@@ -224,7 +240,23 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             ApplicationModel.Mode = GameMode.Skirmish;
             _screensSceneGod.GoToSkirmishScreen();
         }
+        public void ShowPrivateMatchPanel()
+        {
+            if (privateMatchButton != null)
+            {
+                CanvasGroup buttonCanvasGroup = privateMatchButton.GetComponent<CanvasGroup>();
+                if (buttonCanvasGroup != null)
+                {
+                    buttonCanvasGroup.blocksRaycasts = false;
+                    buttonCanvasGroup.interactable = false;
+                }
+            }
 
+            // Pass reference to avoid expensive scene searches
+            PrivateMatchmakingController.HubControllerReference = this;
+
+            SceneNavigator.GoToScene(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE, true);
+        }
         public void GotoPvPMode()
         {
 #if DISABLE_MATCHMAKING
@@ -345,9 +377,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             playerInfoPanelController.gameObject.SetActive(true);
 
             if (ScreensSceneGod.Instance.cameraOfCaptains != null)
-                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(true);
+                ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
             if (ScreensSceneGod.Instance.cameraOfCharacter != null)
-                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(true);
+                ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
 
             _screensSceneGod.GotoBlackMarketScreen();
             UnselectAll();

@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Unity.Netcode;
-using VContainer;
 using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Matchplay.Client;
-using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -27,14 +25,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         StartClientFailed         // failed to connect to server and/or invalid network endpoint
     }
 
-    public enum GetMatchmakingResult
-    {
-        Undefined,
-        Success,
-        Failed,
-        Matchmaking,
-    }
-
     public struct ReconnectMessage
     {
         public int CurrentAttempt;
@@ -45,13 +35,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             CurrentAttempt = currentAttempt;
             MaxAttempt = maxAttempt;
         }
-    }
-
-    public struct ConnectionEventMessage : INetworkSerializeByMemcpy
-    {
-        public ConnectStatus ConnectStatus;
-        public FixedPlayerName PlayerName;
-
     }
 
     [Serializable]
@@ -79,24 +62,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     {
         ConnectionState m_CurrentState;
 
-        [Inject]
-        NetworkManager m_NetworkManager;
-        [Inject]
-        ProfileManager m_ProfileManager;
-        public NetworkManager NetworkManager => m_NetworkManager;
+        public NetworkManager NetworkManager { get; private set; }
 
         [SerializeField]
         int m_NbReconnectAttempts = 2;
 
         public int NbReconnectAttempts => m_NbReconnectAttempts;
-
-        [Inject]
-        IObjectResolver m_Resolver;
-
-        // [Inject]
-        // LobbyServiceFacade m_LobbyServiceFacade;
-        [Inject]
-        LocalLobby m_LocalLobby;
 
         public int MaxConnectedPlayers = 2;
 
@@ -108,15 +79,97 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             set { latencyLimit = value; }
         }
 
-        const string k_DefaultIP = "127.0.0.1";
-        const int k_DefaultPort = 7777;
-        public bool IsConnecting = false;
-        internal readonly OfflineState m_Offline = new OfflineState();
-        internal readonly ClientConnectingState m_ClientConnecting = new ClientConnectingState();
-        internal readonly ClientConnectedState m_ClientConnected = new ClientConnectedState();
-        internal readonly ClientReconnectingState m_ClientReconnecting = new ClientReconnectingState();
-        internal readonly StartingHostState m_StartingHost = new StartingHostState();
-        internal readonly HostingState m_Hosting = new HostingState();
+        internal OfflineState m_Offline;
+        internal ClientConnectingState m_ClientConnecting;
+        internal ClientConnectedState m_ClientConnected;
+        internal ClientReconnectingState m_ClientReconnecting;
+        internal StartingHostState m_StartingHost;
+        internal HostingState m_Hosting;
+
+        public void Initialise(
+            NetworkManager networkManager,
+            LobbyServiceFacade lobbyServiceFacade,
+            ProfileManager profileManager,
+            IPublisher<ConnectStatus> connectStatusPublisher,
+            LocalLobby localLobby,
+            IPublisher<ReconnectMessage> reconnectMessagePublisher)
+        {
+            NetworkManager = networkManager;
+
+            m_Offline = new OfflineState(lobbyServiceFacade,
+                                         profileManager,
+                                         localLobby,
+                                         this,
+                                         connectStatusPublisher);
+            m_ClientConnecting = new ClientConnectingState(lobbyServiceFacade,
+                                                           localLobby,
+                                                           this,
+                                                           connectStatusPublisher);
+            m_ClientConnected = new ClientConnectedState(lobbyServiceFacade,
+                                                         this,
+                                                         connectStatusPublisher);
+            m_ClientReconnecting = new ClientReconnectingState(reconnectMessagePublisher,
+                                                               lobbyServiceFacade,
+                                                               localLobby,
+                                                               this,
+                                                               connectStatusPublisher);
+            m_StartingHost = new StartingHostState(localLobby,
+                                                   this,
+                                                   connectStatusPublisher);
+            m_Hosting = new HostingState(lobbyServiceFacade,
+                                         this,
+                                         connectStatusPublisher);
+
+
+#if UNITY_EDITOR
+            LatencyLimit = 2000;
+            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + StaticData.MaxLatency);
+#else
+            LatencyLimit = StaticData.MaxLatency;
+            if (LatencyLimit == 0) // Just in case 
+            {
+                LatencyLimit = 300;
+            }
+            Debug.Log("Remote Config latency limit set to " + StaticData.MaxLatency);
+#endif
+
+            List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_Hosting };
+
+            m_CurrentState = m_Offline;
+            // Here, we keep ForceSamePrefabs disabled. This will allow us to dynamically add network prefabs to Netcode
+            // for GameObject after establishing a connection.
+            //    NetworkManager.NetworkConfig.ForceSamePrefabs = false;
+
+            // Unsubscribe first to prevent double registration if Initialise is called multiple times
+            // SceneManager might be null on first initialization before StartClient/StartHost
+            NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
+            NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+            NetworkManager.OnServerStarted -= OnServerStarted;
+            NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
+            NetworkManager.OnTransportFailure -= OnTransportFailure;
+            if (NetworkManager.SceneManager != null)
+            {
+                NetworkManager.SceneManager.OnLoad -= OnSceneLoad;
+                NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoadEventCompleted;
+                NetworkManager.SceneManager.OnLoadComplete -= OnSceneLoadComplete;
+            }
+
+            // Now subscribe
+            NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
+            NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
+            NetworkManager.OnServerStarted += OnServerStarted;
+            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
+            NetworkManager.OnTransportFailure += OnTransportFailure;
+            if (NetworkManager.SceneManager != null)
+            {
+                NetworkManager.SceneManager.OnLoad += OnSceneLoad;
+                NetworkManager.SceneManager.OnLoadEventCompleted += OnSceneLoadEventCompleted;
+                NetworkManager.SceneManager.OnLoadComplete += OnSceneLoadComplete;
+            }
+
+            //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
+            //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
+        }
 
         public ClientGameManager Manager
         {
@@ -126,10 +179,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 Debug.LogError($"CilentGameManger is missing, did you run StartClient()?");
                 return null;
             }
-            set
-            {
-                m_GameManager = value;
-            }
+            set { m_GameManager = value; }
         }
 
         ClientGameManager m_GameManager;
@@ -141,46 +191,24 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public void DestroyNetworkObject()
         {
-            NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
-            NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
-            NetworkManager.OnServerStarted -= OnServerStarted;
-            NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
-            NetworkManager.OnTransportFailure -= OnTransportFailure;
+            if (NetworkManager != null)
+            {
+                NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
+                NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+                NetworkManager.OnServerStarted -= OnServerStarted;
+                NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
+                NetworkManager.OnTransportFailure -= OnTransportFailure;
+
+                if (NetworkManager.SceneManager != null)
+                {
+                    NetworkManager.SceneManager.OnLoad -= OnSceneLoad;
+                    NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoadEventCompleted;
+                    NetworkManager.SceneManager.OnLoadComplete -= OnSceneLoadComplete;
+                }
+            }
             Destroy(gameObject);
         }
 
-        void Start()
-        {
-#if UNITY_EDITOR
-            LatencyLimit = 2000;
-            Debug.Log("Running in editor mode, latency limit set to 2000. Remote Config latency limit would be " + StaticData.MaxLatency);
-#else
-            LatencyLimit = StaticData.MaxLatency;
-            if(LatencyLimit == 0) // Just in case 
-            {
-                LatencyLimit = 300;
-            }
-            Debug.Log("Remote Config latency limit set to " + StaticData.MaxLatency);
-#endif
-
-
-            List<ConnectionState> states = new() { m_Offline, m_ClientConnecting, m_ClientConnected, m_ClientReconnecting, m_StartingHost, m_Hosting };
-            foreach (var connectionState in states)
-            {
-                m_Resolver.Inject(connectionState);
-            }
-            m_CurrentState = m_Offline;
-            // Here, we keep ForceSamePrefabs disabled. This will allow us to dynamically add network prefabs to Netcode
-            // for GameObject after establishing a connection.
-            //    NetworkManager.NetworkConfig.ForceSamePrefabs = false;
-            NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
-            NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
-            NetworkManager.OnServerStarted += OnServerStarted;
-            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
-            NetworkManager.OnTransportFailure += OnTransportFailure;
-            //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
-            //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
-        }
         public void LeaveLobby()
         {
             m_CurrentState.LeaveLobby();
@@ -192,27 +220,34 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
         void OnDestroy()
         {
-            NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
-            NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
-            NetworkManager.OnServerStarted -= OnServerStarted;
-            NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
-            NetworkManager.OnTransportFailure -= OnTransportFailure;
+            if (NetworkManager != null)
+            {
+                NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
+                NetworkManager.OnClientDisconnectCallback -= OnClientDisconnectCallback;
+                NetworkManager.OnServerStarted -= OnServerStarted;
+                NetworkManager.ConnectionApprovalCallback -= ApprovalCheck;
+                NetworkManager.OnTransportFailure -= OnTransportFailure;
+
+                if (NetworkManager.SceneManager != null)
+                {
+                    NetworkManager.SceneManager.OnLoad -= OnSceneLoad;
+                    NetworkManager.SceneManager.OnLoadEventCompleted -= OnSceneLoadEventCompleted;
+                    NetworkManager.SceneManager.OnLoadComplete -= OnSceneLoadComplete;
+                }
+            }
         }
 
         internal void ChangeState(ConnectionState nextState)
         {
-
             if (m_CurrentState != null)
-            {
                 m_CurrentState.Exit();
-            }
+
             m_CurrentState = nextState;
             m_CurrentState.Enter();
         }
 
         void OnClientDisconnectCallback(ulong clientId)
         {
-
             m_CurrentState.OnClientDisconnect(clientId);
         }
 
@@ -236,6 +271,23 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_CurrentState.OnTransportFailure();
         }
 
+        void OnSceneLoad(ulong clientId, string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, UnityEngine.AsyncOperation asyncOperation)
+        {
+            // Scene load callbacks - kept minimal for production
+        }
+
+        void OnSceneLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, System.Collections.Generic.List<ulong> clientsCompleted, System.Collections.Generic.List<ulong> clientsTimedOut)
+        {
+            if (clientsTimedOut.Count > 0)
+            {
+                Debug.LogError($"PVP: Scene load timeout - {clientsTimedOut.Count} clients failed to load {sceneName}");
+            }
+        }
+
+        void OnSceneLoadComplete(ulong clientId, string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode)
+        {
+        }
+
         public void StartClientLobby(string playerName)
         {
             m_CurrentState.StartClientLobby(playerName);
@@ -255,49 +307,5 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_CurrentState.StartHostIP(playerName, ipaddress, port);
         }
-
-
-        public async Task<(string IP, string Port, GetMatchmakingResult result)> GetMatchmaking(string lobbyId)
-        {
-            if (Manager.Matchmaker.IsMatchmaking)
-            {
-                return (null, null, GetMatchmakingResult.Matchmaking);
-            }
-            // Manager.User.Data.lobbyId = lobbyId;
-            Manager.User.Data.userGamePreferences.lobbyId = lobbyId;
-            var matchmakingResult = await Manager.GetMatchAsyncInLobby();
-            if (matchmakingResult.result == MatchmakerPollingResult.Success)
-            {
-                //StartClientIp(Manager.User.Data.userName, matchmakingResult.ip, matchmakingResult.port);
-                return (matchmakingResult.ip, matchmakingResult.port.ToString(), GetMatchmakingResult.Success);
-            }
-            else
-            {
-                Debug.Log("===>" + matchmakingResult.resultMessage);
-                return (null, null, GetMatchmakingResult.Failed);
-            }
-        }
-
-
-        public void StartMatch(string IP, string Port)
-        {
-            if (IsConnecting)
-                return;
-            if (int.TryParse(Port, out int port))
-            {
-                StartClientIp(Manager.User.Data.userName, IP, port);
-                IsConnecting = true;
-            }
-        }
-
-        public async Task CancelMatchmaking()
-        {
-            await Manager.CancelMatchmaking();
-        }
-        public void RequestShutdown()
-        {
-            m_CurrentState.OnUserRequestedShutdown();
-        }
     }
 }
-

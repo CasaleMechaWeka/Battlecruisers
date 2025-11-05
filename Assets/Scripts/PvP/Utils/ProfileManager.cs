@@ -8,8 +8,6 @@ using UnityEngine;
 using System.Security.Cryptography;
 #endif
 
-
-
 namespace BattleCruisers.Network.Multiplay.Utils
 {
     public class ProfileManager
@@ -20,18 +18,9 @@ namespace BattleCruisers.Network.Multiplay.Utils
 
         public string Profile
         {
-            get
-            {
-                return m_Profile ??= GetProfile();
-            }
-            set
-            {
-                m_Profile = value;
-                onProfileChanged?.Invoke();
-            }
+            get { return m_Profile ??= GetProfile(); }
+            set { m_Profile = value; }
         }
-
-        public event Action onProfileChanged;
 
         List<string> m_AvailableProfiles;
 
@@ -108,7 +97,5 @@ namespace BattleCruisers.Network.Multiplay.Utils
             }
             ClientPrefs.SetAvailableProfiles(profilesToSave);
         }
-
     }
 }
-

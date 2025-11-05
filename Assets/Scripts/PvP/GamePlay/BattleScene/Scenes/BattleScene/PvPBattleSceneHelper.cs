@@ -85,17 +85,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                  = new PvPBuildProgressCalculatorFactory(
                    new PvPBuildSpeedCalculator());
         }
-
         public virtual PvPLevel GetPvPLevel()
         {
-            /*#if UNITY_EDITOR*/
+            /*#if UNITY_EDITOR
             return StaticData.PvPLevels[(Map)DataProvider.GameModel.GameMap];
-            /*#else
-                        return DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
+            #else
+            return DataProvider.GetPvPLevel(SynchedServerData.Instance.map.Value);
             #endif*/
-            // return DataProvider.GetPvPLevel();
+            return StaticData.PvPLevels[SynchedServerData.Instance.map.Value];
         }
-
         public virtual async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
         {
             return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(new LevelBackgroundImageStatsKey(levelNum));

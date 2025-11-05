@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
-
+using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
@@ -13,29 +13,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
     public class LobbyAPIInterface
     {
         const int k_MaxLobbiesToShow = 16; // If more are necessary, consider retrieving paginated results or using filters.
-
-        readonly List<QueryFilter> m_Filters;
-        readonly List<QueryOrder> m_Order;
-
-        public LobbyAPIInterface()
-        {
-            // Filter for open lobbies only
-            m_Filters = new List<QueryFilter>()
-            {
-                new QueryFilter(
-                    field: QueryFilter.FieldOptions.AvailableSlots,
-                    op: QueryFilter.OpOptions.GT,
-                    value: "0")
-            };
-
-            // Order by newest lobbies first
-            m_Order = new List<QueryOrder>()
-            {
-                new QueryOrder(
-                    asc: false,
-                    field: QueryOrder.FieldOptions.Created)
-            };
-        }
 
         public async Task<Lobby> CreateLobby(string requesterUasId, string lobbyName, int maxPlayers, bool isPrivate, Dictionary<string, PlayerDataObject> hostUserData, Dictionary<string, DataObject> lobbyData)
         {
@@ -67,7 +44,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 UnityEngine.Debug.Log(e.Message);
             }
         }
-
         public async Task<Lobby> JoinLobbyByCode(string requesterUasId, string lobbyCode, Dictionary<string, PlayerDataObject> localUserData)
         {
             JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions { Player = new Player(id: requesterUasId, data: localUserData) };
@@ -75,13 +51,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, joinOptions);
             }
-            catch
+            catch (System.Exception e)
             {
+                Debug.LogError($"UNITY LOBBIES SDK EXCEPTION in JoinLobbyByCode:\nType: {e.GetType().Name}\nMessage: {e.Message}\nStack:\n{e.StackTrace}");
+                if (e.InnerException != null)
+                {
+                    Debug.LogError($"INNER EXCEPTION:\nType: {e.InnerException.GetType().Name}\nMessage: {e.InnerException.Message}");
+                }
                 return null;
             }
-
         }
-
         public async Task<Lobby> JoinLobbyById(string requesterUasId, string lobbyId, Dictionary<string, PlayerDataObject> localUserData)
         {
             JoinLobbyByIdOptions joinOptions = new JoinLobbyByIdOptions { Player = new Player(id: requesterUasId, data: localUserData) };
@@ -138,7 +117,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             {
                 return null;
             }
-
         }
 
         public async Task<Lobby> UpdateLobby(string lobbyId, Dictionary<string, DataObject> data, bool shouldLock)
@@ -170,5 +148,3 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         }
     }
 }
-
-

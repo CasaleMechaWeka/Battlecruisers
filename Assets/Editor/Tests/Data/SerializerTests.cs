@@ -126,24 +126,24 @@ namespace BattleCruisers.Tests.Data
 		}
 
 		[Test]
-		public void DoesSavedGameExist_False()
+		public void DoesSaveGameExist_False()
 		{
-			Assert.IsFalse(_serializer.DoesSavedGameExist());
+			Assert.IsFalse(_serializer.DoesSaveGameExist());
 		}
 
 		[Test]
-		public void DoesSavedGameExist_True()
+		public void DoesSaveGameExist_True()
 		{
 			FileStream savedGameFile = File.Create(gameModelFilePath);
 			savedGameFile.Dispose();
-			Assert.IsTrue(_serializer.DoesSavedGameExist());
+			Assert.IsTrue(_serializer.DoesSaveGameExist());
 		}
 
 		[Test]
 		public void SaveGame()
 		{
 			_serializer.SaveGame(_originalGameModel);
-			Assert.IsTrue(_serializer.DoesSavedGameExist());
+			Assert.IsTrue(_serializer.DoesSaveGameExist());
 		}
 
 		[Test]
@@ -168,7 +168,7 @@ namespace BattleCruisers.Tests.Data
 
 			_serializer.DeleteSavedGame();
 
-			Assert.IsFalse(_serializer.DoesSavedGameExist());
+			Assert.IsFalse(_serializer.DoesSaveGameExist());
 		}
 	}
 }
