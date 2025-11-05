@@ -118,11 +118,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnBuildableStateValueChangedClientRpc(state);
         }
 
-        protected override void CallRpc_ClickedRepairButton()
-        {
-            PvP_RepairableButtonClickedServerRpc();
-        }
-
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
@@ -194,13 +189,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 BuildableState = state;
-        }
-
-        [ServerRpc(RequireOwnership = true)]
-        private void PvP_RepairableButtonClickedServerRpc()
-        {
-            IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
-            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
         [ClientRpc]

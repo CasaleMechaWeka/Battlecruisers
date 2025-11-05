@@ -21,6 +21,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -277,6 +278,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             return isImmune;
         }
+
+        protected override void CallRpc_ClickedRepairButton()
+        {
+            PvP_RepairableButtonClickedServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        private void PvP_RepairableButtonClickedServerRpc()
+        {
+            IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
+            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+        }
+
 
         protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {

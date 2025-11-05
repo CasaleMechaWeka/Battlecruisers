@@ -1,8 +1,6 @@
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
@@ -63,12 +61,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void OnBuildableStateValueChanged(PvPBuildableState state)
         {
             OnBuildableStateValueChangedClientRpc(state);
-        }
-
-        // ClickedRepairButton
-        protected override void CallRpc_ClickedRepairButton()
-        {
-            PvP_RepairableButtonClickedServerRpc();
         }
 
 
@@ -219,13 +211,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 BuildableState = state;
-        }
-
-        [ServerRpc(RequireOwnership = true)]
-        private void PvP_RepairableButtonClickedServerRpc()
-        {
-            IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
-            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
         }
 
 

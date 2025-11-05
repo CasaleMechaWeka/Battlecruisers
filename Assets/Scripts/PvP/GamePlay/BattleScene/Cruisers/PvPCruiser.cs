@@ -314,11 +314,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             return IsAIBotMode;
         }
 
-        protected override void CallRpc_ClickedRepairButton()
-        {
-            PvP_RepairableButtonClickedServerRpc();
-        }
-
 
         public PvPSlotWrapperController GetSlotWrapperController()
         {
