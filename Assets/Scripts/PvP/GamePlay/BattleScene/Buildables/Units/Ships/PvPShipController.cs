@@ -23,6 +23,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Fa
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
+using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -260,6 +261,26 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             return base.GetInGameRenderers();
         }
+
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            if (IsServer)
+            {
+                OnProgressControllerVisibleClientRpc(isEnabled);
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+            }
+            else
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+        }
+
+        [ClientRpc]
+        void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!IsHost)
+                CallRpc_ProgressControllerVisible(isEnabled);
+        }
+
 
         public void DisableMovement()
         {

@@ -313,6 +313,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
         }
 
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            if (IsServer)
+            {
+                OnProgressControllerVisibleClientRpc(isEnabled);
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+            }
+            else
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!IsHost && !isEnabled)
+                Invoke("ActiveTrail", 0.5f);
+        }
+        
+        void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
+        }
+
         private void OnKamikaze()
         {
             CleanUp();

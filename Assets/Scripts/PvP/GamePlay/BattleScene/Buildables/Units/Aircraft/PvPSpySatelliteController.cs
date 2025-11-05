@@ -56,10 +56,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        private void ActiveTrail()
-        {
-            _aircraftTrailObj.SetActive(true);
-        }
+
+
 
         protected override void OnBuildableProgressEvent()
         {
