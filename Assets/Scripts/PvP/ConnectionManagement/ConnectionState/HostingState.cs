@@ -114,6 +114,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.captainAPrefabName.Value = MatchmakingScreenController.Instance.captainAPrefabName;
                     SynchedServerData.Instance.playerARating.Value = MatchmakingScreenController.Instance.playerRating;
                     SynchedServerData.Instance.playerABodykit.Value = MatchmakingScreenController.Instance.playerABodykit;
+                    SynchedServerData.Instance.playerABounty.Value = MatchmakingScreenController.Instance.playerABounty;
                     //       SynchedServerData.Instance.playerASelectedVariants.Value = MatchmakingScreenController.Instance.playerASelectedVariants;
                     PvPBattleSceneGodTunnel._playerACruiserName = MatchmakingScreenController.Instance.playerAPrefabName;
                     PvPBattleSceneGodTunnel._playerACruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[MatchmakingScreenController.Instance.playerAPrefabName];
@@ -126,6 +127,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.captainBPrefabName.Value = connectionPayload.playerCaptainPrefabName;
                     SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
                     SynchedServerData.Instance.playerBBodykit.Value = connectionPayload.playerBodykit;
+                    SynchedServerData.Instance.playerBBounty.Value = connectionPayload.playerBounty;
                     //       SynchedServerData.Instance.playerBSelectedVariants.Value = connectionPayload.playerSelectedVariants;
                     PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
                     PvPBattleSceneGodTunnel._playerBCruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[connectionPayload.playerHullPrefabName];
