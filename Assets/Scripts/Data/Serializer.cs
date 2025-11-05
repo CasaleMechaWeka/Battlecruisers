@@ -326,6 +326,9 @@ namespace BattleCruisers.Data
             if (gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData) != null)
                 compatibleGameModel.TimesLostOnLastLevel = (int)gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData);
 
+            if (gameData.GetType().GetProperty("Bounty").GetValue(gameData) != null)
+                compatibleGameModel.Bounty = (int)gameData.GetType().GetProperty("Bounty").GetValue(gameData);
+
             // Variants
             if (_loadout.SelectedVariants == null)
                 _loadout.SelectedVariants = new List<int>();

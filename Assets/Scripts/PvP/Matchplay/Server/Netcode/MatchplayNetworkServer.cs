@@ -120,6 +120,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                 m_SynchedServerData.playerAName.Value = userData.userName;
                 m_SynchedServerData.playerAScore.Value = userData.score;
                 m_SynchedServerData.captainAPrefabName.Value = userData.captainPrefabName;
+                m_SynchedServerData.playerABounty.Value = userData.bounty;
             }
             else if (m_clientData.Count == 1)
             {
@@ -128,6 +129,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                 m_SynchedServerData.playerBName.Value = userData.userName;
                 m_SynchedServerData.playerBScore.Value = userData.score;
                 m_SynchedServerData.captainBPrefabName.Value = userData.captainPrefabName;
+                m_SynchedServerData.playerBBounty.Value = userData.bounty;
             }
 
             Debug.Log($"Host ApprovalCheck: connecting client: ({request.ClientNetworkId}) - {userData}");
@@ -173,8 +175,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
                     m_clientData.Remove(authId);
                 }
             }
-/*            var matchPlayerIntance = GetNetworkedMatchPlayer(networkId);
-            OnServerPlayerDespawned?.Invoke(matchPlayerIntance);*/
+            /*            var matchPlayerIntance = GetNetworkedMatchPlayer(networkId);
+                        OnServerPlayerDespawned?.Invoke(matchPlayerIntance);*/
         }
 
 

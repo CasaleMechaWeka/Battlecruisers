@@ -52,6 +52,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 playerGameMap = DataProvider.GameModel.GameMap,
                 playerRating = DataProvider.GameModel.BattleWinScore,
                 playerBodykit = DataProvider.GameModel.PlayerLoadout.SelectedBodykit,
+                playerBounty = DataProvider.GameModel.Bounty,
                 //        playerSelectedVariants = DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
                 //               isDebug = Debug.isDebugBuild
             });

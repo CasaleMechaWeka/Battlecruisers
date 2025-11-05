@@ -66,6 +66,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public int playerGameMap;
         public float playerRating;
         public int playerBodykit;
+        public int playerBounty;
         //    public string playerSelectedVariants;
         //        public bool isDebug;
     }
