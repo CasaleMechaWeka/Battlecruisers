@@ -6,6 +6,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils;
+using BattleCruisers.Ads;
 using System;
 using System.Collections;
 using TMPro;
@@ -123,6 +124,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         [SerializeField]
         private Text nukesText;
 
+        // Rewarded ad variables:
+        [Header("Rewarded Ads")]
+        [SerializeField]
+        private GameObject rewardedAdButton;
+        [SerializeField]
+        private Text rewardedAdButtonText;
+        [SerializeField]
+        private float rewardedAdOfferDuration = 5f; // How long to show the button
+        
+        private bool watchedRewardedAd = false;
+        private const int COINS_MULTIPLIER = 2;
+        private const int CREDITS_MULTIPLIER = 3;
 
         public Sprite BlackRig;
         public Sprite Bullshark;
@@ -160,6 +173,28 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             nextButton.Initialise(_soundPlayer, Done);
             skipButton.Initialise(_soundPlayer, SkipAnim);
             SceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
+
+            // Hide rewarded ad button by default
+            if (rewardedAdButton != null)
+            {
+                rewardedAdButton.SetActive(false);
+            }
+
+            // Ensure IronSourceManager exists
+            if (IronSourceManager.Instance == null)
+            {
+                Debug.LogWarning("[PvP Rewards] IronSourceManager not found, creating one...");
+                GameObject adsObj = new GameObject("IronSourceManager");
+                adsObj.AddComponent<IronSourceManager>();
+            }
+
+            // Register rewarded ad callbacks
+            if (IronSourceManager.Instance != null)
+            {
+                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+            }
 
             StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
             StaticData.GameConfigs.TryGetValue("creditdivider", out creditDivider);
@@ -645,7 +680,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private void CalculateRewards()
         {
-            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            // Calculate base rewards
+            int baseCoins = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            long baseCredits = CalculateCredits();
+
+            // Apply multipliers if user watched rewarded ad
+            if (watchedRewardedAd)
+            {
+                coinsToAward = baseCoins * COINS_MULTIPLIER;
+                creditsToAward = baseCredits * CREDITS_MULTIPLIER;
+                Debug.Log($"[PvP Rewards] Multiplied: Coins {baseCoins} -> {coinsToAward}, Credits {baseCredits} -> {creditsToAward}");
+            }
+            else
+            {
+                coinsToAward = baseCoins;
+                creditsToAward = baseCredits;
+            }
+
+            // Update UI
             if (coinsToAward > 0)
             {
                 coinsCounter.SetActive(true);
@@ -656,7 +708,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 coinsCounter.SetActive(false);
             }
 
-            creditsToAward = CalculateCredits();
             if (creditsToAward > 0)
             {
                 creditsCounter.SetActive(true);
@@ -676,6 +727,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             else
             {
                 nukesCounter.SetActive(false);
+            }
+
+            // Show rewarded ad offer if rewards exist and ad is available
+            if (!watchedRewardedAd && (baseCoins > 0 || baseCredits > 0))
+            {
+                ShowRewardedAdOffer(baseCoins, (int)baseCredits);
             }
         }
 
@@ -901,6 +958,193 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             catch (Exception ex)
             {
                 Debug.Log(ex);
+            }
+        }
+
+        // ========== REWARDED AD METHODS ==========
+
+        private void ShowRewardedAdOffer(int baseCoins, int baseCredits)
+        {
+            if (rewardedAdButton == null || IronSourceManager.Instance == null)
+                return;
+
+            // Check if ad is ready
+            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            {
+                Debug.Log("[PvP Rewards] Rewarded ad not available");
+                return;
+            }
+
+            // Calculate potential rewards
+            int bonusCoins = baseCoins * (COINS_MULTIPLIER - 1);
+            int bonusCredits = baseCredits * (CREDITS_MULTIPLIER - 1);
+
+            // Update button text
+            if (rewardedAdButtonText != null)
+            {
+                rewardedAdButtonText.text = $"Watch Ad\n+{bonusCoins} Coins, +{bonusCredits} Credits";
+            }
+
+            // Show button
+            rewardedAdButton.SetActive(true);
+
+            // Log to Firebase
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogRewardedAdOffered("pvp_destruction_screen", bonusCoins, bonusCredits);
+            }
+
+            // Start timer to hide button
+            StartCoroutine(HideRewardedAdOfferAfterDelay());
+
+            Debug.Log($"[PvP Rewards] Offering rewarded ad: +{bonusCoins} coins, +{bonusCredits} credits");
+        }
+
+        private IEnumerator HideRewardedAdOfferAfterDelay()
+        {
+            yield return new WaitForSeconds(rewardedAdOfferDuration);
+            
+            if (!watchedRewardedAd && rewardedAdButton != null && rewardedAdButton.activeSelf)
+            {
+                rewardedAdButton.SetActive(false);
+                
+                // Log skip to Firebase
+                if (FirebaseAnalyticsManager.Instance != null)
+                {
+                    FirebaseAnalyticsManager.Instance.LogRewardedAdSkipped("pvp_destruction_screen");
+                }
+                
+                Debug.Log("[PvP Rewards] Rewarded ad offer expired");
+            }
+        }
+
+        /// <summary>
+        /// Called when user clicks the rewarded ad button
+        /// </summary>
+        public void OnWatchRewardedAdButtonClicked()
+        {
+            // Ensure IronSourceManager exists (fallback)
+            if (IronSourceManager.Instance == null)
+            {
+                Debug.LogWarning("[PvP Rewards] IronSourceManager not found, creating one...");
+                GameObject adsObj = new GameObject("IronSourceManager");
+                adsObj.AddComponent<IronSourceManager>();
+                
+                // Wait for next frame to let it initialize, then try again
+                StartCoroutine(RetryShowRewardedAdAfterInit());
+                return;
+            }
+
+            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            {
+                Debug.LogWarning("[PvP Rewards] Rewarded ad not ready");
+                
+                // Hide button since ad isn't available
+                if (rewardedAdButton != null)
+                {
+                    rewardedAdButton.SetActive(false);
+                }
+                return;
+            }
+
+            // Hide button immediately
+            if (rewardedAdButton != null)
+            {
+                rewardedAdButton.SetActive(false);
+            }
+
+            // Log ad start to Firebase
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogRewardedAdStarted("pvp_destruction_screen");
+            }
+
+            // Show the ad
+            IronSourceManager.Instance.ShowRewardedAd("pvp_destruction_screen");
+            Debug.Log("[PvP Rewards] Showing rewarded ad");
+        }
+
+        private IEnumerator RetryShowRewardedAdAfterInit()
+        {
+            yield return new WaitForSeconds(0.5f);
+            
+            if (IronSourceManager.Instance != null)
+            {
+                // Register callbacks
+                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+                
+                // Try showing ad again
+                OnWatchRewardedAdButtonClicked();
+            }
+            else
+            {
+                Debug.LogError("[PvP Rewards] Failed to create IronSourceManager");
+                if (rewardedAdButton != null)
+                {
+                    rewardedAdButton.SetActive(false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when user completes watching the rewarded ad
+        /// </summary>
+        private void OnRewardedAdCompleted()
+        {
+            watchedRewardedAd = true;
+            Debug.Log("[PvP Rewards] User watched ad - applying multipliers");
+
+            // Recalculate rewards with multipliers
+            CalculateRewards();
+
+            // Log completion to Firebase
+            if (FirebaseAnalyticsManager.Instance != null)
+            {
+                FirebaseAnalyticsManager.Instance.LogRewardedAdCompleted(
+                    "pvp_destruction_screen", 
+                    coinsToAward, 
+                    (int)creditsToAward
+                );
+
+                // Track as virtual currency earned
+                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("coins", coinsToAward, "rewarded_ad_pvp");
+                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("credits", (int)creditsToAward, "rewarded_ad_pvp");
+            }
+        }
+
+        /// <summary>
+        /// Called when rewarded ad is closed (whether completed or not)
+        /// </summary>
+        private void OnRewardedAdClosed()
+        {
+            Debug.Log("[PvP Rewards] Rewarded ad closed");
+            // Ad closed, rewards already applied if completed
+        }
+
+        /// <summary>
+        /// Called when rewarded ad fails to show
+        /// </summary>
+        private void OnRewardedAdFailed()
+        {
+            Debug.LogWarning("[PvP Rewards] Rewarded ad failed to show");
+            
+            // Show button again if it was hidden
+            if (!watchedRewardedAd && rewardedAdButton != null)
+            {
+                rewardedAdButton.SetActive(true);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // Unregister rewarded ad callbacks
+            if (IronSourceManager.Instance != null)
+            {
+                IronSourceManager.Instance.OnRewardedAdRewarded -= OnRewardedAdCompleted;
+                IronSourceManager.Instance.OnRewardedAdClosed -= OnRewardedAdClosed;
+                IronSourceManager.Instance.OnRewardedAdShowFailed -= OnRewardedAdFailed;
             }
         }
     }
