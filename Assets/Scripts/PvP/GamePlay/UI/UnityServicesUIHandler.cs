@@ -4,7 +4,6 @@ using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using Unity.Services.Lobbies;
 using UnityEngine;
-using VContainer;
 
 /// <summary>
 /// handle UI notification for Unity Services
@@ -22,8 +21,7 @@ namespace BattleCruisers.Network.Multiplay.GamePlay.UI
             DontDestroyOnLoad(gameObject);
         }
 
-        [Inject]
-        void Initialize(ISubscriber<UnityServiceErrorMessage> serviceError)
+        public void Initialize(ISubscriber<UnityServiceErrorMessage> serviceError)
         {
             m_ServiceErrorSubscription = serviceError;
             m_ServiceErrorSubscription.Subscribe(ServiceErrorHandler);

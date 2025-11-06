@@ -20,7 +20,6 @@ using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +135,7 @@ namespace BattleCruisers.Scenes
 
             // Interacting with Cloud
             bool IsInternetAccessable = false;
-            if (IsFirstTimeLoad)
+            if (IsFirstTimeLoad && LandingSceneGod.Instance != null)
             {
                 IsInternetAccessable = LandingSceneGod.Instance.HasInternetConnection;
             }
@@ -282,7 +281,8 @@ namespace BattleCruisers.Scenes
             // TEMP  For when not coming from LandingScene :)
             if (_musicPlayer == null)
             {
-                _musicPlayer = Substitute.For<MusicPlayer>();
+                // Leave as null - MusicPlayer requires SingleSoundPlayer parameter
+                Debug.LogWarning("ScreensSceneGod: MusicPlayer is null (not coming from LandingScene)");
             }
 
             messageBox.gameObject.SetActive(true);
@@ -512,7 +512,7 @@ namespace BattleCruisers.Scenes
             cameraOfCaptains.SetActive(false);
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
-            _musicPlayer.PlayScreensSceneMusic();
+            _musicPlayer?.PlayScreensSceneMusic();
             fullScreenads.CloseAdvert();           
             GoToScreen(hubScreen);
         }
@@ -830,9 +830,9 @@ namespace BattleCruisers.Scenes
             _currentScreen.gameObject.SetActive(true);
             _currentScreen.OnPresenting(activationParameter: null);
 
-            if (playDefaultMusic)
+            if (playDefaultMusic && _musicPlayer != null)
             {
-                _musicPlayer.PlayScreensSceneMusic();
+                _musicPlayer?.PlayScreensSceneMusic();
             }
         }
 
@@ -867,7 +867,7 @@ namespace BattleCruisers.Scenes
         public void LoadPvPBattleScene()
         {
             AdvertisingBanner.stopAdvert();
-            SceneNavigator.GoToScene(SceneNames.PvP_BOOT_SCENE, true);
+            SceneNavigator.GoToScene(SceneNames.PvP_INITIALIZE_SCENE, true);
             CleanUp();
         }
 
@@ -887,7 +887,7 @@ namespace BattleCruisers.Scenes
             //{
             //    _musicPlayer.PlayAdsMusic();
             //}
-            _musicPlayer.PlayAdsMusic();
+            _musicPlayer?.PlayAdsMusic();
         }
 
         public void PlayMusicCloseAdsButton()
@@ -895,19 +895,19 @@ namespace BattleCruisers.Scenes
             if (_gameModel.LastBattleResult == null)
             {
                 // If the player has exited the tutorial without progressing to the first level!
-                _musicPlayer.PlayVictoryMusic();
+                _musicPlayer?.PlayVictoryMusic();
                 return;
             }
             //Only called via Unity Button event when clicking the close button on a FullScreenAd
             if (_gameModel.HasAttemptedTutorial && _gameModel.FirstNonTutorialBattle)
-                _musicPlayer.PlayVictoryMusic();
+                _musicPlayer?.PlayVictoryMusic();
 
             else if (_gameModel.LastBattleResult.WasVictory)
-                _musicPlayer.PlayVictoryMusic();
+                _musicPlayer?.PlayVictoryMusic();
             else if (!_gameModel.LastBattleResult.WasVictory)
-                _musicPlayer.PlayDefeatMusic();
+                _musicPlayer?.PlayDefeatMusic();
             else
-                _musicPlayer.PlayScreensSceneMusic();
+                _musicPlayer?.PlayScreensSceneMusic();
         }
 
         public CaptainExo GetCaptainExoData(CaptainExoKey key)

@@ -1,12 +1,16 @@
 using System;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using UnityEngine;
-using VContainer;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Scenes;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Network.Multiplay.Infrastructure;
+using BattleCruisers.Network.Multiplay.Scenes;
+using BattleCruisers.Network.Multiplay.Utils;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -16,11 +20,17 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     /// </summary>
     class StartingHostState : OnlineState
     {
-        [Inject]
-        LobbyServiceFacade m_LobbyServiceFacade;
-        [Inject]
         LocalLobby m_LocalLobby;
         ConnectionMethodBase m_ConnectionMethod;
+
+        public StartingHostState(
+            LocalLobby localLobby,
+            ConnectionManager connectionManager,
+            IPublisher<ConnectStatus> connectStatusPublisher)
+            : base(connectionManager, connectStatusPublisher)
+        {
+            m_LocalLobby = localLobby;
+        }
 
         public StartingHostState Configure(ConnectionMethodBase baseConnectionMethod)
         {
@@ -30,7 +40,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void Enter()
         {
-            MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CONNECTING);
+            if (MatchmakingScreenController.Instance != null)
+                MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CONNECTING);
             StartHost();
         }
 
@@ -39,9 +50,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void OnClientDisconnect(ulong clientId)
         {
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
-            {
                 StartHostFailed();
-            }
         }
 
         void StartHostFailed()
@@ -55,41 +64,55 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
         }
-
         public override void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
         {
-            var connectionData = request.Payload;
-            var clientId = request.ClientNetworkId;
+            byte[] connectionData = request.Payload;
+            ulong clientId = request.ClientNetworkId;
             SynchedServerData m_SynchedServerData = GameObject.Instantiate(Resources.Load<SynchedServerData>("SynchedServerData"));
             m_SynchedServerData.GetComponent<NetworkObject>().Spawn();
+
+            m_SynchedServerData.map.Value = (Map)DataProvider.GameModel.GameMap;
+            Debug.Log($"PVP: HOST synced map (Map={m_SynchedServerData.map.Value}, Arena={DataProvider.GameModel.GameMap})");
+
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)
             {
-                var payload = System.Text.Encoding.UTF8.GetString(connectionData);
-                var connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
+                string payload = System.Text.Encoding.UTF8.GetString(connectionData);
+                ConnectionPayload connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
                 connectionPayload.playerNetworkId = clientId;
 
-                MatchmakingScreenController.Instance.playerAPrefabName = connectionPayload.playerHullPrefabName;
-                MatchmakingScreenController.Instance.playerAClientNetworkId = clientId;
-                MatchmakingScreenController.Instance.playerAName = connectionPayload.playerName;
-                MatchmakingScreenController.Instance.playerAScore = connectionPayload.playerScore;
-                MatchmakingScreenController.Instance.captainAPrefabName = connectionPayload.playerCaptainPrefabName;
-                MatchmakingScreenController.Instance.playerRating = connectionPayload.playerRating;
-                MatchmakingScreenController.Instance.playerABodykit = connectionPayload.playerBodykit;
-                MatchmakingScreenController.Instance.playerABounty = connectionPayload.playerBounty;
+                PvPBootManager.Instance.playerAPrefabName = connectionPayload.playerHullPrefabName;
+                PvPBootManager.Instance.playerAClientNetworkId = clientId;
+                PvPBootManager.Instance.playerAName = connectionPayload.playerName;
+                PvPBootManager.Instance.playerAScore = connectionPayload.playerScore;
+                PvPBootManager.Instance.captainAPrefabName = connectionPayload.playerCaptainPrefabName;
+                PvPBootManager.Instance.playerRating = connectionPayload.playerRating;
+                PvPBootManager.Instance.playerABodykit = connectionPayload.playerBodykit;
+                PvPBootManager.Instance.playerABounty = connectionPayload.playerBounty;
                 //        MatchmakingScreenController.Instance.playerASelectedVariants = connectionPayload.playerSelectedVariants;
             }
             response.Approved = true;
             response.Pending = false;
             response.CreatePlayerObject = true;
         }
-
         async void StartHost()
         {
             try
             {
                 await m_ConnectionMethod.SetupHostConnectionAsync();
-                Debug.Log($"Created relay allocation with join code {m_LocalLobby.RelayJoinCode}");
-                // NGO's StartHost launches everything
+                Debug.Log($"PVP: HOST relay allocated (JoinCode={m_LocalLobby.RelayJoinCode}, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
+
+                if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
+                {
+                    DynamicPrefabLoadingUtilities.Init(m_ConnectionManager.NetworkManager);
+                }
+
+                if (ArenaSelectPanelScreenController.PrivateMatch)
+                {
+                    m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement = true;
+                }
+
+                Debug.Log($"PVP: HOST starting NetworkManager (JoinCode={m_LocalLobby.RelayJoinCode}, SceneManagement={m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement}, Private={ArenaSelectPanelScreenController.PrivateMatch})");
+
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
                     OnClientDisconnect(m_ConnectionManager.NetworkManager.LocalClientId);
@@ -97,9 +120,22 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             catch (Exception e)
             {
-                Debug.Log("Error ---> connecting client, see following exception");
-                Debug.Log(e.Message);
-                LandingSceneGod.Instance.messagebox.ShowMessage(LocTableCache.CommonTable.GetString("NetworkError"));
+                Debug.LogError($"PVP: HOST failed to start (JoinCode={m_LocalLobby.RelayJoinCode}, Error={e.Message})");
+
+                if (LandingSceneGod.Instance != null)
+                {
+                    LandingSceneGod.Instance.messagebox.ShowMessage(LocTableCache.CommonTable.GetString("NetworkError"));
+                }
+                else if (PrivateMatchmakingController.Instance != null && PrivateMatchmakingController.Instance.messageBox != null)
+                {
+                    Debug.Log("PVP: HOST showing connection error in PrivateMatchmakingController");
+                    PrivateMatchmakingController.Instance.ShowBadInternetMessageBox();
+                }
+                else
+                {
+                    Debug.LogError("PVP: HOST no message box available for error display");
+                }
+
                 StartHostFailed();
             }
         }

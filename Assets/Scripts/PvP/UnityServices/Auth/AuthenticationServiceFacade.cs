@@ -1,20 +1,21 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
-using VContainer;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using BattleCruisers.Network.Multiplay.Infrastructure;
-// #if UNITY_EDITOR
-// using ParrelSync;
-// #endif
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Auth
 {
 
     public class AuthenticationServiceFacade
     {
-        [Inject] IPublisher<UnityServiceErrorMessage> m_UnityServiceErrorMessagePublisher;
+        IPublisher<UnityServiceErrorMessage> m_UnityServiceErrorMessagePublisher;
+
+        public AuthenticationServiceFacade(IPublisher<UnityServiceErrorMessage> unityServiceErrorMessagePublisher)
+        {
+            m_UnityServiceErrorMessagePublisher = unityServiceErrorMessagePublisher;
+        }
 
         public async Task InitializeAndSignInAsync(InitializationOptions initializationOptions)
         {
@@ -31,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Auth
                     AuthenticationService.Instance.SwitchProfile($"Clone_{customArgument}_Profile");
                 }
 #endif
-                
+
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
@@ -44,7 +45,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Auth
                 throw;
             }
         }
-   
 
         public async Task SwitchProfileAndReSignInAsync(string profile)
         {
@@ -66,7 +66,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Auth
             }
         }
 
-
         public void AddActionToSignedInEvent(Action action)
         {
             AuthenticationService.Instance.SignedIn += action;
@@ -79,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Auth
             }
 
             try
-            {           
+            {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 return true;
             }
@@ -102,5 +101,3 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Auth
 
     }
 }
-
-

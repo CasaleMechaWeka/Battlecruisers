@@ -41,7 +41,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         protected void SetConnectionPayload(string playerId, string playerName)
         {
-            var payload = JsonUtility.ToJson(new ConnectionPayload()
+            string payload = JsonUtility.ToJson(new ConnectionPayload()
             {
                 playerId = playerId,
                 playerName = playerName,
@@ -53,11 +53,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 playerRating = DataProvider.GameModel.BattleWinScore,
                 playerBodykit = DataProvider.GameModel.PlayerLoadout.SelectedBodykit,
                 playerBounty = DataProvider.GameModel.Bounty,
-                //        playerSelectedVariants = DataProvider.GameModel.PlayerLoadout.GetSelectedVariantsAsString()
-                //               isDebug = Debug.isDebugBuild
             });
 
-            var payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
+            byte[] payloadBytes = System.Text.Encoding.UTF8.GetBytes(payload);
 
             m_ConnectionManager.NetworkManager.NetworkConfig.ConnectionData = payloadBytes;
         }
@@ -123,6 +121,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override async Task SetupClientConnectionAsync()
         {
+            // 1-second delay to allow HOST lobby data (relay join code) to propagate through Unity services
+            await Task.Delay(1000);
+
             Debug.Log("Setting up Unity Relay client");
             SetConnectionPayload(GetPlayerId(), m_PlayerName);
             if (m_LobbyServiceFacade.CurrentUnityLobby == null)

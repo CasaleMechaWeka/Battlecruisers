@@ -1,8 +1,17 @@
+using BattleCruisers.Network.Multiplay.Infrastructure;
+
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     abstract class OnlineState : ConnectionState
     {
         public const string k_DtlsConnType = "dtls";
+
+        public OnlineState(
+            ConnectionManager connectionManager,
+            IPublisher<ConnectStatus> connectStatusPublisher)
+            : base(connectionManager, connectStatusPublisher)
+        {
+        }
 
         public override void OnUserRequestedShutdown()
         {

@@ -1,6 +1,4 @@
 using BattleCruisers.Network.Multiplay.Infrastructure;
-using VContainer;
-
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
@@ -9,10 +7,22 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
     /// </summary>
     public class JoinedLobbyContentHeartbeat
     {
-        [Inject] LocalLobby m_LocalLobby;
-        [Inject] LocalLobbyUser m_LocalUser;
-        [Inject] UpdateRunner m_UpdateRunner;
-        [Inject] LobbyServiceFacade m_LobbyServiceFacade;
+        LocalLobby m_LocalLobby;
+        LocalLobbyUser m_LocalUser;
+        UpdateRunner m_UpdateRunner;
+        LobbyServiceFacade m_LobbyServiceFacade;
+
+        public JoinedLobbyContentHeartbeat(
+            LocalLobby localLobby,
+            LocalLobbyUser localUser,
+            UpdateRunner updateRunner,
+            LobbyServiceFacade lobbyServiceFacade)
+        {
+            m_LocalLobby = localLobby;
+            m_LocalUser = localUser;
+            m_UpdateRunner = updateRunner;
+            m_LobbyServiceFacade = lobbyServiceFacade;
+        }
 
         int m_AwaitingQueryCount = 0;
         bool m_ShouldPushData = false;

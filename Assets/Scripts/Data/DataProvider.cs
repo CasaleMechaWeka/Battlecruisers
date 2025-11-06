@@ -38,7 +38,7 @@ namespace BattleCruisers.Data
         {
             try
             {
-                if (_serializer.DoesSavedGameExist())
+                if (_serializer.DoesSaveGameExist())
                 {
                     _gameModel = _serializer.LoadGame();
 
