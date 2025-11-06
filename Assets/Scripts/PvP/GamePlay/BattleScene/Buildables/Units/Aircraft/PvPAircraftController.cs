@@ -57,7 +57,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IMovementController PatrollingMovementController { get; private set; }
 
         private IMovementController _activeMovementController;
-        protected NetworkVariable<int> pvp_IndexOfSprite = new NetworkVariable<int>();
         protected IMovementController ActiveMovementController
         {
             get { return _activeMovementController; }
@@ -173,11 +172,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted_PvPClient();
             ActiveMovementController = PatrollingMovementController;
-            pvp_IndexOfSprite.OnValueChanged += OnSpriteChanged;
-        }
-        private void OnSpriteChanged(int oldSprite, int newSprite)
-        {
-            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite);
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -211,7 +205,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
                 _spriteRenderer.sprite = spriteOfAircraft.Item1;
-                pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;
             }
         }
 
