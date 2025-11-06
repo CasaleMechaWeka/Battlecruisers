@@ -27,10 +27,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                     .Select(initialiser => initialiser.CreateParticleSystemGroup())
                     .ToList();
 
-            return
-                new PvPShipDeath(
+            PvPShipDeath death = new PvPShipDeath(
                     this,
                     sinkingAnimation);
+
+            Position = new Vector3(0, -1000, 0);
+
+            return death;
         }
         protected virtual void Awake()
         {
@@ -49,6 +52,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
                 new PvPShipDeath(
                     this,
                     sinkingAnimation);
+            Position = new Vector3(0, -1000, 0);
         }
         protected override void SetVisible(bool isVisible)
         {

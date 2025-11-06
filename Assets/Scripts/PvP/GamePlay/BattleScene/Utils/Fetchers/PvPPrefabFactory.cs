@@ -220,7 +220,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(PvPStaticPrefabKeys.PvPShipDeaths.GetKey(deathType));
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             newShipDeath.GetComponent<NetworkObject>().Spawn();
-            newShipDeath.IsVisible = false;
 
             IPoolable<Vector3> shipDeath = newShipDeath.CreateShipDeath();
             shipDeath.Deactivated += (object sender, EventArgs e) => { shipDeathPool[(int)deathType].Push(shipDeath); };
