@@ -23,7 +23,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
-using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {
@@ -221,6 +220,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             PvPShipDeathInitialiser shipDeathPrefab = PvPPrefabCache.GetShipDeath(PvPStaticPrefabKeys.PvPShipDeaths.GetKey(deathType));
             PvPShipDeathInitialiser newShipDeath = Object.Instantiate(shipDeathPrefab);
             newShipDeath.GetComponent<NetworkObject>().Spawn();
+            newShipDeath.IsVisible = false;
 
             IPoolable<Vector3> shipDeath = newShipDeath.CreateShipDeath();
             shipDeath.Deactivated += (object sender, EventArgs e) => { shipDeathPool[(int)deathType].Push(shipDeath); };
