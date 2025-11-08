@@ -39,6 +39,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 Debug.Log("PVP: Connection failed, calling MatchmakingScreen.FailedMatchmaking");
                 MatchmakingScreenController.Instance.FailedMatchmaking();
             }
+            else if (BattleCruisers.UI.ScreensScene.BattleHubScreen.PrivateMatchmakingController.Instance != null)
+            {
+                Debug.Log("PVP: Connection failed, calling PrivateMatchmaking.FailedMatchmaking");
+                BattleCruisers.UI.ScreensScene.BattleHubScreen.PrivateMatchmakingController.Instance.FailedMatchmaking();
+            }
             else
             {
                 Debug.LogWarning("PVP: No matchmaking controller found, falling back to ScreensScene");

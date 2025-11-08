@@ -91,7 +91,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             float newHealth = maxHealth / _shieldController.maxHealth * _shieldController.Health;
 
-            TakeDamage(Health - newHealth, EnemyCruiser);
+            TakeDamage(Health - newHealth, _shieldController.LastDamagedSource ?? EnemyCruiser);
         }
 
         private void OnHealthChanged(object sender, EventArgs e)

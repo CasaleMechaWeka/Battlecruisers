@@ -239,20 +239,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnTakeDamage();
 
                 Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
-                try
-                {
-                    ulong objectId = ulong.MaxValue;
-                    if (damageSource.GameObject.GetComponent<PvPBuilding>() != null)
-                        objectId = (ulong)(damageSource.GameObject.GetComponent<PvPBuilding>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
-                    if (damageSource.GameObject.GetComponent<PvPUnit>() != null)
-                        objectId = (ulong)(damageSource.GameObject.GetComponent<PvPUnit>()?._parent?.GetComponent<NetworkObject>()?.NetworkObjectId);
-                    OnDamagedEventCalled(objectId);
-                }
-                catch (Exception ex)
-                {
-                    //    Debug.Log("Cruiser maybe not have _parent " + damageSource.GameObject.name);
-                    Debug.LogError("Cruiser maybe not have _parent: " + ex.Message);
-                }
+                ulong objectId = ulong.MaxValue;
+                PvPBuilding building = damageSource.GameObject.GetComponent<PvPBuilding>();
+                PvPUnit unit = damageSource.GameObject.GetComponent<PvPUnit>();
+
+                if (building?._parent?.GetComponent<NetworkObject>() is NetworkObject buildingParent)
+                    objectId = buildingParent.NetworkObjectId;
+                else if (unit?._parent?.GetComponent<NetworkObject>() is NetworkObject unitParent)
+                    objectId = unitParent.NetworkObjectId;
+
+                OnDamagedEventCalled(objectId);
 
                 if (wasFullHealth)
                 {

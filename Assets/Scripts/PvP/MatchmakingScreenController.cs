@@ -431,20 +431,26 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public async void FoundCompetitor()
         {
+            if (leftPlayerName == null) return;
             leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
+            if (leftPlayerBounty == null) return;
             leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
             int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
-            leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
-            leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+            UnityEngine.Sprite spriteA = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
+            if (leftPlayerRankImage != null) leftPlayerRankImage.sprite = spriteA;
+            if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
             //    leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
 
+            if (rightPlayerName == null) return;
             rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
+            if (rightPlayerBounty == null) return;
             rightPlayerBounty.text = SynchedServerData.Instance.playerBBounty.Value.ToString();
             //    rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
             int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
-            rightPlayerRankeImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
-            rightPlayerRankeName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
+            UnityEngine.Sprite spriteB = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
+            if (rightPlayerRankeImage != null) rightPlayerRankeImage.sprite = spriteB;
+            if (rightPlayerRankeName != null) rightPlayerRankeName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
             //    rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
 
             // apply bodykit of right player
@@ -457,14 +463,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
                 {
-                    leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
-                    leftCruiserImage.sprite = bodykit.bodykitImage;
+                    if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
+                    if (leftCruiserImage != null) leftCruiserImage.sprite = bodykit.bodykitImage;
                 }
             }
             else
             {
-                leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
-                leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
+                if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
+                if (leftCruiserImage != null) leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
             }
 
             int id_bodykitB = SynchedServerData.Instance.playerBBodykit.Value;
@@ -473,25 +479,25 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
                 {
-                    rightCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitB].NameStringKeyBase);
-                    rightCruiserImage.sprite = bodykit.bodykitImage;
+                    if (rightCruiserName != null) rightCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitB].NameStringKeyBase);
+                    if (rightCruiserImage != null) rightCruiserImage.sprite = bodykit.bodykitImage;
                 }
             }
             else
             {
-                rightCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerBPrefabName.Value + "Name");
-                rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
+                if (rightCruiserName != null) rightCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerBPrefabName.Value + "Name");
+                if (rightCruiserImage != null) rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
             }
 
 
             if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
             {
-                rightCaptain.texture = clientTexture;
+                if (rightCaptain != null) rightCaptain.texture = clientTexture;
             }
             else
             {
-                leftCaptain.texture = hostTexture;
-                rightCaptain.texture = clientTexture;
+                if (leftCaptain != null) leftCaptain.texture = hostTexture;
+                if (rightCaptain != null) rightCaptain.texture = clientTexture;
             }
 
             if (backgroundMusic != null && backgroundMusic.isPlaying)

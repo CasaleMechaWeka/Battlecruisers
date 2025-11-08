@@ -267,8 +267,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"PVP: LobbyServiceFacade.TryJoinLobbyAsync - Exception: {e.GetType().Name} - {e.Message}");
-                Debug.LogError($"PVP: Exception StackTrace: {e.StackTrace}");
+                Debug.LogWarning($"PVP: Failed to join lobby (lobby may have closed or be full): {e.Message}");
             }
 
             return (false, null);

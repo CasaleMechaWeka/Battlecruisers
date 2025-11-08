@@ -270,7 +270,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 GameObject[] rootObjects = battleScene.GetRootGameObjects();
                 foreach (GameObject rootObject in rootObjects)
                 {
-                    if (rootObject.activeSelf && rootObject.name != "EventSystem")
+                    if (rootObject.activeSelf)
                     {
                         rootObject.SetActive(false);
                         disabledRootObjects.Add(rootObject);
@@ -281,10 +281,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             Debug.Log("PVP: PvPBattleScene pre-loaded successfully");
             isPvPBattleScenePreloaded = true;
         }
-        private UnityEngine.EventSystems.EventSystem disabledEventSystem;
         private System.Collections.Generic.List<GameObject> disabledRootObjects = new System.Collections.Generic.List<GameObject>();
         public void ReEnableBattleSceneGameObjects()
         {
+            UnityEngine.EventSystems.EventSystem initializerEventSystem = GetComponentInChildren<UnityEngine.EventSystems.EventSystem>();
+            if (initializerEventSystem != null)
+            {
+                Destroy(initializerEventSystem.gameObject);
+            }
+
             if (disabledRootObjects != null && disabledRootObjects.Count > 0)
             {
                 Debug.Log($"PVP: Re-enabling {disabledRootObjects.Count} disabled root GameObjects");
