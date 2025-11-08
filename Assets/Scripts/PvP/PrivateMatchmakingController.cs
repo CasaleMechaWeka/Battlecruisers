@@ -64,7 +64,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     Debug.LogError($"PrivateMatchmakingController.Start failed: {t.Exception}");
             });
         }
-
         async Task StartAsync()
         {
             if (Instance != null && Instance != this)
@@ -97,8 +96,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             uiAudioSource.loop = false;
 
             soundPlayer = new SingleSoundPlayer(
-                new EffectVolumeAudioSource(
-                new AudioSourceBC(uiAudioSource), 1));
+            new EffectVolumeAudioSource(
+            new AudioSourceBC(uiAudioSource), 1));
 
             if (backButton != null)
             {
@@ -121,6 +120,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     cachedPanel.SetArenaBackground(arenaBackgroundPrefab, arenaPanel.IndexCurrentArena);
                 }
             }
+
+            StartCoroutine(PreloadBattleSceneCoroutine());
 
             (bool success, IList<IQosResult> qosResults) = await latencyTask;
             if (success && qosResults != null && qosResults.Count > 0)
@@ -164,7 +165,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     Debug.LogError($"OnBackButtonClicked failed: {t.Exception}");
             });
         }
-
         async Task OnBackButtonClickedAsync()
         {
             if (backgroundMusic != null && backgroundMusic.isPlaying)
@@ -188,6 +188,13 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 await Task.Delay(LOBBY_CLEANUP_DELAY_MS);
             }
 
+            if (isPvPBattleScenePreloaded)
+            {
+                Debug.Log("PVP: Unloading pre-loaded PvPBattleScene");
+                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
+                isPvPBattleScenePreloaded = false;
+            }
+
             Destroy(gameObject);
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
         }
@@ -207,17 +214,22 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             gameObject.SetActive(false);
         }
-
         public void FailedMatchmaking()
         {
             if (backgroundMusic != null && backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
 
+            if (isPvPBattleScenePreloaded)
+            {
+                Debug.Log("PVP: Unloading pre-loaded PvPBattleScene (FailedMatchmaking)");
+                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
+                isPvPBattleScenePreloaded = false;
+            }
+
             ArenaSelectPanelScreenController.PrivateMatch = false;
             Destroy(gameObject);
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
         }
-
         public void ShowBadInternetMessageBox()
         {
             if (messageBox != null)
@@ -242,6 +254,49 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 return (false, null);
 
             return (true, qosResults);
+        }
+        private bool isPvPBattleScenePreloaded = false;
+        System.Collections.IEnumerator PreloadBattleSceneCoroutine()
+        {
+            Debug.Log("PVP: Pre-loading PvPBattleScene...");
+            AsyncOperation sceneLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            sceneLoad.allowSceneActivation = true;
+
+            yield return sceneLoad;
+
+            UnityEngine.SceneManagement.Scene battleScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("PvPBattleScene");
+            if (battleScene.IsValid())
+            {
+                GameObject[] rootObjects = battleScene.GetRootGameObjects();
+                foreach (GameObject rootObject in rootObjects)
+                {
+                    if (rootObject.activeSelf && rootObject.name != "EventSystem")
+                    {
+                        rootObject.SetActive(false);
+                        disabledRootObjects.Add(rootObject);
+                    }
+                }
+            }
+
+            Debug.Log("PVP: PvPBattleScene pre-loaded successfully");
+            isPvPBattleScenePreloaded = true;
+        }
+        private UnityEngine.EventSystems.EventSystem disabledEventSystem;
+        private System.Collections.Generic.List<GameObject> disabledRootObjects = new System.Collections.Generic.List<GameObject>();
+        public void ReEnableBattleSceneGameObjects()
+        {
+            if (disabledRootObjects != null && disabledRootObjects.Count > 0)
+            {
+                Debug.Log($"PVP: Re-enabling {disabledRootObjects.Count} disabled root GameObjects");
+                foreach (GameObject rootObject in disabledRootObjects)
+                {
+                    if (rootObject != null)
+                    {
+                        rootObject.SetActive(true);
+                    }
+                }
+                disabledRootObjects.Clear();
+            }
         }
     }
 }

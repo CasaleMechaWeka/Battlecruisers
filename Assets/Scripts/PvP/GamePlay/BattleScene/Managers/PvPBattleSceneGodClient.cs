@@ -815,13 +815,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
 
         }
-
         private async void Update()
         {
             if (isReadyToShowCaptainExo && (leftCaptain == null || rightCaptain == null))
             {
                 await LoadAllCaptains();
             }
+
+            if (battleCompletionHandler == null)
+                return;
+
             if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsHost)
             {
                 if (IsConnectedClient)
@@ -837,11 +840,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 DetectClientDisconnection();
             }
         }
-
         IEnumerator iLoadedPvPScene()
         {
             float timeout = 30f;
             float elapsed = 0f;
+
+            Debug.Log($"PVP: wait loop START - PrivateMatch={BattleCruisers.UI.ScreensScene.BattleHubScreen.ArenaSelectPanelScreenController.PrivateMatch}");
 
             while (elapsed < timeout)
             {
@@ -858,12 +862,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 elapsed += 0.1f;
             }
 
+            Debug.Log($"PVP: wait loop DONE after {elapsed:F1}s - ConnectedClients={NetworkManager.Singleton?.ConnectedClientsIds.Count ?? 0}, SyncData={SynchedServerData.Instance != null}");
+
             if (elapsed >= timeout)
             {
                 Debug.LogWarning($"iLoadedPvPScene timeout after {timeout}s - ConnectedClients={NetworkManager.Singleton?.ConnectedClientsIds.Count ?? 0}, SyncData={SynchedServerData.Instance != null}");
             }
 
-            yield return new WaitForSeconds(5f);
+            // yield return new WaitForSeconds(5f);
 
             SetMatchmakingAnimatorCompleted(false);
             CallMatchmakingDisableAllAnimated();

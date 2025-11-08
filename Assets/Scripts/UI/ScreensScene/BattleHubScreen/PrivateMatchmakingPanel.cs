@@ -511,6 +511,11 @@ public class PrivateMatchmakingPanel : MonoBehaviour
                         BattleButton.gameObject.SetActive(false);
                     }
 
+                    if (PrivateMatchmakingController.Instance != null)
+                    {
+                        PrivateMatchmakingController.Instance.ReEnableBattleSceneGameObjects();
+                    }
+
                     PvPBootManager.Instance.ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
 
                     StopCoroutine(nameof(LobbyLoop));
@@ -573,6 +578,11 @@ public class PrivateMatchmakingPanel : MonoBehaviour
                     if (BattleButton != null)
                     {
                         BattleButton.gameObject.SetActive(false);
+                    }
+
+                    if (PrivateMatchmakingController.Instance != null)
+                    {
+                        PrivateMatchmakingController.Instance.ReEnableBattleSceneGameObjects();
                     }
 
                     PvPBootManager.Instance.ConnectionManager.StartClientLobby(DataProvider.GameModel.PlayerName);
