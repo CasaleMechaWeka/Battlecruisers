@@ -65,12 +65,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static bool isCost = false;
         public static float difficultyDestructionScoreMultiplier = 1.0f;
         public static Dictionary<string, long> cruiser_scores = new Dictionary<string, long>() {
-            { "BlackRig", 5800},
+            { "AlphaSpace", 24000},
+            { "Arkdeso", 3500},
+            { "Axiom", 150},
             { "BasicRig", 500},
+            { "BlackRig", 5800},
             { "Bullshark", 4000},
             { "Cricket", 5000 },
             { "Eagle", 2400},
+            { "EndlessWall", 90000},
+            { "Essex", 7000},
             { "Flea", 4000},
+            { "FortNova", 50000},
+            { "FortressPrime", 90000},
             { "Goatherd", 5700},
             { "Hammerhead", 3900},
             { "HuntressBoss", 150000},
@@ -79,14 +86,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             { "Megalodon", 5000},
             { "Megalith", 7000},
             { "Microlodon", 1500},
+            { "Middlodon", 3000},
+            { "October", 1500},
+            { "Orac", 800},
             { "Pistol", 2200},
             { "Raptor", 1500},
             { "Rickshaw", 1500},
             { "Rockjaw", 3600},
+            { "Salvage", 500},
             { "Shepherd", 4000},
             { "TasDevil", 6800},
+            { "TekGnosis", 8000},
             { "Trident", 3500},
             { "Yeti", 8000},
+            { "Yucalux", 500},
+            { "Zumwalt", 500},
         };
         private void Awake()
         {
