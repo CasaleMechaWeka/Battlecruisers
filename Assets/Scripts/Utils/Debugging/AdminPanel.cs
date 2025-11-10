@@ -229,6 +229,14 @@ namespace BattleCruisers.Utils.Debugging
             DataProvider.SaveGame();
         }
 
+        public void Add5kOnBounty()
+        {
+            Debug.LogError(DataProvider.GameModel.Bounty);
+            DataProvider.GameModel.Bounty += 5000;
+            Debug.LogError(DataProvider.GameModel.Bounty);
+            DataProvider.SaveGame();
+        }
+
         /// <summary>
         /// Toggle between Premium and Free edition for ad testing
         /// </summary>
@@ -236,10 +244,10 @@ namespace BattleCruisers.Utils.Debugging
         {
             DataProvider.GameModel.PremiumEdition = !DataProvider.GameModel.PremiumEdition;
             DataProvider.SaveGame();
-            
+
             string status = DataProvider.GameModel.PremiumEdition ? "PREMIUM" : "FREE";
             Debug.Log($"[AdminPanel] Edition toggled to: {status}");
-            
+
             // Log to Firebase for tracking
             if (FirebaseAnalyticsManager.Instance != null)
             {
@@ -281,11 +289,11 @@ namespace BattleCruisers.Utils.Debugging
         {
             bool isPremium = DataProvider.GameModel.PremiumEdition;
             int levelsCompleted = DataProvider.GameModel.NumOfLevelsCompleted;
-            
+
             string config = "=== AD STATUS ===\n";
             config += $"Edition: {(isPremium ? "PREMIUM" : "FREE")}\n";
             config += $"Levels Completed: {levelsCompleted}\n";
-            
+
             if (AdConfigManager.Instance != null)
             {
                 config += $"Min Level for Ads: {AdConfigManager.Instance.MinimumLevelForAds}\n";
@@ -293,7 +301,7 @@ namespace BattleCruisers.Utils.Debugging
                 config += $"Ad Cooldown: {AdConfigManager.Instance.AdCooldownMinutes} min\n";
                 config += $"Veteran Player: {AdConfigManager.Instance.IsVeteranPlayer(levelsCompleted)}\n";
             }
-            
+
             if (fullScreenAdverts != null)
             {
                 config += $"Counter Status: {fullScreenAdverts.GetAdCounterStatus()}\n";
@@ -302,7 +310,7 @@ namespace BattleCruisers.Utils.Debugging
             {
                 config += "FullScreenAdverts: Not linked!\n";
             }
-            
+
             config += "================";
             Debug.Log(config);
         }
