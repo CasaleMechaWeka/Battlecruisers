@@ -145,41 +145,42 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetRelayServerData(new RelayServerData(joinedAllocation, OnlineState.k_DtlsConnType));
         }
-
         public override async Task SetupHostConnectionAsync()
         {
             Debug.Log("Setting up Unity Relay host");
+            SetConnectionPayload(GetPlayerId(), m_PlayerName);
 
-            SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
+            // Add stopwatch to measure actual relay allocation time
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
 
-
-            // Create relay allocation
             Allocation hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
+            string joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
+            Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
 
-            var joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
-            Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, " +
-                $"allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
-
-            var regions = new List<string>();
-            regions.Add(hostAllocation.Region);
-            var qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+            List<string> regions = new List<string> { hostAllocation.Region };
+            IList<IQosResult> qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
             int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
             Debug.Log("===>host latency ---> " + averageLatency);
 
             if (averageLatency > ConnectionManager.LatencyLimit / 2)
                 throw new Exception();
 
+            // BASELINE MEASUREMENT: Log actual relay allocation time
+            sw.Stop();
+            Debug.Log($"PVP: BASELINE relay allocation took {sw.ElapsedMilliseconds}ms");
+
             m_LocalLobby.RelayJoinCode = joinCode;
             m_LocalLobby.Region = hostAllocation.Region;
             m_LocalLobby.Latency = averageLatency.ToString();
-            //next line enable lobby and relay services integration
-            await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
-            await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationIdBytes.ToString(), joinCode);
 
-            // Setup UTP with relay connection info
-            var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
-            utp.SetRelayServerData(new RelayServerData(hostAllocation, OnlineState.k_DtlsConnType)); // This is with DTLS enabled for a secure connection
+            await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationId.ToString(), joinCode);
+
+            UnityTransport utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
+            utp.SetRelayServerData(new RelayServerData(hostAllocation, OnlineState.k_DtlsConnType));
+
+            await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
         }
+
     }
 }
 

@@ -58,6 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         void Start()
         {
+            Debug.Log("PVP: PrivateMatchmakingController.Start - entering PrivatePVP lobby page");
             _ = StartAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)
@@ -66,6 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         async Task StartAsync()
         {
+            Debug.Log("PVP: PrivateMatchmakingController.StartAsync - begin initialization");
             if (Instance != null && Instance != this)
             {
                 Debug.LogWarning("Duplicate PrivateMatchmakingController detected");
@@ -77,6 +79,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             DontDestroyOnLoad(gameObject);
 
             ArenaSelectPanelScreenController.PrivateMatch = true;
+            Debug.Log("PVP: Starting latency check (async)");
             Task<(bool success, IList<IQosResult> qosResults)> latencyTask = FetchLatencyByRegion();
             ArenaSelectPanelScreenController.LatencyCheck = latencyTask;
 
@@ -105,6 +108,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 backButton.gameObject.SetActive(true);
             }
 
+            Debug.Log("PVP: Finding PrivateMatchmakingPanel");
             cachedPanel = FindFirstObjectByType<PrivateMatchmakingPanel>();
 
             if (cachedPanel == null)
@@ -113,16 +117,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             }
             else
             {
+                Debug.Log("PVP: Initializing PrivateMatchmakingPanel");
                 cachedPanel.Initialise(soundPlayer);
                 ArenaSelectPanelScreenController arenaPanel = HubControllerReference?.arenaSelectPanel;
                 if (arenaPanel != null && arenaBackgroundPrefab != null)
                 {
                     cachedPanel.SetArenaBackground(arenaBackgroundPrefab, arenaPanel.IndexCurrentArena);
                 }
+                Debug.Log("PVP: PrivateMatchmakingPanel initialized - UI READY FOR INTERACTION");
             }
 
+            Debug.Log("PVP: Starting PvPBattleScene pre-load (async in background)");
             StartCoroutine(PreloadBattleSceneCoroutine());
 
+            Debug.Log("PVP: Waiting for latency check to complete");
             (bool success, IList<IQosResult> qosResults) = await latencyTask;
             if (success && qosResults != null && qosResults.Count > 0)
             {
@@ -156,6 +164,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 backgroundMusic.Play();
             }
+
+            Debug.Log("PVP: PrivateMatchmakingController initialization COMPLETE - lobby fully ready");
         }
         void OnBackButtonClicked()
         {

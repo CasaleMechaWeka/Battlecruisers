@@ -68,11 +68,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             try
             {
+                Debug.Log("PVP: CLIENT ConnectClientAsync - before SetupClientConnectionAsync");
                 await m_ConnectionMethod.SetupClientConnectionAsync();
+                Debug.Log("PVP: CLIENT ConnectClientAsync - after SetupClientConnectionAsync");
 
                 if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
                 {
+                    Debug.Log("PVP: CLIENT - before DynamicPrefabLoadingUtilities.Init");
                     DynamicPrefabLoadingUtilities.Init(m_ConnectionManager.NetworkManager);
+                    Debug.Log("PVP: CLIENT - after DynamicPrefabLoadingUtilities.Init");
                 }
 
                 Debug.Log($"PVP: CLIENT relay configured (RelayCode={m_LocalLobby.RelayJoinCode}, Private={ArenaSelectPanelScreenController.PrivateMatch}) - starting NetworkManager");

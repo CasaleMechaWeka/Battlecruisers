@@ -513,10 +513,14 @@ public class PrivateMatchmakingPanel : MonoBehaviour
 
                     if (PrivateMatchmakingController.Instance != null)
                     {
+                        Debug.Log("PVP: HOST path - before ReEnableBattleSceneGameObjects");
                         PrivateMatchmakingController.Instance.ReEnableBattleSceneGameObjects();
+                        Debug.Log("PVP: HOST path - after ReEnableBattleSceneGameObjects");
                     }
 
+                    Debug.Log("PVP: HOST path - before StartHostLobby");
                     PvPBootManager.Instance.ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
+                    Debug.Log("PVP: HOST path - after StartHostLobby");
 
                     StopCoroutine(nameof(LobbyLoop));
                     yield break;
@@ -582,10 +586,14 @@ public class PrivateMatchmakingPanel : MonoBehaviour
 
                     if (PrivateMatchmakingController.Instance != null)
                     {
+                        Debug.Log("PVP: CLIENT path - before ReEnableBattleSceneGameObjects");
                         PrivateMatchmakingController.Instance.ReEnableBattleSceneGameObjects();
+                        Debug.Log("PVP: CLIENT path - after ReEnableBattleSceneGameObjects");
                     }
 
+                    Debug.Log("PVP: CLIENT path - before StartClientLobby");
                     PvPBootManager.Instance.ConnectionManager.StartClientLobby(DataProvider.GameModel.PlayerName);
+                    Debug.Log("PVP: CLIENT path - after StartClientLobby");
 
                     StopCoroutine(nameof(ClientLobbyPoll));
 

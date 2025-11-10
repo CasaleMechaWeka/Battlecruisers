@@ -59,7 +59,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 return;
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
         }
-
         public override void OnServerStarted()
         {
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_Hosting);
@@ -98,12 +97,15 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             try
             {
+                Debug.Log("PVP: HOST StartHost - before SetupHostConnectionAsync");
                 await m_ConnectionMethod.SetupHostConnectionAsync();
-                Debug.Log($"PVP: HOST relay allocated (JoinCode={m_LocalLobby.RelayJoinCode}, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
+                Debug.Log($"PVP: HOST relay bound, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
 
                 if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
                 {
+                    Debug.Log("PVP: HOST - before DynamicPrefabLoadingUtilities.Init");
                     DynamicPrefabLoadingUtilities.Init(m_ConnectionManager.NetworkManager);
+                    Debug.Log("PVP: HOST - after DynamicPrefabLoadingUtilities.Init");
                 }
 
                 if (ArenaSelectPanelScreenController.PrivateMatch)
@@ -111,16 +113,20 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement = true;
                 }
 
-                Debug.Log($"PVP: HOST starting NetworkManager (JoinCode={m_LocalLobby.RelayJoinCode}, SceneManagement={m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement}, Private={ArenaSelectPanelScreenController.PrivateMatch})");
+                Debug.Log($"PVP: HOST starting NetworkManager (SceneManagement={m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement}, Private={ArenaSelectPanelScreenController.PrivateMatch})");
 
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
                     OnClientDisconnect(m_ConnectionManager.NetworkManager.LocalClientId);
                 }
+                else
+                {
+                    Debug.Log("PVP: HOST NetworkManager.StartHost returned true");
+                }
             }
             catch (Exception e)
             {
-                Debug.LogError($"PVP: HOST failed to start (JoinCode={m_LocalLobby.RelayJoinCode}, Error={e.Message})");
+                Debug.LogError($"PVP: HOST failed to start (Error={e.Message})");
 
                 if (LandingSceneGod.Instance != null)
                 {

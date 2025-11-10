@@ -413,12 +413,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async void InitialiseAsync()
         {
+            Debug.Log("PVP: InitialiseAsync START");
 
             if (!NetworkManager.Singleton.IsHost)
             {
                 PvPBattleSceneGodTunnel._playerACruiserName = SynchedServerData.Instance.playerAPrefabName.Value;
-                // variants
-                //            GetComponent<PvPBattleSceneGodServer>().GetSelectedVariantsFromString();
             }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             battleCompletionHandler.registeredTime = Time.time;
@@ -427,6 +426,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             playerCruiser.StaticInitialise();
             enemyCruiser.StaticInitialise();
+
+            Debug.Log("PVP: InitialiseAsync - cruisers initialized, starting camera/UI setup");
 
             cameraComponents = cameraInitialiser.Initialise(
             DataProvider.SettingsManager,
@@ -501,7 +502,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             PvPFactoryProvider.Sound.UISoundPlayer);
 
             _informatorDismisser = new PvPInformatorDismisser(components.BackgroundClickableEmitter, uiManager, rightPanelComponents.HacklePanelController);
-            // Audio
+
+            Debug.Log("PVP: InitialiseAsync - UI setup complete, loading music/audio");
+
             LayeredMusicPlayer layeredMusicPlayer
             = await components.MusicPlayerInitialiser.CreatePlayerAsync(
             currentLevel.MusicKeys,
@@ -534,30 +537,37 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             rightPanelComponents.MainMenuManager);
             playerCruiser.Destroyed += PlayerCruiser_Destroyed;
             enemyCruiser.Destroyed += EnemyCruiser_Destroyed;
-            // Captains
+
             if (SynchedServerData.Instance != null)
             {
                 SynchedServerData.Instance.captainAPrefabName.OnValueChanged += CaptainAPrefabNameChanged;
                 SynchedServerData.Instance.captainBPrefabName.OnValueChanged += CaptainBPrefabNameChanged;
             }
             isReadyToShowCaptainExo = true;
-            await Task.Delay(1000);
+
+            Debug.Log("PVP: InitialiseAsync - loading captains");
             await LoadAllCaptains();
+            Debug.Log("PVP: InitialiseAsync - captains loaded, finalizing");
+
             countdownAnimator = countdownGameObject.GetComponent<Animator>();
             if (countdownAnimator == null)
                 Debug.LogError("CountdownGameObject is missing the animator component");
-            // pvp
+
             PvPHeckleMessageManager.Instance.Initialise(PvPFactoryProvider.Sound.UISoundPlayer);
             _ = PvPPrefabCache.CreatePvPPrefabCacheAsync();
             CallMatchmakingFoundCompetitor();
+
+            Debug.Log("PVP: InitialiseAsync - starting wait loop coroutine");
             StartCoroutine(iLoadedPvPScene());
+
             ApplicationModel.Mode = BattleCruisers.Data.GameMode.PvP_1VS1;
-            // apply economy because here is end of starting PvPbattle.
             Invoke("ApplyEconomy", 60f);
             if (NetworkManager.Singleton.IsHost)
             {
                 PvPBattleSceneGodServer.Instance.playerASelectedVariants = DataProvider.GameModel.PlayerLoadout.SelectedVariants;
             }
+
+            Debug.Log("PVP: InitialiseAsync COMPLETE");
         }
         private async void ApplyEconomy()
         {
@@ -871,19 +881,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             // yield return new WaitForSeconds(5f);
 
+            Debug.Log("PVP: About to call SetMatchmakingAnimatorCompleted");
             SetMatchmakingAnimatorCompleted(false);
+            Debug.Log("PVP: About to call CallMatchmakingDisableAllAnimated");
             CallMatchmakingDisableAllAnimated();
 
             string matchmakingScene = ArenaSelectPanelScreenController.PrivateMatch
                 ? SceneNames.PRIVATE_PVP_INITIALIZER_SCENE
                 : SceneNames.PvP_INITIALIZE_SCENE;
+            Debug.Log($"PVP: About to call SceneNavigator.SceneLoaded({matchmakingScene})");
             SceneNavigator.SceneLoaded(matchmakingScene);
 
             if (PvPBootManager.Instance?.LobbyServiceFacade != null)
             {
+                Debug.Log("PVP: About to pause lobby tracking");
                 PvPBootManager.Instance.LobbyServiceFacade.PauseTracking();
             }
 
+            Debug.Log("PVP: About to start countdown animation");
             PlayCountDownAnimation();
             if (SynchedServerData.Instance != null)
             {
@@ -897,46 +912,65 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 components.UpdaterProvider.SwitchableUpdater.Enabled = true;
             }
         }
-
         public void RegisterAsPlayer(PvPCruiser _cruiser)
         {
             Assert.IsNotNull(_cruiser);
+            Debug.Log("PVP: RegisterAsPlayer called");
             playerCruiser = _cruiser;
             if (enemyCruiser != null)
             {
+                Debug.Log("PVP: Both cruisers registered - starting InitialiseAsync");
                 InitialiseAsync();
             }
+            else
+            {
+                Debug.Log("PVP: Waiting for enemy cruiser registration");
+            }
         }
-
         public void RegisterAsEnemy(PvPCruiser _cruiser)
         {
             Assert.IsNotNull(_cruiser);
+            Debug.Log("PVP: RegisterAsEnemy called");
             enemyCruiser = _cruiser;
             if (playerCruiser != null)
             {
+                Debug.Log("PVP: Both cruisers registered - starting InitialiseAsync");
                 InitialiseAsync();
             }
+            else
+            {
+                Debug.Log("PVP: Waiting for player cruiser registration");
+            }
         }
-
         private PvPBattleSceneHelper CreatePvPBattleHelper()
         {
             return new PvPBattleHelper();
         }
         private void PlayCountDownAnimation()
         {
-            if (countdownGameObject == null || countdownAnimator == null) return;
+            Debug.Log("PVP: PlayCountDownAnimation called");
+            if (countdownGameObject == null || countdownAnimator == null)
+            {
+                Debug.LogWarning("PVP: Countdown objects are null!");
+                return;
+            }
 
             countdownGameObject.SetActive(true);
+            Debug.Log($"PVP: Countdown GameObject activated");
 
             countdownAnimator.Play(0);
+            Debug.Log($"PVP: Countdown animation started (length={countdownAnimator.GetCurrentAnimatorStateInfo(0).length}s)");
 
             StartCoroutine(WaitForAnimationToEnd());
         }
         private IEnumerator WaitForAnimationToEnd()
         {
-            yield return new WaitForSeconds(countdownAnimator.GetCurrentAnimatorStateInfo(0).length);
+            float animLength = countdownAnimator.GetCurrentAnimatorStateInfo(0).length;
+            Debug.Log($"PVP: Waiting {animLength}s for countdown animation to complete");
+            yield return new WaitForSeconds(animLength);
 
             countdownGameObject.SetActive(false);
+            Debug.Log("PVP: Countdown complete - gameplay started!");
 
             // Start gameplay AFTER countdown completes (both HOST and CLIENT run this independently)
             isStartedPvP = true;

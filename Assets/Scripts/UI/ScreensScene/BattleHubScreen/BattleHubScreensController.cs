@@ -242,6 +242,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         }
         public void ShowPrivateMatchPanel()
         {
+            Debug.Log("PVP: Private Match button clicked - loading PrivatePVPInitializer scene");
             if (privateMatchButton != null)
             {
                 CanvasGroup buttonCanvasGroup = privateMatchButton.GetComponent<CanvasGroup>();
@@ -255,6 +256,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             // Pass reference to avoid expensive scene searches
             PrivateMatchmakingController.HubControllerReference = this;
 
+            Debug.Log("PVP: Loading scene PRIVATE_PVP_INITIALIZER_SCENE");
             SceneNavigator.GoToScene(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE, true);
         }
         public void GotoPvPMode()

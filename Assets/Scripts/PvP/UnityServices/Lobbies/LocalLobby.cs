@@ -35,7 +35,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         Dictionary<string, LocalLobbyUser> m_LobbyUsers = new Dictionary<string, LocalLobbyUser>();
         public Dictionary<string, LocalLobbyUser> LobbyUsers => m_LobbyUsers;
-
         public struct LobbyData
         {
             public string LobbyID { get; set; }
@@ -49,6 +48,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
             public string Region { get; set; }
             public string Latency { get; set; }
 
+
             public LobbyData(LobbyData existing)
             {
                 LobbyID = existing.LobbyID;
@@ -61,6 +61,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 MatchPort = existing.MatchPort;
                 Region = existing.Region;
                 Latency = existing.Latency;
+
             }
 
             public LobbyData(string lobbyCode)
@@ -75,6 +76,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 MatchPort = null;
                 Region = null;
                 Latency = null;
+
             }
         }
 
@@ -297,7 +299,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 info.Region = null;
                 info.Latency = null;
             }
-
             Debug.Log($"PVP: Lobby status (Code={info.LobbyCode}, Players={lobby.Players.Count}/{info.MaxPlayerCount}, RelayCode={info.RelayJoinCode ?? "null"}, Region={info.Region}, Latency={info.Latency}ms)");
 
             var lobbyUsers = new Dictionary<string, LocalLobbyUser>();

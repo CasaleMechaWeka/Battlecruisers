@@ -79,9 +79,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void StartClientLobby(string playerName)
         {
+            Debug.Log("PVP: OfflineState.StartClientLobby - creating ConnectionMethodLobby");
             ConnectionMethodLobby connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
+            Debug.Log("PVP: OfflineState.StartClientLobby - configuring ClientReconnecting");
             m_ConnectionManager.m_ClientReconnecting.Configure(connectionMethod);
+            Debug.Log("PVP: OfflineState.StartClientLobby - changing state to ClientConnecting");
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnecting.Configure(connectionMethod));
+            Debug.Log("PVP: OfflineState.StartClientLobby - state changed");
         }
 
         public override void StartHostIP(string playerName, string ipaddress, int port)
@@ -92,8 +96,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void StartHostLobby(string playerName)
         {
+            Debug.Log("PVP: OfflineState.StartHostLobby - creating ConnectionMethodLobby");
             ConnectionMethodLobby connectionMethod = new ConnectionMethodLobby(m_LobbyServiceFacade, m_LocalLobby, m_ConnectionManager, m_ProfileManager, playerName);
+            Debug.Log("PVP: OfflineState.StartHostLobby - changing state to StartingHost");
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_StartingHost.Configure(connectionMethod));
+            Debug.Log("PVP: OfflineState.StartHostLobby - state changed");
         }
     }
 }

@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Qos;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
 using UnityEngine;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
@@ -124,7 +126,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             (bool success, IList<IQosResult> qosResults) res = await ArenaSelectPanelScreenController.LatencyCheck;
 
             if (!res.success)
-                return; 
+                return;
 
             int clientLatency = res.qosResults[0].AverageLatencyMs;
 
@@ -198,7 +200,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             Debug.Log("No suitable lobbies found, hosting new lobby");
         }
-
         public async Task<Lobby> CreateLobby(string desiredMap, bool isPrivate)
         {
             if (isPrivate)
@@ -214,13 +215,13 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 return null;
 
             (bool Success, Lobby Lobby) lobbyCreationAttemp = await LobbyServiceFacade.TryCreateLobbyAsync(
-                m_NameGenerationData.GenerateName(),
-                ConnectionManager.MaxConnectedPlayers,
-                isPrivate: isPrivate,
-                LocalUser.GetDataForUnityServices(),
-                lobbyData);
+            m_NameGenerationData.GenerateName(),
+            ConnectionManager.MaxConnectedPlayers,
+            isPrivate: isPrivate,
+            LocalUser.GetDataForUnityServices(),
+            lobbyData);
 
-            for (int i = 0; i < 10; i++) // retry up to 10 times max
+            for (int i = 0; i < 10; i++)
             {
                 if (lobbyCreationAttemp.Success)
                 {
@@ -229,15 +230,16 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                     if (LobbyServiceFacade.CurrentUnityLobby != null)
                     {
                         Debug.Log($"Created lobby '{lobbyCreationAttemp.Lobby.Name}' with code '{lobbyCreationAttemp.Lobby.LobbyCode}' (ID: {lobbyCreationAttemp.Lobby.Id})");
+
                         break;
                     }
                 }
                 lobbyCreationAttemp = await LobbyServiceFacade.TryCreateLobbyAsync(
-                    m_NameGenerationData.GenerateName(),
-                    ConnectionManager.MaxConnectedPlayers,
-                    isPrivate: isPrivate,
-                    LocalUser.GetDataForUnityServices(),
-                    lobbyData);
+                m_NameGenerationData.GenerateName(),
+                ConnectionManager.MaxConnectedPlayers,
+                isPrivate: isPrivate,
+                LocalUser.GetDataForUnityServices(),
+                lobbyData);
                 await Task.Delay(1000);
             }
 
