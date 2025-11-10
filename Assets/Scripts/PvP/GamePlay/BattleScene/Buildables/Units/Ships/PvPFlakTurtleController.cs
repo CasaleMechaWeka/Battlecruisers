@@ -112,25 +112,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        // ProgressController Visible
-        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
-        {
-            if (IsServer)
-            {
-                OnProgressControllerVisibleClientRpc(isEnabled);
-                base.CallRpc_ProgressControllerVisible(isEnabled);
-            }
-            else
-                base.CallRpc_ProgressControllerVisible(isEnabled);
-        }
 
-
-
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
 
         protected override void OnBuildableProgressEvent()
         {
@@ -176,13 +158,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         //-------------------------------------- RPCs -------------------------------------------------//
 
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-            if (!IsHost)
-                CallRpc_ProgressControllerVisible(isEnabled);
-        }
+
 
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
@@ -220,12 +196,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _flakTurret.ApplyVariantStats(this);
         }
 
-        [ClientRpc]
-        private void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
+
 
         [ClientRpc]
         private void EnableAnimatorClientRpc()

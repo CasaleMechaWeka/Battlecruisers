@@ -17,11 +17,20 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
-using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.Network.Multiplay.Scenes;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
+    public enum ConnectionQuality
+    {
+        DEAD,
+        LOW,
+        MID,
+        HIGH
+    }
+
     public class MatchmakingScreenController : ScreenController
     {
         private GameModel _gameModel;
@@ -42,7 +51,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Text rightPlayerBounty;
         public Text rightCruiserName;
         public Image rightCruiserImage;
-
 
         public Text vsTitile;
         public Text LookingForOpponentsText;
@@ -76,16 +84,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public GameObject fleeButton;
         public GameObject vsAIButton;
 
-        // PlayerA data should be stored here temporalliy
-        public string playerAPrefabName;
-        public ulong playerAClientNetworkId;
-        public string playerAName;
-        public long playerAScore;
-        public string captainAPrefabName;
-        public float playerRating;
-        public int playerABodykit;
-        public int playerABounty;
-
         public static bool MatchmakingFailed;
 
         private CaptainExo charlie;
@@ -109,13 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LOOKING_VICTIM
         }
         public MMStatus status = MMStatus.FINDING_LOBBY;
-        public enum ConnectionQuality
-        {
-            DEAD,
-            LOW,
-            MID,
-            HIGH
-        }
+
         private ConnectionQuality connection_Quality;
         public ConnectionQuality Connection_Quality
         {
@@ -233,6 +225,19 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 if (enemyFoundMusic.isPlaying && enemyFoundMusic != null)
                     enemyFoundMusic.Stop();
             }
+
+            Debug.Log($"PVP: MatchmakingScreenController.Start - PrivateMatch={ArenaSelectPanelScreenController.PrivateMatch}");
+            if (!ArenaSelectPanelScreenController.PrivateMatch)
+            {
+                if (PvPBootManager.Instance != null)
+                {
+                    _ = PvPBootManager.Instance.TryJoinLobby();
+                }
+                else
+                {
+                    Debug.LogError("PVP: MatchmakingScreenController.Start - PvPBootManager.Instance is NULL! Cannot start matchmaking.");
+                }
+            }
         }
 
         public void ShowBadInternetMessageBox()
@@ -301,15 +306,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 isProcessing = true;
                 await iLoadingAssets();
             }
-            /*if(status == MMStatus.LOOKING_VICTIM && m_TimeLimitLookingVictim.CanCall)
-            {
-                SetFoundVictimString();
-                if (GameObject.Find("ConnectionManager") != null)
-                    GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().LockLobby();
-                if(GameObject.Find("PvPBattleSceneGod") != null)
-                    GameObject.Find("PvPBattleSceneGod").GetComponent<PvPBattleSceneGodServer>().RunPvP_AIMode();
-                m_TimeLimitLookingVictim.PutOnCooldown(9999f);
-            }*/
         }
 
         async Task iLoadingAssets()
@@ -387,19 +383,50 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void OnFlee()
         {
+            Debug.Log("PVP: MatchmakingScreenController.OnFlee - User clicked FLEE");
             fleeButton.SetActive(false);
-            if (PvPBootManager.Instance != null)
-                PvPBootManager.Instance.m_CancellationToken.Cancel();
+
             if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
             }
-            if (GameObject.Find("ConnectionManager") != null)
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().ChangeState(GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().m_Offline);
 
-            if (backgroundMusic.isPlaying)
+            if (backgroundMusic != null && backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
+
+            // Clear Instance and destroy controller so OfflineState.Enter() navigates to SCREENS_SCENE
+            Debug.Log("PVP: MatchmakingScreenController.OnFlee - Clearing Instance and destroying controller");
+            Instance = null;
+            Destroy(gameObject);
+
+            GameObject connectionManagerObj = GameObject.Find("ConnectionManager");
+            if (connectionManagerObj != null)
+            {
+                ConnectionManager connectionManager = connectionManagerObj.GetComponent<ConnectionManager>();
+                if (connectionManager != null)
+                {
+                    if (connectionManager.m_Offline != null)
+                    {
+                        connectionManager.ChangeState(connectionManager.m_Offline);
+                    }
+                    else
+                    {
+                        Debug.LogError("OnFlee: ConnectionManager.m_Offline is null - services not fully initialized. Navigating directly to SCREENS_SCENE.");
+                        SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("OnFlee: ConnectionManager component not found on ConnectionManager GameObject. Navigating directly to SCREENS_SCENE.");
+                    SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                }
+            }
+            else
+            {
+                Debug.LogError("OnFlee: ConnectionManager GameObject not found - services may not be initialized yet. Navigating directly to SCREENS_SCENE.");
+                SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            }
         }
 
         public async void FoundCompetitor()
@@ -473,7 +500,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (enemyFoundMusic != null)
                 enemyFoundMusic.Play();
 
-            await Task.Delay(50);   // TODO why do we have this here?
             animator.SetBool("Found", true);
             LeaveLobby();
         }
@@ -494,33 +520,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void FailedMatchmaking()
         {
-            // CanceledMatchmaking();
-            if (GameObject.Find("ApplicationController") != null)
-                GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
-
-            if (GameObject.Find("ConnectionManager") != null)
-                GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("PopupPanelManager") != null)
-                GameObject.Find("PopupPanelManager").GetComponent<PopupManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("UIMessageManager") != null)
-                GameObject.Find("UIMessageManager").GetComponent<ConnectionStatusMessageUIManager>().DestroyNetworkObject();
-
-            if (GameObject.Find("UpdateRunner") != null)
-                GameObject.Find("UpdateRunner").GetComponent<UpdateRunner>().DestroyNetworkObject();
-
-            if (GameObject.Find("NetworkManager") != null)
-                GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
-
-            MatchmakingFailed = true;
-            SceneNavigator.SceneLoaded(SceneNames.PvP_BOOT_SCENE);
-            SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
-
-            if (backgroundMusic.isPlaying)
-                backgroundMusic.Stop();
-
-            Invoke("Destroy", 0.5f);
+            Debug.Log("PVP: MatchmakingScreenController.FailedMatchmaking - Matchmaking failed. No action taken.");
         }
 
         public void Destroy()
@@ -537,5 +537,3 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
     }
 }
-
-

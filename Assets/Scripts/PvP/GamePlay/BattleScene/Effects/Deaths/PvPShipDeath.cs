@@ -59,7 +59,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effect
 
             _shipDeathController.IsVisible = true;
             _shipDeathController.Position = activationArgs;
-            Vector3 pos = _shipDeathController.Position;
             if (faction == Faction.Reds)
             {
                 Vector3 newScale = _shipDeathController.transform.localScale;

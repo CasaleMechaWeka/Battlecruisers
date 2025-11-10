@@ -181,12 +181,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             DestroyMe();
         }
 
-        protected virtual void DestroyMe()
+        void DestroyMe()
+        {
+            if (IsServer)
+            {
+                if (!IsDestroyed)
+                    _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
+            }
+            else
+            {
+                OnDestroyMeServerRpc();
+            }
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        void OnDestroyMeServerRpc()
         {
             if (!IsDestroyed)
-            {
                 _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
-            }
         }
 
         protected virtual void InternalDestroy()

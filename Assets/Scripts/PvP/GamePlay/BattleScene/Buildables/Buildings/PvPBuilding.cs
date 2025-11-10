@@ -21,6 +21,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Cruisers.Drones;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
 {
@@ -236,15 +237,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected virtual void PlayPlacementSound()
+        public void PlayPlacementSound()
         {
+            if (IsServer)
+                OnPlayPlacementSoundClientRpc();
+
             if (IsClient && IsOwner)
-            {
                 PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
-            }
         }
 
-
+        [ClientRpc]
+        void OnPlayPlacementSoundClientRpc()
+        {
+            if (!IsHost && IsOwner)
+                PvPFactoryProvider.Sound.UISoundPlayer.PlaySound(_placementSound);
+        }
 
         protected override void OnSingleClick()
         {
@@ -270,6 +277,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override bool IsBuildingImmune()
         {
             return isImmune;
+        }
+
+        protected override void CallRpc_ClickedRepairButton()
+        {
+            PvP_RepairableButtonClickedServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = true)]
+        void PvP_RepairableButtonClickedServerRpc()
+        {
+            IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
+            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
+        }
+
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            OnProgressControllerVisibleClientRpc(isEnabled);
+        }
+
+        [ClientRpc]
+        void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
         protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)

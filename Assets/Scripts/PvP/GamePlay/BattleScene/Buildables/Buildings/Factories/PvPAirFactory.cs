@@ -1,8 +1,6 @@
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories.Spawning;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
@@ -35,22 +33,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         
 
 
-        // Placement Sound
-        protected override void PlayPlacementSound()
-        {
-            base.PlayPlacementSound();
-            if (IsServer)
-                PlayPlacementSoundClientRpc();
-        }
-
-        // Destroy me
-        protected override void DestroyMe()
-        {
-            if (IsServer)
-                base.DestroyMe();
-            else
-                OnDestroyMeServerRpc();
-        }
 
         // Death Sound
         protected override void CallRpc_PlayDeathSound()
@@ -69,29 +51,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.PlayBuildableConstructionCompletedSound();
         }
-        // ProgressController Visible
-        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
-        {
-            OnProgressControllerVisibleClientRpc(isEnabled);
-        }
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
-
-        // ClickedRepairButton
-        protected override void CallRpc_ClickedRepairButton()
-        {
-            PvP_RepairableButtonClickedServerRpc();
-        }
-
-        // SyncFaction
-        protected override void CallRpc_SyncFaction(Faction faction)
-        {
-            OnSyncFationClientRpc(faction);
-        }
 
         // StartBuildingUnit
 
@@ -211,18 +171,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        private void PlayPlacementSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayPlacementSound();
-        }
 
-        [ServerRpc(RequireOwnership = true)]
-        private void OnDestroyMeServerRpc()
-        {
-            DestroyMe();
-        }
+
+
         [ClientRpc]
         private void OnPlayDeathSoundClientRpc()
         {
@@ -243,26 +194,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
 
-        [ServerRpc(RequireOwnership = true)]
-        private void PvP_RepairableButtonClickedServerRpc()
-        {
-            IDroneConsumer repairDroneConsumer = ParentCruiser.RepairManager.GetDroneConsumer(this);
-            ParentCruiser.DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
-        }
-
-        [ClientRpc]
-        private void OnSyncFationClientRpc(Faction faction)
-        {
-            if (!IsHost)
-                Faction = faction;
-        }
 
         [ServerRpc(RequireOwnership = true)]
         private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName, int variantIndex)

@@ -80,22 +80,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
 
         void RemoteDisconnect(ulong clientId)
         {
-            Debug.Log($"Got Client Disconnect callback for {clientId}");
+            Debug.Log($"PVP: Got Client Disconnect callback for {clientId}");
             if (clientId == m_NetworkManager.LocalClientId)
                 return;
             NetworkShutdown();
         }
 
+        public static event Action OnConnectionFailed;
+
         void NetworkShutdown()
         {
-            if (SceneManager.GetActiveScene().name != SceneNames.SCREENS_SCENE)
+            Debug.Log("PVP: MatchplayNetworkClient.NetworkShutdown - A disconnect event occurred.");
+
+            OnConnectionFailed?.Invoke();
+
+            if (m_NetworkManager != null && m_NetworkManager.IsConnectedClient)
             {
-                SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
+                m_NetworkManager.Shutdown(true);
             }
 
-            if (m_NetworkManager.IsConnectedClient)
-                m_NetworkManager.Shutdown(true);
-            OnLocalDisconnection?.Invoke(DisconnectReason.Reason);
             MatchplayNetworkMessenger.UnRegisterListener(NetworkMessage.LocalClientConnected);
             MatchplayNetworkMessenger.UnRegisterListener(NetworkMessage.LocalClientDisconnected);
         }
@@ -103,9 +106,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         public void Dispose()
         {
             if (m_NetworkManager != null && m_NetworkManager.CustomMessagingManager != null)
-            {
                 m_NetworkManager.OnClientDisconnectCallback -= RemoteDisconnect;
-            }
         }
     }
 }

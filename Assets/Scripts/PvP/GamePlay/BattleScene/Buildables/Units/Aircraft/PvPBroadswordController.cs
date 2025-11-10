@@ -292,11 +292,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // only for PvPFighter :(
         public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
         private void LateUpdate()
         {
             if (IsServer)
@@ -313,23 +308,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        // ProgressController Visible
-        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
-        {
-            if (IsServer)
-            {
-                OnProgressControllerVisibleClientRpc(isEnabled);
-                base.CallRpc_ProgressControllerVisible(isEnabled);
-            }
-            else
-                base.CallRpc_ProgressControllerVisible(isEnabled);
-        }
 
 
-        private void ActiveTrail()
-        {
-            _aircraftTrailObj.SetActive(true);
-        }
+
 
         protected override void OnBuildableProgressEvent()
         {
@@ -355,18 +336,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         //-------------------------------------- RPCs -------------------------------------------------//
 
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-            if (!IsHost)
-            {
-                if (!isEnabled)
-                {
-                    Invoke("ActiveTrail", 0.5f);
-                }
-            }
-        }
 
 
 
@@ -404,11 +373,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnDestroyedEvent();
         }
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
     }
 }

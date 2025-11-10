@@ -1,18 +1,30 @@
 using System.Collections;
+using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
-using VContainer;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     class ClientReconnectingState : ClientConnectingState
     {
-        [Inject]
         IPublisher<ReconnectMessage> m_ReconnectMessagePublisher;
         Coroutine m_ReconnectCoroutine;
         string m_LobbyCode = "";
         int m_NbAttempts;
         const float k_TimeBetweenAttempts = 5;
+
+        public ClientReconnectingState(
+            IPublisher<ReconnectMessage> reconnectMessagePublisher,
+            LobbyServiceFacade lobbyServiceFacade,
+            LocalLobby localLobby,
+            ConnectionManager connectionManager,
+            IPublisher<ConnectStatus> connectStatusPublisher)
+             : base(lobbyServiceFacade, localLobby, connectionManager, connectStatusPublisher)
+        {
+            m_ReconnectMessagePublisher = reconnectMessagePublisher;
+        }
 
         public override void Enter()
         {
@@ -41,7 +53,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
         public override void OnClientDisconnect(ulong _)
         {
-            var disconnectReason = m_ConnectionManager.NetworkManager.DisconnectReason;
+            string disconnectReason = m_ConnectionManager.NetworkManager.DisconnectReason;
             if (m_NbAttempts < m_ConnectionManager.NbReconnectAttempts)
             {
                 if (string.IsNullOrEmpty(disconnectReason))
@@ -50,8 +62,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 }
                 else
                 {
-                    var connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
-                    //    m_ConnectStatusPublisher.Publish(connectStatus);
+                    ConnectStatus connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
                     switch (connectStatus)
                     {
                         case ConnectStatus.UserRequestedDisconnect:
@@ -69,14 +80,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             else
             {
-                if (string.IsNullOrEmpty(disconnectReason))
+                if (!string.IsNullOrEmpty(disconnectReason))
                 {
-                    //    m_ConnectStatusPublisher.Publish(ConnectStatus.GenericDisconnect);
-                }
-                else
-                {
-                    var connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
-                    //    m_ConnectStatusPublisher.Publish(connectStatus);
+                    ConnectStatus connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
                 }
                 m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
             }
@@ -96,42 +102,37 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 yield return new WaitForSeconds(k_TimeBetweenAttempts);
             }
 
-            Debug.Log("Lost connection to host, trying to reconnect...");
+            Debug.Log($"PVP: CLIENT lost connection to HOST (LobbyCode={m_LobbyCode}) - attempting reconnect");
             m_ConnectionManager.NetworkManager.Shutdown();
 
-            yield return new WaitWhile(() => m_ConnectionManager.NetworkManager.ShutdownInProgress); // wait until NetworkManager completes shutting down
-            Debug.Log($"Reconnecting attempt {m_NbAttempts + 1}/{m_ConnectionManager.NbReconnectAttempts}...");
+            yield return new WaitWhile(() => m_ConnectionManager.NetworkManager.ShutdownInProgress);
+            Debug.Log($"PVP: CLIENT reconnect attempt {m_NbAttempts + 1}/{m_ConnectionManager.NbReconnectAttempts} (LobbyID={m_LocalLobby?.LobbyID})");
             m_ReconnectMessagePublisher.Publish(new ReconnectMessage(m_NbAttempts, m_ConnectionManager.NbReconnectAttempts));
             m_NbAttempts++;
-            if (!string.IsNullOrEmpty(m_LobbyCode)) // Attempting to reconnect to lobby.
+            if (!string.IsNullOrEmpty(m_LobbyCode))
             {
                 // When using Lobby with Relay, if a user is disconnected from the Relay server, the server will notify
                 // the Lobby service and mark the user as disconnected, but will not remove them from the lobby. They
                 // then have some time to attempt to reconnect (defined by the "Disconnect removal time" parameter on
                 // the dashboard), after which they will be removed from the lobby completely.
                 // See https://docs.unity.com/lobby/reconnect-to-lobby.html
-                var reconnectingToLobby = m_LobbyServiceFacade.ReconnectToLobbyAsync(m_LocalLobby?.LobbyID);
+                Task<Lobby> reconnectingToLobby = m_LobbyServiceFacade.ReconnectToLobbyAsync(m_LocalLobby?.LobbyID);
                 yield return new WaitUntil(() => reconnectingToLobby.IsCompleted);
 
-                // If succeeded, attempt to connect to Relay
                 if (!reconnectingToLobby.IsFaulted && reconnectingToLobby.Result != null)
                 {
-                    // If this fails, the OnClientDisconnect callback will be invoked by Netcode
-                    var connectingToRelay = ConnectClientAsync();
+                    Task connectingToRelay = ConnectClientAsync();
                     yield return new WaitUntil(() => connectingToRelay.IsCompleted);
                 }
                 else
                 {
-                    Debug.Log("Failed reconnecting to lobby.");
-                    // Calling OnClientDisconnect to mark this attempt as failed and either start a new one or give up
-                    // and return to the Offline state
+                    Debug.LogWarning($"PVP: CLIENT reconnect failed (LobbyID={m_LocalLobby?.LobbyID}, Attempt={m_NbAttempts}/{m_ConnectionManager.NbReconnectAttempts})");
                     OnClientDisconnect(0);
                 }
             }
-            else // If not using Lobby, simply try to reconnect to the server directly
+            else
             {
-                // If this fails, the OnClientDisconnect callback will be invoked by Netcode
-                var connectingClient = ConnectClientAsync();
+                Task connectingClient = ConnectClientAsync();
                 yield return new WaitUntil(() => connectingClient.IsCompleted);
             }
         }

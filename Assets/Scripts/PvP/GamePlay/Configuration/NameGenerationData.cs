@@ -2,23 +2,19 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Gameplay.Configuration
 {
-    [CreateAssetMenu(menuName = "GameData/NameGeneration", order = 2)]
     public class NameGenerationData : ScriptableObject
     {
-        [Tooltip("The list of all possible strings the game can use as the first word of a player name")]
-        public string[] FirstWordList;
-
-        [Tooltip("The list of all possible strings the game can use as the second word in a player name")]
-        public string[] SecondWordList;
+        [SerializeField]
+        private string[] firstWordList = new string[] { "Happy", "Rich", "Brave", "Cool", "Calm" };
+        [SerializeField]
+        private string[] secondWordList = new string[] { "Hero", "Elf", "Dwarf", "Ranger", "Warden" };
 
         public string GenerateName()
         {
-            var firstWord = FirstWordList[UnityEngine.Random.Range(0, FirstWordList.Length - 1)];
-            var secondWord = SecondWordList[UnityEngine.Random.Range(0, SecondWordList.Length - 1)];
+            string firstWord = firstWordList[Random.Range(0, firstWordList.Length)];
+            string secondWord = secondWordList[Random.Range(0, secondWordList.Length)];
 
             return firstWord + " " + secondWord + Mathf.FloorToInt(Time.time).ToString();
         }
     }
 }
-
-

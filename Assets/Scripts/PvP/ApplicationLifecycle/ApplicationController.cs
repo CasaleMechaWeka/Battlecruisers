@@ -2,88 +2,153 @@ using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Utils;
-using BattleCruisers.Network.Multiplay.Gameplay.GameState;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle.Messages;
-using BattleCruisers.Network.Multiplay.Gameplay.Messages;
 using BattleCruisers.Network.Multiplay.UnityServices.Auth;
 using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 using BattleCruisers.Network.Multiplay.UnityServices;
+using BattleCruisers.Network.Multiplay.Scenes;
+using BattleCruisers.Network.Multiplay.Gameplay.UI;
+using BattleCruisers.Network.Multiplay.GamePlay.UI;
 
 namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
 {
-    public class ApplicationController : LifetimeScope, INetworkObject
+    public class ApplicationController : MonoBehaviour, INetworkObject
     {
-        [SerializeField] UpdateRunner m_UpdateRunner;
-        [SerializeField] ConnectionManager m_ConnectionManager;
-        [SerializeField] NetworkManager m_NetworkManager;
+        [SerializeField] UpdateRunner updateRunnerPrefab;
+        [SerializeField] NetworkManager networkManagerPrefab;
+        [SerializeField] ConnectionManager connectionManagerPrefab;
+
+        UpdateRunner m_UpdateRunner;
+        NetworkManager m_NetworkManager;
+        ConnectionManager m_ConnectionManager;
 
         LocalLobby m_LocalLobby;
         LobbyServiceFacade m_LobbyServiceFacade;
 
         IDisposable m_Subscriptions;
 
-        protected override void Configure(IContainerBuilder builder)
+        LocalLobbyUser localLobbyUser;
+        ProfileManager profileManager;
+
+        MessageChannel<QuitApplicationMessage> quitChannel;
+        MessageChannel<UnityServiceErrorMessage> unityServiceErrorChannel;
+        MessageChannel<ConnectStatus> connectionStatusChannel;
+
+
+        MessageChannel<ReconnectMessage> reconnectChannel;
+        BufferedMessageChannel<LobbyListFetchedMessage> lobbyListChannel;
+
+        AuthenticationServiceFacade authenticationServiceFacade;
+        public static ApplicationController Instance;
+
+        public NetworkManager NetworkManager => m_NetworkManager;
+
+        private bool m_ServicesInitialised = false;
+
+        public void InitialiseServices()
         {
-            base.Configure(builder);
-            builder.RegisterComponent(m_UpdateRunner);
-            builder.RegisterComponent(m_ConnectionManager);
-            builder.RegisterComponent(m_NetworkManager);
+            if (m_ServicesInitialised)
+            {
+                return;
+            }
 
-            builder.Register<LocalLobbyUser>(Lifetime.Singleton);
-            builder.Register<LocalLobby>(Lifetime.Singleton);
-            builder.Register<ProfileManager>(Lifetime.Singleton);
-            builder.Register<PersistentGameState>(Lifetime.Singleton);
-            builder.Register<LobbyAPIInterface>(Lifetime.Singleton);
+            if (m_UpdateRunner == null)
+            {
+                m_UpdateRunner = Instantiate(updateRunnerPrefab);
+                m_UpdateRunner.gameObject.name = "UpdateRunner";
+            }
 
-            builder.RegisterInstance(new MessageChannel<QuitApplicationMessage>()).AsImplementedInterfaces();
-            builder.RegisterInstance(new MessageChannel<UnityServiceErrorMessage>()).AsImplementedInterfaces();
-            builder.RegisterInstance(new MessageChannel<ConnectStatus>()).AsImplementedInterfaces();
-            builder.RegisterInstance(new MessageChannel<DoorStateChangedEventMessage>()).AsImplementedInterfaces();
+            if (m_NetworkManager == null)
+            {
+                m_NetworkManager = Instantiate(networkManagerPrefab);
+                m_NetworkManager.gameObject.name = "NetworkManager";
+            }
 
+            if (m_ConnectionManager == null)
+            {
+                m_ConnectionManager = Instantiate(connectionManagerPrefab);
+                m_ConnectionManager.gameObject.name = "ConnectionManager";
+            }
 
-            builder.RegisterComponent(new NetworkedMessageChannel<LifeStateChangedEventMessage>()).AsImplementedInterfaces();
-            builder.RegisterComponent(new NetworkedMessageChannel<ConnectionEventMessage>()).AsImplementedInterfaces();
+            localLobbyUser = new LocalLobbyUser();
+            m_LocalLobby = new LocalLobby();
+            profileManager = new ProfileManager();
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            builder.RegisterComponent(new NetworkedMessageChannel<CheatUsedMessage>()).AsImplementedInterfaces();
-#endif
+            quitChannel = new MessageChannel<QuitApplicationMessage>();
+            unityServiceErrorChannel = new MessageChannel<UnityServiceErrorMessage>();
+            connectionStatusChannel = new MessageChannel<ConnectStatus>();
 
-            builder.RegisterInstance(new MessageChannel<ReconnectMessage>()).AsImplementedInterfaces();
-            builder.RegisterInstance(new BufferedMessageChannel<LobbyListFetchedMessage>()).AsImplementedInterfaces();
-            builder.Register<AuthenticationServiceFacade>(Lifetime.Singleton);
-            builder.RegisterEntryPoint<LobbyServiceFacade>(Lifetime.Singleton).AsSelf();
+            reconnectChannel = new MessageChannel<ReconnectMessage>();
+            lobbyListChannel = new BufferedMessageChannel<LobbyListFetchedMessage>();
 
+            authenticationServiceFacade = new AuthenticationServiceFacade(unityServiceErrorChannel);
 
-        }
+            ConnectionStatusMessageUIManager connectionStatusMessageUIManager = new GameObject("UIMessageManager")
+.AddComponent<ConnectionStatusMessageUIManager>();
+            connectionStatusMessageUIManager.Initialize(
+            connectionStatusChannel,
+            reconnectChannel);
+            DontDestroyOnLoad(connectionStatusMessageUIManager.gameObject);
 
+            UnityServicesUIHandler unityServicesUIHandler = new GameObject("UIServiceMessageManager")
+                .AddComponent<UnityServicesUIHandler>();
+            unityServicesUIHandler.SendMessage("Initialize", unityServiceErrorChannel, SendMessageOptions.DontRequireReceiver);
 
-        private void Start()
-        {
-            m_LocalLobby = Container.Resolve<LocalLobby>();
-            m_LobbyServiceFacade = Container.Resolve<LobbyServiceFacade>();
+            m_LobbyServiceFacade = new LobbyServiceFacade(
+                m_UpdateRunner,
+                m_LocalLobby,
+                localLobbyUser,
+                unityServiceErrorChannel,
+                lobbyListChannel);
 
-            var quitApplicationSub = Container.Resolve<ISubscriber<QuitApplicationMessage>>();
-            var subHandles = new DisposableGroup();
-            subHandles.Add(quitApplicationSub.Subscribe(QuitGame));
+            m_ConnectionManager.Initialise(m_NetworkManager,
+                                           m_LobbyServiceFacade,
+                                           profileManager,
+                                           connectionStatusChannel,
+                                           m_LocalLobby,
+                                           reconnectChannel);
+
+            DontDestroyOnLoad(m_ConnectionManager);
+
+            PvPBootManager bootManager = new PvPBootManager(
+                localLobbyUser,
+                m_LocalLobby,
+                m_LobbyServiceFacade,
+                m_ConnectionManager,
+                authenticationServiceFacade);
+
+            DisposableGroup subHandles = new DisposableGroup();
+            subHandles.Add(quitChannel.Subscribe(QuitGame));
             m_Subscriptions = subHandles;
 
             Application.wantsToQuit += OnWantToQuit;
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(m_UpdateRunner.gameObject);
-            // Application.targetFrameRate = 120;
-            //SceneManager.LoadScene("MainMenu");
+
+            m_ServicesInitialised = true;
         }
-        protected override void OnDestroy()
+        void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        void OnDestroy()
         {
             Application.wantsToQuit -= OnWantToQuit;
-            m_Subscriptions?.Dispose();
-            m_LobbyServiceFacade?.EndTracking();
-            base.OnDestroy();
+
+            if (Instance == this)
+            {
+                Instance = null;
+            }
         }
 
         private IEnumerator LeaveBeforeQuit()
@@ -101,17 +166,15 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             Application.Quit();
         }
 
-
         private bool OnWantToQuit()
         {
-            var canQuit = string.IsNullOrEmpty(m_LocalLobby?.LobbyID);
+            bool canQuit = string.IsNullOrEmpty(m_LocalLobby?.LobbyID);
             if (!canQuit)
             {
                 StartCoroutine(LeaveBeforeQuit());
             }
             return canQuit;
         }
-
 
         public void DestroyNetworkObject()
         {
@@ -129,9 +192,5 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             Application.Quit();
 #endif
         }
-
-
     }
-
 }
-

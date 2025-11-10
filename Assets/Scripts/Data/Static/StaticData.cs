@@ -18,6 +18,7 @@ using System.Linq;
 using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Cruisers;
+using UnityEngine;
 
 namespace BattleCruisers.Data.Static
 {
@@ -720,6 +721,23 @@ namespace BattleCruisers.Data.Static
         public static int LastLevelWithLoot => 40;
         public static ILevelStrategies Strategies { get; } = new LevelStrategies();
         public static ILevelStrategies SideQuestStrategies { get; } = new SideQuestStrategies();
+
+        public static bool MeetsMinCPURequirements()
+        {
+            bool pass = true;
+
+#if !UNITY_IOS
+            if (SystemInfo.processorCount > 0 && SystemInfo.processorFrequency > 0)
+            {
+                pass = SystemInfo.processorCount > MinCPUCores
+                       && SystemInfo.processorFrequency > MinCPUFrequency;
+                Debug.Log($"CPU Cores: {SystemInfo.processorCount}, Freq: {SystemInfo.processorFrequency} MHz → Meets CPU Req: {pass}");
+            }
+            else
+                Debug.LogWarning("CPU info not available — allowing by default");
+#endif
+            return pass;
+        }
 
         /// <summary>
         /// Creates the initial game model.

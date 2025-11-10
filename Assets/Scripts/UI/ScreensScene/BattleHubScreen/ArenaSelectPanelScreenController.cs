@@ -13,6 +13,10 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Unity.Services.Qos;
+using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -48,8 +52,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
 
-        public CanvasGroupButton customMessageButton;
-        public MessageBoxBig messageBoxBig;
+        public static Task<(bool success, IList<IQosResult> qosResults)> LatencyCheck;
+        public static bool PrivateMatch = false;
 
         public void Initialise(
             ScreensSceneGod screensSceneGod,
@@ -72,31 +76,20 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             DOTween.Init();
             isClickedBattleButton = false;
             isTransitioning = false;
-
-            // Initialize the custom message button
-            customMessageButton.Initialise(soundPlayer, OnCustomMessageButtonClick);
-
-            // Initialize MessageBoxBig
-            messageBoxBig.Initialize(soundPlayer);
-            messageBoxBig.ShowMessage(LocTableCache.ScreensSceneTable.GetString("HowToFightAFriend"), LocTableCache.ScreensSceneTable.GetString("HowToFightAFriendDescription"));
-            messageBoxBig.HideMessage();
-        }
-
-        private void OnCustomMessageButtonClick()
-        {
-            if (messageBoxBig != null && messageBoxBig.panel != null)
-            {
-                messageBoxBig.panel.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("MessageBoxBig or its panel is not assigned.");
-            }
         }
 
         public void OnEnable()
         {
+            PrivateMatch = false;
             UpdateValueStrings(IndexCurrentArena);
+            LatencyCheck = FetchLatencyByRegion();
+
+            // Reset battle button state when panel becomes active (e.g., after FLEE from PVP)
+            isClickedBattleButton = false;
+            if (battleButton != null)
+                battleButton.gameObject.SetActive(true);
+            if (loadingSpinner != null)
+                loadingSpinner.SetActive(false);
         }
 
         private void NextSetCommandExecute()
@@ -180,7 +173,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             isTransitioning = false;
         }
 
-        private void StartBattle()
+        private async void StartBattle()
         {
             if (!isClickedBattleButton)
             {
@@ -195,6 +188,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         DataProvider.GameModel.GameMap = IndexCurrentArena;
                         PvPBattleSceneGodTunnel.isCost = false;
                         PvPBattleCompletionHandler._isCompleted = false;
+                        if (ApplicationController.Instance != null)
+                        {
+                            ApplicationController.Instance.InitialiseServices();
+                        }
+                        else
+                        {
+                            Debug.LogError("privatepvp: StartBattle - ApplicationController.Instance is NULL!");
+                        }
                         _screenSceneGod.LoadPvPBattleScene();
                     }
                     else
@@ -209,6 +210,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                     }
                 }
             }
+        }
+
+        private static async Task<(bool success, IList<IQosResult> qosResults)> FetchLatencyByRegion()
+        {
+            var qosResults = await QosService.Instance.GetSortedQosResultsAsync("relay", null);
+            if (qosResults == null || qosResults.Count == 0)
+                return (false, null);
+
+            return (true, qosResults);
         }
     }
 }

@@ -238,11 +238,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        // BuildableStatus
-        protected override void OnBuildableStateValueChanged(PvPBuildableState state)
-        {
-            OnBuildableStateValueChangedClientRpc(state);
-        }
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         private void LateUpdate()
         {
@@ -258,23 +253,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        // ProgressController Visible
-        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
-        {
-            if (IsServer)
-            {
-                OnProgressControllerVisibleClientRpc(isEnabled);
-                base.CallRpc_ProgressControllerVisible(isEnabled);
-            }
-            else
-                base.CallRpc_ProgressControllerVisible(isEnabled);
-        }
 
 
-        private void ActiveTrail()
-        {
-            _aircraftTrailObj.SetActive(true);
-        }
+
 
         protected override void OnBuildableProgressEvent()
         {
@@ -300,18 +281,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         //-------------------------------------- RPCs -------------------------------------------------//
 
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-            if (!IsHost)
-            {
-                if (!isEnabled)
-                {
-                    Invoke("ActiveTrail", 0.5f);
-                }
-            }
-        }
 
 
 
@@ -351,11 +320,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        protected void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
-        {
-            if (!IsHost)
-                BuildableState = state;
-        }
     }
 }

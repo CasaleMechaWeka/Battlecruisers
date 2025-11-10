@@ -199,7 +199,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public event EventHandler Deactivated;
 
 
-        protected virtual void OnBuildableStateValueChanged(PvPBuildableState state) { }
+        void OnBuildableStateValueChanged(PvPBuildableState state)
+        {
+            OnBuildableStateValueChangedClientRpc(state);
+        }
+
+        [ClientRpc]
+        void OnBuildableStateValueChangedClientRpc(PvPBuildableState state)
+        {
+            if (!IsHost)
+                BuildableState = state;
+        }
 
         void ShareIsDroneConsumerFocusableValueWithClient(bool isFocusable)
         {
@@ -849,9 +859,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         }
 
-        protected virtual void CallRpc_SyncFaction(Faction faction)
+        void CallRpc_SyncFaction(Faction faction)
         {
+            if (IsServer)
+                SyncFactionClientRpc(faction);
+        }
 
+        [ClientRpc]
+        private void SyncFactionClientRpc(Faction faction)
+        {
+            if (!IsHost)
+                Faction = faction;
         }
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using BattleCruisers.Data;
 using BattleCruisers.UI.Loading;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,9 +23,13 @@ namespace BattleCruisers.Scenes
             {
                 hint = HintProvider.GetHint();
             }
-            if (sceneName == SceneNames.PvP_BOOT_SCENE && !ApplicationModel.IsTutorial)
+            if (sceneName == SceneNames.PvP_INITIALIZE_SCENE && !ApplicationModel.IsTutorial)
             {
                 // should be replace with PvP
+                hint = HintProvider.GetHint();
+            }
+            if (sceneName == SceneNames.PRIVATE_PVP_INITIALIZER_SCENE && !ApplicationModel.IsTutorial)
+            {
                 hint = HintProvider.GetHint();
             }
 
@@ -40,14 +46,10 @@ namespace BattleCruisers.Scenes
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
-            if (sceneName == SceneNames.PvP_BOOT_SCENE)
-            {
-                await LoadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE, LoadSceneMode.Single);
-            }
-            else
-            {
+            // Load PVP scenes additively over ScreensScene (allows easy FLEE back to BattleHub)
+            // ScreensScene will be unloaded later when opponent is found and battle commits
+            if (sceneName != SceneNames.PvP_INITIALIZE_SCENE && sceneName != SceneNames.PRIVATE_PVP_INITIALIZER_SCENE)
                 await LoadSceneAsync(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
-            }
 
             await LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -63,10 +65,15 @@ namespace BattleCruisers.Scenes
 
             // Hide loading scene.  Don't unload, because that destroys all prefabs that have been loaded :P
 
-            if (sceneName == SceneNames.PvP_BOOT_SCENE)
+            if (sceneName == SceneNames.PvP_INITIALIZE_SCENE)
             {
                 if (MatchmakingScreenController.Instance != null)
                     MatchmakingScreenController.Instance.Destroy();
+            }
+            else if (sceneName == SceneNames.PRIVATE_PVP_INITIALIZER_SCENE)
+            {
+                if (PrivateMatchmakingController.Instance != null)
+                    UnityEngine.Object.Destroy(PrivateMatchmakingController.Instance.gameObject);
             }
             else
             {
@@ -75,7 +82,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        private static async Task LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode)
+        public static async Task LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode)
         {
             Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);

@@ -23,7 +23,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 using BattleCruisers.Buildables;
-using System.Linq;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers
 {

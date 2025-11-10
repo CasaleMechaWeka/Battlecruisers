@@ -57,7 +57,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected IMovementController PatrollingMovementController { get; private set; }
 
         private IMovementController _activeMovementController;
-        protected NetworkVariable<int> pvp_IndexOfSprite = new NetworkVariable<int>();
         protected IMovementController ActiveMovementController
         {
             get { return _activeMovementController; }
@@ -173,11 +172,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted_PvPClient();
             ActiveMovementController = PatrollingMovementController;
-            pvp_IndexOfSprite.OnValueChanged += OnSpriteChanged;
-        }
-        private void OnSpriteChanged(int oldSprite, int newSprite)
-        {
-            _spriteRenderer.sprite = _spriteChooser.ChooseSprite(newSprite);
         }
 
         protected override void AddBuildRateBoostProviders(
@@ -211,7 +205,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
                 _spriteRenderer.sprite = spriteOfAircraft.Item1;
-                pvp_IndexOfSprite.Value = spriteOfAircraft.Item2;
             }
         }
 
@@ -311,6 +304,30 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // Make aircraft spin a bit for coolness
             rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+        }
+
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            if (IsServer)
+            {
+                OnProgressControllerVisibleClientRpc(isEnabled);
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+            }
+            else
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!IsHost && !isEnabled)
+                Invoke("ActiveTrail", 0.5f);
+        }
+        
+        void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
         }
 
         private void OnKamikaze()

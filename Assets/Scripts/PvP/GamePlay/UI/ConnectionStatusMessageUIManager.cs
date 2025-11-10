@@ -1,13 +1,11 @@
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine;
-using VContainer;
 
-
-    /// <summary>
-    /// Manage all status message related to connection to 
-    /// </summary>
-    /// <author>Sava Spasic<author>
+/// <summary>
+/// Manage all status message related to connection to 
+/// </summary>
+/// <author>Sava Spasic<author>
 namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 {
     /// <summary>
@@ -19,8 +17,7 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
 
         PopupPanel m_CurrentReconnectPopup;
 
-        [Inject]
-        void InjectDependencies(ISubscriber<ConnectStatus> connectStatusSub, ISubscriber<ReconnectMessage> reconnectMessageSub)
+        public void Initialize(ISubscriber<ConnectStatus> connectStatusSub, ISubscriber<ReconnectMessage> reconnectMessageSub)
         {
             m_Subscriptions = new DisposableGroup();
             m_Subscriptions.Add(connectStatusSub.Subscribe(OnConnectStatus));
@@ -52,8 +49,8 @@ namespace BattleCruisers.Network.Multiplay.Gameplay.UI
                 case ConnectStatus.UserRequestedDisconnect:
                     break;
                 case ConnectStatus.ServerFull:
-                     PopupManager.ShowPopupPanel("Connection Failed", "The Host is full and cannot accept any additional connections.");
-                   
+                    PopupManager.ShowPopupPanel("Connection Failed", "The Host is full and cannot accept any additional connections.");
+
                     break;
                 case ConnectStatus.Success:
                     break;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
-
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 {
     /// <summary>
@@ -89,6 +88,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 DoAddUser(user);
                 OnChanged();
             }
+            Debug.Log($"PVP: LocalLobby.AddUser - User is not null: {user != null}, User ID is not null: {user?.ID != null}");
         }
 
         void DoAddUser(LocalLobbyUser user)
@@ -124,8 +124,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         {
             changed?.Invoke(this);
         }
-
-
 
         public string LobbyID
         {
@@ -278,10 +276,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 {"Region", new DataObject(DataObject.VisibilityOptions.Public, Region, DataObject.IndexOptions.S3)},
                 {"Latency", new DataObject(DataObject.VisibilityOptions.Public, Latency, DataObject.IndexOptions.N2)}
             };
-
         public void ApplyRemoteData(Lobby lobby)
         {
-            var info = new LobbyData(); // Technically, this is largely redundant after the first assignment, but it won't do any harm to assign it again.
+            var info = new LobbyData();
             info.LobbyID = lobby.Id;
             info.LobbyCode = lobby.LobbyCode;
             info.Private = lobby.IsPrivate;
@@ -290,7 +287,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             if (lobby.Data != null)
             {
-                info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null; // By providing RelayCode through the lobby data with Member visibility, we ensure a client is connected to the lobby before they could attempt a relay connection, preventing timing issues between them.
+                info.RelayJoinCode = lobby.Data.ContainsKey("RelayJoinCode") ? lobby.Data["RelayJoinCode"].Value : null;
                 info.Region = lobby.Data.ContainsKey("Region") ? lobby.Data["Region"].Value : null;
                 info.Latency = lobby.Data.ContainsKey("Latency") ? lobby.Data["Latency"].Value : null;
             }
@@ -300,6 +297,8 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
                 info.Region = null;
                 info.Latency = null;
             }
+
+            Debug.Log($"PVP: Lobby status (Code={info.LobbyCode}, Players={lobby.Players.Count}/{info.MaxPlayerCount}, RelayCode={info.RelayJoinCode ?? "null"}, Region={info.Region}, Latency={info.Latency}ms)");
 
             var lobbyUsers = new Dictionary<string, LocalLobbyUser>();
             foreach (var player in lobby.Players)
@@ -327,7 +326,6 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
             CopyDataFrom(info, lobbyUsers);
         }
-
         public void Reset(LocalLobbyUser localUser)
         {
             CopyDataFrom(new LobbyData(), new Dictionary<string, LocalLobbyUser>());
@@ -335,4 +333,3 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         }
     }
 }
-
