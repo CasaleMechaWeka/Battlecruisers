@@ -132,10 +132,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private Text rewardedAdButtonText;
         [SerializeField]
         private float rewardedAdOfferDuration = 5f; // How long to show the button
-        
+
         private bool watchedRewardedAd = false;
         private const int COINS_MULTIPLIER = 2;
         private const int CREDITS_MULTIPLIER = 3;
+        [SerializeField]
+        private BountyScreenHandler bountyScreenHandler;
+        public GameObject BountyScreen;
 
         public Sprite BlackRig;
         public Sprite Bullshark;
@@ -172,6 +175,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             nextButton.Initialise(_soundPlayer, Done);
             skipButton.Initialise(_soundPlayer, SkipAnim);
+            bountyScreenHandler.Initialise(_soundPlayer);
             SceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
             // Hide rewarded ad button by default
@@ -209,6 +213,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PopulateScreen();
 
             StartCoroutine(AnimateScreen());
+            BountyScreen?.SetActive(true);
         }
 
 
@@ -1003,17 +1008,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private IEnumerator HideRewardedAdOfferAfterDelay()
         {
             yield return new WaitForSeconds(rewardedAdOfferDuration);
-            
+
             if (!watchedRewardedAd && rewardedAdButton != null && rewardedAdButton.activeSelf)
             {
                 rewardedAdButton.SetActive(false);
-                
+
                 // Log skip to Firebase
                 if (FirebaseAnalyticsManager.Instance != null)
                 {
                     FirebaseAnalyticsManager.Instance.LogRewardedAdSkipped("pvp_destruction_screen");
                 }
-                
+
                 Debug.Log("[PvP Rewards] Rewarded ad offer expired");
             }
         }
@@ -1029,7 +1034,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 Debug.LogWarning("[PvP Rewards] IronSourceManager not found, creating one...");
                 GameObject adsObj = new GameObject("IronSourceManager");
                 adsObj.AddComponent<IronSourceManager>();
-                
+
                 // Wait for next frame to let it initialize, then try again
                 StartCoroutine(RetryShowRewardedAdAfterInit());
                 return;
@@ -1038,7 +1043,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             if (!IronSourceManager.Instance.IsRewardedAdReady())
             {
                 Debug.LogWarning("[PvP Rewards] Rewarded ad not ready");
-                
+
                 // Hide button since ad isn't available
                 if (rewardedAdButton != null)
                 {
@@ -1067,14 +1072,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private IEnumerator RetryShowRewardedAdAfterInit()
         {
             yield return new WaitForSeconds(0.5f);
-            
+
             if (IronSourceManager.Instance != null)
             {
                 // Register callbacks
                 IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
                 IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
                 IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
-                
+
                 // Try showing ad again
                 OnWatchRewardedAdButtonClicked();
             }
@@ -1103,8 +1108,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             if (FirebaseAnalyticsManager.Instance != null)
             {
                 FirebaseAnalyticsManager.Instance.LogRewardedAdCompleted(
-                    "pvp_destruction_screen", 
-                    coinsToAward, 
+                    "pvp_destruction_screen",
+                    coinsToAward,
                     (int)creditsToAward
                 );
 
@@ -1129,7 +1134,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private void OnRewardedAdFailed()
         {
             Debug.LogWarning("[PvP Rewards] Rewarded ad failed to show");
-            
+
             // Show button again if it was hidden
             if (!watchedRewardedAd && rewardedAdButton != null)
             {

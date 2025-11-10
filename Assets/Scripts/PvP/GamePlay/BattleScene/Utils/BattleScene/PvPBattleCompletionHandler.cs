@@ -15,6 +15,7 @@ using BattleCruisers.Utils;
 using Unity.Services.Leaderboards;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
 {
@@ -26,6 +27,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private Team team;
         private float playerARating;
         private float playerBRating;
+        private float playerABounty;
+        private float playerBBounty;
         public float registeredTime { get; set; }
         private const int POST_GAME_WAIT_TIME_IN_S = 10 * 1000;
 
@@ -36,6 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             team = SynchedServerData.Instance.GetTeam();
             playerARating = SynchedServerData.Instance.playerARating.Value;
             playerBRating = SynchedServerData.Instance.playerBRating.Value;
+            playerABounty = SynchedServerData.Instance.playerABounty.Value;
+            playerBBounty = SynchedServerData.Instance.playerBBounty.Value;
             registeredTime = -1;
         }
 
@@ -231,6 +236,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (NetworkManager.Singleton != null)
                 NetworkManager.Singleton.Shutdown(true);
             DestroyAllNetworkObjects();
+            PvPBattleResult.WasVictory = wasVictory;
+            bool isPlayerA = team == Team.LEFT;
+            if (wasVictory)
+            {
+                PvPBattleResult.WinnerBounty = isPlayerA ? (int)playerABounty : (int)playerBBounty;
+                PvPBattleResult.LoserBounty = isPlayerA ? (int)playerBBounty : (int)playerABounty;
+            }
+            else
+            {
+                PvPBattleResult.WinnerBounty = isPlayerA ? (int)playerBBounty : (int)playerABounty;
+                PvPBattleResult.LoserBounty = isPlayerA ? (int)playerABounty : (int)playerBBounty;
+            }
             SceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
         }
 
