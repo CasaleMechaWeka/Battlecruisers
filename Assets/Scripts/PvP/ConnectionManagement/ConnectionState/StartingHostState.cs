@@ -115,6 +115,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
                 Debug.Log($"PVP: HOST starting NetworkManager (SceneManagement={m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement}, Private={ArenaSelectPanelScreenController.PrivateMatch})");
 
+                if (!ArenaSelectPanelScreenController.PrivateMatch && MatchmakingScreenController.Instance != null)
+                {
+                    Debug.Log("PVP: HOST re-enabling pre-loaded PvPBattleScene GameObjects");
+                    MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
+                }
+
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
                     OnClientDisconnect(m_ConnectionManager.NetworkManager.LocalClientId);

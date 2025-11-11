@@ -81,6 +81,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
                 Debug.Log($"PVP: CLIENT relay configured (RelayCode={m_LocalLobby.RelayJoinCode}, Private={ArenaSelectPanelScreenController.PrivateMatch}) - starting NetworkManager");
 
+                if (!ArenaSelectPanelScreenController.PrivateMatch && MatchmakingScreenController.Instance != null)
+                {
+                    Debug.Log("PVP: CLIENT re-enabling pre-loaded PvPBattleScene GameObjects");
+                    MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
+                }
+
                 if (!m_ConnectionManager.NetworkManager.StartClient())
                 {
                     throw new System.Exception("NetworkManager StartClient failed");
