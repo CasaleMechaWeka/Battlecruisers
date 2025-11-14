@@ -21,9 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override UnitCategory UnitCategory => UnitCategory.Aircraft;
         public override LayerMask UnitLayerMask => aircraftLayerMask;
 
-        // sava added
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         protected override void OnStartBuildingUnit(UnitCategory category, string prefabName, int variantIndex)
         {
             OnStartBuildingUnitServerRpc(category, prefabName, variantIndex);
@@ -89,31 +86,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnUnitUnderConstruction_Destroyed();
         }
 
-
-
-
-
-
-        // ----------------------------------------
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders);
-        }
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
 
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
@@ -135,11 +113,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             OnPauseBuildingUnit();
         }
+        
         [ServerRpc(RequireOwnership = true)]
         private void OnResumeBuildingUnitServerRpc()
         {
             OnResumeBuildingUnit();
         }
+
         [ClientRpc]
         private void OnUnit_BuildingStartedClientRpc(ulong objectId)
         {

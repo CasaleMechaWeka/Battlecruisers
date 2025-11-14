@@ -5,16 +5,12 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Factories
 {
     public class PvPDroneStation : PvPBuilding
     {
         public int numOfDronesProvided;
-        // BuildProgress 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
@@ -45,17 +41,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 ParentCruiser.DroneManager.NumOfDrones -= numOfDronesProvided;
             }
             base.OnDestroyed();
-        }
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-                BuildProgress = PvP_BuildProgress.Value;
         }
     }
 }

@@ -63,21 +63,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted_PvPClient();
         }
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {

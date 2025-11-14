@@ -98,21 +98,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shieldController.SetShieldHealth(_shieldController.maxHealth / maxHealth * Health);
         }
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {

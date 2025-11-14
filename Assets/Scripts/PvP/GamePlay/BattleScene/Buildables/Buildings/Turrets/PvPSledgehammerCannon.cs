@@ -4,7 +4,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Unity.Netcode;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
@@ -24,20 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
-        }
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
     }
 }

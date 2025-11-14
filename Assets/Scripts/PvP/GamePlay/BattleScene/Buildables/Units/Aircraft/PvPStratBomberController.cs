@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Targets.TargetProcessors;
@@ -68,7 +67,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         #endregion Properties
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
@@ -198,19 +196,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 && Target != null/* && IsServer*/)
             {
                 TryBombTarget();
-            }
-        }
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
             }
         }
 

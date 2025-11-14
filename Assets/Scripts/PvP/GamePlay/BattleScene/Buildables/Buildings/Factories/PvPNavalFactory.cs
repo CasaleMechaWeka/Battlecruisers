@@ -22,8 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override LayerMask UnitLayerMask => unitsLayerMask;
 
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
@@ -102,24 +100,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnUnitUnderConstruction_DestroyedClientRpc();
             else
                 base.OnUnitUnderConstruction_Destroyed();
-        }
-
-
-
-
-
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
 
         // Rpcs

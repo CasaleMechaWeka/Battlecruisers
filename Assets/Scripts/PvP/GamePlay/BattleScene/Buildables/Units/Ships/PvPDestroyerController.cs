@@ -80,27 +80,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
-        }
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
 
         protected override void OnBuildableProgressEvent()

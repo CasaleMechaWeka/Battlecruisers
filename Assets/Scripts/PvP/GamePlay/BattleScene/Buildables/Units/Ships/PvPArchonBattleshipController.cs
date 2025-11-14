@@ -14,7 +14,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 
@@ -23,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPArchonBattleshipController : PvPShipController
     {
         private IBroadcastingAnimation _unfurlAnimation;
-        private AudioSourceGroup _unfurlAudioGroup;
 
         public PvPBarrelWrapper laser;
         public GameObject bones;
@@ -160,23 +158,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // bones.SetActive(false);
             SetVisibleBones(false);
             OnSetVisibleBoneClientRpc(false);
-        }
-
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
 
         protected override void OnBuildableProgressEvent()

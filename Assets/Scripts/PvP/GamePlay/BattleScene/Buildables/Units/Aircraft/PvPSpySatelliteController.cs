@@ -38,27 +38,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnActivatePvPClientRpc();
         }
 
-        
-
-
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -77,7 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
         [ClientRpc]
         private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection)
         {
@@ -86,16 +64,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
                 FacingDirection = facingDirection;
                 Activate_PvPClient();
-            }
-        }
-
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-            if (!isEnabled)
-            {
-                Invoke("ActiveTrail", 0.5f);
             }
         }
 
@@ -120,17 +88,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-            {
-                OnDestroyedEvent();
-            }
-        }
-
-
-
     }
 }

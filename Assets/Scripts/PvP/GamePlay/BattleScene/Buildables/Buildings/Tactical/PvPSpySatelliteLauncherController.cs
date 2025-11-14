@@ -6,7 +6,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -32,21 +31,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(satellitePrefab);
             // Need satellite to be initialised to be able to access damage capabilities.
             satellitePrefab.StaticInitialise();
-        }
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
     }
 }

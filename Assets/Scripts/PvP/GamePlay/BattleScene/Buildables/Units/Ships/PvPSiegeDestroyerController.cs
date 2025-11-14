@@ -11,8 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPSiegeDestroyerController : PvPShipController
     {
         private IPvPBarrelWrapper _mortar;
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
         public override bool KeepDistanceFromEnemyCruiser => false;
@@ -47,24 +45,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _mortar.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
-        }
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
         }
 
         protected override void OnBuildableProgressEvent()
