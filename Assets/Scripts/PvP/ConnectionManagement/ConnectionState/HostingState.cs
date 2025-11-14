@@ -58,7 +58,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId
                 && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
             {
-                Debug.Log($"PVP: HOST relay connected (LocalClientId={clientId}, ConnectedClients=1, Private={ArenaSelectPanelScreenController.PrivateMatch}) - loading scene");
+                Debug.Log($"PVP: HOST relay connected (LocalClientId={clientId}, ConnectedClients=1, Private={ArenaSelectPanelScreenController.PrivateMatch}) - loading PvPBattleScene with NetworkManager.SceneManager");
                 NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
             }
             else if (clientId != m_ConnectionManager.NetworkManager.LocalClientId
