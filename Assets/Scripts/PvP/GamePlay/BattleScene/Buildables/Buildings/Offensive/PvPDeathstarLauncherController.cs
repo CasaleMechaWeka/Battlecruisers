@@ -2,9 +2,7 @@ using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
@@ -44,30 +42,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-
-
-
-
-
-
-
-
-
-        // Death Sound
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-
-
-
         private void LateUpdate()
         {
             if (IsServer)
@@ -87,36 +61,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
                 pvp_Health.Value = maxHealth;
         }
-
-        // ----------------------------------------
-
-
-
-
-
-
-        [ClientRpc]
-        private void PlayPlacementSoundClientRpc()
-        {
-            if (!IsHost)
-                base.PlayPlacementSound();
-        }
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-
-        [ServerRpc(RequireOwnership = true)]
-        private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName)
-        {
-            PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
-            //    UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
-        }
-
-
     }
 }

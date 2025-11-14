@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
@@ -77,30 +76,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _boosterGlow.gameObject.SetActive(false);
         }
 
-        // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
-
-
-
-
-
-
-
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-
-
 
         private void LateUpdate()
         {
@@ -122,42 +98,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 pvp_Health.Value = maxHealth;
         }
 
-
-
-
-        [ClientRpc]
-        private void PlayPlacementSoundClientRpc()
-        {
-            if (!IsHost)
-                base.PlayPlacementSound();
-        }
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-
-
-
-
-
-        [ClientRpc]
-        private void OnSyncFationClientRpc(Faction faction)
-        {
-            if (!IsHost)
-                Faction = faction;
-        }
-
         [ClientRpc]
         private void OnEnableBoosterGlowClientRpc(bool enabled)
         {
             if (!IsHost)
                 _boosterGlow.gameObject.SetActive(enabled);
         }
-
-
     }
 }

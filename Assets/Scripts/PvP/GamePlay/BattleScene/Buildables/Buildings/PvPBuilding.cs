@@ -341,6 +341,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             else
                 base.OnDestroyedEvent();
-        }        
+        }
+        
+
+        protected override void CallRpc_PlayDeathSound()
+        {
+            if (IsServer)
+            {
+                OnPlayDeathSoundClientRpc();
+                base.CallRpc_PlayDeathSound();
+            }
+            else
+                base.CallRpc_PlayDeathSound();
+        }
+
+        [ClientRpc]
+        void OnPlayDeathSoundClientRpc()
+        {
+            if (!IsHost)
+                CallRpc_PlayDeathSound();
+        }
     }
 }

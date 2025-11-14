@@ -28,11 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.DroneBuildingsProviders);
         }
 
-
-
-
-
-
         protected override void OnBuildableCompleted()
         {
             if (IsServer)
@@ -56,23 +51,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnDestroyed();
         }
 
-
-
-
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-
-
-
         private void LateUpdate()
         {
             if (IsServer)
@@ -90,34 +68,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (IsServer)
                 pvp_Health.Value = maxHealth;
         }
-
-
-
-
-
-        [ClientRpc]
-        private void PlayPlacementSoundClientRpc()
-        {
-            if (!IsHost)
-                base.PlayPlacementSound();
-        }
-
-
-
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-
-
-
-
-
-
-
     }
 }

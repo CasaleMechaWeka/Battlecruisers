@@ -37,26 +37,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPNavalFactorySpawnPositionFinder(this);
         }
 
-
-
-
-
-
-
-
-
-
-        // Death Sound
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-                OnPlayDeathSoundClientRpc();
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        // StartBuildingUnit
-
         protected override void OnStartBuildingUnit(UnitCategory category, string prefabName, int variantIndex)
         {
             OnStartBuildingUnitServerRpc(category, prefabName, variantIndex);
@@ -164,12 +144,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.PlayPlacementSound();
         }
 
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
+
+
 
 
         [ClientRpc]

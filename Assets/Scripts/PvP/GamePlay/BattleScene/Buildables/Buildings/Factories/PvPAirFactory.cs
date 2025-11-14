@@ -24,27 +24,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-
-
-
-
-
-        // Build Completed
-        
-
-
-
-        // Death Sound
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-                OnPlayDeathSoundClientRpc();
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        // StartBuildingUnit
-
         protected override void OnStartBuildingUnit(UnitCategory category, string prefabName, int variantIndex)
         {
             OnStartBuildingUnitServerRpc(category, prefabName, variantIndex);
@@ -159,12 +138,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
+
+
 
         [ClientRpc]
         private void OnProgressControllerVisibleClientRpc(bool isEnabled)
