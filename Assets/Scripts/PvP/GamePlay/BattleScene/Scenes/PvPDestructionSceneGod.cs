@@ -213,7 +213,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PopulateScreen();
 
             StartCoroutine(AnimateScreen());
-            BountyScreen?.SetActive(true);
+            // BountyScreen?.SetActive(true);
         }
 
 

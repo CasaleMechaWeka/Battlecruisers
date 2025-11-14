@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
@@ -183,16 +182,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.CallRpc_PlayDeathSound();
         }
 
-        // BuildableConstructionCompletedSound
-        protected override void PlayBuildableConstructionCompletedSound()
-        {
-            if (IsServer)
-                PlayBuildableConstructionCompletedSoundClientRpc();
-            else
-                base.PlayBuildableConstructionCompletedSound();
-        }
-
-
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
@@ -244,12 +233,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 CallRpc_PlayDeathSound();
-        }
-        [ClientRpc]
-        private void PlayBuildableConstructionCompletedSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayBuildableConstructionCompletedSound();
         }
 
 

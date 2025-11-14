@@ -1,5 +1,3 @@
-using BattleCruisers.Buildables;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using Unity.Netcode;
@@ -35,17 +33,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.CallRpc_PlayDeathSound();
         }
-
-        // BuildableConstructionCompletedSound
-        protected override void PlayBuildableConstructionCompletedSound()
-        {
-            if (IsServer)
-                PlayBuildableConstructionCompletedSoundClientRpc();
-            else
-                base.PlayBuildableConstructionCompletedSound();
-        }
-
-
 
         protected override void OnDestroyedEvent()
         {
@@ -99,12 +86,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 CallRpc_PlayDeathSound();
         }
 
-        [ClientRpc]
-        private void PlayBuildableConstructionCompletedSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayBuildableConstructionCompletedSound();
-        }
 
 
         [ClientRpc]

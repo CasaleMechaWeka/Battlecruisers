@@ -33,16 +33,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.CallRpc_PlayDeathSound();
         }
 
-        // BuildableConstructionCompletedSound
-        protected override void PlayBuildableConstructionCompletedSound()
-        {
-            if (IsServer)
-                PlayBuildableConstructionCompletedSoundClientRpc();
-            else
-                base.PlayBuildableConstructionCompletedSound();
-        }
-
-
         protected override void OnDestroyedEvent()
         {
             if (IsServer)
@@ -99,12 +89,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        [ClientRpc]
-        private void PlayBuildableConstructionCompletedSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayBuildableConstructionCompletedSound();
-        }
 
 
         [ClientRpc]
