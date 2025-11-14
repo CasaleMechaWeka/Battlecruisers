@@ -62,43 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted_PvPClient();
         }
 
-        // Sava added code
-
-        // BuildProgress 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
-
-
-
-
-
-
-
-
-
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-            {
-                OnDestroyedEventClientRpc();
-                base.OnDestroyedEvent();
-            }
-            else
-                base.OnDestroyedEvent();
-        }
-
 
         private void LateUpdate()
         {
@@ -120,21 +84,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 pvp_Health.Value = maxHealth;
         }
 
-
-
-
-
-
-
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
@@ -143,21 +92,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shieldController.ApplyVariantStats(this);
         }
 
-
-
-
         [ClientRpc]
         private void OnEnableShieldClientRpc(bool enabled)
         {
             if (!IsHost)
                 _shieldController.gameObject.SetActive(enabled);
-        }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
         }
     }
 }

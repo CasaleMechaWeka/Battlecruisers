@@ -11,40 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
-
-
-
-
-
-
-
-
-
-
-        // Death Sound
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-            {
-                OnDestroyedEventClientRpc();
-                base.OnDestroyedEvent();
-            }
-            else
-                base.OnDestroyedEvent();
-        }
-
-
         private void LateUpdate()
         {
             if (IsServer)
@@ -62,39 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (IsServer)
                 pvp_Health.Value = maxHealth;
-        }
-
-
-        // Rpcs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-
-
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
         }
     }
 }

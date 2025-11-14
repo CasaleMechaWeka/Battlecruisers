@@ -10,16 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override SoundKey FiringSound => SoundKeys.Firing.AntiAir;
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.AntiAirTurret;
 
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-            {
-                OnDestroyedEventClientRpc();
-                base.OnDestroyedEvent();
-            }
-            else
-                base.OnDestroyedEvent();
-        }
+
 
 
         private void LateUpdate()
@@ -54,11 +45,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
 
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
-        }
+
     }
 }

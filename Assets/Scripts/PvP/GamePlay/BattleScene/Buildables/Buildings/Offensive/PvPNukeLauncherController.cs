@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
@@ -160,39 +159,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 
-        // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
-
-
-
-
-
-
-        // Death Sound
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-            {
-                OnDestroyedEventClientRpc();
-                base.OnDestroyedEvent();
-            }
-            else
-                base.OnDestroyedEvent();
-        }
-
 
         private void LateUpdate()
         {
@@ -212,42 +179,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (IsServer)
                 pvp_Health.Value = maxHealth;
-        }
-
-        // ----------------------------------------
-
-
-
-
-
-
-        [ClientRpc]
-        private void PlayPlacementSoundClientRpc()
-        {
-            if (!IsHost)
-                base.PlayPlacementSound();
-        }
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-
-        [ServerRpc(RequireOwnership = true)]
-        private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName)
-        {
-            PvPUnitKey _unitKey = new PvPUnitKey(category, prefabName);
-            //    UnitWrapper = PvPBattleSceneGodServer.Instance.prefabFactory.GetUnitWrapperPrefab(_unitKey);
-        }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
         }
     }
 }

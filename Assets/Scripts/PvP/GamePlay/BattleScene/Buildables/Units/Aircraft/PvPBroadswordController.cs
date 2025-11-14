@@ -326,13 +326,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.OnCompletedBuildableEvent();
         }
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-                OnDestroyedEventClientRpc();
-            else
-                base.OnDestroyedEvent();
-        }
+
+
 
         //-------------------------------------- RPCs -------------------------------------------------//
 
@@ -366,12 +361,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnCompletedBuildableEvent();
         }
 
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
-        }
+
 
     }
 }

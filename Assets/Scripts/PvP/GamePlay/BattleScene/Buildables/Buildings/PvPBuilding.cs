@@ -331,5 +331,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
         }
+
+        protected override void OnDestroyedEvent()
+        {
+            if (IsServer)
+            {
+                OnDestroyedEventClientRpc();
+                base.OnDestroyedEvent();
+            }
+            else
+                base.OnDestroyedEvent();
+        }
+        
+
+        protected override void CallRpc_PlayDeathSound()
+        {
+            if (IsServer)
+            {
+                OnPlayDeathSoundClientRpc();
+                base.CallRpc_PlayDeathSound();
+            }
+            else
+                base.CallRpc_PlayDeathSound();
+        }
+
+        [ClientRpc]
+        void OnPlayDeathSoundClientRpc()
+        {
+            if (!IsHost)
+                CallRpc_PlayDeathSound();
+        }
     }
 }
