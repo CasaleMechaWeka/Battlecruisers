@@ -14,7 +14,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.UI.Sound;
-using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 
@@ -23,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPArchonBattleshipController : PvPShipController
     {
         private IBroadcastingAnimation _unfurlAnimation;
-        private AudioSourceGroup _unfurlAudioGroup;
 
         public PvPBarrelWrapper laser;
         public GameObject bones;
@@ -83,10 +81,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         SpriteRenderer[] renders;
-        private void Awake()
-        {
 
-        }
         private void Start()
         {
             renders = bones.GetComponentsInChildren<SpriteRenderer>();
@@ -165,33 +160,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             OnSetVisibleBoneClientRpc(false);
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
-
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -222,13 +190,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        
-
-
-
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
@@ -243,24 +205,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnCompletedBuildableEvent();
         }
 
-
-
-        [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableCompleted();
-            laser.ApplyVariantStats(this);
-        }
-
-
-
         [ClientRpc]
         private void OnSetVisibleBoneClientRpc(bool isVisible)
         {
             if (!IsHost)
                 SetVisibleBones(isVisible);
         }
-
     }
 }

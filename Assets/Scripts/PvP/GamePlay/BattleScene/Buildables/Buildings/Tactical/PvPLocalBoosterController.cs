@@ -66,36 +66,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _boosterGlow.gameObject.SetActive(false);
         }
 
-        // Sava added code
-
-
         public override void Initialise(PvPUIManager uiManager)
         {
             base.Initialise(uiManager);
             _boosterGlow = transform.FindNamedComponent<ParticleSystem>("LocalBoosterMasterGlow");
             _boosterGlow.gameObject.SetActive(false);
-        }
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
         }
 
         [ClientRpc]

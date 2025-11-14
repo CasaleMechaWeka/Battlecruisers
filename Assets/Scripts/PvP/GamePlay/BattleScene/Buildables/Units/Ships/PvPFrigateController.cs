@@ -12,7 +12,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IPvPBarrelWrapper _directFireAntiSea, _mortar, _samSite;// _directFireAntiAir;
 
-        private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => 19;
         public override bool KeepDistanceFromEnemyCruiser => false;
 
@@ -57,35 +56,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _samSite.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
         }
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
 
         protected override void OnBuildableProgressEvent()
         {
@@ -103,15 +78,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnCompletedBuildableEvent();
         }
 
-
-
-
-        
-
-
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {

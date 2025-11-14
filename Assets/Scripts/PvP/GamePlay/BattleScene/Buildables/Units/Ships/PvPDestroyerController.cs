@@ -80,38 +80,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
         }
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
-
-
 
         protected override void OnBuildableProgressEvent()
         {
@@ -128,12 +101,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.OnCompletedBuildableEvent();
         }
-
-
-
-
-        
-
 
         protected override void StartMovementEffectsOfClient()
         {
@@ -161,9 +128,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
@@ -177,20 +141,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-
-
-        [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableCompleted();
-            _directFireAntiAir.ApplyVariantStats(this);
-            _directFireAntiSea.ApplyVariantStats(this);
-            _mortar.ApplyVariantStats(this);
-            _missileLauncher.ApplyVariantStats(this);
-        }
-
 
         [ClientRpc]
         private void StartMovementEffectsClientRpc()

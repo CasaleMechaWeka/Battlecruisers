@@ -238,25 +238,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-
-            }
-        }
-
-
-
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -275,10 +256,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
-
-
         [ClientRpc]
         private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
         {
@@ -298,17 +275,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableProgressEvent();
         }
 
-
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()
         {
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-
-
-
-
     }
 }

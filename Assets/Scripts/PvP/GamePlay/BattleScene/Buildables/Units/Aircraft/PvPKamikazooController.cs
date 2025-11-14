@@ -279,31 +279,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        // sava added
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         // only for PvPFighter :(
         public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-                if (pvp_RotationY.Value != transform.eulerAngles.y)
-                    pvp_RotationY.Value = transform.eulerAngles.y;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, pvp_RotationY.Value, transform.eulerAngles.z);
-            }
-        }
-
-
-
-
 
         protected override void OnBuildableProgressEvent()
         {
@@ -320,12 +297,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnCompletedBuildableEvent();
         }
 
-
-
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
-
         [ClientRpc]
         private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
         {
@@ -352,8 +324,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-
-
     }
 }

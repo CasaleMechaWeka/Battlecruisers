@@ -18,7 +18,6 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Network.Multiplay.Scenes;
 
@@ -469,7 +468,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitA = SynchedServerData.Instance.playerABodykit.Value;
             if (id_bodykitA != -1)
             {
-                Bodykit bodykit = await PvPPrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
+                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
                 {
                     if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
@@ -485,7 +484,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int id_bodykitB = SynchedServerData.Instance.playerBBodykit.Value;
             if (id_bodykitB != -1)
             {
-                Bodykit bodykit = await PvPPrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
+                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
                 if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
                 {
                     if (rightCruiserName != null) rightCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitB].NameStringKeyBase);

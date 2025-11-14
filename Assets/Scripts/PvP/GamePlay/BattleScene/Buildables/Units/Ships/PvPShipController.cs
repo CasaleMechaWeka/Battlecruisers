@@ -314,5 +314,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             FRIEND_DETECTION_RADIUS_MULTIPLIER += extraRange;
         }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
+        }
     }
 }
