@@ -1,21 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 using Unity.Services.Qos;
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
-using BattleCruisers.Network.Multiplay.ConnectionManagement;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
-using BattleCruisers.Scenes;
-using BattleCruisers.UI;
 using BattleCruisers.Utils;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -201,12 +196,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             if (isPvPBattleScenePreloaded)
             {
                 Debug.Log("PVP: Unloading pre-loaded PvPBattleScene");
-                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
+                SceneManager.UnloadSceneAsync("PvPBattleScene");
                 isPvPBattleScenePreloaded = false;
             }
 
             Destroy(gameObject);
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
+            SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
         }
         public void FoundCompetitor()
         {
@@ -238,7 +233,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             ArenaSelectPanelScreenController.PrivateMatch = false;
             Destroy(gameObject);
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
+            SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
         }
         public void ShowBadInternetMessageBox()
         {
@@ -269,12 +264,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         System.Collections.IEnumerator PreloadBattleSceneCoroutine()
         {
             Debug.Log("PVP: Pre-loading PvPBattleScene...");
-            AsyncOperation sceneLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            AsyncOperation sceneLoad = SceneManager.LoadSceneAsync("PvPBattleScene", LoadSceneMode.Additive);
             sceneLoad.allowSceneActivation = true;
 
             yield return sceneLoad;
 
-            UnityEngine.SceneManagement.Scene battleScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("PvPBattleScene");
+            Scene battleScene = SceneManager.GetSceneByName("PvPBattleScene");
             if (battleScene.IsValid())
             {
                 GameObject[] rootObjects = battleScene.GetRootGameObjects();
@@ -291,10 +286,10 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             Debug.Log("PVP: PvPBattleScene pre-loaded successfully");
             isPvPBattleScenePreloaded = true;
         }
-        private System.Collections.Generic.List<GameObject> disabledRootObjects = new System.Collections.Generic.List<GameObject>();
+        private List<GameObject> disabledRootObjects = new List<GameObject>();
         public void ReEnableBattleSceneGameObjects()
         {
-            UnityEngine.EventSystems.EventSystem initializerEventSystem = GetComponentInChildren<UnityEngine.EventSystems.EventSystem>();
+            EventSystem initializerEventSystem = GetComponentInChildren<EventSystem>();
             if (initializerEventSystem != null)
             {
                 Destroy(initializerEventSystem.gameObject);
