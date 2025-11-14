@@ -294,19 +294,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             return drone;
         }
 
-        public static async Task<Bodykit> GetBodykit(IPrefabKey prefabKey)
-        {
-            string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
-            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(addressableKey);
-            await handle.Task;
-            if (handle.Status != AsyncOperationStatus.Succeeded
-                || handle.Result == null)
-            {
-                throw new ArgumentException("Failed to retrieve prefab: " + addressableKey);
-            }
-            return handle.Result.GetComponent<Bodykit>();
-        }
-
         public static async Task<VariantPrefab> GetVariant(IPrefabKey prefabKey)
         {
             string addressableKey = "Assets/Resources_moved/" + prefabKey.PrefabPath + ".prefab";
