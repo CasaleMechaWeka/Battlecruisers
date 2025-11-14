@@ -85,11 +85,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             LatencyCheck = FetchLatencyByRegion();
 
             // Reset battle button state when panel becomes active (e.g., after FLEE from PVP)
-            ResetBattleButtonState();
-        }
-
-        public void ResetBattleButtonState()
-        {
             isClickedBattleButton = false;
             if (battleButton != null)
                 battleButton.gameObject.SetActive(true);
@@ -193,6 +188,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         DataProvider.GameModel.GameMap = IndexCurrentArena;
                         PvPBattleSceneGodTunnel.isCost = false;
                         PvPBattleCompletionHandler._isCompleted = false;
+                        if (ApplicationController.Instance != null)
+                        {
+                            ApplicationController.Instance.InitialiseServices();
+                        }
+                        else
+                        {
+                            Debug.LogError("privatepvp: StartBattle - ApplicationController.Instance is NULL!");
+                        }
                         _screenSceneGod.LoadPvPBattleScene();
                     }
                     else

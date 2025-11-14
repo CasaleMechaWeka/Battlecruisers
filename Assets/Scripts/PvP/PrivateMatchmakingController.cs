@@ -58,7 +58,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         void Start()
         {
-            Debug.Log("PVP: PrivateMatchmakingController.Start");
+            Debug.Log("PVP: PrivateMatchmakingController.Start - entering PrivatePVP lobby page");
             _ = StartAsync().ContinueWith(t =>
             {
                 if (t.IsFaulted)

@@ -47,6 +47,7 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
         public NetworkManager NetworkManager => m_NetworkManager;
 
         private bool m_ServicesInitialised = false;
+
         public void InitialiseServices()
         {
             if (m_ServicesInitialised)
@@ -86,38 +87,38 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             authenticationServiceFacade = new AuthenticationServiceFacade(unityServiceErrorChannel);
 
             ConnectionStatusMessageUIManager connectionStatusMessageUIManager = new GameObject("UIMessageManager")
-            .AddComponent<ConnectionStatusMessageUIManager>();
+.AddComponent<ConnectionStatusMessageUIManager>();
             connectionStatusMessageUIManager.Initialize(
             connectionStatusChannel,
             reconnectChannel);
             DontDestroyOnLoad(connectionStatusMessageUIManager.gameObject);
 
             UnityServicesUIHandler unityServicesUIHandler = new GameObject("UIServiceMessageManager")
-            .AddComponent<UnityServicesUIHandler>();
+                .AddComponent<UnityServicesUIHandler>();
             unityServicesUIHandler.SendMessage("Initialize", unityServiceErrorChannel, SendMessageOptions.DontRequireReceiver);
 
             m_LobbyServiceFacade = new LobbyServiceFacade(
-            m_UpdateRunner,
-            m_LocalLobby,
-            localLobbyUser,
-            unityServiceErrorChannel,
-            lobbyListChannel);
+                m_UpdateRunner,
+                m_LocalLobby,
+                localLobbyUser,
+                unityServiceErrorChannel,
+                lobbyListChannel);
 
             m_ConnectionManager.Initialise(m_NetworkManager,
-            m_LobbyServiceFacade,
-            profileManager,
-            connectionStatusChannel,
-            m_LocalLobby,
-            reconnectChannel);
+                                           m_LobbyServiceFacade,
+                                           profileManager,
+                                           connectionStatusChannel,
+                                           m_LocalLobby,
+                                           reconnectChannel);
 
             DontDestroyOnLoad(m_ConnectionManager);
 
             PvPBootManager bootManager = new PvPBootManager(
-            localLobbyUser,
-            m_LocalLobby,
-            m_LobbyServiceFacade,
-            m_ConnectionManager,
-            authenticationServiceFacade);
+                localLobbyUser,
+                m_LocalLobby,
+                m_LobbyServiceFacade,
+                m_ConnectionManager,
+                authenticationServiceFacade);
 
             DisposableGroup subHandles = new DisposableGroup();
             subHandles.Add(quitChannel.Subscribe(QuitGame));

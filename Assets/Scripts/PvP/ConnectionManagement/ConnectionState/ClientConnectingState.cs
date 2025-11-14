@@ -33,13 +33,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionMethod = baseConnectionMethod;
             return this;
         }
+
         public override void Enter()
         {
             if (MatchmakingScreenController.Instance != null)
                 MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CONNECTING);
-
             _ = ConnectClientAsync();
         }
+
         public override void Exit() { }
         public override void OnClientConnected(ulong _)
         {
@@ -79,6 +80,12 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 }
 
                 Debug.Log($"PVP: CLIENT relay configured (RelayCode={m_LocalLobby.RelayJoinCode}, Private={ArenaSelectPanelScreenController.PrivateMatch}) - starting NetworkManager");
+
+                if (!ArenaSelectPanelScreenController.PrivateMatch && MatchmakingScreenController.Instance != null)
+                {
+                    Debug.Log("PVP: CLIENT re-enabling pre-loaded PvPBattleScene GameObjects");
+                    MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
+                }
 
                 if (!m_ConnectionManager.NetworkManager.StartClient())
                 {

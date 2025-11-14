@@ -97,7 +97,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public AudioSource enemyFoundMusic;
 
         public static MatchmakingScreenController Instance { get; private set; }
-        public static ArenaSelectPanelScreenController ArenaSelectPanelReference;
 
         public enum MMStatus
         {
@@ -129,16 +128,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         async void Start()
         {
             Instance = this;
-
-            if (ApplicationController.Instance != null)
-            {
-                ApplicationController.Instance.InitialiseServices();
-            }
-            else
-            {
-                Debug.LogError("PVP: MatchmakingScreenController.Start - ApplicationController.Instance is NULL!");
-            }
-
             Connection_Quality = ConnectionQuality.HIGH;
             sprites.Add("BlackRig", BlackRig);
             sprites.Add("BasicRig", BasicRig);
@@ -164,7 +153,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             sprites.Add("Yeti", Yeti);
 
             DontDestroyOnLoad(gameObject);
-            Debug.Log("PVP: Pre-loading PvPBattleScene");
             StartCoroutine(PreloadBattleSceneCoroutine());
 
             _gameModel = DataProvider.GameModel;
@@ -393,10 +381,19 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             LockLobby();
         }
+
         public void OnFlee()
         {
             Debug.Log("PVP: MatchmakingScreenController.OnFlee - User clicked FLEE");
             fleeButton.SetActive(false);
+
+            if (isPvPBattleScenePreloaded)
+            {
+                Debug.Log("PVP: PublicPVP unloading pre-loaded PvPBattleScene (OnFlee)");
+                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
+                isPvPBattleScenePreloaded = false;
+                disabledRootObjects.Clear();
+            }
 
             if (PvPBattleSceneGodClient.Instance != null)
             {
@@ -404,8 +401,43 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
             }
 
-            FailedMatchmaking();
+            if (backgroundMusic != null && backgroundMusic.isPlaying)
+                backgroundMusic.Stop();
+
+            // Clear Instance and destroy controller so OfflineState.Enter() navigates to SCREENS_SCENE
+            Debug.Log("PVP: MatchmakingScreenController.OnFlee - Clearing Instance and destroying controller");
+            Instance = null;
+            Destroy(gameObject);
+
+            GameObject connectionManagerObj = GameObject.Find("ConnectionManager");
+            if (connectionManagerObj != null)
+            {
+                ConnectionManager connectionManager = connectionManagerObj.GetComponent<ConnectionManager>();
+                if (connectionManager != null)
+                {
+                    if (connectionManager.m_Offline != null)
+                    {
+                        connectionManager.ChangeState(connectionManager.m_Offline);
+                    }
+                    else
+                    {
+                        Debug.LogError("OnFlee: ConnectionManager.m_Offline is null - services not fully initialized. Navigating directly to SCREENS_SCENE.");
+                        SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("OnFlee: ConnectionManager component not found on ConnectionManager GameObject. Navigating directly to SCREENS_SCENE.");
+                    SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                }
+            }
+            else
+            {
+                Debug.LogError("OnFlee: ConnectionManager GameObject not found - services may not be initialized yet. Navigating directly to SCREENS_SCENE.");
+                SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+            }
         }
+
         public async void FoundCompetitor()
         {
             if (leftPlayerName == null) return;
@@ -504,38 +536,19 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             Debug.Log("PVP: MatchmakingScreenController.FailedMatchmaking - Matchmaking failed");
 
-            if (backgroundMusic != null && backgroundMusic.isPlaying)
-                backgroundMusic.Stop();
-
             if (isPvPBattleScenePreloaded)
             {
-                Debug.Log("PVP: Unloading pre-loaded PvPBattleScene (FailedMatchmaking)");
+                Debug.Log("PVP: PublicPVP unloading pre-loaded PvPBattleScene (FailedMatchmaking)");
                 UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
                 isPvPBattleScenePreloaded = false;
                 disabledRootObjects.Clear();
             }
-
-            if (ArenaSelectPanelReference != null)
-            {
-                Debug.Log("PVP: Resetting ArenaSelectPanel state (FailedMatchmaking)");
-                ArenaSelectPanelReference.ResetBattleButtonState();
-            }
-
-            Destroy(gameObject);
-            Debug.Log("PVP: Unloading PvPInitializeScene (FailedMatchmaking)");
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
         }
         public void Destroy()
         {
             Destroy(gameObject);
         }
-        void OnDestroy()
-        {
-            if (Instance == this)
-            {
-                Instance = null;
-            }
-        }
+
         public void DisableAllAnimatedGameObjects()
         {
             Animator animator = GetComponent<Animator>();
@@ -548,7 +561,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         System.Collections.IEnumerator PreloadBattleSceneCoroutine()
         {
-            Debug.Log("PVP: Pre-loading PvPBattleScene");
+            Debug.Log("PVP: PublicPVP pre-loading PvPBattleScene...");
             AsyncOperation sceneLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(
             "PvPBattleScene",
             UnityEngine.SceneManagement.LoadSceneMode.Additive);
@@ -566,32 +579,33 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     {
                         rootObject.SetActive(false);
                         disabledRootObjects.Add(rootObject);
-                        Debug.Log($"PVP: Disabled root GameObject '{rootObject.name}' to prevent premature NetworkObject spawning");
+                        Debug.Log($"PVP: PublicPVP disabled root GameObject '{rootObject.name}' to prevent premature NetworkObject spawning");
                     }
                 }
             }
 
-            Debug.Log("PVP: PvPBattleScene pre-loaded successfully");
+            Debug.Log("PVP: PublicPVP PvPBattleScene pre-loaded successfully");
             isPvPBattleScenePreloaded = true;
         }
         public void ReEnableBattleSceneGameObjects()
         {
+            // Destroy MatchmakingScreenController's EventSystem to prevent conflicts
             UnityEngine.EventSystems.EventSystem matchmakingEventSystem = GetComponentInChildren<UnityEngine.EventSystems.EventSystem>();
             if (matchmakingEventSystem != null)
             {
                 Destroy(matchmakingEventSystem.gameObject);
-                Debug.Log("PVP: Destroyed matchmaking EventSystem");
+                Debug.Log("PVP: PublicPVP destroyed matchmaking EventSystem");
             }
 
             if (disabledRootObjects != null && disabledRootObjects.Count > 0)
             {
-                Debug.Log($"PVP: Re-enabling {disabledRootObjects.Count} disabled root GameObjects");
+                Debug.Log($"PVP: PublicPVP re-enabling {disabledRootObjects.Count} disabled root GameObjects");
                 foreach (GameObject rootObject in disabledRootObjects)
                 {
                     if (rootObject != null)
                     {
                         rootObject.SetActive(true);
-                        Debug.Log($"PVP: Re-enabled root GameObject '{rootObject.name}'");
+                        Debug.Log($"PVP: PublicPVP re-enabled root GameObject '{rootObject.name}'");
                     }
                 }
                 disabledRootObjects.Clear();

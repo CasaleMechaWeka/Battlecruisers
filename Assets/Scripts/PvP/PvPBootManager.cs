@@ -175,12 +175,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
                 foreach (Lobby lobby in sortedLobbies)
                 {
-                    if (lobby.Players.Count >= lobby.MaxPlayers)
-                    {
-                        Debug.Log($"PVP: Skipping full lobby {lobby.LobbyCode} ({lobby.Players.Count}/{lobby.MaxPlayers} players)");
-                        continue;
-                    }
-
                     int totalLatency = int.Parse(lobby.Data["Latency"].Value) + clientLatenciesByRegion[lobby.Data["Region"].Value];
                     CheckLatency(totalLatency);
                     Debug.Log("Total Latency: " + totalLatency.ToString() + " ms");
@@ -197,13 +191,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
                     Debug.Log($"Joined Lobby {lobbyJoinAttemp.Lobby.Name} ({lobbyJoinAttemp.Lobby.Id})");
                     PlayerPrefs.SetString("JOINCODE", lobby.Data["RelayJoinCode"].Value);
-
-                    if (MatchmakingScreenController.Instance != null)
-                    {
-                        Debug.Log("PVP: CLIENT re-enabling pre-loaded PvPBattleScene before StartClientLobby");
-                        MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
-                    }
-
                     ConnectionManager.StartClientLobby(DataProvider.GameModel.PlayerName);
                     return;
                 }
@@ -277,13 +264,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
             MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
 
             Lobby lobby = await CreateLobby(desiredMap, isPrivate);
-
-            if (MatchmakingScreenController.Instance != null)
-            {
-                Debug.Log("PVP: HOST re-enabling pre-loaded PvPBattleScene before StartHostLobby");
-                MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
-            }
-
             ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
             return lobby;
         }
