@@ -2,7 +2,6 @@ using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Multiplayer.Samples.BossRoom;
 using Unity.Netcode;
-
 using UnityEngine;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
@@ -24,9 +23,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_LobbyServiceFacade = lobbyServiceFacade;
         }
-
-        // used in ApprovalCheck. This is intended as a bit of light protection against DOS attacks that rely on sending silly big buffers of garbage.
-        const int k_MaxConnectPayload = 1024;
 
         public override void Enter()
         {
@@ -119,7 +115,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             Debug.Log($"PVP: HOST approval requested (clientId={clientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}/{m_ConnectionManager.MaxConnectedPlayers}, Hull={connectionPayload.playerHullPrefabName}, Name={connectionPayload.playerName})");
 
-            ConnectStatus gameReturnStatus = GetConnectStatus(connectionPayload);
+            ConnectStatus gameReturnStatus = GetConnectStatus();
 
             if (gameReturnStatus == ConnectStatus.Success)
             {
@@ -177,12 +173,10 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             response.Approved = false;
         }
 
-        ConnectStatus GetConnectStatus(ConnectionPayload connectionPayload)
+        ConnectStatus GetConnectStatus()
         {
             if (m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count >= m_ConnectionManager.MaxConnectedPlayers)
-            {
                 return ConnectStatus.ServerFull;
-            }
             return ConnectStatus.Success;
         }
     }

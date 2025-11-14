@@ -5,8 +5,8 @@ using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using UnityEngine;
-using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -30,19 +30,17 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
         public override void Enter()
         {
-#pragma warning disable 4014
             m_LobbyServiceFacade.EndTracking();
-#pragma warning restore 4014
 
             if (MatchmakingScreenController.Instance != null)
             {
                 Debug.Log("PVP: Connection failed, calling MatchmakingScreen.FailedMatchmaking");
                 MatchmakingScreenController.Instance.FailedMatchmaking();
             }
-            else if (BattleCruisers.UI.ScreensScene.BattleHubScreen.PrivateMatchmakingController.Instance != null)
+            else if (PrivateMatchmakingController.Instance != null)
             {
                 Debug.Log("PVP: Connection failed, calling PrivateMatchmaking.FailedMatchmaking");
-                BattleCruisers.UI.ScreensScene.BattleHubScreen.PrivateMatchmakingController.Instance.FailedMatchmaking();
+                PrivateMatchmakingController.Instance.FailedMatchmaking();
             }
             else
             {
@@ -82,7 +80,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 }
             }
         }
-        public override void Exit() { }
 
         public override void StartClientIP(string playerName, string ipaddress, int port)
         {
@@ -118,4 +115,3 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
     }
 }
-

@@ -80,7 +80,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         public async Task TryJoinLobby()
         {
             // find best matchmaking region
-
             bool playerIsAuthorized = await AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
 
             if (!playerIsAuthorized)

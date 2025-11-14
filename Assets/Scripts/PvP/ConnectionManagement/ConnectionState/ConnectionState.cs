@@ -1,6 +1,5 @@
 using BattleCruisers.Network.Multiplay.Infrastructure;
 using Unity.Netcode;
-using VContainer;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -19,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
 
         public abstract void Enter();
-        public abstract void Exit();
+        public virtual void Exit() { }
 
         public virtual void OnClientConnected(ulong clientId) { }
         public virtual void OnClientDisconnect(ulong clientId) { }

@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             PvPBattleSceneGodTunnel._playerBCruiserVal = 3500;
             PvPBattleSceneGodTunnel._playerBCruiserName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
         }
-        public override void Exit() { }
+
         public override void OnClientDisconnect(ulong clientId)
         {
             Debug.Log($"PVP: CLIENT HOST disconnected (clientId={clientId})");

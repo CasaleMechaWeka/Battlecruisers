@@ -45,8 +45,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             StartHost();
         }
 
-        public override void Exit() { }
-
         public override void OnClientDisconnect(ulong clientId)
         {
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId)

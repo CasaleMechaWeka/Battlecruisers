@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             _ = ConnectClientAsync();
         }
-        public override void Exit() { }
+
         public override void OnClientConnected(ulong _)
         {
             Debug.Log("PVP: CLIENT connected, switching to ClientConnectedState");
