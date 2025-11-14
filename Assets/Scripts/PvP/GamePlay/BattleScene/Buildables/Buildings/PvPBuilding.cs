@@ -302,6 +302,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
+        protected override void PlayBuildableConstructionCompletedSound()
+        {
+            if (IsServer)
+                PlayBuildableConstructionCompletedSoundClientRpc();
+            else
+                base.PlayBuildableConstructionCompletedSound();
+        }
+
+        [ClientRpc]
+        void PlayBuildableConstructionCompletedSoundClientRpc()
+        {
+            if (!IsHost)
+                PlayBuildableConstructionCompletedSound();
+        }
+
         protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {
             base.AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
