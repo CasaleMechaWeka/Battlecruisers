@@ -331,5 +331,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
         }
+
+        protected override void OnDestroyedEvent()
+        {
+            if (IsServer)
+            {
+                OnDestroyedEventClientRpc();
+                base.OnDestroyedEvent();
+            }
+            else
+                base.OnDestroyedEvent();
+        }        
     }
 }

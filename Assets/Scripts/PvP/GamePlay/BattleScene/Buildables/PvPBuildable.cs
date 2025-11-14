@@ -871,5 +871,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 Faction = faction;
         }
+
+        
+        [ClientRpc]
+        public void OnDestroyedEventClientRpc()
+        {
+            if (!IsHost)
+                OnDestroyedEvent();
+        }
     }
 }
