@@ -34,8 +34,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             satellitePrefab.StaticInitialise();
         }
 
-
-        // sava added
         public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
 
         private void LateUpdate()
@@ -49,13 +47,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 BuildProgress = PvP_BuildProgress.Value;
             }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
         }
     }
 }

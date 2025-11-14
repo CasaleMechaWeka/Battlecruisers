@@ -28,13 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
         protected override ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
         {
             get

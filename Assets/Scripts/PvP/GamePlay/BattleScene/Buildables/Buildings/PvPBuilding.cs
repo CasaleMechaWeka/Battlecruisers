@@ -111,6 +111,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (!IsHost)
                 pvp_variantIndex.OnValueChanged += ApplyVariantIconOnClient;
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
         }
 
         public override void OnNetworkDespawn()

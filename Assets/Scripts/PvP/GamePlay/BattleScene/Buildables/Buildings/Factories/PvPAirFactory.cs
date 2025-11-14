@@ -116,40 +116,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
             return new PvPAirFactorySpawnPositionFinder(this);
         }
 
         // ----------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            if (!IsHost)
-                _buildableProgress.gameObject.SetActive(isEnabled);
-        }
-
-
-
         [ServerRpc(RequireOwnership = true)]
         private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName, int variantIndex)
         {
@@ -202,7 +174,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnNewUnitChosen();
         }
-
-
     }
 }

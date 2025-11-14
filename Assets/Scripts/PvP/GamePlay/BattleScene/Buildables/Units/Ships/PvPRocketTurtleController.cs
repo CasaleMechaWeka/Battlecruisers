@@ -104,14 +104,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -127,9 +119,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.OnCompletedBuildableEvent();
         }
-
-
-
 
         protected override void OnBuildableCompleted()
         {
@@ -150,9 +139,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
@@ -166,8 +152,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-
 
         [ClientRpc]
         private void OnEnableShieldClientRpc(bool enabled)
@@ -183,8 +167,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted();
             _missileLauncher.ApplyVariantStats(this);
         }
-
-
 
         [ClientRpc]
         private void EnableAnimatorClientRpc()

@@ -16,7 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPGrapheneBarrierController : PvPTacticalBuilding
     {
-
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
         public override TargetValue TargetValue => TargetValue.Low;
         public override bool IsBoostable => true;
@@ -113,14 +112,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 BuildProgress = PvP_BuildProgress.Value;
             }
         }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
 
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()

@@ -18,8 +18,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.DroneStation;
         public override TargetValue TargetValue => TargetValue.Medium;
 
-
-
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
@@ -40,8 +38,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted_PvPClient();
         }
 
-
-
         protected override void OnDestroyed()
         {
             if (BuildableState == PvPBuildableState.Completed)
@@ -60,13 +56,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             else
                 BuildProgress = PvP_BuildProgress.Value;
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
         }
     }
 }

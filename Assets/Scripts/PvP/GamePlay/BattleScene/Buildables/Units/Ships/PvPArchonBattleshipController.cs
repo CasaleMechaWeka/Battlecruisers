@@ -83,10 +83,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         SpriteRenderer[] renders;
-        private void Awake()
-        {
 
-        }
         private void Start()
         {
             renders = bones.GetComponentsInChildren<SpriteRenderer>();
@@ -182,16 +179,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
-
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -222,13 +209,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        
-
-
-
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
@@ -243,24 +224,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnCompletedBuildableEvent();
         }
 
-
-
-        [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableCompleted();
-            laser.ApplyVariantStats(this);
-        }
-
-
-
         [ClientRpc]
         private void OnSetVisibleBoneClientRpc(bool isVisible)
         {
             if (!IsHost)
                 SetVisibleBones(isVisible);
         }
-
     }
 }
