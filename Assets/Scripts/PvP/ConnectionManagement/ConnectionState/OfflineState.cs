@@ -46,7 +46,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             else
             {
-                Debug.LogWarning("PVP: No matchmaking controller found, falling back to ScreensScene");
+                Debug.LogWarning("PVP: No matchmaking controller found, cleaning up network objects and unloading PVP scenes");
                 if (GameObject.Find("ApplicationController") != null)
                     GameObject.Find("ApplicationController").GetComponent<ApplicationController>().DestroyNetworkObject();
 
@@ -65,7 +65,21 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 if (GameObject.Find("NetworkManager") != null)
                     GameObject.Find("NetworkManager").GetComponent<BCNetworkManager>().DestroyNetworkObject();
 
-                SceneNavigator.GoToScene(SceneNames.SCREENS_SCENE, true);
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneByName(SceneNames.PvP_INITIALIZE_SCENE).isLoaded)
+                {
+                    Debug.Log("PVP: OfflineState unloading PvPInitializeScene");
+                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
+                }
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneByName(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE).isLoaded)
+                {
+                    Debug.Log("PVP: OfflineState unloading PrivatePVPInitializer");
+                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PRIVATE_PVP_INITIALIZER_SCENE);
+                }
+                if (UnityEngine.SceneManagement.SceneManager.GetSceneByName("PvPBattleScene").isLoaded)
+                {
+                    Debug.Log("PVP: OfflineState unloading PvPBattleScene");
+                    UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
+                }
             }
         }
         public override void Exit() { }
