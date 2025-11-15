@@ -293,7 +293,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // Set starting rank values:
             rank = DestructionRanker.CalculateRank(prevAllTimeVal);
 
-            currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
+            currentXP = (int)DestructionRanker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get
@@ -375,7 +375,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // Set starting rank values:
             rank = DestructionRanker.CalculateRank(prevAllTimeVal);
 
-            currentXP = (int)ranker.CalculateXpToNextLevel(prevAllTimeVal);
+            currentXP = (int)DestructionRanker.CalculateXpToNextLevel(prevAllTimeVal);
             nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
             rankNumber.text = FormatRankNumber(rank);
             rankText.text = ranker.destructionRanks[rank].transform.Find("RankNameText").GetComponent<Text>().text; // UGLY looking Find + Get

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.PostBattleScreen;
 
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
@@ -75,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             lableOfSelect.SetActive(true);
 
             playerName.text = DataProvider.GameModel.PlayerName;
-            int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
+            int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
             rankTitle.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
 
@@ -84,12 +85,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             long lDes = DataProvider.GameModel.LifetimeDestructionScore;
             if (lDes > 0)
             {
-                nextLevelXP = (int)CalculateLevelXP(rank);
-                currentXP = (int)CalculateXpToNextLevel((int)lDes);
+                nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
+                currentXP = (int)DestructionRanker.CalculateXpToNextLevel((int)lDes);
             }
             else
             {
-                nextLevelXP = (int)CalculateLevelXP(rank);
+                nextLevelXP = (int)DestructionRanker.CalculateLevelXP(rank);
                 currentXP = 0;
             }
             totalDamage.text = FormatNumber(lDes);
@@ -100,53 +101,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             notorietyScore.text = DataProvider.GameModel.BattleWinScore.ToString("F0");
             Bounty.text = DataProvider.GameModel.Bounty.ToString("F0");
-        }
-
-        private int CalculateRank(long score)
-        {
-
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
-            {
-                long x = 2500 + 2500 * i * i;
-                //Debug.Log(x);
-                if (score < x)
-                {
-                    return i;
-                }
-            }
-            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
-        }
-
-        // return what the x value will be in CalculateRank()
-        // used for setting the max val of any XP progress bars
-        public long CalculateLevelXP(int i)
-        {
-            long x = 2500 + 2500 * i * i;
-            return x;
-        }
-
-        // returns the remainder of the score towards the next level,
-        // based on the current lifetime score passed in
-        public long CalculateXpToNextLevel(long score)
-        {
-            int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
-
-            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count - 1)
-            {
-                // If the current rank is already the highest, there is no remainder
-                return 0;
-            }
-
-            long currentRankThreshold = 2500 + 2500 * currentRank * currentRank;
-            long nextRankThreshold = 2500 + 2500 * (currentRank + 1) * (currentRank + 1);
-
-            long scoreDifference = nextRankThreshold - currentRankThreshold;
-            long scoreRemainder = currentRankThreshold - score;
-            if (scoreRemainder < 0)
-            {
-                scoreRemainder = 0;
-            }
-            return scoreRemainder;
         }
 
         private void Awake()

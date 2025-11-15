@@ -48,7 +48,7 @@ namespace BattleCruisers.PostBattleScreen
 
         // returns the remainder of the score towards the next level,
         // based on the current lifetime score passed in
-        public long CalculateXpToNextLevel(long score)
+        public static long CalculateXpToNextLevel(long score)
         {
             int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
 

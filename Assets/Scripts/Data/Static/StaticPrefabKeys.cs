@@ -199,6 +199,7 @@ namespace BattleCruisers.Data.Static
                 return AllHulls[hullKey];
             }
 
+            // order matters!!! it has to match the order of HullType
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor,

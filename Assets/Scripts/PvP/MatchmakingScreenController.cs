@@ -22,6 +22,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.PostBattleScreen;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -116,7 +117,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             //    leftCruiserName.text = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = DataProvider.GameModel.PlayerName;
-            int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
+            int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
             leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
             leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
             leftPlayerBounty.text = DataProvider.GameModel.Bounty.ToString();
@@ -276,7 +277,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (leftPlayerBounty == null) return;
             leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
-            int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
+            int rankA = DestructionRanker.CalculateRank(SynchedServerData.Instance.playerAScore.Value);
             Sprite spriteA = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
             if (leftPlayerRankImage != null) leftPlayerRankImage.sprite = spriteA;
             if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
@@ -319,19 +320,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LeaveLobby();
         }
 
-        private int CalculateRank(long score)
-        {
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
-            {
-                long x = 2500 + 2500 * i * i;
-                //Debug.Log(x);
-                if (score < x)
-                {
-                    return i;
-                }
-            }
-            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
-        }
         public void FailedMatchmaking()
         {
             Debug.Log("PVP: MatchmakingScreenController.FailedMatchmaking - Matchmaking failed");

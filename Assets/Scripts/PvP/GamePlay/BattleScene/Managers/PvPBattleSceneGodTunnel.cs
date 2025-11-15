@@ -8,8 +8,6 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using System.Linq;
 using System;
-using BattleCruisers.Data.Settings;
-using BattleCruisers.Data;
 using BattleCruisers.Buildables;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
