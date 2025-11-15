@@ -10,7 +10,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
-using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
@@ -20,9 +19,9 @@ using BattleCruisers.Network.Multiplay.Scenes;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.PostBattleScreen;
+using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController.MMStatus;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -36,7 +35,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
     public class MatchmakingScreenController : ScreenController
     {
-        private GameModel _gameModel;
         public Animator animator;
 
         public PvPMessageBox messageBox;
@@ -56,11 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public static bool MatchmakingFailed;
 
         private CaptainExo charlie;
-        public GameObject characterOfCharlie;
         public Transform ContainerCaptain;
 
-        public RawImage leftCaptain, rightCaptain;
-        public RenderTexture hostTexture, clientTexture;
         public AudioSource backgroundMusic;
         public AudioSource enemyFoundMusic;
 
@@ -76,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LOADING_ASSETS,
             LOOKING_VICTIM
         }
-        public MMStatus status = MMStatus.FINDING_LOBBY;
+        public MMStatus status = FINDING_LOBBY;
 
         private ConnectionQuality connection_Quality;
         public ConnectionQuality Connection_Quality
@@ -113,7 +108,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Debug.Log("PVP: Pre-loading PvPBattleScene");
             StartCoroutine(PreloadBattleSceneCoroutine());
 
-            _gameModel = DataProvider.GameModel;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             //    leftCruiserName.text = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = DataProvider.GameModel.PlayerName;
@@ -140,11 +134,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingForOpponents");
 
-
-            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
-            characterOfCharlie = charlie.gameObject;
 
             //    m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
             if (backgroundMusic != null)
@@ -197,39 +189,19 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void SetMMStatus(MMStatus _status)
         {
             status = _status;
-            SetMMString(status);
 
-            /*            switch(status)
-                        {
-                            case MMStatus.LOOKING_VICTIM:
-                                m_TimeLimitLookingVictim.PutOnCooldown();
-                                break;
-                        }*/
-        }
-
-        private void SetMMString(MMStatus _status)
-        {
-            switch (_status)
+            string locTableKey = status switch
             {
-                case MMStatus.FINDING_LOBBY:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("FindingLobby");
-                    break;
-                case MMStatus.JOIN_LOBBY:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("JoiningLobby");
-                    break;
-                case MMStatus.CONNECTING:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("Connecting");
-                    break;
-                case MMStatus.CREATING_LOBBY:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("CreatingLobby");
-                    break;
-                case MMStatus.LOADING_ASSETS:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LoadingAssets");
-                    break;
-                case MMStatus.LOOKING_VICTIM:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingVictim");
-                    break;
-            }
+                FINDING_LOBBY => "FindingLobby",
+                JOIN_LOBBY => "JoiningLobby",
+                CONNECTING => "Connecting",
+                CREATING_LOBBY => "CreatingLobby",
+                LOADING_ASSETS => "LoadingAssets",
+                LOOKING_VICTIM => "LookingVictim",
+                _ => "",
+            };
+
+            LookingForOpponentsText.text = LocTableCache.CommonTable.GetString(locTableKey);
         }
 
         public void LockLobby()
@@ -246,7 +218,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void SetFoundVictimString()
         {
-            SetMMStatus(MMStatus.LOADING_ASSETS);
+            SetMMStatus(LOADING_ASSETS);
             // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
             {
@@ -298,16 +270,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             {
                 if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerACruiserID.Value + "Name");
                 leftCruiserImage.sprite = PrefabCache.GetCruiser(DataProvider.GameModel.PlayerLoadout.Hull).Sprite;
-            }
-
-            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-            {
-                if (rightCaptain != null) rightCaptain.texture = clientTexture;
-            }
-            else
-            {
-                if (leftCaptain != null) leftCaptain.texture = hostTexture;
-                if (rightCaptain != null) rightCaptain.texture = clientTexture;
             }
 
             if (backgroundMusic != null && backgroundMusic.isPlaying)
