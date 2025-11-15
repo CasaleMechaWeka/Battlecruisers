@@ -19,6 +19,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -28,8 +29,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static PvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private PvPBattleSceneGodComponents components;
-        private PvPCruiser playerACruiser;
-        private PvPCruiser playerBCruiser;
+        public static PvPCruiser playerACruiser;
+        public static PvPCruiser playerBCruiser;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerA;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerB;
         private static float difficultyDestructionScoreMultiplier;
@@ -40,11 +41,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables_left;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables_right;
-        public static Sprite enemyCruiserSprite;
-        public static string enemyCruiserName;
-
-        public static Sprite playerBCruiserSprite;
-        public static string playerBCruiserName;
+        public static HullType EnemyCruiserType;
+        public static HullType PlayerBCruiserType;
 
         public IUserChosenTargetHelper playerBCruiseruserChosenTargetHelper;
         public IUserChosenTargetHelper playerACruiseruserChosenTargetHelper;
@@ -181,11 +179,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
 
-            enemyCruiserSprite = playerACruiser.Sprite;
-            enemyCruiserName = playerACruiser.stringKeyBase;
+            EnemyCruiserType = playerACruiser.HullType;
+            PlayerBCruiserType = playerBCruiser.HullType;
 
-            playerBCruiserSprite = playerBCruiser.Sprite;
-            playerBCruiserName = playerBCruiser.stringKeyBase;
 
             droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);

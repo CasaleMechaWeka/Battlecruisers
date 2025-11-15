@@ -12,6 +12,7 @@ using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Data;
 using Unity.Services.Qos;
 using System.Collections.Generic;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -37,15 +38,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_PlayerName = playerName;
         }
 
-
-
         protected void SetConnectionPayload(string playerId, string playerName)
         {
             string payload = JsonUtility.ToJson(new ConnectionPayload()
             {
                 playerId = playerId,
                 playerName = playerName,
-                playerHullPrefabName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName,
+                playerHullID = (int)StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull),
                 playerScore = DataProvider.GameModel.LifetimeDestructionScore,
                 playerNetworkId = 0,
                 playerCaptainPrefabName = DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,

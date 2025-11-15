@@ -396,7 +396,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             if (!NetworkManager.Singleton.IsHost)
             {
-                PvPBattleSceneGodTunnel._playerACruiserName = SynchedServerData.Instance.playerAPrefabName.Value;
+                PvPBattleSceneGodTunnel.PlayerACruiserType = (HullType)SynchedServerData.Instance.playerACruiserID.Value;
             }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             battleCompletionHandler.registeredTime = Time.time;

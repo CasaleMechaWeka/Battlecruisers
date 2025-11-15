@@ -48,7 +48,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         public override void OnClientConnected(ulong _)
         {
             m_ConnectionManager.ChangeState(m_ConnectionManager.m_ClientConnected);
-
         }
 
         public override void OnClientDisconnect(ulong _)
@@ -80,10 +79,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             }
             else
             {
-                if (!string.IsNullOrEmpty(disconnectReason))
-                {
-                    ConnectStatus connectStatus = JsonUtility.FromJson<ConnectStatus>(disconnectReason);
-                }
                 m_ConnectionManager.ChangeState(m_ConnectionManager.m_Offline);
             }
         }

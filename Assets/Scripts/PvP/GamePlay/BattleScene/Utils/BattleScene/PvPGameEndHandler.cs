@@ -14,7 +14,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
 {
     public class PvPGameEndHandler
     {
-        private readonly IPvPCruiser _playerACruiser, _playerBCruiser;
+        private readonly PvPCruiser _playerACruiser, _playerBCruiser;
         private IManagedDisposable _ai_LeftPlayer;
         private IManagedDisposable _ai_RightPlayer;
         private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
@@ -25,8 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         private const float POST_GAME_WAIT_TIME_IN_S = 10;
 
         public PvPGameEndHandler(
-            IPvPCruiser playerACruiser,
-            IPvPCruiser playerBCruiser,
+            PvPCruiser playerACruiser,
+            PvPCruiser playerBCruiser,
             PvPBattleSceneGodTunnel battleSceneGodTunnel,
             IDeferrer deferrer
             )
@@ -52,11 +52,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
             _handledCruiserDeath = true;
 
-            IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
-            IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
+            PvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
+            PvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
-            PvPBattleSceneGodServer.enemyCruiserSprite = losingCruiser.Sprite;
-            PvPBattleSceneGodServer.enemyCruiserName = losingCruiser.Name;
+            PvPBattleSceneGodServer.EnemyCruiserType = losingCruiser.HullType;
 
             //---> Code by ANUJ
             ClearProjectiles();
@@ -84,11 +83,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
             _handledCruiserDeath = true;
 
-            IPvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
-            IPvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
+            PvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
+            PvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
 
-            PvPBattleSceneGodServer.enemyCruiserSprite = losingCruiser.Sprite;
-            PvPBattleSceneGodServer.enemyCruiserName = losingCruiser.Name;
+            PvPBattleSceneGodServer.EnemyCruiserType = losingCruiser.HullType;
             //---> Code by ANUJ
             ClearProjectiles();
             //<---

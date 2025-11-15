@@ -42,7 +42,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
     {
         public string playerId;
         public string playerName;
-        public string playerHullPrefabName;
+        public int playerHullID;
         public long playerScore;
         public ulong playerNetworkId;
         public string playerCaptainPrefabName;

@@ -7,17 +7,14 @@ using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.UnityServices.Auth;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Utils;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Qos;
-using Unity.Services.Relay;
-using Unity.Services.Relay.Models;
 using UnityEngine;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -35,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         AuthenticationServiceFacade AuthenticationServiceFacade;
         public string joinCode;
 
-        [HideInInspector] public string playerAPrefabName;
+        [HideInInspector] public HullType playerAHullType;
         [HideInInspector] public ulong playerAClientNetworkId;
         [HideInInspector] public string playerAName;
         [HideInInspector] public long playerAScore;

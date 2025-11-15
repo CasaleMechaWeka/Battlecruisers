@@ -8,6 +8,7 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Network.Multiplay.Scenes;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -113,7 +114,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             ConnectionPayload connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
             connectionPayload.playerNetworkId = clientId;
 
-            Debug.Log($"PVP: HOST approval requested (clientId={clientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}/{m_ConnectionManager.MaxConnectedPlayers}, Hull={connectionPayload.playerHullPrefabName}, Name={connectionPayload.playerName})");
+            Debug.Log($"PVP: HOST approval requested (clientId={clientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}/{m_ConnectionManager.MaxConnectedPlayers}, Hull={(HullType)connectionPayload.playerHullID}, Name={connectionPayload.playerName})");
 
             ConnectStatus gameReturnStatus = GetConnectStatus();
 
@@ -129,7 +130,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                         return;
                     }
 
-                    SynchedServerData.Instance.playerAPrefabName.Value = PvPBootManager.Instance.playerAPrefabName;
+                    SynchedServerData.Instance.playerACruiserID.Value = (int)PvPBootManager.Instance.playerAHullType;
                     SynchedServerData.Instance.playerAClientNetworkId.Value = PvPBootManager.Instance.playerAClientNetworkId;
                     SynchedServerData.Instance.playerAName.Value = PvPBootManager.Instance.playerAName;
                     SynchedServerData.Instance.playerAScore.Value = PvPBootManager.Instance.playerAScore;
@@ -137,15 +138,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.playerARating.Value = PvPBootManager.Instance.playerRating;
                     SynchedServerData.Instance.playerABodykit.Value = PvPBootManager.Instance.playerABodykit;
                     SynchedServerData.Instance.playerABounty.Value = PvPBootManager.Instance.playerABounty;
-                    PvPBattleSceneGodTunnel._playerACruiserName = PvPBootManager.Instance.playerAPrefabName;
-                    if (!PvPBattleSceneGodTunnel.cruiser_scores.TryGetValue(PvPBootManager.Instance.playerAPrefabName, out long cruiserAScore))
-                    {
-                        Debug.LogWarning($"PVP: Hull '{PvPBootManager.Instance.playerAPrefabName}' not in cruiser_scores, using default 3500");
-                        cruiserAScore = 3500;
-                    }
-                    PvPBattleSceneGodTunnel._playerACruiserVal = cruiserAScore;
 
-                    SynchedServerData.Instance.playerBPrefabName.Value = connectionPayload.playerHullPrefabName;
+                    SynchedServerData.Instance.playerBCruiserID.Value = connectionPayload.playerHullID;
                     SynchedServerData.Instance.playerBClientNetworkId.Value = clientId;
                     SynchedServerData.Instance.playerBName.Value = connectionPayload.playerName;
                     SynchedServerData.Instance.playerBScore.Value = connectionPayload.playerScore;
@@ -153,15 +147,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     SynchedServerData.Instance.playerBRating.Value = connectionPayload.playerRating;
                     SynchedServerData.Instance.playerBBodykit.Value = connectionPayload.playerBodykit;
                     SynchedServerData.Instance.playerBBounty.Value = connectionPayload.playerBounty;
-                    PvPBattleSceneGodTunnel._playerBCruiserName = connectionPayload.playerHullPrefabName;
-                    if (!PvPBattleSceneGodTunnel.cruiser_scores.TryGetValue(connectionPayload.playerHullPrefabName, out long cruiserBScore))
-                    {
-                        Debug.LogWarning($"PVP: Hull '{connectionPayload.playerHullPrefabName}' not in cruiser_scores, using default 3500");
-                        cruiserBScore = 3500;
-                    }
-                    PvPBattleSceneGodTunnel._playerBCruiserVal = cruiserBScore;
 
-                    Debug.Log($"PVP: HOST approving CLIENT (clientId={clientId}, HostHull={PvPBootManager.Instance.playerAPrefabName}, ClientHull={connectionPayload.playerHullPrefabName}) - syncing game state");
+                    Debug.Log($"PVP: HOST approving CLIENT (clientId={clientId}, HostHull={PvPBootManager.Instance.playerAHullType}, ClientHull={(HullType)connectionPayload.playerHullID}) - syncing game state");
                 }
                 response.Approved = true;
                 response.Pending = false;

@@ -1,6 +1,7 @@
 ﻿using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using System;
 using System.Collections.Generic;
@@ -152,6 +153,51 @@ namespace BattleCruisers.Data.Static
             public static HullKey EndlessWall { get; } = new HullKey("EndlessWall");
             public static HullKey AlphaSpace { get; } = new HullKey("AlphaSpace");
             public static HullKey Arkdeso { get; } = new HullKey("Arkdeso");
+
+            static Dictionary<HullKey, HullType> AllHulls = new Dictionary<HullKey, HullType>
+            {
+                { Bullshark,    HullType.Bullshark },
+                { Eagle,        HullType.Eagle },
+                { Hammerhead,   HullType.Hammerhead },
+                { Longbow,      HullType.Longbow },
+                { Megalodon,    HullType.Megalodon },
+                { Raptor,       HullType.Raptor },
+                { Rockjaw,      HullType.Rockjaw },
+                { Trident,      HullType.Trident },
+                { ManOfWarBoss, HullType.None },
+                { HuntressBoss, HullType.None },
+                { TasDevil,     HullType.TasDevil },
+                { Yeti,         HullType.Yeti },
+                { Rickshaw,     HullType.Rickshaw },
+                { BlackRig,     HullType.BlackRig },
+                { Flea,         HullType.Flea },
+                { Shepherd,     HullType.Shepherd },
+                { Microlodon,   HullType.Microlodon },
+                { Pistol,       HullType.Pistol },
+                { Goatherd,     HullType.Goatherd },
+                { Megalith,     HullType.Megalith },
+                { FortressPrime,HullType.None },
+                { BasicRig,     HullType.BasicRig },
+                { Cricket,      HullType.Cricket },
+                { FortNova,     HullType.FortNova },
+                { Zumwalt,      HullType.Zumwalt },
+                { Yucalux,      HullType.Yucalux },
+                { TekGnosis,    HullType.TekGnosis },
+                { Salvage,      HullType.Salvage },
+                { Orac,         HullType.Orac },
+                { Middlodon,    HullType.Middlodon },
+                { Essex,        HullType.Essex },
+                { Axiom,        HullType.Axiom },
+                { October,      HullType.October },
+                { EndlessWall,  HullType.EndlessWall },
+                { AlphaSpace,   HullType.AlphaSpace },
+                { Arkdeso,      HullType.Arkdeso },
+            };
+
+            public static HullType GetHullType(HullKey hullKey)
+            {
+                return AllHulls[hullKey];
+            }
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {

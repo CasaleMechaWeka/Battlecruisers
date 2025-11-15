@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Utils.Fetchers.Cache;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -47,31 +48,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Image leftCruiserImage;
 
         public Text LookingForOpponentsText;
-
-        public Sprite BlackRig;
-        public Sprite BasicRig;
-        public Sprite Bullshark;
-        public Sprite Cricket;
-        public Sprite Eagle;
-        public Sprite Flea;
-        public Sprite Goatherd;
-        public Sprite Hammerhead;
-        public Sprite HuntressBoss;
-        public Sprite Longbow;
-        public Sprite ManOfWarBoss;
-        public Sprite Megalodon;
-        public Sprite Megalith;
-        public Sprite Microlodon;
-        public Sprite Raptor;
-        public Sprite Rickshaw;
-        public Sprite Rockjaw;
-        public Sprite Pistol;
-        public Sprite Shepherd;
-        public Sprite TasDevil;
-        public Sprite Trident;
-        public Sprite Yeti;
-
-        private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 
         public GameObject fleeButton;
         public GameObject vsAIButton;
@@ -131,28 +107,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
 
             Connection_Quality = ConnectionQuality.HIGH;
-            sprites.Add("BlackRig", BlackRig);
-            sprites.Add("BasicRig", BasicRig);
-            sprites.Add("Bullshark", Bullshark);
-            sprites.Add("Cricket", Cricket);
-            sprites.Add("Eagle", Eagle);
-            sprites.Add("Flea", Flea);
-            sprites.Add("Goatherd", Goatherd);
-            sprites.Add("Hammerhead", Hammerhead);
-            sprites.Add("HuntressBoss", HuntressBoss);
-            sprites.Add("Longbow", Longbow);
-            sprites.Add("ManOfWarBoss", ManOfWarBoss);
-            sprites.Add("Megalodon", Megalodon);
-            sprites.Add("Megalith", Megalith);
-            sprites.Add("Microlodon", Microlodon);
-            sprites.Add("Raptor", Raptor);
-            sprites.Add("Rickshaw", Rickshaw);
-            sprites.Add("Rockjaw", Rockjaw);
-            sprites.Add("Pistol", Pistol);
-            sprites.Add("Shepherd", Shepherd);
-            sprites.Add("TasDevil", TasDevil);
-            sprites.Add("Trident", Trident);
-            sprites.Add("Yeti", Yeti);
 
             DontDestroyOnLoad(gameObject);
             Debug.Log("PVP: Pre-loading PvPBattleScene");
@@ -171,7 +125,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (id_bodykitA != -1)
             {
                 Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
-                if (bodykit.cruiserType == GetHullType(DataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
+                if (bodykit.cruiserType == StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull))
                 {
                     leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     leftCruiserImage.sprite = bodykit.BodykitImage;
@@ -180,7 +134,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             else
             {
                 leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName + "Name");
-                leftCruiserImage.sprite = sprites[DataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
+                leftCruiserImage.sprite = PrefabCache.GetCruiser(DataProvider.GameModel.PlayerLoadout.Hull).Sprite;
             }
 
             LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingForOpponents");
@@ -216,36 +170,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             //refactor to using translation string tool
             messageBox.ShowMessage("Sorry your internet connection is too rangi for muliplayer, try again when you have a more stable connection", () => { messageBox.HideMessage(); FailedMatchmaking(); }, false);
-        }
-
-
-        private HullType GetHullType(string hullName)
-        {
-            return hullName switch
-            {
-                "Trident" => HullType.Trident,
-                "BlackRig" => HullType.BlackRig,
-                "BasicRig" => HullType.BasicRig,
-                "Bullshark" => HullType.Bullshark,
-                "Cricket" => HullType.Cricket,
-                "Eagle" => HullType.Eagle,
-                "Flea" => HullType.Flea,
-                "Goatherd" => HullType.Goatherd,
-                "Hammerhead" => HullType.Hammerhead,
-                "Longbow" => HullType.Longbow,
-                "Megalodon" => HullType.Megalodon,
-                "Megalith" => HullType.Megalith,
-                "Microlodon" => HullType.Microlodon,
-                "Raptor" => HullType.Raptor,
-                "Rickshaw" => HullType.Rickshaw,
-                "Rockjaw" => HullType.Rockjaw,
-                "Pistol" => HullType.Pistol,
-                "Shepherd" => HullType.Shepherd,
-                "TasDevil" => HullType.TasDevil,
-                "Yeti" => HullType.Yeti,
-                _ => HullType.None,
-            };
-
         }
 
         public bool isProcessing = false;
@@ -363,7 +287,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (id_bodykitA != -1)
             {
                 Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
-                if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
+                if (bodykit.cruiserType == (HullType)SynchedServerData.Instance.playerACruiserID.Value)
                 {
                     if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     if (leftCruiserImage != null) leftCruiserImage.sprite = bodykit.bodykitImage;
@@ -371,8 +295,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             else
             {
-                if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
-                if (leftCruiserImage != null) leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
+                if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerACruiserID.Value + "Name");
+                leftCruiserImage.sprite = PrefabCache.GetCruiser(DataProvider.GameModel.PlayerLoadout.Hull).Sprite;
             }
 
             if (SynchedServerData.Instance.GetTeam() == Team.LEFT)

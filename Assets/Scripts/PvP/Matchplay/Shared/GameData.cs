@@ -5,6 +5,7 @@ using UnityEngine;
 using Unity.Services.Lobbies.Models;
 using BattleCruisers.Data;
 using Unity.Services.Authentication;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
 {
@@ -39,9 +40,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
     {
         public MatchplayUser()
         {
-            var tmepId = Guid.NewGuid().ToString();
-            var tempLobbyId = Guid.NewGuid().ToString();
-            Data = new UserData(DataProvider.GameModel.PlayerName, AuthenticationService.Instance.PlayerId, 0, DataProvider.GameModel.PlayerLoadout.Hull.PrefabName, new GameInfo(), DataProvider.GameModel.LifetimeDestructionScore, DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName, DataProvider.GameModel.Bounty);
+            Data = new UserData(DataProvider.GameModel.PlayerName, 
+                                AuthenticationService.Instance.PlayerId, 
+                                0, 
+                                (int)StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull), 
+                                new GameInfo(), 
+                                DataProvider.GameModel.LifetimeDestructionScore, 
+                                DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName, 
+                                DataProvider.GameModel.Bounty);
 
             //cheat code
             Data.userGamePreferences.gameQueue = GameQueue.Casual;
@@ -61,7 +67,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             }
         }
 
-
         public Action<string> onNameChanged;
 
         public string AuthId
@@ -70,13 +75,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             set => Data.userAuthId = value;
         }
 
-
         public Map MapPreferences
         {
             get => Data.userGamePreferences.map;
             set { Data.userGamePreferences.map = value; }
         }
-
 
         public GameMode GameModePreferences
         {
@@ -110,25 +113,24 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         public string userName;
         public string userAuthId;
         public ulong networkId;
-        public string hullPrefabName;
+        public int hullID;
         public long score;
         public string captainPrefabName;
         public int bounty;
         // public string lobbyId;
         public GameInfo userGamePreferences;
-        public UserData(string userName, string userAuthId, ulong networkId, string hullPrefabName, GameInfo userGamePreferences, long score, string captainPrefabName, int bounty)
+        public UserData(string userName, string userAuthId, ulong networkId, int hullID, GameInfo userGamePreferences, long score, string captainPrefabName, int bounty)
         {
             this.userName = userName;
             this.userAuthId = userAuthId;
             this.networkId = networkId;
-            this.hullPrefabName = hullPrefabName;
+            this.hullID = hullID;
             this.userGamePreferences = userGamePreferences;
             this.score = score;
             this.captainPrefabName = captainPrefabName;
             this.bounty = bounty;
             // this.lobbyId = lobbyId;
         }
-
 
         public override string ToString()
         {
@@ -139,7 +141,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             sb.AppendLine($"- User Game Preferences:        {userGamePreferences}");
             return sb.ToString();
         }
-
     }
 
     [Serializable]
@@ -160,7 +161,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
             { k_MultiplayCasualQueue, GameQueue.Casual },
             { k_MultiplayCompetetiveQueue, GameQueue.Competitive }
         };
-
 
         public Dictionary<string, DataObject> GetDataForUnityServices() =>
             new Dictionary<string, DataObject>()
@@ -184,27 +184,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
         }
         public static string ConvertToScene(Map map)
         {
-            switch (map)
+            return map switch
             {
-                case Map.PracticeWreckyards:
-                    return "PracticeWreckyards";
-                case Map.OzPenitentiary:
-                    return "OzPenitentiary";
-                case Map.SanFranciscoFightClub:
-                    return "SanFranciscoFightClub";
-                case Map.UACBattleNight:
-                    return "UACBattleNight";
-                case Map.UACArena:
-                    return "UACArena";
-                case Map.RioBattlesport:
-                    return "RioBattlesport";
-                case Map.UACUltimate:
-                    return "UACUltimate";
-                case Map.MercenaryOne:
-                    return "MercenaryOne";
-                default:
-                    return "PvPBattleScene";
-            }
+                Map.PracticeWreckyards => "PracticeWreckyards",
+                Map.OzPenitentiary => "OzPenitentiary",
+                Map.SanFranciscoFightClub => "SanFranciscoFightClub",
+                Map.UACBattleNight => "UACBattleNight",
+                Map.UACArena => "UACArena",
+                Map.RioBattlesport => "RioBattlesport",
+                Map.UACUltimate => "UACUltimate",
+                Map.MercenaryOne => "MercenaryOne",
+                _ => "PvPBattleScene",
+            };
+
         }
         public string ToMultiplayQueue()
         {

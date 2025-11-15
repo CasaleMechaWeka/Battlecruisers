@@ -11,6 +11,7 @@ using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Network.Multiplay.Utils;
 using BattleCruisers.Data;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -77,7 +78,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 ConnectionPayload connectionPayload = JsonUtility.FromJson<ConnectionPayload>(payload);
                 connectionPayload.playerNetworkId = clientId;
 
-                PvPBootManager.Instance.playerAPrefabName = connectionPayload.playerHullPrefabName;
+                PvPBootManager.Instance.playerAHullType = (HullType)connectionPayload.playerHullID;
                 PvPBootManager.Instance.playerAClientNetworkId = clientId;
                 PvPBootManager.Instance.playerAName = connectionPayload.playerName;
                 PvPBootManager.Instance.playerAScore = connectionPayload.playerScore;

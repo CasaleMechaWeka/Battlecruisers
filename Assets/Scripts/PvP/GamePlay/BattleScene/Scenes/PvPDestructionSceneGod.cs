@@ -15,6 +15,8 @@ using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 {
@@ -140,28 +142,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private BountyScreenHandler bountyScreenHandler;
         public GameObject BountyScreen;
 
-        public Sprite BlackRig;
-        public Sprite Bullshark;
-        public Sprite Cricket;
-        public Sprite Eagle;
-        public Sprite Flea;
-        public Sprite Goatherd;
-        public Sprite Hammerhead;
-        public Sprite HuntressBoss;
-        public Sprite Longbow;
-        public Sprite ManOfWarBoss;
-        public Sprite Megalodon;
-        public Sprite Megalith;
-        public Sprite Microlodon;
-        public Sprite Raptor;
-        public Sprite Rickshaw;
-        public Sprite Rockjaw;
-        public Sprite Pistol;
-        public Sprite Shepherd;
-        public Sprite TasDevil;
-        public Sprite Trident;
-        public Sprite Yeti;
-        public Sprite BasicRig;
+        private Cruiser PlayerACruiser;
+        private Cruiser PlayerBCruiser;
+
 
         void Start()
         {
@@ -209,6 +192,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             StaticData.GameConfigs.TryGetValue("coin5threshold", out coin5Threshold);
             StaticData.GameConfigs.TryGetValue("creditmax", out creditMax);
 
+            PlayerACruiser = PrefabCache.GetCruiser(StaticPrefabKeys.Hulls.AllKeys[(int)PvPBattleSceneGodTunnel.PlayerACruiserType]);
+            PlayerBCruiser = PrefabCache.GetCruiser(StaticPrefabKeys.Hulls.AllKeys[(int)PvPBattleSceneGodTunnel.PlayerBCruiserType]);
 
             PopulateScreen();
 
@@ -241,7 +226,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelTimeInSeconds = PvPBattleSceneGodTunnel._playerALevelTimeInSeconds;
                 aircraftVal = PvPBattleSceneGodTunnel._playerAAircraftVal;
                 shipsVal = PvPBattleSceneGodTunnel._playerAShipsVal;
-                cruiserVal = PvPBattleSceneGodTunnel._playerACruiserVal;
+                cruiserVal = (long)PlayerACruiser.maxHealth;
                 buildingsVal = PvPBattleSceneGodTunnel._playerABuildingsVal;
             }
             if (PvPBattleSceneGodTunnel.isDisconnected == 2)
@@ -249,7 +234,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelTimeInSeconds = PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds;
                 aircraftVal = PvPBattleSceneGodTunnel._playerBAircraftVal;
                 shipsVal = PvPBattleSceneGodTunnel._playerBShipsVal;
-                cruiserVal = PvPBattleSceneGodTunnel._playerBCruiserVal;
+                cruiserVal = (long)PlayerBCruiser.maxHealth;
                 buildingsVal = PvPBattleSceneGodTunnel._playerBBuildingsVal;
             }
 
@@ -269,83 +254,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             /*destructionCards[2].image.sprite = PvPBattleSceneGodServer.enemyCruiserSprite;*/
-            string cruiserName = "";
+            Cruiser enemyCruiser = null;
             if (PvPBattleSceneGodTunnel.isDisconnected == 0)
-                cruiserName = PvPBattleSceneGodTunnel._enemyCruiserName;
+                enemyCruiser = PrefabCache.GetCruiser(StaticPrefabKeys.Hulls.AllKeys[(int)PvPBattleSceneGodTunnel.EnemyCruiserType]);
             if (PvPBattleSceneGodTunnel.isDisconnected == 1)
-                cruiserName = PvPBattleSceneGodTunnel._playerACruiserName;
+                enemyCruiser = PlayerACruiser;
             if (PvPBattleSceneGodTunnel.isDisconnected == 2)
-                cruiserName = PvPBattleSceneGodTunnel._playerBCruiserName;
-            switch (cruiserName)
-            {
-                case "BlackRig":
-                    destructionCards[2].image.sprite = BlackRig;
-                    break;
-                case "Bullshark":
-                    destructionCards[2].image.sprite = Bullshark;
-                    break;
-                case "Cricket":
-                    destructionCards[2].image.sprite = Cricket;
-                    break;
-                case "Eagle":
-                    destructionCards[2].image.sprite = Eagle;
-                    break;
-                case "Flea":
-                    destructionCards[2].image.sprite = Flea;
-                    break;
-                case "Goatherd":
-                    destructionCards[2].image.sprite = Goatherd;
-                    break;
-                case "Hammerhead":
-                    destructionCards[2].image.sprite = Hammerhead;
-                    break;
-                case "HuntressBoss":
-                    destructionCards[2].image.sprite = HuntressBoss;
-                    break;
-                case "Longbow":
-                    destructionCards[2].image.sprite = Longbow;
-                    break;
-                case "ManOfWarBoss":
-                    destructionCards[2].image.sprite = ManOfWarBoss;
-                    break;
-                case "Megalodon":
-                    destructionCards[2].image.sprite = Megalodon;
-                    break;
-                case "Megalith":
-                    destructionCards[2].image.sprite = Megalith;
-                    break;
-                case "BasicRig":
-                    destructionCards[2].image.sprite = BasicRig;
-                    break;
-                case "Microlodon":
-                    destructionCards[2].image.sprite = Microlodon;
-                    break;
-                case "Raptor":
-                    destructionCards[2].image.sprite = Raptor;
-                    break;
-                case "Rickshaw":
-                    destructionCards[2].image.sprite = Rickshaw;
-                    break;
-                case "Rockjaw":
-                    destructionCards[2].image.sprite = Rockjaw;
-                    break;
-                case "Pistol":
-                    destructionCards[2].image.sprite = Pistol;
-                    break;
-                case "Shepherd":
-                    destructionCards[2].image.sprite = Shepherd;
-                    break;
-                case "TasDevil":
-                    destructionCards[2].image.sprite = TasDevil;
-                    break;
-                case "Trident":
-                    destructionCards[2].image.sprite = Trident;
-                    break;
-                case "Yeti":
-                    destructionCards[2].image.sprite = Yeti;
-                    break;
-            }
-            destructionCards[2].description.text = LocTableCache.CommonTable.GetString("Cruisers/" + cruiserName + "Name");
+                enemyCruiser = PlayerBCruiser;
+
+            destructionCards[2].image.sprite = enemyCruiser.Sprite;
+            
+
+            destructionCards[2].description.text = LocTableCache.CommonTable.GetString("Cruisers/" + enemyCruiser.stringKeyBase + "Name");
 
             //### Screen Setup ###
 
