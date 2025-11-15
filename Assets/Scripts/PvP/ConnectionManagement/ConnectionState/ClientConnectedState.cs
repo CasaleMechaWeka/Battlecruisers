@@ -20,7 +20,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_lobbyServiceFacade = lobbyServiceFacade;
         }
-
         public override void Enter()
         {
             Debug.Log($"PVP: CLIENT connected to HOST (LocalHull={DataProvider.GameModel.PlayerLoadout.Hull.PrefabName}) - waiting for game sync");
@@ -29,6 +28,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 //    m_lobbyServiceFacade.BeginTracking();
                 // m_lobbyServiceFacade.EndTracking();
             }
+
             if (MatchmakingScreenController.Instance != null)
             {
                 MatchmakingScreenController.Instance.SetFoundVictimString();
@@ -39,7 +39,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             PvPBattleSceneGodTunnel._playerBCruiserVal = 3500;
             PvPBattleSceneGodTunnel._playerBCruiserName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
         }
-
         public override void Exit() { }
         public override void OnClientDisconnect(ulong clientId)
         {

@@ -598,9 +598,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
 
 
-                if (SynchedServerData.Instance.captainBPrefabName.Value.ToString() != string.Empty)
+                string captainBName = SynchedServerData.Instance.captainBPrefabName.Value.ToString();
+                if (!string.IsNullOrWhiteSpace(captainBName) && captainBName.StartsWith("Captain"))
                 {
-                    PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainBPrefabName.Value.ToString()));
+                    PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(captainBName));
                     resultB.Prefab.StaticInitialise();
                     if (rightCaptain == null)
                     {
@@ -610,6 +611,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 else
                 {
+                    Debug.LogWarning($"PVP: LoadAllCaptains - Invalid captainBPrefabName, using default CaptainExo000");
                     PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultB.Prefab.StaticInitialise();
                     if (rightCaptain == null)
@@ -631,9 +633,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
                 try
                 {
-                    if (SynchedServerData.Instance.captainAPrefabName.Value.ToString() != string.Empty)
+                    string captainAName = SynchedServerData.Instance.captainAPrefabName.Value.ToString();
+                    if (!string.IsNullOrWhiteSpace(captainAName) && captainAName.StartsWith("Captain"))
                     {
-                        PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(SynchedServerData.Instance.captainAPrefabName.Value.ToString()));
+                        PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(captainAName));
                         resultA.Prefab.StaticInitialise();
                         if (leftCaptain == null)
                         {
@@ -643,6 +646,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     }
                     else
                     {
+                        Debug.LogWarning($"PVP: LoadAllCaptains - Invalid captainAPrefabName, using default CaptainExo000");
                         PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                         resultA.Prefab.StaticInitialise();
                         if (leftCaptain == null)
@@ -654,7 +658,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e.Message);
+                    Debug.LogError($"PVP: LoadAllCaptains exception loading captainA: {e.Message}");
                     PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey("CaptainExo000"));
                     resultA.Prefab.StaticInitialise();
                     if (leftCaptain == null)
@@ -668,9 +672,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         }
         private async void CaptainAPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
         {
-            if (newVal.ToString() != string.Empty)
+            string captainName = newVal.ToString();
+            if (!string.IsNullOrWhiteSpace(captainName) && captainName.StartsWith("Captain"))
             {
-                PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                PrefabContainer<Prefab> resultA = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(captainName));
                 resultA.Prefab.StaticInitialise();
 
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
@@ -688,9 +693,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         private async void CaptainBPrefabNameChanged(NetworkString oldVal, NetworkString newVal)
         {
-            if (newVal.ToString() != string.Empty)
+            string captainName = newVal.ToString();
+            if (!string.IsNullOrWhiteSpace(captainName) && captainName.StartsWith("Captain"))
             {
-                PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(newVal.ToString()));
+                PrefabContainer<Prefab> resultB = await PrefabFetcher.GetPrefabAsync<Prefab>(new CaptainExoKey(captainName));
                 resultB.Prefab.StaticInitialise();
 
                 if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
