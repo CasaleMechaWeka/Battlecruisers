@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         
         HealthAllBuilding       = 302,
 
-        RechargeRateShield      = 406,
+        RechargeRateShield      = 409,
     }
     
     public class GlobalBoostProviders
