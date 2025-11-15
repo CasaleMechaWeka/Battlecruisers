@@ -23,6 +23,7 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene
 {
@@ -30,8 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
     {
         protected readonly PvPBuildProgressCalculatorFactory _calculatorFactory;
 
-        public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : PvPStaticPrefabKeys.PvPHulls.AllKeys[SynchedServerData.Instance.playerACruiserID.Value];
-        public virtual IPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : PvPStaticPrefabKeys.PvPHulls.AllKeys[SynchedServerData.Instance.playerBCruiserID.Value];
+        public virtual IPrefabKey PlayerACruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : PvPStaticPrefabKeys.PvPHulls.HullKeyFromType((HullType)SynchedServerData.Instance.playerACruiserID.Value);
+        public virtual IPrefabKey PlayerBCruiser => SynchedServerData.Instance == null ? new PvPHullKey("PvP" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName) : PvPStaticPrefabKeys.PvPHulls.HullKeyFromType((HullType)SynchedServerData.Instance.playerBCruiserID.Value);
         public abstract BuildingCategoryFilter BuildingCategoryPermitter { get; }
         public abstract IFilter<PvPSlot> CreateHighlightableSlotFilter();
         public abstract IPvPBuildProgressCalculator CreatePlayerACruiserBuildProgressCalculator();
