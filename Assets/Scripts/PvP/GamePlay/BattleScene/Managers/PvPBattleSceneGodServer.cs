@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static PvPCruiser playerBCruiser;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerA;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerB;
-        private static float difficultyDestructionScoreMultiplier;
+        private const float DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER = 2;
         private static bool GameOver;
         private PvPBattleSceneHelper pvpBattleHelper;
         public IUserChosenTargetManager playerACruiserUserChosenTargetManager;
@@ -269,19 +269,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             deadBuildables_right.Add(TargetType.Buildings, new DeadBuildableCounter());
             deadBuildables_right.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
-
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
-            {
-                difficultyDestructionScoreMultiplier = 1.0f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
-            {
-                difficultyDestructionScoreMultiplier = 1.5f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
-            {
-                difficultyDestructionScoreMultiplier = 2.0f;
-            }
             GameOver = false;
         }
 
@@ -296,7 +283,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 if (type == TargetType.Cruiser)
                     Debug.Log("CRUISER DESTROYED LEFT");
 
-                deadBuildables_left[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                deadBuildables_left[type].AddDeadBuildable((int)(DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfLeftPlayer();
                 if (type == TargetType.Cruiser)
                 {
@@ -323,7 +310,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 if (type == TargetType.Cruiser)
                     Debug.Log("CRUISER DESTROYED RIGHT");
-                deadBuildables_right[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                deadBuildables_right[type].AddDeadBuildable((int)(DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfRightPlayer();
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == TargetType.Cruiser)

@@ -226,7 +226,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelTimeInSeconds = PvPBattleSceneGodTunnel._playerALevelTimeInSeconds;
                 aircraftVal = PvPBattleSceneGodTunnel._playerAAircraftVal;
                 shipsVal = PvPBattleSceneGodTunnel._playerAShipsVal;
-                cruiserVal = (long)PlayerACruiser.maxHealth;
+                cruiserVal = (long)(PlayerACruiser.maxHealth * PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER);
                 buildingsVal = PvPBattleSceneGodTunnel._playerABuildingsVal;
             }
             if (PvPBattleSceneGodTunnel.isDisconnected == 2)
@@ -234,7 +234,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 levelTimeInSeconds = PvPBattleSceneGodTunnel._playerBLevelTimeInSeconds;
                 aircraftVal = PvPBattleSceneGodTunnel._playerBAircraftVal;
                 shipsVal = PvPBattleSceneGodTunnel._playerBShipsVal;
-                cruiserVal = (long)PlayerBCruiser.maxHealth;
+                cruiserVal = (long)(PlayerBCruiser.maxHealth * PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER);
                 buildingsVal = PvPBattleSceneGodTunnel._playerBBuildingsVal;
             }
 
@@ -264,7 +264,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             destructionCards[2].image.sprite = enemyCruiser.Sprite;
             
-
             destructionCards[2].description.text = LocTableCache.CommonTable.GetString("Cruisers/" + enemyCruiser.stringKeyBase + "Name");
 
             //### Screen Setup ###

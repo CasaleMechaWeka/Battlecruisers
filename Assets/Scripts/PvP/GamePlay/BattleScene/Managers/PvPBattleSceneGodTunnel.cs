@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static bool OpponentQuit = false;
         public static int isDisconnected = 0;
         public static bool isCost = false;
-        public static float difficultyDestructionScoreMultiplier = 1.0f;
+        public const float DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER = 2;
 
         private void Awake()
         {
@@ -82,20 +82,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerBBuildingsVal = 0;
             _playerBTotoalDestroyed = new long[4];
             //    _playerBCruiserName = "";
-
-
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
-            {
-                difficultyDestructionScoreMultiplier = 1.0f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
-            {
-                difficultyDestructionScoreMultiplier = 1.5f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
-            {
-                difficultyDestructionScoreMultiplier = 2.0f;
-            }
         }
 
         public static void AddAllBuildablesOfLeftPlayer(TargetType type, float val)
