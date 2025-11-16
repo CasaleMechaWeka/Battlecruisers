@@ -394,15 +394,52 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         public void OnFlee()
         {
-            Debug.Log("PVP: MatchmakingScreenController.OnFlee - User clicked FLEE");
+            Debug.Log("PVP: MatchmakingScreenController.OnFlee - User clicked FLEE, starting async cleanup");
             fleeButton.SetActive(false);
-
+            _ = OnFleeAsync();
+        }
+        async System.Threading.Tasks.Task OnFleeAsync()
+        {
+            Debug.Log("PVP: OnFleeAsync - stopping matchmaking (user clicked FLEE)");
+            isCancelled = true;
+            StopCoroutine(nameof(LobbyLoop));
+            if (PvPBootManager.Instance?.LobbyServiceFacade != null)
+            {
+                Debug.Log("PVP: OnFleeAsync - stopping lobby tracking");
+                await PvPBootManager.Instance.LobbyServiceFacade.EndTracking();
+                Unity.Services.Lobbies.Models.Lobby currentLobby = PvPBootManager.Instance.LobbyServiceFacade.CurrentUnityLobby;
+                if (currentLobby != null && !string.IsNullOrEmpty(currentLobby.Id))
+                {
+                    try
+                    {
+                        Debug.Log($"PVP: OnFleeAsync - deleting lobby {currentLobby.Id}");
+                        await PvPBootManager.Instance.LobbyServiceFacade.DeleteLobbyAsync(currentLobby.Id);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogError($"PVP: OnFleeAsync - failed to delete lobby: {ex.Message}");
+                    }
+                }
+            }
             if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
             }
-
+            if (ApplicationController.Instance?.NetworkManager != null && ApplicationController.Instance.NetworkManager.IsListening)
+            {
+                Debug.Log("PVP: OnFleeAsync - shutting down NetworkManager");
+                ApplicationController.Instance.NetworkManager.Shutdown();
+            }
+            if (PvPBootManager.Instance?.ConnectionManager != null)
+            {
+                Debug.Log("PVP: OnFleeAsync - resetting ConnectionManager to Offline state");
+                PvPBootManager.Instance.ConnectionManager.ChangeState(PvPBootManager.Instance.ConnectionManager.m_Offline);
+            }
+            lastKnownPlayerCount = 0;
+            gameStarted = false;
+            isCancelled = false;
+            await System.Threading.Tasks.Task.Delay(500);
             FailedMatchmaking();
         }
         public async void FoundCompetitor()
@@ -594,6 +631,76 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     }
                 }
                 disabledRootObjects.Clear();
+            }
+        }
+
+        private bool gameStarted = false;
+        private bool isCancelled = false;
+        private int lastKnownPlayerCount = 0;
+
+        public void StartLobbyLoop()
+        {
+            gameStarted = false;
+            isCancelled = false;
+            lastKnownPlayerCount = 0;
+            StartCoroutine(nameof(LobbyLoop));
+        }
+
+        System.Collections.IEnumerator LobbyLoop()
+        {
+            Unity.Services.Lobbies.Models.Lobby lobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
+
+            while (lobby != null)
+            {
+                yield return new WaitForSeconds(0.1f);
+
+                Unity.Services.Lobbies.Models.Lobby liveLobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
+
+                if (liveLobby != null)
+                {
+                    int currentPlayerCount = liveLobby.Players.Count;
+
+                    if (currentPlayerCount != lastKnownPlayerCount)
+                    {
+                        lastKnownPlayerCount = currentPlayerCount;
+                        Debug.Log($"PVP: LobbyLoop - player count changed to {currentPlayerCount}/{liveLobby.MaxPlayers}");
+                    }
+
+                    if (currentPlayerCount == 2 && !gameStarted && !isCancelled)
+                    {
+                        gameStarted = true;
+                        Debug.Log("PVP: LobbyLoop - opponent found (Players=2/2), starting match");
+
+                        if (backgroundMusic != null && backgroundMusic.isPlaying)
+                            backgroundMusic.Stop();
+
+                        if (enemyFoundMusic != null)
+                            enemyFoundMusic.Play();
+
+                        if (fleeButton != null)
+                        {
+                            fleeButton.SetActive(false);
+                            Debug.Log("PVP: LobbyLoop - hiding FLEE button");
+                        }
+
+                        if (vsAIButton != null)
+                        {
+                            vsAIButton.SetActive(false);
+                        }
+
+                        Debug.Log("PVP: LobbyLoop - opponent found, re-enabling PvPBattleScene GameObjects");
+                        ReEnableBattleSceneGameObjects();
+                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, match will start when CLIENT connects");
+
+                        StopCoroutine(nameof(LobbyLoop));
+                        yield break;
+                    }
+
+                    if (isCancelled)
+                    {
+                        yield break;
+                    }
+                }
             }
         }
     }

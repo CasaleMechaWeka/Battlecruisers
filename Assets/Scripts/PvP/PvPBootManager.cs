@@ -278,10 +278,11 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             Lobby lobby = await CreateLobby(desiredMap, isPrivate);
 
-            if (MatchmakingScreenController.Instance != null)
+            if (lobby != null && MatchmakingScreenController.Instance != null)
             {
-                Debug.Log("PVP: HOST re-enabling pre-loaded PvPBattleScene before StartHostLobby");
-                MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
+                Debug.Log("PVP: Lobby created - starting tracking and hosting for matchmaking");
+                LobbyServiceFacade.BeginTracking();
+                MatchmakingScreenController.Instance.StartLobbyLoop();
             }
 
             ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
