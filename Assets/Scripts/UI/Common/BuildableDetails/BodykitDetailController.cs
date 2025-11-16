@@ -16,7 +16,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
     public class BodykitDetailController : MonoBehaviour
     {
         IBroadcastingProperty<HullKey> _selectedHull;
-        private HullType _selectedHullType => GetHullType(DataProvider.GameModel.PlayerLoadout.Hull);
+        private HullType _selectedHullType => StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull);
         private HullType _hullType;
         public HullType hullType
         {
@@ -185,53 +185,6 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         private void ShowOriginCruiser()
         {
             GetComponent<ComparableCruiserDetailsController>().ShowItemDetails();
-        }
-
-        private HullType GetHullType(HullKey hullKey)
-        {
-            switch (hullKey.PrefabName)
-            {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "BasicRig":
-                    return HullType.BasicRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Cricket":
-                    return HullType.Cricket;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Flea":
-                    return HullType.Flea;
-                case "Goatherd":
-                    return HullType.Goatherd;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Megalith":
-                    return HullType.Megalith;
-                case "Microlodon":
-                    return HullType.Microlodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "Pistol":
-                    return HullType.Pistol;
-                case "Shepherd":
-                    return HullType.Shepherd;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                default:
-                    return HullType.Yeti;
-            }
         }
 
         public void CollectUnlockedBodykits()

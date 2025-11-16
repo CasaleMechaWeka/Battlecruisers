@@ -3,12 +3,12 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
@@ -161,55 +161,14 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         {
             ICruiser playerCruiser = PrefabFactory.GetCruiserPrefab(DataProvider.GameModel.PlayerLoadout.Hull);
             _itemDetailsManager.ShowDetails(playerCruiser);
-            _itemDetailsManager.ShowDetails(GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
+            _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
             _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
             _comparingFamilyTracker.SetComparingFamily(null);
         }
 
         public void RefreshBodykitsUI()
         {
-            _itemDetailsManager.ShowDetails(GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
-        }
-
-        private HullType GetHullType(HullKey hullKey)
-        {
-            return hullKey.PrefabName switch
-            {
-                "Trident" => HullType.Trident,
-                "BlackRig" => HullType.BlackRig,
-                "BasicRig" => HullType.BasicRig,
-                "Bullshark" => HullType.Bullshark,
-                "Cricket" => HullType.Cricket,
-                "Eagle" => HullType.Eagle,
-                "Flea" => HullType.Flea,
-                "Goatherd" => HullType.Goatherd,
-                "Hammerhead" => HullType.Hammerhead,
-                "Longbow" => HullType.Longbow,
-                "Megalodon" => HullType.Megalodon,
-                "Megalith" => HullType.Megalith,
-                "Microlodon" => HullType.Microlodon,
-                "Raptor" => HullType.Raptor,
-                "Rickshaw" => HullType.Rickshaw,
-                "Rockjaw" => HullType.Rockjaw,
-                "Pistol" => HullType.Pistol,
-                "Shepherd" => HullType.Shepherd,
-                "TasDevil" => HullType.TasDevil,
-                "FortNova" => HullType.FortNova,
-                "Zumwalt" => HullType.Zumwalt,
-                "Yucalux" => HullType.Yucalux,
-                "TekGnosis" => HullType.TekGnosis,
-                "Salvage" => HullType.Salvage,
-                "Orac" => HullType.Orac,
-                "Middlodon" => HullType.Middlodon,
-                "Essex" => HullType.Essex,
-                "Axiom" => HullType.Axiom,
-                "October" => HullType.October,
-                "EndlessWall" => HullType.EndlessWall,
-                "AlphaSpace" => HullType.AlphaSpace,
-                "Arkdeso" => HullType.Arkdeso,
-                _ => HullType.Yeti,
-            };
-
+            _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
         }
 
         public override void Cancel()

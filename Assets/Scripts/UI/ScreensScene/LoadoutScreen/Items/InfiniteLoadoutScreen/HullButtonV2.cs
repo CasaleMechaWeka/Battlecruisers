@@ -9,7 +9,7 @@ using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -79,7 +79,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
                 _itemDetailsManager.ShowDetails(_cruiserPrefab);
-                _itemDetailsManager.ShowDetails(GetHullType(_hullKey));
+                _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(_hullKey));
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
@@ -89,58 +89,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        private HullType GetHullType(HullKey hullKey)
-        {
-            switch (hullKey.PrefabName)
-            {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "BasicRig":
-                    return HullType.BasicRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Cricket":
-                    return HullType.Cricket;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Flea":
-                    return HullType.Flea;
-                case "Goatherd":
-                    return HullType.Goatherd;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Megalith":
-                    return HullType.Megalith;
-                case "Microlodon":
-                    return HullType.Microlodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "Pistol":
-                    return HullType.Pistol;
-                case "Shepherd":
-                    return HullType.Shepherd;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                case "Yeti":
-                    return HullType.Yeti;
-            }
-            return HullType.None;
-        }
-
         public override void ShowDetails()
         {
             _itemDetailsManager.ShowDetails(_cruiserPrefab);
-            _itemDetailsManager.ShowDetails(GetHullType(_hullKey));
+            _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(_hullKey));
         }
         private void OnSelectionButtonClicked()
         {
