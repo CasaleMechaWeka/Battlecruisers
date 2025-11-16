@@ -100,17 +100,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 Debug.Log("PVP: HOST StartHost - before SetupHostConnectionAsync");
                 await m_ConnectionMethod.SetupHostConnectionAsync();
                 Debug.Log($"PVP: HOST relay bound, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
-
                 if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
                 {
                     Debug.Log("PVP: HOST - before DynamicPrefabLoadingUtilities.Init");
                     DynamicPrefabLoadingUtilities.Init(m_ConnectionManager.NetworkManager);
                     Debug.Log("PVP: HOST - after DynamicPrefabLoadingUtilities.Init");
                 }
-
                 m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement = true;
                 Debug.Log($"PVP: HOST starting NetworkManager (SceneManagement=true, Private={ArenaSelectPanelScreenController.PrivateMatch})");
-
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
                     OnClientDisconnect(m_ConnectionManager.NetworkManager.LocalClientId);
@@ -123,7 +120,6 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             catch (Exception e)
             {
                 Debug.LogError($"PVP: HOST failed to start (Error={e.Message})");
-
                 if (LandingSceneGod.Instance != null)
                 {
                     LandingSceneGod.Instance.messagebox.ShowMessage(LocTableCache.CommonTable.GetString("NetworkError"));
@@ -137,10 +133,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 {
                     Debug.LogError("PVP: HOST no message box available for error display");
                 }
-
                 StartHostFailed();
             }
         }
     }
 }
-

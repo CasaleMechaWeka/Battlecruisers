@@ -258,7 +258,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             return lobbyCreationAttemp.Lobby;
         }
-
         public async Task<Lobby> HostLobby(int latency, string desiredMap, bool isPrivate)
         {
             if (!StaticData.MeetsMinCPURequirements())
@@ -266,29 +265,22 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 Debug.Log("CPU requirements are not met - can't host");
                 return null;
             }
-
             CheckLatency(latency);
-
             if (latency > (int)(ConnectionManager.LatencyLimit * 0.6f))
             {
                 MatchmakingScreenController.Instance.ShowBadInternetMessageBox();
                 return null;
             }
             MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
-
             Lobby lobby = await CreateLobby(desiredMap, isPrivate);
-
             if (lobby != null && MatchmakingScreenController.Instance != null)
             {
-                Debug.Log("PVP: Lobby created - starting tracking and hosting for matchmaking");
+                Debug.Log("PVP: Lobby created - starting tracking, waiting for Players=2/2 before StartHostLobby");
                 LobbyServiceFacade.BeginTracking();
                 MatchmakingScreenController.Instance.StartLobbyLoop();
             }
-
-            ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
             return lobby;
         }
-
         void CheckLatency(int latency)
         {
             Debug.Log($"Update latency: {latency} ms");

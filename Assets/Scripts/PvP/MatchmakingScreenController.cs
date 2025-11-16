@@ -645,57 +645,44 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             lastKnownPlayerCount = 0;
             StartCoroutine(nameof(LobbyLoop));
         }
-
         System.Collections.IEnumerator LobbyLoop()
         {
             Unity.Services.Lobbies.Models.Lobby lobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
-
             while (lobby != null)
             {
                 yield return new WaitForSeconds(0.1f);
-
                 Unity.Services.Lobbies.Models.Lobby liveLobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
-
                 if (liveLobby != null)
                 {
                     int currentPlayerCount = liveLobby.Players.Count;
-
                     if (currentPlayerCount != lastKnownPlayerCount)
                     {
                         lastKnownPlayerCount = currentPlayerCount;
                         Debug.Log($"PVP: LobbyLoop - player count changed to {currentPlayerCount}/{liveLobby.MaxPlayers}");
                     }
-
                     if (currentPlayerCount == 2 && !gameStarted && !isCancelled)
                     {
                         gameStarted = true;
                         Debug.Log("PVP: LobbyLoop - opponent found (Players=2/2), starting match");
-
                         if (backgroundMusic != null && backgroundMusic.isPlaying)
                             backgroundMusic.Stop();
-
                         if (enemyFoundMusic != null)
                             enemyFoundMusic.Play();
-
                         if (fleeButton != null)
                         {
                             fleeButton.SetActive(false);
                             Debug.Log("PVP: LobbyLoop - hiding FLEE button");
                         }
-
                         if (vsAIButton != null)
-                        {
                             vsAIButton.SetActive(false);
-                        }
-
-                        Debug.Log("PVP: LobbyLoop - opponent found, re-enabling PvPBattleScene GameObjects");
+                        Debug.Log("PVP: LobbyLoop - calling StartHostLobby at Players=2/2 (matching PrivatePVP pattern)");
+                        PvPBootManager.Instance.ConnectionManager.StartHostLobby(BattleCruisers.Data.DataProvider.GameModel.PlayerName);
+                        Debug.Log("PVP: LobbyLoop - re-enabling PvPBattleScene GameObjects");
                         ReEnableBattleSceneGameObjects();
-                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, match will start when CLIENT connects");
-
+                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, NetworkManager will start and trigger LoadScene(Single)");
                         StopCoroutine(nameof(LobbyLoop));
                         yield break;
                     }
-
                     if (isCancelled)
                     {
                         yield break;
