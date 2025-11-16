@@ -112,8 +112,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             //    leftCruiserName.text = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = DataProvider.GameModel.PlayerName;
             int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
-            leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
-            leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
+            leftPlayerRankName.text = LocTableCache.CommonTable.GetString($"Rank{rank}");
+            leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
             leftPlayerBounty.text = DataProvider.GameModel.Bounty.ToString();
             // show bodykit of left player in MM if owned
             int id_bodykitA = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
@@ -250,9 +250,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
             int rankA = DestructionRanker.CalculateRank(SynchedServerData.Instance.playerAScore.Value);
-            Sprite spriteA = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
+            Sprite spriteA = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rankA}.png");
             if (leftPlayerRankImage != null) leftPlayerRankImage.sprite = spriteA;
-            if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+            if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString($"Rank{rankA}");
             //    leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
 
             // apply bodykit of left player

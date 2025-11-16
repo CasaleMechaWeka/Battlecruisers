@@ -1,4 +1,4 @@
-using BattleCruisers.Data.Static;
+using BattleCruisers.Utils;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,7 +17,7 @@ namespace BattleCruisers.PostBattleScreen
             foreach (GameObject o in destructionRanks)
                 o.SetActive(false);
             int rank = CalculateRank(score);
-            Assert.IsTrue(rank >= 0 && rank <= StaticPrefabKeys.Ranks.AllRanks.Count - 1);
+            Assert.IsTrue(rank >= 0 && rank <= Constants.MAX_RANK);
             if (rank >= 0)
             {
                 destructionRanks[rank].SetActive(true);
@@ -26,7 +26,7 @@ namespace BattleCruisers.PostBattleScreen
 
         public static int CalculateRank(long score)
         {
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
+            for (int i = 0; i <= Constants.MAX_RANK; i++)
             {
                 long x = 2500 + 2500 * i * i;
                 //Debug.Log(x);
@@ -35,7 +35,7 @@ namespace BattleCruisers.PostBattleScreen
                     return i;
                 }
             }
-            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
+            return Constants.MAX_RANK;
         }
 
         // return what the x value will be in CalculateRank()
@@ -52,7 +52,7 @@ namespace BattleCruisers.PostBattleScreen
         {
             int currentRank = CalculateRank(score); // Calculate the current rank using the existing method
 
-            if (currentRank >= StaticPrefabKeys.Ranks.AllRanks.Count - 1)
+            if (currentRank >= Constants.MAX_RANK)
             {
                 // If the current rank is already the highest, there is no remainder
                 return 0;

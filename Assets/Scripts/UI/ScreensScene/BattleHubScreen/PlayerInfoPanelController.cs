@@ -1,5 +1,4 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Static;
 using BattleCruisers.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
@@ -30,7 +29,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _playerName.text = DataProvider.GameModel.PlayerName;
 
             int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
-            _rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
+            _rankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
         }
     }
 }

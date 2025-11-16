@@ -7,7 +7,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.PostBattleScreen;
 
@@ -77,8 +76,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             playerName.text = DataProvider.GameModel.PlayerName;
             int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
-            rankTitle.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
-            rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
+            rankTitle.text = LocTableCache.CommonTable.GetString($"Rank{rank}");
+            rankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
 
             int nextLevelXP;
             int currentXP;

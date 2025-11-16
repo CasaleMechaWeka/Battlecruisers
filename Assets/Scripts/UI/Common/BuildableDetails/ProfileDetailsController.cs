@@ -144,10 +144,9 @@ public class ProfileDetailsController : MonoBehaviour
 
         long score = DataProvider.GameModel.LifetimeDestructionScore;
         int rank = DestructionRanker.CalculateRank(score);
-        RankData rankData = StaticPrefabKeys.Ranks.AllRanks[rank];
 
-        RankImage.sprite = await SpriteFetcher.GetSpriteAsync(SpritePaths.RankImagesPath + rankData.RankImage + ".png");
-        RankNameText.text = LocTableCache.CommonTable.GetString(rankData.RankNameKeyBase);
+        RankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
+        RankNameText.text = LocTableCache.CommonTable.GetString($"Rank{rank}");
         long minRankValue = DestructionRanker.CalculateLevelXP(rank);
         long nextRankValue = DestructionRanker.CalculateLevelXP(1 + rank);
 
