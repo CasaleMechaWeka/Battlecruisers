@@ -38,7 +38,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public BuildingDetailController buildingDetails;
         public UnitDetailController unitDetails;
 
-        public CanvasGroupButton heckleButton;
+        public CanvasGroupButton profileButton;
         public CanvasGroupButton shopButton;
 
 
@@ -55,7 +55,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton, heckleButton);
+            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton, profileButton);
 
             itemDetailsPanel.Initialise();
 
@@ -121,7 +121,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _loadoutItemColourController = new LoadoutItemColourControllerV2(_itemDetailsManager, itemButtons);
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, DataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
-            heckleButton.Initialise(soundPlayer, ShowHeckles);
+            profileButton.Initialise(soundPlayer, ShowProfile);
             shopButton.Initialise(soundPlayer, GoToBodykitsShop);
 
             ShowPlayerHull();
@@ -144,9 +144,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                     */
         }
 
-        private void ShowHeckles()
+        public void ShowProfile()
         {
-
             _itemDetailsManager.HideDetails();
             itemPanels.CurrentlyShownPanel?.Hide();
             itemPanels.ShowHecklePanel();

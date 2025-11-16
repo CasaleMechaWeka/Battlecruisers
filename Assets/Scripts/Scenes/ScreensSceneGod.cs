@@ -94,9 +94,6 @@ namespace BattleCruisers.Scenes
         public bool testLoadoutScreen = false;
         public DestructionRanker ranker;
 
-        [SerializeField]
-        private CaptainSelectorPanel captainSelectorPanel;
-
         public GameObject characterOfShop, characterOfBlackmarket;
         public GameObject characterOfCharlie;
         public GameObject cameraOfCharacter;
@@ -335,7 +332,6 @@ namespace BattleCruisers.Scenes
             skirmishScreen.Initialise(this, _soundPlayer);
             shopPanelScreen.Initialise(this, _soundPlayer, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer);
-            captainSelectorPanel.Initialize(_soundPlayer);
 
             DataProvider.SaveGame();
             if (MatchmakingScreenController.MatchmakingFailed)
