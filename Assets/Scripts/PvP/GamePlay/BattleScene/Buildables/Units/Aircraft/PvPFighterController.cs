@@ -256,31 +256,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelController.CleanUp();
         }
 
-
-
-        // sava added
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         // only for PvPFighter :(
         public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-                if (pvp_RotationY.Value != transform.eulerAngles.y)
-                    pvp_RotationY.Value = transform.eulerAngles.y;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, pvp_RotationY.Value, transform.eulerAngles.z);
-            }
-        }
-
-
-
-
 
         protected override void OnBuildableProgressEvent()
         {
@@ -296,16 +273,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.OnCompletedBuildableEvent();
         }
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-                OnDestroyedEventClientRpc();
-            else
-                base.OnDestroyedEvent();
-        }
+
+
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
         [ClientRpc]
         private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
         {
@@ -325,22 +296,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableProgressEvent();
         }
 
-
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()
         {
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
-        }
-
-
-
     }
 }

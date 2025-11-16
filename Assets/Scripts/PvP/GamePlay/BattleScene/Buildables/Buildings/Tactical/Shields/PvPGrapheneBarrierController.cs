@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPGrapheneBarrierController : PvPTacticalBuilding
     {
-
         protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
         public override TargetValue TargetValue => TargetValue.Low;
         public override bool IsBoostable => true;
@@ -100,95 +98,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shieldController.SetShieldHealth(_shieldController.maxHealth / maxHealth * Health);
         }
 
-        // Sava added code
-
-        // BuildProgress 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
-
-
-
-
-
-
-
-
-
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-            {
-                OnPlayDeathSoundClientRpc();
-                base.CallRpc_PlayDeathSound();
-            }
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        protected override void PlayBuildableConstructionCompletedSound()
-        {
-            if (IsServer)
-                PlayBuildableConstructionCompletedSoundClientRpc();
-            else
-                base.PlayBuildableConstructionCompletedSound();
-        }
-
-
-
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-            {
-                OnDestroyedEventClientRpc();
-                base.OnDestroyedEvent();
-            }
-            else
-                base.OnDestroyedEvent();
-        }
-
-
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
-
-
-
-
-
-
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-
-        [ClientRpc]
-        private void PlayBuildableConstructionCompletedSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayBuildableConstructionCompletedSound();
-        }
-
         [ClientRpc]
         private void OnBuildableCompletedClientRpc()
         {
@@ -197,21 +106,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _shieldController.ApplyVariantStats(this);
         }
 
-
-
-
         [ClientRpc]
         private void OnEnableShieldClientRpc(bool enabled)
         {
             if (!IsHost)
                 _shieldController.gameObject.SetActive(enabled);
-        }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
         }
 
         [ClientRpc]

@@ -34,6 +34,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public abstract class PvPBuildable<TPvPActivationArgs> : PvPTarget, IPvPBuildable, IPoolable<TPvPActivationArgs>
         where TPvPActivationArgs : PvPBuildableActivationArgs
     {
+        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
         private float _cumulativeBuildProgressInDroneS;
         protected float _buildTimeInDroneSeconds;
         private ClickHandler _clickHandler;
@@ -606,6 +607,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
+        void LateUpdate()
+        {
+            if (IsServer)
+            {
+                if (PvP_BuildProgress.Value != BuildProgress)
+                    PvP_BuildProgress.Value = BuildProgress;
+            }
+            else
+            {
+                BuildProgress = PvP_BuildProgress.Value;
+            }
+        }
+
         protected virtual void OnBuildableProgressEvent()
         {
             if (IsClient)
@@ -870,6 +884,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 Faction = faction;
+        }
+
+        
+        [ClientRpc]
+        public void OnDestroyedEventClientRpc()
+        {
+            if (!IsHost)
+                OnDestroyedEvent();
         }
     }
 }

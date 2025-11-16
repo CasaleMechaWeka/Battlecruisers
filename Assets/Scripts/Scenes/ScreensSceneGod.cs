@@ -867,6 +867,9 @@ namespace BattleCruisers.Scenes
         public void LoadPvPBattleScene()
         {
             AdvertisingBanner.stopAdvert();
+
+            BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController.ArenaSelectPanelReference = hubScreen.arenaSelectPanel;
+
             SceneNavigator.GoToScene(SceneNames.PvP_INITIALIZE_SCENE, true);
             CleanUp();
         }

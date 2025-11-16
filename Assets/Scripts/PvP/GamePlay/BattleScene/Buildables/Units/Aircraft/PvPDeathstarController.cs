@@ -122,23 +122,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelWrapper.DisposeManagedState();
         }
 
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -153,13 +136,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.OnCompletedBuildableEvent();
         }
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-                OnDestroyedEventClientRpc();
-            else
-                base.OnDestroyedEvent();
-        }
+
+
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
@@ -167,19 +145,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            _buildableProgress.gameObject.SetActive(isEnabled);
-            if (!isEnabled)
-            {
-                Invoke("ActiveTrail", 0.5f);
-            }
-        }
-
-
-
         [ClientRpc]
         private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
         {
@@ -206,15 +171,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
-        }
-
-
 
         [ClientRpc]
         private void UnfoldWingsClientRpc()

@@ -111,6 +111,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (!IsHost)
                 pvp_variantIndex.OnValueChanged += ApplyVariantIconOnClient;
+            if (IsServer)
+                pvp_Health.Value = maxHealth;
         }
 
         public override void OnNetworkDespawn()
@@ -302,6 +304,21 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _buildableProgress.gameObject.SetActive(isEnabled);
         }
 
+        protected override void PlayBuildableConstructionCompletedSound()
+        {
+            if (IsServer)
+                PlayBuildableConstructionCompletedSoundClientRpc();
+            else
+                base.PlayBuildableConstructionCompletedSound();
+        }
+
+        [ClientRpc]
+        void PlayBuildableConstructionCompletedSoundClientRpc()
+        {
+            if (!IsHost)
+                PlayBuildableConstructionCompletedSound();
+        }
+
         protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
         {
             base.AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
@@ -315,6 +332,36 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
+        }
+
+        protected override void OnDestroyedEvent()
+        {
+            if (IsServer)
+            {
+                OnDestroyedEventClientRpc();
+                base.OnDestroyedEvent();
+            }
+            else
+                base.OnDestroyedEvent();
+        }
+        
+
+        protected override void CallRpc_PlayDeathSound()
+        {
+            if (IsServer)
+            {
+                OnPlayDeathSoundClientRpc();
+                base.CallRpc_PlayDeathSound();
+            }
+            else
+                base.CallRpc_PlayDeathSound();
+        }
+
+        [ClientRpc]
+        void OnPlayDeathSoundClientRpc()
+        {
+            if (!IsHost)
+                CallRpc_PlayDeathSound();
         }
     }
 }

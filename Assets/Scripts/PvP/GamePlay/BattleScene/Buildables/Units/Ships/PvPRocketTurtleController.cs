@@ -78,15 +78,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return isCompleted && !IsMoving;
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
         }
+        /*
         private void LateUpdate()
         {
             if (IsServer)
@@ -103,14 +100,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 BuildProgress = PvP_BuildProgress.Value;
             }
         }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
+        */
 
         protected override void OnBuildableProgressEvent()
         {
@@ -126,14 +116,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnCompletedBuildableEventClientRpc();
             else
                 base.OnCompletedBuildableEvent();
-        }
-
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-                OnDestroyedEventClientRpc();
-            else
-                base.OnDestroyedEvent();
         }
 
         protected override void OnBuildableCompleted()
@@ -155,9 +137,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-
-
-
         [ClientRpc]
         private void OnBuildableProgressEventClientRpc()
         {
@@ -170,13 +149,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnCompletedBuildableEvent();
-        }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
         }
 
         [ClientRpc]
@@ -193,8 +165,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 OnBuildableCompleted();
             _missileLauncher.ApplyVariantStats(this);
         }
-
-
 
         [ClientRpc]
         private void EnableAnimatorClientRpc()

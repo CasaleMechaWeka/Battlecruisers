@@ -272,12 +272,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnDestroyedEvent()
         {
-            base.OnDestroyedEvent();
-            if (IsClient)
-                _coreEngineAudioSource.Stop();
-            if (ShouldShowDeathEffects())
+            if (IsServer)
+                OnDestroyedEventClientRpc();
+            else
             {
-                ShowDeathEffects();
+
+                base.OnDestroyedEvent();
+                if (IsClient)
+                    _coreEngineAudioSource.Stop();
+                if (ShouldShowDeathEffects())
+                {
+                    ShowDeathEffects();
+                }
             }
         }
 

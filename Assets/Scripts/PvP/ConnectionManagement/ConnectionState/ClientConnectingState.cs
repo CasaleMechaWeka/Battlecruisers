@@ -33,14 +33,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_ConnectionMethod = baseConnectionMethod;
             return this;
         }
-
         public override void Enter()
         {
             if (MatchmakingScreenController.Instance != null)
                 MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CONNECTING);
+
             _ = ConnectClientAsync();
         }
-
         public override void Exit() { }
         public override void OnClientConnected(ulong _)
         {

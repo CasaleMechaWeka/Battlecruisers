@@ -21,40 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public override UnitCategory UnitCategory => UnitCategory.Aircraft;
         public override LayerMask UnitLayerMask => aircraftLayerMask;
 
-        // sava added
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
-
-
-
-
-
-        // Build Completed
-        
-
-
-
-        // Death Sound
-        protected override void CallRpc_PlayDeathSound()
-        {
-            if (IsServer)
-                OnPlayDeathSoundClientRpc();
-            else
-                base.CallRpc_PlayDeathSound();
-        }
-
-        // BuildableConstructionCompletedSound
-        protected override void PlayBuildableConstructionCompletedSound()
-        {
-            if (IsServer)
-                PlayBuildableConstructionCompletedSoundClientRpc();
-            else
-                base.PlayBuildableConstructionCompletedSound();
-        }
-
-
-        // StartBuildingUnit
-
         protected override void OnStartBuildingUnit(UnitCategory category, string prefabName, int variantIndex)
         {
             OnStartBuildingUnitServerRpc(category, prefabName, variantIndex);
@@ -120,17 +86,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnUnitUnderConstruction_Destroyed();
         }
 
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-                OnDestroyedEventClientRpc();
-            else
-                base.OnDestroyedEvent();
-        }
-
-
-
-        // ----------------------------------------
         protected override void AddBuildRateBoostProviders(
             GlobalBoostProviders globalBoostProviders,
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
@@ -139,63 +94,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AirFactoryProviders);
         }
 
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
         protected override IPvPUnitSpawnPositionFinder CreateSpawnPositionFinder()
         {
             return new PvPAirFactorySpawnPositionFinder(this);
         }
 
         // ----------------------------------------
-
-
-
-
-
-
-
-
-
-        [ClientRpc]
-        private void OnPlayDeathSoundClientRpc()
-        {
-            if (!IsHost)
-                CallRpc_PlayDeathSound();
-        }
-        [ClientRpc]
-        private void PlayBuildableConstructionCompletedSoundClientRpc()
-        {
-            if (!IsHost)
-                PlayBuildableConstructionCompletedSound();
-        }
-
-        [ClientRpc]
-        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
-        {
-            if (!IsHost)
-                _buildableProgress.gameObject.SetActive(isEnabled);
-        }
-
-
-
         [ServerRpc(RequireOwnership = true)]
         private void OnStartBuildingUnitServerRpc(UnitCategory category, string prefabName, int variantIndex)
         {
@@ -209,11 +113,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             OnPauseBuildingUnit();
         }
+        
         [ServerRpc(RequireOwnership = true)]
         private void OnResumeBuildingUnitServerRpc()
         {
             OnResumeBuildingUnit();
         }
+
         [ClientRpc]
         private void OnUnit_BuildingStartedClientRpc(ulong objectId)
         {
@@ -247,13 +153,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 OnNewUnitChosen();
-        }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
         }
     }
 }

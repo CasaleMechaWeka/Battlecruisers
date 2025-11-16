@@ -11,8 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPSiegeDestroyerController : PvPShipController
     {
         private IPvPBarrelWrapper _mortar;
-        public NetworkVariable<float> PvP_BuildProgress = new NetworkVariable<float>();
-
         private float _optimalArmamentRangeInM;
         public override float OptimalArmamentRangeInM => _optimalArmamentRangeInM;
         public override bool KeepDistanceFromEnemyCruiser => false;
@@ -47,33 +45,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _mortar.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
         }
 
-        //------------------------------------ methods for sync, written by Sava ------------------------------//
-
         protected override void OnShipCompleted()
         {
             if (IsServer)
                 base.OnShipCompleted();
         }
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            if (IsServer)
-                pvp_Health.Value = maxHealth;
-        }
-
 
         protected override void OnBuildableProgressEvent()
         {
@@ -91,17 +67,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnCompletedBuildableEvent();
         }
 
-        protected override void OnDestroyedEvent()
-        {
-            if (IsServer)
-                OnDestroyedEventClientRpc();
-            else
-                base.OnDestroyedEvent();
-        }
-
-        
-
-
         //-------------------------------------- RPCs -------------------------------------------------//
 
 
@@ -118,22 +83,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-        [ClientRpc]
-        private void OnDestroyedEventClientRpc()
-        {
-            if (!IsHost)
-                OnDestroyedEvent();
-        }
-
-        [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableCompleted();
-            _mortar.ApplyVariantStats(this);
-        }
-
-
     }
 }
