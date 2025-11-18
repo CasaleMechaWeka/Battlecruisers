@@ -89,7 +89,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiserHelper helper = CreatePlayerHelper(/*_uiManager , cameraFocuser*/);
             Faction faction = Faction.Blues;
             Direction facingDirection = Direction.Right;
-            PvPFogStrength fogStrength = PvPFogStrength.Weak;
             IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
             IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
 
@@ -100,7 +99,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 helper,
                 faction,
                 facingDirection,
-                fogStrength,
                 _highlightableSlotFilter,
                 _helper.CreatePlayerACruiserBuildProgressCalculator(),
                 userChosenTargetTracker,
@@ -122,7 +120,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiserHelper helper = CreatePlayerBHelper(/*_uiManager , cameraFocuser*/);
             Faction faction = Faction.Reds;
             Direction facingDirection = Direction.Left;
-            PvPFogStrength fogStrength = PvPFogStrength.Strong;
 
             IDoubleClickHandler<IPvPBuilding> buildingDoubleClickHandler = new PvPPlayerBuildingDoubleClickHandler();
             IDoubleClickHandler<IPvPCruiser> cruiserDoubleClickHandler = new PvPPlayerCruiserDoubleClickHandler();
@@ -134,7 +131,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 helper,
                 faction,
                 facingDirection,
-                fogStrength,
                 _highlightableSlotFilter,
                 _helper.CreatePlayerBCruiserBuildProgressCalculator(),
                 userChosenTargetTracker,
@@ -151,7 +147,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiserHelper helper,
             Faction faction,
             Direction facingDirection,
-            PvPFogStrength fogStrength,
             IFilter<PvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
             IRankedTargetTracker userChosenTargetTracker,
@@ -192,7 +187,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                     cruiserSpecificFactories,
                     facingDirection,
                     repairManager,
-                    fogStrength,
                     helper,
                     highlightableFilter,
                     buildProgressCalculator,

@@ -346,7 +346,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _fogOfWarManager = args.FogOfWarManager;
             RepairManager = args.RepairManager;
 
-            _fog.Initialise(args.FogStrength);
+            _fog.Initialise();
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new PvPSlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);
