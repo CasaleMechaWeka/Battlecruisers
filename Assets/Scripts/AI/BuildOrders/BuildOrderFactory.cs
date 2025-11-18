@@ -23,14 +23,19 @@ namespace BattleCruisers.AI.BuildOrders
         private const int NUM_OF_NAVAL_FACTORY_SLOTS = 1;
         private const int NUM_OF_AIR_FACTORY_SLOTS_TO_RESERVE = 1;
         // For spy satellite launcher
-        private const int NUM_OF_DECK_SLOTS_TO_RESERVE = 1;
-        private int numOfMastSlotsToReserve = 2;    // not constant because we don't always want to build a StealthGen
+        private int numOfDeckSlotsToReserve = 1;
+        private int numOfMastSlotsToReserve = 2;    // not constant because we don't always want to build a StealthGen or TeslaCoil
 
-        List<HullType> goodStealthCruisers = new List<HullType>
+        static float GetStealthBonus(HullType hull)
         {
-            HullType.Trident,
-            HullType.Rickshaw
-        };
+            return hull switch
+            {
+                HullType.Trident => 4,
+                HullType.Rickshaw => 2,
+                HullType.Goatherd => 1.6f,
+                _ => 1,
+            };
+        }
 
         public BuildOrderFactory(SlotAssigner slotAssigner, IStrategyFactory strategyFactory)
         {
@@ -54,14 +59,21 @@ namespace BattleCruisers.AI.BuildOrders
 
             // we do not want the AI to build a StealthGen when they only have 1 mast because that makes
             // it very vulnerable to MissileRevolver
-            if (DataProvider.SettingsManager.AIDifficulty == Data.Settings.Difficulty.Harder
-                && (levelInfo.AICruiser.SlotNumProvider.GetSlotCount(SlotType.Mast) <= 1)
-                    || (goodStealthCruisers.Contains(levelInfo.PlayerCruiser.hullType)
-                        && !goodStealthCruisers.Contains(levelInfo.AICruiser.hullType)))
+            if (DataProvider.SettingsManager.AIDifficulty == Data.Settings.Difficulty.Harder)
             {
-                for (int i = 0; i < strategy.BaseStrategy.Count; i++)
-                    if (strategy.BaseStrategy[i] == StaticPrefabKeys.Buildings.StealthGenerator)
-                        strategy.BaseStrategy.RemoveAt(i);
+                if (levelInfo.AICruiser.SlotNumProvider.GetSlotCount(SlotType.Mast) <= 1
+                || (GetStealthBonus(levelInfo.PlayerCruiser.hullType) > GetStealthBonus(levelInfo.AICruiser.hullType)))
+                    for (int i = 0; i < strategy.BaseStrategy.Count; i++)
+                        if (strategy.BaseStrategy[i] == StaticPrefabKeys.Buildings.StealthGenerator)
+                        {
+                            strategy.BaseStrategy.RemoveAt(i);
+                        }
+
+                if(!DataProvider.GameModel.PlayerLoadout.SelectedBuildings[BuildingCategory.Tactical].Contains(StaticPrefabKeys.Buildings.StealthGenerator))
+                    numOfDeckSlotsToReserve--;
+            
+                if(!DataProvider.GameModel.PlayerLoadout.SelectedBuildings[BuildingCategory.Offence].Contains(StaticPrefabKeys.Buildings.RocketLauncher))
+                    numOfMastSlotsToReserve--;
             }
 
             if (!strategy.BaseStrategy.Contains(StaticPrefabKeys.Buildings.StealthGenerator))
@@ -87,22 +99,23 @@ namespace BattleCruisers.AI.BuildOrders
             // What do we need?
             // SlotAccessor for the slot count (Platform, Bow and Mast slots, anything that can host offensives)                   
 
-            List<BuildingKey> offensiveBuildOrder = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots).ToList();
-            Debug.Log(offensiveBuildOrder.Count + " " + strategy.Offensives);
+            List<BuildingKey> offensiveBuildingKeys = CreateOffensiveBuildOrder(strategy.Offensives.ToList(), numOfOffensiveSlots).ToList();
+            Debug.Log(offensiveBuildingKeys.Count + " " + strategy.Offensives);
+
             for (int i = 0; i < strategy.BaseStrategy.Count; i++)
                 if (strategy.BaseStrategy[i] == null)
                 {
-                    if (offensiveBuildOrder.Count > 0)
+                    if (offensiveBuildingKeys.Count > 0)
                     {
-                        strategy.BaseStrategy[i] = offensiveBuildOrder[0];
-                        offensiveBuildOrder.RemoveAt(0);
+                        strategy.BaseStrategy[i] = CreateDynamicBuildOrder(BuildingCategory.Offence, 1)[0];
+                        offensiveBuildingKeys.RemoveAt(0);
                     }
                 }
 
-            offensiveBuildOrder = offensiveBuildOrder.Where(x => x != null).ToList();
-            for (int i = 0; i < offensiveBuildOrder.Count; i++)
-                if (offensiveBuildOrder[i] == null)
-                    Debug.Log("RAAAAA");
+            offensiveBuildingKeys = offensiveBuildingKeys.Where(x => x != null).ToList();
+            for (int i = 0; i < offensiveBuildingKeys.Count; i++)
+                if (offensiveBuildingKeys[i] == null)
+                    Debug.LogError("RAAAAA");
 
             return strategy.BaseStrategy.ToArray();
         }
@@ -127,11 +140,11 @@ namespace BattleCruisers.AI.BuildOrders
             AssignSlots(_slotAssigner, requests, numOfPlatformSlots);
 
             // Create individual build orders
-            List<BuildingKey> buildOrders = new List<BuildingKey>();
+            List<BuildingKey> buildingKeys = new List<BuildingKey>();
             foreach (OffensiveRequest request in requests)
-                buildOrders.AddRange(CreateBuildOrder(request));
+                buildingKeys.AddRange(CreateBuildOrder(request));
 
-            return buildOrders.ToArray();
+            return buildingKeys.ToArray();
         }
 
         private void AssignSlots(SlotAssigner slotAssigner, IList<OffensiveRequest> requests, int numOfPlatformSlots)
@@ -174,7 +187,7 @@ namespace BattleCruisers.AI.BuildOrders
         public BuildingKey[] CreateAntiAirBuildOrder(LevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
-            int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: true);
+            int numOfSlotsToUse = Helper.Half(numOfDeckSlots - numOfDeckSlotsToReserve, roundUp: true);
 
             BuildingKey[] buildOrder = new BuildingKey[numOfSlotsToUse];
             buildOrder[0] = StaticPrefabKeys.Buildings.AntiAirTurret;
@@ -192,7 +205,7 @@ namespace BattleCruisers.AI.BuildOrders
         public BuildingKey[] CreateAntiNavalBuildOrder(LevelInfo levelInfo)
         {
             int numOfDeckSlots = levelInfo.AICruiser.SlotAccessor.GetSlotCount(SlotType.Deck);
-            int numOfSlotsToUse = Helper.Half(numOfDeckSlots - NUM_OF_DECK_SLOTS_TO_RESERVE, roundUp: false);
+            int numOfSlotsToUse = Helper.Half(numOfDeckSlots - numOfDeckSlotsToReserve, roundUp: false);
 
             BuildingKey[] buildOrder = new BuildingKey[numOfSlotsToUse];
             buildOrder[0] = StaticPrefabKeys.Buildings.AntiShipTurret;
