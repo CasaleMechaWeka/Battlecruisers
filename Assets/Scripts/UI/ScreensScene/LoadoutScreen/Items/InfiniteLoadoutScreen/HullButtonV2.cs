@@ -8,7 +8,6 @@ using System;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Assertions;
 using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
@@ -25,29 +24,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public GameObject clickedFeedBack;
         public Button toggleHullButton;
         public SelectCruiserButton selectCruiserButton;
-        private const char SEPARATOR = '_';
-        private string lootType;
-        private string lootName;
+
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             Cruiser cruiserPrefab,
-            IBroadcastingProperty<HullKey> selectedHull,
-            PrefabKeyName hullKeyName)
+            IBroadcastingProperty<HullKey> selectedHull)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
 
             Helper.AssertIsNotNull(hullKey, cruiserPrefab, selectedHull);
-
-            string keyNameStr = hullKeyName.ToString();
-
-            string[] strAsArray = keyNameStr.Split(SEPARATOR);
-            Assert.AreEqual(2, strAsArray.Length);
-
-            lootType = strAsArray[0];
-            lootName = strAsArray[1];
 
             _hullKey = hullKey;
             _cruiserPrefab = cruiserPrefab;
@@ -55,7 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
-            _unitName.text = (cruiserPrefab.Name).ToString();
+            _unitName.text = cruiserPrefab.Name.ToString();
             UpdateSelectedFeedback();
             toggleHullButton.onClick.AddListener(OnSelectionButtonClicked);
         }
