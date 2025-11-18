@@ -124,6 +124,16 @@ namespace BattleCruisers.Scenes.BattleScene
                 {
                     if (boostAction.Operation == SequencePoint.BoostAction.BoostOp.Remove)
                         cruiser.RemoveBoost(new Cruiser.BoostStats() { boostType = boostAction.BoostType });
+                    else if(boostAction.Operation == SequencePoint.BoostAction.BoostOp.Replace)
+                    {
+                        cruiser.RemoveBoost(new Cruiser.BoostStats() { boostType = boostAction.BoostType });
+                        cruiser.AddBoost(
+                            new Cruiser.BoostStats()
+                            {
+                                boostType = boostAction.BoostType,
+                                boostAmount = boostAction.BoostAmount
+                            });
+                    }
                     else if (boostAction.Operation == SequencePoint.BoostAction.BoostOp.Add)
                     {
                         cruiser.AddBoost(
@@ -231,6 +241,7 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 Add = 0,
                 Remove = 1,
+                Replace = 2,
             }
 
             public BoostOp Operation;
