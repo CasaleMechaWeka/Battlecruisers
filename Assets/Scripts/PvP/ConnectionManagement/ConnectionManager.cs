@@ -95,6 +95,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             IPublisher<ReconnectMessage> reconnectMessagePublisher)
         {
             NetworkManager = networkManager;
+            m_LobbyServiceFacade = lobbyServiceFacade;
+            m_LocalLobby = localLobby;
+            m_ProfileManager = profileManager;
 
             m_Offline = new OfflineState(lobbyServiceFacade,
                                          profileManager,
@@ -307,5 +310,21 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             m_CurrentState.StartHostIP(playerName, ipaddress, port);
         }
+        public async System.Threading.Tasks.Task SetupRelayForMatchmaking(string playerName)
+        {
+            ConnectionMethodBase connectionMethod = new ConnectionMethodLobby(
+                m_LobbyServiceFacade,
+                m_LocalLobby,
+                this,
+                m_ProfileManager,
+                playerName);
+            UnityEngine.Debug.Log("PVP: SetupRelayForMatchmaking - creating relay allocation (lobby will become discoverable)");
+            await connectionMethod.SetupHostConnectionAsync();
+            UnityEngine.Debug.Log("PVP: SetupRelayForMatchmaking - relay allocated, lobby updated with RelayJoinCode");
+        }
+
+        private LobbyServiceFacade m_LobbyServiceFacade;
+        private LocalLobby m_LocalLobby;
+        private ProfileManager m_ProfileManager;
     }
 }
