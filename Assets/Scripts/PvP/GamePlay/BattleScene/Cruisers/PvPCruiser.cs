@@ -211,9 +211,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
         }
 
-        private async Task LoadBodykit(int index)
+        private void LoadBodykit(int index)
         {
-            Bodykit bodykit = await PvPPrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+            Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
             if (bodykit != null)
             {
                 GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
@@ -249,7 +249,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 int id_bodykit = IsOwner ? SynchedServerData.Instance.playerABodykit.Value : SynchedServerData.Instance.playerBBodykit.Value;
                 if (id_bodykit != -1)
                 {
-                    await LoadBodykit(id_bodykit);
+                    LoadBodykit(id_bodykit);
                 }
             }
             else
@@ -257,7 +257,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
                 int id_bodykit = IsOwner ? SynchedServerData.Instance.playerBBodykit.Value : SynchedServerData.Instance.playerABodykit.Value;
                 if (id_bodykit != -1)
                 {
-                    await LoadBodykit(id_bodykit);
+                    LoadBodykit(id_bodykit);
                 }
             }
         }
@@ -725,14 +725,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         private void PvP_SetFactionClientRpc(Faction faction)
         {
             Faction = faction;
-        }
-
-        [ServerRpc(RequireOwnership = true)]
-        private void PvP_RepairableButtonClickedServerRpc()
-        {
-            IDroneConsumer repairDroneConsumer = RepairManager.GetDroneConsumer(this);
-            PrioritisedSoundKey sound = DroneFocuser.ToggleDroneConsumerFocus(repairDroneConsumer, isTriggeredByPlayer: true);
-            PvP_PrioritisedSoundClientRpc(sound.Key.Type, sound.Key.Name, sound.Priority);
         }
 
         [ClientRpc]

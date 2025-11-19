@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using BattleCruisers.Data;
-using BattleCruisers.Scenes;
 using BattleCruisers.Utils;
 using UnityEngine;
 using System.Threading.Tasks;
-using BattleCruisers.Network.Multiplay.Gameplay.UI;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine.UI;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
@@ -12,7 +10,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
-using BattleCruisers.Network.Multiplay.Infrastructure;
 using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
@@ -20,6 +17,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Network.Multiplay.Scenes;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using System.Collections;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -261,52 +262,32 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         private HullType GetHullType(string hullName)
         {
-            switch (hullName)
+            return hullName switch
             {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "BasicRig":
-                    return HullType.BasicRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Cricket":
-                    return HullType.Cricket;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Flea":
-                    return HullType.Flea;
-                case "Goatherd":
-                    return HullType.Goatherd;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Megalith":
-                    return HullType.Megalith;
-                case "Microlodon":
-                    return HullType.Microlodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "Pistol":
-                    return HullType.Pistol;
-                case "Shepherd":
-                    return HullType.Shepherd;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                case "Yeti":
-                    return HullType.Yeti;
-            }
-            return HullType.None;
-        }
+                "Trident" => HullType.Trident,
+                "BlackRig" => HullType.BlackRig,
+                "BasicRig" => HullType.BasicRig,
+                "Bullshark" => HullType.Bullshark,
+                "Cricket" => HullType.Cricket,
+                "Eagle" => HullType.Eagle,
+                "Flea" => HullType.Flea,
+                "Goatherd" => HullType.Goatherd,
+                "Hammerhead" => HullType.Hammerhead,
+                "Longbow" => HullType.Longbow,
+                "Megalodon" => HullType.Megalodon,
+                "Megalith" => HullType.Megalith,
+                "Microlodon" => HullType.Microlodon,
+                "Raptor" => HullType.Raptor,
+                "Rickshaw" => HullType.Rickshaw,
+                "Rockjaw" => HullType.Rockjaw,
+                "Pistol" => HullType.Pistol,
+                "Shepherd" => HullType.Shepherd,
+                "TasDevil" => HullType.TasDevil,
+                "Yeti" => HullType.Yeti,
+                _ => HullType.None,
+            };
 
+        }
 
         public bool isProcessing = false;
         public bool isLoaded = false;
@@ -480,7 +461,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
             int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
-            UnityEngine.Sprite spriteA = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
+            Sprite spriteA = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
             if (leftPlayerRankImage != null) leftPlayerRankImage.sprite = spriteA;
             if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
             //    leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
@@ -491,7 +472,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             rightPlayerBounty.text = SynchedServerData.Instance.playerBBounty.Value.ToString();
             //    rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
             int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
-            UnityEngine.Sprite spriteB = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
+            Sprite spriteB = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
             if (rightPlayerRankeImage != null) rightPlayerRankeImage.sprite = spriteB;
             if (rightPlayerRankeName != null) rightPlayerRankeName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
             //    rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
@@ -533,7 +514,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
 
 
-            if (SynchedServerData.Instance.GetTeam() == Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Team.LEFT)
+            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
             {
                 if (rightCaptain != null) rightCaptain.texture = clientTexture;
             }
@@ -576,7 +557,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             if (isPvPBattleScenePreloaded)
             {
                 Debug.Log("PVP: Unloading pre-loaded PvPBattleScene (FailedMatchmaking)");
-                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("PvPBattleScene");
+                SceneManager.UnloadSceneAsync("PvPBattleScene");
                 isPvPBattleScenePreloaded = false;
                 disabledRootObjects.Clear();
             }
@@ -589,12 +570,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
             Destroy(gameObject);
             Debug.Log("PVP: Unloading PvPInitializeScene (FailedMatchmaking)");
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
+            SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
         }
+        
         public void Destroy()
         {
             Destroy(gameObject);
         }
+        
         void OnDestroy()
         {
             if (Instance == this)
@@ -612,17 +595,17 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         private bool isPvPBattleScenePreloaded = false;
         private List<GameObject> disabledRootObjects = new List<GameObject>();
 
-        System.Collections.IEnumerator PreloadBattleSceneCoroutine()
+        IEnumerator PreloadBattleSceneCoroutine()
         {
             Debug.Log("PVP: Pre-loading PvPBattleScene");
-            AsyncOperation sceneLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(
+            AsyncOperation sceneLoad = SceneManager.LoadSceneAsync(
             "PvPBattleScene",
-            UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            LoadSceneMode.Additive);
             sceneLoad.allowSceneActivation = true;
 
             yield return sceneLoad;
 
-            UnityEngine.SceneManagement.Scene battleScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("PvPBattleScene");
+            Scene battleScene = SceneManager.GetSceneByName("PvPBattleScene");
             if (battleScene.IsValid())
             {
                 GameObject[] rootObjects = battleScene.GetRootGameObjects();
@@ -642,7 +625,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         public void ReEnableBattleSceneGameObjects()
         {
-            UnityEngine.EventSystems.EventSystem matchmakingEventSystem = GetComponentInChildren<UnityEngine.EventSystems.EventSystem>();
+            EventSystem matchmakingEventSystem = GetComponentInChildren<EventSystem>();
             if (matchmakingEventSystem != null)
             {
                 Destroy(matchmakingEventSystem.gameObject);
