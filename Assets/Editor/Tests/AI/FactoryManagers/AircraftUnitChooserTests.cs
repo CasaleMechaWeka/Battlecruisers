@@ -11,7 +11,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
     public class AircraftUnitChooserTests
     {
         private UnitChooser _unitChooser;
-        private IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
+        private IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber, _antiAirPlaneLate;
         private DroneManager _droneManager;
         private BaseThreatMonitor _airThreatMonitor, _navalThreatMonitor;
 
@@ -24,6 +24,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
             _antiNavalPlane = CreateUnit(numOfDrones: 6);
             _broadswordGunship = CreateUnit(numOfDrones: 18);
             _stratBomber = CreateUnit(numOfDrones: 10);
+            _antiAirPlane = CreateUnit(numOfDrones: 8);
 
             _droneManager = Substitute.For<DroneManager>();
             _droneManager.NumOfDrones = 12;
@@ -38,6 +39,7 @@ namespace BattleCruisers.Tests.AI.FactoryManagers
                 _antiNavalPlane,
                 _broadswordGunship,
                 _stratBomber,
+                _antiAirPlaneLate,
 
                 _droneManager,
                 _airThreatMonitor,
