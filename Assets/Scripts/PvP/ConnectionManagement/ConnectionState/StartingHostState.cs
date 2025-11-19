@@ -99,7 +99,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             {
                 Debug.Log("PVP: HOST StartHost - before SetupHostConnectionAsync");
                 await m_ConnectionMethod.SetupHostConnectionAsync();
-                Debug.Log($"PVP: HOST relay bound, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
+                Debug.Log($"PVP: HOST relay configured, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
                 if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
                 {
                     Debug.Log("PVP: HOST - before DynamicPrefabLoadingUtilities.Init");

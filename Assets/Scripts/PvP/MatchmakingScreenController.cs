@@ -335,11 +335,11 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             SetMMString(status);
 
             /*            switch(status)
-                        {
-                            case MMStatus.LOOKING_VICTIM:
-                                m_TimeLimitLookingVictim.PutOnCooldown();
-                                break;
-                        }*/
+            {
+            case MMStatus.LOOKING_VICTIM:
+            m_TimeLimitLookingVictim.PutOnCooldown();
+            break;
+            }*/
         }
 
         private void SetMMString(MMStatus _status)
@@ -403,43 +403,73 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Debug.Log("PVP: OnFleeAsync - stopping matchmaking (user clicked FLEE)");
             isCancelled = true;
             StopCoroutine(nameof(LobbyLoop));
+
+            string lobbyIdToDelete = null;
+            bool wasHost = PvPBootManager.Instance?.IsLocalUserHost ?? false;
+
             if (PvPBootManager.Instance?.LobbyServiceFacade != null)
             {
-                Debug.Log("PVP: OnFleeAsync - stopping lobby tracking");
-                await PvPBootManager.Instance.LobbyServiceFacade.EndTracking();
                 Unity.Services.Lobbies.Models.Lobby currentLobby = PvPBootManager.Instance.LobbyServiceFacade.CurrentUnityLobby;
                 if (currentLobby != null && !string.IsNullOrEmpty(currentLobby.Id))
                 {
+                    lobbyIdToDelete = currentLobby.Id;
+                    Debug.Log($"PVP: OnFleeAsync - stored lobby ID {lobbyIdToDelete} for deletion (IsHost={wasHost})");
+                }
+
+                Debug.Log("PVP: OnFleeAsync - stopping lobby tracking (EndTracking will clear cached relay allocation)");
+                await PvPBootManager.Instance.LobbyServiceFacade.EndTracking();
+
+                if (!string.IsNullOrEmpty(lobbyIdToDelete) && wasHost)
+                {
                     try
                     {
-                        Debug.Log($"PVP: OnFleeAsync - deleting lobby {currentLobby.Id}");
-                        await PvPBootManager.Instance.LobbyServiceFacade.DeleteLobbyAsync(currentLobby.Id);
+                        Debug.Log($"PVP: OnFleeAsync - HOST deleting lobby {lobbyIdToDelete}");
+                        await PvPBootManager.Instance.LobbyServiceFacade.DeleteLobbyAsync(lobbyIdToDelete);
+                        Debug.Log($"PVP: OnFleeAsync - lobby {lobbyIdToDelete} deleted successfully");
                     }
                     catch (System.Exception ex)
                     {
                         Debug.LogError($"PVP: OnFleeAsync - failed to delete lobby: {ex.Message}");
                     }
                 }
+                else if (!wasHost)
+                {
+                    Debug.Log("PVP: OnFleeAsync - CLIENT leaving lobby (not deleting)");
+                }
             }
+
             if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
             }
+
             if (ApplicationController.Instance?.NetworkManager != null && ApplicationController.Instance.NetworkManager.IsListening)
             {
                 Debug.Log("PVP: OnFleeAsync - shutting down NetworkManager");
                 ApplicationController.Instance.NetworkManager.Shutdown();
             }
+
             if (PvPBootManager.Instance?.ConnectionManager != null)
             {
                 Debug.Log("PVP: OnFleeAsync - resetting ConnectionManager to Offline state");
                 PvPBootManager.Instance.ConnectionManager.ChangeState(PvPBootManager.Instance.ConnectionManager.m_Offline);
             }
+
             lastKnownPlayerCount = 0;
             gameStarted = false;
             isCancelled = false;
+
             await System.Threading.Tasks.Task.Delay(500);
+
+            UnityEngine.SceneManagement.Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            if (currentScene.name == "PvPBattleScene")
+            {
+                Debug.Log("PVP: OnFleeAsync - in PvPBattleScene, loading ScreensScene before cleanup");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
+                await System.Threading.Tasks.Task.Delay(500);
+            }
+
             FailedMatchmaking();
         }
         public async void FoundCompetitor()
@@ -675,11 +705,16 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                         }
                         if (vsAIButton != null)
                             vsAIButton.SetActive(false);
-                        Debug.Log("PVP: LobbyLoop - calling StartHostLobby at Players=2/2 (matching PrivatePVP pattern)");
-                        PvPBootManager.Instance.ConnectionManager.StartHostLobby(BattleCruisers.Data.DataProvider.GameModel.PlayerName);
-                        Debug.Log("PVP: LobbyLoop - re-enabling PvPBattleScene GameObjects");
+
+                        if (!ArenaSelectPanelScreenController.PrivateMatch && PvPBootManager.Instance != null && PvPBootManager.Instance.IsLocalUserHost)
+                        {
+                            Debug.Log("PVP: LobbyLoop - PublicPVP HOST at Players=2/2, calling StartHostLobby to start NetworkManager");
+                            PvPBootManager.Instance.ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
+                        }
+
+                        Debug.Log("PVP: LobbyLoop - re-enabling PvPBattleScene GameObjects at Players=2/2");
                         ReEnableBattleSceneGameObjects();
-                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, NetworkManager will start and trigger LoadScene(Single)");
+                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, match ready to start");
                         StopCoroutine(nameof(LobbyLoop));
                         yield break;
                     }
