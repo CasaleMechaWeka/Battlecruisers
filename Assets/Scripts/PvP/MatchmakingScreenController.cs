@@ -114,6 +114,9 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
             leftPlayerRankName.text = LocTableCache.CommonTable.GetString($"Rank{rank}");
             leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
+#if !ENABLE_BOUNTIES
+            leftPlayerBounty.gameObject.SetActive(false);
+#endif
             leftPlayerBounty.text = DataProvider.GameModel.Bounty.ToString();
             // show bodykit of left player in MM if owned
             int id_bodykitA = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
@@ -313,8 +316,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             if (leftPlayerName == null) return;
             leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
+#if ENABLE_BOUNTIES
             if (leftPlayerBounty == null) return;
             leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
+#endif
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
             int rankA = DestructionRanker.CalculateRank(SynchedServerData.Instance.playerAScore.Value);
             Sprite spriteA = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rankA}.png");
@@ -374,12 +379,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Debug.Log("PVP: Unloading PvPInitializeScene (FailedMatchmaking)");
             SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
         }
-        
+
         public void Destroy()
         {
             Destroy(gameObject);
         }
-        
+
         void OnDestroy()
         {
             if (Instance == this)

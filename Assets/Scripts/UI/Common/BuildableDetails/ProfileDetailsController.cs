@@ -186,7 +186,12 @@ public class ProfileDetailsController : MonoBehaviour
         ShowHecklePreviews();
 
         EloText.text = DataProvider.GameModel.BattleWinScore.ToString("F0");
+#if !ENABLE_BOUNTIES
+        BountyContainer.SetActive(false);
+#endif
+#if ENABLE_BOUNTIES
         BountyText.text = DataProvider.GameModel.Bounty.ToString("F0");
+#endif
         UpdatePlayerName();
     }
 
@@ -221,7 +226,9 @@ public class ProfileDetailsController : MonoBehaviour
         LeftCancelZone.gameObject.SetActive(false);
         RightCancelZone.gameObject.SetActive(false);
         EloContainer.SetActive(true);
+#if ENABLE_BOUNTIES
         BountyContainer.SetActive(true);
+#endif
         HeckleSelector.SetActive(false);
         ExoSelectorPanel.SetActive(false);
 

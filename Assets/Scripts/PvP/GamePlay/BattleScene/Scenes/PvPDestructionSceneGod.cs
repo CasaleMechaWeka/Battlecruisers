@@ -158,7 +158,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
             nextButton.Initialise(_soundPlayer, Done);
             skipButton.Initialise(_soundPlayer, SkipAnim);
+#if ENABLE_BOUNTIES
             bountyScreenHandler.Initialise(_soundPlayer);
+#endif
             SceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
             // Hide rewarded ad button by default
@@ -198,7 +200,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             PopulateScreen();
 
             StartCoroutine(AnimateScreen());
-            // BountyScreen?.SetActive(true);
+#if ENABLE_BOUNTIES
+            BountyScreen?.SetActive(true);
+#endif
         }
 
 
@@ -263,7 +267,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 enemyCruiser = PlayerBCruiser;
 
             destructionCards[2].image.sprite = enemyCruiser.Sprite;
-            
+
             destructionCards[2].description.text = LocTableCache.CommonTable.GetString("Cruisers/" + enemyCruiser.stringKeyBase + "Name");
 
             //### Screen Setup ###
