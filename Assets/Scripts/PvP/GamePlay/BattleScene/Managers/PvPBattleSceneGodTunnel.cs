@@ -8,9 +8,8 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using System.Linq;
 using System;
-using BattleCruisers.Data.Settings;
-using BattleCruisers.Data;
 using BattleCruisers.Buildables;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -38,7 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static long _cruiserVal;
         public static long _buildingsVal;
         public static long[] _totalDestroyed;
-        public static string _enemyCruiserName;
+        public static HullType EnemyCruiserType;
 
         /// <summary>
         ///  need to hold all values here to handle player disconnection
@@ -47,61 +46,22 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static float _playerALevelTimeInSeconds;
         public static long _playerAAircraftVal;
         public static long _playerAShipsVal;
-        public static long _playerACruiserVal;
         public static long _playerABuildingsVal;
         public static long[] _playerATotoalDestroyed = new long[4];
-        public static string _playerACruiserName;
+        public static HullType PlayerACruiserType;
 
         public static float _playerBLevelTimeInSeconds;
         public static long _playerBAircraftVal;
         public static long _playerBShipsVal;
-        public static long _playerBCruiserVal;
         public static long _playerBBuildingsVal;
         public static long[] _playerBTotoalDestroyed = new long[4];
-        public static string _playerBCruiserName;
+        public static HullType PlayerBCruiserType;
 
         public static bool OpponentQuit = false;
         public static int isDisconnected = 0;
         public static bool isCost = false;
-        public static float difficultyDestructionScoreMultiplier = 1.0f;
-        public static Dictionary<string, long> cruiser_scores = new Dictionary<string, long>() {
-            { "AlphaSpace", 24000},
-            { "Arkdeso", 3500},
-            { "Axiom", 150},
-            { "BasicRig", 500},
-            { "BlackRig", 5800},
-            { "Bullshark", 4000},
-            { "Cricket", 5000 },
-            { "Eagle", 2400},
-            { "EndlessWall", 90000},
-            { "Essex", 7000},
-            { "Flea", 4000},
-            { "FortNova", 50000},
-            { "FortressPrime", 90000},
-            { "Goatherd", 5700},
-            { "Hammerhead", 3900},
-            { "HuntressBoss", 150000},
-            { "Longbow", 5000},
-            { "ManOfWarBoss", 10000},
-            { "Megalodon", 5000},
-            { "Megalith", 7000},
-            { "Microlodon", 1500},
-            { "Middlodon", 3000},
-            { "October", 1500},
-            { "Orac", 800},
-            { "Pistol", 2200},
-            { "Raptor", 1500},
-            { "Rickshaw", 1500},
-            { "Rockjaw", 3600},
-            { "Salvage", 500},
-            { "Shepherd", 4000},
-            { "TasDevil", 6800},
-            { "TekGnosis", 8000},
-            { "Trident", 3500},
-            { "Yeti", 8000},
-            { "Yucalux", 500},
-            { "Zumwalt", 500},
-        };
+        public const float DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER = 2;
+
         private void Awake()
         {
             isDisconnected = 0;
@@ -120,20 +80,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             _playerBBuildingsVal = 0;
             _playerBTotoalDestroyed = new long[4];
             //    _playerBCruiserName = "";
-
-
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
-            {
-                difficultyDestructionScoreMultiplier = 1.0f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
-            {
-                difficultyDestructionScoreMultiplier = 1.5f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
-            {
-                difficultyDestructionScoreMultiplier = 2.0f;
-            }
         }
 
         public static void AddAllBuildablesOfLeftPlayer(TargetType type, float val)
@@ -149,8 +95,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     _playerATotoalDestroyed[1]++;
                     break;
                 case TargetType.Cruiser:
-                    _playerACruiserVal += (long)val;
-                    _playerATotoalDestroyed[2]++;
                     break;
                 case TargetType.Buildings:
                     _playerABuildingsVal += (long)val;
@@ -172,8 +116,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     _playerBTotoalDestroyed[1]++;
                     break;
                 case TargetType.Cruiser:
-                    _playerBCruiserVal += (long)val;
-                    _playerBTotoalDestroyed[2]++;
                     break;
                 case TargetType.Buildings:
                     _playerBBuildingsVal += (long)val;
@@ -207,7 +149,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 _shipsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Ships].GetTotalDamageInCredits();
                 _cruiserVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Cruiser].GetTotalDamageInCredits();
                 _buildingsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Buildings].GetTotalDamageInCredits();
-                _enemyCruiserName = PvPBattleSceneGodServer.playerBCruiserName;
+                EnemyCruiserType = PvPBattleSceneGodServer.PlayerBCruiserType;
                 _totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
@@ -222,14 +164,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 long shipsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Ships].GetTotalDamageInCredits();
                 long cruiserVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Cruiser].GetTotalDamageInCredits();
                 long buildingsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Buildings].GetTotalDamageInCredits();
-                string enemyCruiserName = PvPBattleSceneGodServer.enemyCruiserName;
                 long[] totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
                     totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(TargetType)i].GetTotalDestroyed();
                 }
                 Debug.Log($"CRUISERS DESTROYED RIGHT: {totalDestroyed[2]}");
-                CompleteBattleClientRpc(!wasVictory, retryLevel, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
+                CompleteBattleClientRpc(!wasVictory, retryLevel, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, EnemyCruiserType, totalDestroyed);
 
             }
             else
@@ -258,7 +199,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 _shipsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Ships].GetTotalDamageInCredits();
                 _cruiserVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Cruiser].GetTotalDamageInCredits();
                 _buildingsVal = PvPBattleSceneGodServer.deadBuildables_left[TargetType.Buildings].GetTotalDamageInCredits();
-                _enemyCruiserName = PvPBattleSceneGodServer.playerBCruiserName;
+                EnemyCruiserType = PvPBattleSceneGodServer.PlayerBCruiserType;
                 _totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
@@ -274,14 +215,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 long shipsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Ships].GetTotalDamageInCredits();
                 long cruiserVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Cruiser].GetTotalDamageInCredits();
                 long buildingsVal = PvPBattleSceneGodServer.deadBuildables_right[TargetType.Buildings].GetTotalDamageInCredits();
-                string enemyCruiserName = PvPBattleSceneGodServer.enemyCruiserName;
                 long[] totalDestroyed = new long[4];
                 for (int i = 0; i < 4; i++)
                 {
                     totalDestroyed[i] = PvPBattleSceneGodServer.deadBuildables_right[(TargetType)i].GetTotalDestroyed();
                 }
                 Debug.Log($"CRUISERS DESTROYED RIGHT: {totalDestroyed[2]}");
-                CompleteBattleClientRpc(!wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, enemyCruiserName, totalDestroyed);
+                CompleteBattleClientRpc(!wasPlayerVictory, retryLevel, destructionScore, levelTimeInSeconds, aircraftVal, shipsVal, cruiserVal, buildingsVal, EnemyCruiserType, totalDestroyed);
             }
             else
             {
@@ -480,7 +420,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             }
         }
         [ClientRpc]
-        private void CompleteBattleClientRpc(bool wasVictory, bool retryLevel, float levelTimeInSeconds, long aircraftVal, long shipsVal, long cruiserVal, long buildingsVal, string enemyCruiserName, long[] totalDestroyed)
+        private void CompleteBattleClientRpc(bool wasVictory, bool retryLevel, float levelTimeInSeconds, long aircraftVal, long shipsVal, long cruiserVal, long buildingsVal, HullType enemyCruiserType, long[] totalDestroyed)
         {
             if (!IsServer)
             {
@@ -490,14 +430,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 _shipsVal = shipsVal;
                 _cruiserVal = cruiserVal;
                 _buildingsVal = buildingsVal;
-                _enemyCruiserName = enemyCruiserName;
+                EnemyCruiserType = enemyCruiserType;
                 _totalDestroyed = totalDestroyed;
                 battleCompletionHandler?.CompleteBattle(wasVictory, retryLevel);
             }
         }
 
         [ClientRpc]
-        private void CompleteBattleClientRpc(bool wasVictory, bool retryLevel, long destructionScore, float levelTimeInSeconds, long aircraftVal, long shipsVal, long cruiserVal, long buildingsVal, string enemyCruiserName, long[] totalDestroyed)
+        private void CompleteBattleClientRpc(bool wasVictory, bool retryLevel, long destructionScore, float levelTimeInSeconds, long aircraftVal, long shipsVal, long cruiserVal, long buildingsVal, HullType enemyCruiserType, long[] totalDestroyed)
         {
             if (!IsServer)
             {
@@ -507,7 +447,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 _shipsVal = shipsVal;
                 _cruiserVal = cruiserVal;
                 _buildingsVal = buildingsVal;
-                _enemyCruiserName = enemyCruiserName;
+                EnemyCruiserType = enemyCruiserType;
                 _totalDestroyed = totalDestroyed;
                 battleCompletionHandler?.CompleteBattle(wasVictory, retryLevel, destructionScore);
             }
@@ -531,7 +471,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             _unlockedBuildings_RightPlayer.Add(new BuildingKey(category, prefabName));
         }
-
 
         [ServerRpc(RequireOwnership = false)]
         private void AddUnlockedUnitRightPlayerServerRpc(UnitCategory category, string prefabName)

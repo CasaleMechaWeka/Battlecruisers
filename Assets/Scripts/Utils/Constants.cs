@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const int RANK_COUNT = 34;
+        public const int MAX_RANK = RANK_COUNT - 1;
         public const float GRAVITY = 9.81f;  // m/s^2  => Match unity physics setting!
         public const float PI = 3.14f;
         public const int MS_PER_S = 1000;

@@ -3,6 +3,7 @@ using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -139,6 +140,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.S
             public static PvPHullKey PvPMegalith { get; } = new PvPHullKey("PvPMegalith");
             public static PvPHullKey PvPBasicRig { get; } = new PvPHullKey("PvPBasicRig");
             public static PvPHullKey PvPCricket { get; } = new PvPHullKey("PvPCricket");
+
+            const int MaxHullSupported = (int)HullType.Cricket;
+
+            public static IPrefabKey HullKeyFromType(HullType hullType)
+            {
+                if((int)hullType > MaxHullSupported)
+                {
+                    Debug.LogError($"Tried to load PvP cruiser prefab for {hullType}, this is not available.");
+                    return PvPTrident;
+                }
+                else
+                    return AllKeys[(int)hullType];
+            }
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {

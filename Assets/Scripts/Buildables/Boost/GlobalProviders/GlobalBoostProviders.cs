@@ -5,7 +5,7 @@ using static BattleCruisers.Buildables.Boost.GlobalProviders.BoostType;
 namespace BattleCruisers.Buildables.Boost.GlobalProviders
 {
     public enum BoostType   // DO NOT CHANGE THE VALUES, or you break all cruiser prefabs!!!
-    {
+    {                       // 1st digit == kind of bonus; last 2 digits == boost group
         AccuracyAllBuilding     = 002,
         
         BuildRateAircraft       = 100,
@@ -29,7 +29,7 @@ namespace BattleCruisers.Buildables.Boost.GlobalProviders
         
         HealthAllBuilding       = 302,
 
-        RechargeRateShield      = 406,
+        RechargeRateShield      = 409,
     }
     
     public class GlobalBoostProviders

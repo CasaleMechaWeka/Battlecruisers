@@ -144,10 +144,9 @@ public class ProfileDetailsController : MonoBehaviour
 
         long score = DataProvider.GameModel.LifetimeDestructionScore;
         int rank = DestructionRanker.CalculateRank(score);
-        RankData rankData = StaticPrefabKeys.Ranks.AllRanks[rank];
 
-        RankImage.sprite = await SpriteFetcher.GetSpriteAsync(SpritePaths.RankImagesPath + rankData.RankImage + ".png");
-        RankNameText.text = LocTableCache.CommonTable.GetString(rankData.RankNameKeyBase);
+        RankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
+        RankNameText.text = LocTableCache.CommonTable.GetString($"Rank{rank}");
         long minRankValue = DestructionRanker.CalculateLevelXP(rank);
         long nextRankValue = DestructionRanker.CalculateLevelXP(1 + rank);
 
@@ -187,7 +186,12 @@ public class ProfileDetailsController : MonoBehaviour
         ShowHecklePreviews();
 
         EloText.text = DataProvider.GameModel.BattleWinScore.ToString("F0");
+#if !ENABLE_BOUNTIES
+        BountyContainer.SetActive(false);
+#endif
+#if ENABLE_BOUNTIES
         BountyText.text = DataProvider.GameModel.Bounty.ToString("F0");
+#endif
         UpdatePlayerName();
     }
 
@@ -222,7 +226,9 @@ public class ProfileDetailsController : MonoBehaviour
         LeftCancelZone.gameObject.SetActive(false);
         RightCancelZone.gameObject.SetActive(false);
         EloContainer.SetActive(true);
+#if ENABLE_BOUNTIES
         BountyContainer.SetActive(true);
+#endif
         HeckleSelector.SetActive(false);
         ExoSelectorPanel.SetActive(false);
 

@@ -94,9 +94,6 @@ namespace BattleCruisers.Scenes
         public bool testLoadoutScreen = false;
         public DestructionRanker ranker;
 
-        [SerializeField]
-        private CaptainSelectorPanel captainSelectorPanel;
-
         public GameObject characterOfShop, characterOfBlackmarket;
         public GameObject characterOfCharlie;
         public GameObject cameraOfCharacter;
@@ -335,7 +332,6 @@ namespace BattleCruisers.Scenes
             skirmishScreen.Initialise(this, _soundPlayer);
             shopPanelScreen.Initialise(this, _soundPlayer, IsInternetAccessable);
             blackMarketScreen.Initialise(this, _soundPlayer);
-            captainSelectorPanel.Initialize(_soundPlayer);
 
             DataProvider.SaveGame();
             if (MatchmakingScreenController.MatchmakingFailed)
@@ -658,7 +654,7 @@ namespace BattleCruisers.Scenes
                 levelToShowCutscene = 0;
                 // Random bodykits for AIBot
                 Level level = StaticData.Levels[levelNum - 1];
-                DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName)) : -1;
+                DataProvider.GameModel.ID_Bodykit_AIbot = UnityEngine.Random.Range(0, 5) == 2 ? GetRandomBodykitForAI(StaticPrefabKeys.Hulls.GetHullType((HullKey)level.Hull)) : -1;
                 //DataProvider.GameModel.ID_Bodykit_AIbot = GetRandomBodykitForAI(GetHullType(level.Hull.PrefabName));
                 DataProvider.SaveGame();
                 GoToScreen(trashScreen, playDefaultMusic: false);
@@ -688,80 +684,6 @@ namespace BattleCruisers.Scenes
                     id_bodykit = bodykits[UnityEngine.Random.Range(0, bodykits.Count)];
             }
             return id_bodykit;
-        }
-
-        private HullType GetHullType(string hullName)
-        {
-            switch (hullName)
-            {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "BasicRig":
-                    return HullType.BasicRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Cricket":
-                    return HullType.Cricket;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Flea":
-                    return HullType.Flea;
-                case "Goatherd":
-                    return HullType.Goatherd;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Megalith":
-                    return HullType.Megalith;
-                case "Microlodon":
-                    return HullType.Microlodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "Pistol":
-                    return HullType.Pistol;
-                case "Shepherd":
-                    return HullType.Shepherd;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                case "Yeti":
-                    return HullType.Yeti;
-                case "FortNova":
-                    return HullType.FortNova;
-                case "Zumwalt":
-                    return HullType.Zumwalt;
-                case "Yucalux":
-                    return HullType.Yucalux;
-                case "TekGnosis":
-                    return HullType.TekGnosis;
-                case "Salvage":
-                    return HullType.Salvage;
-                case "Orac":
-                    return HullType.Orac;
-                case "Middlodon":
-                    return HullType.Middlodon;
-                case "Essex":
-                    return HullType.Essex;
-                case "Axiom":
-                    return HullType.Axiom;
-                case "October":
-                    return HullType.October;
-                case "EndlessWall":
-                    return HullType.EndlessWall;
-                case "AlphaSpace":
-                    return HullType.AlphaSpace;
-                case "Arkdeso":
-                    return HullType.Arkdeso;
-            }
-            return HullType.None;
         }
 
         public void GoStraightToTrashScreen(int levelNum)

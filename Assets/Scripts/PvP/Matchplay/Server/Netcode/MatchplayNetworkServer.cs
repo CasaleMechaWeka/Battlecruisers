@@ -21,7 +21,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
         NetworkManager m_NetworkManager;
         public int PlayerCount => m_NetworkManager.ConnectedClients.Count;
         SynchedServerData m_SynchedServerData;
-        bool m_InitializedServer;
 
         const int k_MaxConnectPayload = 1024;
 
@@ -110,12 +109,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             }
 
 
-            var payload = System.Text.Encoding.UTF8.GetString(request.Payload);
-            var userData = JsonUtility.FromJson<UserData>(payload);
+            string payload = System.Text.Encoding.UTF8.GetString(request.Payload);
+            UserData userData = JsonUtility.FromJson<UserData>(payload);
             userData.networkId = request.ClientNetworkId;
             if (m_clientData.Count == 0)
             {
-                m_SynchedServerData.playerAPrefabName.Value = userData.hullPrefabName;
+                m_SynchedServerData.playerACruiserID.Value = userData.hullID;
                 m_SynchedServerData.playerAClientNetworkId.Value = userData.networkId;
                 m_SynchedServerData.playerAName.Value = userData.userName;
                 m_SynchedServerData.playerAScore.Value = userData.score;
@@ -124,7 +123,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Server
             }
             else if (m_clientData.Count == 1)
             {
-                m_SynchedServerData.playerBPrefabName.Value = userData.hullPrefabName;
+                m_SynchedServerData.playerBCruiserID.Value = userData.hullID;
                 m_SynchedServerData.playerBClientNetworkId.Value = userData.networkId;
                 m_SynchedServerData.playerBName.Value = userData.userName;
                 m_SynchedServerData.playerBScore.Value = userData.score;

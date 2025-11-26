@@ -4,12 +4,12 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Infrastructure;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
     class ClientConnectedState : ConnectionState
     {
-
         protected LobbyServiceFacade m_lobbyServiceFacade;
 
         public ClientConnectedState(
@@ -35,11 +35,9 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 MatchmakingScreenController.Instance.fleeButton.SetActive(false);
                 MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
             }
-            PvPBattleSceneGodTunnel._playerACruiserVal = 3500;  // in case of worse state
-            PvPBattleSceneGodTunnel._playerBCruiserVal = 3500;
-            PvPBattleSceneGodTunnel._playerBCruiserName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
+            PvPBattleSceneGodTunnel.PlayerBCruiserType = StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull);
         }
-        public override void Exit() { }
+
         public override void OnClientDisconnect(ulong clientId)
         {
             Debug.Log($"PVP: CLIENT HOST disconnected (clientId={clientId})");
@@ -58,4 +56,3 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
     }
 }
-

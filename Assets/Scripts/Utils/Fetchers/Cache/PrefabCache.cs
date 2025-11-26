@@ -47,51 +47,44 @@ namespace BattleCruisers.Utils.Fetchers.Cache
 
         public static async Task CreatePrefabCacheAsync()
         {
-            IList<Task> retrievePrefabsTasks = new List<Task>();
+            IDictionary<IPrefabKey, VariantPrefab> keysToVariants               = new ConcurrentDictionary<IPrefabKey, VariantPrefab>();
+            IDictionary<IPrefabKey, BuildableWrapper<IBuilding>> keysToBuilding = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IBuilding>>();
+            IDictionary<IPrefabKey, CaptainExo> keysToCaptains                  = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
+            IDictionary<IPrefabKey, Cruiser> keysToCruiser                      = new ConcurrentDictionary<IPrefabKey, Cruiser>();
+            IDictionary<IPrefabKey, Bodykit> keysToBodykits                     = new ConcurrentDictionary<IPrefabKey, Bodykit>();
+            IDictionary<IPrefabKey, ShipDeathInitialiser> keysToShipDeaths      = new ConcurrentDictionary<IPrefabKey, ShipDeathInitialiser>();
+            IDictionary<IPrefabKey, BuildableWrapper<IUnit>> keysToUnits        = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IUnit>>();
+            IDictionary<IPrefabKey, Prefab> keysToProjectile                    = new ConcurrentDictionary<IPrefabKey, Prefab>();
+            IDictionary<IPrefabKey, ExplosionController> keysToExplosion        = new ConcurrentDictionary<IPrefabKey, ExplosionController>();
+            Container<DroneController> DroneContainer                           = new Container<DroneController>();
 
-            IDictionary<IPrefabKey, VariantPrefab> keyToVariants = new ConcurrentDictionary<IPrefabKey, VariantPrefab>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.Variants.AllKeys, keyToVariants));
-
-            IDictionary<IPrefabKey, BuildableWrapper<IBuilding>> keyToBuilding = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IBuilding>>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.Buildings.AllKeys, keyToBuilding));
-
-            IDictionary<IPrefabKey, CaptainExo> keyToCaptains = new ConcurrentDictionary<IPrefabKey, CaptainExo>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.CaptainExos.AllKeys, keyToCaptains));
-
-            IDictionary<IPrefabKey, Cruiser> keyToCruiser = new ConcurrentDictionary<IPrefabKey, Cruiser>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.Hulls.AllKeys, keyToCruiser));
-
-            IDictionary<IPrefabKey, Bodykit> keyToBodykits = new ConcurrentDictionary<IPrefabKey, Bodykit>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.BodyKits.AllKeys, keyToBodykits));
-
-            IDictionary<IPrefabKey, ShipDeathInitialiser> keyToDeath = new ConcurrentDictionary<IPrefabKey, ShipDeathInitialiser>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.ShipDeaths.AllKeys, keyToDeath));
-
-            IDictionary<IPrefabKey, BuildableWrapper<IUnit>> keyToUnit = new ConcurrentDictionary<IPrefabKey, BuildableWrapper<IUnit>>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.Units.AllKeys, keyToUnit));
-
-            IDictionary<IPrefabKey, Prefab> keyToProjectile = new ConcurrentDictionary<IPrefabKey, Prefab>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.Projectiles.AllKeys, keyToProjectile));
-
-            IDictionary<IPrefabKey, ExplosionController> keyToExplosion = new ConcurrentDictionary<IPrefabKey, ExplosionController>();
-            retrievePrefabsTasks.Add(GetPrefabs(StaticPrefabKeys.Explosions.AllKeys, keyToExplosion));
-
-            Container<DroneController> DroneContainer = new Container<DroneController>();
-            retrievePrefabsTasks.Add(GetPrefab(StaticPrefabKeys.Effects.BuilderDrone, DroneContainer));
+            IList<Task> retrievePrefabsTasks = new List<Task>
+            {
+                GetPrefabs(StaticPrefabKeys.Variants.AllKeys, keysToVariants),
+                GetPrefabs(StaticPrefabKeys.Buildings.AllKeys, keysToBuilding),
+                GetPrefabs(StaticPrefabKeys.CaptainExos.AllKeys, keysToCaptains),
+                GetPrefabs(StaticPrefabKeys.Hulls.AllKeys, keysToCruiser),
+                GetPrefabs(StaticPrefabKeys.BodyKits.AllKeys, keysToBodykits),
+                GetPrefabs(StaticPrefabKeys.ShipDeaths.AllKeys, keysToShipDeaths),
+                GetPrefabs(StaticPrefabKeys.Units.AllKeys, keysToUnits),
+                GetPrefabs(StaticPrefabKeys.Projectiles.AllKeys, keysToProjectile),
+                GetPrefabs(StaticPrefabKeys.Explosions.AllKeys, keysToExplosion),
+                GetPrefab(StaticPrefabKeys.Effects.BuilderDrone, DroneContainer)
+            };
 
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "Pre retrieve all prefabs task");
             await Task.WhenAll(retrievePrefabsTasks);
 
-            _buildings = new MultiCache<BuildableWrapper<IBuilding>>(keyToBuilding);
-            _units = new MultiCache<BuildableWrapper<IUnit>>(keyToUnit);
-            _units = new MultiCache<BuildableWrapper<IUnit>>(keyToUnit);
-            _cruisers = new MultiCache<Cruiser>(keyToCruiser);
-            _projectiles = new MultiCache<Prefab>(keyToProjectile);
-            _shipDeaths = new MultiCache<ShipDeathInitialiser>(keyToDeath);
-            _explosions = new MultiCache<ExplosionController>(keyToExplosion);
-            _bodykits = new MultiCache<Bodykit>(keyToBodykits);
-            _captains = new MultiCache<CaptainExo>(keyToCaptains);
-            _variants = new MultiCache<VariantPrefab>(keyToVariants);
+            _buildings = new MultiCache<BuildableWrapper<IBuilding>>(keysToBuilding);
+            _units = new MultiCache<BuildableWrapper<IUnit>>(keysToUnits);
+            _units = new MultiCache<BuildableWrapper<IUnit>>(keysToUnits);
+            _cruisers = new MultiCache<Cruiser>(keysToCruiser);
+            _projectiles = new MultiCache<Prefab>(keysToProjectile);
+            _shipDeaths = new MultiCache<ShipDeathInitialiser>(keysToShipDeaths);
+            _explosions = new MultiCache<ExplosionController>(keysToExplosion);
+            _bodykits = new MultiCache<Bodykit>(keysToBodykits);
+            _captains = new MultiCache<CaptainExo>(keysToCaptains);
+            _variants = new MultiCache<VariantPrefab>(keysToVariants);
 
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After retrieve all prefabs task");
             Drone = DroneContainer.Value;

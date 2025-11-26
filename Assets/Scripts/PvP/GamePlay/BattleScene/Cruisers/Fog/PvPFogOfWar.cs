@@ -4,21 +4,14 @@ using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog
 {
-    public enum PvPFogStrength
-    {
-        Weak, Strong
-    }
-
     public class PvPFogOfWar : PvPMonoBehaviourWrapper
     {
         public GameObject weakFog, strongFog;
-        private PvPFogStrength currentStrength;
         private bool IsAIBotMode = false;
-        public void Initialise(PvPFogStrength fogStrength)
+        public void Initialise()
         {
             Helper.AssertIsNotNull(weakFog, strongFog);
             IsVisible = false;
-            currentStrength = fogStrength;
         }
         public void SetAIBotMode()
         {

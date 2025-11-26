@@ -4,7 +4,6 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.UI.ScreensScene.LoadoutScreen;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
@@ -12,7 +11,6 @@ using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using System.Linq;
 using Unity.Services.Authentication;
 using BattleCruisers.Utils.Localisation;
-using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 {
     public class BattleHubScreensController : ScreenController
@@ -21,20 +19,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private ScreenController _currentScreen;
         private SingleSoundPlayer _soundPlayer;
 
-        public CanvasGroupButton homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
+        public CanvasGroupButton homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton, profileButton, arenaBackButton;
         public CanvasGroupButton discordButton, blackMarketButton;
-        public GameObject coins;
 
         public ScreenController battlePanel;
-        public InfiniteLoadoutScreenController loadoutPanel;
-        //    public ShopPanelScreenController shopPanel;
         public LeaderboardPanelScreenController leaderboardPanel;
-        public ProfilePanelScreenController profilePanel;
         public ArenaSelectPanelScreenController arenaSelectPanel;
         public CoinBattleScreenController coinBattleController;
-        public BlackMarketScreenController blackMarketScreenController;
 
-        // Discord invite link
         private const string DiscordInviteLink = "https://discord.gg/V94HZVdvHy";
 
         public PlayerInfoPanelController playerInfoPanelController;
@@ -59,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(homeButton, battleHubButton, battleHubButton2, loadoutButton, shopButton, leaderboardButton,
+            Helper.AssertIsNotNull(homeButton, battleHubButton, loadoutButton, shopButton, leaderboardButton,
                 profileButton, arenaBackButton, discordButton, blackMarketButton);
 
             _lastBattleResult = DataProvider.GameModel.LastBattleResult;
@@ -67,7 +59,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             homeButton.Initialise(_soundPlayer, GoHome);
             battleHubButton.Initialise(_soundPlayer, OpenBattleHub);
-            battleHubButton2.Initialise(_soundPlayer, OpenBattleHub);
             arenaBackButton.Initialise(_soundPlayer, OpenBattleHub);
             loadoutButton.Initialise(_soundPlayer, OpenLoadout);
             shopButton.Initialise(_soundPlayer, OpenShop);
@@ -94,7 +85,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             battlePanel.Initialise(screensSceneGod);
             leaderboardPanel.Initialise(screensSceneGod);
-            profilePanel.Initialise(screensSceneGod, _soundPlayer);
             arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer);
 
             coinBattleController.Initialise(screensSceneGod);
@@ -132,7 +122,6 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void UnselectAll()
         {
             battleHubButton.IsSelected = false;
-            battleHubButton2.IsSelected = false;
             loadoutButton.IsSelected = false;
             shopButton.IsSelected = false;
             leaderboardButton.IsSelected = false;
@@ -164,9 +153,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             //  GoToScreen(shopPanel);
             playerInfoPanelController.gameObject.SetActive(true);
-            ProfilePanelScreenController.Instance?.captainsPanel?.RemoveAllCaptainsFromRenderCamera();
-            if (ProfilePanelScreenController.Instance?.captainsPanel != null)
-                ProfilePanelScreenController.Instance?.captainsPanel?.gameObject.SetActive(false);
+
             _screensSceneGod.GotoShopScreen();
             UnselectAll();
         }
@@ -184,6 +171,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void OpenProfile()
         {
+            OpenLoadout();
+            _screensSceneGod.loadoutScreen.categoryButtonsPanel.ChangeCategory(8);
+            /*
             // Profile button is available in the shop, so we need to be able to turn that off when entering profile (otherwise shop gets in the way)
             if (ScreensSceneGod.Instance.shopPanelScreen.gameObject.activeInHierarchy || ScreensSceneGod.Instance.blackMarketScreen.gameObject.activeInHierarchy)
             {
@@ -199,6 +189,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             ScreensSceneGod.Instance.cameraOfCaptains.SetActive(true);
             ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
             GoToScreen(profilePanel);
+            */
             UnselectAll();
         }
 

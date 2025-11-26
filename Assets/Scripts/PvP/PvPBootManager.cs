@@ -7,17 +7,14 @@ using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Network.Multiplay.UnityServices.Auth;
 using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.Utils;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Qos;
-using Unity.Services.Relay;
-using Unity.Services.Relay.Models;
 using UnityEngine;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Scenes
 {
@@ -35,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         AuthenticationServiceFacade AuthenticationServiceFacade;
         public string joinCode;
 
-        [HideInInspector] public string playerAPrefabName;
+        [HideInInspector] public HullType playerAHullType;
         [HideInInspector] public ulong playerAClientNetworkId;
         [HideInInspector] public string playerAName;
         [HideInInspector] public long playerAScore;
@@ -80,7 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         public async Task TryJoinLobby()
         {
             // find best matchmaking region
-
             bool playerIsAuthorized = await AuthenticationServiceFacade.EnsurePlayerIsAuthorized();
 
             if (!playerIsAuthorized)
@@ -258,7 +254,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
 
             return lobbyCreationAttemp.Lobby;
         }
-
         public async Task<Lobby> HostLobby(int latency, string desiredMap, bool isPrivate)
         {
             if (!StaticData.MeetsMinCPURequirements())
@@ -266,28 +261,29 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 Debug.Log("CPU requirements are not met - can't host");
                 return null;
             }
-
             CheckLatency(latency);
-
             if (latency > (int)(ConnectionManager.LatencyLimit * 0.6f))
             {
                 MatchmakingScreenController.Instance.ShowBadInternetMessageBox();
                 return null;
             }
             MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.CREATING_LOBBY);
-
             Lobby lobby = await CreateLobby(desiredMap, isPrivate);
-
-            if (MatchmakingScreenController.Instance != null)
+            if (lobby != null && MatchmakingScreenController.Instance != null)
             {
-                Debug.Log("PVP: HOST re-enabling pre-loaded PvPBattleScene before StartHostLobby");
-                MatchmakingScreenController.Instance.ReEnableBattleSceneGameObjects();
+                if (!isPrivate)
+                {
+                    Debug.Log("PVP: PublicPVP lobby created - setting up relay allocation (lobby will become discoverable)");
+                    await ConnectionManager.SetupRelayForMatchmaking(DataProvider.GameModel.PlayerName);
+                    Debug.Log("PVP: PublicPVP relay allocated, lobby now discoverable - waiting for Players=2/2");
+                    MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.LOOKING_VICTIM);
+                }
+                Debug.Log("PVP: Lobby created - starting tracking, waiting for Players=2/2");
+                LobbyServiceFacade.BeginTracking();
+                MatchmakingScreenController.Instance.StartLobbyLoop();
             }
-
-            ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
             return lobby;
         }
-
         void CheckLatency(int latency)
         {
             Debug.Log($"Update latency: {latency} ms");
@@ -333,5 +329,6 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         {
             LobbyServiceFacade.OnMatchMakingFailed -= OnMatchmakingFailed;
         }
+        public bool IsLocalUserHost => LocalUser?.IsHost ?? false;
     }
 }

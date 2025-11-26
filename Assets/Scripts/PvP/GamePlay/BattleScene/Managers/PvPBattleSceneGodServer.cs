@@ -1,5 +1,4 @@
 using BattleCruisers.Cruisers.Drones;
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -11,7 +10,6 @@ using Unity.Netcode;
 using System;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Construction;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
-using BattleCruisers.Data.Settings;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Gameplay.Configuration;
 using BattleCruisers.Buildables;
@@ -19,6 +17,7 @@ using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 {
@@ -28,11 +27,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         private static PvPGameEndMonitor _gameEndMonitor;
         public PvPBattleSceneGodTunnel _battleSceneGodTunnel;
         private PvPBattleSceneGodComponents components;
-        private PvPCruiser playerACruiser;
-        private PvPCruiser playerBCruiser;
+        public static PvPCruiser playerACruiser;
+        public static PvPCruiser playerBCruiser;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerA;
         private PvPPopulationLimitAnnouncer _populationLimitAnnouncerB;
-        private static float difficultyDestructionScoreMultiplier;
+        private const float DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER = 2;
         private static bool GameOver;
         private PvPBattleSceneHelper pvpBattleHelper;
         public IUserChosenTargetManager playerACruiserUserChosenTargetManager;
@@ -40,11 +39,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables_left;
         public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables_right;
-        public static Sprite enemyCruiserSprite;
-        public static string enemyCruiserName;
-
-        public static Sprite playerBCruiserSprite;
-        public static string playerBCruiserName;
+        public static HullType EnemyCruiserType;
+        public static HullType PlayerBCruiserType;
 
         public IUserChosenTargetHelper playerBCruiseruserChosenTargetHelper;
         public IUserChosenTargetHelper playerACruiseruserChosenTargetHelper;
@@ -175,17 +171,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         {
             PvPCruiserFactory cruiserFactory = new PvPCruiserFactory(pvpBattleHelper /*, uiManager */);
             //await Task.Delay(500);
-            playerACruiser = cruiserFactory.CreatePlayerACruiser(Team.LEFT);
+            playerACruiser = cruiserFactory.CreatePlayerACruiser();
             //await Task.Delay(500);
-            playerBCruiser = cruiserFactory.CreatePlayerBCruiser(Team.RIGHT);
+            playerBCruiser = cruiserFactory.CreatePlayerBCruiser();
             cruiserFactory.InitialisePlayerACruiser(playerACruiser, playerBCruiser, playerACruiserUserChosenTargetManager);
             cruiserFactory.InitialisePlayerBCruiser(playerBCruiser, playerACruiser, playerBCruiserUserChosenTargetManager);
 
-            enemyCruiserSprite = playerACruiser.Sprite;
-            enemyCruiserName = playerACruiser.stringKeyBase;
+            EnemyCruiserType = playerACruiser.HullType;
+            PlayerBCruiserType = playerBCruiser.HullType;
 
-            playerBCruiserSprite = playerBCruiser.Sprite;
-            playerBCruiserName = playerBCruiser.stringKeyBase;
 
             droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
             droneManagerMonitorA = new DroneManagerMonitor(playerACruiser.DroneManager, components.Deferrer);
@@ -273,19 +267,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             deadBuildables_right.Add(TargetType.Buildings, new DeadBuildableCounter());
             deadBuildables_right.Add(TargetType.PlayedTime, new DeadBuildableCounter());
 
-
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Normal)
-            {
-                difficultyDestructionScoreMultiplier = 1.0f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Hard)
-            {
-                difficultyDestructionScoreMultiplier = 1.5f;
-            }
-            if (DataProvider.SettingsManager.AIDifficulty == Difficulty.Harder)
-            {
-                difficultyDestructionScoreMultiplier = 2.0f;
-            }
             GameOver = false;
         }
 
@@ -300,7 +281,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 if (type == TargetType.Cruiser)
                     Debug.Log("CRUISER DESTROYED LEFT");
 
-                deadBuildables_left[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                deadBuildables_left[type].AddDeadBuildable((int)(DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfLeftPlayer();
                 if (type == TargetType.Cruiser)
                 {
@@ -327,7 +308,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 }
                 if (type == TargetType.Cruiser)
                     Debug.Log("CRUISER DESTROYED RIGHT");
-                deadBuildables_right[type].AddDeadBuildable((int)(difficultyDestructionScoreMultiplier * ((float)value)));
+                deadBuildables_right[type].AddDeadBuildable((int)(DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * ((float)value)));
                 SynchedServerData.Instance.CalculateScoresOfRightPlayer();
                 //Debug.Log("" + (int)(difficultyDestructionScoreMultiplier*((float)value)) + " added");
                 if (type == TargetType.Cruiser)

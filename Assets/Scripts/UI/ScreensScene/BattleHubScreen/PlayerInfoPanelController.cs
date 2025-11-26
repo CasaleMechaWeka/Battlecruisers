@@ -1,5 +1,5 @@
 using BattleCruisers.Data;
-using BattleCruisers.Data.Static;
+using BattleCruisers.PostBattleScreen;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
@@ -28,23 +28,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             _credits.text = DataProvider.GameModel.Credits.ToString();
             _playerName.text = DataProvider.GameModel.PlayerName;
 
-            int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
-            _rankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
-        }
-
-        private int CalculateRank(long score)
-        {
-
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
-            {
-                long x = 2500 + 2500 * i * i;
-                //Debug.Log(x);
-                if (score < x)
-                {
-                    return i;
-                }
-            }
-            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
+            int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
+            _rankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
         }
     }
 }

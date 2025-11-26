@@ -8,8 +8,7 @@ using System;
 using BattleCruisers.Utils.Properties;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Assertions;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 {
@@ -25,29 +24,18 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public GameObject clickedFeedBack;
         public Button toggleHullButton;
         public SelectCruiserButton selectCruiserButton;
-        private const char SEPARATOR = '_';
-        private string lootType;
-        private string lootName;
+
         public void Initialise(
             SingleSoundPlayer soundPlayer,
             ItemDetailsManager itemDetailsManager,
             ComparingItemFamilyTracker comparingFamiltyTracker,
             HullKey hullKey,
             Cruiser cruiserPrefab,
-            IBroadcastingProperty<HullKey> selectedHull,
-            PrefabKeyName hullKeyName)
+            IBroadcastingProperty<HullKey> selectedHull)
         {
             base.Initialise(soundPlayer, itemDetailsManager, comparingFamiltyTracker);
 
             Helper.AssertIsNotNull(hullKey, cruiserPrefab, selectedHull);
-
-            string keyNameStr = hullKeyName.ToString();
-
-            string[] strAsArray = keyNameStr.Split(SEPARATOR);
-            Assert.AreEqual(2, strAsArray.Length);
-
-            lootType = strAsArray[0];
-            lootName = strAsArray[1];
 
             _hullKey = hullKey;
             _cruiserPrefab = cruiserPrefab;
@@ -55,7 +43,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             _selectedFeedback = transform.FindNamedComponent<RectTransform>("SelectedFeedback");
 
             _selectedHull.ValueChanged += _selectedHull_ValueChanged;
-            _unitName.text = (cruiserPrefab.Name).ToString();
+            _unitName.text = cruiserPrefab.Name.ToString();
             UpdateSelectedFeedback();
             toggleHullButton.onClick.AddListener(OnSelectionButtonClicked);
         }
@@ -79,7 +67,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             if (_comparingFamiltyTracker.ComparingFamily.Value == ItemFamily.Hulls)
             {
                 _itemDetailsManager.ShowDetails(_cruiserPrefab);
-                _itemDetailsManager.ShowDetails(GetHullType(_hullKey));
+                _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(_hullKey));
                 _comparingFamiltyTracker.SetComparingFamily(null);
             }
             else
@@ -89,58 +77,10 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
             }
         }
 
-        private HullType GetHullType(HullKey hullKey)
-        {
-            switch (hullKey.PrefabName)
-            {
-                case "Trident":
-                    return HullType.Trident;
-                case "BlackRig":
-                    return HullType.BlackRig;
-                case "BasicRig":
-                    return HullType.BasicRig;
-                case "Bullshark":
-                    return HullType.Bullshark;
-                case "Cricket":
-                    return HullType.Cricket;
-                case "Eagle":
-                    return HullType.Eagle;
-                case "Flea":
-                    return HullType.Flea;
-                case "Goatherd":
-                    return HullType.Goatherd;
-                case "Hammerhead":
-                    return HullType.Hammerhead;
-                case "Longbow":
-                    return HullType.Longbow;
-                case "Megalodon":
-                    return HullType.Megalodon;
-                case "Megalith":
-                    return HullType.Megalith;
-                case "Microlodon":
-                    return HullType.Microlodon;
-                case "Raptor":
-                    return HullType.Raptor;
-                case "Rickshaw":
-                    return HullType.Rickshaw;
-                case "Rockjaw":
-                    return HullType.Rockjaw;
-                case "Pistol":
-                    return HullType.Pistol;
-                case "Shepherd":
-                    return HullType.Shepherd;
-                case "TasDevil":
-                    return HullType.TasDevil;
-                case "Yeti":
-                    return HullType.Yeti;
-            }
-            return HullType.None;
-        }
-
         public override void ShowDetails()
         {
             _itemDetailsManager.ShowDetails(_cruiserPrefab);
-            _itemDetailsManager.ShowDetails(GetHullType(_hullKey));
+            _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(_hullKey));
         }
         private void OnSelectionButtonClicked()
         {

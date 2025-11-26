@@ -12,6 +12,7 @@ using BattleCruisers.Network.Multiplay.UnityServices.Lobbies;
 using BattleCruisers.Data;
 using Unity.Services.Qos;
 using System.Collections.Generic;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 {
@@ -37,15 +38,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             m_PlayerName = playerName;
         }
 
-
-
         protected void SetConnectionPayload(string playerId, string playerName)
         {
             string payload = JsonUtility.ToJson(new ConnectionPayload()
             {
                 playerId = playerId,
                 playerName = playerName,
-                playerHullPrefabName = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName,
+                playerHullID = (int)StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull),
                 playerScore = DataProvider.GameModel.LifetimeDestructionScore,
                 playerNetworkId = 0,
                 playerCaptainPrefabName = DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName,
@@ -80,7 +79,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         ushort m_Port;
 
         public ConnectionMethodIP(string ip, ushort port, ConnectionManager connectionManager, ProfileManager profileManager, string playerName)
-            : base(connectionManager, profileManager, playerName)
+        : base(connectionManager, profileManager, playerName)
         {
             m_Ipaddress = ip;
             m_Port = port;
@@ -111,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         LocalLobby m_LocalLobby;
 
         public ConnectionMethodLobby(LobbyServiceFacade lobbyServiceFacade, LocalLobby localLobby, ConnectionManager connectionManager, ProfileManager profileManager, string playerName)
-            : base(connectionManager, profileManager, playerName)
+        : base(connectionManager, profileManager, playerName)
         {
             m_LobbyServiceFacade = lobbyServiceFacade;
             m_LocalLobby = localLobby;
@@ -136,8 +135,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             // Create client joining allocation from join code
             var joinedAllocation = await RelayService.Instance.JoinAllocationAsync(m_LocalLobby.RelayJoinCode);
             Debug.Log($"client: {joinedAllocation.ConnectionData[0]} {joinedAllocation.ConnectionData[1]}, " +
-                $"host: {joinedAllocation.HostConnectionData[0]} {joinedAllocation.HostConnectionData[1]}, " +
-                $"client: {joinedAllocation.AllocationId}");
+            $"host: {joinedAllocation.HostConnectionData[0]} {joinedAllocation.HostConnectionData[1]}, " +
+            $"client: {joinedAllocation.AllocationId}");
 
             await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(joinedAllocation.AllocationId.ToString(), m_LocalLobby.RelayJoinCode);
 
@@ -150,28 +149,39 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             Debug.Log("Setting up Unity Relay host");
             SetConnectionPayload(GetPlayerId(), m_PlayerName);
 
-            // Add stopwatch to measure actual relay allocation time
-            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
+            Allocation hostAllocation;
+            string joinCode;
 
-            Allocation hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
-            string joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
-            Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
+            if (m_LocalLobby.CachedRelayAllocation != null)
+            {
+                Debug.Log($"PVP: Reusing cached relay allocation (AllocationId={m_LocalLobby.CachedRelayAllocation.AllocationId})");
+                hostAllocation = m_LocalLobby.CachedRelayAllocation;
+                joinCode = m_LocalLobby.RelayJoinCode;
+            }
+            else
+            {
+                System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
 
-            List<string> regions = new List<string> { hostAllocation.Region };
-            IList<IQosResult> qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
-            int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
-            Debug.Log("===>host latency ---> " + averageLatency);
+                hostAllocation = await RelayService.Instance.CreateAllocationAsync(m_ConnectionManager.MaxConnectedPlayers, region: null);
+                joinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
+                Debug.Log($"server: connection data: {hostAllocation.ConnectionData[0]} {hostAllocation.ConnectionData[1]}, allocation ID:{hostAllocation.AllocationId}, region:{hostAllocation.Region}");
 
-            if (averageLatency > ConnectionManager.LatencyLimit / 2)
-                throw new Exception();
+                List<string> regions = new List<string> { hostAllocation.Region };
+                IList<IQosResult> qosResultsForRegion = await QosService.Instance.GetSortedQosResultsAsync("relay", regions);
+                int averageLatency = qosResultsForRegion[0].AverageLatencyMs;
+                Debug.Log("===>host latency ---> " + averageLatency);
 
-            // BASELINE MEASUREMENT: Log actual relay allocation time
-            sw.Stop();
-            Debug.Log($"PVP: BASELINE relay allocation took {sw.ElapsedMilliseconds}ms");
+                if (averageLatency > ConnectionManager.LatencyLimit / 2)
+                    throw new Exception();
 
-            m_LocalLobby.RelayJoinCode = joinCode;
-            m_LocalLobby.Region = hostAllocation.Region;
-            m_LocalLobby.Latency = averageLatency.ToString();
+                sw.Stop();
+                Debug.Log($"PVP: BASELINE relay allocation took {sw.ElapsedMilliseconds}ms");
+
+                m_LocalLobby.RelayJoinCode = joinCode;
+                m_LocalLobby.Region = hostAllocation.Region;
+                m_LocalLobby.Latency = averageLatency.ToString();
+                m_LocalLobby.CachedRelayAllocation = hostAllocation;
+            }
 
             await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationId.ToString(), joinCode);
 
@@ -180,7 +190,5 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
         }
-
     }
 }
-

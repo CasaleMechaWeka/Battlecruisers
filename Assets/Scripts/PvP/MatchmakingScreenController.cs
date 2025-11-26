@@ -10,7 +10,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
-using BattleCruisers.Data.Models;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
@@ -20,7 +19,9 @@ using BattleCruisers.Network.Multiplay.Scenes;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System.Collections;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.PostBattleScreen;
+using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController.MMStatus;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 {
@@ -34,7 +35,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
     public class MatchmakingScreenController : ScreenController
     {
-        private GameModel _gameModel;
         public Animator animator;
 
         public PvPMessageBox messageBox;
@@ -46,41 +46,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public Text leftCruiserName;
         public Image leftCruiserImage;
 
-        public Text rightPlayerName;
-        public Image rightPlayerRankeImage;
-        public Text rightPlayerRankeName;
-        public Text rightPlayerBounty;
-        public Text rightCruiserName;
-        public Image rightCruiserImage;
-
-        public Text vsTitile;
         public Text LookingForOpponentsText;
-        public Text FoundOpponentText;
-
-        public Sprite BlackRig;
-        public Sprite BasicRig;
-        public Sprite Bullshark;
-        public Sprite Cricket;
-        public Sprite Eagle;
-        public Sprite Flea;
-        public Sprite Goatherd;
-        public Sprite Hammerhead;
-        public Sprite HuntressBoss;
-        public Sprite Longbow;
-        public Sprite ManOfWarBoss;
-        public Sprite Megalodon;
-        public Sprite Megalith;
-        public Sprite Microlodon;
-        public Sprite Raptor;
-        public Sprite Rickshaw;
-        public Sprite Rockjaw;
-        public Sprite Pistol;
-        public Sprite Shepherd;
-        public Sprite TasDevil;
-        public Sprite Trident;
-        public Sprite Yeti;
-
-        private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 
         public GameObject fleeButton;
         public GameObject vsAIButton;
@@ -88,11 +54,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public static bool MatchmakingFailed;
 
         private CaptainExo charlie;
-        public GameObject characterOfCharlie;
         public Transform ContainerCaptain;
 
-        public RawImage leftCaptain, rightCaptain;
-        public RenderTexture hostTexture, clientTexture;
         public AudioSource backgroundMusic;
         public AudioSource enemyFoundMusic;
 
@@ -108,7 +71,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LOADING_ASSETS,
             LOOKING_VICTIM
         }
-        public MMStatus status = MMStatus.FINDING_LOBBY;
+        public MMStatus status = FINDING_LOBBY;
 
         private ConnectionQuality connection_Quality;
         public ConnectionQuality Connection_Quality
@@ -140,47 +103,27 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
 
             Connection_Quality = ConnectionQuality.HIGH;
-            sprites.Add("BlackRig", BlackRig);
-            sprites.Add("BasicRig", BasicRig);
-            sprites.Add("Bullshark", Bullshark);
-            sprites.Add("Cricket", Cricket);
-            sprites.Add("Eagle", Eagle);
-            sprites.Add("Flea", Flea);
-            sprites.Add("Goatherd", Goatherd);
-            sprites.Add("Hammerhead", Hammerhead);
-            sprites.Add("HuntressBoss", HuntressBoss);
-            sprites.Add("Longbow", Longbow);
-            sprites.Add("ManOfWarBoss", ManOfWarBoss);
-            sprites.Add("Megalodon", Megalodon);
-            sprites.Add("Megalith", Megalith);
-            sprites.Add("Microlodon", Microlodon);
-            sprites.Add("Raptor", Raptor);
-            sprites.Add("Rickshaw", Rickshaw);
-            sprites.Add("Rockjaw", Rockjaw);
-            sprites.Add("Pistol", Pistol);
-            sprites.Add("Shepherd", Shepherd);
-            sprites.Add("TasDevil", TasDevil);
-            sprites.Add("Trident", Trident);
-            sprites.Add("Yeti", Yeti);
 
             DontDestroyOnLoad(gameObject);
             Debug.Log("PVP: Pre-loading PvPBattleScene");
             StartCoroutine(PreloadBattleSceneCoroutine());
 
-            _gameModel = DataProvider.GameModel;
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre prefab cache load");
             //    leftCruiserName.text = DataProvider.GameModel.PlayerLoadout.Hull.PrefabName;
             leftPlayerName.text = DataProvider.GameModel.PlayerName;
-            int rank = CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
-            leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rank].RankNameKeyBase);
-            leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rank].RankImage + ".png");
+            int rank = DestructionRanker.CalculateRank(DataProvider.GameModel.LifetimeDestructionScore);
+            leftPlayerRankName.text = LocTableCache.CommonTable.GetString($"Rank{rank}");
+            leftPlayerRankImage.sprite = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rank}.png");
+#if !ENABLE_BOUNTIES
+            leftPlayerBounty.gameObject.SetActive(false);
+#endif
             leftPlayerBounty.text = DataProvider.GameModel.Bounty.ToString();
             // show bodykit of left player in MM if owned
             int id_bodykitA = DataProvider.GameModel.PlayerLoadout.SelectedBodykit;
             if (id_bodykitA != -1)
             {
                 Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
-                if (bodykit.cruiserType == GetHullType(DataProvider.GameModel.PlayerLoadout.Hull.PrefabName))
+                if (bodykit.cruiserType == StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull))
                 {
                     leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     leftCruiserImage.sprite = bodykit.BodykitImage;
@@ -189,48 +132,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             else
             {
                 leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + DataProvider.GameModel.PlayerLoadout.Hull.PrefabName + "Name");
-                leftCruiserImage.sprite = sprites[DataProvider.GameModel.PlayerLoadout.Hull.PrefabName];
+                leftCruiserImage.sprite = PrefabCache.GetCruiser(DataProvider.GameModel.PlayerLoadout.Hull).Sprite;
             }
 
             LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingForOpponents");
-            FoundOpponentText.text = LocTableCache.CommonTable.GetString("FoundOpponent");
 
-
-            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 0.4f;
-            characterOfCharlie = charlie.gameObject;
-
-            switch ((Map)DataProvider.GameModel.GameMap)
-            {
-                case Map.PracticeWreckyards:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena01Name");
-                    break;
-                case Map.OzPenitentiary:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena02Name");
-                    break;
-                case Map.UACUltimate:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena08Name");
-                    break;
-                case Map.RioBattlesport:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena07Name");
-                    break;
-                case Map.NuclearDome:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena05Name");
-                    break;
-                case Map.MercenaryOne:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena09Name");
-                    break;
-                case Map.SanFranciscoFightClub:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena03Name");
-                    break;
-                case Map.UACArena:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena06Name");
-                    break;
-                case Map.UACBattleNight:
-                    vsTitile.text = LocTableCache.ScreensSceneTable.GetString("Arena04Name");
-                    break;
-            }
 
             //    m_TimeLimitLookingVictim = new RateLimitCooldown(5f);
             if (backgroundMusic != null)
@@ -259,36 +168,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             messageBox.ShowMessage("Sorry your internet connection is too rangi for muliplayer, try again when you have a more stable connection", () => { messageBox.HideMessage(); FailedMatchmaking(); }, false);
         }
 
-
-        private HullType GetHullType(string hullName)
-        {
-            return hullName switch
-            {
-                "Trident" => HullType.Trident,
-                "BlackRig" => HullType.BlackRig,
-                "BasicRig" => HullType.BasicRig,
-                "Bullshark" => HullType.Bullshark,
-                "Cricket" => HullType.Cricket,
-                "Eagle" => HullType.Eagle,
-                "Flea" => HullType.Flea,
-                "Goatherd" => HullType.Goatherd,
-                "Hammerhead" => HullType.Hammerhead,
-                "Longbow" => HullType.Longbow,
-                "Megalodon" => HullType.Megalodon,
-                "Megalith" => HullType.Megalith,
-                "Microlodon" => HullType.Microlodon,
-                "Raptor" => HullType.Raptor,
-                "Rickshaw" => HullType.Rickshaw,
-                "Rockjaw" => HullType.Rockjaw,
-                "Pistol" => HullType.Pistol,
-                "Shepherd" => HullType.Shepherd,
-                "TasDevil" => HullType.TasDevil,
-                "Yeti" => HullType.Yeti,
-                _ => HullType.None,
-            };
-
-        }
-
         public bool isProcessing = false;
         public bool isLoaded = false;
 
@@ -313,39 +192,19 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         public void SetMMStatus(MMStatus _status)
         {
             status = _status;
-            SetMMString(status);
 
-            /*            switch(status)
-                        {
-                            case MMStatus.LOOKING_VICTIM:
-                                m_TimeLimitLookingVictim.PutOnCooldown();
-                                break;
-                        }*/
-        }
-
-        private void SetMMString(MMStatus _status)
-        {
-            switch (_status)
+            string locTableKey = status switch
             {
-                case MMStatus.FINDING_LOBBY:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("FindingLobby");
-                    break;
-                case MMStatus.JOIN_LOBBY:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("JoiningLobby");
-                    break;
-                case MMStatus.CONNECTING:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("Connecting");
-                    break;
-                case MMStatus.CREATING_LOBBY:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("CreatingLobby");
-                    break;
-                case MMStatus.LOADING_ASSETS:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LoadingAssets");
-                    break;
-                case MMStatus.LOOKING_VICTIM:
-                    LookingForOpponentsText.text = LocTableCache.CommonTable.GetString("LookingVictim");
-                    break;
-            }
+                FINDING_LOBBY => "FindingLobby",
+                JOIN_LOBBY => "JoiningLobby",
+                CONNECTING => "Connecting",
+                CREATING_LOBBY => "CreatingLobby",
+                LOADING_ASSETS => "LoadingAssets",
+                LOOKING_VICTIM => "LookingVictim",
+                _ => "",
+            };
+
+            LookingForOpponentsText.text = LocTableCache.CommonTable.GetString(locTableKey);
         }
 
         public void LockLobby()
@@ -362,7 +221,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         public void SetFoundVictimString()
         {
-            SetMMStatus(MMStatus.LOADING_ASSETS);
+            SetMMStatus(LOADING_ASSETS);
             // Iterate through all child objects of ContainerCaptain
             foreach (Transform child in ContainerCaptain)
             {
@@ -375,13 +234,80 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         public void OnFlee()
         {
-            Debug.Log("PVP: MatchmakingScreenController.OnFlee - User clicked FLEE");
+            Debug.Log("PVP: MatchmakingScreenController.OnFlee - User clicked FLEE, starting async cleanup");
             fleeButton.SetActive(false);
+            _ = OnFleeAsync();
+        }
+        async System.Threading.Tasks.Task OnFleeAsync()
+        {
+            Debug.Log("PVP: OnFleeAsync - stopping matchmaking (user clicked FLEE)");
+            isCancelled = true;
+            StopCoroutine(nameof(LobbyLoop));
+
+            string lobbyIdToDelete = null;
+            bool wasHost = PvPBootManager.Instance?.IsLocalUserHost ?? false;
+
+            if (PvPBootManager.Instance?.LobbyServiceFacade != null)
+            {
+                Unity.Services.Lobbies.Models.Lobby currentLobby = PvPBootManager.Instance.LobbyServiceFacade.CurrentUnityLobby;
+                if (currentLobby != null && !string.IsNullOrEmpty(currentLobby.Id))
+                {
+                    lobbyIdToDelete = currentLobby.Id;
+                    Debug.Log($"PVP: OnFleeAsync - stored lobby ID {lobbyIdToDelete} for deletion (IsHost={wasHost})");
+                }
+
+                Debug.Log("PVP: OnFleeAsync - stopping lobby tracking (EndTracking will clear cached relay allocation)");
+                await PvPBootManager.Instance.LobbyServiceFacade.EndTracking();
+
+                if (!string.IsNullOrEmpty(lobbyIdToDelete) && wasHost)
+                {
+                    try
+                    {
+                        Debug.Log($"PVP: OnFleeAsync - HOST deleting lobby {lobbyIdToDelete}");
+                        await PvPBootManager.Instance.LobbyServiceFacade.DeleteLobbyAsync(lobbyIdToDelete);
+                        Debug.Log($"PVP: OnFleeAsync - lobby {lobbyIdToDelete} deleted successfully");
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogError($"PVP: OnFleeAsync - failed to delete lobby: {ex.Message}");
+                    }
+                }
+                else if (!wasHost)
+                {
+                    Debug.Log("PVP: OnFleeAsync - CLIENT leaving lobby (not deleting)");
+                }
+            }
 
             if (PvPBattleSceneGodClient.Instance != null)
             {
                 PvPBattleSceneGodClient.Instance.WasLeftMatch = true;
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
+            }
+
+            if (ApplicationController.Instance?.NetworkManager != null && ApplicationController.Instance.NetworkManager.IsListening)
+            {
+                Debug.Log("PVP: OnFleeAsync - shutting down NetworkManager");
+                ApplicationController.Instance.NetworkManager.Shutdown();
+            }
+
+            if (PvPBootManager.Instance?.ConnectionManager != null)
+            {
+                Debug.Log("PVP: OnFleeAsync - resetting ConnectionManager to Offline state");
+                PvPBootManager.Instance.ConnectionManager.ChangeState(PvPBootManager.Instance.ConnectionManager.m_Offline);
+            }
+
+            lastKnownPlayerCount = 0;
+            gameStarted = false;
+            isCancelled = false;
+
+            await System.Threading.Tasks.Task.Delay(500);
+
+            UnityEngine.SceneManagement.Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            if (currentScene.name == "PvPBattleScene")
+            {
+                Debug.Log("PVP: OnFleeAsync - in PvPBattleScene, loading ScreensScene before cleanup");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
+                await System.Threading.Tasks.Task.Delay(500);
             }
 
             FailedMatchmaking();
@@ -390,35 +316,23 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         {
             if (leftPlayerName == null) return;
             leftPlayerName.text = SynchedServerData.Instance.playerAName.Value;
+#if ENABLE_BOUNTIES
             if (leftPlayerBounty == null) return;
             leftPlayerBounty.text = SynchedServerData.Instance.playerABounty.Value.ToString();
+#endif
             //    leftCruiserName.text = SynchedServerData.Instance.playerAPrefabName.Value;
-            int rankA = CalculateRank(SynchedServerData.Instance.playerAScore.Value);
-            Sprite spriteA = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankA].RankImage + ".png");
+            int rankA = DestructionRanker.CalculateRank(SynchedServerData.Instance.playerAScore.Value);
+            Sprite spriteA = await SpriteFetcher.GetSpriteAsync($"{SpritePaths.RankImagesPath}Rank{rankA}.png");
             if (leftPlayerRankImage != null) leftPlayerRankImage.sprite = spriteA;
-            if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankA].RankNameKeyBase);
+            if (leftPlayerRankName != null) leftPlayerRankName.text = LocTableCache.CommonTable.GetString($"Rank{rankA}");
             //    leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
-
-            if (rightPlayerName == null) return;
-            rightPlayerName.text = SynchedServerData.Instance.playerBName.Value;
-            if (rightPlayerBounty == null) return;
-            rightPlayerBounty.text = SynchedServerData.Instance.playerBBounty.Value.ToString();
-            //    rightCruiserName.text = SynchedServerData.Instance.playerBPrefabName.Value;
-            int rankB = CalculateRank(SynchedServerData.Instance.playerBScore.Value);
-            Sprite spriteB = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/" + StaticPrefabKeys.Ranks.AllRanks[rankB].RankImage + ".png");
-            if (rightPlayerRankeImage != null) rightPlayerRankeImage.sprite = spriteB;
-            if (rightPlayerRankeName != null) rightPlayerRankeName.text = LocTableCache.CommonTable.GetString(StaticPrefabKeys.Ranks.AllRanks[rankB].RankNameKeyBase);
-            //    rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-
-            // apply bodykit of right player
-
 
             // apply bodykit of left player
             int id_bodykitA = SynchedServerData.Instance.playerABodykit.Value;
             if (id_bodykitA != -1)
             {
                 Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitA));
-                if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerAPrefabName.Value))
+                if (bodykit.cruiserType == (HullType)SynchedServerData.Instance.playerACruiserID.Value)
                 {
                     if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitA].NameStringKeyBase);
                     if (leftCruiserImage != null) leftCruiserImage.sprite = bodykit.bodykitImage;
@@ -426,35 +340,8 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             }
             else
             {
-                if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerAPrefabName.Value + "Name");
-                if (leftCruiserImage != null) leftCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerAPrefabName.Value) ? sprites[SynchedServerData.Instance.playerAPrefabName.Value] : Trident;
-            }
-
-            int id_bodykitB = SynchedServerData.Instance.playerBBodykit.Value;
-            if (id_bodykitB != -1)
-            {
-                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykitB));
-                if (bodykit.cruiserType == GetHullType(SynchedServerData.Instance.playerBPrefabName.Value))
-                {
-                    if (rightCruiserName != null) rightCruiserName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykitB].NameStringKeyBase);
-                    if (rightCruiserImage != null) rightCruiserImage.sprite = bodykit.bodykitImage;
-                }
-            }
-            else
-            {
-                if (rightCruiserName != null) rightCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerBPrefabName.Value + "Name");
-                if (rightCruiserImage != null) rightCruiserImage.sprite = sprites.ContainsKey(SynchedServerData.Instance.playerBPrefabName.Value) ? sprites[SynchedServerData.Instance.playerBPrefabName.Value] : Trident;
-            }
-
-
-            if (SynchedServerData.Instance.GetTeam() == Team.LEFT)
-            {
-                if (rightCaptain != null) rightCaptain.texture = clientTexture;
-            }
-            else
-            {
-                if (leftCaptain != null) leftCaptain.texture = hostTexture;
-                if (rightCaptain != null) rightCaptain.texture = clientTexture;
+                if (leftCruiserName != null) leftCruiserName.text = LocTableCache.CommonTable.GetString("Cruisers/" + SynchedServerData.Instance.playerACruiserID.Value + "Name");
+                leftCruiserImage.sprite = PrefabCache.GetCruiser(DataProvider.GameModel.PlayerLoadout.Hull).Sprite;
             }
 
             if (backgroundMusic != null && backgroundMusic.isPlaying)
@@ -467,19 +354,6 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             LeaveLobby();
         }
 
-        private int CalculateRank(long score)
-        {
-            for (int i = 0; i <= StaticPrefabKeys.Ranks.AllRanks.Count - 1; i++)
-            {
-                long x = 2500 + 2500 * i * i;
-                //Debug.Log(x);
-                if (score < x)
-                {
-                    return i;
-                }
-            }
-            return StaticPrefabKeys.Ranks.AllRanks.Count - 1;
-        }
         public void FailedMatchmaking()
         {
             Debug.Log("PVP: MatchmakingScreenController.FailedMatchmaking - Matchmaking failed");
@@ -505,12 +379,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             Debug.Log("PVP: Unloading PvPInitializeScene (FailedMatchmaking)");
             SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
         }
-        
+
         public void Destroy()
         {
             Destroy(gameObject);
         }
-        
+
         void OnDestroy()
         {
             if (Instance == this)
@@ -577,6 +451,68 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                     }
                 }
                 disabledRootObjects.Clear();
+            }
+        }
+
+        private bool gameStarted = false;
+        private bool isCancelled = false;
+        private int lastKnownPlayerCount = 0;
+
+        public void StartLobbyLoop()
+        {
+            gameStarted = false;
+            isCancelled = false;
+            lastKnownPlayerCount = 0;
+            StartCoroutine(nameof(LobbyLoop));
+        }
+        System.Collections.IEnumerator LobbyLoop()
+        {
+            Unity.Services.Lobbies.Models.Lobby lobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
+            while (lobby != null)
+            {
+                yield return new WaitForSeconds(0.1f);
+                Unity.Services.Lobbies.Models.Lobby liveLobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
+                if (liveLobby != null)
+                {
+                    int currentPlayerCount = liveLobby.Players.Count;
+                    if (currentPlayerCount != lastKnownPlayerCount)
+                    {
+                        lastKnownPlayerCount = currentPlayerCount;
+                        Debug.Log($"PVP: LobbyLoop - player count changed to {currentPlayerCount}/{liveLobby.MaxPlayers}");
+                    }
+                    if (currentPlayerCount == 2 && !gameStarted && !isCancelled)
+                    {
+                        gameStarted = true;
+                        Debug.Log("PVP: LobbyLoop - opponent found (Players=2/2), starting match");
+                        if (backgroundMusic != null && backgroundMusic.isPlaying)
+                            backgroundMusic.Stop();
+                        if (enemyFoundMusic != null)
+                            enemyFoundMusic.Play();
+                        if (fleeButton != null)
+                        {
+                            fleeButton.SetActive(false);
+                            Debug.Log("PVP: LobbyLoop - hiding FLEE button");
+                        }
+                        if (vsAIButton != null)
+                            vsAIButton.SetActive(false);
+
+                        if (!ArenaSelectPanelScreenController.PrivateMatch && PvPBootManager.Instance != null && PvPBootManager.Instance.IsLocalUserHost)
+                        {
+                            Debug.Log("PVP: LobbyLoop - PublicPVP HOST at Players=2/2, calling StartHostLobby to start NetworkManager");
+                            PvPBootManager.Instance.ConnectionManager.StartHostLobby(DataProvider.GameModel.PlayerName);
+                        }
+
+                        Debug.Log("PVP: LobbyLoop - re-enabling PvPBattleScene GameObjects at Players=2/2");
+                        ReEnableBattleSceneGameObjects();
+                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, match ready to start");
+                        StopCoroutine(nameof(LobbyLoop));
+                        yield break;
+                    }
+                    if (isCancelled)
+                    {
+                        yield break;
+                    }
+                }
             }
         }
     }

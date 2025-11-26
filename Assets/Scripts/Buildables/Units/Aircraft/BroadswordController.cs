@@ -23,7 +23,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
     public class BroadswordController : AircraftController, ITargetConsumer
     {
         private FollowingXAxisMovementController _outsideRangeMovementController, _inRangeMovementController;
-        private IBarrelWrapper _rocketBarrelWrapper, _minigunBarrelWrapper;
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private TargetTracker _inRangeTargetTracker;
@@ -54,23 +53,21 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         // Expose barrel wrappers to editor
         [SerializeField]
-        private List<AircraftBarrelWrapper> barrelWrappers;
+        private BarrelWrapper[] barrelWrappers;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
-
-            foreach (var barrelWrapper in barrelWrappers)
+            barrelWrappers = gameObject.GetComponentsInChildren<BarrelWrapper>();
+            foreach (BarrelWrapper barrelWrapper in barrelWrappers)
             {
                 Assert.IsNotNull(barrelWrapper);
                 barrelWrapper.StaticInitialise();
                 AddDamageStats(barrelWrapper.DamageCapability);
             }
         }
-
-
 
         public override void Initialise(UIManager uiManager)
         {
@@ -99,6 +96,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             foreach (var barrelWrapper in barrelWrappers)
             {
+                barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                 barrelWrapper.ApplyVariantStats(this);
             }
             List<Sprite> allSpriteWrappers = new List<Sprite>();
@@ -159,12 +157,6 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             }
 
             return patrolPoints;
-        }
-
-        private void OnFirstPatrolPointReached()
-        {
-            _isAtCruisingHeight = true;
-            UpdateMovementController();
         }
 
         private void UpdateMovementController()

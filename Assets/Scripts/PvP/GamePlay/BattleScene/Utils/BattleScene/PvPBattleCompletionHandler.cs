@@ -39,8 +39,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             team = SynchedServerData.Instance.GetTeam();
             playerARating = SynchedServerData.Instance.playerARating.Value;
             playerBRating = SynchedServerData.Instance.playerBRating.Value;
+#if ENABLE_BOUNTIES
             playerABounty = SynchedServerData.Instance.playerABounty.Value;
             playerBBounty = SynchedServerData.Instance.playerBBounty.Value;
+#endif
             registeredTime = -1;
         }
 
@@ -236,6 +238,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
             if (NetworkManager.Singleton != null)
                 NetworkManager.Singleton.Shutdown(true);
             DestroyAllNetworkObjects();
+#if ENABLE_BOUNTIES
             PvPBattleResult.WasVictory = wasVictory;
             bool isPlayerA = team == Team.LEFT;
             if (wasVictory)
@@ -248,6 +251,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
                 PvPBattleResult.WinnerBounty = isPlayerA ? (int)playerBBounty : (int)playerABounty;
                 PvPBattleResult.LoserBounty = isPlayerA ? (int)playerABounty : (int)playerBBounty;
             }
+#endif
             SceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
         }
 

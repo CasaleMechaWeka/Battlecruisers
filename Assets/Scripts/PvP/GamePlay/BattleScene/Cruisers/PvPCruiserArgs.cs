@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.BuildProgress;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Drones;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Fog;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
@@ -28,7 +27,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public PvPCruiserSpecificFactories CruiserSpecificFactories { get; }
         public Direction FacingDirection { get; }
         public IRepairManager RepairManager { get; }
-        public PvPFogStrength FogStrength { get; }
         public PvPCruiserHelper Helper { get; }
         public IFilter<PvPSlot> HighlightableFilter { get; }
         public IPvPBuildProgressCalculator BuildProgressCalculator { get; }
@@ -47,7 +45,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiserSpecificFactories cruiserSpecificFactories,
             Direction facingDirection,
             IRepairManager repairManager,
-            PvPFogStrength fogStrength,
             PvPCruiserHelper helper,
             IFilter<PvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
@@ -81,7 +78,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             CruiserSpecificFactories = cruiserSpecificFactories;
             FacingDirection = facingDirection;
             RepairManager = repairManager;
-            FogStrength = fogStrength;
             Helper = helper;
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;
@@ -101,7 +97,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             PvPCruiserSpecificFactories cruiserSpecificFactories,
             Direction facingDirection,
             IRepairManager repairManager,
-            PvPFogStrength fogStrength,
             PvPCruiserHelper helper,
             IFilter<PvPSlot> highlightableFilter,
             IPvPBuildProgressCalculator buildProgressCalculator,
@@ -135,7 +130,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             CruiserSpecificFactories = cruiserSpecificFactories;
             FacingDirection = facingDirection;
             RepairManager = repairManager;
-            FogStrength = fogStrength;
             Helper = helper;
             HighlightableFilter = highlightableFilter;
             BuildProgressCalculator = buildProgressCalculator;

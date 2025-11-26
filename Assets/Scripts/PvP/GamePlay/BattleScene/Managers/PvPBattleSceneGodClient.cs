@@ -29,7 +29,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.H
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Damage;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Buildables;
-using BattleCruisers.Network.Multiplay.Scenes;
 using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Fetchers;
@@ -155,26 +154,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         static PvPBattleSceneGodClient s_pvpBattleSceneGodClient;
 
-        private bool TrySetMatchmakingFlag(System.Action<dynamic> setter)
-        {
-            if (MatchmakingScreenController.Instance != null)
-            {
-                setter(MatchmakingScreenController.Instance);
-                return true;
-            }
-            else if (PrivateMatchmakingController.Instance != null)
-            {
-                setter(PrivateMatchmakingController.Instance);
-                return true;
-            }
-            return false;
-        }
-
-        private bool HasMatchmakingController()
-        {
-            return MatchmakingScreenController.Instance != null || PrivateMatchmakingController.Instance != null;
-        }
-
         private void SetMatchmakingProcessing(bool value)
         {
             if (MatchmakingScreenController.Instance != null)
@@ -218,13 +197,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         void Awake()
         {
             Debug.Log($"PVP: Current scene={UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
-            Debug.Log($"PVP: NetworkManager exists={Unity.Netcode.NetworkManager.Singleton != null}");
-            if (Unity.Netcode.NetworkManager.Singleton != null)
+            Debug.Log($"PVP: NetworkManager exists={NetworkManager.Singleton != null}");
+            if (NetworkManager.Singleton != null)
             {
-                Debug.Log($"PVP: IsHost={Unity.Netcode.NetworkManager.Singleton.IsHost}, IsClient={Unity.Netcode.NetworkManager.Singleton.IsClient}, ConnectedClients={Unity.Netcode.NetworkManager.Singleton.ConnectedClientsIds.Count}");
+                Debug.Log($"PVP: IsHost={NetworkManager.Singleton.IsHost}, IsClient={NetworkManager.Singleton.IsClient}, ConnectedClients={NetworkManager.Singleton.ConnectedClientsIds.Count}");
             }
-            Debug.Log($"PVP: SynchedServerData exists={BattleCruisers.Network.Multiplay.Matchplay.Shared.SynchedServerData.Instance != null}");
-            Debug.Log($"PVP: PrivateMatch={BattleCruisers.UI.ScreensScene.BattleHubScreen.ArenaSelectPanelScreenController.PrivateMatch}");
+            Debug.Log($"PVP: SynchedServerData exists={SynchedServerData.Instance != null}");
+            Debug.Log($"PVP: PrivateMatch={ArenaSelectPanelScreenController.PrivateMatch}");
             s_pvpBattleSceneGodClient = this;
 
             components = GetComponent<PvPBattleSceneGodComponents>();
@@ -417,7 +396,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
             if (!NetworkManager.Singleton.IsHost)
             {
-                PvPBattleSceneGodTunnel._playerACruiserName = SynchedServerData.Instance.playerAPrefabName.Value;
+                PvPBattleSceneGodTunnel.PlayerACruiserType = (HullType)SynchedServerData.Instance.playerACruiserID.Value;
             }
             PvPHelper.AssertIsNotNull(playerCruiser, enemyCruiser);
             battleCompletionHandler.registeredTime = Time.time;

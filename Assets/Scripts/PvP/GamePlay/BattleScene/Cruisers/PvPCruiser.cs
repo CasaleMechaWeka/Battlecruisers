@@ -28,7 +28,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using Unity.Netcode;
 using System.Linq;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using System.Threading.Tasks;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.BuildableOutline;
 using BattleCruisers.Targets.TargetTrackers;
@@ -71,6 +70,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
         public int numOfDrones = 4;
         public float yAdjustmentInM;
         public Vector2 trashTalkScreenPosition = new Vector2(480, -28);
+
+        public HullType HullType;
 
         [Tooltip("GameObjects that persist in the scene after this cruiser is destroyed (e.g., CivBuildings)")]
         public GameObject[] persistentObjects;
@@ -197,18 +198,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
 
             if (Faction == Faction.Blues)
             {
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(this.TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * (float)maxHealth);
-                PvPBattleSceneGodTunnel._playerACruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[stringKeyBase];
-                PvPBattleSceneGodTunnel._playerACruiserName = Name;
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * maxHealth);
+                PvPBattleSceneGodTunnel.PlayerACruiserType = HullType;
             }
             else
             {
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(this.TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * (float)maxHealth);
-                PvPBattleSceneGodTunnel._playerBCruiserVal = PvPBattleSceneGodTunnel.cruiser_scores[stringKeyBase];
-                PvPBattleSceneGodTunnel._playerBCruiserName = Name;
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * maxHealth);
+                PvPBattleSceneGodTunnel.PlayerBCruiserType = HullType;
             }
-
-
         }
 
         private void LoadBodykit(int index)
@@ -349,7 +346,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _fogOfWarManager = args.FogOfWarManager;
             RepairManager = args.RepairManager;
 
-            _fog.Initialise(args.FogStrength);
+            _fog.Initialise();
 
             SlotAccessor = _slotWrapperController.Initialise(this);
             SlotHighlighter = new PvPSlotHighlighter(SlotAccessor, args.HighlightableFilter, BuildingMonitor);

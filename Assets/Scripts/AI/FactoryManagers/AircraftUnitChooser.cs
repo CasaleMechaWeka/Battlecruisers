@@ -17,7 +17,7 @@ namespace BattleCruisers.AI.FactoryManagers
     /// </summary>
     public class AircraftUnitChooser : UnitChooser
     {
-        private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber;
+        private readonly IBuildableWrapper<IUnit> _defaultPlane, _lategamePlane, _antiAirPlane, _antiNavalPlane, _broadswordGunship, _stratBomber, _antiAirPlaneLate;
         private readonly DroneManager _droneManager;
         private readonly BaseThreatMonitor _airThreatMonitor, _navalThreatMonitor;
         private readonly ThreatLevel _threatLevelThreshold;
@@ -29,12 +29,13 @@ namespace BattleCruisers.AI.FactoryManagers
             IBuildableWrapper<IUnit> antiNavalPlane,
             IBuildableWrapper<IUnit> broadswordGunship,
             IBuildableWrapper<IUnit> stratBomber,
+            IBuildableWrapper<IUnit> antiAirPlaneLate,
             DroneManager droneManager,
             BaseThreatMonitor airThreatMonitor,
             BaseThreatMonitor navalThreatMonitor,
             ThreatLevel threatLevelThreshold)
         {
-            Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, broadswordGunship, stratBomber, droneManager, airThreatMonitor, navalThreatMonitor);
+            Helper.AssertIsNotNull(defaultPlane, antiAirPlane, antiNavalPlane, broadswordGunship, stratBomber, droneManager, airThreatMonitor, navalThreatMonitor, antiAirPlaneLate);
 
             _defaultPlane = defaultPlane;
             _lategamePlane = lategamePlane;
@@ -42,6 +43,7 @@ namespace BattleCruisers.AI.FactoryManagers
             _antiNavalPlane = antiNavalPlane;
             _broadswordGunship = broadswordGunship;
             _stratBomber = stratBomber;
+            _antiAirPlaneLate = antiAirPlaneLate;
             _droneManager = droneManager;
             _airThreatMonitor = airThreatMonitor;
             _navalThreatMonitor = navalThreatMonitor;
@@ -85,6 +87,8 @@ namespace BattleCruisers.AI.FactoryManagers
             }
             else if (_airThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold)
             {
+                if(CanAfforUnit(_antiAirPlaneLate))
+                    return UnityEngine.Random.Range(0, 20) < 16? _antiAirPlane : _antiAirPlaneLate;
                 return _antiAirPlane;
             }
             else if (_navalThreatMonitor.CurrentThreatLevel >= _threatLevelThreshold)

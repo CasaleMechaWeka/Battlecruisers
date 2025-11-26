@@ -649,9 +649,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             RepairCommand.EmitCanExecuteChanged();
 
             if (Faction == Faction.Blues)
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * numOfDronesRequired * buildTimeInS);
             else
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * numOfDronesRequired * buildTimeInS);
 
             OnBuildableCompletedClientRpc();
         }
@@ -673,9 +673,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ToggleDroneConsumerFocusCommand.EmitCanExecuteChanged();
 
             if (Faction == Faction.Blues)
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfLeftPlayer(TargetType, PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * numOfDronesRequired * buildTimeInS);
             else
-                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.difficultyDestructionScoreMultiplier * numOfDronesRequired * buildTimeInS);
+                PvPBattleSceneGodTunnel.AddAllBuildablesOfRightPlayer(TargetType, PvPBattleSceneGodTunnel.DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER * numOfDronesRequired * buildTimeInS);
         }
 
         protected virtual void PlayBuildableConstructionCompletedSound()

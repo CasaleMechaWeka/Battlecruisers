@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Relay.Models;
 using UnityEngine;
 
 namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
@@ -82,6 +83,9 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
 
         LobbyData m_Data;
         public LobbyData Data => new LobbyData(m_Data);
+
+        [NonSerialized]
+        public Allocation CachedRelayAllocation;
 
         public void AddUser(LocalLobbyUser user)
         {
@@ -329,6 +333,7 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         }
         public void Reset(LocalLobbyUser localUser)
         {
+            CachedRelayAllocation = null;
             CopyDataFrom(new LobbyData(), new Dictionary<string, LocalLobbyUser>());
             AddUser(localUser);
         }
