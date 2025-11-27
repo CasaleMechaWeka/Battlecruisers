@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 namespace BattleCruisers.Ads
 {
     /// <summary>
-    /// Interface for ad mediation managers (AppLovin MAX, IronSource, etc.)
+    /// Interface for ad mediation managers (AppLovin MAX, etc.)
     /// Provides abstraction for interstitial and rewarded video ads
+    /// Note: Currently unused - AppLovinManager doesn't implement this interface
     /// </summary>
     public interface IMediationManager
     {

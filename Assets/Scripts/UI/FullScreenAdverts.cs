@@ -12,7 +12,7 @@ public class FullScreenAdverts : MonoBehaviour
     public DefaultAdvertController defaultAd;
     public Button closeButton;
     private SettingsManager settingsManager; // For fullscreen ads on premium :)
-    private bool useIronSource = true; // Toggle between IronSource and default ads
+    private bool useAppLovin = true; // Toggle between AppLovin and default ads
     private bool isShowingAd = false;
     
     // Ad frequency control keys
@@ -28,12 +28,12 @@ public class FullScreenAdverts : MonoBehaviour
         Button btn = closeButton.GetComponent<Button>();
         btn.onClick.AddListener(CloseAdvert);
         
-        // Register IronSource callbacks
-        if (useIronSource && IronSourceManager.Instance != null)
+        // Register AppLovin callbacks
+        if (useAppLovin && AppLovinManager.Instance != null)
         {
-            IronSourceManager.Instance.OnInterstitialAdReady += OnIronSourceAdReady;
-            IronSourceManager.Instance.OnInterstitialAdClosed += OnIronSourceAdClosed;
-            IronSourceManager.Instance.OnInterstitialAdShowFailed += OnIronSourceAdFailed;
+            AppLovinManager.Instance.OnInterstitialAdReady += OnAppLovinAdReady;
+            AppLovinManager.Instance.OnInterstitialAdClosed += OnAppLovinAdClosed;
+            AppLovinManager.Instance.OnInterstitialAdShowFailed += OnAppLovinAdFailed;
         }
     }
     public void CloseAdvert()
@@ -44,10 +44,10 @@ public class FullScreenAdverts : MonoBehaviour
 
     public void OpenAdvert()
     {
-        // Try to show IronSource ad first (if available and not premium)
-        if (useIronSource && ShouldShowAds())
+        // Try to show AppLovin ad first (if available and not premium)
+        if (useAppLovin && ShouldShowAds())
         {
-            TryShowIronSourceAd();
+            TryShowAppLovinAd();
         }
         else
         {
@@ -147,29 +147,29 @@ public class FullScreenAdverts : MonoBehaviour
         }
     }
     
-    private void TryShowIronSourceAd()
+    private void TryShowAppLovinAd()
     {
 #if UNITY_ANDROID || UNITY_EDITOR
-        if (IronSourceManager.Instance != null && IronSourceManager.Instance.IsInterstitialReady())
+        if (AppLovinManager.Instance != null && AppLovinManager.Instance.IsInterstitialReady())
         {
-            Debug.Log("[FullScreenAdverts] Showing IronSource interstitial ad");
+            Debug.Log("[FullScreenAdverts] Showing AppLovin interstitial ad");
             isShowingAd = true;
             
-            // Hide the UI panel since IronSource will show fullscreen
+            // Hide the UI panel since AppLovin will show fullscreen
             gameObject.SetActive(false);
             
             // Show the ad
-            IronSourceManager.Instance.ShowInterstitial();
+            AppLovinManager.Instance.ShowInterstitial();
             
             // Track ad impression with Firebase
             if (FirebaseAnalyticsManager.Instance != null)
             {
-                FirebaseAnalyticsManager.Instance.LogAdImpression("ironsource", "interstitial");
+                FirebaseAnalyticsManager.Instance.LogAdImpression("applovin", "interstitial");
             }
         }
         else
         {
-            Debug.LogWarning("[FullScreenAdverts] IronSource ad not ready, showing default ad");
+            Debug.LogWarning("[FullScreenAdverts] AppLovin ad not ready, showing default ad");
             ShowDefaultAd();
         }
 #else
@@ -183,21 +183,21 @@ public class FullScreenAdverts : MonoBehaviour
         StartPlatformSpecficAds();
     }
     
-    // IronSource callbacks
-    private void OnIronSourceAdReady()
+    // AppLovin callbacks
+    private void OnAppLovinAdReady()
     {
-        Debug.Log("[FullScreenAdverts] IronSource ad ready");
+        Debug.Log("[FullScreenAdverts] AppLovin ad ready");
     }
     
-    private void OnIronSourceAdClosed()
+    private void OnAppLovinAdClosed()
     {
-        Debug.Log("[FullScreenAdverts] IronSource ad closed");
+        Debug.Log("[FullScreenAdverts] AppLovin ad closed");
         isShowingAd = false;
         
         // Track ad completion
         if (FirebaseAnalyticsManager.Instance != null)
         {
-            FirebaseAnalyticsManager.Instance.LogAdClosed("ironsource", "interstitial");
+            FirebaseAnalyticsManager.Instance.LogAdClosed("applovin", "interstitial");
         }
         
         // Resume music if needed
@@ -207,9 +207,9 @@ public class FullScreenAdverts : MonoBehaviour
         }
     }
     
-    private void OnIronSourceAdFailed()
+    private void OnAppLovinAdFailed()
     {
-        Debug.LogWarning("[FullScreenAdverts] IronSource ad failed to show, showing default ad");
+        Debug.LogWarning("[FullScreenAdverts] AppLovin ad failed to show, showing default ad");
         isShowingAd = false;
         ShowDefaultAd();
     }
@@ -298,12 +298,12 @@ public class FullScreenAdverts : MonoBehaviour
     
     private void OnDestroy()
     {
-        // Unregister IronSource callbacks
-        if (useIronSource && IronSourceManager.Instance != null)
+        // Unregister AppLovin callbacks
+        if (useAppLovin && AppLovinManager.Instance != null)
         {
-            IronSourceManager.Instance.OnInterstitialAdReady -= OnIronSourceAdReady;
-            IronSourceManager.Instance.OnInterstitialAdClosed -= OnIronSourceAdClosed;
-            IronSourceManager.Instance.OnInterstitialAdShowFailed -= OnIronSourceAdFailed;
+            AppLovinManager.Instance.OnInterstitialAdReady -= OnAppLovinAdReady;
+            AppLovinManager.Instance.OnInterstitialAdClosed -= OnAppLovinAdClosed;
+            AppLovinManager.Instance.OnInterstitialAdShowFailed -= OnAppLovinAdFailed;
         }
     }
 }

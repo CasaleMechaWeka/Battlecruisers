@@ -7,7 +7,7 @@ using UnityEngine;
 
 /// <summary>
 /// Post-process build script that adds required SKAdNetwork IDs to iOS Info.plist
-/// Required for iOS 14+ ad attribution tracking with Unity Ads, IronSource, and other ad networks
+/// Required for iOS 14+ ad attribution tracking with AppLovin MAX, Unity Ads, and other ad networks
 /// </summary>
 public class iOSSKAdNetworkPostProcess : IPostprocessBuildWithReport
 {
@@ -43,7 +43,7 @@ public class iOSSKAdNetworkPostProcess : IPostprocessBuildWithReport
                 Debug.Log("[SKAdNetwork] Created new SKAdNetworkItems array");
             }
 
-            // List of SKAdNetwork IDs required for Unity Ads, IronSource, and major ad networks
+            // List of SKAdNetwork IDs required for AppLovin MAX, Unity Ads, and major ad networks
             // Updated as of 2024 - check monthly for updates
             string[] skAdNetworkIds = new string[]
             {
@@ -51,7 +51,7 @@ public class iOSSKAdNetworkPostProcess : IPostprocessBuildWithReport
                 "4dzt52r2t5.skadnetwork",
                 "bvpn9ufa9b.skadnetwork",
                 
-                // IronSource & ironSource mediation partners
+                // AppLovin MAX & mediation partners (includes legacy IronSource IDs for compatibility)
                 "su67r6k2v3.skadnetwork", // IronSource
                 "c6k4g5qg8m.skadnetwork", // IronSource
                 "44jx6755aq.skadnetwork", // IronSource

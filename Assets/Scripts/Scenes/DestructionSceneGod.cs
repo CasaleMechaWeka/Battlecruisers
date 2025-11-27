@@ -157,20 +157,20 @@ namespace BattleCruisers.Scenes
                 rewardedAdButton.SetActive(false);
             }
 
-            // Ensure IronSourceManager exists
-            if (IronSourceManager.Instance == null)
+            // Ensure AppLovinManager exists
+            if (AppLovinManager.Instance == null)
             {
-                Debug.LogWarning("[Rewards] IronSourceManager not found, creating one...");
-                GameObject adsObj = new GameObject("IronSourceManager");
-                adsObj.AddComponent<IronSourceManager>();
+                Debug.LogWarning("[Rewards] AppLovinManager not found, creating one...");
+                GameObject adsObj = new GameObject("AppLovinManager");
+                adsObj.AddComponent<AppLovinManager>();
             }
 
             // Register rewarded ad callbacks
-            if (IronSourceManager.Instance != null)
+            if (AppLovinManager.Instance != null)
             {
-                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
-                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
-                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+                AppLovinManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                AppLovinManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                AppLovinManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
             }
 
             // Populate screen:
@@ -817,11 +817,11 @@ namespace BattleCruisers.Scenes
 
         private void ShowRewardedAdOffer(int baseCoins, int baseCredits)
         {
-            if (rewardedAdButton == null || IronSourceManager.Instance == null)
+            if (rewardedAdButton == null || AppLovinManager.Instance == null)
                 return;
 
             // Check if ad is ready
-            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            if (!AppLovinManager.Instance.IsRewardedAdReady())
             {
                 Debug.Log("[Rewards] Rewarded ad not available");
                 return;
@@ -875,19 +875,19 @@ namespace BattleCruisers.Scenes
         /// </summary>
         public void OnWatchRewardedAdButtonClicked()
         {
-            // Ensure IronSourceManager exists (fallback)
-            if (IronSourceManager.Instance == null)
+            // Ensure AppLovinManager exists (fallback)
+            if (AppLovinManager.Instance == null)
             {
-                Debug.LogWarning("[Rewards] IronSourceManager not found, creating one...");
-                GameObject adsObj = new GameObject("IronSourceManager");
-                adsObj.AddComponent<IronSourceManager>();
+                Debug.LogWarning("[Rewards] AppLovinManager not found, creating one...");
+                GameObject adsObj = new GameObject("AppLovinManager");
+                adsObj.AddComponent<AppLovinManager>();
                 
                 // Wait for next frame to let it initialize, then try again
                 StartCoroutine(RetryShowRewardedAdAfterInit());
                 return;
             }
 
-            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            if (!AppLovinManager.Instance.IsRewardedAdReady())
             {
                 Debug.LogWarning("[Rewards] Rewarded ad not ready");
                 
@@ -912,7 +912,7 @@ namespace BattleCruisers.Scenes
             }
 
             // Show the ad
-            IronSourceManager.Instance.ShowRewardedAd("destruction_screen");
+            AppLovinManager.Instance.ShowRewardedAd();
             Debug.Log("[Rewards] Showing rewarded ad");
         }
 
@@ -920,19 +920,19 @@ namespace BattleCruisers.Scenes
         {
             yield return new WaitForSeconds(0.5f);
             
-            if (IronSourceManager.Instance != null)
+            if (AppLovinManager.Instance != null)
             {
                 // Register callbacks
-                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
-                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
-                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+                AppLovinManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                AppLovinManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                AppLovinManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
                 
                 // Try showing ad again
                 OnWatchRewardedAdButtonClicked();
             }
             else
             {
-                Debug.LogError("[Rewards] Failed to create IronSourceManager");
+                Debug.LogError("[Rewards] Failed to create AppLovinManager");
                 if (rewardedAdButton != null)
                 {
                     rewardedAdButton.SetActive(false);
@@ -1011,11 +1011,11 @@ namespace BattleCruisers.Scenes
         private void OnDestroy()
         {
             // Unregister rewarded ad callbacks
-            if (IronSourceManager.Instance != null)
+            if (AppLovinManager.Instance != null)
             {
-                IronSourceManager.Instance.OnRewardedAdRewarded -= OnRewardedAdCompleted;
-                IronSourceManager.Instance.OnRewardedAdClosed -= OnRewardedAdClosed;
-                IronSourceManager.Instance.OnRewardedAdShowFailed -= OnRewardedAdFailed;
+                AppLovinManager.Instance.OnRewardedAdRewarded -= OnRewardedAdCompleted;
+                AppLovinManager.Instance.OnRewardedAdClosed -= OnRewardedAdClosed;
+                AppLovinManager.Instance.OnRewardedAdShowFailed -= OnRewardedAdFailed;
             }
         }
     }

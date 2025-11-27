@@ -68,6 +68,11 @@ namespace BattleCruisers.Ads
 
         private void InitializeAppLovin()
         {
+            #if DISABLE_ADS
+            Debug.Log("[AppLovin] DISABLE_ADS is defined - AppLovin SDK will not be initialized");
+            return;
+            #endif
+
             if (string.IsNullOrEmpty(sdkKey) || sdkKey == "YOUR_SDK_KEY")
             {
                 Debug.LogError("[AppLovin] ⚠️ SDK Key not set! Please set it in the Inspector.");
@@ -83,6 +88,7 @@ namespace BattleCruisers.Ads
                 Invoke(nameof(SimulateInitSuccess), 1f);
 
                 #elif UNITY_ANDROID || UNITY_IOS
+                #if !DISABLE_ADS
                 // Register SDK initialization callback BEFORE initialization
                 MaxSdkCallbacks.OnSdkInitializedEvent += OnSdkInitialized;
 
@@ -99,6 +105,9 @@ namespace BattleCruisers.Ads
                 // MaxSdk.SetUserId("USER_ID");
 
                 LogDebug("✅ AppLovin MAX SDK initialization started");
+                #else
+                Debug.LogWarning("[AppLovin] DISABLE_ADS is defined - AppLovin SDK will not be initialized");
+                #endif
 
                 #else
                 Debug.LogWarning("[AppLovin] SDK only works on Android/iOS builds");
@@ -137,7 +146,9 @@ namespace BattleCruisers.Ads
                 #if UNITY_EDITOR
                 Invoke(nameof(SimulateInterstitialReady), 1f);
                 #elif UNITY_ANDROID || UNITY_IOS
+                #if !DISABLE_ADS
                 MaxSdk.LoadInterstitial(interstitialAdUnitId);
+                #endif
                 #endif
             }
             catch (Exception ex)
@@ -153,7 +164,11 @@ namespace BattleCruisers.Ads
             #if UNITY_EDITOR
             return true; // Always ready in editor
             #elif UNITY_ANDROID || UNITY_IOS
+            #if !DISABLE_ADS
             return MaxSdk.IsInterstitialReady(interstitialAdUnitId);
+            #else
+            return false;
+            #endif
             #else
             return false;
             #endif
@@ -183,7 +198,9 @@ namespace BattleCruisers.Ads
                 #if UNITY_EDITOR
                 SimulateInterstitialCompleted();
                 #elif UNITY_ANDROID || UNITY_IOS
+                #if !DISABLE_ADS
                 MaxSdk.ShowInterstitial(interstitialAdUnitId);
+                #endif
                 #endif
             }
             catch (Exception ex)
@@ -205,7 +222,9 @@ namespace BattleCruisers.Ads
             #if UNITY_EDITOR
             // Already simulated in Init
             #elif UNITY_ANDROID || UNITY_IOS
+            #if !DISABLE_ADS
             MaxSdk.LoadRewardedAd(rewardedAdUnitId);
+            #endif
             #endif
         }
 
@@ -216,7 +235,11 @@ namespace BattleCruisers.Ads
             #if UNITY_EDITOR
             return true; // Always ready in editor
             #elif UNITY_ANDROID || UNITY_IOS
+            #if !DISABLE_ADS
             return MaxSdk.IsRewardedAdReady(rewardedAdUnitId);
+            #else
+            return false;
+            #endif
             #else
             return false;
             #endif
@@ -245,7 +268,9 @@ namespace BattleCruisers.Ads
                 #if UNITY_EDITOR
                 SimulateRewardedAdCompleted();
                 #elif UNITY_ANDROID || UNITY_IOS
+                #if !DISABLE_ADS
                 MaxSdk.ShowRewardedAd(rewardedAdUnitId);
+                #endif
                 #endif
             }
             catch (Exception ex)
@@ -259,7 +284,7 @@ namespace BattleCruisers.Ads
 
         #region AppLovin MAX Callbacks (Android/iOS Only)
 
-#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+#if !DISABLE_ADS && !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
         private void RegisterInterstitialCallbacks()
         {
             // Interstitial Ad Loaded
@@ -362,7 +387,7 @@ namespace BattleCruisers.Ads
 
         private void RegisterRevenueTrackingCallbacks()
         {
-#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+#if !DISABLE_ADS && !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
             try
             {
                 // Track revenue for all ad formats

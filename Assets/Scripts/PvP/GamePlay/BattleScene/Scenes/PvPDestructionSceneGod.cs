@@ -169,20 +169,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
                 rewardedAdButton.SetActive(false);
             }
 
-            // Ensure IronSourceManager exists
-            if (IronSourceManager.Instance == null)
+            // Ensure AppLovinManager exists
+            if (AppLovinManager.Instance == null)
             {
-                Debug.LogWarning("[PvP Rewards] IronSourceManager not found, creating one...");
-                GameObject adsObj = new GameObject("IronSourceManager");
-                adsObj.AddComponent<IronSourceManager>();
+                Debug.LogWarning("[PvP Rewards] AppLovinManager not found, creating one...");
+                GameObject adsObj = new GameObject("AppLovinManager");
+                adsObj.AddComponent<AppLovinManager>();
             }
 
             // Register rewarded ad callbacks
-            if (IronSourceManager.Instance != null)
+            if (AppLovinManager.Instance != null)
             {
-                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
-                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
-                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+                AppLovinManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                AppLovinManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                AppLovinManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
             }
 
             StaticData.GameConfigs.TryGetValue("scoredivider", out scoreDivider);
@@ -893,11 +893,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private void ShowRewardedAdOffer(int baseCoins, int baseCredits)
         {
-            if (rewardedAdButton == null || IronSourceManager.Instance == null)
+            if (rewardedAdButton == null || AppLovinManager.Instance == null)
                 return;
 
             // Check if ad is ready
-            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            if (!AppLovinManager.Instance.IsRewardedAdReady())
             {
                 Debug.Log("[PvP Rewards] Rewarded ad not available");
                 return;
@@ -951,19 +951,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         /// </summary>
         public void OnWatchRewardedAdButtonClicked()
         {
-            // Ensure IronSourceManager exists (fallback)
-            if (IronSourceManager.Instance == null)
+            // Ensure AppLovinManager exists (fallback)
+            if (AppLovinManager.Instance == null)
             {
-                Debug.LogWarning("[PvP Rewards] IronSourceManager not found, creating one...");
-                GameObject adsObj = new GameObject("IronSourceManager");
-                adsObj.AddComponent<IronSourceManager>();
+                Debug.LogWarning("[PvP Rewards] AppLovinManager not found, creating one...");
+                GameObject adsObj = new GameObject("AppLovinManager");
+                adsObj.AddComponent<AppLovinManager>();
 
                 // Wait for next frame to let it initialize, then try again
                 StartCoroutine(RetryShowRewardedAdAfterInit());
                 return;
             }
 
-            if (!IronSourceManager.Instance.IsRewardedAdReady())
+            if (!AppLovinManager.Instance.IsRewardedAdReady())
             {
                 Debug.LogWarning("[PvP Rewards] Rewarded ad not ready");
 
@@ -988,7 +988,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             // Show the ad
-            IronSourceManager.Instance.ShowRewardedAd("pvp_destruction_screen");
+            AppLovinManager.Instance.ShowRewardedAd();
             Debug.Log("[PvP Rewards] Showing rewarded ad");
         }
 
@@ -996,19 +996,19 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         {
             yield return new WaitForSeconds(0.5f);
 
-            if (IronSourceManager.Instance != null)
+            if (AppLovinManager.Instance != null)
             {
                 // Register callbacks
-                IronSourceManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
-                IronSourceManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
-                IronSourceManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
+                AppLovinManager.Instance.OnRewardedAdRewarded += OnRewardedAdCompleted;
+                AppLovinManager.Instance.OnRewardedAdClosed += OnRewardedAdClosed;
+                AppLovinManager.Instance.OnRewardedAdShowFailed += OnRewardedAdFailed;
 
                 // Try showing ad again
                 OnWatchRewardedAdButtonClicked();
             }
             else
             {
-                Debug.LogError("[PvP Rewards] Failed to create IronSourceManager");
+                Debug.LogError("[PvP Rewards] Failed to create AppLovinManager");
                 if (rewardedAdButton != null)
                 {
                     rewardedAdButton.SetActive(false);
@@ -1068,11 +1068,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         private void OnDestroy()
         {
             // Unregister rewarded ad callbacks
-            if (IronSourceManager.Instance != null)
+            if (AppLovinManager.Instance != null)
             {
-                IronSourceManager.Instance.OnRewardedAdRewarded -= OnRewardedAdCompleted;
-                IronSourceManager.Instance.OnRewardedAdClosed -= OnRewardedAdClosed;
-                IronSourceManager.Instance.OnRewardedAdShowFailed -= OnRewardedAdFailed;
+                AppLovinManager.Instance.OnRewardedAdRewarded -= OnRewardedAdCompleted;
+                AppLovinManager.Instance.OnRewardedAdClosed -= OnRewardedAdClosed;
+                AppLovinManager.Instance.OnRewardedAdShowFailed -= OnRewardedAdFailed;
             }
         }
     }

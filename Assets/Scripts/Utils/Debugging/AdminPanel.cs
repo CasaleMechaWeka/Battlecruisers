@@ -267,7 +267,7 @@ namespace BattleCruisers.Utils.Debugging
         }
 
         /// <summary>
-        /// Force show an ad immediately (for testing IronSource integration)
+        /// Force show an ad immediately (for testing AppLovin MAX integration)
         /// </summary>
         public void ForceShowAd()
         {

@@ -332,7 +332,7 @@ namespace BattleCruisers.Ads
             LogEvent("rewarded_ad_started", new Dictionary<string, object>
             {
                 { "placement", placement },
-                { "ad_platform", "ironsource" },
+                { "ad_platform", "applovin" },
                 { "ad_type", "rewarded" }
             });
         }
@@ -342,7 +342,7 @@ namespace BattleCruisers.Ads
             LogEvent("rewarded_ad_completed", new Dictionary<string, object>
             {
                 { "placement", placement },
-                { "ad_platform", "ironsource" },
+                { "ad_platform", "applovin" },
                 { "ad_type", "rewarded" },
                 { "coins_earned", coinsEarned },
                 { "credits_earned", creditsEarned },

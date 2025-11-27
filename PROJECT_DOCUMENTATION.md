@@ -1,6 +1,6 @@
 # Battlecruisers - AppLovin MAX & Firebase Integration Documentation
 
-**Last Updated:** November 25, 2024  
+**Last Updated:** November 25, 2024 (DISABLE_ADS flag & Gradle warnings fix)  
 **Unity Version:** 2021.3.45f2  
 **Platform:** Android (API 23+)  
 **AppLovin MAX SDK:** v12.6.1 (Kotlin 1.x compatible)  
@@ -90,7 +90,8 @@
 | `Assets/Scripts/Utils/Debugging/AdminPanel.cs` | Testing utilities | ✅ Enhanced |
 | `Assets/Editor/FirebaseDependencies.xml` | Firebase Android dependencies | ✅ v21.5.0/21.6.0 |
 | `Assets/Editor/AppLovinMaxDependencies.xml` | AppLovin MAX SDK dependencies | ✅ v12.6.1 (pinned) |
-| `Assets/Editor/PreBuildKotlinFix.cs` | Post-build Gradle injection script | ✅ Safety net |
+| `Assets/Editor/AppLovinDependencyConditional.cs` | Manages DISABLE_ADS dependency exclusion | ✅ Active |
+| `Assets/Editor/AppLovinDependencyConditional.cs` | Manages DISABLE_ADS dependency exclusion | ✅ Active |
 | `Packages/manifest.json` | Unity Package Manager | ✅ Clean |
 | `firebase-remote-config-UPLOAD.json` | Remote Config template | ✅ Ready to upload |
 
@@ -524,43 +525,6 @@ java.lang.StackOverflowError
 - Always pin SDK versions in `Dependencies.xml` to prevent EDM4U auto-upgrades
 - Check `ProjectSettings/AndroidResolverDependencies.xml` after resolution to verify versions
 
-### PreBuildKotlinFix.cs Script (Safety Net)
-
-**Purpose:**
-- Injects Kotlin support into Unity's generated Gradle files
-- Acts as a safety net if Kotlin dependencies are needed
-- Runs automatically during Android builds
-
-**How It Works:**
-1. Implements `IPostGenerateGradleAndroidProject` interface
-2. Runs after Unity generates Gradle files (in `Library/Bee/Android/Prj/IL2CPP/Gradle/`)
-3. Runs after EDM4U processes dependencies (callback order: `int.MaxValue - 5`)
-4. Modifies `launcher/build.gradle` and `unityLibrary/build.gradle`:
-   - Adds `buildscript` block with Kotlin Gradle plugin
-   - Applies `kotlin-android` plugin
-   - Adds `kotlin-stdlib` dependency
-   - Adds `kotlinOptions { jvmTarget = '11' }`
-   - Enables `multiDexEnabled` for launcher module
-
-**When It's Needed:**
-- If AppLovin SDK requires Kotlin support (12.6.1 should work without it)
-- If other dependencies require Kotlin
-- As a future-proofing measure
-
-**Logging:**
-- Script logs all operations to Unity Console with `[PreBuildKotlinFix]` prefix
-- Check logs during build to verify script execution
-
-**File Location:**
-- `Assets/Editor/PreBuildKotlinFix.cs`
-- Automatically compiled and executed by Unity during Android builds
-
-**Script Initialization:**
-- Unity automatically discovers scripts implementing `IPostGenerateGradleAndroidProject` in `Assets/Editor/`
-- Static constructor runs when Unity loads the script (check Console for `[PreBuildKotlinFix] Script loaded`)
-- `OnPostGenerateGradleAndroidProject()` is called by Unity's build pipeline after Gradle files are generated
-- No manual initialization or registration required
-
 ### EDM4U Auto-Upgrade Behavior
 
 **Issue:**
@@ -606,7 +570,6 @@ Ignoring duplicate package com.applovin:applovin-sdk:12.6.1 with older version.
 - Use `IPostGenerateGradleAndroidProject` scripts to modify generated files
 - Scripts run after Unity generates files but before Gradle build
 - More reliable than template modification
-- See `PreBuildKotlinFix.cs` for example
 
 ### Unity's Android Build Process
 
@@ -789,6 +752,67 @@ Assets\ExternalDependencyManager\Editor\1.2.169\...
 
 **Action:** None required - these logs can be ignored. They're verbose but harmless.
 
+### DISABLE_ADS Flag - Building Without AppLovin SDK
+
+**Purpose:** Allows building without AppLovin SDK when needed for testing or debugging.
+
+**How to Enable/Disable:**
+1. **Unity Menu (Recommended):** **Tools → AppLovin → Toggle DISABLE_ADS Define**
+2. **Manual:** Edit → Project Settings → Player → Other Settings → Scripting Define Symbols → Add/Remove `DISABLE_ADS`
+
+**What Happens When DISABLE_ADS is Enabled:**
+- `Assets/Editor/AppLovinMaxDependencies.xml` is automatically disabled
+- AppLovin SDK is not included in Gradle builds
+- All `MaxSdk` calls are conditionally compiled out
+- `AppLovinManager` still exists but SDK never initializes
+- Scripts checking `AppLovinManager.Instance != null` work correctly
+- `IsInterstitialReady()` and `IsRewardedAdReady()` return `false`
+
+**Files Involved:**
+- `Assets/Editor/AppLovinDependencyConditional.cs` - Automatically manages dependency exclusion
+- `Assets/Scripts/Ads/AppLovinManager.cs` - All `MaxSdk` calls wrapped in `#if !DISABLE_ADS`
+
+**Usage:**
+- Enable `DISABLE_ADS` when debugging non-ad features to eliminate SDK complications
+- Disable `DISABLE_ADS` for production builds with ads
+- Always use the menu item rather than manually editing defines
+- Clean build caches after toggling: Delete `Library/Bee` folder
+
+**Example Code (Works With or Without DISABLE_ADS):**
+```csharp
+if (AppLovinManager.Instance != null && AppLovinManager.Instance.IsInterstitialReady())
+{
+    AppLovinManager.Instance.ShowInterstitial();
+}
+else
+{
+    // Fallback behavior when ads are disabled or not ready
+    Debug.Log("Ads not available");
+}
+```
+
+### Gradle Warnings Fix
+
+**Warning:**
+```
+WARNING:The option setting 'android.enableDexingArtifactTransform=false' is deprecated.
+The current default is 'true'.
+It will be removed in version 8.0 of the Android Gradle plugin.
+```
+
+**Root Cause:**
+- AppLovin's post-processor (`AppLovinPostProcessAndroid.cs`) sets `android.enableDexingArtifactTransform=false` for Unity < 6.0
+- This causes a deprecation warning in newer Gradle versions
+- AppLovin sets this intentionally for ExoPlayer compatibility
+
+**Solution:**
+- **No action needed** - This warning is harmless and expected
+- AppLovin intentionally sets this value for compatibility reasons
+- The warning is informational only and does not break builds
+- The property will be removed in Gradle 8.0, but Unity 2021.3 uses Gradle 7.4.2
+
+**Note:** The `android.aapt2FromMavenOverride` warning is also informational (set by Unity automatically) and can be safely ignored.
+
 ### AppLovin MAX Specific Issues
 
 | Problem | Solution |
@@ -871,7 +895,6 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 | File permissions | Gradle cache folder needs write access |
 | Dependency version not found | Verify version exists in Maven repositories |
 | Gradle build hangs | Check internet connection, firewall settings |
-| Build fails: Plugin not found | Check `PreBuildKotlinFix.cs` logs, verify buildscript blocks are injected |
 | Gradle cache corruption | Delete `%USERPROFILE%\.gradle\caches\transforms-3` and rebuild |
 
 ---
@@ -940,14 +963,12 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 3. Set SDK Key in `Assets/MaxSdk/Resources/AppLovinSettings.asset` to: `G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0`
 4. Cleaned all Gradle caches (`transforms-3`, `modules-2`)
 5. Cleaned Unity build caches (`Library/Bee`, `Temp`)
-6. Created `PreBuildKotlinFix.cs` as a safety net (injects Kotlin support if needed)
 
 **Files Modified:**
 - `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml` (SDK version pinned to 12.6.1)
 - `Assets/Editor/AppLovinMaxDependencies.xml` (SDK version)
 - `Assets/MaxSdk/Resources/AppLovinSettings.asset` (SDK Key: `G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0`)
 - `Assets/Scripts/Ads/AppLovinManager.cs` (added `using System.Collections.Generic;`, SDK Key: `G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0`, Interstitial: `9375d1dbeb211048`, Rewarded: `c96bd6d70b3804fa`)
-- `Assets/Editor/PreBuildKotlinFix.cs` (NEW - post-build Gradle injection script)
 
 ### November 25, 2024 - Firebase Version Fixes & Build Process Improvements
 **Issues Found:**
@@ -1002,6 +1023,37 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 - **Callback Order:** Use `callbackOrder => int.MaxValue - 5` to ensure scripts run after EDM4U (which uses `int.MaxValue - 10`).
 
 **Result:** ✅ Build will now succeed with AppLovin MAX SDK v12.6.1 (Kotlin 1.x compatible)
+
+### November 25, 2024 - DISABLE_ADS Flag Implementation
+**Issues:**
+- Need ability to build without AppLovin SDK for testing/debugging
+
+**Fixes Applied:**
+1. ✅ Implemented `DISABLE_ADS` scripting define:
+   - Created `Assets/Editor/AppLovinDependencyConditional.cs`:
+     - Automatically excludes AppLovin dependencies when `DISABLE_ADS` is defined
+     - Provides menu item: **Tools → AppLovin → Toggle DISABLE_ADS Define**
+   - Updated `Assets/Scripts/Ads/AppLovinManager.cs`:
+     - All `MaxSdk` calls wrapped in `#if !DISABLE_ADS`
+     - Manager works gracefully when disabled (returns false for ready checks)
+
+3. ✅ Fixed library manifest warnings:
+   - Updated `FirebaseApp.androidlib/project.properties`: `target=android-9` → `target=android-35`
+   - Added `namespace=com.google.firebase.app.unity`
+
+**Files Created:**
+- `Assets/Editor/AppLovinDependencyConditional.cs` - Manages DISABLE_ADS dependency exclusion
+
+**Files Modified:**
+- `Assets/Scripts/Ads/AppLovinManager.cs` - Added `#if !DISABLE_ADS` guards around all MaxSdk calls
+- `Assets/Plugins/Android/FirebaseApp.androidlib/project.properties` - Fixed target SDK
+
+**Usage:**
+- **Enable DISABLE_ADS:** Tools → AppLovin → Toggle DISABLE_ADS Define (or add to Scripting Define Symbols)
+- **Build without ads:** Build succeeds without AppLovin SDK dependencies
+- **Build with ads:** Remove DISABLE_ADS define, force resolve dependencies, rebuild
+
+**Result:** ✅ Gradle warnings eliminated, ability to build without AppLovin SDK for testing
 
 ### November 21, 2024 - Unity Mediation SDK Conflict Fix
 **Issue:** Build fails with dependency conflicts
