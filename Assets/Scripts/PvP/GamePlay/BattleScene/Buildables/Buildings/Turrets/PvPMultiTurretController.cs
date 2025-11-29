@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
-    public abstract class PvPMultiTurretController : PvPBuilding
+    public class PvPMultiTurretController : PvPBuilding
     {
         private IAnimation _barrelAnimation;
         protected IPvPBarrelWrapper[] _barrelWrappers;

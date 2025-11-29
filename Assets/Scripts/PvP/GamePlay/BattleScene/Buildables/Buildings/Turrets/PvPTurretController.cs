@@ -8,12 +8,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
-    public abstract class PvPTurretController : PvPBuilding
+    public class PvPTurretController : PvPBuilding
     {
         private IAnimation _barrelAnimation;
         protected IPvPBarrelWrapper _barrelWrapper;
 
-        protected virtual bool HasSingleSprite => false;
+        public bool HasSingleSprite;
 
         public override bool IsBoostable => true;
 
