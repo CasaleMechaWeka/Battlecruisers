@@ -15,7 +15,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Effects.Smoke;
 using BattleCruisers.Buildables;
@@ -28,6 +27,7 @@ using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.UI.Sound.Players;
 using Unity.Netcode;
+using BattleCruisers.Data.Static;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables
 {
@@ -92,7 +92,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public IBoostable HealthBoostable { get; private set; }
         public override Vector2 Size => _buildableProgress.FillableImage.sprite.bounds.size;
         public float CostInDroneS => NumOfDronesRequired * BuildTimeInS;
-        protected virtual PrioritisedSoundKey ConstructionCompletedSoundKey => null;
+        public PrioritisedSoundKeys.CompletedSound CompletedSound = PrioritisedSoundKeys.CompletedSound.None;
+
         public IPvPCruiser ParentCruiser { get; set; }
         public IPvPCruiser EnemyCruiser { get; private set; }
         protected virtual bool ShowSmokeWhenDestroyed => false;
@@ -103,6 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private IList<IDamageCapability> _damageCapabilities;
         public ReadOnlyCollection<IDamageCapability> DamageCapabilities { get; private set; }
+        public List<BoostType> BoostTypes = new List<BoostType>();
 
         private IDroneConsumer _droneConsumer;
         public IDroneConsumer DroneConsumer
@@ -152,14 +154,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public Command ToggleDroneConsumerFocusCommand { get; private set; }
         public bool IsInitialised => BuildProgressBoostable != null;
 
-
-        protected virtual ObservableCollection<IBoostProvider> TurretFireRateBoostProviders
-        {
-            get
-            {
-                return _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders;
-            }
-        }
+        [HideInInspector] public List<ObservableCollection<IBoostProvider>> TurretFireRateBoostProviders = new List<ObservableCollection<IBoostProvider>>();
 
         public override Color Color
         {
@@ -369,13 +364,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ParentCruiser = parentCruiser;
             EnemyCruiser = enemyCruiser;
             _cruiserSpecificFactories = cruiserSpecificFactories;
+
+            foreach (BoostType boostType in BoostTypes)
+            {
+                if ((int)boostType >= 200 && (int)boostType < 300)   //fire rate boosts
+                    TurretFireRateBoostProviders.Add(_cruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
+            }
+
             _droneConsumerProvider = ParentCruiser.DroneConsumerProvider;
             Faction = ParentCruiser.Faction;
             CallRpc_SyncFaction(Faction);
             _aircraftProvider = _cruiserSpecificFactories.AircraftProvider;
             _localBoosterBoostableGroup = new BoostableGroup();
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(HealthBoostable);
         }
 
         /// <summary>
@@ -414,8 +416,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             // Apply specialized buildable modifiers BEFORE creating boost groups
             ApplySpecializedModifiers(_cruiserSpecificFactories.GlobalBoostProviders);
             
-            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, BuildProgressBoostable);
-            _healthBoostableGroup = CreateHealthBoostableGroup(_cruiserSpecificFactories.GlobalBoostProviders, HealthBoostable);
+            _buildRateBoostableGroup = CreateBuildRateBoostableGroup(BuildProgressBoostable);
+            _healthBoostableGroup = CreateHealthBoostableGroup(HealthBoostable);
             _healthBoostableGroup.BoostChanged += HealthBoostChanged;
             HealthBoostChanged(this, EventArgs.Empty);
         }
@@ -435,13 +437,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public void Activate(TPvPActivationArgs activationArgs, Faction faction) { }
 
-        private IBoostableGroup CreateHealthBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable healthBoostable)
+        private IBoostableGroup CreateHealthBoostableGroup(IBoostable healthBoostable)
         {
             IBoostableGroup healthBoostableGroup = new BoostableGroup();
             healthBoostableGroup.AddBoostable(healthBoostable);
 
             IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
-            AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
+            
+            foreach (BoostType boostType in BoostTypes)
+                if ((int)boostType >= 300 && (int)boostType < 400)  //health boosts
+                    healthBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
 
             foreach (ObservableCollection<IBoostProvider> healthBoostProviders in healthBoostProvidersList)
             {
@@ -451,13 +456,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return healthBoostableGroup;
         }
 
-        private IBoostableGroup CreateBuildRateBoostableGroup(GlobalBoostProviders globalBoostProviders, IBoostable buildProgressBoostable)
+        private IBoostableGroup CreateBuildRateBoostableGroup(IBoostable buildProgressBoostable)
         {
             IBoostableGroup buildRateBoostableGroup = new BoostableGroup();
             buildRateBoostableGroup.AddBoostable(buildProgressBoostable);
 
             IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList = new List<ObservableCollection<IBoostProvider>>();
-            AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
+            
+            foreach (BoostType boostType in BoostTypes)
+                if ((int)boostType >= 100 && (int)boostType < 200)  //build rate boosts
+                    buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
 
             foreach (ObservableCollection<IBoostProvider> buildRateBoostProviders in buildRateBoostProvidersList)
             {
@@ -465,25 +473,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
 
             return buildRateBoostableGroup;
-        }
-
-        protected virtual void AddHealthBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
-        {
-            Logging.Log(Tags.BOOST, this);
-        }
-
-        /// <summary>
-        /// To allow multiple boost provider sources.  Eg, for the ShieldGenerator:
-        /// + Tacticals => Boost from Trident
-        /// + Shields   => Boost from Raptor
-        /// </summary>
-        protected virtual void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            Logging.Log(Tags.BOOST, this);
         }
 
         private void ApplySpecializedModifiers(GlobalBoostProviders globalBoostProviders)
@@ -640,8 +629,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             CleanUpDroneConsumer();
             EnableRenderers(true);
             BuildableState = PvPBuildableState.Completed;
-            if (ConstructionCompletedSoundKey != null)
-                PlayBuildableConstructionCompletedSound();
+            PlayBuildableConstructionCompletedSound();
 
             CompletedBuildable?.Invoke(this, EventArgs.Empty);
             OnCompletedBuildableEvent();
@@ -680,10 +668,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual void PlayBuildableConstructionCompletedSound()
         {
-            if (ConstructionCompletedSoundKey != null)
+            if (CompletedSound != PrioritisedSoundKeys.CompletedSound.None)
             {
                 if (IsClient && IsOwner)
-                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.PlaySound(ConstructionCompletedSoundKey);
+                    PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.PlaySound(PrioritisedSoundKeys.Completed.CompletedSoundToKey(CompletedSound));
             }
         }
 

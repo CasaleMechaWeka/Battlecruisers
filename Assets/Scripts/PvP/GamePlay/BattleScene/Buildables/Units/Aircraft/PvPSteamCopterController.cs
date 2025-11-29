@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Buildables.Units.Aircraft;
@@ -109,7 +108,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 base.OnBuildableCompleted();
                 SetupTargetDetection();
-                _barrelWrapper.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.PneumaticSlug);
+                _barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                 List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {

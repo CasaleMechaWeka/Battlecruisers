@@ -1,5 +1,3 @@
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
@@ -9,7 +7,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleS
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetDetectors;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using BattleCruisers.Utils;
@@ -149,14 +146,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _movementTargetProcessor = SetupTargetProcessorWrapper();
             _movementDecider = SetupMovementDecider(_targetProcessorWrapper.InRangeTargetFinder);
             _movementTargetProcessor.AddTargetConsumer(_movementDecider);
-        }
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.ShipProviders);
         }
 
         private ITargetProcessor SetupTargetProcessorWrapper()

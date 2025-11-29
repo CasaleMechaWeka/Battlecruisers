@@ -1,5 +1,3 @@
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
@@ -8,13 +6,10 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
@@ -38,17 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private const float SILO_HALVES_ROTATE_SPEED_IN_M_PER_S = 15;
         private const float SILO_TARGET_ANGLE_IN_DEGREES = 45;
         private static Vector3 NUKE_SPAWN_POSITION_ADJUSTMENT = new Vector3(0, -0.3f, 0);
-
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
         public override TargetValue TargetValue => TargetValue.High;
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
-        }
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {

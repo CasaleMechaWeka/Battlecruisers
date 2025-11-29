@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
@@ -10,15 +9,12 @@ using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Common.Click;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Buildables;
-
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Cruisers.Drones;
@@ -317,21 +313,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             if (!IsHost)
                 PlayBuildableConstructionCompletedSound();
-        }
-
-        protected override void AddHealthBoostProviders(GlobalBoostProviders globalBoostProviders, IList<ObservableCollection<IBoostProvider>> healthBoostProvidersList)
-        {
-            base.AddHealthBoostProviders(globalBoostProviders, healthBoostProvidersList);
-            healthBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingHealth.AllBuildingsProviders);
-        }
-
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.AllBuildingsProviders);
         }
 
         protected override void OnDestroyedEvent()

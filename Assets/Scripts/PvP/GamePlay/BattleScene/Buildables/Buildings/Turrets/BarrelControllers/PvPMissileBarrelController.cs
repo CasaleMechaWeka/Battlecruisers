@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.DataStrctures;
@@ -34,7 +35,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             foreach (PvPMissileSpawner missileSpawner in _missileSpawners.Items)
             {
-                await missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
+                await missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound));
             }
         }
 

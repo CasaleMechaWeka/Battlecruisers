@@ -1,6 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
@@ -14,13 +12,10 @@ using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Targets.TargetTrackers;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Buildables.Units.Aircraft;
@@ -105,14 +100,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _inRangeMovementController = new FollowingXAxisMovementController(rigidBody, inRangeVelocityProvider);
         }
 
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
-        }
-
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
@@ -131,21 +118,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 foreach (var barrelWrapper in barrelWrappers)
                 {
-                    SoundKey soundKey;
-                    switch (barrelWrapper.firingSoundKey)
-                    {
-                        case "AttackBoat":
-                            soundKey = SoundKeys.Firing.AttackBoat;
-                            break;
-                        case "Missile":
-                            soundKey = SoundKeys.Firing.Missile;
-                            break;
-                        // Add more cases for other sound keys as needed
-                        default:
-                            soundKey = SoundKeys.Firing.AttackBoat; // default sound key if no match is found
-                            break;
-                    }
-                    barrelWrapper.Initialise(this, _cruiserSpecificFactories, soundKey);
+                    barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                     barrelWrapper.ApplyVariantStats(this);
                 }
 

@@ -1,5 +1,3 @@
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
@@ -9,12 +7,9 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Utils;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
@@ -103,14 +98,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnShipCompleted();
         }
 
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
-        }
-
         public override float OptimalArmamentRangeInM
         {
             get
@@ -118,8 +105,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return laser.RangeInM;
             }
         }
-
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Ultra;
 
         protected override IList<IPvPBarrelWrapper> GetTurrets()
         {

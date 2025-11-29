@@ -1,10 +1,6 @@
-using BattleCruisers.Data.Static;
-using BattleCruisers.UI.Sound;
-
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets
 {
     public class PvPIonCannon : PvPOffenseTurret
     {
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Railgun;
     }
 }

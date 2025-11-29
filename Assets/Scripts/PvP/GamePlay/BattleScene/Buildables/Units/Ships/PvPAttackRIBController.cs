@@ -1,4 +1,3 @@
-using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
@@ -26,8 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override void InitialiseTurrets()
         {
             AddExtraFriendDetectionRange(1);
-            ak1.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
-            ak2.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.AttackBoat);
+            ak1.Initialise(this, _cruiserSpecificFactories);
+            ak2.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override List<SpriteRenderer> GetNonTurretRenderers()

@@ -1,14 +1,8 @@
-using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
-using BattleCruisers.UI.Sound;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Buildables;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields
@@ -16,19 +10,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     public class PvPUltraShieldGenerator : PvPBuilding
     {
         private PvPShieldController _shieldController;
-
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Shields;
         public override TargetValue TargetValue => TargetValue.Medium;
         public override bool IsBoostable => true;
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.ShieldsProviders);
-            buildRateBoostProvidersList.Add(_cruiserSpecificFactories.GlobalBoostProviders.BuildingBuildRate.UltrasProviders);
-        }
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {

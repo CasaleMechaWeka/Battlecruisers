@@ -17,7 +17,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fact
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using System.Collections.Generic;
@@ -130,9 +129,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         public void Initialise(
             IPvPBuildable parent,
             PvPCruiserSpecificFactories cruiserSpecificFactories,
-            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent, cruiserSpecificFactories);
@@ -153,9 +151,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         parent,
                         targetFilter,
                         angleCalculator,
-                        firingSound,
                         localBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        globalFireRateBoostProviders ?? cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
+                        globalFireRateBoostProviders ?? new List<ObservableCollection<IBoostProvider>>() { cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders },
                         barrelFiringAnimation ?? GetBarrelAnimation());
                 InitialiseBarrelController(barrel, barrelArgs);
             }
@@ -179,7 +176,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by client
         public void Initialise(
             IPvPBuildable parent,
-            SoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null)
         {
             PvPHelper.AssertIsNotNull(parent);
@@ -190,9 +186,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 IPvPBarrelControllerArgs barrelArgs
                     = CreateBarrelControllerArgs(
-                        barrel,
                         parent,
-                        firingSound,
                         barrelFiringAnimation ?? GetBarrelAnimation());
                 InitialiseBarrelController_PvPClient(barrel, barrelArgs);
             }
@@ -206,9 +200,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IPvPBuildable parent,
             ITargetFilter targetFilter,
             IAngleCalculator angleCalculator,
-            SoundKey firingSound,
             ObservableCollection<IBoostProvider> localBoostProviders,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProvider,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders,
             IAnimation barrelFiringAnimation)
         {
             IUpdater updater = ChooseUpdater(PvPFactoryProvider.UpdaterProvider);
@@ -225,22 +218,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _cruiserSpecificFactories,
                 parent,
                 localBoostProviders,
-                globalFireRateBoostProvider,
+                globalFireRateBoostProviders,
                 _parent.EnemyCruiser,
-                firingSound,
                 barrelFiringAnimation);
         }
 
         // should be called by Client
         private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
-            IBarrelController barrel,
             IPvPBuildable parent,
-            SoundKey firingSound,
             IAnimation barrelFiringAnimation)
         {
             return new PvPBarrelControllerArgs(
                 parent,
-                firingSound,
                 barrelFiringAnimation);
         }
 

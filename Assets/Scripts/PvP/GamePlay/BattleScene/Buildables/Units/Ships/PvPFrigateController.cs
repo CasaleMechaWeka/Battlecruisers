@@ -1,4 +1,3 @@
-using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Utils;
@@ -50,10 +49,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void InitialiseTurrets()
         {
-            _directFireAntiSea.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
-            _mortar.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+            _directFireAntiSea.Initialise(this, _cruiserSpecificFactories);
+            _mortar.Initialise(this, _cruiserSpecificFactories);
             //_directFireAntiAir.Initialise(this, _factoryProvider, _cruiserSpecificFactories, SoundKeys.Firing.AntiAir);
-            _samSite.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.Missile);
+            _samSite.Initialise(this, _cruiserSpecificFactories);
         }
 
         protected override void OnShipCompleted()

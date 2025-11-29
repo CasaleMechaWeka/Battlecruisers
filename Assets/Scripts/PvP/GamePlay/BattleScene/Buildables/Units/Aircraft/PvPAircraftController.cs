@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
@@ -15,7 +14,6 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Seabed;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -172,14 +170,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted_PvPClient();
             ActiveMovementController = PatrollingMovementController;
-        }
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.AircraftProviders);
         }
 
         protected abstract IList<IPatrolPoint> GetPatrolPoints();

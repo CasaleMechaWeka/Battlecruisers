@@ -1,7 +1,6 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
@@ -132,9 +131,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         _cruiserSpecificFactories,
                         parent,
                         _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        EnemyCruiser,
-                        SoundKeys.Firing.BigCannon);
+                        TurretFireRateBoostProviders,
+                        EnemyCruiser);
 
                 _ = _barrelController.InitialiseAsync(args);
 

@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
@@ -114,7 +113,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 SetupTargetDetection();
 
-                _barrelWrapper.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+                _barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                 List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {

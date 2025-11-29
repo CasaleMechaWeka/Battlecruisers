@@ -22,6 +22,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -49,11 +50,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual int NumOfBarrels => 1;
         public Transform Transform => transform;
         public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
-
+        public SoundKeys.FiringSound FiringSound;
         [SerializeField] private List<SpriteRenderer> manualRenderers = new List<SpriteRenderer>();
         public List<SpriteRenderer> Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
+        public List<BoostType> BoostTypes = new List<BoostType>();
+
         private IDamageCapability _damageCapability;
         public IDamageCapability DamageCapability
         {
@@ -150,7 +153,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         // should be called by Server
         public async Task InitialiseAsync(IPvPBarrelControllerArgs args)
         {
-
+            foreach (BoostType boostType in BoostTypes)
+            {
+                if ((int)boostType >= 200 && (int)boostType < 300)   //fire rate boosts
+                    args.GlobalFireRateBoostProviders.Add(args.CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
+            }
+            
             Assert.IsNotNull(args);
             _parent = args.Parent;
             _targetFilter = args.TargetFilter;

@@ -1,7 +1,6 @@
 using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,8 +13,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IAnimation _barrelAnimation;
         protected IPvPBarrelWrapper[] _barrelWrappers;
 
-        // By default have null (no) sound
-        protected virtual SoundKey[] FiringSounds => null;
         protected virtual bool HasSingleSprite => false;
 
         public override bool IsBoostable => true;
@@ -26,7 +23,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             _barrelWrappers = gameObject.GetComponentsInChildren<IPvPBarrelWrapper>();
             Assert.IsNotNull(_barrelWrappers);
-            Assert.IsTrue(_barrelWrappers.Length == FiringSounds.Length);
 
             for (int i = 0; i < _barrelWrappers.Count(); i++)
             {
@@ -49,7 +45,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     .Initialise(
                         this,
                         _cruiserSpecificFactories,
-                        FiringSounds[i],
                         _parentSlot.BoostProviders,
                         TurretFireRateBoostProviders,
                         _barrelAnimation);
@@ -65,7 +60,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _barrelWrappers[i]
                 .Initialise(
                     this,
-                    FiringSounds[i],
                     _barrelAnimation);
                 _barrelWrappers[i].ApplyVariantStats(this);
             }
