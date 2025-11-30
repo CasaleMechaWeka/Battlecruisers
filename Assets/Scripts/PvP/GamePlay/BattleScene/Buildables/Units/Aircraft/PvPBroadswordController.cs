@@ -72,8 +72,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-
-
         public override void Initialise()
         {
             base.Initialise();
@@ -191,12 +189,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return patrolPoints;
         }
 
-        private void OnFirstPatrolPointReached()
-        {
-            _isAtCruisingHeight = true;
-            UpdateMovementController();
-        }
-
         private void UpdateMovementController()
         {
             ActiveMovementController = ChooseMovementController();
@@ -258,9 +250,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        // only for PvPFighter :(
-        public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -295,7 +284,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnBuildableProgressEvent();
         }
-
 
         [ClientRpc]
         private void OnCompletedBuildableEventClientRpc()

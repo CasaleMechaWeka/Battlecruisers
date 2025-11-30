@@ -17,10 +17,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             return new ExactMatchTargetFilter();
         }
-
-        protected override AngleLimiter CreateAngleLimiter()
-        {
-            return new AngleLimiter(30, 150);
-        }
     }
 }

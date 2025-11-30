@@ -8,7 +8,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
     /// Turrets:  Anti air turret
     /// Units:  Gunships
     /// </summary>
-	public abstract class LeadingDirectFireBarrelWrapper : BarrelWrapper
+	public class LeadingDirectFireBarrelWrapper : BarrelWrapper
     {
         protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {

@@ -39,7 +39,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITargetFinder _followableTargetFinder, _shootableTargetFinder;
         private ITargetProcessor _followableTargetProcessor, _shootableTargetProcessor;
         private IExactMatchTargetFilter _exactMatchTargetFilter;
-        private IMovementController _figherMovementController;
+        private IMovementController _fighterMovementController;
         private PvPBarrelController _barrelController;
         private ManualDetectorProvider _followableEnemyDetectorProvider, _shootableEnemeyDetectorProvider;
 
@@ -63,7 +63,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 }
                 else
                 {
-                    ActiveMovementController = _figherMovementController;
+                    ActiveMovementController = _fighterMovementController;
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
             base.Activate(activationArgs);
-            _figherMovementController
+            _fighterMovementController
                 = new FighterMovementController(
                     rigidBody,
                     maxVelocityProvider: this,
@@ -254,9 +254,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelController.CleanUp();
         }
 
-        // only for PvPFighter :(
-        public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -271,8 +268,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             else
                 base.OnCompletedBuildableEvent();
         }
-
-
 
         //-------------------------------------- RPCs -------------------------------------------------//
         [ClientRpc]

@@ -14,10 +14,5 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         {
             return new DummyRotationMovementController();
         }
-
-        protected override AngleLimiter CreateAngleLimiter()
-        {
-            return new AngleLimiter(-180, 180);
-        }
     }
 }

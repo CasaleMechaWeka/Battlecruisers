@@ -315,9 +315,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _targetProcessor = null;
         }
 
-
-
-
         protected override void OnBuildableProgressEvent()
         {
             if (IsServer)
@@ -363,10 +360,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             if (!IsHost)
                 OnCompletedBuildableEvent();
         }
-
-
-
-
-
     }
 }

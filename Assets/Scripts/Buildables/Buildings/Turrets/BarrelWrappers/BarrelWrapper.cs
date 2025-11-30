@@ -36,6 +36,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
         public Vector2 Position => transform.position;
         public IDamageCapability DamageCapability { get; private set; }
         public float RangeInM { get; private set; }
+        public float minAngle = -30, maxAngle = 90;
 
         private List<SpriteRenderer> _renderers;
         public IList<SpriteRenderer> Renderers => _renderers;
@@ -228,9 +229,9 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
             return new FacingMinRangePositionValidator(0, true);
         }
 
-        protected virtual AngleLimiter CreateAngleLimiter()
+        protected AngleLimiter CreateAngleLimiter()
         {
-            return new AngleLimiter(-30, 90);
+            return new AngleLimiter(minAngle, maxAngle);
         }
 
         protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
