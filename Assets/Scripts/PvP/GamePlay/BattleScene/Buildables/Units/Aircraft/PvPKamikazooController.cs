@@ -57,7 +57,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         // Expose barrel wrappers to editor
         [SerializeField]
-        private List<PvPAircraftBarrelWrapper> barrelWrappers;
+        private List<PvPLeadingDirectFireBarrelWrapper> barrelWrappers;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {

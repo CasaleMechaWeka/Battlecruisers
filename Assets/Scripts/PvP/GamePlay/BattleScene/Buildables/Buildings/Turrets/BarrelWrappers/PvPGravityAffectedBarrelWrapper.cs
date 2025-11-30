@@ -33,10 +33,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 return new AccuracyAdjuster((X_MARGIN, 0f), angleCalculator, barrel.TurretStats);
             }
         }
-
-        protected override AngleLimiter CreateAngleLimiter()
-        {
-            return new AngleLimiter(-20, 85);
-        }
     }
 }

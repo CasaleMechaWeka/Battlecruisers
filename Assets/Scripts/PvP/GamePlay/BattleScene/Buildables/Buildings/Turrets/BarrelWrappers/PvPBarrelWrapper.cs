@@ -37,6 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected PvPCruiserSpecificFactories _cruiserSpecificFactories;
         protected Faction _enemyFaction;
         protected float _minRangeInM;
+        public float minAngle = -30, maxAngle = 90;
         private IPvPBuildable _parent;
 
         public Vector2 Position => transform.position;
@@ -278,9 +279,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new FacingMinRangePositionValidator(0, true);
         }
 
-        protected virtual AngleLimiter CreateAngleLimiter()
+        protected AngleLimiter CreateAngleLimiter()
         {
-            return new AngleLimiter(-30, 90);
+            return new AngleLimiter(minAngle, maxAngle);
         }
 
         protected virtual IUpdater ChooseUpdater(IUpdaterProvider updaterProvider)
