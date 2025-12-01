@@ -34,8 +34,20 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
 
             if (MatchmakingScreenController.Instance != null)
             {
-                Debug.Log("PVP: Connection failed, calling MatchmakingScreen.FailedMatchmaking");
-                MatchmakingScreenController.Instance.FailedMatchmaking();
+                // Don't call FailedMatchmaking if we're still in matchmaking search phase
+                // Only call it if game actually started (Players=2/2 then failed) or was explicitly cancelled
+                bool stillSearching = !MatchmakingScreenController.Instance.IsGameStarted && !MatchmakingScreenController.Instance.IsCancelled;
+
+                if (stillSearching)
+                {
+                    Debug.Log("PVP: Connection attempt failed during matchmaking search - matchmaking controller will retry or host");
+                    // Don't call FailedMatchmaking - let matchmaking controller handle retry/fallback
+                }
+                else
+                {
+                    Debug.Log("PVP: Connection failed after match started or cancelled, calling MatchmakingScreen.FailedMatchmaking");
+                    MatchmakingScreenController.Instance.FailedMatchmaking();
+                }
             }
             else if (PrivateMatchmakingController.Instance != null)
             {

@@ -174,7 +174,39 @@ namespace BattleCruisers.Network.Multiplay.ApplicationLifecycle
             }
             return canQuit;
         }
+        public void ReinitialiseServicesForFLEE()
+        {
+            Debug.Log("PVP: ApplicationController.ReinitialiseServicesForFLEE - lightweight reset (matching organic flow)");
 
+            // Shutdown NetworkManager if listening, but DON'T destroy it
+            if (m_NetworkManager != null)
+            {
+                Debug.Log($"PVP: NetworkManager state - IsListening={m_NetworkManager.IsListening}, IsServer={m_NetworkManager.IsServer}, IsClient={m_NetworkManager.IsClient}");
+
+                if (m_NetworkManager.IsListening)
+                {
+                    Debug.Log("PVP: Calling NetworkManager.Shutdown() (keeping instance alive)");
+                    m_NetworkManager.Shutdown();
+                    Debug.Log($"PVP: After Shutdown - IsListening={m_NetworkManager.IsListening}, IsServer={m_NetworkManager.IsServer}, IsClient={m_NetworkManager.IsClient}");
+                }
+            }
+
+            // Reset ConnectionManager to offline state
+            if (m_ConnectionManager != null)
+            {
+                Debug.Log("PVP: Resetting ConnectionManager to OfflineState");
+                m_ConnectionManager.ResetToOffline();
+            }
+
+            // Clear static caches - these are safe to clear and necessary for clean state
+            Debug.Log("PVP: Clearing static caches");
+            DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
+            Matchplay.MultiplayBattleScene.Utils.Fetchers.PvPPrefabCache.Clear();
+            Matchplay.MultiplayBattleScene.Utils.Factories.PvPFactoryProvider.Clear();
+            Matchplay.Shared.SynchedServerData.ClearInstance();
+
+            Debug.Log("PVP: FLEE reset complete - NetworkManager instance preserved");
+        }
         public void DestroyNetworkObject()
         {
             Application.wantsToQuit -= OnWantToQuit;

@@ -143,6 +143,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             // for GameObject after establishing a connection.
             //    NetworkManager.NetworkConfig.ForceSamePrefabs = false;
 
+            Debug.Log("PVP: ConnectionManager.Initialise - UNSUBSCRIBING old callbacks");
             // Unsubscribe first to prevent double registration if Initialise is called multiple times
             // SceneManager might be null on first initialization before StartClient/StartHost
             NetworkManager.OnClientConnectedCallback -= OnClientConnectedCallback;
@@ -157,6 +158,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 NetworkManager.SceneManager.OnLoadComplete -= OnSceneLoadComplete;
             }
 
+            Debug.Log("PVP: ConnectionManager.Initialise - SUBSCRIBING new callbacks");
             // Now subscribe
             NetworkManager.OnClientConnectedCallback += OnClientConnectedCallback;
             NetworkManager.OnClientDisconnectCallback += OnClientDisconnectCallback;
@@ -168,7 +170,14 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 NetworkManager.SceneManager.OnLoad += OnSceneLoad;
                 NetworkManager.SceneManager.OnLoadEventCompleted += OnSceneLoadEventCompleted;
                 NetworkManager.SceneManager.OnLoadComplete += OnSceneLoadComplete;
+                Debug.Log("PVP: ConnectionManager.Initialise - SceneManager callbacks subscribed");
             }
+            else
+            {
+                Debug.Log("PVP: ConnectionManager.Initialise - SceneManager is NULL (normal before StartHost/StartClient), will subscribe later");
+            }
+
+            Debug.Log("PVP: ConnectionManager.Initialise complete");
 
             //    m_GameManager = new ClientGameManager(m_ProfileManager.Profile);
             //    DynamicPrefabLoadingUtilities.Init(m_NetworkManager);
@@ -323,8 +332,25 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             UnityEngine.Debug.Log("PVP: SetupRelayForMatchmaking - relay allocated, lobby updated with RelayJoinCode");
         }
 
+        public void ClearCachedRelay()
+        {
+            if (m_LocalLobby != null)
+            {
+                m_LocalLobby.CachedRelayAllocation = null;
+                UnityEngine.Debug.Log("PVP: Cleared cached relay allocation");
+            }
+        }
+
         private LobbyServiceFacade m_LobbyServiceFacade;
         private LocalLobby m_LocalLobby;
         private ProfileManager m_ProfileManager;
+        /// <summary>
+        /// Resets ConnectionManager to OfflineState. Used during FLEE cleanup to reset state without destroying the instance.
+        /// </summary>
+        public void ResetToOffline()
+        {
+            Debug.Log("PVP: ConnectionManager.ResetToOffline");
+            ChangeState(m_Offline);
+        }
     }
 }

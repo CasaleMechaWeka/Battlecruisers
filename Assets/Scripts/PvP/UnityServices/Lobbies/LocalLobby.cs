@@ -333,7 +333,10 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         }
         public void Reset(LocalLobbyUser localUser)
         {
+            string allocationIdString = CachedRelayAllocation != null ? CachedRelayAllocation.AllocationId.ToString() : "null";
+            Debug.Log($"PVP: LocalLobby.Reset - clearing CachedRelayAllocation (was {allocationIdString})");
             CachedRelayAllocation = null;
+            Debug.Log("PVP: LocalLobby.Reset - CachedRelayAllocation cleared");
             CopyDataFrom(new LobbyData(), new Dictionary<string, LocalLobbyUser>());
             AddUser(localUser);
         }

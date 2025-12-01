@@ -218,5 +218,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Shared
                 }
             }
         }
+        /// <summary>
+        /// Clears the static singleton reference. MUST be called during FLEE cleanup to prevent stale references.
+        /// </summary>
+        public static void ClearInstance()
+        {
+            sync_ServerData = null;
+            Debug.Log("PVP: SynchedServerData.ClearInstance - static singleton cleared");
+        }
     }
 }

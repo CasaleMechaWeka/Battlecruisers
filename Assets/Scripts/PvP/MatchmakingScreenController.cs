@@ -1,26 +1,27 @@
+using System.Collections;
 using System.Collections.Generic;
-using BattleCruisers.Data;
-using BattleCruisers.Utils;
-using UnityEngine;
 using System.Threading.Tasks;
-using BattleCruisers.Utils.Localisation;
-using UnityEngine.UI;
-using BattleCruisers.Network.Multiplay.Matchplay.Shared;
-using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.ApplicationLifecycle;
 using BattleCruisers.Network.Multiplay.ConnectionManagement;
-using BattleCruisers.UI.ScreensScene.ProfileScreen;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI;
-using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.Network.Multiplay.Scenes;
-using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
-using System.Collections;
-using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.PostBattleScreen;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.ScreensScene.BattleHubScreen;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen.MatchmakingScreenController.MMStatus;
 
 namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
@@ -91,6 +92,12 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         }
         async void Start()
         {
+            if (Instance != null && Instance != this)
+            {
+                Debug.LogWarning($"PVP: MatchmakingScreenController duplicate detected - destroying OLD instance IMMEDIATELY (this={gameObject.GetInstanceID()}, existing={Instance.gameObject.GetInstanceID()})");
+                DestroyImmediate(Instance.gameObject); // Use DestroyImmediate to prevent old instance's coroutines from running
+            }
+
             Instance = this;
 
             if (ApplicationController.Instance != null)
@@ -284,33 +291,52 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 PvPBattleSceneGodClient.Instance.HandleClientDisconnected();
             }
 
-            if (ApplicationController.Instance?.NetworkManager != null && ApplicationController.Instance.NetworkManager.IsListening)
-            {
-                Debug.Log("PVP: OnFleeAsync - shutting down NetworkManager");
-                ApplicationController.Instance.NetworkManager.Shutdown();
-            }
-
-            if (PvPBootManager.Instance?.ConnectionManager != null)
-            {
-                Debug.Log("PVP: OnFleeAsync - resetting ConnectionManager to Offline state");
-                PvPBootManager.Instance.ConnectionManager.ChangeState(PvPBootManager.Instance.ConnectionManager.m_Offline);
-            }
-
             lastKnownPlayerCount = 0;
             gameStarted = false;
             isCancelled = false;
 
-            await System.Threading.Tasks.Task.Delay(500);
-
-            UnityEngine.SceneManagement.Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
-            if (currentScene.name == "PvPBattleScene")
+            if (ApplicationController.Instance != null)
             {
-                Debug.Log("PVP: OnFleeAsync - in PvPBattleScene, loading ScreensScene before cleanup");
-                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNames.SCREENS_SCENE);
-                await System.Threading.Tasks.Task.Delay(500);
+                Debug.Log("PVP: OnFleeAsync - reinitializing services");
+                ApplicationController.Instance.ReinitialiseServicesForFLEE();
             }
 
-            FailedMatchmaking();
+            if (backgroundMusic != null && backgroundMusic.isPlaying)
+                backgroundMusic.Stop();
+
+            UnityEngine.EventSystems.EventSystem[] eventSystemsBefore = UnityEngine.Object.FindObjectsOfType<UnityEngine.EventSystems.EventSystem>();
+            Debug.Log($"PVP: FLEE - Found {eventSystemsBefore.Length} EventSystems before cleanup");
+
+            Debug.Log($"PVP: FLEE - Active scenes before cleanup: {UnityEngine.SceneManagement.SceneManager.sceneCount}");
+            for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+            {
+                UnityEngine.SceneManagement.Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+                Debug.Log($"  Scene {i}: {scene.name}, rootCount={scene.rootCount}, isLoaded={scene.isLoaded}");
+            }
+
+            if (isPvPBattleScenePreloaded)
+            {
+                Debug.Log("PVP: OnFleeAsync - unloading pre-loaded PvPBattleScene");
+                SceneManager.UnloadSceneAsync("PvPBattleScene");
+                isPvPBattleScenePreloaded = false;
+                disabledRootObjects.Clear();
+            }
+
+            if (ArenaSelectPanelReference != null)
+            {
+                Debug.Log("PVP: Resetting ArenaSelectPanel state");
+                ArenaSelectPanelReference.ResetBattleButtonState();
+            }
+
+            // Set flag so ScreensSceneGod.Start() navigates to HubScreen (ArenaSelectPanel) if needed
+            Debug.Log("PVP: OnFleeAsync - setting MatchmakingFailed=true");
+            MatchmakingFailed = true;
+
+            Debug.Log("PVP: OnFleeAsync - destroying MatchmakingScreenController (DontDestroyOnLoad)");
+            Destroy(gameObject);
+
+            Debug.Log("PVP: OnFleeAsync - unloading PvPInitializeScene");
+            SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
         }
         public async void FoundCompetitor()
         {
@@ -353,17 +379,16 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             animator.SetBool("Found", true);
             LeaveLobby();
         }
-
         public void FailedMatchmaking()
         {
-            Debug.Log("PVP: MatchmakingScreenController.FailedMatchmaking - Matchmaking failed");
+            Debug.Log($"PVP: MatchmakingScreenController.FailedMatchmaking - isPvPBattleScenePreloaded={isPvPBattleScenePreloaded}");
 
             if (backgroundMusic != null && backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
 
             if (isPvPBattleScenePreloaded)
             {
-                Debug.Log("PVP: Unloading pre-loaded PvPBattleScene (FailedMatchmaking)");
+                Debug.LogWarning("PVP: FailedMatchmaking - PvPBattleScene still marked as pre-loaded, unloading now (should have been done in OnFleeAsync)");
                 SceneManager.UnloadSceneAsync("PvPBattleScene");
                 isPvPBattleScenePreloaded = false;
                 disabledRootObjects.Clear();
@@ -375,11 +400,14 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                 ArenaSelectPanelReference.ResetBattleButtonState();
             }
 
+            // Set flag so ScreensSceneGod.Start() navigates to HubScreen (ArenaSelectPanel)
+            Debug.Log("PVP: FailedMatchmaking - setting MatchmakingFailed=true to return to HubScreen");
+            MatchmakingFailed = true;
+
             Destroy(gameObject);
             Debug.Log("PVP: Unloading PvPInitializeScene (FailedMatchmaking)");
             SceneManager.UnloadSceneAsync(SceneNames.PvP_INITIALIZE_SCENE);
         }
-
         public void Destroy()
         {
             Destroy(gameObject);
@@ -387,6 +415,7 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
         void OnDestroy()
         {
+            Debug.Log("PVP: MatchmakingScreenController.OnDestroy - clearing singleton reference");
             if (Instance == this)
             {
                 Instance = null;
@@ -458,12 +487,55 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         private bool isCancelled = false;
         private int lastKnownPlayerCount = 0;
 
+        public bool IsGameStarted => gameStarted;
+        public bool IsCancelled => isCancelled;
+
         public void StartLobbyLoop()
         {
             gameStarted = false;
             isCancelled = false;
             lastKnownPlayerCount = 0;
             StartCoroutine(nameof(LobbyLoop));
+        }
+
+        public void StartRelayRefreshLoop()
+        {
+            StartCoroutine(nameof(RelayRefreshLoop));
+        }
+
+        System.Collections.IEnumerator RelayRefreshLoop()
+        {
+            float elapsedTime = 0f;
+            const float relayRefreshInterval = 50f;
+
+            while (!gameStarted && !isCancelled)
+            {
+                yield return new WaitForSeconds(1f);
+                elapsedTime += 1f;
+
+                if (elapsedTime >= relayRefreshInterval)
+                {
+                    Debug.Log($"PVP: Refreshing relay allocation ({relayRefreshInterval}s elapsed)");
+                    if (PvPBootManager.Instance?.ConnectionManager != null)
+                    {
+                        PvPBootManager.Instance.ConnectionManager.ClearCachedRelay();
+                        Task refreshTask = PvPBootManager.Instance.ConnectionManager.SetupRelayForMatchmaking(BattleCruisers.Data.DataProvider.GameModel.PlayerName);
+                        yield return new WaitUntil(() => refreshTask.IsCompleted);
+
+                        if (refreshTask.IsFaulted)
+                        {
+                            Debug.LogError($"PVP: Relay refresh failed: {refreshTask.Exception?.GetBaseException().Message}");
+                        }
+                        else
+                        {
+                            Debug.Log("PVP: Relay allocation refreshed");
+                        }
+                    }
+                    elapsedTime = 0f;
+                }
+            }
+
+            Debug.Log("PVP: RelayRefreshLoop stopped");
         }
         System.Collections.IEnumerator LobbyLoop()
         {

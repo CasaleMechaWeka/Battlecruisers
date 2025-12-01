@@ -130,6 +130,16 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 throw new Exception("Trying to start relay while Lobby isn't set");
             }
 
+            Debug.Log($"PVP: CLIENT SetupClientConnectionAsync - LocalLobby.RelayJoinCode={m_LocalLobby.RelayJoinCode}");
+            Debug.Log($"PVP: CLIENT SetupClientConnectionAsync - LobbyServiceFacade.CurrentUnityLobby.Data keys: {string.Join(", ", m_LobbyServiceFacade.CurrentUnityLobby.Data.Keys)}");
+            if (m_LobbyServiceFacade.CurrentUnityLobby.Data.ContainsKey("RelayJoinCode"))
+            {
+                Debug.Log($"PVP: CLIENT SetupClientConnectionAsync - Lobby.Data[RelayJoinCode]={m_LobbyServiceFacade.CurrentUnityLobby.Data["RelayJoinCode"].Value}");
+            }
+            else
+            {
+                Debug.LogError("PVP: CLIENT SetupClientConnectionAsync - Lobby.Data does NOT contain RelayJoinCode key!");
+            }
             Debug.Log($"Setting Unity Relay client with join code {m_LocalLobby.RelayJoinCode}");
 
             // Create client joining allocation from join code
@@ -177,18 +187,22 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 sw.Stop();
                 Debug.Log($"PVP: BASELINE relay allocation took {sw.ElapsedMilliseconds}ms");
 
+                Debug.Log($"PVP: HOST created new relay allocation (AllocationId={hostAllocation.AllocationId}, JoinCode={joinCode}, Region={hostAllocation.Region})");
                 m_LocalLobby.RelayJoinCode = joinCode;
                 m_LocalLobby.Region = hostAllocation.Region;
                 m_LocalLobby.Latency = averageLatency.ToString();
                 m_LocalLobby.CachedRelayAllocation = hostAllocation;
+                Debug.Log($"PVP: HOST stored relay info in LocalLobby (RelayJoinCode={m_LocalLobby.RelayJoinCode})");
+
+                Debug.Log($"PVP: HOST updating lobby data (RelayJoinCode={m_LocalLobby.RelayJoinCode}, Region={m_LocalLobby.Region}, Latency={m_LocalLobby.Latency})");
+                await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
             }
 
+            Debug.Log($"PVP: HOST UpdatePlayerRelayInfoAsync (AllocationId={hostAllocation.AllocationId}, JoinCode={joinCode})");
             await m_LobbyServiceFacade.UpdatePlayerRelayInfoAsync(hostAllocation.AllocationId.ToString(), joinCode);
 
             UnityTransport utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetRelayServerData(new RelayServerData(hostAllocation, OnlineState.k_DtlsConnType));
-
-            await m_LobbyServiceFacade.UpdateLobbyDataAsync(m_LocalLobby.GetDataForUnityServices());
         }
     }
 }

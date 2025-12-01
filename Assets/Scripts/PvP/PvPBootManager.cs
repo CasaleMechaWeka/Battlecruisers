@@ -275,8 +275,9 @@ namespace BattleCruisers.Network.Multiplay.Scenes
                 {
                     Debug.Log("PVP: PublicPVP lobby created - setting up relay allocation (lobby will become discoverable)");
                     await ConnectionManager.SetupRelayForMatchmaking(DataProvider.GameModel.PlayerName);
-                    Debug.Log("PVP: PublicPVP relay allocated, lobby now discoverable - waiting for Players=2/2");
+                    Debug.Log("PVP: Relay allocated, starting refresh loop");
                     MatchmakingScreenController.Instance.SetMMStatus(MatchmakingScreenController.MMStatus.LOOKING_VICTIM);
+                    MatchmakingScreenController.Instance.StartRelayRefreshLoop();
                 }
                 Debug.Log("PVP: Lobby created - starting tracking, waiting for Players=2/2");
                 LobbyServiceFacade.BeginTracking();

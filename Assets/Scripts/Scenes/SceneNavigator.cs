@@ -6,6 +6,7 @@ using BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen;
 using BattleCruisers.UI.ScreensScene.BattleHubScreen;
 using BattleCruisers.Utils;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace BattleCruisers.Scenes
@@ -40,16 +41,36 @@ namespace BattleCruisers.Scenes
 
             _ = LoadSceneWithLoadingScreen(sceneName);
         }
-
         private static async Task LoadSceneWithLoadingScreen(string sceneName)
         {
             Logging.LogMethod(Tags.SCENE_NAVIGATION);
 
             _lastSceneLoaded = null;
+
+            Debug.Log($"PVP: SceneNavigator - Before loading {sceneName} - Current scenes: {SceneManager.sceneCount}");
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene scene = SceneManager.GetSceneAt(i);
+                Debug.Log($"  Scene {i}: {scene.name}, rootCount={scene.rootCount}");
+            }
+
             // Load PVP scenes additively over ScreensScene (allows easy FLEE back to BattleHub)
             // ScreensScene will be unloaded later when opponent is found and battle commits
             if (sceneName != SceneNames.PvP_INITIALIZE_SCENE && sceneName != SceneNames.PRIVATE_PVP_INITIALIZER_SCENE)
+            {
+                Debug.Log($"PVP: SceneNavigator - Loading LoadingScene with LoadSceneMode.Single (destroys all other scenes)");
                 await LoadSceneAsync(SceneNames.LOADING_SCENE, LoadSceneMode.Single);
+
+                Debug.Log($"PVP: SceneNavigator - After LoadSceneMode.Single - Current scenes: {SceneManager.sceneCount}");
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    Scene scene = SceneManager.GetSceneAt(i);
+                    Debug.Log($"  Scene {i}: {scene.name}, rootCount={scene.rootCount}");
+                }
+
+                UnityEngine.EventSystems.EventSystem[] eventSystemsAfter = UnityEngine.Object.FindObjectsOfType<UnityEngine.EventSystems.EventSystem>();
+                Debug.Log($"PVP: SceneNavigator - Found {eventSystemsAfter.Length} EventSystems after LoadSceneMode.Single");
+            }
 
             await LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -81,7 +102,6 @@ namespace BattleCruisers.Scenes
                     LoadingScreenController.Instance.Destroy();
             }
         }
-
         public static async Task LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode)
         {
             Logging.Log(Tags.SCENE_NAVIGATION, "Start loading:  " + sceneName);

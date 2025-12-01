@@ -351,6 +351,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                 m_NetcodeHooks.OnNetworkSpawnHook -= OnNetworkSpawn;
                 m_NetcodeHooks.OnNetworkDespawnHook -= OnNetworkDespawn;
             }
+
+            // Clear static reference to prevent stale reference after scene unload
+            if (s_pvpBattleSceneGodClient == this)
+            {
+                Debug.Log("PVP: PvPBattleSceneGodClient.OnDestroy - clearing static singleton reference");
+                s_pvpBattleSceneGodClient = null;
+            }
         }
         public void StaticInitialiseAsync_Host()
         {

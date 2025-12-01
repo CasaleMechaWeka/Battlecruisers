@@ -99,6 +99,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                 Debug.Log("PVP: HOST StartHost - before SetupHostConnectionAsync");
                 await m_ConnectionMethod.SetupHostConnectionAsync();
                 Debug.Log($"PVP: HOST relay configured, Private={ArenaSelectPanelScreenController.PrivateMatch}) - preparing NetworkManager");
+
                 if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
                 {
                     Debug.Log("PVP: HOST - before DynamicPrefabLoadingUtilities.Init");
@@ -106,14 +107,18 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     Debug.Log("PVP: HOST - after DynamicPrefabLoadingUtilities.Init");
                 }
                 m_ConnectionManager.NetworkManager.NetworkConfig.EnableSceneManagement = true;
+                Debug.Log($"PVP: HOST EnableSceneManagement=true, SceneManager={(m_ConnectionManager.NetworkManager.SceneManager != null ? "EXISTS" : "NULL (normal before StartHost)")}");
                 Debug.Log($"PVP: HOST starting NetworkManager (SceneManagement=true, Private={ArenaSelectPanelScreenController.PrivateMatch})");
+
                 if (!m_ConnectionManager.NetworkManager.StartHost())
                 {
+                    Debug.LogError("PVP: HOST StartHost returned FALSE - startup failed");
                     OnClientDisconnect(m_ConnectionManager.NetworkManager.LocalClientId);
                 }
                 else
                 {
-                    Debug.Log("PVP: HOST NetworkManager.StartHost returned true");
+                    Debug.Log($"PVP: HOST NetworkManager.StartHost returned true - SceneManager={(m_ConnectionManager.NetworkManager.SceneManager != null ? "NOW EXISTS" : "STILL NULL - BUG")}");
+                    Debug.Log($"PVP: HOST StartHost complete - IsListening={m_ConnectionManager.NetworkManager.IsListening}, IsServer={m_ConnectionManager.NetworkManager.IsServer}, IsClient={m_ConnectionManager.NetworkManager.IsClient}, LocalClientId={m_ConnectionManager.NetworkManager.LocalClientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}");
                 }
             }
             catch (Exception e)

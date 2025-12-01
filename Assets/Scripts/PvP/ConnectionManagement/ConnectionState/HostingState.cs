@@ -49,17 +49,96 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             SessionManager<SessionPlayerData>.Instance.OnServerEnded();
         }
-
         public override void OnClientConnected(ulong clientId)
         {
+            Debug.Log($"PVP: HostingState.OnClientConnected CALLED - clientId={clientId}, LocalClientId={m_ConnectionManager.NetworkManager.LocalClientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}");
+
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId
-                && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
+            && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)
             {
                 Debug.Log($"PVP: HOST relay connected (LocalClientId={clientId}, ConnectedClients=1, Private={ArenaSelectPanelScreenController.PrivateMatch}) - loading PvPBattleScene with NetworkManager.SceneManager");
-                NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+
+                if (NetworkManager.Singleton == null)
+                {
+                    Debug.LogError("PVP: HOST CRITICAL ERROR - NetworkManager.Singleton is NULL, cannot load scene");
+                    Debug.LogError($"AUDIT FAILED: m_ConnectionManager.NetworkManager={(m_ConnectionManager.NetworkManager != null ? "EXISTS but Singleton is NULL - BUG" : "ALSO NULL")}");
+                    return;
+                }
+
+                if (NetworkManager.Singleton.SpawnManager != null)
+                {
+                    var spawnedObjects = NetworkManager.Singleton.SpawnManager.SpawnedObjects;
+                    Debug.Log($"PVP: NetworkSpawnManager state BEFORE LoadScene:");
+                    Debug.Log($"PVP:   SpawnedObjects.Count = {spawnedObjects.Count}");
+
+                    // Build dictionary to detect duplicates
+                    System.Collections.Generic.Dictionary<string, int> objectNameCounts = new System.Collections.Generic.Dictionary<string, int>();
+
+                    // Log all spawned objects with full details including Scene
+                    foreach (var kvp in spawnedObjects)
+                    {
+                        string objectName = kvp.Value.name;
+                        string sceneName = kvp.Value.gameObject.scene.name;
+                        Debug.Log($"PVP:     NetworkObjectId={kvp.Key}, Name={objectName}, IsSpawned={kvp.Value.IsSpawned}, Scene={sceneName}");
+
+                        // Track duplicate names
+                        if (!objectNameCounts.ContainsKey(objectName))
+                            objectNameCounts[objectName] = 0;
+                        objectNameCounts[objectName]++;
+                    }
+
+                    // Check for duplicates
+                    bool hasDuplicates = false;
+                    foreach (var kvp in objectNameCounts)
+                    {
+                        if (kvp.Value > 1)
+                        {
+                            hasDuplicates = true;
+                            Debug.LogError($"PVP:   ERROR - Duplicate NetworkObject detected: {kvp.Key} appears {kvp.Value} times");
+                        }
+                    }
+
+                    if (spawnedObjects.Count > 4)
+                    {
+                        Debug.LogWarning($"PVP:   SpawnedObjects.Count ({spawnedObjects.Count}) > expected (4) - potential SpawnStateException");
+                    }
+
+                    if (hasDuplicates)
+                    {
+                        Debug.LogError($"PVP:   Duplicate NetworkObjects detected, match will likely crash with SpawnStateException");
+                    }
+
+                    if (spawnedObjects.Count == 0)
+                    {
+                        Debug.Log($"PVP:   SpawnedObjects is clean (empty)");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("PVP: NetworkSpawnManager is NULL - cannot check spawned objects");
+                }
+
+                if (NetworkManager.Singleton.SceneManager == null)
+                {
+                    Debug.LogError("PVP: HOST CRITICAL ERROR - NetworkManager.Singleton.SceneManager is NULL, cannot load scene");
+                    Debug.LogError("AUDIT FAILED: SceneManager should have been created during StartHost() - check StartingHostState logs");
+                    return;
+                }
+
+                Debug.Log($"PVP: HOST calling NetworkManager.SceneManager.LoadScene(PvPBattleScene, Single) - CurrentScene={UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+
+                try
+                {
+                    SceneEventProgressStatus status = NetworkManager.Singleton.SceneManager.LoadScene("PvPBattleScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                    Debug.Log($"PVP: HOST NetworkManager.SceneManager.LoadScene completed - Status={status}");
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"PVP: HOST NetworkManager.SceneManager.LoadScene THREW EXCEPTION: {ex.Message}\n{ex.StackTrace}");
+                }
             }
             else if (clientId != m_ConnectionManager.NetworkManager.LocalClientId
-                && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 2)
+            && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 2)
             {
                 Debug.Log($"PVP: HOST CLIENT joined (clientId={clientId}, ConnectedClients=2, Private={ArenaSelectPanelScreenController.PrivateMatch}) - match ready");
 
@@ -70,8 +149,11 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
                     MatchmakingScreenController.Instance.vsAIButton.SetActive(false);
                 }
             }
+            else
+            {
+                Debug.Log($"PVP: OnClientConnected - NEITHER condition met - clientId={clientId}, LocalClientId={m_ConnectionManager.NetworkManager.LocalClientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}");
+            }
         }
-
         public override void OnClientDisconnect(ulong clientId)
         {
             Debug.Log($"PVP: HOST CLIENT disconnected (clientId={clientId}, RemainingClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}, Private={ArenaSelectPanelScreenController.PrivateMatch})");
