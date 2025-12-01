@@ -1,60 +1,17 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Utils;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
     public class AttackBoatController : AnimatedShipController
     {
-        private IBarrelWrapper _antiSeaTurret;
-
-        public override float OptimalArmamentRangeInM => _antiSeaTurret.RangeInM;
-        public override bool KeepDistanceFromEnemyCruiser => false;
-
         protected override Vector2 MaskHighlightableSize
         {
             get
             {
-                return
-                    new Vector2(
+                return new Vector2(
                         base.MaskHighlightableSize.x * 1.5f,
                         base.MaskHighlightableSize.y * 2);
             }
-        }
-
-        protected override IList<IBarrelWrapper> GetTurrets()
-        {
-            IList<IBarrelWrapper> turrets = new List<IBarrelWrapper>();
-
-            _antiSeaTurret = gameObject.GetComponentInChildren<IBarrelWrapper>();
-            Assert.IsNotNull(_antiSeaTurret);
-            turrets.Add(_antiSeaTurret);
-
-            return turrets;
-        }
-
-        protected override void InitialiseTurrets()
-        {
-            _antiSeaTurret.Initialise(this, _cruiserSpecificFactories);
-        }
-
-        protected override List<SpriteRenderer> GetNonTurretRenderers()
-        {
-            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
-
-            Transform pistonsParent = transform.FindNamedComponent<Transform>("Pistons");
-            SpriteRenderer[] pistonRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-            renderers.AddRange(pistonRenderers);
-
-            return renderers;
-        }
-
-        protected override void OnBuildableCompleted()
-        {
-            base.OnBuildableCompleted();
-            _antiSeaTurret.ApplyVariantStats(this);
         }
     }
 }

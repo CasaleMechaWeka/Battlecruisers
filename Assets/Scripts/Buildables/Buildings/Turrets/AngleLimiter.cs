@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BattleCruisers.Targets.TargetFinders;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets
@@ -16,7 +17,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets
 
         public AngleLimiter(float minAngle, float maxAngle)
         {
-            Assert.IsTrue(minAngle < maxAngle);
+            Assert.IsTrue(minAngle < maxAngle, $"Min Angle is {minAngle}°, Max Angle is {maxAngle}°. Min Angle must be > Max Angle");
             Assert.IsTrue(minAngle >= MIN_MIN_ANGLE);
             Assert.IsTrue(maxAngle <= MAX_MAX_ANGLE);
 

@@ -20,7 +20,7 @@ namespace BattleCruisers.Movement.Deciders
     /// </summary>
     public class ShipMovementDecider : IMovementDecider
     {
-        private readonly IShip _ship;
+        private readonly ShipController _ship;
         private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly TargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
 
@@ -39,7 +39,7 @@ namespace BattleCruisers.Movement.Deciders
         }
 
         public ShipMovementDecider(
-            IShip ship,
+            ShipController ship,
             BroadcastingTargetProvider blockingEnemyProvider,
             BroadcastingTargetProvider blockingFriendlyProvider,
             TargetTracker inRangeTargetTracker,
