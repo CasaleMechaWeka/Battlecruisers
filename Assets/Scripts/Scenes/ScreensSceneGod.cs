@@ -885,7 +885,7 @@ namespace BattleCruisers.Scenes
             }
         }
 
-        int VersionToInt(string version)
+        public static int VersionToInt(string version)
         {
             int seperatorCount = version.Count(c => c == '.');
 

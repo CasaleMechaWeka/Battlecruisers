@@ -63,8 +63,7 @@ namespace BattleCruisers.Data
 
         public void SaveGame(GameModel game)
         {
-            // Ensure save version is set to 5
-            game.SaveVersion = 5;
+            game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
             using (FileStream file = File.Create(preferredGameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
@@ -160,13 +159,21 @@ namespace BattleCruisers.Data
         private GameModel MakeCompatible(object gameData)
         {
             Debug.Log("MakeCompatible");
-            // vars
+
+            // perhaps be more conservative for these other fields too?
             var tut = gameData.GetType().GetProperty("HasAttemptedTutorial").GetValue(gameData);
             var lds = gameData.GetType().GetProperty("LifetimeDestructionScore").GetValue(gameData);
             var bds = gameData.GetType().GetProperty("BestDestructionScore").GetValue(gameData);
             var plo = gameData.GetType().GetProperty("PlayerLoadout").GetValue(gameData);
             var lbr = gameData.GetType().GetProperty("LastBattleResult").GetValue(gameData);
             var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
+            var sav = gameData.GetType().GetProperty("SaveVersion");
+            int saveVersion = 0;
+
+            if(sav == null)
+                saveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            else
+                saveVersion = (int)sav.GetValue(gameData);
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
             foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
@@ -202,7 +209,8 @@ namespace BattleCruisers.Data
                 _lastBattleResult,
                 _unlockedHulls,
                 _unlockedBuildings,
-                _unlockedUnits
+                _unlockedUnits,
+                saveVersion
                 );
 
             compatibleGameModel.PremiumEdition = _premiumState;
@@ -319,7 +327,7 @@ namespace BattleCruisers.Data
                 compatibleGameModel.Bounty = (int)gameData.GetType().GetProperty("Bounty").GetValue(gameData);
 
             // Extract SelectedBodykit if it exists
-            var bodykitField = _loadout.GetType().GetField("_selectedBodykit", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var bodykitField = _loadout.GetType().GetField("_selectedBodykit", BindingFlags.NonPublic | BindingFlags.Instance);
             if (bodykitField != null)
             {
                 var bodykitValue = bodykitField.GetValue(_loadout);
@@ -522,6 +530,7 @@ namespace BattleCruisers.Data
         {
             try
             {
+                game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
                 SaveGameModel saveData = new SaveGameModel(game);
                 if (CloudSaveService.Instance != null && CloudSaveService.Instance.Data != null)
                 {
