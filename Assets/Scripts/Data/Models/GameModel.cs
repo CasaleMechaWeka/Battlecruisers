@@ -139,21 +139,6 @@ namespace BattleCruisers.Data.Models
         }
 
         [SerializeField]
-        private int _saveVersion = 5;
-        public int SaveVersion
-        {
-            get => _saveVersion;
-            set => _saveVersion = value;
-        }
-
-        /*        private int _rankData;
-                public int RankData
-                {
-                    get => _rankData;
-                    set => _rankData = value;
-                }*/
-
-        [SerializeField]
         private bool _hasAttemptedTutorial;
 
         [SerializeField]
@@ -315,6 +300,9 @@ namespace BattleCruisers.Data.Models
             set { _sideQuest = value; }
         }
 
+        [SerializeField]
+        public int SaveVersion;
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
@@ -380,7 +368,8 @@ namespace BattleCruisers.Data.Models
             BattleResult lastBattleResult,
             List<HullKey> unlockedHulls,
             List<BuildingKey> unlockedBuildings,
-            List<UnitKey> unlockedUnits)
+            List<UnitKey> unlockedUnits,
+            int saveVersion)
             : this()
         {
             HasSyncdShop = hasSyncdShop;
@@ -393,6 +382,7 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
+            SaveVersion = saveVersion;
         }
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)
@@ -544,9 +534,9 @@ namespace BattleCruisers.Data.Models
                 _hotkeys = new HotkeysModel();
             }
             // Version detection: if SaveVersion is 0, it's an old save (v1-v4)
-            if (_saveVersion == 0)
+            if (SaveVersion == 0)
             {
-                _saveVersion = 4; // Assume old saves are v4
+                SaveVersion = 4; // Assume old saves are v4
             }
         }
 

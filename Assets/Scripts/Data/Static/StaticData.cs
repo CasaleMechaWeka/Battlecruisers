@@ -19,6 +19,7 @@ using UnityEngine.Assertions;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Cruisers;
 using UnityEngine;
+using BattleCruisers.Scenes;
 
 namespace BattleCruisers.Data.Static
 {
@@ -767,7 +768,8 @@ namespace BattleCruisers.Data.Static
                 // TEMP  Do not unlock all hulls & buildables at the game start :P
                 unlockedHulls: new List<HullKey>() { Hulls.Trident },
                 unlockedBuildings: GetInitialBuildings(),
-                unlockedUnits: GetInitialUnits()
+                unlockedUnits: GetInitialUnits(),
+                saveVersion: ScreensSceneGod.VersionToInt(Application.version)
                 );
 
             foreach (int i in playerLoadout.CurrentHeckles)

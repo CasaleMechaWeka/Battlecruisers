@@ -76,7 +76,7 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            saveVersion = 5;
+            saveVersion = game.SaveVersion;
             // Last change: v5 - Added robust version compatibility system
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
@@ -122,6 +122,7 @@ namespace BattleCruisers.Data.Models
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
+            game.SaveVersion = saveVersion;
             Debug.Log("Assigning save data to GameModel...");
 
             game.LifetimeDestructionScore = lifetimeDestructionScore;
