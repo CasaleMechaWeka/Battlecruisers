@@ -99,6 +99,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
             else
                 DataProvider.GameModel.AddCompletedSideQuest(level);
 
+            // Reset consecutive losses counter on victory
+            DataProvider.GameModel.TimesLostOnLastLevel = 0;
+
             int nextLevel = 0;
             if (ApplicationModel.Mode != GameMode.SideQuest)
                 nextLevel = ApplicationModel.SelectedLevel + 1;

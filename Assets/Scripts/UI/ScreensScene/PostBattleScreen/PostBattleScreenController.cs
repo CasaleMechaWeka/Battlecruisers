@@ -41,6 +41,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         private LootManager _lootManager;
 
+        // Number of consecutive losses before suggesting easier AI difficulty
+        private const int CONSECUTIVE_LOSSES_THRESHOLD = 3;
+
         public Text title;
         public SlidingPanel unlockedItemSection;
         public GameObject defeatMessage, victoryNoLootMessage, demoCompletedScreen, decreaseDifficultySection;
@@ -214,7 +217,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     if (ApplicationModel.SelectedLevel == DataProvider.GameModel.CompletedLevels.Count + 1 && DataProvider.SettingsManager.AIDifficulty != Difficulty.Normal && ApplicationModel.Mode == GameMode.Campaign)
                     {
                         DataProvider.GameModel.TimesLostOnLastLevel += 1;
-                        if (DataProvider.GameModel.TimesLostOnLastLevel == 3)
+                        if (DataProvider.GameModel.TimesLostOnLastLevel >= CONSECUTIVE_LOSSES_THRESHOLD)
                         {
                             if (defeatMessage.activeSelf)
                                 defeatMessage.SetActive(false);
