@@ -138,6 +138,14 @@ namespace BattleCruisers.Data.Models
             set => _isDoneMigration = value;
         }
 
+        [SerializeField]
+        private int _saveVersion = 5;
+        public int SaveVersion
+        {
+            get => _saveVersion;
+            set => _saveVersion = value;
+        }
+
         /*        private int _rankData;
                 public int RankData
                 {
@@ -534,6 +542,11 @@ namespace BattleCruisers.Data.Models
             if (_hotkeys == null)
             {
                 _hotkeys = new HotkeysModel();
+            }
+            // Version detection: if SaveVersion is 0, it's an old save (v1-v4)
+            if (_saveVersion == 0)
+            {
+                _saveVersion = 4; // Assume old saves are v4
             }
         }
 

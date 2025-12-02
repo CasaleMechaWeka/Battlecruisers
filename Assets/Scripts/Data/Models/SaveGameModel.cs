@@ -76,8 +76,8 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            saveVersion = 4;
-            // Last change: 5/16/2023
+            saveVersion = 5;
+            // Last change: v5 - Added robust version compatibility system
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
