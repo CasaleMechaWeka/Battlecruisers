@@ -61,6 +61,13 @@ public class FullScreenAdverts : MonoBehaviour
     {
         settingsManager = DataProvider.SettingsManager;
         
+        // Check if ads are globally disabled via Remote Config
+        if (AdConfigManager.Instance != null && AdConfigManager.Instance.AdsDisabled)
+        {
+            Debug.Log("[Ads] Skipped - Ads globally DISABLED via Remote Config");
+            return false;
+        }
+        
         // Don't show ads for premium users unless they have ads enabled in settings
         if (DataProvider.GameModel.PremiumEdition)
         {

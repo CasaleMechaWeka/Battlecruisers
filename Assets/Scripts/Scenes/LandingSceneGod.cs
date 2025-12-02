@@ -105,6 +105,14 @@ namespace BattleCruisers.Scenes
                 Instance = this;
             }
 
+            // Initialize Firebase Analytics Manager if it doesn't exist
+            if (BattleCruisers.Ads.FirebaseAnalyticsManager.Instance == null)
+            {
+                GameObject firebaseManagerObj = new GameObject("FirebaseAnalyticsManager");
+                firebaseManagerObj.AddComponent<BattleCruisers.Ads.FirebaseAnalyticsManager>();
+                Debug.Log("[LandingSceneGod] Created FirebaseAnalyticsManager");
+            }
+
             LogToScreen(Application.platform.ToString());
             messagebox.HideMessage();
             Helper.AssertIsNotNull(landingCanvas, loginPanel, logos, googleBtn, guestBtn);

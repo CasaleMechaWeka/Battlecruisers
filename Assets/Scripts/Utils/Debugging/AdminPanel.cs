@@ -25,10 +25,59 @@ namespace BattleCruisers.Utils.Debugging
         [Tooltip("Link FullScreenAdverts from ScreensScene hierarchy")]
         private FullScreenAdverts fullScreenAdverts;
 
+        [Header("On-Screen Logging")]
+        [SerializeField]
+        [Tooltip("Optional UI Text element for on-screen messages")]
+        private UnityEngine.UI.Text screenMessageText;
+        
+        private float messageDisplayTime = 5f;
+        private float messageTimer = 0f;
 
         void Start()
         {
             Assert.IsNotNull(buttons);
+        }
+
+        void Update()
+        {
+            // Auto-hide on-screen message after timer expires
+            if (messageTimer > 0)
+            {
+                messageTimer -= Time.deltaTime;
+                if (messageTimer <= 0 && screenMessageText != null)
+                {
+                    screenMessageText.text = "";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Show message on screen and in logs
+        /// </summary>
+        private void ShowMessage(string message, bool isError = false)
+        {
+            // Log to Unity console
+            if (isError)
+            {
+                Debug.LogError($"[AdminPanel] {message}");
+            }
+            else
+            {
+                Debug.Log($"[AdminPanel] {message}");
+            }
+
+            // Try to show on LandingSceneGod if available
+            if (LandingSceneGod.Instance != null)
+            {
+                LandingSceneGod.Instance.LogToScreen($"[Admin] {message}");
+            }
+
+            // Also show on local text if assigned
+            if (screenMessageText != null)
+            {
+                screenMessageText.text = message;
+                messageTimer = messageDisplayTime;
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -46,6 +95,7 @@ namespace BattleCruisers.Utils.Debugging
         private void Show()
         {
             buttons.SetActive(true);
+            ShowMessage("Admin Panel OPENED - Debug tools available");
         }
 
         public void Hide()
@@ -55,50 +105,59 @@ namespace BattleCruisers.Utils.Debugging
 
         public void UnlockEverything()
         {
+            ShowMessage("UNLOCKING EVERYTHING...");
+            
             // Levels
+            int levelCount = 0;
             foreach (Level level in StaticData.Levels)
             {
                 DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(level.Num, Difficulty.Normal));
+                levelCount++;
             }
 
+            int sideQuestCount = 0;
             foreach (SideQuestData sideQuest in StaticData.SideQuests)
             {
                 DataProvider.GameModel.AddCompletedSideQuest(new CompletedLevel(sideQuest.SideLevelNum, Difficulty.Normal));
+                sideQuestCount++;
             }
 
             // Hulls
+            int hullCount = 0;
             foreach (HullKey hull in StaticData.HullKeys)
             {
                 if (!DataProvider.GameModel.UnlockedHulls.Contains(hull))
                 {
                     DataProvider.GameModel.AddUnlockedHull(hull);
+                    hullCount++;
                 }
             }
 
             // Buildings
+            int buildingCount = 0;
             foreach (BuildingKey building in StaticData.BuildingKeys)
             {
                 if (!DataProvider.GameModel.UnlockedBuildings.Contains(building))
                 {
                     DataProvider.GameModel.AddUnlockedBuilding(building);
-                    //    DataProvider.GameModel.PlayerLoadout.AddBuilding(building);
+                    buildingCount++;
                 }
             }
 
             // Units
+            int unitCount = 0;
             foreach (UnitKey unit in StaticData.UnitKeys)
             {
                 if (!DataProvider.GameModel.UnlockedUnits.Contains(unit))
                 {
                     DataProvider.GameModel.AddUnlockedUnit(unit);
-                    //    DataProvider.GameModel.PlayerLoadout.AddUnit(unit);
+                    unitCount++;
                 }
             }
 
             DataProvider.GameModel.HasAttemptedTutorial = true;
 
-            // If never played a level, need to set last battle result, because levels should
-            // not be unlocked without a continue result.
+            // If never played a level, need to set last battle result
             if (DataProvider.GameModel.LastBattleResult == null)
             {
                 DataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
@@ -106,11 +165,13 @@ namespace BattleCruisers.Utils.Debugging
 
             DataProvider.SaveGame();
 
-            Debug.Log("Everything unlocked :D  Restart game.");
+            ShowMessage($"UNLOCKED: {levelCount} levels, {sideQuestCount} side quests, {hullCount} hulls, {buildingCount} buildings, {unitCount} units. RESTART GAME!");
         }
 
         public void ResetToState()
         {
+            ShowMessage($"RESETTING to level {levelToUnlock}...");
+            
             List<int> levelsToUnlock = Enumerable.Range(1, levelToUnlock).ToList();
 
             // Mark tutorial as complete
@@ -142,18 +203,20 @@ namespace BattleCruisers.Utils.Debugging
 
             DataProvider.SaveGame();
 
-            Debug.Log($"Progress reset and levels up to {levelToUnlock} unlocked. Restart game.");
+            ShowMessage($"RESET complete! Levels 1-{levelToUnlock} unlocked. RESTART GAME!");
         }
-
 
         public void Reset()
         {
+            ShowMessage("FULL RESET - Deleting all save data...");
             DataProvider.Reset();
-            Debug.Log("Everything reset :D  Restart game.");
+            ShowMessage("RESET COMPLETE! All data deleted. RESTART GAME!");
         }
 
         public void DvorakHotkeys()
         {
+            ShowMessage("Setting Dvorak hotkeys...");
+            
             HotkeysModel hotkeys = DataProvider.GameModel.Hotkeys;
 
             // Navigation
@@ -211,30 +274,35 @@ namespace BattleCruisers.Utils.Debugging
             hotkeys.Archon = KeyCode.P;
 
             DataProvider.SaveGame();
+            ShowMessage("Dvorak hotkeys SET! Check settings.");
         }
 
         public void AddMoney()
         {
+            long before = DataProvider.GameModel.Coins;
             DataProvider.GameModel.Coins += 1000;
             DataProvider.SaveGame();
+            ShowMessage($"COINS: {before} → {DataProvider.GameModel.Coins} (+1000)");
         }
 
         public void RemoveMoney()
         {
+            long before = DataProvider.GameModel.Coins;
             DataProvider.GameModel.Coins -= 1000;
             if (DataProvider.GameModel.Coins < 0)
             {
                 DataProvider.GameModel.Coins = 0;
             }
             DataProvider.SaveGame();
+            ShowMessage($"COINS: {before} → {DataProvider.GameModel.Coins} (-1000)");
         }
 
         public void Add5kOnBounty()
         {
-            Debug.LogError(DataProvider.GameModel.Bounty);
+            long before = DataProvider.GameModel.Bounty;
             DataProvider.GameModel.Bounty += 5000;
-            Debug.LogError(DataProvider.GameModel.Bounty);
             DataProvider.SaveGame();
+            ShowMessage($"BOUNTY: {before} → {DataProvider.GameModel.Bounty} (+5000)");
         }
 
         /// <summary>
@@ -245,8 +313,8 @@ namespace BattleCruisers.Utils.Debugging
             DataProvider.GameModel.PremiumEdition = !DataProvider.GameModel.PremiumEdition;
             DataProvider.SaveGame();
 
-            string status = DataProvider.GameModel.PremiumEdition ? "PREMIUM" : "FREE";
-            Debug.Log($"[AdminPanel] Edition toggled to: {status}");
+            string status = DataProvider.GameModel.PremiumEdition ? "PREMIUM (no ads)" : "FREE (ads enabled)";
+            ShowMessage($"Edition: {status}");
 
             // Log to Firebase for tracking
             if (FirebaseAnalyticsManager.Instance != null)
@@ -263,7 +331,7 @@ namespace BattleCruisers.Utils.Debugging
             PlayerPrefs.DeleteKey("AdCounterKey");
             PlayerPrefs.DeleteKey("LastAdShowTime");
             PlayerPrefs.Save();
-            Debug.Log("[AdminPanel] Ad counters reset - next battle will show ad");
+            ShowMessage("Ad counters RESET! Next battle will trigger ad check.");
         }
 
         /// <summary>
@@ -273,12 +341,26 @@ namespace BattleCruisers.Utils.Debugging
         {
             if (fullScreenAdverts == null)
             {
-                Debug.LogError("[AdminPanel] FullScreenAdverts not linked! Assign in Inspector.");
+                ShowMessage("ERROR: FullScreenAdverts not linked! Assign in Inspector.", true);
+                return;
+            }
+
+            // Check if ads are disabled
+            if (AdConfigManager.Instance != null && AdConfigManager.Instance.AdsDisabled)
+            {
+                ShowMessage("Ads are DISABLED via Remote Config. Cannot show ad.", true);
                 return;
             }
 
             ResetAdCounters();
-            Debug.Log("[AdminPanel] Forcing ad display...");
+            
+            string mode = "UNKNOWN";
+            if (AdConfigManager.Instance != null)
+            {
+                mode = AdConfigManager.Instance.IsTestMode() ? "TEST MODE" : "PRODUCTION";
+            }
+            
+            ShowMessage($"Forcing ad display... Mode: {mode}");
             fullScreenAdverts.ForceShowAd();
         }
 
@@ -290,29 +372,30 @@ namespace BattleCruisers.Utils.Debugging
             bool isPremium = DataProvider.GameModel.PremiumEdition;
             int levelsCompleted = DataProvider.GameModel.NumOfLevelsCompleted;
 
-            string config = "=== AD STATUS ===\n";
-            config += $"Edition: {(isPremium ? "PREMIUM" : "FREE")}\n";
-            config += $"Levels Completed: {levelsCompleted}\n";
+            string statusMsg = "=== AD STATUS ===\n";
+            statusMsg += $"Edition: {(isPremium ? "PREMIUM" : "FREE")}\n";
+            statusMsg += $"Levels: {levelsCompleted}\n";
 
             if (AdConfigManager.Instance != null)
             {
-                config += $"Min Level for Ads: {AdConfigManager.Instance.MinimumLevelForAds}\n";
-                config += $"Ad Frequency: {AdConfigManager.Instance.GetAdFrequencyForPlayer(levelsCompleted)}\n";
-                config += $"Ad Cooldown: {AdConfigManager.Instance.AdCooldownMinutes} min\n";
-                config += $"Veteran Player: {AdConfigManager.Instance.IsVeteranPlayer(levelsCompleted)}\n";
+                var config = AdConfigManager.Instance;
+                statusMsg += $"Mode: {(config.AdsDisabled ? "DISABLED" : (config.AdsAreLive ? "PRODUCTION" : "TEST"))}\n";
+                statusMsg += $"MinLevel: {config.MinimumLevelForAds}\n";
+                statusMsg += $"Frequency: {config.GetAdFrequencyForPlayer(levelsCompleted)}\n";
+                statusMsg += $"Cooldown: {config.AdCooldownMinutes}min\n";
+                statusMsg += $"Veteran: {config.IsVeteranPlayer(levelsCompleted)}\n";
+            }
+            else
+            {
+                statusMsg += "AdConfigManager: NOT FOUND!\n";
             }
 
             if (fullScreenAdverts != null)
             {
-                config += $"Counter Status: {fullScreenAdverts.GetAdCounterStatus()}\n";
-            }
-            else
-            {
-                config += "FullScreenAdverts: Not linked!\n";
+                statusMsg += $"Counter: {fullScreenAdverts.GetAdCounterStatus()}\n";
             }
 
-            config += "================";
-            Debug.Log(config);
+            ShowMessage(statusMsg);
         }
 
         /// <summary>
@@ -322,18 +405,57 @@ namespace BattleCruisers.Utils.Debugging
         {
             if (FirebaseAnalyticsManager.Instance != null)
             {
-                FirebaseAnalyticsManager.Instance.LogEvent("admin_test_event", new System.Collections.Generic.Dictionary<string, object>
+                FirebaseAnalyticsManager.Instance.LogEvent("admin_test_event", new Dictionary<string, object>
                 {
                     { "test_param", "test_value" },
                     { "timestamp", System.DateTime.Now.ToString() },
                     { "levels_completed", DataProvider.GameModel.NumOfLevelsCompleted },
                     { "is_premium", DataProvider.GameModel.PremiumEdition }
                 });
-                Debug.Log("[AdminPanel] ✅ Test event sent to Firebase Analytics! Check DebugView in Firebase Console.");
+                ShowMessage("Firebase test event SENT! Check DebugView in Firebase Console.");
             }
             else
             {
-                Debug.LogError("[AdminPanel] FirebaseAnalyticsManager not found!");
+                ShowMessage("ERROR: FirebaseAnalyticsManager not found!", true);
+            }
+        }
+
+        /// <summary>
+        /// Refresh Ad Config from Unity Remote Config
+        /// </summary>
+        public async void RefreshAdConfig()
+        {
+            ShowMessage("Refreshing Ad Config from Unity Remote Config...");
+            
+            if (AdConfigManager.Instance != null)
+            {
+                await AdConfigManager.Instance.RefreshConfigAsync();
+                ShowMessage($"Config refreshed! {AdConfigManager.Instance.GetStatusString()}");
+            }
+            else
+            {
+                ShowMessage("ERROR: AdConfigManager not found!", true);
+            }
+        }
+
+        /// <summary>
+        /// Show detailed Remote Config values
+        /// </summary>
+        public void ShowRemoteConfigDetails()
+        {
+            if (AdConfigManager.Instance != null)
+            {
+                var snapshot = AdConfigManager.Instance.GetConfigSnapshot();
+                string details = "=== REMOTE CONFIG ===\n";
+                foreach (var kvp in snapshot)
+                {
+                    details += $"{kvp.Key}: {kvp.Value}\n";
+                }
+                ShowMessage(details);
+            }
+            else
+            {
+                ShowMessage("ERROR: AdConfigManager not found!", true);
             }
         }
     }

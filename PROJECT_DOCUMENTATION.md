@@ -27,12 +27,12 @@
 
 ### ✅ Complete & Production Ready
 - **AppLovin MAX SDK Integration** - AppLovin MAX SDK v12.6.1 (Kotlin 1.x compatible with Unity 2021.3)
-- **Custom Firebase JNI Integration** - Analytics + Remote Config via Android native SDK
+- **Custom Firebase JNI Integration** - Analytics via Android native SDK (Analytics only)
 - **Firebase Android SDK** (v21.5.0/21.6.0) - compatible with Unity 2021.3
 - **Rewarded Ad System** with first-time bonus logic
-- **AdConfigManager** - Firebase Remote Config integration
+- **AdConfigManager** - Unity Remote Config (AD_CONFIG JSON) integration
 - **AppLovinManager** - Real AppLovin MAX SDK implementation with Editor simulation
-- **Admin Panel** - Enhanced with ad testing functions
+- **Admin Panel** - Enhanced with ad testing functions & on-screen logging
 - **Minimum SDK Version** - Android API 23
 - **Google Play Games** - Unity plugin for authentication
 
@@ -49,14 +49,14 @@
 
 ```
 ┌─────────────────────────────────────┐
-│     Firebase Remote Config          │
-│  (Reward values, ad settings)       │
+│     Unity Remote Config             │
+│            (AD_CONFIG)              │
 └──────────────┬──────────────────────┘
                │
                ▼
 ┌─────────────────────────────────────┐
 │       AdConfigManager               │
-│  - Fetches Firebase values          │
+│  - Fetches AD_CONFIG JSON           │
 │  - Applies defaults if offline      │
 │  - Provides ad configuration        │
 └──────────────┬──────────────────────┘
@@ -83,7 +83,7 @@
 
 | File | Purpose | Status |
 |------|---------|--------|
-| `Assets/Scripts/Ads/AdConfigManager.cs` | Firebase Remote Config fetching | ✅ Complete |
+| `Assets/Scripts/Ads/AdConfigManager.cs` | Unity Remote Config (AD_CONFIG JSON) fetching | ✅ Complete |
 | `Assets/Scripts/Ads/AppLovinManager.cs` | AppLovin MAX SDK wrapper | ✅ Full implementation |
 | `Assets/Scripts/Scenes/DestructionSceneGod.cs` | Campaign rewarded ads | ✅ Complete |
 | `Assets/Scripts/PvP/.../PvPDestructionSceneGod.cs` | PvP rewarded ads | ✅ Complete |
@@ -91,9 +91,7 @@
 | `Assets/Editor/FirebaseDependencies.xml` | Firebase Android dependencies | ✅ v21.5.0/21.6.0 |
 | `Assets/Editor/AppLovinMaxDependencies.xml` | AppLovin MAX SDK dependencies | ✅ v12.6.1 (pinned) |
 | `Assets/Editor/AppLovinDependencyConditional.cs` | Manages DISABLE_ADS dependency exclusion | ✅ Active |
-| `Assets/Editor/AppLovinDependencyConditional.cs` | Manages DISABLE_ADS dependency exclusion | ✅ Active |
 | `Packages/manifest.json` | Unity Package Manager | ✅ Clean |
-| `firebase-remote-config-UPLOAD.json` | Remote Config template | ✅ Ready to upload |
 
 ---
 
@@ -149,18 +147,17 @@
 3. Enable **Test Mode** and add your test device ID
 4. (Optional) Add additional ad networks (AdMob, Meta, Unity, etc.) for mediation
 
-### Firebase Native SDK (Custom JNI)
+### Firebase Native SDK (Analytics Only)
 
 **Current Versions (Verified Working - Unity 2021.3 Compatible)**
 - Firebase Analytics: **21.5.0** ✅ (verified exists in Maven, Kotlin 1.x compatible)
-- Firebase Remote Config: **21.6.0** ✅ (verified exists in Maven, Kotlin 1.x compatible)
 - Firebase Crashlytics: **18.6.0** ✅ (verified exists in Maven)
 - AppLovin MAX SDK: **12.6.1** ✅ (Kotlin 1.x compatible, pinned to prevent auto-upgrade)
 
 **⚠️ Version Warning:** Do not use Firebase versions like 21.6.0 (analytics), 21.7.0 (config), or 18.7.0 (crashlytics) - they don't exist in Maven and will cause "Could not find" build errors. Always verify versions exist before updating.
 
 **Implementation Notes**
-- We use AndroidJavaClass to call Firebase Analytics / Remote Config directly
+- We use AndroidJavaClass to call Firebase Analytics directly
 - No Firebase Unity SDK is installed to avoid conflicts
 - Dependencies defined in `Assets/Editor/FirebaseDependencies.xml`
 
@@ -178,6 +175,25 @@
    ```
 6. Rebuild in Unity
 
+### Unity Remote Config – AD_CONFIG
+
+Unity Remote Config now stores all ad tuning values in a single JSON key named `AD_CONFIG`, matching the style of `GAME_CONFIG` and `SHOP_CONFIG`.
+
+**Key Name:** `AD_CONFIG`  
+**Type:** `json`  
+**Recommended Value:**
+```json
+{"ad_minimum_level":7,"ad_frequency":3,"ad_cooldown_minutes":9.0,"ad_veteran_boost_enabled":true,"ad_veteran_threshold":15,"ad_veteran_frequency":2,"ads_are_live":false,"ads_disabled":false}
+```
+
+**Usage Notes**
+- Add `AD_CONFIG` via Unity Dashboard → Remote Config → Add Key
+- Publish to propagate changes (~2 minutes)
+- `AdConfigManager` reads the JSON via `JsonUtility.FromJson<AdConfig>()`
+- `FullScreenAdverts`, `AppLovinManager`, and `AdminPanel` honor `ads_are_live`/`ads_disabled`
+- Flip between test mode (`ads_are_live=false`), production (`ads_are_live=true`), or disabled (`ads_disabled=true`) without code changes
+
+### Unity Inspector Assignments
 ### Unity Inspector Assignments
 
 #### AppLovinManager
@@ -427,7 +443,7 @@ Automatically logged:
 - AppLovin MAX SDK integrated
 - `AppLovinManager.cs` fully implemented with AppLovin MAX SDK
 - Android dependencies configured via Android Resolver
-- Firebase integration (Analytics + Remote Config)
+- Firebase integration (Analytics only) plus Unity Remote Config (AD_CONFIG)
 - Rewarded & interstitial ad systems implemented
 - Editor simulation + Admin Panel enhancements
 
@@ -454,10 +470,11 @@ Automatically logged:
 6. **Build & Test**:
    - Unity → Build Settings → Android → Build and Run
    - Confirm rewarded ad button, watch ad, verify rewards
-7. **Verify Firebase**:
-   - Firebase Console → Analytics → DebugView
-   - Enable debug: `adb shell setprop debug.firebase.analytics.app com.Bluebottle.Battlecruisers`
-   - Check for `ad_impression`, `rewarded_ad_started`, `rewarded_ad_completed`, `earn_virtual_currency`
+- 7. **Verify Analytics & Remote Config**:
+-   - Firebase Console → Analytics → DebugView
+-   - Enable debug: `adb shell setprop debug.firebase.analytics.app com.Bluebottle.Battlecruisers`
+-   - Check for `ad_impression`, `rewarded_ad_started`, `rewarded_ad_completed`, `earn_virtual_currency`
+-   - Unity Dashboard → Remote Config → Confirm `AD_CONFIG` is published
 
 ### 🧾 Build Checklist
 
@@ -480,7 +497,7 @@ Automatically logged:
 
 ### 🔗 References
 
-- Firebase Remote Config URL: `https://console.firebase.google.com/project/YOUR_PROJECT_ID/config`
+- Unity Remote Config Dashboard: `https://dashboard.unity3d.com/projects/<project-id>/remote-config`
 - Admin Panel: `Assets/Scripts/Utils/Debugging/AdminPanel.cs`
 - AppLovin MAX Dashboard: `https://dash.applovin.com/`
 - AppLovin MAX Unity Plugin GitHub: `https://github.com/AppLovin/AppLovin-MAX-Unity-Plugin`
@@ -751,6 +768,24 @@ Assets\ExternalDependencyManager\Editor\1.2.169\...
 - This is informational logging, not a problem
 
 **Action:** None required - these logs can be ignored. They're verbose but harmless.
+
+### Jetifier Configuration (Required by AppLovin)
+
+**Status:** ✅ **Correctly Enabled**
+
+According to [AppLovin's Unity integration documentation](https://support.axon.ai/en/max/unity/overview/integration/), Jetifier is **required** for Android builds with AppLovin MAX SDK.
+
+**Current Configuration:**
+- `ProjectSettings/AndroidResolverDependencies.xml`: `useJetifier="True"` ✅
+- `Assets/Plugins/Android/gradleTemplate.properties`: `android.enableJetifier=true` ✅
+- AppLovin's post-processor (`AppLovinPostProcessAndroid.cs`) also automatically enables Jetifier ✅
+
+**What Jetifier Does:**
+- Converts legacy Android Support Library dependencies to AndroidX
+- Required for AppLovin MAX SDK compatibility
+- Automatically enabled by AppLovin's post-processor
+
+**Note:** We previously attempted to disable Jetifier, but this was incorrect. AppLovin requires it, and it's now properly enabled.
 
 ### DISABLE_ADS Flag - Building Without AppLovin SDK
 
@@ -1054,6 +1089,32 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 - **Build with ads:** Remove DISABLE_ADS define, force resolve dependencies, rebuild
 
 **Result:** ✅ Gradle warnings eliminated, ability to build without AppLovin SDK for testing
+
+### November 25, 2024 - Creative Debugger & Jetifier Verification
+**Issues Found:**
+- Missing Creative Debugger implementation from [AppLovin documentation](https://support.axon.ai/en/max/unity/testing-networks/creative-debugger/)
+- Jetifier was correctly enabled (verified against AppLovin requirements)
+
+**Fixes Applied:**
+1. ✅ Added Creative Debugger support to `AppLovinManager.cs`:
+   - `SetCreativeDebuggerEnabled()` - Configurable via Inspector
+   - `ShowCreativeDebugger()` - Programmatic access to debugger UI
+   - Creative ID now included in revenue tracking logs (via `OnAdRevenuePaidEvent` callback)
+   - **Note:** `GetInfo()` method from AppLovin docs is not available in SDK 12.6.1. AdInfo is only available through callbacks (which we're already using)
+
+2. ✅ Verified Jetifier configuration:
+   - Confirmed `useJetifier="True"` in AndroidResolverDependencies.xml
+   - Confirmed `android.enableJetifier=true` in gradleTemplate.properties
+   - AppLovin's post-processor also enables Jetifier automatically
+
+**Files Modified:**
+- `Assets/Scripts/Ads/AppLovinManager.cs` - Added Creative Debugger methods and creative ID tracking
+
+**References:**
+- [AppLovin Creative Debugger Documentation](https://support.axon.ai/en/max/unity/testing-networks/creative-debugger/)
+- [AppLovin Unity Integration Guide](https://support.axon.ai/en/max/unity/overview/integration/)
+
+**Result:** ✅ Creative Debugger now available, Jetifier confirmed as required and correctly enabled
 
 ### November 21, 2024 - Unity Mediation SDK Conflict Fix
 **Issue:** Build fails with dependency conflicts
