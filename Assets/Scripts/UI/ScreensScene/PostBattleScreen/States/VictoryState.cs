@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                _unlockedLoot = lootManager.UnlockLevelLoot(battleResult.LevelNum);
+                _unlockedLoot = LootManager.UnlockLevelLoot(battleResult.LevelNum);
             }
             else if (ApplicationModel.Mode == GameMode.SideQuest &&
                     (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
                 postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                _unlockedLoot = lootManager.UnlockSideQuestLoot(ApplicationModel.SelectedSideQuestID);
+                _unlockedLoot = LootManager.UnlockSideQuestLoot(ApplicationModel.SelectedSideQuestID);
             }
             else
             {

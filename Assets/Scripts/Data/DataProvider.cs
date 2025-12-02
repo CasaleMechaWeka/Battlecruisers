@@ -220,19 +220,11 @@ namespace BattleCruisers.Data
                     GetConfigValues();
                     await SyncItemsCostV2();
                     await SyncCurrencyFromCloud();
-                    if (_gameModel.IsDoneMigration)
-                    {
-                        await SyncInventroyV2();
-                    }
-                    else
-                    {
-                        await SyncInventoryFromCloud();
-                        MigrateInventory();
-                        await SyncInventroyV2();
-                        _gameModel.IsDoneMigration = true;
-                        SaveGame();
-                        await CloudSave();
-                    }
+                    await SyncInventoryFromCloud();
+                    MigrateInventory();
+                    await SyncInventroyV2();
+                    SaveGame();
+                    await CloudSave();
                     GameModel.HasSyncdShop = true;
                     break;
             }

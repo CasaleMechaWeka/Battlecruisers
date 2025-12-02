@@ -31,7 +31,6 @@ public class PlayerSaveGameEditor : EditorWindow
     private long editableBestDestructionScore;
     private bool editablePremiumEdition;
     private bool editableHasSyncdShop;
-    private bool editableIsDoneMigration;
     private int editableGameMap;
     private string editableQueueName;
     private int editableID_Bodykit_AIbot;
@@ -92,7 +91,6 @@ public class PlayerSaveGameEditor : EditorWindow
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Game State - EDITABLE", EditorStyles.boldLabel);
         editableHasSyncdShop = EditorGUILayout.Toggle("Has Synced Shop:", editableHasSyncdShop);
-        editableIsDoneMigration = EditorGUILayout.Toggle("Is Done Migration:", editableIsDoneMigration);
         editableGameMap = EditorGUILayout.IntField("Game Map:", editableGameMap);
         editableQueueName = EditorGUILayout.TextField("Queue Name:", editableQueueName);
         editableID_Bodykit_AIbot = EditorGUILayout.IntField("ID Bodykit AIbot:", editableID_Bodykit_AIbot);
@@ -176,7 +174,6 @@ public class PlayerSaveGameEditor : EditorWindow
         editableBestDestructionScore = gameModel.BestDestructionScore;
         editablePremiumEdition = gameModel.PremiumEdition;
         editableHasSyncdShop = gameModel.HasSyncdShop;
-        editableIsDoneMigration = gameModel.IsDoneMigration;
         editableGameMap = gameModel.GameMap;
         editableQueueName = gameModel.QueueName;
         editableID_Bodykit_AIbot = gameModel.ID_Bodykit_AIbot;
@@ -221,7 +218,6 @@ public class PlayerSaveGameEditor : EditorWindow
         gameModel.BestDestructionScore = editableBestDestructionScore;
         gameModel.PremiumEdition = editablePremiumEdition;
         gameModel.HasSyncdShop = editableHasSyncdShop;
-        gameModel.IsDoneMigration = editableIsDoneMigration;
         gameModel.GameMap = editableGameMap;
         gameModel.QueueName = editableQueueName;
         gameModel.ID_Bodykit_AIbot = editableID_Bodykit_AIbot;

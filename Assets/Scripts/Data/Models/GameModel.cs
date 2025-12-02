@@ -130,14 +130,6 @@ namespace BattleCruisers.Data.Models
         private List<int> _purchasedBodykits;
         private List<int> _purchasedVariants;
 
-
-        private bool _isDoneMigration;
-        public bool IsDoneMigration
-        {
-            get => _isDoneMigration;
-            set => _isDoneMigration = value;
-        }
-
         [SerializeField]
         private bool _hasAttemptedTutorial;
 
@@ -344,7 +336,6 @@ namespace BattleCruisers.Data.Models
             _purchasedHeckles = new List<int>();
             _purchasedBodykits = new List<int>();
             _purchasedVariants = new List<int>();
-            _isDoneMigration = false;
 
             _playerName = "Charlie";
             _coins = 50;
