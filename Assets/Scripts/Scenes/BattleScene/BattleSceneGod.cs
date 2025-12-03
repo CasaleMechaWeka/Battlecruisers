@@ -503,7 +503,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 await handle.Task;
                 
                 if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
-                    Debug.LogError("Failed to retrieve sprite for path: " + path);
+                    Debug.LogError("Failed to retrieve prefab for path: " + path);
                 else
                 {
                     battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
