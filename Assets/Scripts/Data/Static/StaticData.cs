@@ -20,6 +20,7 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Cruisers;
 using UnityEngine;
 using BattleCruisers.Scenes;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 
 namespace BattleCruisers.Data.Static
 {
@@ -297,6 +298,87 @@ namespace BattleCruisers.Data.Static
             new Level(39, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(39), GetDefaultHeckleConfig()),
             new Level(40, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(40), GetDefaultHeckleConfig()) //TODO: Change to new boss broadsword
         });
+
+        public static ReadOnlyCollection<BackgroundImageStats> LevelBackgrounds = new ReadOnlyCollection<BackgroundImageStats>(new List<BackgroundImageStats>()
+        {
+            new BackgroundImageStats(160,   new Vector2(0,  500),   655,    777,    "EvenNewerZealand", new Color(0.7169812f,   0.6184399f,     0.5512638f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  500),   655,    777,    "EvenNewerZealand", new Color(0.7169812f,   0.6184399f,     0.5512638f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(23, 500),   620,    740,    "Sydney",           new Color(0.282353f,    0.2039216f,     0.3215686f),                    false,  10),
+            new BackgroundImageStats(55,    new Vector2(0,  224),   372,    333,    "KualaLimpur",      new Color(0.09019608f,  0.04705882f,    0.1333333f),                    false,  10),
+            new BackgroundImageStats(144,   new Vector2(0,  1160),  1260,   1425,   "Himalayas",        new Color(0.8039216f,   0.7789315f,     0.5411765f,     0.7882353f),    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    755,    "Egypt",            new Color(0.1960784f,   0.2313726f,     0.345098f),                     false,  10),
+            new BackgroundImageStats(120,   new Vector2(0,  320),   456,    555,    "Paris",            new Color(0.08235294f,  0.1215686f,     0.1529412f),                    false,  -50),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "SeaWall",          new Color(0.3333333f,   0.3333333f,     0.3333333f),                    false,  55),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "Rio",              new Color(0.1490196f,   0.2392157f,     0.3215686f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  1300),  1400,   1470,   "Andes",            new Color(1f,           0.6156863f,     0f,             0.3568628f),    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "Sanfran",          new Color(0.282353f,    0.227451f,      0.6039216f,     0.1529412f),    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "China",            new Color(0.427451f,    0.4823529f,     0.5411765f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  1160),  1260,   1400,   "Himalayas",        new Color(1f,           0.6941177f,     0f,             0.3137255f),    true,   10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "Dubai",            new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "Dubai",            new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "London",           new Color(0.7803922f,   0.5803922f,     0.4862745f,     0.2235294f),    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "NYC",              new Color(0f,           0f,             0f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    "TwinCityFlotilla", new Color(0.06790674f,  0.103556f,      0.1320755f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  500),   655,    740,    "BlimpCity",        new Color(0f,           0f,             0f,             0.7137255f),    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  590),   720,    810,    "Russia",           new Color(0.01960784f,  0.01176471f,    0.01176471f),                   false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   100,    "FightClub",        new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  450),   580,    740,    "EvenNewerZealand", new Color(0.1882353f,   0.2784314f,     0.4078431f),                    true,   10),
+            new BackgroundImageStats(150,   new Vector2(0,  -20),   200,    300,    "Junkyard",         new Color(0.2156863f,   0.2117647f,     0.2470588f),                    false,  10),
+            new BackgroundImageStats(50,    new Vector2(0,  240),   300,    450,    "Antarctica",       new Color(0.631675f,    0.7289388f,     0.8018868f),                    false,  10),
+            new BackgroundImageStats(150,   new Vector2(0,  330),   550,    690,    "CapeTown",         new Color(0.2392157f,   0.1843137f,     0.3215686f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  -110),  140,    300,    "TableMountain",    new Color(0.1501869f,   0.1964908f,     0.2358491f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  180),   380,    500,    "BGENZ",            new Color(0.745283f,    0.5127987f,     0.3831879f),                    true,   10),
+
+            new BackgroundImageStats(160,   new Vector2(0,  550),   660,    790,    "Wreckyards",       new Color(0.01960784f,  0.01176471f,    0.01176471f),                   false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "Oz",               new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "FightClub",        new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  420),   640,    730,    "UACBattleNight",   new Color(0.1501869f,   0.1964908f,     0.2358491f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  500),   660,    730,    "NuclearDome",      new Color(0.745283f,    0.5127987f,     0.3831879f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "UACArena",         new Color(0.01960784f,  0.01176471f,    0.01176471f),                   false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "Rio2",             new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  500),   660,    730,    "UACUltimate",      new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  420),   660,    730,    "MercenaryOne",     new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+        });
+
+        public static ReadOnlyCollection<BackgroundImageStats> SideQuestBackgrounds = new ReadOnlyCollection<BackgroundImageStats>(new List<BackgroundImageStats>()
+        {
+            new BackgroundImageStats(160,   new Vector2(0,  550),   660,    790,    "Wreckyards",       new Color(0.01960784f,  0.01176471f,    0.01176471f),                   false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "Oz",               new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "FightClub",        new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  420),   640,    730,    "UACBattleNight",   new Color(0.1501869f,   0.1964908f,     0.2358491f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  500),   660,    730,    "NuclearDome",      new Color(0.745283f,    0.5127987f,     0.3831879f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "UACArena",         new Color(0.01960784f,  0.01176471f,    0.01176471f),                   false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "Rio2",             new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  500),   660,    730,    "UACUltimate",      new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  420),   660,    730,    "MercenaryOne",     new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  410),   510,    730,    "ImperiusTower",    new Color(0.2392157f,   0.1843137f,     0.3215686f),                    false,  -50),
+            new BackgroundImageStats(160,   new Vector2(0,  460),   595,    730,    "TowerCity",        new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  460),   595,    730,    "BlockCity",        new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  460),   595,    730,    "RicketyCity",      new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  380),   540,    650,    "UACHQ",            new Color(0.1254902f,   0.0627451f,     0.0627451f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  456),   655,    740,    null,               new Color(1f,           1f,             1f),                            false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  445),   636,    730,    "FPIslandDistant",  new Color(0.4716981f,   0.3597144f,     0.2647739f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  445),   595,    730,    "FPIsland",         new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(110,   new Vector2(0,  224),   372,    444,    "FortressPrime",    new Color(0.3490196f,   0.3764706f,     0.3960784f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  500),   650,    730,    "FPIslandOnly",     new Color(0.0627451f,   0.09411765f,    0.1254902f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "Oz",               new Color(0.7843137f,   0.7019608f,     0.6470588f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "FightClub",        new Color(0.09019608f,  0.04705882f,    0.1333333f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  500),   660,    730,    "UACBattleNight",   new Color(0.135502f,    0.1489414f,     0.1981132f),                    false,  10),
+            new BackgroundImageStats(140,   new Vector2(0,  460),   600,    700,    "NuclearDome",      new Color(0.05762725f,  0.06384827f,    0.06603771f),                   false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "UACArena",         new Color(0.09019608f,  0.04705882f,    0.1333333f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  -290),  -100,   0,      "Rio2",             new Color(0.7647059f,   0.5803922f,     0.4862745f),                    false,  10),
+            new BackgroundImageStats(160,   new Vector2(0,  500),   660,    730,    "UACUltimate",      new Color(0.1960784f,   0.2313726f,     0.345098f),                     false,  10),
+        });
+
         public static ReadOnlyCollection<SideQuestData> SideQuests { get; } = new ReadOnlyCollection<SideQuestData>(new List<SideQuestData>()
         {
             //Set 1: Original Secret Levels
@@ -336,6 +418,7 @@ namespace BattleCruisers.Data.Static
             new SideQuestData(false, Exos.GetCaptainExoKey(45), 4, 27, Hulls.Megalith, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, false, 29), //SpyPlane
             new SideQuestData(false, Exos.GetCaptainExoKey(11), 11, 29, Hulls.Pistol, BackgroundMusic.Juggernaut, SkyMaterials.Midday, false, 30) //Sledgehammer
         });
+
         public static ReadOnlyDictionary<Map, PvPLevel> PvPLevels { get; } = new ReadOnlyDictionary<Map, PvPLevel>(new Dictionary<Map, PvPLevel>()
         {
             {Map.PracticeWreckyards,  new PvPLevel(1, PvPStaticPrefabKeys.PvPHulls.PvPRaptor, BackgroundMusic.Bobby, SkyMaterials.Morning)},

@@ -344,20 +344,20 @@ namespace BattleCruisers.Scenes.BattleScene
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
-            PrefabContainer<BackgroundImageStats> backgroundStats;
+            BackgroundImageStats backgroundStats;
             IManagedDisposable ai;
             if (ApplicationModel.Mode != GameMode.SideQuest)
             {
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedLevel);
-                backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
-                components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
+                backgroundStats = StaticData.LevelBackgrounds[currentLevel.Num];
+                await components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
                 cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentLevel.SkyMaterialName);
             }
             else
             {
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedSideQuestID);
-                backgroundStats = await helper.GetBackgroundStatsAsync(ApplicationModel.SelectedSideQuestID);
-                components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
+                backgroundStats = StaticData.SideQuestBackgrounds[ApplicationModel.SelectedSideQuestID];
+                await components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
 
                 cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentSideQuest.SkyMaterial);
             }

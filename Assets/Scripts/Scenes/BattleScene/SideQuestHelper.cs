@@ -5,7 +5,6 @@ using BattleCruisers.Cruisers.Drones;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
-using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
@@ -13,7 +12,6 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Common.BuildableDetails.Buttons;
@@ -21,11 +19,9 @@ using BattleCruisers.UI.Filters;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
 using BattleCruisers.Utils.Timers;
-using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Scenes.BattleScene
@@ -61,12 +57,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public override Loadout GetPlayerLoadout()
         {
             return DataProvider.GameModel.PlayerLoadout;
-        }
-
-        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
-        {
-            IPrefabKey key = new SideQuestBackgroundImageStatsKey(ApplicationModel.SelectedSideQuestID);
-            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(key);
         }
 
         public override IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum)
@@ -151,14 +141,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 soundPlayer,
                 uiSoundPlayer);
         }
-
-        /*
-        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
-        {
-            return await _backgroundStatsProvider.GetStatsAsync(_skirmish.BackgroundLevelNum);
-        }
-        */
-
 
         public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
             IUserChosenTargetManager playerCruiserUserChosenTargetManager,

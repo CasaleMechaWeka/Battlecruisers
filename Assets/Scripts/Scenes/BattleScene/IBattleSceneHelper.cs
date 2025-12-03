@@ -9,12 +9,10 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
-using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 
@@ -50,7 +48,6 @@ namespace BattleCruisers.Scenes.BattleScene
             IPrioritisedSoundPlayer soundPlayer,
             TargetIndicatorController targetIndicator);
         Task<string> GetEnemyNameAsync(int levelNum);
-        Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum);
         IPrefabKey GetAiCruiserKey();
     }
 }

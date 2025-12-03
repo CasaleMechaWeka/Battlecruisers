@@ -5,8 +5,6 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static.Strategies.Helper;
-using BattleCruisers.UI.BattleScene.Clouds.Stats;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Threading;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,12 +52,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public override Task<string> GetEnemyNameAsync(int levelNum)
         {
             return Task.FromResult("SIMULATRON");
-        }
-
-        public override async Task<PrefabContainer<BackgroundImageStats>> GetBackgroundStatsAsync(int levelNum)
-        {
-            return await PrefabFetcher.GetPrefabAsync<BackgroundImageStats>(
-                new LevelBackgroundImageStatsKey(_skirmish.BackgroundLevelNum));
         }
 
         public override IPrefabKey GetAiCruiserKey()

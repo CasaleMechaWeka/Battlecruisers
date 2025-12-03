@@ -1,8 +1,8 @@
-﻿using BattleCruisers.UI.BattleScene.Clouds.Stats;
+﻿using System.Threading.Tasks;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Update;
 using BattleCruisers.Utils.DataStrctures;
-using BattleCruisers.Utils.Fetchers;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -23,11 +23,11 @@ namespace BattleCruisers.UI.BattleScene.Clouds
         public Image seaShadeCanvas;
 
 
-        public void Initialise(
+        public async Task Initialise(
             string skyMaterialName,
             IUpdater updater,
             float cameraAspectRatio,
-            PrefabContainer<BackgroundImageStats> backgroundStats)
+            BackgroundImageStats backgroundStats)
         {
             Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, background);
             Helper.AssertIsNotNull(leftCloud, rightCloud, mist, backgroundStats);
@@ -36,7 +36,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds
             skyStatsGroup.Initialise();
             SkyStatsController skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
 
-            background.Initialise(backgroundStats, cameraAspectRatio, new BackgroundImageCalculator());
+            await background.Initialise(backgroundStats, cameraAspectRatio, new BackgroundImageCalculator());
 
             leftCloud.Initialise(skyStats);
             rightCloud.Initialise(skyStats);
