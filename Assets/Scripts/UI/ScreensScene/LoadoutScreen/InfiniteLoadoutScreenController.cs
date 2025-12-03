@@ -26,7 +26,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public ItemDetailsPanel itemDetailsPanel;
         public ItemPanelsController itemPanels;
         public CategoryButtonsPanel categoryButtonsPanel;
-        public CompareButton compareButton;
         public SelectCruiserButton selectCruiserButton;
         public SelectBuildingButton selectBuildingButton;
         public SelectUnitButton selectUnitButton;
@@ -55,7 +54,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, compareButton, selectCruiserButton, homeButton, profileButton);
+            Helper.AssertIsNotNull(itemDetailsPanel, itemPanels, categoryButtonsPanel, selectCruiserButton, homeButton, profileButton);
 
             itemDetailsPanel.Initialise();
 
@@ -80,7 +79,6 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _comparingFamilyTracker = new ComparingItemFamilyTracker();
             ComparisonStateTracker comparisonStateTracker = new ComparisonStateTracker(_comparingFamilyTracker.ComparingFamily, _itemDetailsManager);
 
-            compareButton.Initialise(soundPlayer, _itemDetailsManager, _comparingFamilyTracker, comparisonStateTracker);
             selectCruiserButton
                 .Initialise(
                     soundPlayer,
@@ -146,9 +144,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         public void ShowProfile()
         {
-            _itemDetailsManager.HideDetails();
             itemPanels.CurrentlyShownPanel?.Hide();
             itemPanels.ShowHecklePanel();
+            _itemDetailsManager.ShowProfile();
         }
 
         private void GoToBodykitsShop()
