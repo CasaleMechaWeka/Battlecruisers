@@ -9,7 +9,7 @@ public class DemoScript : MonoBehaviour
 
     void Start()
     {
-        BattleSceneGod = GetComponent<BattleSceneGod>();
+        BattleSceneGod = GetComponentInParent<BattleSceneGod>();
     }
 
     void Init(BattleSceneGod battleSceneGod)
