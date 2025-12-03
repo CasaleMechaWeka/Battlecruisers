@@ -15,6 +15,7 @@ using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Utils.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -24,8 +25,6 @@ namespace BattleCruisers.Scenes.BattleScene
     public abstract class BattleSceneHelper : IBattleSceneHelper
     {
         protected readonly BuildProgressCalculatorFactory _calculatorFactory;
-        private ITrashTalkProvider _trashTalkProvider;
-
 
         public abstract bool ShowInGameHints { get; }
         public abstract BuildingCategoryFilter BuildingCategoryPermitter { get; }
@@ -36,7 +35,6 @@ namespace BattleCruisers.Scenes.BattleScene
             _calculatorFactory
                 = new BuildProgressCalculatorFactory(
                     new BuildSpeedCalculator());
-            _trashTalkProvider = new TrashTalkProvider();
         }
 
         public abstract IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum);
@@ -80,26 +78,25 @@ namespace BattleCruisers.Scenes.BattleScene
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting side quest trash talk for level {levelNum}");
 #endif
-                levelTrashTalkData = await _trashTalkProvider.GetTrashTalkAsync(levelNum, true);
+                levelTrashTalkData = StaticData.SideQuestTrashTalk[levelNum];
             }
             else
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[BattleSceneHelper] Getting campaign trash talk for level {levelNum}");
 #endif
-                levelTrashTalkData = await _trashTalkProvider.GetTrashTalkAsync(levelNum);
+                levelTrashTalkData = StaticData.LevelTrashTalk[levelNum];
             }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[BattleSceneHelper] Full trash talk data for {(ApplicationModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
-                     $"  Enemy Name: {levelTrashTalkData.EnemyName}\n" +
-                     $"  Player Text: {levelTrashTalkData.PlayerText}\n" +
-                     $"  Enemy Text: {levelTrashTalkData.EnemyText}\n" +
-                     $"  Player Talks First: {levelTrashTalkData.PlayerTalksFirst}\n" +
-                     $"  String Key Base: {levelTrashTalkData.StringKeyBase}");
+                     $"  Enemy Name:         {LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey)}\n" +
+                     $"  Player Text:        {LocTableCache.StoryTable.GetString(levelTrashTalkData.PlayerTextKey)}\n" +
+                     $"  Enemy Text:         {LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyTextKey)}\n" +
+                     $"  Player Talks First: {levelTrashTalkData.PlayerTalksFirst}\n");
 #endif
 
-            return levelTrashTalkData.EnemyName;
+            return LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey);
         }
 
         public virtual IPrefabKey GetAiCruiserKey()

@@ -1,8 +1,11 @@
-﻿using BattleCruisers.Data;
+﻿using System.Threading.Tasks;
+using BattleCruisers.Data;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +24,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public Sprite defaultBackground, clickedBackground;
         public Color battlecruisersRed;
 
-        public void Initialise(
+        public async Task Initialise(
             SingleSoundPlayer soundPlayer,
             LevelInfo level,
             ScreensSceneGod screensSceneGod,
@@ -39,8 +42,8 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _screensSceneGod = screensSceneGod;
 
             levelNumberText.text = level.Num.ToString();
-            levelNameText.text = trashTalkData.EnemyName;
-            captainImage.sprite = trashTalkData.EnemySprite;
+            levelNameText.text = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
+            captainImage.sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
             levelStatsController.Initialise(level.DifficultyCompleted, difficultyIndicators);
 
             Enabled = numOfLevelsUnlocked >= level.Num;

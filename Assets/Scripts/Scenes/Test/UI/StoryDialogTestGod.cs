@@ -10,7 +10,6 @@ namespace BattleCruisers.Scenes.Test.UI
     public class StoryDialogTestGod : TestGodBase
     {
         public TrashScreenController trashScreen;
-        public TrashTalkDataList trashDataList;
         public LevelButtonsPanel levelButtonsPanel;
 
         [Header("Peter can change these :D")]
@@ -19,16 +18,13 @@ namespace BattleCruisers.Scenes.Test.UI
 
         protected override void Setup(Utilities.Helper helper)
         {
-            Helper.AssertIsNotNull(trashScreen, trashDataList, levelButtonsPanel);
+            Helper.AssertIsNotNull(trashScreen, levelButtonsPanel);
 
-            trashDataList.Initialise();
 
             trashScreen
                 .Initialise(
                     Substitute.For<ScreensSceneGod>(),
                     Substitute.For<SingleSoundPlayer>(),
-                    trashDataList,
-                    trashDataList,
                     Substitute.For<MusicPlayer>());
 
             levelButtonsPanel
