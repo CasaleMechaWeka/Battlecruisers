@@ -458,5 +458,254 @@ namespace BattleCruisers.Utils.Debugging
                 ShowMessage("ERROR: AdConfigManager not found!", true);
             }
         }
+
+        #region Exos (Captains)
+
+        /// <summary>
+        /// Unlock all captain exos (0-50, where 0 is Charlie)
+        /// </summary>
+        public void UnlockExos()
+        {
+            ShowMessage("UNLOCKING ALL EXOS (Captains)...");
+            
+            int totalCaptains = StaticData.Captains.Count;
+            int unlocked = 0;
+            
+            for (int i = 0; i < totalCaptains; i++)
+            {
+                if (!DataProvider.GameModel.PurchasedExos.Contains(i))
+                {
+                    DataProvider.GameModel.AddExo(i);
+                    unlocked++;
+                }
+            }
+            
+            DataProvider.SaveGame();
+            
+            string captainName = StaticData.Captains[0].NameStringKeyBase;
+            ShowMessage($"EXOS UNLOCKED: {unlocked} new captains added (total: {DataProvider.GameModel.PurchasedExos.Count}/{totalCaptains}). Current captain: {DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName}");
+        }
+
+        /// <summary>
+        /// Reset exos to just Charlie (captain index 0)
+        /// </summary>
+        public void ResetExos()
+        {
+            ShowMessage("RESETTING EXOS to Charlie only...");
+            
+            // Clear all exos
+            List<int> currentExos = DataProvider.GameModel.PurchasedExos.ToList();
+            foreach (int exoId in currentExos)
+            {
+                if (exoId != 0) // Keep Charlie (index 0)
+                {
+                    DataProvider.GameModel.RemoveExo(exoId);
+                }
+            }
+            
+            // Ensure Charlie is in the list
+            if (!DataProvider.GameModel.PurchasedExos.Contains(0))
+            {
+                DataProvider.GameModel.AddExo(0);
+            }
+            
+            // Reset current captain to Charlie (CaptainExo000)
+            DataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+            
+            DataProvider.SaveGame();
+            
+            ShowMessage($"EXOS RESET: Only Charlie remains. Current captain set to CaptainExo000. Total exos: {DataProvider.GameModel.PurchasedExos.Count}");
+        }
+
+        #endregion
+
+        #region Heckles
+
+        /// <summary>
+        /// Unlock all heckles (0-278, 279 total)
+        /// </summary>
+        public void UnlockHeckles()
+        {
+            ShowMessage("UNLOCKING ALL HECKLES...");
+            
+            int totalHeckles = StaticData.Heckles.Count;
+            int unlocked = 0;
+            
+            for (int i = 0; i < totalHeckles; i++)
+            {
+                if (!DataProvider.GameModel.PurchasedHeckles.Contains(i))
+                {
+                    DataProvider.GameModel.AddHeckle(i);
+                    unlocked++;
+                }
+            }
+            
+            DataProvider.SaveGame();
+            
+            ShowMessage($"HECKLES UNLOCKED: {unlocked} new heckles added (total: {DataProvider.GameModel.PurchasedHeckles.Count}/{totalHeckles})");
+        }
+
+        /// <summary>
+        /// Reset heckles to random 3 (like initial game state)
+        /// </summary>
+        public void ResetHeckles()
+        {
+            ShowMessage("RESETTING HECKLES to random 3...");
+            
+            // Clear all heckles
+            List<int> currentHeckles = DataProvider.GameModel.PurchasedHeckles.ToList();
+            foreach (int heckleId in currentHeckles)
+            {
+                DataProvider.GameModel.RemoveHeckle(heckleId);
+            }
+            
+            // Generate 3 random unique heckles (same logic as Loadout.UnlockedHeckles())
+            List<int> newHeckles = new List<int>();
+            int numHecklesUnlocked = 3;
+            int maxHeckleIndex = 279; // 0-278
+            
+            while (newHeckles.Count < numHecklesUnlocked)
+            {
+                int randomHeckle = Random.Range(0, maxHeckleIndex);
+                if (!newHeckles.Contains(randomHeckle))
+                {
+                    newHeckles.Add(randomHeckle);
+                    DataProvider.GameModel.AddHeckle(randomHeckle);
+                }
+            }
+            
+            // Update CurrentHeckles in loadout to use the new random heckles
+            DataProvider.GameModel.PlayerLoadout.CurrentHeckles.Clear();
+            DataProvider.GameModel.PlayerLoadout.CurrentHeckles.AddRange(newHeckles);
+            
+            DataProvider.SaveGame();
+            
+            ShowMessage($"HECKLES RESET: Random 3 heckles selected: [{string.Join(", ", newHeckles)}]. Total purchased: {DataProvider.GameModel.PurchasedHeckles.Count}");
+        }
+
+        #endregion
+
+        #region Bodykits
+
+        /// <summary>
+        /// Unlock all bodykits (all except Trident Prototype for free edition, all for premium)
+        /// Bodykit 0 = Trident Prototype (premium only, cost 999999)
+        /// </summary>
+        public void UnlockBodykits()
+        {
+            bool isPremium = DataProvider.GameModel.PremiumEdition;
+            ShowMessage($"UNLOCKING BODYKITS... (Edition: {(isPremium ? "PREMIUM" : "FREE")})");
+            
+            int totalBodykits = StaticData.Bodykits.Count;
+            int unlocked = 0;
+            int skipped = 0;
+            
+            for (int i = 0; i < totalBodykits; i++)
+            {
+                // Skip Trident Prototype (index 0) for free edition
+                if (i == 0 && !isPremium)
+                {
+                    skipped++;
+                    continue;
+                }
+                
+                if (!DataProvider.GameModel.PurchasedBodykits.Contains(i))
+                {
+                    DataProvider.GameModel.AddBodykit(i);
+                    unlocked++;
+                }
+            }
+            
+            DataProvider.SaveGame();
+            
+            string skipMsg = skipped > 0 ? $" (Trident Prototype skipped - premium only)" : "";
+            ShowMessage($"BODYKITS UNLOCKED: {unlocked} new bodykits added{skipMsg}. Total: {DataProvider.GameModel.PurchasedBodykits.Count}/{totalBodykits}");
+        }
+
+        /// <summary>
+        /// Reset bodykits (none for free edition, just Trident Prototype for premium)
+        /// </summary>
+        public void ResetBodykits()
+        {
+            bool isPremium = DataProvider.GameModel.PremiumEdition;
+            ShowMessage($"RESETTING BODYKITS... (Edition: {(isPremium ? "PREMIUM" : "FREE")})");
+            
+            // Clear all bodykits
+            List<int> currentBodykits = DataProvider.GameModel.PurchasedBodykits.ToList();
+            foreach (int bodykitId in currentBodykits)
+            {
+                DataProvider.GameModel.RemoveBodykit(bodykitId);
+            }
+            
+            // For premium edition, add Trident Prototype (index 0)
+            if (isPremium)
+            {
+                DataProvider.GameModel.AddBodykit(0);
+            }
+            
+            // Reset selected bodykit to none (-1)
+            DataProvider.GameModel.PlayerLoadout.SelectedBodykit = -1;
+            
+            DataProvider.SaveGame();
+            
+            string result = isPremium 
+                ? "Trident Prototype (index 0) added. Selected bodykit reset to none."
+                : "All bodykits removed. Selected bodykit reset to none.";
+            ShowMessage($"BODYKITS RESET: {result} Total: {DataProvider.GameModel.PurchasedBodykits.Count}");
+        }
+
+        #endregion
+
+        #region Variants
+
+        /// <summary>
+        /// Unlock all variants for buildings and units
+        /// </summary>
+        public void UnlockVariants()
+        {
+            ShowMessage("UNLOCKING ALL VARIANTS...");
+            
+            int totalVariants = StaticData.Variants.Count;
+            int unlocked = 0;
+            
+            for (int i = 0; i < totalVariants; i++)
+            {
+                if (!DataProvider.GameModel.PurchasedVariants.Contains(i))
+                {
+                    DataProvider.GameModel.AddVariant(i);
+                    unlocked++;
+                }
+            }
+            
+            DataProvider.SaveGame();
+            
+            ShowMessage($"VARIANTS UNLOCKED: {unlocked} new variants added (total: {DataProvider.GameModel.PurchasedVariants.Count}/{totalVariants})");
+        }
+
+        /// <summary>
+        /// Reset variants (remove all purchased variants and clear selected variants)
+        /// </summary>
+        public void ResetVariants()
+        {
+            ShowMessage("RESETTING VARIANTS...");
+            
+            // Clear all purchased variants
+            List<int> currentVariants = DataProvider.GameModel.PurchasedVariants.ToList();
+            int removed = currentVariants.Count;
+            
+            foreach (int variantId in currentVariants)
+            {
+                DataProvider.GameModel.RemoveVariant(variantId);
+            }
+            
+            // Clear selected variants in loadout
+            DataProvider.GameModel.PlayerLoadout.SelectedVariants.Clear();
+            
+            DataProvider.SaveGame();
+            
+            ShowMessage($"VARIANTS RESET: {removed} variants removed. Selected variants cleared. Total: {DataProvider.GameModel.PurchasedVariants.Count}");
+        }
+
+        #endregion
     }
 }

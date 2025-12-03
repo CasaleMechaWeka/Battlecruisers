@@ -334,47 +334,87 @@ namespace BattleCruisers.Scenes
             blackMarketScreen.Initialise(this, _soundPlayer);
 
             DataProvider.SaveGame();
-            if (MatchmakingScreenController.MatchmakingFailed)
+            
+            // Check test bools FIRST before normal navigation
+            bool testScreenRequiresInit = false;
+            bool testScreenHandled = false;
+#if UNITY_EDITOR
+            if (testSettingsScreen)
             {
-                MatchmakingScreenController.MatchmakingFailed = false;
-                GotoHubScreen();
+                GoToSettingsScreen();
+                testScreenHandled = true;
             }
-            else if (ApplicationModel.ShowPostBattleScreen)
+            else if (testLevelsScreen)
             {
-                ApplicationModel.ShowPostBattleScreen = false;
-                Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
-                await GoToPostBattleScreenAsync();
-#if !THIRD_PARTY_PUBLISHER
-                fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
-#endif
-                Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
+                // Levels screen needs to be initialized first, handled below
+                testScreenRequiresInit = true;
             }
-            else if (ApplicationModel.Mode == GameMode.CoinBattle)
+            else if (testTrashTalkScreen)
             {
-                ApplicationModel.ShowPostBattleScreen = false;
-                //ApplicationModel.Mode = GameMode.Campaign;
-#if !THIRD_PARTY_PUBLISHER
-                //PlayAdvertisementMusic();
-                //fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+                GoToTrashScreen(levelNum: 1);
+                testScreenHandled = true;
+            }
+            else if (testDifficultyScreen)
+            {
+                GoToChooseDifficultyScreen();
+                testScreenHandled = true;
+            }
+            else if (testSkirmishScreen)
+            {
+                GoToSkirmishScreen();
+                testScreenHandled = true;
+            }
+            else if (testLoadoutScreen)
+            {
+                // Loadout screen needs to be initialized first, handled below
+                testScreenRequiresInit = true;
+            }
 #endif
-                if (LandingSceneGod.Instance.coinBattleLevelNum == -1)
+            
+            if (!testScreenHandled && !testScreenRequiresInit)
+            {
+                if (MatchmakingScreenController.MatchmakingFailed)
+                {
+                    MatchmakingScreenController.MatchmakingFailed = false;
                     GotoHubScreen();
-                else
-                    GoToTrashScreen(LandingSceneGod.Instance.coinBattleLevelNum);
-            }
-            else if (ApplicationModel.Mode == GameMode.PvP_1VS1)
-            {
-                ApplicationModel.ShowPostBattleScreen = false;
-                //ApplicationModel.Mode = GameMode.Campaign;
+                }
+                else if (ApplicationModel.ShowPostBattleScreen)
+                {
+                    ApplicationModel.ShowPostBattleScreen = false;
+                    Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre go to post battle screen");
+                    await GoToPostBattleScreenAsync();
 #if !THIRD_PARTY_PUBLISHER
-                fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
+                    fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
 #endif
-                GotoHubScreen();
+                    Logging.Log(Tags.SCREENS_SCENE_GOD, "After go to post battle screen");
+                }
+                else if (ApplicationModel.Mode == GameMode.CoinBattle)
+                {
+                    ApplicationModel.ShowPostBattleScreen = false;
+                    //ApplicationModel.Mode = GameMode.Campaign;
+#if !THIRD_PARTY_PUBLISHER
+                    //PlayAdvertisementMusic();
+                    //fullScreenads.OpenAdvert();//<Aaron> Loads full screen ads after player win a battle
+#endif
+                    if (LandingSceneGod.Instance.coinBattleLevelNum == -1)
+                        GotoHubScreen();
+                    else
+                        GoToTrashScreen(LandingSceneGod.Instance.coinBattleLevelNum);
+                }
+                else if (ApplicationModel.Mode == GameMode.PvP_1VS1)
+                {
+                    ApplicationModel.ShowPostBattleScreen = false;
+                    //ApplicationModel.Mode = GameMode.Campaign;
+#if !THIRD_PARTY_PUBLISHER
+                    fullScreenads.OpenAdvert();// Loads full screen ads after player win a battle
+#endif
+                    GotoHubScreen();
+                }
+                else if (levelToShowCutscene == 0)
+                    GoToHomeScreen();
+                else
+                    GoToTrashScreen(levelToShowCutscene);
             }
-            else if (levelToShowCutscene == 0)
-                GoToHomeScreen();
-            else
-                GoToTrashScreen(levelToShowCutscene);
 
             // After potentially initialising post battle screen, because that can modify the data model.
             Logging.Log(Tags.SCREENS_SCENE_GOD, "Pre initialise levels screen");
@@ -385,21 +425,13 @@ namespace BattleCruisers.Scenes
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.Initialize(_soundPlayer);
             loadoutScreen.Initialise(this, _soundPlayer);
 
-            // TEMP  Go to specific screen :)
-            //GoToLoadoutScreen();
-
-            if (testSettingsScreen)
-                GoToSettingsScreen();
-            else if (testLevelsScreen)
+            // Handle test screens that require initialization first
+#if UNITY_EDITOR
+            if (testLevelsScreen)
                 GoToLevelsScreen();
-            else if (testTrashTalkScreen)
-                GoToTrashScreen(levelNum: 1);
-            else if (testDifficultyScreen)
-                GoToChooseDifficultyScreen();
-            else if (testSkirmishScreen)
-                GoToSkirmishScreen();
             else if (testLoadoutScreen)
                 GoToLoadoutScreen();
+#endif
 
             ranker.DisplayRank(_gameModel.LifetimeDestructionScore);
 
