@@ -41,6 +41,8 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Utils.Timers;
 using BattleCruisers.Cruisers.Construction;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.AddressableAssets;
 
 // === Tag keys :D ===
 // FELIX    => Code todo
@@ -53,6 +55,8 @@ namespace BattleCruisers.Scenes.BattleScene
 {
     public class BattleSceneGod : MonoBehaviour
     {
+        const string SEQUENCER_PATH = "Assets/Resources_moved/Prefabs/BattleScene/Sequencer/";
+
         private static GameEndMonitor _gameEndMonitor;
         // Hold references to avoid garbage collectio
         private TutorialHelper _tutorialProvider;
@@ -344,20 +348,20 @@ namespace BattleCruisers.Scenes.BattleScene
             // Other
             Logging.Log(Tags.BATTLE_SCENE, "Other setup");
             _cruiserDeathManager = new CruiserDeathManager(playerCruiser, aiCruiser);
-            PrefabContainer<BackgroundImageStats> backgroundStats;
+            BackgroundImageStats backgroundStats;
             IManagedDisposable ai;
             if (ApplicationModel.Mode != GameMode.SideQuest)
             {
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedLevel);
-                backgroundStats = await helper.GetBackgroundStatsAsync(currentLevel.Num);
-                components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
+                backgroundStats = StaticData.LevelBackgrounds[currentLevel.Num];
+                await components.CloudInitialiser.Initialise(currentLevel.SkyMaterialName, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
                 cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentLevel.SkyMaterialName);
             }
             else
             {
                 ai = helper.CreateAI(aiCruiser, playerCruiser, ApplicationModel.SelectedSideQuestID);
-                backgroundStats = await helper.GetBackgroundStatsAsync(ApplicationModel.SelectedSideQuestID);
-                components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
+                backgroundStats = StaticData.SideQuestBackgrounds[ApplicationModel.SelectedSideQuestID];
+                await components.CloudInitialiser.Initialise(currentSideQuest.SkyMaterial, components.UpdaterProvider.VerySlowUpdater, cameraComponents.MainCamera.Aspect, backgroundStats);
 
                 cameraComponents.Skybox.material = await MaterialFetcher.GetMaterialAsync(currentSideQuest.SkyMaterial);
             }
@@ -492,9 +496,21 @@ namespace BattleCruisers.Scenes.BattleScene
             if (LandingSceneGod.Instance.coinBattleLevelNum > 0)
                 LandingSceneGod.Instance.coinBattleLevelNum = -2; //DestructionSceneGod will detect Coin battle mode through this
 
-            battleSequencer = GetComponent<BattleSequencer>();
-            battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
-            battleSequencer.StartF();
+            if (ApplicationModel.Mode == GameMode.SideQuest && StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].HasSequencer)
+            {
+                string path = SEQUENCER_PATH + "SequencerSQ" + ApplicationModel.SelectedSideQuestID.ToString("000") + ".prefab";
+                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(path);
+                await handle.Task;
+                
+                if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+                    Debug.LogError("Failed to retrieve prefab for path: " + path);
+                else
+                {
+                    battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
+                    battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+                    battleSequencer.StartF();
+                }
+            }
             /*
             string logName = "Battle_Begin";
             #if LOG_ANALYTICS

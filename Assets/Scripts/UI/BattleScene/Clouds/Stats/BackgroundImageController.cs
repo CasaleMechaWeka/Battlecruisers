@@ -1,27 +1,23 @@
-﻿using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
+﻿using System.Threading.Tasks;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
     public class BackgroundImageController : MonoBehaviour
     {
-        private PrefabContainer<BackgroundImageStats> _statsContainer;
 
         public SpriteRenderer background;
 
-        public void Initialise(PrefabContainer<BackgroundImageStats> statsContainer, float cameraAspectRatio, BackgroundImageCalculator calculator)
+        public async Task Initialise(BackgroundImageStats stats, float cameraAspectRatio, BackgroundImageCalculator calculator)
         {
-            Helper.AssertIsNotNull(statsContainer, calculator);
+            Helper.AssertIsNotNull(stats, calculator);
             Assert.IsNotNull(background);
             Assert.IsTrue(cameraAspectRatio > 0);
 
-            _statsContainer = statsContainer;
-            BackgroundImageStats stats = _statsContainer.Prefab;
-
-            if (stats.Sprite == null)
+            if (stats.SpriteName == null)
             {
                 gameObject.SetActive(false);
                 return;
@@ -30,23 +26,12 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             gameObject.SetActive(true);
 
             transform.position = calculator.FindPosition(stats, cameraAspectRatio);
-            transform.localScale = new Vector3(stats.Scale.x, stats.Scale.y, 1);
-            transform.rotation = Quaternion.Euler(0, 0, stats.ZRotation);
+            transform.localScale = new Vector3(stats.Scale, stats.Scale, 1);
 
-            background.sprite = stats.Sprite;
+            background.sprite = await SpriteFetcher.GetSpriteAsync(SpritePaths.BackgroundImagesPath + stats.SpriteName);
             background.color = stats.Colour;
             background.flipX = stats.FlipX;
-            background.flipY = stats.FlipY;
             background.sortingOrder = stats.OrderInLayer;
-        }
-
-        void OnDestroy()
-        {
-            if (_statsContainer != null)
-            {
-                Addressables.Release(_statsContainer.Handle);
-                _statsContainer = null;
-            }
         }
     }
 }

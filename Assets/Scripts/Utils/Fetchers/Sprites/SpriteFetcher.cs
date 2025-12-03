@@ -11,13 +11,14 @@ namespace BattleCruisers.Utils.Fetchers.Sprites
 
     public static class SpritePaths
     {
-        public static string ExoImagesPath = "Assets/Resources_moved/Sprites/UI/ScreensScene/LevelsScreen/NPCs/";
-        public static string RankImagesPath = "Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/";
+        public const string ExoImagesPath = "Assets/Resources_moved/Sprites/UI/ScreensScene/LevelsScreen/NPCs/";
+        public const string RankImagesPath = "Assets/Resources_moved/Sprites/UI/ScreensScene/DestructionScore/";
+        public const string BackgroundImagesPath = "Assets/Resources_moved/Sprites/Skies/Backgrounds/";
     }
 
     public static class SpriteFetcher
     {
-        public static async Task<Sprite>    GetSpriteAsync(string spritePath)
+        public static async Task<Sprite> GetSpriteAsync(string spritePath)
         {
             AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(spritePath);
             await handle.Task;

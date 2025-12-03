@@ -56,8 +56,6 @@ namespace BattleCruisers.Scenes
         public SettingsScreenController settingsScreen;
         public BattleHubScreensController hubScreen;
         public TrashScreenController trashScreen;
-        public TrashTalkDataList levelTrashDataList;
-        public TrashTalkDataList sideQuestTrashDataList;
         public ChooseDifficultyScreenController chooseDifficultyScreen;
         public SkirmishScreenController skirmishScreen;
         public AdvertisingBannerScrollingText AdvertisingBanner;
@@ -114,7 +112,7 @@ namespace BattleCruisers.Scenes
                 Instance = this;
 
             //Screen.SetResolution(Math.Max(600, Screen.currentResolution.width), Math.Max(400, Screen.currentResolution.height), FullScreenMode.Windowed);
-            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, levelTrashDataList, sideQuestTrashDataList, _uiAudioSource);
+            Helper.AssertIsNotNull(homeScreen, levelsScreen, postBattleScreen, loadoutScreen, settingsScreen, hubScreen, trashScreen, chooseDifficultyScreen, skirmishScreen, _uiAudioSource);
             Helper.AssertIsNotNull(characterOfBlackmarket, characterOfShop, ContainerCaptain);
             Helper.AssertIsNotNull(premiumEditionButton);
             Logging.Log(Tags.SCREENS_SCENE_GOD, "START");
@@ -267,10 +265,6 @@ namespace BattleCruisers.Scenes
                     new EffectVolumeAudioSource(
                         new AudioSourceBC(_uiAudioSource), 1));
 
-
-            levelTrashDataList.Initialise();
-            sideQuestTrashDataList.Initialise();
-
             homeScreen.Initialise(this, _soundPlayer);
             settingsScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager, DataProvider.GameModel.Hotkeys);
             chooseDifficultyScreen.Initialise(this, _soundPlayer, DataProvider.SettingsManager);
@@ -322,7 +316,7 @@ namespace BattleCruisers.Scenes
             ShowCharlieOnMainMenu();
 
             hubScreen.Initialise(this, _soundPlayer);
-            trashScreen.Initialise(this, _soundPlayer, levelTrashDataList, sideQuestTrashDataList, _musicPlayer);
+            trashScreen.Initialise(this, _soundPlayer, _musicPlayer);
             Camera captainsCamera = cameraOfCaptains.GetComponent<Camera>();
             if (captainsCamera != null)
             {
@@ -488,7 +482,7 @@ namespace BattleCruisers.Scenes
         private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
-            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _musicPlayer, difficultyIndicators, levelTrashDataList, sideQuestTrashDataList);
+            await postBattleScreen.InitialiseAsync(this, _soundPlayer, _musicPlayer, difficultyIndicators);
             //--->
             if (ApplicationModel.Mode == GameMode.PvP_1VS1)
             {
@@ -602,8 +596,7 @@ namespace BattleCruisers.Scenes
                 _soundPlayer,
                 levels,
                 testLevelsScreen ? numOfLevelsUnlocked : DataProvider.LockedInfo.NumOfLevelsUnlocked,
-                difficultyIndicators,
-                levelTrashDataList);
+                difficultyIndicators);
         }
 
         private IList<LevelInfo> CreateLevelInfo(IList<Level> staticLevels, IList<CompletedLevel> completedLevels)

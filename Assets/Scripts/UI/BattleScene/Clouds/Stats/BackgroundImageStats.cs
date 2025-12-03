@@ -2,40 +2,34 @@
 
 namespace BattleCruisers.UI.BattleScene.Clouds.Stats
 {
-    public class BackgroundImageStats : MonoBehaviour
+    public class BackgroundImageStats
     {
-        public Vector2 scale;
-        public Vector2 Scale => scale;
+        public float Scale;
+        public Vector2 PositionAt4to3;
+        public float YPositionAt16to9;
+        public float YPositionAt24to10;
+        public string SpriteName;
+        public Color Colour;
+        public bool FlipX = false;
+        public int OrderInLayer;
 
-        public float zRotation;
-        public float ZRotation => zRotation;
-
-        [Header("Position for 4:3 aspect ratio")]
-        public Vector3 positionAt4to3;
-        public Vector3 PositionAt4to3 => positionAt4to3;
-
-        [Header("Y position for 16:9 aspect ratio")]
-        public float yPositionAt16to9;
-        public float YPositionAt16to9 => yPositionAt16to9;
-
-        [Header("Y position for 24:10 aspect ratio")]
-        public float yPositionAt24to10;
-        public float YPositionAt24to10 => yPositionAt24to10;
-
-        [Header("Sprite (leave empty if no background for this level)")]
-        public Sprite sprite;
-        public Sprite Sprite => sprite;
-
-        public Color colour;
-        public Color Colour => colour;
-
-        public bool flipX = false;
-        public bool FlipX => flipX;
-
-        public bool flipY = false;
-        public bool FlipY => flipY;
-
-        public int orderInLayer;
-        public int OrderInLayer => orderInLayer;
+        public BackgroundImageStats(float scale, 
+                                    Vector2 positionAt4to3,
+                                    float yPositionAt16to9,
+                                    float yPositionAt24to10,
+                                    string spriteName,
+                                    Color colour,
+                                    bool flipX,
+                                    int orderInLayer)
+        {
+            Scale = scale;
+            PositionAt4to3 = positionAt4to3;
+            YPositionAt16to9 = yPositionAt16to9;
+            YPositionAt24to10 = yPositionAt24to10;
+            SpriteName = spriteName;
+            Colour = colour;
+            FlipX = flipX;
+            OrderInLayer = orderInLayer;
+        }
     }
 }
