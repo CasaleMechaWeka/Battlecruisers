@@ -193,6 +193,9 @@ public class ProfileDetailsController : MonoBehaviour
         BountyText.text = DataProvider.GameModel.Bounty.ToString("F0");
 #endif
         UpdatePlayerName();
+        
+        // Show the exo selector panel by default
+        ShowExoSelector();
     }
 
     void ShowHeckleSelector()
