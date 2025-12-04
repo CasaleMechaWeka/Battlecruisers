@@ -5,7 +5,9 @@ using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     public class PvPShellSpawner : PvPProjectileSpawner<PvPProjectileController, ProjectileActivationArgs, ProjectileStats>
     {
         private ITargetFilter _targetFilter;
-        private IProjectileSoundPlayerInitialiser soundPlayerInitialiser;
+
         private SoundType _type;
         private string _name;
         public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, SoundKey firingSound, ITargetFilter targetFilter)
@@ -51,7 +53,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         {
             if (IsOwner)
             {
-                Assert.IsNotNull(soundPlayerInitialiser);
                 _type = type;
                 _name = name;
                 _burstSize = burstSize;
@@ -59,21 +60,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             }
         }
 
-        private void Start()
-        {
-            if (IsClient)
-                soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
-        }
-
         private async void PlayProjectileFiredSound()
         {
-            var soundPlayer
-                = await soundPlayerInitialiser?.CreateSoundPlayerAsync(
-                    PvPFactoryProvider.Sound.SoundPlayerFactory,
-                    new SoundKey(_type, _name),
-                    _burstSize,
-                    DataProvider.SettingsManager);
-            soundPlayer?.OnProjectileFired();
+            AudioSource audioSource = GetComponentInChildren<AudioSource>();
+            Assert.IsNotNull(audioSource);
+
+            IAudioSource audioSourceWrapper = new EffectVolumeAudioSource(new AudioSourceBC(audioSource));
+            IProjectileSpawnerSoundPlayer soundPlayer
+                = await PvPFactoryProvider.Sound.SoundPlayerFactory.CreateShortSoundPlayerAsync(new SoundKey(_type, _name), audioSourceWrapper);
         }
     }
 }

@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -7,6 +6,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetc
 using BattleCruisers.Projectiles;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System.Threading.Tasks;
@@ -44,17 +44,23 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
             _cruiserSpecificFactories = args.CruiserSpecificFactories;
             _enemyCruiser = args.EnempCruiser;
 
-            IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
-            Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer
-                = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-                    PvPFactoryProvider.Sound.SoundPlayerFactory,
-                    firingSound,
-                    args.BurstSize,
-                    DataProvider.SettingsManager);
+            if (firingSound != null)
+            {
+                AudioSource audioSource = GetComponentInChildren<AudioSource>();
+                Assert.IsNotNull(audioSource);
+
+                IAudioSource audioSourceWrapper =
+                    new EffectVolumeAudioSource(new AudioSourceBC(audioSource));
+
+                _soundPlayer = await PvPFactoryProvider.Sound.SoundPlayerFactory
+                    .CreateShortSoundPlayerAsync(firingSound, audioSourceWrapper);
+            }
+            else
+            {
+                _soundPlayer = PvPFactoryProvider.Sound.SoundPlayerFactory.DummyPlayer;
+            }
             _firingSound = firingSound;
             _burstSize = args.BurstSize;
-
         }
 
         protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)
