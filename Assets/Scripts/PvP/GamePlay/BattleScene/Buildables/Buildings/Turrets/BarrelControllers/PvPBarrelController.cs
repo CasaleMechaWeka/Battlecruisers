@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
@@ -23,6 +22,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -138,9 +138,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
-            PvPFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPFireIntervalManagerInitialiser>();
-            Assert.IsNotNull(fireIntervalManagerInitialiser);
-            return fireIntervalManagerInitialiser.Initialise(turretStats);
+            Assert.IsNotNull(turretStats);
+
+            PvPWaitingState waitingState = new PvPWaitingState();
+            PvPFiringOnceState firingState = new PvPFiringOnceState();
+
+            waitingState.Initialise(firingState, turretStats);
+            firingState.Initialise(waitingState, turretStats);
+
+            return new FireIntervalManager(firingState);
         }
 
         protected virtual IDamageCapability FindDamageCapabilities()
