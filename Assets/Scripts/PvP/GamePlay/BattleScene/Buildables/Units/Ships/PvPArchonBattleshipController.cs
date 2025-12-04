@@ -1,12 +1,9 @@
 using BattleCruisers.Buildables.Units;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Utils;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
@@ -18,7 +15,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IBroadcastingAnimation _unfurlAnimation;
 
-        public PvPBarrelWrapper laser;
         public GameObject bones;
         public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
 
@@ -29,13 +25,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
-        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
 
-            PvPHelper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
+            PvPHelper.AssertIsNotNull(bones, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 
             _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
             Assert.IsNotNull(_unfurlAnimation);
@@ -71,7 +66,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             SetVisibleBones(true);
             if (IsHost)
                 OnSetVisibleBoneClientRpc(true);
-            // Delay normal setup (movement, turrets) until the unfurl animation has completed
+            base.OnShipCompleted();
         }
 
 
@@ -98,67 +93,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 base.OnShipCompleted();
         }
 
-        public override float OptimalArmamentRangeInM
-        {
-            get
-            {
-                return laser.RangeInM;
-            }
-        }
-
-        protected override IList<IPvPBarrelWrapper> GetTurrets()
-        {
-            return new List<IPvPBarrelWrapper>()
-            {
-                laser
-            };
-        }
-
-        protected override void InitialiseTurrets()
-        {
-            laser.Initialise(this, _cruiserSpecificFactories);
-        }
-
-        protected override List<SpriteRenderer> GetNonTurretRenderers()
-        {
-            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
-
-            Transform pistonsParent = transform.FindNamedComponent<Transform>("UnitBones");
-            SpriteRenderer[] boneRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-
-            foreach (SpriteRenderer renderer in boneRenderers)
-            {
-                // Only add enabled renderers, which excludes guide sprites
-                if (renderer.enabled)
-                {
-                    renderers.Add(renderer);
-                }
-            }
-            return renderers;
-        }
-
         protected override void Deactivate()
         {
             base.Deactivate();
             // bones.SetActive(false);
             SetVisibleBones(false);
             OnSetVisibleBoneClientRpc(false);
-        }
-
-        protected override void OnBuildableProgressEvent()
-        {
-            if (IsServer)
-                OnBuildableProgressEventClientRpc();
-            else
-                base.OnBuildableProgressEvent();
-        }
-
-        protected override void OnCompletedBuildableEvent()
-        {
-            if (IsServer)
-                OnCompletedBuildableEventClientRpc();
-            else
-                base.OnCompletedBuildableEvent();
         }
 
         protected override void OnDestroyedEvent()
@@ -176,19 +116,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-        [ClientRpc]
-        private void OnBuildableProgressEventClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableProgressEvent();
-        }
 
-        [ClientRpc]
-        private void OnCompletedBuildableEventClientRpc()
-        {
-            if (!IsHost)
-                OnCompletedBuildableEvent();
-        }
 
         [ClientRpc]
         private void OnSetVisibleBoneClientRpc(bool isVisible)

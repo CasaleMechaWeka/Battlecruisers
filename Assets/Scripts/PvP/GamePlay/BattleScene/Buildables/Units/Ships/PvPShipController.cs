@@ -21,6 +21,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using Unity.Netcode;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -32,16 +33,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// 3. Boat will only stop to fight enemies (or to avoid bumping into friendlies).
     ///     Either this boat is destroyed, or the enemy, in which case this boat will continue moving.
     /// </summary>
-    public abstract class PvPShipController : PvPUnit, IPvPShip
+    public abstract class PvPShipController : PvPUnit
     {
         private int _directionMultiplier;
-        private IList<IPvPBarrelWrapper> _turrets;
+        private IList<IPvPBarrelWrapper> turrets;
         private PvPShipTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
         public PvPShipDeathType deathType;
-        private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
+        const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
         public override TargetType TargetType => TargetType.Ships;
@@ -62,8 +63,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         /// Usually this will simply be the range of the ship's longest ranged turret,
         /// but can be less if we want multiple of the ships turrets to be in range.
         /// </summary>
-        public abstract float OptimalArmamentRangeInM { get; }
-        public abstract bool KeepDistanceFromEnemyCruiser { get; }
+        public float OptimalArmamentRangeInM;
+        public bool KeepDistanceFromEnemyCruiser;
 
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
@@ -73,9 +74,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.StaticInitialise(parent, healthBar);
 
-            _turrets = GetTurrets();
+            turrets = transform.GetComponentsInChildren<IPvPBarrelWrapper>();
 
-            foreach (IPvPBarrelWrapper turret in _turrets)
+            foreach (IPvPBarrelWrapper turret in turrets)
             {
                 turret.StaticInitialise();
             }
@@ -83,11 +84,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             FindDamageStats();
 
             _targetProcessorWrapper = transform.FindNamedComponent<PvPShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
-        }
-
-        protected virtual IList<IPvPBarrelWrapper> GetTurrets()
-        {
-            return new List<IPvPBarrelWrapper>();
         }
 
         private void FindDamageStats()
@@ -108,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private IList<IDamageCapability> GetDamageCapabilities(TargetType attackCapability)
         {
             return
-                _turrets
+                turrets
                     .Where(turret => turret.DamageCapability.AttackCapabilities.Contains(attackCapability))
                     .Select(turret => turret.DamageCapability)
                     .ToList();
@@ -121,8 +117,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
-            OnShipCompleted();
+            if (IsServer)
+            {
+                base.OnBuildableCompleted();
+                OnShipCompleted();
+                OnBuildableCompletedClientRpc();
+            }
+            else
+            {
+                OnBuildableCompleted_PvPClient();
+            }
         }
 
         protected override void OnBuildableCompleted_PvPClient()
@@ -132,13 +136,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
         protected virtual void OnShipCompleted()
         {
-            InitialiseTurrets();
-            SetupMovement();
+            if (IsServer)
+            {
+                InitialiseTurrets();
+                SetupMovement();
+            }
         }
 
         // Turrets start attacking targets as soon as they are initialised, so
         // only initialise them once the ship has been completed.
-        protected virtual void InitialiseTurrets() { }
+        void InitialiseTurrets()
+        {
+            foreach(IPvPBarrelWrapper barrelWrapper in turrets)
+                barrelWrapper.Initialise(this, _cruiserSpecificFactories);
+        }
 
         protected void SetupMovement()
         {
@@ -229,7 +240,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             List<SpriteRenderer> renderers = GetNonTurretRenderers();
 
-            foreach (IPvPBarrelWrapper turret in _turrets)
+            foreach (IPvPBarrelWrapper turret in turrets)
             {
                 renderers.AddRange(turret.Renderers);
             }
@@ -246,7 +257,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return renderers;
         }
 
-        protected virtual List<SpriteRenderer> GetNonTurretRenderers()
+        List<SpriteRenderer> GetNonTurretRenderers()
         {
             return base.GetInGameRenderers();
         }
@@ -292,16 +303,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _friendDetectorProvider.DisposeManagedState();
                 _friendDetectorProvider = null;
 
-                foreach (IPvPBarrelWrapper turret in _turrets)
+                foreach (IPvPBarrelWrapper turret in turrets)
                 {
                     turret.DisposeManagedState();
                 }
             }
-        }
-
-        public void AddExtraFriendDetectionRange(float extraRange)
-        {
-            FRIEND_DETECTION_RADIUS_MULTIPLIER += extraRange;
         }
 
         public override void OnNetworkSpawn()
@@ -309,6 +315,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             base.OnNetworkSpawn();
             if (IsServer)
                 pvp_Health.Value = maxHealth;
+        }
+
+        [ClientRpc]
+        void OnBuildableCompletedClientRpc()
+        {
+            if (!IsHost)
+                OnBuildableCompleted();
+            foreach(IPvPBarrelWrapper barrelWrapper in turrets)
+                barrelWrapper.ApplyVariantStats(this);
         }
     }
 }

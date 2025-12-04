@@ -40,7 +40,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
         private ToggleButtonGroup _speedButtonGroup;
 
         private IBuilding _playerBuilding, _aiBuilding;
-        private IShip _playerShip, _aiShip;
+        private ShipController _playerShip, _aiShip;
 
         [SetUp]
         public void TestSetup()
@@ -95,7 +95,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             };
             _playerCruiser.BuildingMonitor.AliveBuildings.Returns(playerBuildings.AsReadOnly());
 
-            _playerShip = Substitute.For<IShip>();
+            _playerShip = Substitute.For<ShipController>();
             List<IUnit> playerUnits = new List<IUnit>()
             {
                 _playerShip
@@ -112,7 +112,7 @@ namespace BattleCruisers.Tests.Utils.BattleScene
             };
             _aiCruiser.BuildingMonitor.AliveBuildings.Returns(aiBuildings.AsReadOnly());
 
-            _aiShip = Substitute.For<IShip>();
+            _aiShip = Substitute.For<ShipController>();
             List<IUnit> aiUnits = new List<IUnit>()
             {
                 _aiShip

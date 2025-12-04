@@ -1,10 +1,7 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Tactical.Shields;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
-using BattleCruisers.Utils;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -13,16 +10,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPFlakTurtleController : PvPShipController
     {
-        private IPvPBarrelWrapper _flakTurret;
         private PvPSectorShieldController _shieldController;
-        public float armamentRange;
 
-        private bool isCompleted = false;
         private Animator animator;
 
-        public override float OptimalArmamentRangeInM => armamentRange;
-        public bool keepDistanceFromEnemyCruiser;
-        public override bool KeepDistanceFromEnemyCruiser => keepDistanceFromEnemyCruiser;
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
@@ -31,7 +22,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             animator = GetComponent<Animator>();
             Assert.IsNotNull(_shieldController, "Cannot find PvPSectorShieldController component");
             Assert.IsNotNull(animator, "Animator component could not be found.");
-            isCompleted = false;
             animator.enabled = false; // Ensure the animator is disabled by default
             _shieldController.StaticInitialise();
         }
@@ -50,73 +40,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        protected override IList<IPvPBarrelWrapper> GetTurrets()
-        {
-            IList<IPvPBarrelWrapper> turrets = new List<IPvPBarrelWrapper>();
-
-            _flakTurret = transform.FindNamedComponent<IPvPBarrelWrapper>("FlakTurret");
-            Assert.IsNotNull(_flakTurret);
-            turrets.Add(_flakTurret);
-
-            return turrets;
-        }
-
-        protected override void InitialiseTurrets()
-        {
-            _flakTurret.Initialise(this, _cruiserSpecificFactories);
-        }
-        private void PlayAnimation()
-        {
-            if (!animator.enabled)
-            {
-                animator.enabled = true;
-            }
-        }
-        private bool ShouldPlayAnimation()
-        {
-            return isCompleted && !IsMoving;
-        }
-
-        protected override void OnShipCompleted()
-        {
-            if (IsServer)
-                base.OnShipCompleted();
-        }
-        /*
-        private void LateUpdate()
-        {
-            if (IsServer)
-            {
-                if (PvP_BuildProgress.Value != BuildProgress)
-                    PvP_BuildProgress.Value = BuildProgress;
-
-                if (ShouldPlayAnimation())
-                    PlayAnimation();
-                EnableAnimatorClientRpc();
-            }
-            else
-            {
-                BuildProgress = PvP_BuildProgress.Value;
-            }
-        }
-        */
-
-        protected override void OnBuildableProgressEvent()
-        {
-            if (IsServer)
-                OnBuildableProgressEventClientRpc();
-            else
-                base.OnBuildableProgressEvent();
-        }
-
-        protected override void OnCompletedBuildableEvent()
-        {
-            if (IsServer)
-                OnCompletedBuildableEventClientRpc();
-            else
-                base.OnCompletedBuildableEvent();
-        }
-
         protected override void OnBuildableCompleted()
         {
             if (IsServer)
@@ -126,49 +49,20 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 _shieldController.ActivateShield();
                 OnEnableShieldClientRpc(true);
                 OnBuildableCompletedClientRpc();
-                isCompleted = true;
             }
             else
             {
                 OnBuildableCompleted_PvPClient();
             }
-
         }
 
         //-------------------------------------- RPCs -------------------------------------------------//
-        [ClientRpc]
-        private void OnBuildableProgressEventClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableProgressEvent();
-        }
-
-        [ClientRpc]
-        private void OnCompletedBuildableEventClientRpc()
-        {
-            if (!IsHost)
-                OnCompletedBuildableEvent();
-        }
 
         [ClientRpc]
         private void OnEnableShieldClientRpc(bool enabled)
         {
             if (!IsHost)
                 _shieldController.gameObject.SetActive(enabled);
-        }
-
-        [ClientRpc]
-        private void OnBuildableCompletedClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableCompleted();
-            _flakTurret.ApplyVariantStats(this);
-        }
-
-        [ClientRpc]
-        private void EnableAnimatorClientRpc()
-        {
-            animator.enabled = true;
         }
     }
 }

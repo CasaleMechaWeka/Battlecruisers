@@ -323,5 +323,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             _buildRateBoostableGroup.AddBoostProvidersList(boostProviders);
         }
+
+        protected override void OnBuildableProgressEvent()
+        {
+            if (IsServer)
+                OnBuildableProgressEventClientRpc();
+            else
+                base.OnBuildableProgressEvent();
+        }
+
+        [ClientRpc]
+        void OnBuildableProgressEventClientRpc()
+        {
+            if (!IsHost)
+                OnBuildableProgressEvent();
+        }
+
+        protected override void OnCompletedBuildableEvent()
+        {
+            if (IsServer)
+                OnCompletedBuildableEventClientRpc();
+            else
+                base.OnCompletedBuildableEvent();
+        }
+
+        [ClientRpc]
+        void OnCompletedBuildableEventClientRpc()
+        {
+            if (!IsHost)
+                OnCompletedBuildableEvent();
+        }
     }
 }
