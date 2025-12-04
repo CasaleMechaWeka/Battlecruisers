@@ -278,9 +278,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _baseBuilding = new SettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
             Building = new BroadcastingProperty<IPvPBuilding>(_baseBuilding);
 
-            PvPSlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<PvPSlotBoostFeedbackMonitorInitialiser>();
-            Assert.IsNotNull(boostFeedbackInitialiser);
-            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this, IsHost);
+            Transform singleBoostEffect = transform.FindNamedComponent<Transform>("SingleBoostEffect");
+            Transform doubleBoostEffect = transform.FindNamedComponent<Transform>("DoubleBoostEffect");
+
+            _boostFeedbackMonitor = new PvPSlotBoostFeedbackMonitor(
+                    this,
+                    new PvPBoostStateFinder(),
+                    new PvPBoostFeedback(
+                        new GameObjectBC(singleBoostEffect.gameObject),
+                        new GameObjectBC(doubleBoostEffect.gameObject)),
+                    IsHost);
             _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");
             _buildingPlacementBeacon = _renderer.gameObject.transform.Find("BuildingPlacementBeacon");
             _clickAndDrag = GameObject.Find("BuildableClickAndDrag").GetComponentInChildren<PvPBuildableClickAndDrag>();
