@@ -10,7 +10,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override float DesiredAngleInDegrees => 90;
 
-        protected override void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        protected override void InitialiseBarrelController(PvPBarrelController barrel, PvPBarrelControllerArgs args)
         {
             if (barrelController == null)
             {

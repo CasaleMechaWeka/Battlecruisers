@@ -11,7 +11,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
     {
         protected ITargetFilter _targetFilter;
 
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, ITargetFilter targetFilter)
+        public async Task InitialiseAsync(PvPProjectileSpawnerArgs args, ITargetFilter targetFilter)
         {
             await base.InitialiseAsync(args, firingSound: null);
 

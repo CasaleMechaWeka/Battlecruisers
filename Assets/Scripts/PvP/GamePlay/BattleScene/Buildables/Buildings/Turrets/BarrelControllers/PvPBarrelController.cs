@@ -156,7 +156,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // should be called by Server
-        public async Task InitialiseAsync(IPvPBarrelControllerArgs args)
+        public async Task InitialiseAsync(PvPBarrelControllerArgs args)
         {
             foreach (BoostType boostType in BoostTypes)
             {
@@ -199,14 +199,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // should be called by Client
-        public async Task InitialiseAsync_PvPClient(IPvPBarrelControllerArgs args)
+        public async Task InitialiseAsync_PvPClient(PvPBarrelControllerArgs args)
         {
             Assert.IsNotNull(args);
             _parent = args.Parent;
             _barrelAnimation = GetBarrelFiringAnimation(args);
         }
 
-        protected virtual IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
+        protected virtual IBarrelFirer CreateFirer(PvPBarrelControllerArgs args)
         {
             return new BarrelFirer(
                     this,
@@ -214,14 +214,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     _muzzleFlash);
         }
 
-        protected virtual IAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
+        protected virtual IAnimation GetBarrelFiringAnimation(PvPBarrelControllerArgs args)
         {
             return args.BarrelFiringAnimation;
         }
 
 
 #pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
-        protected virtual async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args) { }
+        protected virtual async Task InternalInitialiseAsync(PvPBarrelControllerArgs args) { }
 #pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         private void _updater_Updated(object sender, EventArgs e)

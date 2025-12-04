@@ -105,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 ITarget parent = this;
                 IUpdater updater = PvPFactoryProvider.UpdaterProvider.PerFrameUpdater;
 
-                IPvPBarrelControllerArgs args
+                PvPBarrelControllerArgs args
                     = new PvPBarrelControllerArgs(
                         updater,
                         new FactionAndTargetTypeFilter(enemyFaction, AttackCapabilities),

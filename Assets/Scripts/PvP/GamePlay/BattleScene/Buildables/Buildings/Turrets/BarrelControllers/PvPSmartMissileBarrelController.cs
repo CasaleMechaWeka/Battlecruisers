@@ -32,10 +32,10 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return _ProjectileStats;
         }
 
-        protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(PvPBarrelControllerArgs args)
         {
             _targetFilter = new FactionAndTargetTypeFilter(args.EnemyCruiser.Faction, _ProjectileStats.AttackCapabilities);
-            IPvPProjectileSpawnerArgs spawnerArgs
+            PvPProjectileSpawnerArgs spawnerArgs
                 = new PvPProjectileSpawnerArgs(
                     args,
                     _ProjectileStats,

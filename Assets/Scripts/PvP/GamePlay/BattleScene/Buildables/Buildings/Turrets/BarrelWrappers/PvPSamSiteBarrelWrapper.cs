@@ -6,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSamSiteBarrelWrapper : PvPDirectFireBarrelWrapper
     {
-        protected override void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        protected override void InitialiseBarrelController(PvPBarrelController barrel, PvPBarrelControllerArgs args)
         {
             IExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IExactMatchTargetFilter>();
             PvPSamSiteBarrelController samSiteBarrel = barrel.Parse<PvPSamSiteBarrelController>();

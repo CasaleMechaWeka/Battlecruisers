@@ -146,7 +146,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             foreach (PvPBarrelController barrel in _barrels)
             {
-                IPvPBarrelControllerArgs barrelArgs
+                PvPBarrelControllerArgs barrelArgs
                     = CreateBarrelControllerArgs(
                         barrel,
                         parent,
@@ -185,7 +185,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             //    _enemyFaction = _parent.EnemyCruiser.Faction;
             foreach (PvPBarrelController barrel in _barrels)
             {
-                IPvPBarrelControllerArgs barrelArgs
+                PvPBarrelControllerArgs barrelArgs
                     = CreateBarrelControllerArgs(
                         parent,
                         barrelFiringAnimation ?? GetBarrelAnimation());
@@ -196,7 +196,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // should be called by Server
-        private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
+        private PvPBarrelControllerArgs CreateBarrelControllerArgs(
             IBarrelController barrel,
             IPvPBuildable parent,
             ITargetFilter targetFilter,
@@ -225,7 +225,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         // should be called by Client
-        private IPvPBarrelControllerArgs CreateBarrelControllerArgs(
+        private PvPBarrelControllerArgs CreateBarrelControllerArgs(
             IPvPBuildable parent,
             IAnimation barrelFiringAnimation)
         {
@@ -235,13 +235,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
         // should be called by Server
-        protected virtual void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        protected virtual void InitialiseBarrelController(PvPBarrelController barrel, PvPBarrelControllerArgs args)
         {
             _ = barrel.InitialiseAsync(args);
         }
 
         // should be called by Client
-        protected virtual void InitialiseBarrelController_PvPClient(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        protected virtual void InitialiseBarrelController_PvPClient(PvPBarrelController barrel, PvPBarrelControllerArgs args)
         {
             _ = barrel.InitialiseAsync_PvPClient(args);
         }

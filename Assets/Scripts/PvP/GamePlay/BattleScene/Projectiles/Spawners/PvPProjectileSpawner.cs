@@ -33,7 +33,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private SoundKey _firingSound;
         protected int _burstSize;
 
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, SoundKey firingSound)
+        public async Task InitialiseAsync(PvPProjectileSpawnerArgs args, SoundKey firingSound)
         {
 
             PvPHelper.AssertIsNotNull(impactSound, args);

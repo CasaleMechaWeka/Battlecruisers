@@ -16,7 +16,7 @@ using System.Collections.ObjectModel;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
-    public class PvPBarrelControllerArgs : IPvPBarrelControllerArgs
+    public class PvPBarrelControllerArgs
     {
         public IUpdater Updater { get; }
         public ITargetFilter TargetFilter { get; }

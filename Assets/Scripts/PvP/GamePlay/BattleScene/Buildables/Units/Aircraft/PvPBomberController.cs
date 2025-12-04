@@ -107,7 +107,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _cruiserSpecificFactories, EnemyCruiser);
+            PvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _cruiserSpecificFactories, EnemyCruiser);
             _ = _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
         }
 

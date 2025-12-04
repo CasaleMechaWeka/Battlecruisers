@@ -15,7 +15,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsTrue(delayInS >= 0);
         }
 
-        protected override IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
+        protected override IBarrelFirer CreateFirer(PvPBarrelControllerArgs args)
         {
             return
                 new DeferredBarrelFirer(

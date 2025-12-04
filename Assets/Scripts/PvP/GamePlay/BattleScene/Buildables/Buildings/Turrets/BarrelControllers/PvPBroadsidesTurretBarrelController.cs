@@ -28,12 +28,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _barrelAnimation = barrelAnimationInitialiser.CreateAnimation();
         }
 
-        protected override IAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
+        protected override IAnimation GetBarrelFiringAnimation(PvPBarrelControllerArgs args)
         {
             return _barrelAnimation;
         }
 
-        protected override IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
+        protected override IBarrelFirer CreateFirer(PvPBarrelControllerArgs args)
         {
             return
                 new DeferredBarrelFirer(

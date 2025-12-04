@@ -7,7 +7,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         protected override float DesiredAngleInDegrees => 60;
 
-        protected override void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        protected override void InitialiseBarrelController(PvPBarrelController barrel, PvPBarrelControllerArgs args)
         {
             PvPRocketBarrelController rocketBarrel = barrel.Parse<PvPRocketBarrelController>();
             _ = rocketBarrel.InitialiseAsync(args);

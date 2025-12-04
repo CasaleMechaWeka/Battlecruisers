@@ -1,4 +1,3 @@
-using BattleCruisers.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Projectiles;
@@ -21,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
 
         private SoundType _type;
         private string _name;
-        public async Task InitialiseAsync(IPvPProjectileSpawnerArgs args, SoundKey firingSound, ITargetFilter targetFilter)
+        public async Task InitialiseAsync(PvPProjectileSpawnerArgs args, SoundKey firingSound, ITargetFilter targetFilter)
         {
             await base.InitialiseAsync(args, firingSound);
 

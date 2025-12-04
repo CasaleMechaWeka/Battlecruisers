@@ -62,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPDamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
-        protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(PvPBarrelControllerArgs args)
         {
             _laserEmitter.Initialise(
                     args.TargetFilter,
