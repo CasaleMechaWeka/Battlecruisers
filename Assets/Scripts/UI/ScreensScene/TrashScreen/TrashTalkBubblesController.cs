@@ -33,17 +33,15 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
 
             string protagonistName = LocTableCache.CommonTable.GetString("Names/Protagonist");
 
-            playerBubble.Initialise(protagonistName, trashTalkData.PlayerText);
+            playerBubble.Initialise(protagonistName, LocTableCache.StoryTable.GetString(trashTalkData.PlayerTextKey));
             playerBubble.gameObject.SetActive(true);
 
-            string enemyNameKey = $"{trashTalkData.StringKeyBase}/name";
-            Debug.Log($"EnemyName key: {enemyNameKey}");
-            string enemyName = LocTableCache.StoryTable.GetString(enemyNameKey);
+            Debug.Log($"EnemyName key: {LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey)}");
+            string enemyName = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
             Debug.Log($"Resolved EnemyName: {enemyName}");
 
-            enemyBubble.Initialise(enemyName, trashTalkData.EnemyText);
+            enemyBubble.Initialise(enemyName, LocTableCache.StoryTable.GetString(trashTalkData.EnemyTextKey));
             enemyBubble.gameObject.SetActive(true);
         }
-
     }
 }

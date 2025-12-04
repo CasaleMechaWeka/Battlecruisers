@@ -7,6 +7,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
         public const float RATIO_4_TO_3 = 1.333f;
         public const float RATIO_16_TO_9 = 1.778f;
         public const float RATIO_24_TO_10 = 2.4f;
+        const float Z_POSITION_AT_4_TO_3 = 600;
 
         public Vector3 FindPosition(BackgroundImageStats stats, float cameraAspectRatio)
         {
@@ -14,7 +15,7 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
             {
                 // Set a fixed new Y position for aspect ratios narrower than 1:1
                 float newYPosition = -300; // Adjust this value as needed
-                return new Vector3(stats.PositionAt4to3.x, newYPosition, stats.PositionAt4to3.z);
+                return new Vector3(stats.PositionAt4to3.x, newYPosition, Z_POSITION_AT_4_TO_3);
             }
 
             float deltaY = stats.YPositionAt16to9 - stats.PositionAt4to3.y;
@@ -39,14 +40,14 @@ namespace BattleCruisers.UI.BattleScene.Clouds.Stats
                 return new Vector3(
                     stats.PositionAt4to3.x,
                     yAdjustedPosition_16to9_to_24to10,
-                    stats.PositionAt4to3.z
+                    Z_POSITION_AT_4_TO_3
                 );
             }
 
             return new Vector3(
                 stats.PositionAt4to3.x,
                 yAdjustedPosition,
-                stats.PositionAt4to3.z);
+                Z_POSITION_AT_4_TO_3);
         }
     }
 }

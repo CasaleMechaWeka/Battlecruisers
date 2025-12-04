@@ -41,6 +41,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         private LootManager _lootManager;
 
+        // Number of consecutive losses before suggesting easier AI difficulty
+        private const int CONSECUTIVE_LOSSES_THRESHOLD = 3;
+
         public Text title;
         public SlidingPanel unlockedItemSection;
         public GameObject defeatMessage, victoryNoLootMessage, demoCompletedScreen, decreaseDifficultySection;
@@ -67,9 +70,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             ScreensSceneGod screensSceneGod,
             SingleSoundPlayer soundPlayer,
             MusicPlayer musicPlayer,
-            Sprite[] difficultyIndicators,
-            ITrashTalkProvider levelTrashTalkList,
-            ITrashTalkProvider sideQuestTrashTalkList)
+            Sprite[] difficultyIndicators)
         {
             base.Initialise(screensSceneGod);
 
@@ -78,7 +79,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 defeatMessage, victoryNoLootMessage,
                 demoCompletedScreen, levelName,
                 completedDifficultySymbol, demoHomeButton,
-                levelTrashTalkList, sideQuestTrashTalkList,
                 postTutorialButtonsPanel, postBattleButtonsPanel,
                 postSkirmishButtonsPanel, appraisalSection,
                 appraisalButtonsPanel,
@@ -183,11 +183,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                 TrashTalkData trashTalkData;
 
                 if (ApplicationModel.Mode == GameMode.SideQuest)
-                    trashTalkData = await sideQuestTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum, true);
+                    trashTalkData = StaticData.SideQuestTrashTalk[BattleResult.LevelNum];
                 else
-                    trashTalkData = await levelTrashTalkList.GetTrashTalkAsync(BattleResult.LevelNum);
+                    trashTalkData = StaticData.LevelTrashTalk[BattleResult.LevelNum];
 
-                levelName.Initialise(BattleResult.LevelNum, trashTalkData);
+                levelName.Initialise(BattleResult.LevelNum);
                 if (ApplicationModel.Mode == GameMode.SideQuest)
                     levelName.gameObject.SetActive(false);
 
@@ -214,7 +214,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     if (ApplicationModel.SelectedLevel == DataProvider.GameModel.CompletedLevels.Count + 1 && DataProvider.SettingsManager.AIDifficulty != Difficulty.Normal && ApplicationModel.Mode == GameMode.Campaign)
                     {
                         DataProvider.GameModel.TimesLostOnLastLevel += 1;
-                        if (DataProvider.GameModel.TimesLostOnLastLevel == 3)
+                        if (DataProvider.GameModel.TimesLostOnLastLevel >= CONSECUTIVE_LOSSES_THRESHOLD)
                         {
                             if (defeatMessage.activeSelf)
                                 defeatMessage.SetActive(false);
@@ -262,7 +262,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                     title.color = Color.black; // Set title text to black for victory
                 }
 
-                await SetupAppraisalButtonsAsync(soundPlayer, levelTrashTalkList);
+                await SetupAppraisalButtonsAsync(soundPlayer);
 
                 // Initialise AFTER loot manager potentially unlocks loot and next levels
                 Command nextCommand = new Command(NextCommandExecute, CanNextCommandExecute);
@@ -345,11 +345,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
         }
 
-        private async Task SetupAppraisalButtonsAsync(SingleSoundPlayer soundPlayer, ITrashTalkProvider trashTalkList)
+        private async Task SetupAppraisalButtonsAsync(SingleSoundPlayer soundPlayer)
         {
             if (showAppraisalButtons)
             {
-                await appraisalButtonsPanel.InitialiseAsync(appraisalSection, soundPlayer, trashTalkList);
+                await appraisalButtonsPanel.InitialiseAsync(appraisalSection, soundPlayer);
                 appraisalButtonsPanel.gameObject.SetActive(true);
             }
             else

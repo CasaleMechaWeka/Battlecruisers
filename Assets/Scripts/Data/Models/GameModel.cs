@@ -130,21 +130,6 @@ namespace BattleCruisers.Data.Models
         private List<int> _purchasedBodykits;
         private List<int> _purchasedVariants;
 
-
-        private bool _isDoneMigration;
-        public bool IsDoneMigration
-        {
-            get => _isDoneMigration;
-            set => _isDoneMigration = value;
-        }
-
-        /*        private int _rankData;
-                public int RankData
-                {
-                    get => _rankData;
-                    set => _rankData = value;
-                }*/
-
         [SerializeField]
         private bool _hasAttemptedTutorial;
 
@@ -307,6 +292,9 @@ namespace BattleCruisers.Data.Models
             set { _sideQuest = value; }
         }
 
+        [SerializeField]
+        public int SaveVersion;
+
         public ReadOnlyCollection<HullKey> UnlockedHulls { get; }
         public ReadOnlyCollection<BuildingKey> UnlockedBuildings { get; }
         public ReadOnlyCollection<UnitKey> UnlockedUnits { get; }
@@ -348,7 +336,6 @@ namespace BattleCruisers.Data.Models
             _purchasedHeckles = new List<int>();
             _purchasedBodykits = new List<int>();
             _purchasedVariants = new List<int>();
-            _isDoneMigration = false;
 
             _playerName = "Charlie";
             _coins = 50;
@@ -372,7 +359,8 @@ namespace BattleCruisers.Data.Models
             BattleResult lastBattleResult,
             List<HullKey> unlockedHulls,
             List<BuildingKey> unlockedBuildings,
-            List<UnitKey> unlockedUnits)
+            List<UnitKey> unlockedUnits,
+            int saveVersion)
             : this()
         {
             HasSyncdShop = hasSyncdShop;
@@ -385,6 +373,7 @@ namespace BattleCruisers.Data.Models
             _unlockedHulls.AddRange(unlockedHulls);
             _unlockedBuildings.AddRange(unlockedBuildings);
             _unlockedUnits.AddRange(unlockedUnits);
+            SaveVersion = saveVersion;
         }
 
         public Dictionary<string, object> Analytics(string gameModeString, string type, bool lastSkirmishResult)
@@ -534,6 +523,11 @@ namespace BattleCruisers.Data.Models
             if (_hotkeys == null)
             {
                 _hotkeys = new HotkeysModel();
+            }
+            // Version detection: if SaveVersion is 0, it's an old save (v1-v4)
+            if (SaveVersion == 0)
+            {
+                SaveVersion = 4; // Assume old saves are v4
             }
         }
 

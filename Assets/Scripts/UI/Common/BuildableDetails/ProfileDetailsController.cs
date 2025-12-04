@@ -193,6 +193,9 @@ public class ProfileDetailsController : MonoBehaviour
         BountyText.text = DataProvider.GameModel.Bounty.ToString("F0");
 #endif
         UpdatePlayerName();
+        
+        // Show the exo selector panel by default
+        ShowExoSelector();
     }
 
     void ShowHeckleSelector()
@@ -344,7 +347,7 @@ public class ProfileDetailsController : MonoBehaviour
             Destroy(currentCaptainRender);
         CaptainExoKey exoKey = StaticPrefabKeys.CaptainExos.GetCaptainExoKey(newExoIndex);
         CaptainExo playerExo = Instantiate(PrefabFactory.GetCaptainExo(exoKey), CaptainRenderContainer);
-        playerExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+        playerExo.gameObject.transform.localScale = Vector3.one * 1f;
         currentCaptainRender = playerExo.gameObject;
 
         instantiatedExoItems[exoIndexToItemIndex[currentExoIndex]].ClickedFeedback.SetActive(false);
@@ -357,7 +360,7 @@ public class ProfileDetailsController : MonoBehaviour
         if (currentCaptainRender != null)
             Destroy(currentCaptainRender);
         CaptainExo playerExo = Instantiate(PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain), CaptainRenderContainer);
-        playerExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+        playerExo.gameObject.transform.localScale = Vector3.one * 1f;
         currentCaptainRender = playerExo.gameObject;
     }
 

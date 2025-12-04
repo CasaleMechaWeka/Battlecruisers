@@ -63,6 +63,7 @@ namespace BattleCruisers.Data
 
         public void SaveGame(GameModel game)
         {
+            game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
             using (FileStream file = File.Create(preferredGameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
@@ -71,7 +72,11 @@ namespace BattleCruisers.Data
 
         public GameModel LoadGame()
         {
-            Assert.IsTrue(DoesSaveGameExist());
+            // Check if save file exists - if not, go to emergency recovery
+            if (!DoesSaveGameExist())
+            {
+                return EmergencyRecovery();
+            }
 
             string filePath = preferredGameModelFilePath;
 #if BETA_SAVE || EXPERIMENTAL_SAVE
@@ -80,83 +85,56 @@ namespace BattleCruisers.Data
                 if (File.Exists(defaultGameModelFilePath))
                 {
                     filePath = defaultGameModelFilePath;
-
                     Debug.Log("No Beta save file found; defaulting to GameModel.bcms");
                 }
             }
 #endif
+
             object output = null;
-            using (FileStream file = File.Open(filePath, FileMode.Open))
+            try
             {
-                output = _binaryFormatter.Deserialize(file);
+                using (FileStream file = File.Open(filePath, FileMode.Open))
+                {
+                    output = _binaryFormatter.Deserialize(file);
+                }
+            }
+            catch
+            {
+                return EmergencyRecovery();
             }
 
-            GameModel game;
             if (output == null)
+                return EmergencyRecovery();
+
+            int version = GetSaveVersion(output);
+            GameModel game;
+
+            switch (version)
             {
-                Debug.LogError("output == null");
-                LandingSceneGod.Instance.LogToScreen("output == null");
-                game = StaticData.InitialGameModel;
-            }
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    // Legacy/hypothetical formats - migrate
+                    game = MigrateToCurrentVersion(output);
+                    break;
 
-            // We need to track Save vs Install versions
-            // since we don't do that right now, I'm just checking inside the Loadout to see whether the user has a captains set.
-            // Not having a captain set causes the game to hang on the first load screen, so this is a good test now.
-
-            // It should be changed to a version check though.
-            var plo = output.GetType().GetProperty("PlayerLoadout").GetValue(output);
-            var coins = output.GetType().GetProperty("Coins").GetValue(output);
-
-            string[] purchasableCategories = new string[]
-            {
-                "Heckles", "Exos", "Bodykits", "Variants"
-            };
-
-            byte compatiblePurchasables = 0;
-
-            foreach (string purchasableCategory in purchasableCategories)
-                try
-                {
-                    var purchasableProperty = output.GetType().GetProperty("Purchased" + purchasableCategory);
-                    if (purchasableProperty != null)
-                        if (purchasableProperty.GetValue(output) is List<int>)
-                            compatiblePurchasables++;
-                        else
-                            Debug.LogWarning("Property \"Purchased" + purchasableCategory + "\" was not in the expected format: List<int>");
+                default:
+                    // Real versions: 640 (6.4.0), 650 (6.5.0), etc.
+                    if (version >= 640)
+                    {
+                        game = output as GameModel;
+                        if (game == null || !ValidateCurrentSave(game))
+                            return EmergencyRecovery();
+                    }
                     else
-                        Debug.Log("Property \"Purchased" + purchasableCategory + "\" was not found");
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Error while reading \"Purchased" + purchasableCategory + "\" property from save data:\n" + ex.Message);
-                }
-
-            Loadout loadout = (Loadout)plo;
-
-            bool validLoadoutCatrgories = true;
-
-            if (loadout.SelectedBuildings[BuildingCategory.Factory].Count > 5 ||
-               loadout.SelectedBuildings[BuildingCategory.Defence].Count > 5 ||
-               loadout.SelectedBuildings[BuildingCategory.Offence].Count > 5 ||
-               loadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5 ||
-               loadout.SelectedUnits[UnitCategory.Naval].Count > 5 ||
-               loadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
-            {
-                validLoadoutCatrgories = false;
+                        return EmergencyRecovery();
+                    break;
             }
 
-            if (loadout.CurrentCaptain == null || loadout.SelectedVariants == null || !validLoadoutCatrgories || compatiblePurchasables != purchasableCategories.Length ||
-                ((GameModel)output).NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
-            {
-                // make GameModel as compatible as possible
-                game = MakeCompatible(output);
-            }
-            else
-            {
-                // assign as was previously done
-                game = (GameModel)output;
-            }
-
+            // Post-load recovery operations (preserve existing logic)
             // If any variant is in SelectedVariants but missing from PurchasedVariants, restore it
             if (game.PlayerLoadout.SelectedVariants != null && game.PlayerLoadout.SelectedVariants.Count > 0)
             {
@@ -186,13 +164,21 @@ namespace BattleCruisers.Data
         private GameModel MakeCompatible(object gameData)
         {
             Debug.Log("MakeCompatible");
-            // vars
+
+            // perhaps be more conservative for these other fields too?
             var tut = gameData.GetType().GetProperty("HasAttemptedTutorial").GetValue(gameData);
             var lds = gameData.GetType().GetProperty("LifetimeDestructionScore").GetValue(gameData);
             var bds = gameData.GetType().GetProperty("BestDestructionScore").GetValue(gameData);
             var plo = gameData.GetType().GetProperty("PlayerLoadout").GetValue(gameData);
             var lbr = gameData.GetType().GetProperty("LastBattleResult").GetValue(gameData);
             var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
+            var sav = gameData.GetType().GetProperty("SaveVersion");
+            int saveVersion = 0;
+
+            if(sav == null)
+                saveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            else
+                saveVersion = (int)sav.GetValue(gameData);
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
             foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
@@ -228,24 +214,40 @@ namespace BattleCruisers.Data
                 _lastBattleResult,
                 _unlockedHulls,
                 _unlockedBuildings,
-                _unlockedUnits
+                _unlockedUnits,
+                saveVersion
                 );
 
             compatibleGameModel.PremiumEdition = _premiumState;
 
-            // ##############################################
-            //                  New Fields
-            // ##############################################
-
-            // Selected Captain
-            if (_loadout.CurrentCaptain == null)
+            if (_loadout.CurrentCaptain != null)
+            {
+                string captainName = _loadout.CurrentCaptain.PrefabName;
+                if (captainName.StartsWith("CaptainExo"))
+                {
+                    string indexStr = captainName.Replace("CaptainExo", "");
+                    if (int.TryParse(indexStr, out int captainIndex))
+                    {
+                        compatibleGameModel.AddExo(captainIndex);
+                    }
+                }
+            }
+            else
             {
                 compatibleGameModel.PlayerLoadout.PurchaseExo("CaptainExo000");
                 compatibleGameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
+                compatibleGameModel.AddExo(0);
             }
 
-            // Heckles
-            if (_loadout.CurrentHeckles == null)
+            // Extract CurrentHeckles and ensure they're in purchased Heckles
+            if (_loadout.CurrentHeckles != null && _loadout.CurrentHeckles.Count > 0)
+            {
+                foreach (int heckleId in _loadout.CurrentHeckles)
+                {
+                    compatibleGameModel.AddHeckle(heckleId);
+                }
+            }
+            else
             {
                 compatibleGameModel.PlayerLoadout.CurrentHeckles = new List<int> { 0, 1, 2 };
             }
@@ -271,21 +273,11 @@ namespace BattleCruisers.Data
                 try
                 {
                     var purchasableProperty = gameData.GetType().GetProperty("Purchased" + purchasableCategories[i]);
-                    if (purchasableProperty != null)
-                    {
-                        if (purchasableProperty.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
-                            foreach (int j in purchasableItems)
-                                purchasableOperations[i](j);
-                        else
-                            Debug.LogError("Property \"Purchased" + purchasableCategories[i] + "\" was not in the expected format List<int>");
-                    }
-                    else
-                        Debug.LogWarning("Property \"Purchased" + purchasableCategories[i] + "\" is null in save data");
+                    if (purchasableProperty?.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
+                        foreach (int j in purchasableItems)
+                            purchasableOperations[i](j);
                 }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Error when processing  \"Purchased" + purchasableCategories[i] + "\": " + ex.Message);
-                }
+                catch { }
 
             string[] purchasableCategoriesLegacy = new string[]
             {
@@ -296,28 +288,20 @@ namespace BattleCruisers.Data
                 try
                 {
                     var purchasableProperty = gameData.GetType().GetProperty(purchasableCategoriesLegacy[i]);
-                    if (purchasableProperty != null)
-                        if (purchasableProperty.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
-                            foreach (int? j in purchasableItems)
-                            {
-                                if (j == null) continue;
-                                var isOwnedProperty = j.GetType().GetProperty("isOwned");
-                                if (isOwnedProperty == null) continue;
-                                var indexProperty = j.GetType().GetProperty("index");
-                                if (indexProperty == null) continue;
-                                if (isOwnedProperty.GetValue(j) is bool isOwned && isOwned
-                                && indexProperty.GetValue(j) is int index)
-                                    purchasableOperations[i](index);
-                            }
-                        else
-                            Debug.LogError("Property \"Purchased" + purchasableCategoriesLegacy[i] + "\" was not in the expected format List<int>");
-                    else
-                        Debug.LogWarning("Property \"Purchased" + purchasableCategoriesLegacy[i] + "\" is null in save data");
+                    if (purchasableProperty?.GetValue(gameData) is List<int> purchasableItems && purchasableItems.Count > 0)
+                        foreach (int? j in purchasableItems)
+                        {
+                            if (j == null) continue;
+                            var isOwnedProperty = j.GetType().GetProperty("isOwned");
+                            if (isOwnedProperty == null) continue;
+                            var indexProperty = j.GetType().GetProperty("index");
+                            if (indexProperty == null) continue;
+                            if (isOwnedProperty.GetValue(j) is bool isOwned && isOwned
+                            && indexProperty.GetValue(j) is int index)
+                                purchasableOperations[i](index);
+                        }
                 }
-                catch (Exception ex)
-                {
-                    Debug.LogError("Error when processing  \"Purchased" + purchasableCategoriesLegacy[i] + "\": " + ex.Message);
-                }
+                catch { }
 
             if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
                 compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
@@ -342,9 +326,25 @@ namespace BattleCruisers.Data
             if (gameData.GetType().GetProperty("Bounty").GetValue(gameData) != null)
                 compatibleGameModel.Bounty = (int)gameData.GetType().GetProperty("Bounty").GetValue(gameData);
 
-            // Variants
+            // Extract SelectedBodykit if it exists
+            var bodykitField = _loadout.GetType().GetField("_selectedBodykit", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (bodykitField != null)
+            {
+                var bodykitValue = bodykitField.GetValue(_loadout);
+                if (bodykitValue is int bodykitIndex && bodykitIndex >= 0)
+                {
+                    compatibleGameModel.AddBodykit(bodykitIndex);
+                }
+            }
+
+            // Extract SelectedVariants and ensure they're in purchased Variants
             if (_loadout.SelectedVariants == null)
                 _loadout.SelectedVariants = new List<int>();
+            
+            foreach (int variantId in _loadout.SelectedVariants)
+            {
+                compatibleGameModel.AddVariant(variantId);
+            }
 
             // Player Name
             string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;
@@ -397,6 +397,109 @@ namespace BattleCruisers.Data
             return compatibleGameModel;
         }
 
+        private int GetSaveVersion(object gameData)
+        {
+            if (gameData is GameModel gameModel)
+                return gameModel.SaveVersion;
+
+            var prop = gameData.GetType().GetProperty("SaveVersion");
+            if (prop != null && prop.GetValue(gameData) is int version)
+                return version;
+
+            return 0;
+        }
+
+        private bool ValidateCurrentSave(GameModel game)
+        {
+            if (game == null)
+                return false;
+
+            // Check critical loadout properties
+            if (game.PlayerLoadout == null)
+                return false;
+
+            if (game.PlayerLoadout.CurrentCaptain == null)
+                return false;
+
+            if (game.PlayerLoadout.SelectedVariants == null)
+                return false;
+
+            // Check Purchased lists exist and are correct type
+            string[] purchasableCategories = new string[] { "Heckles", "Exos", "Bodykits", "Variants" };
+            foreach (string category in purchasableCategories)
+            {
+                try
+                {
+                    var prop = game.GetType().GetProperty("Purchased" + category);
+                    if (prop == null)
+                        return false;
+
+                    var value = prop.GetValue(game);
+                    if (!(value is List<int>))
+                        return false;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            // Check loadout category counts
+            try
+            {
+                if (game.PlayerLoadout.SelectedBuildings[BuildingCategory.Factory].Count > 5 ||
+                   game.PlayerLoadout.SelectedBuildings[BuildingCategory.Defence].Count > 5 ||
+                   game.PlayerLoadout.SelectedBuildings[BuildingCategory.Offence].Count > 5 ||
+                   game.PlayerLoadout.SelectedBuildings[BuildingCategory.Ultra].Count > 5 ||
+                   game.PlayerLoadout.SelectedUnits[UnitCategory.Naval].Count > 5 ||
+                   game.PlayerLoadout.SelectedUnits[UnitCategory.Aircraft].Count > 5)
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            // Check completed levels count
+            if (game.NumOfLevelsCompleted > StaticData.NUM_OF_LEVELS)
+                return false;
+
+            // Try ValidateSelectedBuildables
+            try
+            {
+                game.PlayerLoadout.ValidateSelectedBuildables();
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private GameModel MigrateToCurrentVersion(object gameData)
+        {
+            GameModel game = MakeCompatible(gameData);
+            game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            SaveGame(game);
+            return game;
+        }
+
+        private GameModel BuildMinimalDefaults()
+        {
+            return StaticData.InitialGameModel;
+        }
+
+        private GameModel EmergencyRecovery()
+        {
+            GameModel minimal = BuildMinimalDefaults();
+            minimal.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            SaveGame(minimal);
+            return minimal;
+        }
+
         public void DeleteSavedGame()
         {
             if (DoesPreferredSaveGameExist())
@@ -423,6 +526,7 @@ namespace BattleCruisers.Data
         {
             try
             {
+                game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
                 SaveGameModel saveData = new SaveGameModel(game);
                 if (CloudSaveService.Instance != null && CloudSaveService.Instance.Data != null)
                 {

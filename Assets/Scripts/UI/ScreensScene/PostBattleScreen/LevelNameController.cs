@@ -1,4 +1,5 @@
-﻿using BattleCruisers.UI.ScreensScene.TrashScreen;
+﻿using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -9,12 +10,11 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
     {
         public Text levelName;
 
-        public void Initialise(int levelNum, TrashTalkData levelTrashTalkData)
+        public void Initialise(int levelNum)
         {
             Assert.IsNotNull(levelName);
-            Assert.IsNotNull(levelTrashTalkData);
 
-            levelName.text = $"#{levelNum} {levelTrashTalkData.EnemyName}";
+            levelName.text = $"#{levelNum} {LocTableCache.StoryTable.GetString(StaticData.LevelTrashTalk[levelNum].EnemyNameKey)}";
             gameObject.SetActive(true);
         }
     }

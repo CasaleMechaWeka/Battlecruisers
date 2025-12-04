@@ -1,11 +1,12 @@
-using System;
 using System.Threading.Tasks;
 using BattleCruisers.Data;
 using BattleCruisers.Scenes;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace BattleCruisers.Utils.Localisation
@@ -71,6 +72,7 @@ namespace BattleCruisers.Utils.Localisation
                     }
                     catch
                     {
+                        _locale = new Locale();
                         _locale.name = "English (en)";
                         LandingSceneGod.Instance.LogToScreen("DEFAULT TO EN LOC");
                         LocalizationSettings.SelectedLocale = _locale;
@@ -78,7 +80,7 @@ namespace BattleCruisers.Utils.Localisation
                 }
             }
 
-            var handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, _locale);
+            AsyncOperationHandle<StringTable> handle = LocalizationSettings.StringDatabase.GetTableAsync(tableName, _locale);
             handle.WaitForCompletion();
 
             Assert.IsTrue(handle.Status == AsyncOperationStatus.Succeeded);
@@ -103,6 +105,7 @@ namespace BattleCruisers.Utils.Localisation
                     }
                     catch
                     {
+                        _locale = new Locale();
                         _locale.name = "English (en)";
                         LandingSceneGod.Instance.LogToScreen("DEFAULT TO EN LOC");
                         LocalizationSettings.SelectedLocale = _locale;

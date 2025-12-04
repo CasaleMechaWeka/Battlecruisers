@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
+using BattleCruisers.Data.Static.LevelLoot;
+using BattleCruisers.UI.ScreensScene.PostBattleScreen;
 
 // Remember, this class is going to be fed into a JSON (de)serializer!
 // Keep data types primitive.
@@ -61,7 +63,6 @@ namespace BattleCruisers.Data.Models
 
         // Status tracking
         public bool hasAttemptedTutorial;
-        public bool isDoneMigration;
         public bool premiumEdition;
 
         public SaveGameModel()
@@ -76,8 +77,8 @@ namespace BattleCruisers.Data.Models
             // ##################################################################################
             //                     INCREMENT THIS IF YOU CHANGE SAVEGAMEMODEL
 
-            saveVersion = 4;
-            // Last change: 5/16/2023
+            saveVersion = game.SaveVersion;
+            // Last change: v5 - Added robust version compatibility system
 
             // Consider writing handling for loading old saves with mismatched or missing fields.
             // ##################################################################################
@@ -115,26 +116,32 @@ namespace BattleCruisers.Data.Models
 
             // Status tracking:
             hasAttemptedTutorial = game.HasAttemptedTutorial;
-            isDoneMigration = game.IsDoneMigration;
             premiumEdition = game.PremiumEdition || game.PurchasedBodykits.Contains(0);
         }
 
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
+            game.SaveVersion = saveVersion;
             Debug.Log("Assigning save data to GameModel...");
 
-            game.LifetimeDestructionScore = lifetimeDestructionScore;
-            Debug.Log($"LifetimeDestructionScore: {lifetimeDestructionScore}");
+            if (lifetimeDestructionScore > game.LifetimeDestructionScore)
+                game.LifetimeDestructionScore = lifetimeDestructionScore;
+                
+            Debug.Log($"LifetimeDestructionScore: {game.LifetimeDestructionScore}; Cloud Save value: {lifetimeDestructionScore}");
 
-            game.BattleWinScore = battleWinScore;
-            Debug.Log($"BattleWinScore: {battleWinScore}");
+            if(battleWinScore > game.BattleWinScore)
+                game.BattleWinScore = battleWinScore;
+            Debug.Log($"BattleWinScore: {game.BattleWinScore}; Cloud Save value: {battleWinScore}");
 
-            game.TimesLostOnLastLevel = timesLostOnLastLevel;
-            Debug.Log($"Times lost on last level: {timesLostOnLastLevel}");
+            if(timesLostOnLastLevel > game.TimesLostOnLastLevel)
+                game.TimesLostOnLastLevel = timesLostOnLastLevel;
+            Debug.Log($"Times lost on last level: {game.TimesLostOnLastLevel}; Cloud Save value: {timesLostOnLastLevel}");
 
+#if FEATURE_BOUNTY
             game.Bounty = bounty;
             Debug.Log($"Player's bounty: {bounty}");
+#endif
 
             if (game.PlayerName == "Charlie")
             {
@@ -142,28 +149,25 @@ namespace BattleCruisers.Data.Models
                 Debug.Log($"PlayerName: {playerName}");
             }
 
-            game.IsDoneMigration = isDoneMigration;
-            Debug.Log($"IsDoneMigration: {isDoneMigration}");
-
             // Log completed levels
-            foreach (var level in levelsCompleted)
+            foreach (KeyValuePair<int, int> level in levelsCompleted)
                 Debug.Log($"Completed Level: {level.Key}, Difficulty: {level.Value}");
 
             // Log completed side quests
             if (sideQuestsCompleted != null)
-                foreach (var sideQuest in sideQuestsCompleted)
+                foreach (KeyValuePair<int, int> sideQuest in sideQuestsCompleted)
                     Debug.Log($"Completed SideQuest: {sideQuest.Key}, Difficulty: {sideQuest.Value}");
 
             // Log unlocked hulls
-            foreach (var hull in unlockedHulls)
+            foreach (string hull in unlockedHulls)
                 Debug.Log($"Unlocked Hull: {hull}");
 
             // Log unlocked buildings
-            foreach (var building in unlockedBuildings)
+            foreach (KeyValuePair<string, string> building in unlockedBuildings)
                 Debug.Log($"Unlocked Building: {building.Key}, Category: {building.Value}");
 
             // Log unlocked units
-            foreach (var unit in unlockedUnits)
+            foreach (KeyValuePair<string, string> unit in unlockedUnits)
                 Debug.Log($"Unlocked Unit: {unit.Key}, Category: {unit.Value}");
 
             // IAPs
@@ -171,16 +175,12 @@ namespace BattleCruisers.Data.Models
             if (purchasedExos != null)
             {
                 List<int> currentExos = game.PurchasedExos;
-
                 foreach (int exo in purchasedExos)
                     if (!currentExos.Contains(exo))
                         game.AddExo(exo);
-
-                // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentExos.Except(purchasedExos).ToList();
-                foreach (int entry in entriesToRemove)
-                    game.RemoveExo(entry);
             }
+            else
+                game.AddExo(0);
 
             // Heckles
             if (purchasedHeckles != null)
@@ -189,11 +189,12 @@ namespace BattleCruisers.Data.Models
                 foreach (int heckle in purchasedHeckles)
                     if (!currentHeckles.Contains(heckle))
                         game.AddHeckle(heckle);
-
-                // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentHeckles.Except(purchasedHeckles).ToList();
-                foreach (int entry in entriesToRemove)
-                    game.RemoveHeckle(entry);
+            }
+            else if (game.PurchasedHeckles.Count < 3)
+            {
+                game.AddHeckle(0);
+                game.AddHeckle(1);
+                game.AddHeckle(2);
             }
 
             // Bodykits
@@ -205,11 +206,6 @@ namespace BattleCruisers.Data.Models
                 foreach (int bodykit in purchasedBodykits)
                     if (!currentBodykits.Contains(bodykit))
                         game.AddBodykit(bodykit);
-
-                // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentBodykits.Except(purchasedBodykits).ToList();
-                foreach (int entry in entriesToRemove)
-                    game.RemoveBodykit(entry);
             }
 
             // Variants
@@ -219,11 +215,6 @@ namespace BattleCruisers.Data.Models
                 foreach (int variant in purchasedVariants)
                     if (!currentVariants.Contains(variant))
                         game.AddVariant(variant);
-
-                // Remove if they're not in the cloud save data:
-                List<int> entriesToRemove = currentVariants.Except(purchasedVariants).ToList();
-                foreach (int entry in entriesToRemove)
-                    game.RemoveVariant(entry);
             }
 
             // levels completed
@@ -231,6 +222,7 @@ namespace BattleCruisers.Data.Models
             {
                 CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
                 game.AddCompletedLevel(cLevel);
+                //LootManager.UnlockLevelLoot(level.Value);
             }
 
             if (sideQuestsCompleted != null)
@@ -238,6 +230,7 @@ namespace BattleCruisers.Data.Models
                 {
                     CompletedLevel cSideQuest = new CompletedLevel(sideQuest.Key, (Settings.Difficulty)sideQuest.Value);
                     game.AddCompletedSideQuest(cSideQuest);
+                    //LootManager.UnlockSideQuestLoot(sideQuest.Value);
                 }
 
             // unlocked hulls

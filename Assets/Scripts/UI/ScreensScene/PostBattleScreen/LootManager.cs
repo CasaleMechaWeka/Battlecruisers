@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return containsNewLoot || !completedSideQuestIDs.Contains(sideQuestID);
         }
 
-        public Loot UnlockLevelLoot(int levelCompleted)
+        public static Loot UnlockLevelLoot(int levelCompleted)
         {
             Debug.Log($"UnlockLevelLoot called for level: {levelCompleted}");
             Loot unlockedLoot = StaticData.GetLevelLoot(levelCompleted);
@@ -76,7 +76,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return unlockedLoot;
         }
 
-        public Loot UnlockSideQuestLoot(int sideQuestID)
+        public static Loot UnlockSideQuestLoot(int sideQuestID)
         {
             Debug.Log($"UnlockSideQuestLoot called for sideQuestID: {sideQuestID}");
             Loot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
@@ -90,7 +90,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return unlockedLoot;
         }
 
-        private void UnlockLootItems(Loot unlockedLoot)
+        private static void UnlockLootItems(Loot unlockedLoot)
         {
             foreach (ILootItem lootItem in unlockedLoot.Items)
             {

@@ -2,12 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Unity.Services.RemoteConfig;
 
 namespace BattleCruisers.Ads
 {
     /// <summary>
-    /// Manages ad configuration with Firebase Remote Config for A/B testing
-    /// Falls back to local defaults if Firebase is unavailable
+    /// JSON structure for AD_CONFIG from Unity Remote Config
+    /// Matches the pattern used by GAME_CONFIG, SHOP_CONFIG, etc.
+    /// </summary>
+    [Serializable]
+    public struct AdConfig
+    {
+        public int ad_minimum_level;
+        public int ad_frequency;
+        public float ad_cooldown_minutes;
+        public bool ad_veteran_boost_enabled;
+        public int ad_veteran_threshold;
+        public int ad_veteran_frequency;
+        public bool ads_are_live;
+        public bool ads_disabled;
+    }
+
+    /// <summary>
+    /// Manages ad configuration with Unity Remote Config for A/B testing
+    /// Falls back to local defaults if Remote Config is unavailable
     /// </summary>
     public class AdConfigManager : MonoBehaviour
     {
@@ -22,7 +40,7 @@ namespace BattleCruisers.Ads
         public int defaultAdFrequency = 3;
         
         [Tooltip("Minimum minutes between ads")]
-        public float defaultAdCooldownMinutes = 5f;
+        public float defaultAdCooldownMinutes = 9f;
         
         [Tooltip("Enable different ad frequency for new vs veteran players")]
         public bool enableVeteranFrequencyBoost = true;
@@ -33,6 +51,13 @@ namespace BattleCruisers.Ads
         [Tooltip("Ad frequency for veteran players (lower = more ads)")]
         public int veteranAdFrequency = 2;
 
+        [Header("Ad Mode Configuration")]
+        [Tooltip("If true, ads are in production mode. If false, ads are in test mode.")]
+        public bool defaultAdsAreLive = false;
+        
+        [Tooltip("If true, all ads are completely disabled (no test ads, no real ads)")]
+        public bool defaultAdsDisabled = false;
+
         // Current values (from Remote Config or defaults)
         public int MinimumLevelForAds { get; private set; }
         public int AdFrequency { get; private set; }
@@ -40,6 +65,18 @@ namespace BattleCruisers.Ads
         public bool VeteranFrequencyBoostEnabled { get; private set; }
         public int VeteranThreshold { get; private set; }
         public int VeteranAdFrequency { get; private set; }
+        
+        /// <summary>
+        /// If true, ads are in PRODUCTION mode (real ads, real revenue).
+        /// If false, ads are in TEST mode (test ads only).
+        /// </summary>
+        public bool AdsAreLive { get; private set; }
+        
+        /// <summary>
+        /// If true, ALL ads are disabled (no test ads, no real ads).
+        /// Use this for maintenance or to turn off ads entirely.
+        /// </summary>
+        public bool AdsDisabled { get; private set; }
 
         private bool isRemoteConfigFetched = false;
 
@@ -74,97 +111,95 @@ namespace BattleCruisers.Ads
             VeteranFrequencyBoostEnabled = enableVeteranFrequencyBoost;
             VeteranThreshold = veteranThreshold;
             VeteranAdFrequency = veteranAdFrequency;
+            AdsAreLive = defaultAdsAreLive;
+            AdsDisabled = defaultAdsDisabled;
 
-            Debug.Log($"[AdConfig] Using defaults: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}, Cooldown={AdCooldownMinutes}");
+            Debug.Log($"[AdConfig] Using defaults: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}, Cooldown={AdCooldownMinutes}, AdsAreLive={AdsAreLive}, AdsDisabled={AdsDisabled}");
         }
 
         /// <summary>
-        /// Fetch configuration from Firebase Remote Config
+        /// Fetch configuration from Unity Remote Config as single JSON (AD_CONFIG)
+        /// Matches the pattern used by GAME_CONFIG, SHOP_CONFIG, etc.
         /// </summary>
         private async Task FetchRemoteConfigAsync()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
             try
             {
-                Debug.Log("[AdConfig] Fetching Remote Config from Firebase...");
-                
-                // Get Firebase Remote Config instance via Android JNI
-                using (AndroidJavaClass firebaseRemoteConfig = new AndroidJavaClass("com.google.firebase.remoteconfig.FirebaseRemoteConfig"))
-                using (AndroidJavaObject remoteConfigInstance = firebaseRemoteConfig.CallStatic<AndroidJavaObject>("getInstance"))
+                Debug.Log("[AdConfig] Fetching AD_CONFIG from Unity Remote Config...");
+
+                // Check if Unity Services are initialized
+                if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized)
                 {
-                    // Set default values
-                    using (AndroidJavaObject defaultsMap = new AndroidJavaObject("java.util.HashMap"))
-                    {
-                        defaultsMap.Call<AndroidJavaObject>("put", "minimum_level_for_ads", new AndroidJavaObject("java.lang.Long", (long)defaultMinimumLevelForAds));
-                        defaultsMap.Call<AndroidJavaObject>("put", "ad_frequency", new AndroidJavaObject("java.lang.Long", (long)defaultAdFrequency));
-                        defaultsMap.Call<AndroidJavaObject>("put", "ad_cooldown_minutes", new AndroidJavaObject("java.lang.Double", (double)defaultAdCooldownMinutes));
-                        defaultsMap.Call<AndroidJavaObject>("put", "veteran_frequency_boost_enabled", new AndroidJavaObject("java.lang.Boolean", enableVeteranFrequencyBoost));
-                        defaultsMap.Call<AndroidJavaObject>("put", "veteran_threshold", new AndroidJavaObject("java.lang.Long", (long)veteranThreshold));
-                        defaultsMap.Call<AndroidJavaObject>("put", "veteran_ad_frequency", new AndroidJavaObject("java.lang.Long", (long)veteranAdFrequency));
-                        
-                        remoteConfigInstance.Call("setDefaultsAsync", defaultsMap);
-                    }
+                    Debug.LogWarning("[AdConfig] Unity Services not initialized, using defaults");
+                    return;
+                }
 
-                    // Fetch and activate
-                    // Set cache expiration to 1 hour for production, 0 for testing
-                    long cacheExpiration = 3600; // 1 hour
-                    using (AndroidJavaObject fetchTask = remoteConfigInstance.Call<AndroidJavaObject>("fetch", cacheExpiration))
-                    {
-                        // Wait for fetch to complete (simplified - in production use proper async)
-                        await Task.Delay(2000);
-                    }
+                // Fetch remote config (if not already fetched by DataProvider)
+                if (RemoteConfigService.Instance.appConfig.config.Count == 0)
+                {
+                    Debug.Log("[AdConfig] Fetching remote config data...");
+                    await RemoteConfigService.Instance.FetchConfigsAsync(new BattleCruisers.Data.UserAttributes(), new BattleCruisers.Data.AppAttributes());
+                }
 
-                    // Activate fetched values
-                    bool activated = remoteConfigInstance.Call<bool>("activate");
+                // Get AD_CONFIG as JSON (single key, like GAME_CONFIG pattern)
+                var adConfigJson = RemoteConfigService.Instance.appConfig.GetJson("AD_CONFIG");
+                
+                if (!string.IsNullOrEmpty(adConfigJson) && adConfigJson != "{}")
+                {
+                    Debug.Log($"[AdConfig] Fetched AD_CONFIG: {adConfigJson}");
                     
-                    if (activated)
-                    {
-                        // Get values
-                        MinimumLevelForAds = (int)remoteConfigInstance.Call<AndroidJavaObject>("getLong", "minimum_level_for_ads").Call<long>("longValue");
-                        AdFrequency = (int)remoteConfigInstance.Call<AndroidJavaObject>("getLong", "ad_frequency").Call<long>("longValue");
-                        AdCooldownMinutes = (float)remoteConfigInstance.Call<AndroidJavaObject>("getDouble", "ad_cooldown_minutes").Call<double>("doubleValue");
-                        VeteranFrequencyBoostEnabled = remoteConfigInstance.Call<AndroidJavaObject>("getBoolean", "veteran_frequency_boost_enabled").Call<bool>("booleanValue");
-                        VeteranThreshold = (int)remoteConfigInstance.Call<AndroidJavaObject>("getLong", "veteran_threshold").Call<long>("longValue");
-                        VeteranAdFrequency = (int)remoteConfigInstance.Call<AndroidJavaObject>("getLong", "veteran_ad_frequency").Call<long>("longValue");
+                    // Parse JSON to struct
+                    AdConfig adConfig = JsonUtility.FromJson<AdConfig>(adConfigJson);
+                    
+                    // Apply values from Remote Config
+                    MinimumLevelForAds = adConfig.ad_minimum_level > 0 ? adConfig.ad_minimum_level : defaultMinimumLevelForAds;
+                    AdFrequency = adConfig.ad_frequency > 0 ? adConfig.ad_frequency : defaultAdFrequency;
+                    AdCooldownMinutes = adConfig.ad_cooldown_minutes > 0 ? adConfig.ad_cooldown_minutes : defaultAdCooldownMinutes;
+                    VeteranFrequencyBoostEnabled = adConfig.ad_veteran_boost_enabled;
+                    VeteranThreshold = adConfig.ad_veteran_threshold > 0 ? adConfig.ad_veteran_threshold : veteranThreshold;
+                    VeteranAdFrequency = adConfig.ad_veteran_frequency > 0 ? adConfig.ad_veteran_frequency : veteranAdFrequency;
+                    AdsAreLive = adConfig.ads_are_live;
+                    AdsDisabled = adConfig.ads_disabled;
 
-                        isRemoteConfigFetched = true;
-                        
-                        Debug.Log($"[AdConfig] Remote Config fetched: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}, Cooldown={AdCooldownMinutes}, VeteranBoost={VeteranFrequencyBoostEnabled}");
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[AdConfig] Remote Config activation failed, using defaults");
-                    }
+                    isRemoteConfigFetched = true;
+
+                    Debug.Log($"[AdConfig] AD_CONFIG parsed successfully!");
+                    Debug.Log($"[AdConfig] Ad Settings: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}, Cooldown={AdCooldownMinutes}min");
+                    Debug.Log($"[AdConfig] Ad Mode: AdsAreLive={AdsAreLive} (production={AdsAreLive}), AdsDisabled={AdsDisabled}");
+                    Debug.Log($"[AdConfig] Veteran Settings: Boost={VeteranFrequencyBoostEnabled}, Threshold={VeteranThreshold}, Frequency={VeteranAdFrequency}");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdConfig] AD_CONFIG not found in Unity Remote Config, using defaults");
+                    Debug.LogWarning("[AdConfig] Add key 'AD_CONFIG' (type: json) to Unity Remote Config dashboard");
                 }
             }
             catch (Exception e)
             {
-                Debug.LogError($"[AdConfig] Failed to fetch Remote Config: {e.Message}");
+                Debug.LogError($"[AdConfig] Failed to fetch/parse AD_CONFIG: {e.Message}");
                 Debug.LogWarning("[AdConfig] Using default values");
             }
-#elif UNITY_EDITOR
-            // Simulate remote config fetch in Editor
-            Debug.Log("[AdConfig] [Editor] Simulating Remote Config fetch...");
-            await Task.Delay(500);
-            
-            // Check if we have editor overrides in PlayerPrefs
-            if (PlayerPrefs.HasKey("EditorAdConfig_MinLevel"))
+        }
+
+        /// <summary>
+        /// Check if ads should be shown at all
+        /// </summary>
+        public bool ShouldShowAds()
+        {
+            if (AdsDisabled)
             {
-                MinimumLevelForAds = PlayerPrefs.GetInt("EditorAdConfig_MinLevel", defaultMinimumLevelForAds);
-                AdFrequency = PlayerPrefs.GetInt("EditorAdConfig_Frequency", defaultAdFrequency);
-                AdCooldownMinutes = PlayerPrefs.GetFloat("EditorAdConfig_Cooldown", defaultAdCooldownMinutes);
-                Debug.Log($"[AdConfig] [Editor] Using editor overrides: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}");
+                Debug.Log("[AdConfig] Ads are DISABLED via Remote Config");
+                return false;
             }
-            else
-            {
-                Debug.Log($"[AdConfig] [Editor] Using defaults (set overrides via PlayerPrefs)");
-            }
-            
-            isRemoteConfigFetched = true;
-#else
-            Debug.Log("[AdConfig] Platform not supported for Remote Config");
-            await Task.CompletedTask;
-#endif
+            return true;
+        }
+
+        /// <summary>
+        /// Check if we're in test mode (for AppLovin test ads)
+        /// </summary>
+        public bool IsTestMode()
+        {
+            return !AdsAreLive;
         }
 
         /// <summary>
@@ -192,7 +227,7 @@ namespace BattleCruisers.Ads
         /// </summary>
         public async Task RefreshConfigAsync()
         {
-            Debug.Log("[AdConfig] Force refreshing config...");
+            Debug.Log("[AdConfig] Force refreshing AD_CONFIG...");
             await FetchRemoteConfigAsync();
         }
 
@@ -209,8 +244,21 @@ namespace BattleCruisers.Ads
                 { "veteran_boost_enabled", VeteranFrequencyBoostEnabled },
                 { "veteran_threshold", VeteranThreshold },
                 { "veteran_frequency", VeteranAdFrequency },
-                { "remote_config_fetched", isRemoteConfigFetched }
+                { "ads_are_live", AdsAreLive },
+                { "ads_disabled", AdsDisabled },
+                { "is_test_mode", IsTestMode() },
+                { "remote_config_fetched", isRemoteConfigFetched },
+                { "config_source", "Unity Remote Config (AD_CONFIG)" }
             };
+        }
+
+        /// <summary>
+        /// Get a formatted string of current ad status for display
+        /// </summary>
+        public string GetStatusString()
+        {
+            string mode = AdsDisabled ? "DISABLED" : (AdsAreLive ? "PRODUCTION" : "TEST MODE");
+            return $"Ads: {mode} | MinLevel: {MinimumLevelForAds} | Freq: {AdFrequency} | Cooldown: {AdCooldownMinutes}min | RemoteConfig: {(isRemoteConfigFetched ? "YES" : "NO")}";
         }
 
         private void OnDestroy()
@@ -222,4 +270,3 @@ namespace BattleCruisers.Ads
         }
     }
 }
-

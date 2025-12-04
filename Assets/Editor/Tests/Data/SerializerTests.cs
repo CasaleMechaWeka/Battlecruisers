@@ -6,6 +6,7 @@ using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
+using BattleCruisers.Scenes;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +45,8 @@ namespace BattleCruisers.Tests.Data
 				lastBattleResult: CreateBattleResult(),
 				unlockedHulls: CreateUnlockedHulls(),
 				unlockedBuildings: CreateUnlockedBuildings(),
-				unlockedUnits: CreateUnlockedUnits());
+				unlockedUnits: CreateUnlockedUnits(),
+				saveVersion: ScreensSceneGod.VersionToInt(Application.version));
 			_originalGameModel.NewHulls.AddItem(new HullKey("sup"));
 			_originalGameModel.NewBuildings.AddItem(new BuildingKey(BuildingCategory.Ultra, "brah"));
 			_originalGameModel.NewUnits.AddItem(new UnitKey(UnitCategory.Naval, "seeeendii"));

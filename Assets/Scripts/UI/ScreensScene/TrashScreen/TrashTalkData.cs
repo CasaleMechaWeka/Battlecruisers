@@ -1,44 +1,36 @@
-﻿using BattleCruisers.Utils.Localisation;
-using UnityEngine;
+﻿using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Utils.Fetchers.Sprites;
 
 namespace BattleCruisers.UI.ScreensScene.TrashScreen
 {
-    public class TrashTalkData : Prefab
+    public class TrashTalkData
     {
-        public Sprite enemySprite;
-        public Sprite EnemySprite => enemySprite;
-        public GameObject enemyPrefab;
-        public GameObject EnemyPrefab => enemyPrefab;
+        public string EnemySpritePath;
+        public CaptainExoKey EnemyExoPrefabKey;
 
-        public string enemyName = "Bill";
-        public string EnemyName => enemyName;
+        public string EnemyNameKey;
+        public string EnemyTextKey;
+        public string PlayerTextKey;
+        public string AppraisalDroneTextKey;
 
-        public float enemyScale = 1;
-        public float EnemyScale => enemyScale;
-
-        public bool playerTalksFirst;
-        public bool PlayerTalksFirst => playerTalksFirst;
-
-        public string PlayerText { get; private set; }
-        public string EnemyText { get; private set; }
-        public string AppraisalDroneText { get; private set; }
-
-        public string stringKeyBase;
-
-        public string StringKeyBase => stringKeyBase;
-
-        public void Initialise(bool isSideQuest = false)
+        public bool PlayerTalksFirst;
+        public TrashTalkData(int levelNumber,
+                             int exoId,
+                             bool playerTalksFirst,
+                             string stringKeyBasePrefix)
         {
+            EnemySpritePath = SpritePaths.ExoImagesPath + "NPC-" + exoId.ToString("00") + ".png";
+            EnemyExoPrefabKey = StaticPrefabKeys.CaptainExos.GetCaptainExoKey(exoId);
 
-            string playerTextKey = $"{stringKeyBase}/PlayerText";
-            string enemyTextKey = $"{stringKeyBase}/EnemyText";
-            string droneTextKey = $"{stringKeyBase}/DroneText";
-            string enemyNameKey = $"{stringKeyBase}/name";
+            string stringKeyBase = $"{stringKeyBasePrefix}{levelNumber}";
 
-            PlayerText = LocTableCache.StoryTable.GetString(playerTextKey);
-            EnemyText = LocTableCache.StoryTable.GetString(enemyTextKey);
-            AppraisalDroneText = LocTableCache.StoryTable.GetString(droneTextKey);
-            enemyName = LocTableCache.StoryTable.GetString(enemyNameKey);
+            EnemyNameKey = $"{stringKeyBase}/name";
+            EnemyTextKey = $"{stringKeyBase}/EnemyText";
+            PlayerTextKey = $"{stringKeyBase}/PlayerText";
+            AppraisalDroneTextKey = $"{stringKeyBase}/DroneText";
+
+            PlayerTalksFirst = playerTalksFirst;
         }
     }
 }

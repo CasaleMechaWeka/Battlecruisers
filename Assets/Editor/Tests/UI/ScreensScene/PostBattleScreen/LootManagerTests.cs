@@ -126,7 +126,7 @@ namespace BattleCruisers.Tests.UI.ScreensScene.PostBattleScreen
             DataProvider.GameModel.NumOfLevelsCompleted.Returns(levelCompleted - 1);
             StaticData.LastLevelWithLoot.Returns(levelCompleted);
 
-            _lootManager.UnlockLevelLoot(levelCompleted);
+            LootManager.UnlockLevelLoot(levelCompleted);
         }
     }
 }

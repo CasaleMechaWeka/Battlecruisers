@@ -50,8 +50,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-                postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                _unlockedLoot = lootManager.UnlockLevelLoot(battleResult.LevelNum);
+                postBattleScreen.appraisalSection.Initialise(LocTableCache.StoryTable.GetString(trashTalkData.AppraisalDroneTextKey), soundPlayer, ShowLoot);
+                _unlockedLoot = LootManager.UnlockLevelLoot(battleResult.LevelNum);
             }
             else if (ApplicationModel.Mode == GameMode.SideQuest &&
                     (desiredBehaviour == PostBattleScreenBehaviour.Victory_SideQuest_LootUnlocked ||
@@ -61,8 +61,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 postBattleScreen.title.text = LocTableCache.ScreensSceneTable.GetString(VICTORY_TITLE_LOOT_KEY);
 
                 _postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(false);
-                postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer, ShowLoot);
-                _unlockedLoot = lootManager.UnlockSideQuestLoot(ApplicationModel.SelectedSideQuestID);
+                postBattleScreen.appraisalSection.Initialise(LocTableCache.StoryTable.GetString(trashTalkData.AppraisalDroneTextKey), soundPlayer, ShowLoot);
+                _unlockedLoot = LootManager.UnlockSideQuestLoot(ApplicationModel.SelectedSideQuestID);
             }
             else
             {
@@ -75,7 +75,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 else
                 {
                     postBattleScreen.postBattleButtonsPanel.gameObject.SetActive(true);
-                    postBattleScreen.appraisalSection.Initialise(trashTalkData.AppraisalDroneText, soundPlayer);
+                    postBattleScreen.appraisalSection.Initialise(LocTableCache.StoryTable.GetString(trashTalkData.AppraisalDroneTextKey), soundPlayer);
                 }
             }
 #endif
@@ -98,6 +98,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen.States
                 DataProvider.GameModel.AddCompletedLevel(level);
             else
                 DataProvider.GameModel.AddCompletedSideQuest(level);
+
+            // Reset consecutive losses counter on victory
+            DataProvider.GameModel.TimesLostOnLastLevel = 0;
 
             int nextLevel = 0;
             if (ApplicationModel.Mode != GameMode.SideQuest)

@@ -1,51 +1,28 @@
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.Sound;
 using System;
-using UnityEngine;
-
 
 namespace BattleCruisers.Data
 {
     [Serializable]
     public class SideQuestData
     {
-        [SerializeField]
-        private bool _playerTalksFirst;
-        public bool PlayerTalksFirst => _playerTalksFirst;
 
-        [SerializeField]
-        private IPrefabKey _enemyCaptainExo;
-        public IPrefabKey EnemyCaptainExo => _enemyCaptainExo;
+        public readonly bool PlayerTalksFirst;
 
-        [SerializeField]
-        private int _unlockRequirementLevel;
-        public int UnlockRequirementLevel => _unlockRequirementLevel;
-        [SerializeField]
-        private int _requiredSideQuestID;
-        public int RequiredSideQuestID => _requiredSideQuestID;
-        //public RewardKey StaticPrefabKeys { get; }
-        [SerializeField]
-        private PrefabKey _hull;
-        public PrefabKey Hull => _hull;
+        public readonly IPrefabKey EnemyCaptainExo;
+        public readonly int UnlockRequirementLevel;
+        public readonly int RequiredSideQuestID;
+        public readonly PrefabKey Hull;
 
-        [SerializeField]
-        private string _skyMaterial;
-        public string SkyMaterial => _skyMaterial;
+        public readonly string SkyMaterial;
 
-        [SerializeField]
-        private SoundKeyPair _musicBackgroundKey;
-        public SoundKeyPair MusicBackgroundKey => _musicBackgroundKey;
-        //public SkyMaterials SkyMaterial { get; }
-        [SerializeField]
-        private bool _isCompleted;
-        public bool IsCompleted => _isCompleted;
-        [SerializeField]
-        private int _sideLevelNum;
-        public int SideLevelNum => _sideLevelNum;
+        public readonly SoundKeyPair MusicBackgroundKey;
+        public readonly bool IsCompleted;
+        public readonly int SideLevelNum;
 
-        [SerializeField]
-        private HeckleConfig _heckleConfig;
-        public HeckleConfig HeckleConfig => _heckleConfig ?? new HeckleConfig();
+        public readonly HeckleConfig HeckleConfig;
+        public readonly bool HasSequencer;
 
         public SideQuestData(
         bool playerTalksFirst,
@@ -57,19 +34,20 @@ namespace BattleCruisers.Data
         string skyMaterial,
         bool isCompleted,
         int sideLevelNum,
-        HeckleConfig heckleConfig = null
-        )
+        HeckleConfig heckleConfig = null,
+        bool hasSequencer = false)
         {
-            _playerTalksFirst = playerTalksFirst;
-            _enemyCaptainExo = enemyCaptainExo;
-            _unlockRequirementLevel = unlockRequirementLevel;
-            _requiredSideQuestID = requiredSideQuestID;
-            _hull = hull;
-            _skyMaterial = skyMaterial;
-            _musicBackgroundKey = musicBackgroundKey;
-            _isCompleted = isCompleted;
-            _sideLevelNum = sideLevelNum;
-            _heckleConfig = heckleConfig;
+            PlayerTalksFirst = playerTalksFirst;
+            EnemyCaptainExo = enemyCaptainExo;
+            UnlockRequirementLevel = unlockRequirementLevel;
+            RequiredSideQuestID = requiredSideQuestID;
+            Hull = hull;
+            SkyMaterial = skyMaterial;
+            MusicBackgroundKey = musicBackgroundKey;
+            IsCompleted = isCompleted;
+            SideLevelNum = sideLevelNum;
+            HeckleConfig = heckleConfig ?? new HeckleConfig();
+            HasSequencer = hasSequencer;
         }
         //Set vars, functions, check screenscenegod for trashtalk, pass all the parameters to battlescenegod
         /*Step 1: secure that the button is receiving input
