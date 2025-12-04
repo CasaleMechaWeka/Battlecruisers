@@ -104,13 +104,14 @@ namespace BattleCruisers.Data.Static
             public static UnitKey GunBoat { get; } = new UnitKey(UnitCategory.Naval, "GunBoat");
             public static UnitKey RocketTurtle { get; } = new UnitKey(UnitCategory.Naval, "RocketTurtle");
             public static UnitKey FlakTurtle { get; } = new UnitKey(UnitCategory.Naval, "FlakTurtle");
+            public static UnitKey TeslaTurtle { get; } = new UnitKey(UnitCategory.Naval, "TeslaTurtle");
 
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
                 // Aircraft
                 Bomber, Fighter, Gunship, SteamCopter, Broadsword, StratBomber, SpyPlane, MissileFighter, TestAircraft,
                 // Ships
-                AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer, GunBoat, RocketTurtle, FlakTurtle
+                AttackBoat, AttackRIB, Frigate, Destroyer, SiegeDestroyer, ArchonBattleship, GlassCannoneer, GunBoat, RocketTurtle, FlakTurtle, TeslaTurtle
             });
         }
 

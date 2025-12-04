@@ -104,7 +104,8 @@ namespace BattleCruisers.Data.Static
             { Units.ArchonBattleship, 16 },
             { Units.AttackRIB, 30 },
             { Units.RocketTurtle, 95 },
-            { Units.FlakTurtle, 95 }
+            { Units.FlakTurtle, 95 },
+            { Units.TeslaTurtle, 95 },
         });
         private static ReadOnlyDictionary<HullKey, int> _hullToUnlockedLevel
         = new ReadOnlyDictionary<HullKey, int>(new Dictionary<HullKey, int>()
@@ -572,7 +573,8 @@ namespace BattleCruisers.Data.Static
             Units.AttackRIB,
             Units.GlassCannoneer,
             Units.RocketTurtle,
-            Units.FlakTurtle
+            Units.FlakTurtle,
+            Units.TeslaTurtle
     });
         public static ReadOnlyCollection<BuildingKey> BuildingKeys { get; } = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
         {
