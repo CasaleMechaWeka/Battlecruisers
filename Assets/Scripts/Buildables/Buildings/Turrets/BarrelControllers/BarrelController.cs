@@ -18,6 +18,7 @@ using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 
 namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -131,9 +132,15 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected virtual FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
-            FireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<FireIntervalManagerInitialiser>();
-            Assert.IsNotNull(fireIntervalManagerInitialiser);
-            return fireIntervalManagerInitialiser.Initialise(turretStats);
+            Assert.IsNotNull(turretStats);
+
+            WaitingState waitingState = new WaitingState();
+            FiringOnceState firingState = new FiringOnceState();
+
+            waitingState.Initialise(firingState, turretStats);
+            firingState.Initialise(waitingState, turretStats);
+
+            return new FireIntervalManager(firingState);
         }
 
         protected virtual IDamageCapability FindDamageCapabilities()
