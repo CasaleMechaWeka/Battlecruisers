@@ -111,22 +111,27 @@ namespace BattleCruisers.Data
 
             switch (version)
             {
-                case 5:
-                    game = output as GameModel;
-                    if (game == null || !SimpleV5Validation(game))
-                        return EmergencyRecovery();
-                    break;
-
                 case 0:
                 case 1:
                 case 2:
                 case 3:
                 case 4:
-                    game = MigrateToV5(output);
+                case 5:
+                    // Legacy/hypothetical formats - migrate
+                    game = MigrateToCurrentVersion(output);
                     break;
 
                 default:
-                    return EmergencyRecovery();
+                    // Real versions: 640 (6.4.0), 650 (6.5.0), etc.
+                    if (version >= 640)
+                    {
+                        game = output as GameModel;
+                        if (game == null || !ValidateCurrentSave(game))
+                            return EmergencyRecovery();
+                    }
+                    else
+                        return EmergencyRecovery();
+                    break;
             }
 
             // Post-load recovery operations (preserve existing logic)
@@ -215,11 +220,6 @@ namespace BattleCruisers.Data
 
             compatibleGameModel.PremiumEdition = _premiumState;
 
-            // ##############################################
-            //                  New Fields
-            // ##############################################
-
-            // Extract CurrentCaptain and ensure it's in purchased Exos
             if (_loadout.CurrentCaptain != null)
             {
                 string captainName = _loadout.CurrentCaptain.PrefabName;
@@ -409,13 +409,9 @@ namespace BattleCruisers.Data
             return 0;
         }
 
-        private bool SimpleV5Validation(GameModel game)
+        private bool ValidateCurrentSave(GameModel game)
         {
             if (game == null)
-                return false;
-
-            // Check version
-            if (game.SaveVersion != 5)
                 return false;
 
             // Check critical loadout properties
@@ -483,10 +479,10 @@ namespace BattleCruisers.Data
             return true;
         }
 
-        private GameModel MigrateToV5(object gameData)
+        private GameModel MigrateToCurrentVersion(object gameData)
         {
             GameModel game = MakeCompatible(gameData);
-            game.SaveVersion = 5;
+            game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
             SaveGame(game);
             return game;
         }
@@ -499,7 +495,7 @@ namespace BattleCruisers.Data
         private GameModel EmergencyRecovery()
         {
             GameModel minimal = BuildMinimalDefaults();
-            minimal.SaveVersion = 5;
+            minimal.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
             SaveGame(minimal);
             return minimal;
         }
