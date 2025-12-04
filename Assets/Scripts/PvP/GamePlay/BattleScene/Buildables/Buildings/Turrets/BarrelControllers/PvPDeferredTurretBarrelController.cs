@@ -1,5 +1,4 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Utils.Threading;
 using UnityEngine.Assertions;
@@ -19,7 +18,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
         {
             return
-                new PvPDeferredBarrelFirer(
+                new DeferredBarrelFirer(
                     base.CreateFirer(args),
                     new ConstantDeferrer(PvPFactoryProvider.DeferrerProvider.Deferrer, delayInS));
         }

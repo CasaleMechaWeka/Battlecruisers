@@ -4,7 +4,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -184,11 +183,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.AngleLimiter);
 
             _firingHelper
-                = new PvPBarrelFiringHelper(
+                = new BarrelFiringHelper(
                     this,
                     args.AccuracyAdjuster,
                     _fireIntervalManager,
-                    CreateFirer(args));
+                    CreateFirer(args),
+                    false);
 
             await InternalInitialiseAsync(args);
 
@@ -208,7 +208,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
         {
-            return new PvPBarrelFirer(
+            return new BarrelFirer(
                     this,
                     disableAnimator ? null : GetBarrelFiringAnimation(args),
                     _muzzleFlash);
