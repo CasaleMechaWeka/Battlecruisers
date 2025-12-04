@@ -181,7 +181,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
-                    EnemyCruiser.BlockedShipsTracker);
+                    EnemyCruiser.BlockedShipsTracker,
+                    KeepDistanceFromEnemyCruiser ? OptimalArmamentRangeInM : 0);
         }
 
         public void StartMoving()
