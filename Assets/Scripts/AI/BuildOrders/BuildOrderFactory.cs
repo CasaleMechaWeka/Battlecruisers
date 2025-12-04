@@ -62,7 +62,7 @@ namespace BattleCruisers.AI.BuildOrders
             if (DataProvider.SettingsManager.AIDifficulty == Data.Settings.Difficulty.Harder)
             {
                 if (levelInfo.AICruiser.SlotNumProvider.GetSlotCount(SlotType.Mast) <= 1
-                || (GetStealthBonus(levelInfo.PlayerCruiser.hullType) > GetStealthBonus(levelInfo.AICruiser.hullType)))
+                || (GetStealthBonus(levelInfo.PlayerCruiser.hullType) < GetStealthBonus(levelInfo.AICruiser.hullType)))
                     for (int i = 0; i < strategy.BaseStrategy.Count; i++)
                         if (strategy.BaseStrategy[i] == StaticPrefabKeys.Buildings.StealthGenerator)
                         {
