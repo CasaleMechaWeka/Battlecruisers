@@ -22,7 +22,7 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -140,8 +140,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             Assert.IsNotNull(turretStats);
 
-            PvPWaitingState waitingState = new PvPWaitingState();
-            PvPFiringOnceState firingState = new PvPFiringOnceState();
+            WaitingState waitingState = new WaitingState();
+            FiringOnceState firingState = new FiringOnceState();
 
             waitingState.Initialise(firingState, turretStats);
             firingState.Initialise(waitingState, turretStats);

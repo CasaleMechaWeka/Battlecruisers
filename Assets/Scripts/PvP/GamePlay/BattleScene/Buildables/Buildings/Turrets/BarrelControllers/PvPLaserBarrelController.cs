@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects.Laser;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -43,8 +43,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             IDurationProvider waitingDurationProvider = TurretStats;
             IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
             
-            PvPWaitingState waitingState = new PvPWaitingState();
-            PvPFiringDurationState firingState = new PvPFiringDurationState();
+            WaitingState waitingState = new WaitingState();
+            FiringDurationState firingState = new FiringDurationState();
 
             waitingState.Initialise(firingState, waitingDurationProvider);
             firingState.Initialise(waitingState, firingDurationProvider);
