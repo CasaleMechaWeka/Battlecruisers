@@ -157,11 +157,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
         }
 
-        public override void Activate_PvPClient()
-        {
-            base.Activate_PvPClient();
-        }
-
         public async void ApplyVariantPvP(IPvPBuilding building, int variant_index)
         {
             if (variant_index != -1)

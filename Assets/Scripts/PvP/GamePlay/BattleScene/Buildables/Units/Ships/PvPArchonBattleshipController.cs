@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
 using System;
@@ -41,16 +40,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             {
                 targetProxy.Initialise(this);
             }
-        }
-
-        public override void Initialise()
-        {
-            base.Initialise();
-        }
-
-        public override void Initialise(PvPUIManager uiManager)
-        {
-            base.Initialise(uiManager);
         }
 
         public override void Activate(PvPBuildableActivationArgs activationArgs)

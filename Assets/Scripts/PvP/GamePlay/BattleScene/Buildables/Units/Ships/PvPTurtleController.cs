@@ -8,11 +8,12 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
-    public class PvPRocketTurtleController : PvPShipController
+    public class PvPTurtleController : PvPShipController
     {
         private PvPSectorShieldController _shieldController;
 
         private Animator animator;
+
         public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
@@ -41,12 +42,17 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override void OnBuildableCompleted()
         {
-            base.OnBuildableCompleted();
             if (IsServer)
             {
+                base.OnBuildableCompleted();
                 _shieldController.gameObject.SetActive(true);
                 _shieldController.ActivateShield();
                 OnEnableShieldClientRpc(true);
+                OnBuildableCompletedClientRpc();
+            }
+            else
+            {
+                OnBuildableCompleted_PvPClient();
             }
         }
 

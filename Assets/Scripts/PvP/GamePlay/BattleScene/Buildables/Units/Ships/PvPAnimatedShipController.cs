@@ -1,11 +1,12 @@
 using BattleCruisers.Effects.Movement;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
-    public abstract class PvPAnimatedShipController : PvPShipController
+    public class PvPAnimatedShipController : PvPShipController
     {
         private ShipMovementEffect _movementEffects;
         public MovementEffectInitialiser movementEffectInitialiser;
@@ -36,21 +37,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _movementEffects.StartEffects();
             StartMovementEffectsOfClient();
         }
-        protected virtual void StartMovementEffectsOfClient()
-        {
-            if (IsClient)
-                _movementEffects.StartEffects();
-        }
+
         protected override void StopMovementEffects()
         {
             _movementEffects.StopEffects();
             StopMovementEffectsOfClient();
-        }
-
-        protected virtual void StopMovementEffectsOfClient()
-        {
-            if (IsClient)
-                _movementEffects.StopEffects();
         }
 
         protected override void Deactivate()
@@ -60,10 +51,58 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ResetAndHideOfClient();
         }
 
-        protected virtual void ResetAndHideOfClient()
+        void StartMovementEffectsOfClient()
         {
-            if (IsClient)
-                _movementEffects.ResetAndHide();
+            if (!IsHost)
+            {
+                if (IsClient)
+                    _movementEffects.StartEffects();
+            }
+            else
+                StartMovementEffectsClientRpc();
+        }
+
+        [ClientRpc]
+        void StartMovementEffectsClientRpc()
+        {
+            if (!IsHost)
+                StartMovementEffectsOfClient();
+        }
+
+        void StopMovementEffectsOfClient()
+        {
+            if (!IsHost)
+            {
+                if (IsClient)
+                    _movementEffects.StopEffects();
+            }
+            else
+                StopMovementEffectsClientRpc();
+        }
+
+        [ClientRpc]
+        void StopMovementEffectsClientRpc()
+        {
+            if (!IsHost)
+                StopMovementEffectsOfClient();
+        }
+
+        void ResetAndHideOfClient()
+        {
+            if (!IsHost)
+            {
+                if (IsClient)
+                    _movementEffects.ResetAndHide();
+            }
+            else
+                ResetHideClientRpc();
+        }
+
+        [ClientRpc]
+        void ResetHideClientRpc()
+        {
+            if (!IsHost)
+                ResetAndHideOfClient();
         }
     }
 }

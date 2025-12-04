@@ -21,7 +21,6 @@ using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Stati
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.TargetProviders;
 using Unity.Netcode;
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships
 {
@@ -33,7 +32,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// 3. Boat will only stop to fight enemies (or to avoid bumping into friendlies).
     ///     Either this boat is destroyed, or the enemy, in which case this boat will continue moving.
     /// </summary>
-    public abstract class PvPShipController : PvPUnit
+    public class PvPShipController : PvPUnit
     {
         private int _directionMultiplier;
         private IList<IPvPBarrelWrapper> turrets;
@@ -108,11 +107,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     .Where(turret => turret.DamageCapability.AttackCapabilities.Contains(attackCapability))
                     .Select(turret => turret.DamageCapability)
                     .ToList();
-        }
-
-        public override void Initialise()
-        {
-            base.Initialise();
         }
 
         protected override void OnBuildableCompleted()
