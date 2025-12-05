@@ -11,6 +11,10 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using Unity.Services.Core;
+using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.UI.Sound.Players;
 
 namespace BattleCruisers.UI.Loading
 {
@@ -29,6 +33,7 @@ namespace BattleCruisers.UI.Loading
         public GameObject idHighlight;
         public AnimationClip idAnim;
         public TextMeshProUGUI idText;
+        public static MusicPlayer MusicPlayer { get; private set; }
 
         void Start()
         {
@@ -51,6 +56,7 @@ namespace BattleCruisers.UI.Loading
             _defaultLoadingText = LocTableCache.CommonTable.GetString("UI/LoadingScreen/DefaultLoadingText");
             startingText = LocTableCache.CommonTable.GetString("UI/LoadingScreen/StartingText");
             loadingText.text = FindLoadingText();
+            MusicPlayer = CreateMusicPlayer();
             Instance = this;
 
             Assert.IsNotNull(idButton);
@@ -160,6 +166,19 @@ namespace BattleCruisers.UI.Loading
                 {
                     idButton.gameObject.SetActive(false);
                 }
+        }
+        private MusicPlayer CreateMusicPlayer()
+        {
+            AudioSource platformAudioSource = GetComponent<AudioSource>();
+            Assert.IsNotNull(platformAudioSource);
+            IAudioSource audioSource
+                = new MusicVolumeAudioSource(
+                    new AudioSourceBC(platformAudioSource),
+                    DataProvider.SettingsManager);
+
+            return
+                new MusicPlayer(
+                    new SingleSoundPlayer(audioSource));
         }
     }
 }
