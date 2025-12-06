@@ -190,7 +190,8 @@ namespace BattleCruisers.Ads
 
         public void LogSessionStart()
         {
-            LogEvent("session_start", new Dictionary<string, object>
+            // Note: "session_start" is a reserved Firebase event name, use custom name
+            LogEvent("game_session_begin", new Dictionary<string, object>
             {
                 { "platform", Application.platform.ToString() },
                 { "app_version", Application.version },

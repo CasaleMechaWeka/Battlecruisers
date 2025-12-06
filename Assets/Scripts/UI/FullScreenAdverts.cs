@@ -13,7 +13,7 @@ public class FullScreenAdverts : MonoBehaviour
     public Button closeButton;
     private SettingsManager settingsManager; // For fullscreen ads on premium :)
     private bool useAppLovin = true; // Toggle between AppLovin and default ads
-    private bool isShowingAd = false;
+    // private bool isShowingAd = false; // Currently unused, reserved for future state tracking
     
     // Ad frequency control keys
     private const string AD_COUNTER_KEY = "AdCounterKey";
@@ -38,7 +38,7 @@ public class FullScreenAdverts : MonoBehaviour
     }
     public void CloseAdvert()
     {
-        isShowingAd = false;
+        // isShowingAd = false;
         gameObject.SetActive(false);
     }
 
@@ -160,7 +160,7 @@ public class FullScreenAdverts : MonoBehaviour
         if (AppLovinManager.Instance != null && AppLovinManager.Instance.IsInterstitialReady())
         {
             Debug.Log("[FullScreenAdverts] Showing AppLovin interstitial ad");
-            isShowingAd = true;
+            // isShowingAd = true;
             
             // Hide the UI panel since AppLovin will show fullscreen
             gameObject.SetActive(false);
@@ -199,7 +199,7 @@ public class FullScreenAdverts : MonoBehaviour
     private void OnAppLovinAdClosed()
     {
         Debug.Log("[FullScreenAdverts] AppLovin ad closed");
-        isShowingAd = false;
+        // isShowingAd = false;
         
         // Track ad completion
         if (FirebaseAnalyticsManager.Instance != null)
@@ -217,7 +217,7 @@ public class FullScreenAdverts : MonoBehaviour
     private void OnAppLovinAdFailed()
     {
         Debug.LogWarning("[FullScreenAdverts] AppLovin ad failed to show, showing default ad");
-        isShowingAd = false;
+        // isShowingAd = false;
         ShowDefaultAd();
     }
 

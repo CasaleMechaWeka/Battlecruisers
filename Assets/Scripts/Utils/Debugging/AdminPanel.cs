@@ -27,8 +27,14 @@ namespace BattleCruisers.Utils.Debugging
 
         [Header("On-Screen Logging")]
         [SerializeField]
-        [Tooltip("Optional UI Text element for on-screen messages")]
+        [Tooltip("Optional UI Text element for on-screen messages (fallback if overlay is not set)")]
         private UnityEngine.UI.Text screenMessageText;
+        [SerializeField]
+        [Tooltip("Optional panel to show overlay messages (set active to show/hide)")]
+        private GameObject overlayPanel;
+        [SerializeField]
+        [Tooltip("Optional text inside the overlay panel")]
+        private UnityEngine.UI.Text overlayText;
         
         private float messageDisplayTime = 5f;
         private float messageTimer = 0f;
@@ -40,13 +46,24 @@ namespace BattleCruisers.Utils.Debugging
 
         void Update()
         {
-            // Auto-hide on-screen message after timer expires
+            // Auto-hide message after timer expires (overlay preferred, screen fallback)
             if (messageTimer > 0)
             {
                 messageTimer -= Time.deltaTime;
-                if (messageTimer <= 0 && screenMessageText != null)
+                if (messageTimer <= 0)
                 {
-                    screenMessageText.text = "";
+                    if (overlayText != null)
+                    {
+                        overlayText.text = "";
+                    }
+                    if (overlayPanel != null)
+                    {
+                        overlayPanel.SetActive(false);
+                    }
+                    else if (screenMessageText != null)
+                    {
+                        screenMessageText.text = "";
+                    }
                 }
             }
         }
@@ -72,8 +89,17 @@ namespace BattleCruisers.Utils.Debugging
                 LandingSceneGod.Instance.LogToScreen($"[Admin] {message}");
             }
 
-            // Also show on local text if assigned
-            if (screenMessageText != null)
+            // Prefer overlay; fallback to screen text if overlay not assigned
+            if (overlayText != null)
+            {
+                overlayText.text = message;
+                messageTimer = messageDisplayTime;
+                if (overlayPanel != null)
+                {
+                    overlayPanel.SetActive(true);
+                }
+            }
+            else if (screenMessageText != null)
             {
                 screenMessageText.text = message;
                 messageTimer = messageDisplayTime;
@@ -331,7 +357,7 @@ namespace BattleCruisers.Utils.Debugging
             PlayerPrefs.DeleteKey("AdCounterKey");
             PlayerPrefs.DeleteKey("LastAdShowTime");
             PlayerPrefs.Save();
-            ShowMessage("Ad counters RESET! Next battle will trigger ad check.");
+            ShowMessage("Ad frequency counter reset to 0. Cooldown timer cleared. Next ShouldShowAds() check will pass frequency/cooldown gates.");
         }
 
         /// <summary>
@@ -345,8 +371,22 @@ namespace BattleCruisers.Utils.Debugging
                 return;
             }
 
+            // Check if AppLovinManager is missing
+            if (AppLovinManager.Instance == null)
+            {
+                ShowMessage("ERROR: AppLovinManager missing! Add a GameObject with AppLovinManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
+                return;
+            }
+
+            // Check if AdConfigManager is missing
+            if (AdConfigManager.Instance == null)
+            {
+                ShowMessage("ERROR: AdConfigManager missing! Add a GameObject with AdConfigManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
+                return;
+            }
+
             // Check if ads are disabled
-            if (AdConfigManager.Instance != null && AdConfigManager.Instance.AdsDisabled)
+            if (AdConfigManager.Instance.AdsDisabled)
             {
                 ShowMessage("Ads are DISABLED via Remote Config. Cannot show ad.", true);
                 return;
@@ -354,14 +394,87 @@ namespace BattleCruisers.Utils.Debugging
 
             ResetAdCounters();
             
-            string mode = "UNKNOWN";
+            string mode = AdConfigManager.Instance.IsTestMode() ? "TEST" : "PRODUCTION";
+            
+            ShowMessage($"Resetting ad counters and attempting to show interstitial ad... Mode: {mode}");
+            fullScreenAdverts.ForceShowAd();
+            ShowMessage("Interstitial ad request sent. If no ad appears, check Mediation Debugger for fill status.");
+        }
+
+        /// <summary>
+        /// Show an interstitial immediately if already loaded
+        /// </summary>
+        public void ShowInterstitialIfReady()
+        {
+            if (AppLovinManager.Instance == null)
+            {
+                ShowMessage("ERROR: AppLovinManager missing! Add a GameObject with AppLovinManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
+                return;
+            }
+
+            if (!AppLovinManager.Instance.IsInterstitialReady())
+            {
+                ShowMessage("Interstitial not ready yet. Use 'Show Ad Status' and wait for Interstitial Ready: True.", true);
+                return;
+            }
+
+            ShowMessage("Showing interstitial (ready).");
+            AppLovinManager.Instance.ShowInterstitial();
+        }
+
+        /// <summary>
+        /// Show a rewarded ad and grant currency when reward is received
+        /// </summary>
+        public void ShowRewardedAndGrant()
+        {
+            if (AppLovinManager.Instance == null)
+            {
+                ShowMessage("ERROR: AppLovinManager missing! Add a GameObject with AppLovinManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
+                return;
+            }
+
+            if (!AppLovinManager.Instance.IsRewardedAdReady())
+            {
+                ShowMessage("Rewarded ad not ready yet. Use 'Show Ad Status' and wait for Rewarded Ready: True.", true);
+                return;
+            }
+
+            // Determine reward amounts (fallback to 10 coins / 250 credits)
+            int coins = 10;
+            int credits = 250;
             if (AdConfigManager.Instance != null)
             {
-                mode = AdConfigManager.Instance.IsTestMode() ? "TEST MODE" : "PRODUCTION";
+                var snapshot = AdConfigManager.Instance.GetConfigSnapshot();
+                if (snapshot.ContainsKey("rewarded_ad_coins"))
+                {
+                    int.TryParse(snapshot["rewarded_ad_coins"].ToString(), out coins);
+                }
+                if (snapshot.ContainsKey("rewarded_ad_credits"))
+                {
+                    int.TryParse(snapshot["rewarded_ad_credits"].ToString(), out credits);
+                }
             }
-            
-            ShowMessage($"Forcing ad display... Mode: {mode}");
-            fullScreenAdverts.ForceShowAd();
+
+            // Grant on reward callback
+            System.Action rewardHandler = null;
+            rewardHandler = () =>
+            {
+                long coinsBefore = DataProvider.GameModel.Coins;
+                long creditsBefore = DataProvider.GameModel.Bounty;
+
+                DataProvider.GameModel.Coins += coins;
+                DataProvider.GameModel.Bounty += credits;
+                DataProvider.SaveGame();
+
+                ShowMessage($"REWARDED AD COMPLETED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Bounty} (+{credits})");
+
+                AppLovinManager.Instance.OnRewardedAdRewarded -= rewardHandler;
+            };
+
+            AppLovinManager.Instance.OnRewardedAdRewarded += rewardHandler;
+
+            ShowMessage($"Showing rewarded ad... Reward: {coins} coins, {credits} credits");
+            AppLovinManager.Instance.ShowRewardedAd();
         }
 
         /// <summary>
@@ -387,12 +500,57 @@ namespace BattleCruisers.Utils.Debugging
             }
             else
             {
-                statusMsg += "AdConfigManager: NOT FOUND!\n";
+                statusMsg += "AdConfigManager: MISSING - Add to scene!\n";
+            }
+
+            if (AppLovinManager.Instance != null)
+            {
+                bool interstitialReady = AppLovinManager.Instance.IsInterstitialReady();
+                bool rewardedReady = AppLovinManager.Instance.IsRewardedAdReady();
+                statusMsg += $"Interstitial Ready: {interstitialReady}\n";
+                statusMsg += $"Rewarded Ready: {rewardedReady}\n";
+            }
+            else
+            {
+                statusMsg += "AppLovinManager: MISSING - Add to scene!\n";
             }
 
             if (fullScreenAdverts != null)
             {
-                statusMsg += $"Counter: {fullScreenAdverts.GetAdCounterStatus()}\n";
+                string counterStatus = fullScreenAdverts.GetAdCounterStatus();
+                // Parse and reformat counter status for clarity
+                if (counterStatus.Contains("Counter:"))
+                {
+                    string[] parts = counterStatus.Split(',');
+                    if (parts.Length >= 1)
+                    {
+                        string counterPart = parts[0].Replace("Counter:", "").Trim();
+                        if (counterPart.Contains("/"))
+                        {
+                            string[] counterVals = counterPart.Split('/');
+                            if (counterVals.Length == 2 && int.TryParse(counterVals[0], out int current) && int.TryParse(counterVals[1], out int total))
+                            {
+                                statusMsg += $"Ad Counter: {current} of {total} battles until next ad (resets after ad shown)\n";
+                            }
+                            else
+                            {
+                                statusMsg += $"Ad Counter: {counterPart}\n";
+                            }
+                        }
+                        else
+                        {
+                            statusMsg += $"Ad Counter: {counterPart}\n";
+                        }
+                    }
+                    if (parts.Length >= 2)
+                    {
+                        statusMsg += $"Last Ad: {parts[1].Replace("Last:", "").Trim()}\n";
+                    }
+                }
+                else
+                {
+                    statusMsg += $"Counter: {counterStatus}\n";
+                }
             }
 
             ShowMessage(statusMsg);
@@ -434,7 +592,7 @@ namespace BattleCruisers.Utils.Debugging
             }
             else
             {
-                ShowMessage("ERROR: AdConfigManager not found!", true);
+                ShowMessage("ERROR: AdConfigManager missing! Add a GameObject with AdConfigManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
             }
         }
 
@@ -455,8 +613,25 @@ namespace BattleCruisers.Utils.Debugging
             }
             else
             {
-                ShowMessage("ERROR: AdConfigManager not found!", true);
+                ShowMessage("ERROR: AdConfigManager missing! Add a GameObject with AdConfigManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
             }
+        }
+
+        /// <summary>
+        /// Show MAX Mediation Debugger UI (for testing/debugging ad fill issues)
+        /// </summary>
+        public void ShowMediationDebugger()
+        {
+            if (AppLovinManager.Instance == null)
+            {
+                ShowMessage("ERROR: AppLovinManager missing! Add a GameObject with AppLovinManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
+                return;
+            }
+
+            // Check if SDK is initialized by trying to show debugger
+            // AppLovinManager.ShowMediationDebugger() already checks isInitialized internally
+            ShowMessage("Opening MAX Mediation Debugger... Check ad unit status, network fill rates, and error codes.");
+            AppLovinManager.Instance.ShowMediationDebugger();
         }
 
         #region Exos (Captains)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BattleCruisers.Ads
 {
@@ -14,6 +15,7 @@ namespace BattleCruisers.Ads
 
         [Header("AppLovin MAX Configuration")]
         [Tooltip("Your AppLovin SDK Key from the dashboard")]
+#pragma warning disable 0414 // Field assigned but not used (false positive - used in platform-specific code)
         [SerializeField] private string sdkKey = "G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0";
         
         [Tooltip("Interstitial Ad Unit ID from AppLovin dashboard")]
@@ -21,13 +23,35 @@ namespace BattleCruisers.Ads
         
         [Tooltip("Rewarded Ad Unit ID from AppLovin dashboard")]
         [SerializeField] private string rewardedAdUnitId = "c96bd6d70b3804fa";
+#pragma warning restore 0414
 
         [Header("Debug Settings")]
         [SerializeField] private bool enableDebugLogs = true;
+        
+        [Header("Safety Settings")]
+        [Tooltip("Maximum time (seconds) to wait for an ad to close before forcing callbacks")]
+        [SerializeField] private float adWatchdogTimeout = 31f;
+        [Tooltip("When watchdog triggers on Android, also try sending a back press to close the ad UI")]
+#pragma warning disable 0414 // Field assigned but not used (false positive - used in platform-specific code)
+        [SerializeField] private bool sendAndroidBackOnWatchdog = true;
+#pragma warning restore 0414
+        
+        [Header("Kill Switch UI (Assign Your Own)")]
+        [Tooltip("Canvas that shows above ads when they're stuck")]
+        public Canvas killSwitchCanvas;
+        [Tooltip("Button that force-closes stuck ads")]
+        public Button killSwitchButton;
+        [Tooltip("Text showing countdown until kill switch appears")]
+        public Text killSwitchTimerText;
 
         private bool isInitialized = false;
         private int interstitialRetryAttempt = 0;
         private int rewardedRetryAttempt = 0;
+        
+        // Watchdog tracking
+        private bool isInterstitialShowing = false;
+        private bool isRewardedShowing = false;
+        private float adShowStartTime = 0f;
 
         // Public events for ad lifecycle
         public event Action OnInterstitialAdReady;
@@ -54,6 +78,97 @@ namespace BattleCruisers.Ads
         private void Start()
         {
             InitializeAppLovin();
+            
+            // Setup kill switch button
+            if (killSwitchButton != null)
+            {
+                killSwitchButton.onClick.AddListener(OnKillSwitchPressed);
+            }
+            
+            // Hide kill switch initially
+            if (killSwitchCanvas != null)
+            {
+                killSwitchCanvas.gameObject.SetActive(false);
+            }
+        }
+
+        private void Update()
+        {
+            // Watchdog: if an ad has been showing too long, show kill switch UI
+            if ((isInterstitialShowing || isRewardedShowing) && adShowStartTime > 0)
+            {
+                float elapsed = Time.realtimeSinceStartup - adShowStartTime;
+                float timeRemaining = adWatchdogTimeout - elapsed;
+                
+                // Update kill switch UI
+                if (killSwitchCanvas != null)
+                {
+                    if (elapsed >= adWatchdogTimeout)
+                    {
+                        // Show kill switch button
+                        killSwitchCanvas.gameObject.SetActive(true);
+                        if (killSwitchTimerText != null)
+                        {
+                            killSwitchTimerText.text = "AD STUCK - TAP TO CLOSE";
+                        }
+                    }
+                    else if (elapsed >= adWatchdogTimeout * 0.5f) // Show countdown when halfway to timeout
+                    {
+                        killSwitchCanvas.gameObject.SetActive(true);
+                        if (killSwitchTimerText != null)
+                        {
+                            killSwitchTimerText.text = $"Kill switch in {Mathf.CeilToInt(timeRemaining)}s";
+                        }
+                    }
+                }
+                
+                // Auto-trigger watchdog as backup
+                if (elapsed > adWatchdogTimeout + 5f) // Give user 5s to manually use kill switch
+                {
+                    Debug.LogWarning($"[AppLovin] WATCHDOG: Ad has been showing for {elapsed:F0}s - auto-triggering close");
+                    TriggerAdKillSwitch();
+                }
+            }
+        }
+        
+        private void OnKillSwitchPressed()
+        {
+            Debug.Log("[AppLovin] Kill switch pressed by user - force closing ad");
+            TriggerAdKillSwitch();
+        }
+        
+        private void TriggerAdKillSwitch()
+        {
+            // Hide kill switch UI
+            if (killSwitchCanvas != null)
+            {
+                killSwitchCanvas.gameObject.SetActive(false);
+            }
+            
+            // Force close the ad
+            if (isInterstitialShowing)
+            {
+                isInterstitialShowing = false;
+                adShowStartTime = 0f;
+                OnInterstitialAdClosed?.Invoke();
+                LoadInterstitial();
+            }
+            
+            if (isRewardedShowing)
+            {
+                isRewardedShowing = false;
+                adShowStartTime = 0f;
+                // Note: We do NOT fire OnRewardedAdRewarded here - user didn't complete the ad
+                OnRewardedAdShowFailed?.Invoke();
+                LoadRewardedAd();
+            }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (sendAndroidBackOnWatchdog)
+            {
+                TrySendAndroidBack();
+            }
+#endif
         }
 
         private void InitializeAppLovin()
@@ -97,6 +212,7 @@ namespace BattleCruisers.Ads
             // Attach callbacks
             MaxSdkCallbacks.Interstitial.OnAdLoadedEvent += OnInterstitialLoadedEvent;
             MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent += OnInterstitialFailedEvent;
+            MaxSdkCallbacks.Interstitial.OnAdDisplayedEvent += OnInterstitialDisplayedEvent;
             MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent += OnInterstitialFailedToDisplayEvent;
             MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += OnInterstitialDismissedEvent;
             MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += OnInterstitialRevenuePaidEvent;
@@ -137,9 +253,25 @@ namespace BattleCruisers.Ads
             Invoke(nameof(LoadInterstitial), (float)retryDelay);
         }
 
+        private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        {
+            LogDebug($"Interstitial displayed (network={adInfo.NetworkName}, creativeId={adInfo.CreativeIdentifier}, placement={adInfo.Placement})");
+            isInterstitialShowing = true;
+            adShowStartTime = Time.realtimeSinceStartup;
+        }
+
         private void OnInterstitialFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug($"Interstitial failed to display: {errorInfo.Code}");
+            isInterstitialShowing = false;
+            adShowStartTime = 0f;
+            
+            // Hide kill switch UI
+            if (killSwitchCanvas != null)
+            {
+                killSwitchCanvas.gameObject.SetActive(false);
+            }
+            
             OnInterstitialAdShowFailed?.Invoke();
             LoadInterstitial();
         }
@@ -147,6 +279,14 @@ namespace BattleCruisers.Ads
         private void OnInterstitialDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug("Interstitial dismissed");
+            isInterstitialShowing = false;
+            adShowStartTime = 0f;
+            
+            // Hide kill switch UI
+            if (killSwitchCanvas != null)
+            {
+                killSwitchCanvas.gameObject.SetActive(false);
+            }
             
             // Log to Firebase
             if (FirebaseAnalyticsManager.Instance != null)
@@ -189,21 +329,65 @@ namespace BattleCruisers.Ads
         private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug($"Rewarded ad failed to display: {errorInfo.Code}");
+            isRewardedShowing = false;
+            adShowStartTime = 0f;
+            
+            // Hide kill switch UI
+            if (killSwitchCanvas != null)
+            {
+                killSwitchCanvas.gameObject.SetActive(false);
+            }
+            
             OnRewardedAdShowFailed?.Invoke();
             LoadRewardedAd();
         }
 
         private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug("Rewarded ad displayed");
+            LogDebug($"Rewarded ad displayed (network={adInfo.NetworkName}, creativeId={adInfo.CreativeIdentifier}, placement={adInfo.Placement})");
+            isRewardedShowing = true;
+            adShowStartTime = Time.realtimeSinceStartup;
         }
 
         private void OnRewardedAdDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug("Rewarded ad dismissed");
+            isRewardedShowing = false;
+            adShowStartTime = 0f;
+            
+            // Hide kill switch UI
+            if (killSwitchCanvas != null)
+            {
+                killSwitchCanvas.gameObject.SetActive(false);
+            }
+            
             OnRewardedAdClosed?.Invoke();
             LoadRewardedAd(); // Pre-load next ad
         }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        /// <summary>
+        /// Best-effort: ask the current Activity to execute onBackPressed, which can close some stuck ad UIs.
+        /// </summary>
+        private void TrySendAndroidBack()
+        {
+            try
+            {
+                using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+                {
+                    var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+                    activity.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+                    {
+                        activity.Call("onBackPressed");
+                    }));
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[AppLovin] Failed to send back press on watchdog: {e.Message}");
+            }
+        }
+#endif
 
         private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)
         {

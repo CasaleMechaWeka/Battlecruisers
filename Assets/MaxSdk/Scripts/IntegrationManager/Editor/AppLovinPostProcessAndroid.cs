@@ -24,9 +24,11 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
     /// </summary>
     public class AppLovinPostProcessAndroid : IPostGenerateGradleAndroidProject
     {
+#if UNITY_2019_3_OR_NEWER
         private const string PropertyAndroidX = "android.useAndroidX";
         private const string PropertyJetifier = "android.enableJetifier";
         private const string EnableProperty = "=true";
+#endif
         private const string PropertyDexingArtifactTransform = "android.enableDexingArtifactTransform";
         private const string DisableProperty = "=false";
 
@@ -42,12 +44,16 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
 
         private const string AppLovinSettingsFileName = "applovin_settings.json";
 
+        private const string KeyTermsFlowSettings = "terms_flow_settings";
+        private const string KeyTermsFlowEnabled = "terms_flow_enabled";
+        private const string KeyTermsFlowTermsOfService = "terms_flow_terms_of_service";
+        private const string KeyTermsFlowPrivacyPolicy = "terms_flow_privacy_policy";
+
         private const string KeySdkKey = "sdk_key";
         private const string KeyConsentFlowSettings = "consent_flow_settings";
         private const string KeyConsentFlowEnabled = "consent_flow_enabled";
         private const string KeyConsentFlowTermsOfService = "consent_flow_terms_of_service";
         private const string KeyConsentFlowPrivacyPolicy = "consent_flow_privacy_policy";
-        private const string KeyConsentFlowShowTermsAndPrivacyPolicyAlertInGDPR = "consent_flow_show_terms_and_privacy_policy_alert_in_gdpr";
         private const string KeyConsentFlowDebugUserGeography = "consent_flow_debug_user_geography";
 
         private const string KeyRenderOutsideSafeArea = "render_outside_safe_area";
@@ -66,11 +72,26 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
 
         private static readonly XNamespace AndroidNamespace = "http://schemas.android.com/apk/res/android";
 
+        private static string PluginMediationDirectory
+        {
+            get
+            {
+                var pluginParentDir = AppLovinIntegrationManager.MediationSpecificPluginParentDirectory;
+                return Path.Combine(pluginParentDir, "MaxSdk/Mediation/");
+            }
+        }
+
         public void OnPostGenerateGradleAndroidProject(string path)
         {
+#if UNITY_2019_3_OR_NEWER
             var rootGradleBuildFilePath = Path.Combine(path, "../build.gradle");
             var gradlePropertiesPath = Path.Combine(path, "../gradle.properties");
             var gradleWrapperPropertiesPath = Path.Combine(path, "../gradle/wrapper/gradle-wrapper.properties");
+#else
+            var rootGradleBuildFilePath = Path.Combine(path, "build.gradle");
+            var gradlePropertiesPath = Path.Combine(path, "gradle.properties");
+            var gradleWrapperPropertiesPath = Path.Combine(path, "gradle/wrapper/gradle-wrapper.properties");
+#endif
 
             UpdateGradleVersionsIfNeeded(gradleWrapperPropertiesPath, rootGradleBuildFilePath);
 
@@ -81,13 +102,20 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
             {
                 var lines = File.ReadAllLines(gradlePropertiesPath);
 
+#if UNITY_2019_3_OR_NEWER
                 // Add all properties except AndroidX, Jetifier, and DexingArtifactTransform since they may already exist. We will re-add them below.
                 gradlePropertiesUpdated.AddRange(lines.Where(line => !line.Contains(PropertyAndroidX) && !line.Contains(PropertyJetifier) && !line.Contains(PropertyDexingArtifactTransform)));
+#else
+                // Add all properties except DexingArtifactTransform since it may already exist. We will re-add it below.
+                gradlePropertiesUpdated.AddRange(lines.Where(line => !line.Contains(PropertyDexingArtifactTransform)));
+#endif
             }
 
+#if UNITY_2019_3_OR_NEWER
             // Enable AndroidX and Jetifier properties
             gradlePropertiesUpdated.Add(PropertyAndroidX + EnableProperty);
             gradlePropertiesUpdated.Add(PropertyJetifier + EnableProperty);
+#endif
 
             // `DexingArtifactTransform` has been removed in Gradle 8+ which is the default Gradle version for Unity 6.
 #if !UNITY_6000_0_OR_NEWER
@@ -111,7 +139,7 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
 
         public int callbackOrder
         {
-            get { return AppLovinPreProcess.CallbackOrder; }
+            get { return int.MaxValue; }
         }
 
         private static void ProcessAndroidManifest(string path)
@@ -195,7 +223,7 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
 
         private static void AddGoogleApplicationIdIfNeeded(XElement elementApplication, IEnumerable<XElement> metaDataElements)
         {
-            if (!AppLovinPackageManager.IsAdapterInstalled("Google") && !AppLovinPackageManager.IsAdapterInstalled("GoogleAdManager")) return;
+            if (!AppLovinIntegrationManager.IsAdapterInstalled("Google") && !AppLovinIntegrationManager.IsAdapterInstalled("GoogleAdManager")) return;
 
             var googleApplicationIdMetaData = GetMetaDataElement(metaDataElements, KeyMetaDataGoogleApplicationId);
             var appId = AppLovinSettings.Instance.AdMobAndroidAppId;
@@ -220,7 +248,7 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
 
         private static void AddGoogleOptimizationFlagsIfNeeded(XElement elementApplication, IEnumerable<XElement> metaDataElements)
         {
-            if (!AppLovinPackageManager.IsAdapterInstalled("Google") && !AppLovinPackageManager.IsAdapterInstalled("GoogleAdManager")) return;
+            if (!AppLovinIntegrationManager.IsAdapterInstalled("Google") && !AppLovinIntegrationManager.IsAdapterInstalled("GoogleAdManager")) return;
 
             var googleOptimizeInitializationMetaData = GetMetaDataElement(metaDataElements, KeyMetaDataGoogleOptimizeInitialization);
             // If meta data doesn't exist, add it
@@ -239,7 +267,7 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
 
         private static void DisableAutoInitIfNeeded(XElement elementApplication, IEnumerable<XElement> metaDataElements)
         {
-            if (AppLovinPackageManager.IsAdapterInstalled("MobileFuse"))
+            if (AppLovinIntegrationManager.IsAdapterInstalled("MobileFuse"))
             {
                 var mobileFuseMetaData = GetMetaDataElement(metaDataElements, KeyMetaDataMobileFuseAutoInit);
                 // If MobileFuse meta data doesn't exist, add it
@@ -249,7 +277,7 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
                 }
             }
 
-            if (AppLovinPackageManager.IsAdapterInstalled("MyTarget"))
+            if (AppLovinIntegrationManager.IsAdapterInstalled("MyTarget"))
             {
                 var myTargetMetaData = GetMetaDataElement(metaDataElements, KeyMetaDataMyTargetAutoInit);
                 // If MyTarget meta data doesn't exist, add it
@@ -330,8 +358,15 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
             appLovinSdkSettings[KeySdkKey] = AppLovinSettings.Instance.SdkKey;
             appLovinSdkSettings[KeyRenderOutsideSafeArea] = PlayerSettings.Android.renderOutsideSafeArea;
 
-            // Add the Terms and Privacy Policy flow settings if needed.
-            EnableConsentFlowIfNeeded(rawResourceDirectory, appLovinSdkSettings);
+            // Add the Consent/Terms flow settings if needed.
+            if (AppLovinInternalSettings.Instance.ConsentFlowEnabled)
+            {
+                EnableConsentFlowIfNeeded(rawResourceDirectory, appLovinSdkSettings);
+            }
+            else
+            {
+                EnableTermsFlowIfNeeded(rawResourceDirectory, appLovinSdkSettings);
+            }
 
             WriteAppLovinSettings(rawResourceDirectory, appLovinSdkSettings);
         }
@@ -364,8 +399,6 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
             {
                 consentFlowSettings[KeyConsentFlowTermsOfService] = termsOfServiceUrl;
             }
-            
-            consentFlowSettings[KeyConsentFlowShowTermsAndPrivacyPolicyAlertInGDPR] = AppLovinInternalSettings.Instance.ShouldShowTermsAndPrivacyPolicyAlertInGDPR;
 
             var debugUserGeography = AppLovinInternalSettings.Instance.DebugUserGeography;
             if (debugUserGeography == MaxSdkBase.ConsentFlowUserGeography.Gdpr)
@@ -374,6 +407,41 @@ namespace AppLovinMax.Scripts.IntegrationManager.Editor
             }
 
             applovinSdkSettings[KeyConsentFlowSettings] = consentFlowSettings;
+        }
+
+        private static void EnableTermsFlowIfNeeded(string rawResourceDirectory, Dictionary<string, object> applovinSdkSettings)
+        {
+            if (AppLovinInternalSettings.Instance.ConsentFlowEnabled) return;
+
+            // Check if terms flow is enabled for this format. No need to create the applovin_consent_flow_settings.json if consent flow is disabled.
+            var consentFlowEnabled = AppLovinSettings.Instance.ConsentFlowEnabled;
+            var consentFlowPlatform = AppLovinSettings.Instance.ConsentFlowPlatform;
+            if (!consentFlowEnabled || (consentFlowPlatform != Platform.All && consentFlowPlatform != Platform.Android))
+            {
+                RemoveAppLovinSettingsRawResourceFileIfNeeded(rawResourceDirectory);
+                return;
+            }
+
+            var privacyPolicyUrl = AppLovinSettings.Instance.ConsentFlowPrivacyPolicyUrl;
+            if (string.IsNullOrEmpty(privacyPolicyUrl))
+            {
+                AppLovinIntegrationManager.ShowBuildFailureDialog("You cannot use the AppLovin SDK's consent flow without defining a Privacy Policy URL in the AppLovin Integration Manager.");
+
+                // No need to update the applovin_consent_flow_settings.json here. Default consent flow state will be determined on the SDK side.
+                return;
+            }
+
+            var consentFlowSettings = new Dictionary<string, object>();
+            consentFlowSettings[KeyTermsFlowEnabled] = consentFlowEnabled;
+            consentFlowSettings[KeyTermsFlowPrivacyPolicy] = privacyPolicyUrl;
+
+            var termsOfServiceUrl = AppLovinSettings.Instance.ConsentFlowTermsOfServiceUrl;
+            if (MaxSdkUtils.IsValidString(termsOfServiceUrl))
+            {
+                consentFlowSettings[KeyTermsFlowTermsOfService] = termsOfServiceUrl;
+            }
+
+            applovinSdkSettings[KeyTermsFlowSettings] = consentFlowSettings;
         }
 
         private static void WriteAppLovinSettingsRawResourceFile(string applovinSdkSettingsJson, string rawResourceDirectory)

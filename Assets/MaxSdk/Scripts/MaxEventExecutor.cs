@@ -15,31 +15,31 @@ namespace AppLovinMax.Internal
 {
     public class MaxEventExecutor : MonoBehaviour
     {
-        private static MaxEventExecutor _instance;
-        private static readonly List<MaxAction> AdEventsQueue = new List<MaxAction>();
+        private static MaxEventExecutor instance;
+        private static List<MaxAction> adEventsQueue = new List<MaxAction>();
 
-        private static volatile bool _adEventsQueueEmpty = true;
+        private static volatile bool adEventsQueueEmpty = true;
 
         struct MaxAction
         {
-            public readonly Action ActionToExecute;
-            public readonly string EventName;
+            public Action action;
+            public string eventName;
 
             public MaxAction(Action actionToExecute, string nameOfEvent)
             {
-                ActionToExecute = actionToExecute;
-                EventName = nameOfEvent;
+                action = actionToExecute;
+                eventName = nameOfEvent;
             }
         }
 
         public static void InitializeIfNeeded()
         {
-            if (_instance != null) return;
+            if (instance != null) return;
 
             var executor = new GameObject("MaxEventExecutor");
             executor.hideFlags = HideFlags.HideAndDontSave;
             DontDestroyOnLoad(executor);
-            _instance = executor.AddComponent<MaxEventExecutor>();
+            instance = executor.AddComponent<MaxEventExecutor>();
         }
 
         #region Public API
@@ -50,17 +50,17 @@ namespace AppLovinMax.Internal
             get
             {
                 InitializeIfNeeded();
-                return _instance;
+                return instance;
             }
         }
 #endif
 
         public static void ExecuteOnMainThread(Action action, string eventName)
         {
-            lock (AdEventsQueue)
+            lock (adEventsQueue)
             {
-                AdEventsQueue.Add(new MaxAction(action, eventName));
-                _adEventsQueueEmpty = false;
+                adEventsQueue.Add(new MaxAction(action, eventName));
+                adEventsQueueEmpty = false;
             }
         }
 
@@ -73,28 +73,28 @@ namespace AppLovinMax.Internal
 
         public void Update()
         {
-            if (_adEventsQueueEmpty) return;
+            if (adEventsQueueEmpty) return;
 
             var actionsToExecute = new List<MaxAction>();
-            lock (AdEventsQueue)
+            lock (adEventsQueue)
             {
-                actionsToExecute.AddRange(AdEventsQueue);
-                AdEventsQueue.Clear();
-                _adEventsQueueEmpty = true;
+                actionsToExecute.AddRange(adEventsQueue);
+                adEventsQueue.Clear();
+                adEventsQueueEmpty = true;
             }
 
             foreach (var maxAction in actionsToExecute)
             {
-                if (maxAction.ActionToExecute.Target != null)
+                if (maxAction.action.Target != null)
                 {
                     try
                     {
-                        maxAction.ActionToExecute.Invoke();
+                        maxAction.action.Invoke();
                     }
                     catch (Exception exception)
                     {
-                        MaxSdkLogger.UserError("Caught exception in publisher event: " + maxAction.EventName + ", exception: " + exception);
-                        MaxSdkLogger.LogException(exception);
+                        MaxSdkLogger.UserError("Caught exception in publisher event: " + maxAction.eventName + ", exception: " + exception);
+                        Debug.LogException(exception);
                     }
                 }
             }
@@ -102,7 +102,7 @@ namespace AppLovinMax.Internal
 
         public void Disable()
         {
-            _instance = null;
+            instance = null;
         }
     }
 }
