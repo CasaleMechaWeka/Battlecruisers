@@ -1,8 +1,6 @@
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using Unity.Netcode;
 using UnityEngine;
@@ -13,8 +11,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private IBoostProvider _boostProvider;
         private ParticleSystem _boosterGlow;
-
-        protected override PrioritisedSoundKey ConstructionCompletedSoundKey => PrioritisedSoundKeys.Completed.Buildings.Booster;
         public override bool IsBoostable => true;
 
         public float boostMultiplier;

@@ -169,9 +169,15 @@ namespace BattleCruisers.Cruisers.Slots
             _baseBuilding = new SettableBroadcastingProperty<IBuilding>(initialValue: null);
             Building = new BroadcastingProperty<IBuilding>(_baseBuilding);
 
-            SlotBoostFeedbackMonitorInitialiser boostFeedbackInitialiser = GetComponentInChildren<SlotBoostFeedbackMonitorInitialiser>();
-            Assert.IsNotNull(boostFeedbackInitialiser);
-            _boostFeedbackMonitor = boostFeedbackInitialiser.CreateFeedbackMonitor(this);
+            Transform singleBoostEffect = transform.FindNamedComponent<Transform>("BoostFeedback/SingleBoostEffect");
+            Transform doubleBoostEffect = transform.FindNamedComponent<Transform>("BoostFeedback/DoubleBoostEffect");
+
+            _boostFeedbackMonitor = new SlotBoostFeedbackMonitor(
+                    this,
+                    new BoostStateFinder(),
+                    new BoostFeedback(
+                        new GameObjectBC(singleBoostEffect.gameObject),
+                        new GameObjectBC(doubleBoostEffect.gameObject)));
 
             _buildingPlacementFeedback = _renderer.gameObject.transform.Find("BuildingPlacedFeedback");
             _buildingPlacementBeacon = _renderer.gameObject.transform.Find("BuildingPlacementBeacon");

@@ -20,7 +20,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         }
 
 #pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
-        protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(PvPBarrelControllerArgs args)
         {
             lightningEmitter
                 .Initialise(

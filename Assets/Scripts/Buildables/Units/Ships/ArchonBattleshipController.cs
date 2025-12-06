@@ -1,5 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
-using BattleCruisers.Buildables.Pools;
+﻿using BattleCruisers.Buildables.Pools;
 using BattleCruisers.Effects;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
@@ -8,7 +7,6 @@ using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -19,7 +17,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBroadcastingAnimation _unfurlAnimation;
         private AudioSourceGroup _unfurlAudioGroup;
 
-        public BarrelWrapper laser;
         public GameObject bones;
         public AudioSource bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource;
 
@@ -30,13 +27,12 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         public Vector2 droneAreaPositionAdjustment;
         public override Vector2 DroneAreaPosition => FacingDirection == Direction.Right ? Position + droneAreaPositionAdjustment : Position - droneAreaPositionAdjustment;
-        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
             base.StaticInitialise(parent, healthBar);
 
-            Helper.AssertIsNotNull(bones, laser, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
+            Helper.AssertIsNotNull(bones, bellowAudioSource, crankAudioSource, chainAudioSource, dieselAudioSource);
 
             _unfurlAnimation = bones.GetComponent<IBroadcastingAnimation>();
             Assert.IsNotNull(_unfurlAnimation);
@@ -82,57 +78,10 @@ namespace BattleCruisers.Buildables.Units.Ships
             base.OnShipCompleted();
         }
 
-        public override float OptimalArmamentRangeInM
-        {
-            get
-            {
-                return laser.RangeInM;
-            }
-        }
-
-
-        protected override IList<IBarrelWrapper> GetTurrets()
-        {
-            return new List<IBarrelWrapper>()
-            {
-                laser
-            };
-        }
-
-        protected override void InitialiseTurrets()
-        {
-            laser.Initialise(this, _cruiserSpecificFactories);
-        }
-
-        protected override List<SpriteRenderer> GetNonTurretRenderers()
-        {
-            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
-
-            Transform pistonsParent = transform.FindNamedComponent<Transform>("UnitBones");
-            SpriteRenderer[] boneRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-
-            foreach (SpriteRenderer renderer in boneRenderers)
-            {
-                // Only add enabled renderers, which excludes guide sprites
-                if (renderer.enabled)
-                {
-                    renderers.Add(renderer);
-                }
-            }
-
-            return renderers;
-        }
-
         protected override void Deactivate()
         {
             base.Deactivate();
             bones.SetActive(false);
-        }
-
-        protected override void OnBuildableCompleted()
-        {
-            base.OnBuildableCompleted();
-            laser.ApplyVariantStats(this);
         }
     }
 }

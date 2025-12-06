@@ -58,6 +58,7 @@ namespace BattleCruisers.Buildables.Pools
                 "GunBoat" => _unitPoolProvider.GunBoatPool,
                 "RocketTurtle" => _unitPoolProvider.RocketTurtlePool,
                 "FlakTurtle" => _unitPoolProvider.FlakTurtlePool,
+                "TeslaTurtle" => _unitPoolProvider.TeslaTurtlePool,
                 _ => throw new ArgumentException($"Unsupported ship: {ship.PrefabName}"),
             };
         }

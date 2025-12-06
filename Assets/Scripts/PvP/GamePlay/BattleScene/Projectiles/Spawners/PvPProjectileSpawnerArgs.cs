@@ -7,7 +7,7 @@ using BattleCruisers.Projectiles.Stats;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners
 {
-    public class PvPProjectileSpawnerArgs : IPvPProjectileSpawnerArgs
+    public class PvPProjectileSpawnerArgs
     {
         public ITarget Parent { get; }
         public ProjectileStats ProjectileStats { get; }
@@ -16,7 +16,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         public IPvPCruiser EnempCruiser { get; }
 
         public PvPProjectileSpawnerArgs(
-            IPvPBarrelControllerArgs barrelControllerArgs,
+            PvPBarrelControllerArgs barrelControllerArgs,
             ProjectileStats projectileStats,
             int burstSize)
             : this(

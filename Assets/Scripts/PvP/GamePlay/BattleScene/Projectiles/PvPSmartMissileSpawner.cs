@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projec
         private ProjectileStats _ProjectileStats;
 
         public async Task InitialiseAsync(
-            IPvPProjectileSpawnerArgs args,
+            PvPProjectileSpawnerArgs args,
             SoundKey firingSound,
             ProjectileStats ProjectileStats)
         {

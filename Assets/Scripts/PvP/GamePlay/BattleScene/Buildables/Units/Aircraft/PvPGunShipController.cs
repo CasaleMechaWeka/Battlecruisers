@@ -1,6 +1,4 @@
 using BattleCruisers.Buildables;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelWrappers;
@@ -16,10 +14,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Unity.Netcode;
 using BattleCruisers.Targets.TargetFinders;
 using BattleCruisers.Targets.TargetProcessors;
-using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
@@ -31,7 +27,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITargetProcessor _followingTargetProcessor;
         private ITargetFinder _inRangeTargetFinder;
         private TargetTracker _inRangeTargetTracker;
-        private bool _isAtCruisingHeight;
         private ManualDetectorProvider _hoverTargetDetectorProvider;
         public List<Sprite> allSprites = new List<Sprite>();
         public PvPManualProximityTargetProcessorWrapper followingTargetProcessorWrapper;
@@ -101,11 +96,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _isAtCruisingHeight = false;
         }
 
-        public override void Activate_PvPClient()
-        {
-            base.Activate_PvPClient();
-        }
-
         protected override async void OnBuildableCompleted()
         {
             if (IsServer)
@@ -114,7 +104,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
                 SetupTargetDetection();
 
-                _barrelWrapper.Initialise(this, _cruiserSpecificFactories, SoundKeys.Firing.BigCannon);
+                _barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                 List<Sprite> allSpriteWrappers = new List<Sprite>();
                 foreach (Sprite sprite in allSprites)
                 {
@@ -236,50 +226,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             List<SpriteRenderer> renderers = base.GetInGameRenderers();
             renderers.AddRange(_barrelWrapper.Renderers);
             return renderers;
-        }
-
-        protected override void OnBuildableProgressEvent()
-        {
-            if (IsServer)
-                OnBuildableProgressEventClientRpc();
-            else
-                base.OnBuildableProgressEvent();
-        }
-        protected override void OnCompletedBuildableEvent()
-        {
-            if (IsServer)
-                OnCompletedBuildableEventClientRpc();
-            else
-                base.OnCompletedBuildableEvent();
-        }
-
-
-
-        //-------------------------------------- RPCs -------------------------------------------------//
-        [ClientRpc]
-        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
-        {
-            if (!IsHost)
-            {
-                _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
-                FacingDirection = facingDirection;
-                _isAtCruisingHeight = isAtCruiserHeight;
-                Activate_PvPClient();
-            }
-        }
-
-        [ClientRpc]
-        private void OnBuildableProgressEventClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableProgressEvent();
-        }
-
-        [ClientRpc]
-        private void OnCompletedBuildableEventClientRpc()
-        {
-            if (!IsHost)
-                OnCompletedBuildableEvent();
         }
     }
 }

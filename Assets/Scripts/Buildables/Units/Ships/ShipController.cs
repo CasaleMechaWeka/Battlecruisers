@@ -25,17 +25,18 @@ namespace BattleCruisers.Buildables.Units.Ships
     /// 3. Boat will only stop to fight enemies (or to avoid bumping into friendlies).
     ///     Either this boat is destroyed, or the enemy, in which case this boat will continue moving.
     /// </summary>
-    public abstract class ShipController : Unit, IShip
+    public class ShipController : Unit
     {
         private int _directionMultiplier;
-        private IList<IBarrelWrapper> _turrets;
+        protected IList<IBarrelWrapper> turrets;
         private ShipTargetProcessorWrapper _targetProcessorWrapper;
         private ITargetProcessor _movementTargetProcessor;
         private IMovementDecider _movementDecider;
         private ManualDetectorProvider _enemyDetectorProvider, _friendDetectorProvider;
+        public float OptimalArmamentRangeInM = -1;
         public ShipDeathType deathType;
 
-        private float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
+        const float FRIEND_DETECTION_RADIUS_MULTIPLIER = 1.2f;
         private const float ENEMY_DETECTION_RADIUS_MULTIPLIER = 2;
 
         public override TargetType TargetType => TargetType.Ships;
@@ -44,6 +45,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private float ySpawnOffset = -0.35f; // Default value, can be adjusted in the Inspector
 
         public override float YSpawnOffset => ySpawnOffset;
+        
 
         [SerializeField]
         private List<GameObject> additionalRenderers = new List<GameObject>();
@@ -56,8 +58,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         /// Usually this will simply be the range of the ship's longest ranged turret,
         /// but can be less if we want multiple of the ships turrets to be in range.
         /// </summary>
-        public abstract float OptimalArmamentRangeInM { get; }
-        public abstract bool KeepDistanceFromEnemyCruiser { get; }
+        public bool KeepDistanceFromEnemyCruiser;
 
         private float FriendDetectionRangeInM => FRIEND_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
         private float EnemyDetectionRangeInM => ENEMY_DETECTION_RADIUS_MULTIPLIER * Size.x / 2;
@@ -67,9 +68,9 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise(parent, healthBar);
 
-            _turrets = GetTurrets();
+            turrets = gameObject.GetComponentsInChildren<IBarrelWrapper>();
 
-            foreach (IBarrelWrapper turret in _turrets)
+            foreach (IBarrelWrapper turret in turrets)
             {
                 turret.StaticInitialise();
             }
@@ -77,11 +78,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             FindDamageStats();
 
             _targetProcessorWrapper = transform.FindNamedComponent<ShipTargetProcessorWrapper>("ShipTargetProcessorWrapper");
-        }
-
-        protected virtual IList<IBarrelWrapper> GetTurrets()
-        {
-            return new List<IBarrelWrapper>();
         }
 
         private void FindDamageStats()
@@ -102,7 +98,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IList<IDamageCapability> GetDamageCapabilities(TargetType attackCapability)
         {
             return
-                _turrets
+                turrets
                     .Where(turret => turret.DamageCapability.AttackCapabilities.Contains(attackCapability))
                     .Select(turret => turret.DamageCapability)
                     .ToList();
@@ -117,17 +113,17 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.OnBuildableCompleted();
             OnShipCompleted();
+            foreach(IBarrelWrapper barrelWrapper in turrets)
+                barrelWrapper.ApplyVariantStats(this);
         }
 
         protected virtual void OnShipCompleted()
         {
-            InitialiseTurrets();
+            foreach(IBarrelWrapper barrelWrapper in turrets)
+                barrelWrapper.Initialise(this, _cruiserSpecificFactories);
             SetupMovement();
         }
 
-        // Turrets start attacking targets as soon as they are initialised, so
-        // only initialise them once the ship has been completed.
-        protected virtual void InitialiseTurrets() { }
 
         protected void SetupMovement()
         {
@@ -146,6 +142,12 @@ namespace BattleCruisers.Buildables.Units.Ships
             targetProcessorTargetTypes.Remove(TargetType.Aircraft);
             if (KeepDistanceFromEnemyCruiser)
                 targetProcessorTargetTypes.Add(TargetType.Cruiser);
+
+            if(OptimalArmamentRangeInM == -1)
+            {
+                Debug.LogError("Field OptimalArmamentRangeInM is not set. Set to >= 0 to confirm it is set");
+                OptimalArmamentRangeInM = 0;
+            }
 
             TargetProcessorArgs args
                 = new TargetProcessorArgs(
@@ -179,7 +181,8 @@ namespace BattleCruisers.Buildables.Units.Ships
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingEnemyProvider(_enemyDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.ProviderFactory.CreateShipBlockingFriendlyProvider(_friendDetectorProvider.TargetDetector, this),
                     _cruiserSpecificFactories.Targets.TrackerFactory.CreateTargetTracker(inRangeTargetFinder),
-                    EnemyCruiser.BlockedShipsTracker);
+                    EnemyCruiser.BlockedShipsTracker,
+                    KeepDistanceFromEnemyCruiser ? OptimalArmamentRangeInM : 0);
         }
 
         public void StartMoving()
@@ -214,9 +217,9 @@ namespace BattleCruisers.Buildables.Units.Ships
 
         protected override List<SpriteRenderer> GetInGameRenderers()
         {
-            List<SpriteRenderer> renderers = GetNonTurretRenderers();
+            List<SpriteRenderer> renderers = base.GetInGameRenderers();
 
-            foreach (IBarrelWrapper turret in _turrets)
+            foreach (IBarrelWrapper turret in turrets)
             {
                 renderers.AddRange(turret.Renderers);
             }
@@ -231,11 +234,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             }
 
             return renderers;
-        }
-
-        protected virtual List<SpriteRenderer> GetNonTurretRenderers()
-        {
-            return base.GetInGameRenderers();
         }
 
         public void DisableMovement()
@@ -259,16 +257,11 @@ namespace BattleCruisers.Buildables.Units.Ships
                 _friendDetectorProvider.DisposeManagedState();
                 _friendDetectorProvider = null;
 
-                foreach (IBarrelWrapper turret in _turrets)
+                foreach (IBarrelWrapper turret in turrets)
                 {
                     turret.DisposeManagedState();
                 }
             }
-        }
-
-        public void AddExtraFriendDetectionRange(float extraRange)
-        {
-            FRIEND_DETECTION_RADIUS_MULTIPLIER += extraRange;
         }
     }
 }

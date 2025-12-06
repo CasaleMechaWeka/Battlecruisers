@@ -20,9 +20,10 @@ namespace BattleCruisers.Movement.Deciders
     /// </summary>
     public class ShipMovementDecider : IMovementDecider
     {
-        private readonly IShip _ship;
+        private readonly ShipController _ship;
         private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly TargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
+        float _preferredCruiserSqrDistance;
 
         private const float IN_RANGE_LEEWAY_IN_M = 0.01f;
 
@@ -39,11 +40,12 @@ namespace BattleCruisers.Movement.Deciders
         }
 
         public ShipMovementDecider(
-            IShip ship,
+            ShipController ship,
             BroadcastingTargetProvider blockingEnemyProvider,
             BroadcastingTargetProvider blockingFriendlyProvider,
             TargetTracker inRangeTargetTracker,
-            TargetTracker shipBlockerTargetTracker)
+            TargetTracker shipBlockerTargetTracker,
+            float preferredCruiserDistance)
         {
             Helper.AssertIsNotNull(ship, blockingEnemyProvider, blockingFriendlyProvider, inRangeTargetTracker, shipBlockerTargetTracker);
 
@@ -52,6 +54,7 @@ namespace BattleCruisers.Movement.Deciders
             _blockingFriendlyProvider = blockingFriendlyProvider;
             _inRangeTargetTracker = inRangeTargetTracker;
             _shipBlockerTargetTracker = shipBlockerTargetTracker;
+            _preferredCruiserSqrDistance = preferredCruiserDistance * preferredCruiserDistance;
 
             _blockingEnemyProvider.TargetChanged += TriggerDecideMovement;
             _blockingFriendlyProvider.TargetChanged += TriggerDecideMovement;
@@ -81,17 +84,17 @@ namespace BattleCruisers.Movement.Deciders
                 if (_blockingEnemyProvider.Target == null
                     && _blockingFriendlyProvider.Target == null
                     && !HaveReachedEnemyCruiser()
-                    && (_highestPriorityTarget == null
-                        || !IsHighestPriorityTargetInRange()))
+                    && (_highestPriorityTarget == null || !IsHighestPriorityTargetInRange())
+                    && (_ship.transform.position - _ship.EnemyCruiser.Transform.Position).sqrMagnitude > _preferredCruiserSqrDistance)
                 {
                     _ship.StartMoving();
                 }
             }
             else if (_blockingEnemyProvider.Target != null
-                || _blockingFriendlyProvider.Target != null
-                || HaveReachedEnemyCruiser()
-                || (_highestPriorityTarget != null
-                    && IsHighestPriorityTargetInRange()))
+                 || _blockingFriendlyProvider.Target != null
+                 || HaveReachedEnemyCruiser()
+                 || (_highestPriorityTarget != null && IsHighestPriorityTargetInRange())
+                 || (_ship.transform.position - _ship.EnemyCruiser.Transform.Position).sqrMagnitude <= _preferredCruiserSqrDistance)
             {
                 _ship.StopMoving();
             }

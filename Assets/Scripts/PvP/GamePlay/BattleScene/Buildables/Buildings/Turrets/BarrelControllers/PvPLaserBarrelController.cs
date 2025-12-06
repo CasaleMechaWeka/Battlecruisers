@@ -1,7 +1,7 @@
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects.Laser;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners.Beams.Laser;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
@@ -40,12 +40,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected override FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
-            PvPLaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPLaserFireIntervalManagerInitialiser>();
-            Assert.IsNotNull(fireIntervalManagerInitialiser);
-
             IDurationProvider waitingDurationProvider = TurretStats;
             IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
-            return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
+            
+            WaitingState waitingState = new WaitingState();
+            FiringDurationState firingState = new FiringDurationState();
+
+            waitingState.Initialise(firingState, waitingDurationProvider);
+            firingState.Initialise(waitingState, firingDurationProvider);
+
+            return new FireIntervalManager(firingState);
         }
 
         protected override IDamageCapability FindDamageCapabilities()
@@ -58,7 +62,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             return new PvPDamageCapability(damagePerS, TurretStats.AttackCapabilities);
         }
 
-        protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(PvPBarrelControllerArgs args)
         {
             _laserEmitter.Initialise(
                     args.TargetFilter,

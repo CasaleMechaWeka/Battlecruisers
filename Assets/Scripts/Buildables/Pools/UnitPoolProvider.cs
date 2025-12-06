@@ -37,6 +37,7 @@ namespace BattleCruisers.Buildables.Pools
         public Pool<Unit, BuildableActivationArgs> GunBoatPool { get; }
         public Pool<Unit, BuildableActivationArgs> RocketTurtlePool { get; }
         public Pool<Unit, BuildableActivationArgs> FlakTurtlePool { get; }
+        public Pool<Unit, BuildableActivationArgs> TeslaTurtlePool { get; }
 
         public UnitPoolProvider()
         {
@@ -64,6 +65,7 @@ namespace BattleCruisers.Buildables.Pools
             GunBoatPool = CreatePool(StaticPrefabKeys.Units.GunBoat);
             RocketTurtlePool = CreatePool(StaticPrefabKeys.Units.RocketTurtle);
             FlakTurtlePool = CreatePool(StaticPrefabKeys.Units.FlakTurtle);
+            TeslaTurtlePool = CreatePool(StaticPrefabKeys.Units.TeslaTurtle);
         }
 
         private Pool<Unit, BuildableActivationArgs> CreatePool(IPrefabKey unitKey)

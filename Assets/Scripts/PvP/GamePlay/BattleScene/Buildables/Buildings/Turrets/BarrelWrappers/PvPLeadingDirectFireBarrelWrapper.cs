@@ -8,7 +8,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// Turrets:  Anti air turret
     /// Units:  Gunships
     /// </summary>
-	public abstract class PvPLeadingDirectFireBarrelWrapper : PvPBarrelWrapper
+	public class PvPLeadingDirectFireBarrelWrapper : PvPBarrelWrapper
     {
         protected override ITargetPositionPredictor CreateTargetPositionPredictor()
         {

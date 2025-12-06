@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Utils;
 using System.Threading.Tasks;
@@ -33,18 +34,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _middleSpawner = _shellSpawners.Middle();
         }
 
-        protected override async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args)
+        protected override async Task InternalInitialiseAsync(PvPBarrelControllerArgs args)
         {
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
+            PvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 
+            // PERF we can use concurrency here
             foreach (PvPShellSpawner spawner in _shellSpawners)
-            {
-
-                await spawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey, args.TargetFilter);
-
-            }
-
-
+                await spawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound), args.TargetFilter);
         }
 
         public override void Fire(float angleInDegrees)

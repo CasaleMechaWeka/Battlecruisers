@@ -4,8 +4,6 @@ using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Effects;
 using BattleCruisers.Effects.ParticleSystems;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Targets.TargetFinders.Filters;
@@ -22,6 +20,8 @@ using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Buildables.Boost.GlobalProviders;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
 {
@@ -49,11 +49,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected virtual int NumOfBarrels => 1;
         public Transform Transform => transform;
         public float BarrelAngleInDegrees => Transform.rotation.eulerAngles.z;
-
+        public SoundKeys.FiringSound FiringSound;
         [SerializeField] private List<SpriteRenderer> manualRenderers = new List<SpriteRenderer>();
         public List<SpriteRenderer> Renderers { get; private set; }
 
         // Initialise lazily, because requires child class StaticInitialise()s to have completed.
+        public List<BoostType> BoostTypes = new List<BoostType>();
+
         private IDamageCapability _damageCapability;
         public IDamageCapability DamageCapability
         {
@@ -135,9 +137,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         protected virtual FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
-            PvPFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<PvPFireIntervalManagerInitialiser>();
-            Assert.IsNotNull(fireIntervalManagerInitialiser);
-            return fireIntervalManagerInitialiser.Initialise(turretStats);
+            Assert.IsNotNull(turretStats);
+
+            WaitingState waitingState = new WaitingState();
+            FiringOnceState firingState = new FiringOnceState();
+
+            waitingState.Initialise(firingState, turretStats);
+            firingState.Initialise(waitingState, turretStats);
+
+            return new FireIntervalManager(firingState);
         }
 
         protected virtual IDamageCapability FindDamageCapabilities()
@@ -148,9 +156,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // should be called by Server
-        public async Task InitialiseAsync(IPvPBarrelControllerArgs args)
+        public async Task InitialiseAsync(PvPBarrelControllerArgs args)
         {
-
+            foreach (BoostType boostType in BoostTypes)
+            {
+                if ((int)boostType >= 200 && (int)boostType < 300)   //fire rate boosts
+                    args.GlobalFireRateBoostProviders.Add(args.CruiserSpecificFactories.GlobalBoostProviders.BoostTypeToBoostProvider(boostType));
+            }
+            
             Assert.IsNotNull(args);
             _parent = args.Parent;
             _targetFilter = args.TargetFilter;
@@ -170,11 +183,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                     args.AngleLimiter);
 
             _firingHelper
-                = new PvPBarrelFiringHelper(
+                = new BarrelFiringHelper(
                     this,
                     args.AccuracyAdjuster,
                     _fireIntervalManager,
-                    CreateFirer(args));
+                    CreateFirer(args),
+                    false);
 
             await InternalInitialiseAsync(args);
 
@@ -185,29 +199,29 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
 
         // should be called by Client
-        public async Task InitialiseAsync_PvPClient(IPvPBarrelControllerArgs args)
+        public async Task InitialiseAsync_PvPClient(PvPBarrelControllerArgs args)
         {
             Assert.IsNotNull(args);
             _parent = args.Parent;
             _barrelAnimation = GetBarrelFiringAnimation(args);
         }
 
-        protected virtual IBarrelFirer CreateFirer(IPvPBarrelControllerArgs args)
+        protected virtual IBarrelFirer CreateFirer(PvPBarrelControllerArgs args)
         {
-            return new PvPBarrelFirer(
+            return new BarrelFirer(
                     this,
                     disableAnimator ? null : GetBarrelFiringAnimation(args),
                     _muzzleFlash);
         }
 
-        protected virtual IAnimation GetBarrelFiringAnimation(IPvPBarrelControllerArgs args)
+        protected virtual IAnimation GetBarrelFiringAnimation(PvPBarrelControllerArgs args)
         {
             return args.BarrelFiringAnimation;
         }
 
 
 #pragma warning disable 1998  // This async method lacks 'await' operators and will run synchronously
-        protected virtual async Task InternalInitialiseAsync(IPvPBarrelControllerArgs args) { }
+        protected virtual async Task InternalInitialiseAsync(PvPBarrelControllerArgs args) { }
 #pragma warning restore 1998  // This async method lacks 'await' operators and will run synchronously
 
         private void _updater_Updated(object sender, EventArgs e)

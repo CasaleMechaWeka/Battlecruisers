@@ -1,3 +1,4 @@
+using BattleCruisers.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using System.Threading.Tasks;
@@ -22,14 +23,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(_missileSpawner);
         }
 
-        public async Task InitialiseAsync(IExactMatchTargetFilter targetFilter, IPvPBarrelControllerArgs args)
+        public async Task InitialiseAsync(IExactMatchTargetFilter targetFilter, PvPBarrelControllerArgs args)
         {
             await base.InitialiseAsync(args);
 
             _exactMatchTargetFilter = targetFilter;
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
+            PvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _projectileStats, TurretStats.BurstSize);
 
-            await _missileSpawner.InitialiseAsync(spawnerArgs, args.SpawnerSoundKey);
+            await _missileSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound));
         }
 
         public override void Fire(float angleInDegrees)

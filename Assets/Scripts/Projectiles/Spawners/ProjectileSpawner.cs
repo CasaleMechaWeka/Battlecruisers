@@ -3,6 +3,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Projectiles.Stats;
 using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.ProjectileSpawners;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
@@ -40,14 +41,21 @@ namespace BattleCruisers.Projectiles.Spawners
             _cruiserSpecificFactories = args.CruiserSpecificFactories;
             _enemyCruiser = args.EnempCruiser;
 
-            IProjectileSoundPlayerInitialiser soundPlayerInitialiser = GetComponent<IProjectileSoundPlayerInitialiser>();
-            Assert.IsNotNull(soundPlayerInitialiser);
-            _soundPlayer
-                = await soundPlayerInitialiser.CreateSoundPlayerAsync(
-                    FactoryProvider.Sound.SoundPlayerFactory,
-                    firingSound,
-                    args.BurstSize,
-                    FactoryProvider.SettingsManager);
+            if (firingSound != null)
+            {
+                AudioSource audioSource = GetComponentInChildren<AudioSource>();
+                Assert.IsNotNull(audioSource);
+
+                IAudioSource audioSourceWrapper =
+                    new EffectVolumeAudioSource(new AudioSourceBC(audioSource));
+
+                _soundPlayer = await FactoryProvider.Sound.SoundPlayerFactory
+                    .CreateShortSoundPlayerAsync(firingSound, audioSourceWrapper);
+            }
+            else
+            {
+                _soundPlayer = FactoryProvider.Sound.SoundPlayerFactory.DummyPlayer;
+            }
         }
 
         protected Vector2 FindProjectileVelocity(float angleInDegrees, bool isSourceMirrored, float velocityInMPerS)

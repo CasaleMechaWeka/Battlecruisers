@@ -164,7 +164,7 @@ namespace BattleCruisers.Utils.BattleScene
         {
             foreach (IUnit unit in victoryCruiser.UnitMonitor.AliveUnits)
             {
-                if (unit is IShip ship)
+                if (unit is ShipController ship)
                 {
                     ship.DisableMovement();
                     ship.StopMoving();

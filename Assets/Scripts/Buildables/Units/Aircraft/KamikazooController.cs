@@ -54,7 +54,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
         // Expose barrel wrappers to editor
         [SerializeField]
-        private List<AircraftBarrelWrapper> barrelWrappers;
+        private List<LeadingDirectFireBarrelWrapper> barrelWrappers;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {

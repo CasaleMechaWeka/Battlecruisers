@@ -88,9 +88,8 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
                         Debug.Log($"MisFighter: Outside Tolerance - Fire Angle (Degrees): {fireAngleInDegrees}, Desired: {barrelAdjustmentResult.DesiredAngleInDegrees}");
                     }
                 }
-                else if (!barrelAdjustmentResult.IsOnTarget)
+                else if (_doDebug && !barrelAdjustmentResult.IsOnTarget)
                 {
-                    if (_doDebug)
                         Debug.Log("MisFighter: IsOffTarget - Desired Angle Not Met.");
                 }
             }

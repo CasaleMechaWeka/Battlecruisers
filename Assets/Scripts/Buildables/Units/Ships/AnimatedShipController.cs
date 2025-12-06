@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace BattleCruisers.Buildables.Units.Ships
 {
-    public abstract class AnimatedShipController : ShipController
+    public class AnimatedShipController : ShipController
     {
         private ShipMovementEffect _movementEffects;
         public MovementEffectInitialiser movementEffectInitialiser;

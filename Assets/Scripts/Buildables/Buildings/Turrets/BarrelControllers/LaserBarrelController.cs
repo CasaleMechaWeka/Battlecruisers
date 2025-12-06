@@ -1,4 +1,5 @@
 ﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.FireInterval.States;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Effects.Laser;
 using BattleCruisers.Projectiles.Spawners.Beams.Laser;
@@ -39,12 +40,16 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
 
         protected override FireIntervalManager SetupFireIntervalManager(ITurretStats turretStats)
         {
-            LaserFireIntervalManagerInitialiser fireIntervalManagerInitialiser = gameObject.GetComponent<LaserFireIntervalManagerInitialiser>();
-            Assert.IsNotNull(fireIntervalManagerInitialiser);
-
             IDurationProvider waitingDurationProvider = TurretStats;
             IDurationProvider firingDurationProvider = new DummyDurationProvider(_laserTurretStats.laserDurationInS);
-            return fireIntervalManagerInitialiser.Initialise(waitingDurationProvider, firingDurationProvider);
+
+            WaitingState waitingState = new WaitingState();
+            FiringDurationState firingState = new FiringDurationState();
+            
+            waitingState.Initialise(firingState, waitingDurationProvider);
+            firingState.Initialise(waitingState, firingDurationProvider);
+            
+            return new FireIntervalManager(firingState);
         }
 
         protected override IDamageCapability FindDamageCapabilities()

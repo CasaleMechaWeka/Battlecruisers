@@ -21,7 +21,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
     /// </summary>
     public class PvPShipMovementDecider : IMovementDecider
     {
-        private readonly IPvPShip _ship;
+        private readonly PvPShipController _ship;
         private readonly BroadcastingTargetProvider _blockingEnemyProvider, _blockingFriendlyProvider;
         private readonly TargetTracker _inRangeTargetTracker, _shipBlockerTargetTracker;
 
@@ -40,7 +40,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Moveme
         }
 
         public PvPShipMovementDecider(
-            IPvPShip ship,
+            PvPShipController ship,
             BroadcastingTargetProvider blockingEnemyProvider,
             BroadcastingTargetProvider blockingFriendlyProvider,
             TargetTracker inRangeTargetTracker,

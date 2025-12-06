@@ -1,5 +1,4 @@
 using BattleCruisers.Movement.Rotation;
-using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 
@@ -14,11 +13,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override IRotationMovementController CreateRotationMovementController(IBarrelController barrel, IDeltaTimeProvider deltaTimeProvider)
         {
             return new DummyRotationMovementController();
-        }
-
-        protected override AngleLimiter CreateAngleLimiter()
-        {
-            return new AngleLimiter(-180, 180);
         }
     }
 }

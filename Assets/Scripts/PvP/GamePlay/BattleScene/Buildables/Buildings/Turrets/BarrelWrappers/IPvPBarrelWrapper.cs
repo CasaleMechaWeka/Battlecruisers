@@ -4,7 +4,6 @@ using BattleCruisers.Effects;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Targets;
-using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,14 +23,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         void Initialise(
             IPvPBuildable parent,
             PvPCruiserSpecificFactories cruiserSpecificFactories,
-            SoundKey firingSound = null,
             ObservableCollection<IBoostProvider> localBoostProviders = null,
-            ObservableCollection<IBoostProvider> globalFireRateBoostProviders = null,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders = null,
             IAnimation barrelFiringAnimation = null);
 
         void Initialise(
             IPvPBuildable parent,
-            SoundKey firingSound = null,
             IAnimation barrelFiringAnimation = null);
 
         void ApplyVariantStats(IPvPBuilding building);

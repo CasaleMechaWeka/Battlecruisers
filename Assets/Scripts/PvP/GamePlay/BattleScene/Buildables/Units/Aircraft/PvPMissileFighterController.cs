@@ -1,11 +1,8 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
-using BattleCruisers.Buildables.Units;
-using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
-using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
@@ -22,7 +19,6 @@ using BattleCruisers.Utils.BattleScene.Update;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Unity.Netcode;
 using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Movement.Predictors;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
@@ -30,7 +26,6 @@ using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Movement.Velocity.Homing;
 using BattleCruisers.Movement.Rotation;
 using BattleCruisers.Utils.PlatformAbstractions;
-using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Targets.Factories;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
@@ -82,15 +77,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             AddDamageStats(_barrelController.DamageCapability);
         }
 
-        public override void Initialise()
-        {
-            base.Initialise();
-        }
-
-        public override void Initialise(PvPUIManager uiManager)
-        {
-            base.Initialise(uiManager);
-        }
         public override void Activate(PvPBuildableActivationArgs activationArgs)
         {
             OnActivatePvPClientRpc(activationArgs.ParentCruiser.Position, activationArgs.EnemyCruiser.Position, activationArgs.ParentCruiser.Direction, isAtCruiserHeight: false);
@@ -119,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                 ITarget parent = this;
                 IUpdater updater = PvPFactoryProvider.UpdaterProvider.PerFrameUpdater;
 
-                IPvPBarrelControllerArgs args
+                PvPBarrelControllerArgs args
                     = new PvPBarrelControllerArgs(
                         updater,
                         new FactionAndTargetTypeFilter(enemyFaction, AttackCapabilities),
@@ -132,9 +118,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
                         _cruiserSpecificFactories,
                         parent,
                         _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        _cruiserSpecificFactories.GlobalBoostProviders.DummyBoostProviders,
-                        EnemyCruiser,
-                        SoundKeys.Firing.BigCannon);
+                        TurretFireRateBoostProviders,
+                        EnemyCruiser);
 
                 _ = _barrelController.InitialiseAsync(args);
 
@@ -254,51 +239,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             // Do not set to null, only created once in StaticInitialise(), so reused by unit pools.
             _barrelController.CleanUp();
-        }
-
-        // only for PvPFighter :(
-        public NetworkVariable<float> pvp_RotationY = new NetworkVariable<float>();
-
-        protected override void OnBuildableProgressEvent()
-        {
-            if (IsServer)
-                OnBuildableProgressEventClientRpc();
-            else
-                base.OnBuildableProgressEvent();
-        }
-        protected override void OnCompletedBuildableEvent()
-        {
-            if (IsServer)
-                OnCompletedBuildableEventClientRpc();
-            else
-                base.OnCompletedBuildableEvent();
-        }
-
-        //-------------------------------------- RPCs -------------------------------------------------//
-        [ClientRpc]
-        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
-        {
-            if (!IsHost)
-            {
-                _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
-                FacingDirection = facingDirection;
-                //    _isAtCruisingHeight = isAtCruiserHeight;
-                Activate_PvPClient();
-            }
-        }
-
-        [ClientRpc]
-        private void OnBuildableProgressEventClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableProgressEvent();
-        }
-
-        [ClientRpc]
-        private void OnCompletedBuildableEventClientRpc()
-        {
-            if (!IsHost)
-                OnCompletedBuildableEvent();
         }
     }
 }

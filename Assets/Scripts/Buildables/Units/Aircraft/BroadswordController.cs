@@ -94,7 +94,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
 
             SetupTargetDetection();
 
-            foreach (var barrelWrapper in barrelWrappers)
+            foreach (BarrelWrapper barrelWrapper in barrelWrappers)
             {
                 barrelWrapper.Initialise(this, _cruiserSpecificFactories);
                 barrelWrapper.ApplyVariantStats(this);
@@ -202,7 +202,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _hoverTargetDetectorProvider.DisposeManagedState();
             _hoverTargetDetectorProvider = null;
 
-            foreach (var barrelWrapper in barrelWrappers)
+            foreach (BarrelWrapper barrelWrapper in barrelWrappers)
             {
                 barrelWrapper.DisposeManagedState();
             }
@@ -212,7 +212,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
         {
             List<SpriteRenderer> renderers = base.GetInGameRenderers();
 
-            foreach (var barrelWrapper in barrelWrappers)
+            foreach (BarrelWrapper barrelWrapper in barrelWrappers)
             {
                 renderers.AddRange(barrelWrapper.Renderers);
             }

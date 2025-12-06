@@ -1,6 +1,5 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
-using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Movement.Velocity.Providers;
@@ -15,11 +14,11 @@ using BattleCruisers.Utils.BattleScene;
 using BattleCruisers.Utils.BattleScene.Seabed;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Unity.Netcode;
 using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Buildables.Units.Aircraft;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
 {
@@ -32,6 +31,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private float _fuzziedMaxVelocityInMPerS;
         protected TrailRenderer _aircraftTrail;
         protected GameObject _aircraftTrailObj;
+        protected bool _isAtCruisingHeight;
+
         private bool _onSeabed;
 
         protected PvPSpriteChooser _spriteChooser;
@@ -172,14 +173,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             base.OnBuildableCompleted_PvPClient();
             ActiveMovementController = PatrollingMovementController;
-        }
-
-        protected override void AddBuildRateBoostProviders(
-            GlobalBoostProviders globalBoostProviders,
-            IList<ObservableCollection<IBoostProvider>> buildRateBoostProvidersList)
-        {
-            base.AddBuildRateBoostProviders(globalBoostProviders, buildRateBoostProvidersList);
-            buildRateBoostProvidersList.Add(globalBoostProviders.UnitBuildRate.AircraftProviders);
         }
 
         protected abstract IList<IPatrolPoint> GetPatrolPoints();
@@ -360,6 +353,18 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             rigidBody.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
 
             PvPFactoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
+        }
+
+        [ClientRpc]
+        protected void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
+        {
+            if (!IsHost)
+            {
+                _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
+                FacingDirection = facingDirection;
+                _isAtCruisingHeight = isAtCruiserHeight;
+                Activate_PvPClient();
+            }
         }
 
     }

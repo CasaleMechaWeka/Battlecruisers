@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Buildings.Turrets;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers;
 using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.Utils;
@@ -7,7 +6,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 {
     public class PvPSamSiteBarrelWrapper : PvPDirectFireBarrelWrapper
     {
-        protected override void InitialiseBarrelController(PvPBarrelController barrel, IPvPBarrelControllerArgs args)
+        protected override void InitialiseBarrelController(PvPBarrelController barrel, PvPBarrelControllerArgs args)
         {
             IExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IExactMatchTargetFilter>();
             PvPSamSiteBarrelController samSiteBarrel = barrel.Parse<PvPSamSiteBarrelController>();
@@ -17,11 +16,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         protected override ITargetFilter CreateTargetFilter()
         {
             return new ExactMatchTargetFilter();
-        }
-
-        protected override AngleLimiter CreateAngleLimiter()
-        {
-            return new AngleLimiter(30, 150);
         }
     }
 }

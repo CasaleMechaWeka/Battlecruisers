@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Effects;
 using BattleCruisers.Projectiles.DamageAppliers;
@@ -7,11 +6,9 @@ using BattleCruisers.Targets.TargetFinders.Filters;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.BattleScene.ProgressBars;
 using BattleCruisers.UI.Sound.AudioSources;
-using BattleCruisers.Utils;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -22,7 +19,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         private IBroadcastingAnimation _unfurlAnimation;
         private AudioSourceGroup _unfurlAudioGroup;
         public AudioSource[] audioSources;
-        public BarrelWrapper minigun, _samSite;
         public ProjectileStats minigunStats;
 
         public ProjectileStats samSiteStats;
@@ -43,7 +39,6 @@ namespace BattleCruisers.Buildables.Units.Ships
         public event EventHandler RearingStarted;
 
         private IDamageApplier _areaDamageApplier;
-        public override bool KeepDistanceFromEnemyCruiser => false;
 
         public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
         {
@@ -91,11 +86,6 @@ namespace BattleCruisers.Buildables.Units.Ships
             // Delay normal setup (movement, turrets) until the unfurl animation has completed
         }
 
-        private void CompleteShip()
-        {
-            base.OnShipCompleted();
-        }
-
         private void _unfurlAnimation_AnimationDone(object sender, EventArgs e)
         {
             base.OnShipCompleted();
@@ -116,47 +106,6 @@ namespace BattleCruisers.Buildables.Units.Ships
                 damageSource: null);
 
             RearingStarted?.Invoke(this, EventArgs.Empty);
-        }
-
-        public override float OptimalArmamentRangeInM
-        {
-            get
-            {
-                return minigun.RangeInM;
-            }
-        }
-
-        protected override IList<IBarrelWrapper> GetTurrets()
-        {
-            return new List<IBarrelWrapper>()
-            {
-                minigun, _samSite
-            };
-        }
-
-        protected override void InitialiseTurrets()
-        {
-            minigun.Initialise(this, _cruiserSpecificFactories);
-            _samSite.Initialise(this, _cruiserSpecificFactories);
-        }
-
-        protected override List<SpriteRenderer> GetNonTurretRenderers()
-        {
-            List<SpriteRenderer> renderers = base.GetNonTurretRenderers();
-
-            Transform pistonsParent = transform.FindNamedComponent<Transform>("HuntressBones");
-            SpriteRenderer[] boneRenderers = pistonsParent.GetComponentsInChildren<SpriteRenderer>(includeInactive: true);
-
-            foreach (SpriteRenderer renderer in boneRenderers)
-            {
-                // Only add enabled renderers, which excludes guide sprites
-                if (renderer.enabled)
-                {
-                    renderers.Add(renderer);
-                }
-            }
-
-            return renderers;
         }
 
         protected override void Deactivate()

@@ -1,4 +1,3 @@
-using BattleCruisers.Buildables.Units;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
@@ -12,14 +11,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using BattleCruisers.Utils;
-using Unity.Netcode;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.Buildables;
 using BattleCruisers.Targets.TargetProcessors;
 using BattleCruisers.Movement.Velocity;
 using BattleCruisers.Utils.Fetchers.Sprites;
-using BattleCruisers.Buildables.Units.Aircraft;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
@@ -31,7 +28,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private ITargetProcessor _targetProcessor;
         private IBomberMovementController _bomberMovementControler;
         private bool _haveDroppedBombOnRun = false;
-        private bool _isAtCruisingHeight = false;
 
         private const float TURN_AROUND_DISTANCE_MULTIPLIER = 1.5f;
         private const float AVERAGE_FIRE_RATE_PER_S = 0.2f;
@@ -111,13 +107,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             int burstSize = 1;
             // apply variant stats
             ApplyVariantStats();
-            IPvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _cruiserSpecificFactories, EnemyCruiser);
+            PvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(this, _bombStats, burstSize, _cruiserSpecificFactories, EnemyCruiser);
             _ = _bombSpawner.InitialiseAsync(spawnerArgs, targetFilter);
-        }
-
-        public override void Activate_PvPClient()
-        {
-            base.Activate_PvPClient();
         }
 
         private async void ApplyVariantStats()
@@ -314,59 +305,5 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _targetProcessor.RemoveTargetConsumer(this);
             _targetProcessor = null;
         }
-
-
-
-
-        protected override void OnBuildableProgressEvent()
-        {
-            if (IsServer)
-                OnBuildableProgressEventClientRpc();
-            else
-                base.OnBuildableProgressEvent();
-        }
-        protected override void OnCompletedBuildableEvent()
-        {
-            if (IsServer)
-                OnCompletedBuildableEventClientRpc();
-            else
-                base.OnCompletedBuildableEvent();
-        }
-
-
-
-        //-------------------------------------- RPCs -------------------------------------------------//
-
-        [ClientRpc]
-        private void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
-        {
-            if (!IsHost)
-            {
-                _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
-                FacingDirection = facingDirection;
-                _isAtCruisingHeight = isAtCruiserHeight;
-                Activate_PvPClient();
-            }
-        }
-
-        [ClientRpc]
-        private void OnBuildableProgressEventClientRpc()
-        {
-            if (!IsHost)
-                OnBuildableProgressEvent();
-        }
-
-
-        [ClientRpc]
-        private void OnCompletedBuildableEventClientRpc()
-        {
-            if (!IsHost)
-                OnCompletedBuildableEvent();
-        }
-
-
-
-
-
     }
 }

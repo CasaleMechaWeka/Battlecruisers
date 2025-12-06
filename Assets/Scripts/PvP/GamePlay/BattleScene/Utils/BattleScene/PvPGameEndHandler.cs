@@ -141,7 +141,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.
         {
             foreach (IPvPUnit unit in victoryCruiser.UnitMonitor.AliveUnits)
             {
-                if (unit is IPvPShip ship)
+                if (unit is PvPShipController ship)
                 {
                     ship.DisableMovement();
                     ship.StopMoving();
