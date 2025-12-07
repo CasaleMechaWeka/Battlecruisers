@@ -234,13 +234,17 @@ namespace BattleCruisers.Ads
             TriggerAdKillSwitch();
         }
         
-        private void TriggerAdKillSwitch()
+        private void HideKillSwitchUI()
         {
-            // Hide kill switch UI
             if (killSwitchCanvas != null)
             {
                 killSwitchCanvas.gameObject.SetActive(false);
             }
+        }
+        
+        private void TriggerAdKillSwitch()
+        {
+            HideKillSwitchUI();
             
             // Force close the ad
             if (isInterstitialShowing)
@@ -299,11 +303,11 @@ namespace BattleCruisers.Ads
             // Register SDK initialization callback BEFORE initialization (matches demo pattern)
             MaxSdkCallbacks.OnSdkInitializedEvent += OnSdkInitialized;
 
-            // Set test mode if needed
+            // Note: Test mode controlled via AppLovin dashboard (add test device) or mediation debugger
+            // SetTestModeEnabled() not available in SDK v7.0.0
             if (isTestMode)
             {
-                AdDebugLogger.Instance?.LogWarning("ENABLING TEST MODE - Should show test ads");
-                MaxSdk.SetTestModeEnabled(true);
+                AdDebugLogger.Instance?.LogWarning("TEST MODE ENABLED in config - Add device as test device in AppLovin dashboard");
             }
             else
             {
@@ -407,12 +411,7 @@ namespace BattleCruisers.Ads
             LogDebug($"Interstitial failed to display: {errorInfo.Code}");
             isInterstitialShowing = false;
             adShowStartTime = 0f;
-            
-            // Hide kill switch UI
-            if (killSwitchCanvas != null)
-            {
-                killSwitchCanvas.gameObject.SetActive(false);
-            }
+            HideKillSwitchUI();
             
             OnInterstitialAdShowFailed?.Invoke();
             LoadInterstitial();
@@ -423,18 +422,9 @@ namespace BattleCruisers.Ads
             LogDebug("Interstitial dismissed");
             isInterstitialShowing = false;
             adShowStartTime = 0f;
+            HideKillSwitchUI();
             
-            // Hide kill switch UI
-            if (killSwitchCanvas != null)
-            {
-                killSwitchCanvas.gameObject.SetActive(false);
-            }
-            
-            // Log to Firebase
-            if (FirebaseAnalyticsManager.Instance != null)
-            {
-                FirebaseAnalyticsManager.Instance.LogAdClosed("applovin", "interstitial");
-            }
+            FirebaseAnalyticsManager.Instance?.LogAdClosed("applovin", "interstitial");
             
             OnInterstitialAdClosed?.Invoke();
             LoadInterstitial(); // Pre-load next ad
@@ -443,12 +433,7 @@ namespace BattleCruisers.Ads
         private void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug($"Interstitial revenue: ${adInfo.Revenue:F4} from {adInfo.NetworkName}");
-            
-            // Log to Firebase
-            if (FirebaseAnalyticsManager.Instance != null)
-            {
-                FirebaseAnalyticsManager.Instance.LogAdImpression("applovin", "interstitial");
-            }
+            FirebaseAnalyticsManager.Instance?.LogAdImpression("applovin", "interstitial");
         }
 
         private void OnRewardedAdLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
@@ -473,12 +458,7 @@ namespace BattleCruisers.Ads
             LogDebug($"Rewarded ad failed to display: {errorInfo.Code}");
             isRewardedShowing = false;
             adShowStartTime = 0f;
-            
-            // Hide kill switch UI
-            if (killSwitchCanvas != null)
-            {
-                killSwitchCanvas.gameObject.SetActive(false);
-            }
+            HideKillSwitchUI();
             
             OnRewardedAdShowFailed?.Invoke();
             LoadRewardedAd();
@@ -505,12 +485,7 @@ namespace BattleCruisers.Ads
             LogDebug("Rewarded ad dismissed");
             isRewardedShowing = false;
             adShowStartTime = 0f;
-            
-            // Hide kill switch UI
-            if (killSwitchCanvas != null)
-            {
-                killSwitchCanvas.gameObject.SetActive(false);
-            }
+            HideKillSwitchUI();
             
             OnRewardedAdClosed?.Invoke();
             LoadRewardedAd(); // Pre-load next ad

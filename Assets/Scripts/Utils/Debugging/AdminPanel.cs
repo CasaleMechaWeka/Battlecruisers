@@ -439,42 +439,17 @@ namespace BattleCruisers.Utils.Debugging
                 return;
             }
 
-            // Get reward amounts based on first-time vs returning
-            var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
-
-            AdDebugLogger.Instance?.Log($"[AdminPanel] ShowRewardedAndGrant called - will grant {coins} coins, {credits} credits");
-
             // Grant on reward callback
             System.Action rewardHandler = null;
             rewardHandler = () =>
             {
-                long coinsBefore = DataProvider.GameModel.Coins;
-                long creditsBefore = DataProvider.GameModel.Credits;
-
-                AdDebugLogger.Instance?.Log($"[AdminPanel] Reward callback fired - Before: Coins={coinsBefore}, Credits={creditsBefore}");
-
-                // Mark as watched (only on first time)
-                if (!AdConfigManager.HasEverWatchedRewardedAd())
-                {
-                    AdConfigManager.MarkRewardedAdWatched();
-                    AdDebugLogger.Instance?.Log("[AdminPanel] Player marked as ADWATCHER");
-                }
-
-                DataProvider.GameModel.Coins += coins;
-                DataProvider.GameModel.Credits += credits;
-                
-                AdDebugLogger.Instance?.Log($"[AdminPanel] After: Coins={DataProvider.GameModel.Coins}, Credits={DataProvider.GameModel.Credits}");
-                
-                DataProvider.SaveGame();
-                AdDebugLogger.Instance?.Log("[AdminPanel] Game saved");
-
-                ShowMessage($"REWARDED AD COMPLETED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
-
+                GrantRewardedAdCurrency();
                 AppLovinManager.Instance.OnRewardedAdRewarded -= rewardHandler;
             };
 
             AppLovinManager.Instance.OnRewardedAdRewarded += rewardHandler;
 
+            var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
             ShowMessage($"Showing rewarded ad... Reward: {coins} coins, {credits} credits");
             AppLovinManager.Instance.ShowRewardedAd();
         }
@@ -514,8 +489,7 @@ namespace BattleCruisers.Utils.Debugging
             if (AdConfigManager.HasEverWatchedRewardedAd())
             {
                 // Currently Adwatcher -> Reset to Virgin
-                PlayerPrefs.DeleteKey("HasWatchedRewardedAd");
-                PlayerPrefs.Save();
+                AdConfigManager.ResetAdWatcherStatus();
                 var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
                 ShowMessage($"Ad Status: VIRGIN (reset)\nNext reward: {coins} coins, {credits} credits");
             }
@@ -529,9 +503,9 @@ namespace BattleCruisers.Utils.Debugging
         }
 
         /// <summary>
-        /// Simulate a successfully watched rewarded ad (for testing reward grant logic)
+        /// Helper method to grant rewarded ad currency and log changes
         /// </summary>
-        public void RewardedAdWatched()
+        private void GrantRewardedAdCurrency()
         {
             // Get reward amounts based on first-time vs returning
             var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
@@ -540,7 +514,7 @@ namespace BattleCruisers.Utils.Debugging
             long coinsBefore = DataProvider.GameModel.Coins;
             long creditsBefore = DataProvider.GameModel.Credits;
 
-            AdDebugLogger.Instance?.Log($"[AdminPanel] RewardedAdWatched called - granting {coins} coins, {credits} credits");
+            AdDebugLogger.Instance?.Log($"[AdminPanel] Granting {coins} coins, {credits} credits");
             AdDebugLogger.Instance?.Log($"[AdminPanel] Before: Coins={coinsBefore}, Credits={creditsBefore}");
 
             // Mark as watched (only on first time)
@@ -560,7 +534,15 @@ namespace BattleCruisers.Utils.Debugging
             DataProvider.SaveGame();
             AdDebugLogger.Instance?.Log("[AdminPanel] Game saved");
 
-            ShowMessage($"REWARDED AD WATCHED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
+            ShowMessage($"REWARDED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
+        }
+
+        /// <summary>
+        /// Simulate a successfully watched rewarded ad (for testing reward grant logic)
+        /// </summary>
+        public void RewardedAdWatched()
+        {
+            GrantRewardedAdCurrency();
         }
 
         /// <summary>

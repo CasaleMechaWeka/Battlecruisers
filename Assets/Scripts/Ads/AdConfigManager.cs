@@ -319,6 +319,15 @@ namespace BattleCruisers.Ads
         }
 
         /// <summary>
+        /// Reset player's ad watcher status to VIRGIN (for testing)
+        /// </summary>
+        public static void ResetAdWatcherStatus()
+        {
+            PlayerPrefs.DeleteKey(HAS_WATCHED_REWARDED_AD_KEY);
+            PlayerPrefs.Save();
+        }
+
+        /// <summary>
         /// Get appropriate reward amounts based on whether player is VIRGIN or ADWATCHER
         /// </summary>
         public (int coins, int credits) GetRewardAmountsForPlayer()
