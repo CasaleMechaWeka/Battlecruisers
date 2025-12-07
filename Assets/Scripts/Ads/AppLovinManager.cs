@@ -77,18 +77,32 @@ namespace BattleCruisers.Ads
 
         private void Start()
         {
+            // Initialize debug logger
+            if (AdDebugLogger.Instance == null)
+            {
+                GameObject loggerObj = new GameObject("AdDebugLogger");
+                loggerObj.AddComponent<AdDebugLogger>();
+            }
+            
+            AdDebugLogger.Instance?.LogSection("APPLOVIN MANAGER START");
+
+            // Ensure kill switch UI exists even if not wired in Inspector
+            EnsureKillSwitchUiExists();
+            
             InitializeAppLovin();
             
             // Setup kill switch button
             if (killSwitchButton != null)
             {
                 killSwitchButton.onClick.AddListener(OnKillSwitchPressed);
+                AdDebugLogger.Instance?.Log("Kill switch button listener added");
             }
             
             // Hide kill switch initially
             if (killSwitchCanvas != null)
             {
                 killSwitchCanvas.gameObject.SetActive(false);
+                AdDebugLogger.Instance?.Log("Kill switch canvas hidden initially");
             }
         }
 
@@ -131,6 +145,89 @@ namespace BattleCruisers.Ads
             }
         }
         
+        /// <summary>
+        /// Create a simple fallback kill switch UI if none is assigned in the Inspector.
+        /// This prevents the watchdog from silently failing on device builds.
+        /// </summary>
+        private void EnsureKillSwitchUiExists()
+        {
+            if (killSwitchCanvas != null && killSwitchButton != null && killSwitchTimerText != null)
+            {
+                return; // already wired
+            }
+
+            AdDebugLogger.Instance?.LogWarning("Kill switch UI not assigned. Creating fallback UI (ScreenSpaceOverlay).");
+
+            // Canvas
+            GameObject canvasObj = new GameObject("KillSwitchCanvas_Fallback");
+            canvasObj.layer = LayerMask.NameToLayer("UI");
+            killSwitchCanvas = canvasObj.AddComponent<Canvas>();
+            killSwitchCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            killSwitchCanvas.sortingOrder = 32767;
+            CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1080, 1920);
+            canvasObj.AddComponent<GraphicRaycaster>();
+
+            // Background (transparent)
+            GameObject bgObj = new GameObject("Background");
+            bgObj.transform.SetParent(canvasObj.transform, false);
+            Image bgImage = bgObj.AddComponent<Image>();
+            bgImage.color = new Color(0, 0, 0, 0.35f);
+            RectTransform bgRect = bgObj.GetComponent<RectTransform>();
+            bgRect.anchorMin = Vector2.zero;
+            bgRect.anchorMax = Vector2.one;
+            bgRect.offsetMin = Vector2.zero;
+            bgRect.offsetMax = Vector2.zero;
+
+            // Timer text
+            GameObject timerObj = new GameObject("KillSwitchTimerText");
+            timerObj.transform.SetParent(canvasObj.transform, false);
+            killSwitchTimerText = timerObj.AddComponent<Text>();
+            killSwitchTimerText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            killSwitchTimerText.fontSize = 32;
+            killSwitchTimerText.alignment = TextAnchor.MiddleCenter;
+            killSwitchTimerText.color = Color.white;
+            RectTransform timerRect = timerObj.GetComponent<RectTransform>();
+            timerRect.anchorMin = new Vector2(0.5f, 0.6f);
+            timerRect.anchorMax = new Vector2(0.5f, 0.6f);
+            timerRect.sizeDelta = new Vector2(700, 80);
+            timerRect.anchoredPosition = Vector2.zero;
+
+            // Button
+            GameObject buttonObj = new GameObject("KillSwitchButton");
+            buttonObj.transform.SetParent(canvasObj.transform, false);
+            killSwitchButton = buttonObj.AddComponent<Button>();
+            Image btnImage = buttonObj.AddComponent<Image>();
+            btnImage.color = new Color(0.8f, 0.2f, 0.2f, 0.95f);
+            RectTransform btnRect = buttonObj.GetComponent<RectTransform>();
+            btnRect.anchorMin = new Vector2(0.5f, 0.45f);
+            btnRect.anchorMax = new Vector2(0.5f, 0.45f);
+            btnRect.sizeDelta = new Vector2(500, 120);
+            btnRect.anchoredPosition = Vector2.zero;
+
+            // Button text
+            GameObject btnTextObj = new GameObject("Text");
+            btnTextObj.transform.SetParent(buttonObj.transform, false);
+            Text btnText = btnTextObj.AddComponent<Text>();
+            btnText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            btnText.fontSize = 30;
+            btnText.alignment = TextAnchor.MiddleCenter;
+            btnText.color = Color.white;
+            btnText.text = "FORCE CLOSE AD";
+            RectTransform btnTextRect = btnTextObj.GetComponent<RectTransform>();
+            btnTextRect.anchorMin = Vector2.zero;
+            btnTextRect.anchorMax = Vector2.one;
+            btnTextRect.offsetMin = Vector2.zero;
+            btnTextRect.offsetMax = Vector2.zero;
+
+            // Wire up button
+            killSwitchButton.onClick.AddListener(OnKillSwitchPressed);
+
+            // Start hidden
+            killSwitchCanvas.gameObject.SetActive(false);
+        }
+
         private void OnKillSwitchPressed()
         {
             Debug.Log("[AppLovin] Kill switch pressed by user - force closing ad");
@@ -176,23 +273,50 @@ namespace BattleCruisers.Ads
 #if UNITY_EDITOR
             // Editor simulation
             LogDebug("Running in Editor - simulating SDK initialization");
+            AdDebugLogger.Instance?.LogWarning("EDITOR MODE - Simulated initialization");
             Invoke(nameof(SimulateInitSuccess), 1f);
 #elif UNITY_ANDROID || UNITY_IOS
             if (string.IsNullOrEmpty(sdkKey) || sdkKey == "YOUR_SDK_KEY")
             {
                 Debug.LogError("[AppLovin] SDK Key not set! Please set it in the Inspector.");
+                AdDebugLogger.Instance?.LogError("SDK Key not set!");
                 return;
             }
+
+            AdDebugLogger.Instance?.LogSection("SDK INITIALIZATION");
+            AdDebugLogger.Instance?.Log($"SDK Key: {sdkKey}");
+            AdDebugLogger.Instance?.Log($"Interstitial Unit: {interstitialAdUnitId}");
+            AdDebugLogger.Instance?.Log($"Rewarded Unit: {rewardedAdUnitId}");
+            
+            // Check test mode from AdConfigManager
+            bool isTestMode = AdConfigManager.Instance?.IsTestMode() ?? true;
+            AdDebugLogger.Instance?.Log($"AdConfigManager Found: {(AdConfigManager.Instance != null)}");
+            AdDebugLogger.Instance?.Log($"Test Mode Setting: {isTestMode}");
+            AdDebugLogger.Instance?.Log($"AdsAreLive: {(AdConfigManager.Instance?.AdsAreLive ?? false)}");
 
             LogDebug($"Initializing AppLovin MAX SDK...");
 
             // Register SDK initialization callback BEFORE initialization (matches demo pattern)
             MaxSdkCallbacks.OnSdkInitializedEvent += OnSdkInitialized;
 
+            // Set test mode if needed
+            if (isTestMode)
+            {
+                AdDebugLogger.Instance?.LogWarning("ENABLING TEST MODE - Should show test ads");
+                MaxSdk.SetTestModeEnabled(true);
+            }
+            else
+            {
+                AdDebugLogger.Instance?.LogWarning("PRODUCTION MODE - Will show real ads");
+            }
+
             MaxSdk.SetSdkKey(sdkKey);
             MaxSdk.InitializeSdk();
+            
+            AdDebugLogger.Instance?.Log("InitializeSdk() called");
 #else
             Debug.LogWarning("[AppLovin] SDK only works on Android/iOS builds");
+            AdDebugLogger.Instance?.LogWarning("Wrong platform - SDK only works on Android/iOS");
 #endif
         }
 
@@ -200,6 +324,12 @@ namespace BattleCruisers.Ads
         private void OnSdkInitialized(MaxSdkBase.SdkConfiguration config)
         {
             LogDebug("MAX SDK Initialized");
+            
+            AdDebugLogger.Instance?.LogSection("SDK INITIALIZED SUCCESSFULLY");
+            AdDebugLogger.Instance?.Log($"Country Code: {config.CountryCode}");
+            AdDebugLogger.Instance?.Log($"Test Mode Enabled: {config.IsTestModeEnabled}");
+            AdDebugLogger.Instance?.Log($"Consent Flow: {config.ConsentFlowUserGeography}");
+            
             isInitialized = true;
 
             // Initialize ad types AFTER SDK is fully initialized (matches demo pattern)
@@ -239,6 +369,9 @@ namespace BattleCruisers.Ads
         private void OnInterstitialLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug("Interstitial loaded");
+            
+            AdDebugLogger.Instance?.Log($"[Interstitial] AD LOADED - Network: {adInfo.NetworkName}, Creative: {adInfo.CreativeIdentifier}");
+            
             interstitialRetryAttempt = 0;
             OnInterstitialAdReady?.Invoke();
         }
@@ -256,6 +389,15 @@ namespace BattleCruisers.Ads
         private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug($"Interstitial displayed (network={adInfo.NetworkName}, creativeId={adInfo.CreativeIdentifier}, placement={adInfo.Placement})");
+            
+            AdDebugLogger.Instance?.LogSection("INTERSTITIAL AD DISPLAYED");
+            AdDebugLogger.Instance?.Log($"Network: {adInfo.NetworkName}");
+            AdDebugLogger.Instance?.Log($"Creative ID: {adInfo.CreativeIdentifier}");
+            AdDebugLogger.Instance?.Log($"Placement: {adInfo.Placement}");
+            AdDebugLogger.Instance?.Log($"Revenue: ${adInfo.Revenue}");
+            AdDebugLogger.Instance?.Log($"Ad Unit: {adUnitId}");
+            AdDebugLogger.Instance?.Log($"Watchdog started at {Time.realtimeSinceStartup}");
+            
             isInterstitialShowing = true;
             adShowStartTime = Time.realtimeSinceStartup;
         }
@@ -345,6 +487,15 @@ namespace BattleCruisers.Ads
         private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             LogDebug($"Rewarded ad displayed (network={adInfo.NetworkName}, creativeId={adInfo.CreativeIdentifier}, placement={adInfo.Placement})");
+            
+            AdDebugLogger.Instance?.LogSection("REWARDED AD DISPLAYED");
+            AdDebugLogger.Instance?.Log($"Network: {adInfo.NetworkName}");
+            AdDebugLogger.Instance?.Log($"Creative ID: {adInfo.CreativeIdentifier}");
+            AdDebugLogger.Instance?.Log($"Placement: {adInfo.Placement}");
+            AdDebugLogger.Instance?.Log($"Revenue: ${adInfo.Revenue}");
+            AdDebugLogger.Instance?.Log($"Ad Unit: {adUnitId}");
+            AdDebugLogger.Instance?.Log($"Watchdog started at {Time.realtimeSinceStartup}");
+            
             isRewardedShowing = true;
             adShowStartTime = Time.realtimeSinceStartup;
         }

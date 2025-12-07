@@ -133,11 +133,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         [SerializeField]
         private Text rewardedAdButtonText;
         [SerializeField]
+        private Text rewardedAdCoinsText; // Text object showing coins offer
+        [SerializeField]
+        private Text rewardedAdCreditsText; // Text object showing credits offer
+        [SerializeField]
         private float rewardedAdOfferDuration = 5f; // How long to show the button
 
         private bool watchedRewardedAd = false;
-        private const int COINS_MULTIPLIER = 2;
-        private const int CREDITS_MULTIPLIER = 3;
         [SerializeField]
         private BountyScreenHandler bountyScreenHandler;
         public GameObject BountyScreen;
@@ -608,24 +610,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         private void CalculateRewards()
         {
-            // Calculate base rewards
-            int baseCoins = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
-            long baseCredits = CalculateCredits();
+            // Calculate base rewards (always shown, regardless of ad)
+            coinsToAward = CalculateCoins(CalculateScore(levelTimeInSeconds, (aircraftVal + shipsVal + cruiserVal + buildingsVal)));
+            creditsToAward = CalculateCredits();
 
-            // Apply multipliers if user watched rewarded ad
-            if (watchedRewardedAd)
-            {
-                coinsToAward = baseCoins * COINS_MULTIPLIER;
-                creditsToAward = baseCredits * CREDITS_MULTIPLIER;
-                Debug.Log($"[PvP Rewards] Multiplied: Coins {baseCoins} -> {coinsToAward}, Credits {baseCredits} -> {creditsToAward}");
-            }
-            else
-            {
-                coinsToAward = baseCoins;
-                creditsToAward = baseCredits;
-            }
-
-            // Update UI
+            // Update UI for base rewards
             if (coinsToAward > 0)
             {
                 coinsCounter.SetActive(true);
@@ -658,9 +647,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             }
 
             // Show rewarded ad offer if rewards exist and ad is available
-            if (!watchedRewardedAd && (baseCoins > 0 || baseCredits > 0))
+            if (!watchedRewardedAd && (coinsToAward > 0 || creditsToAward > 0))
             {
-                ShowRewardedAdOffer(baseCoins, (int)baseCredits);
+                ShowRewardedAdOffer();
             }
         }
 
@@ -891,26 +880,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 
         // ========== REWARDED AD METHODS ==========
 
-        private void ShowRewardedAdOffer(int baseCoins, int baseCredits)
+        private void ShowRewardedAdOffer()
         {
-            if (rewardedAdButton == null || AppLovinManager.Instance == null)
+            // Check if rewarded ads are enabled
+            if (AdConfigManager.Instance != null && !AdConfigManager.Instance.RewardedAdsEnabled)
+            {
+                Debug.Log("[PvP Rewards] Rewarded ads disabled via Remote Config");
+                return;
+            }
+
+            if (rewardedAdButton == null)
                 return;
 
-            // Check if ad is ready
-            if (!AppLovinManager.Instance.IsRewardedAdReady())
+            // Check if ad is ready (for free players)
+            bool isPremium = DataProvider.GameModel.PremiumEdition;
+            if (!isPremium && (AppLovinManager.Instance == null || !AppLovinManager.Instance.IsRewardedAdReady()))
             {
                 Debug.Log("[PvP Rewards] Rewarded ad not available");
                 return;
             }
 
-            // Calculate potential rewards
-            int bonusCoins = baseCoins * (COINS_MULTIPLIER - 1);
-            int bonusCredits = baseCredits * (CREDITS_MULTIPLIER - 1);
+            // Get reward amounts based on first-time vs returning player
+            var (offerCoins, offerCredits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+
+            // Update UI text objects
+            if (rewardedAdCoinsText != null)
+            {
+                rewardedAdCoinsText.text = $"+{offerCoins}";
+            }
+            if (rewardedAdCreditsText != null)
+            {
+                rewardedAdCreditsText.text = $"+{offerCredits}";
+            }
 
             // Update button text
             if (rewardedAdButtonText != null)
             {
-                rewardedAdButtonText.text = $"Watch Ad\n+{bonusCoins} Coins, +{bonusCredits} Credits";
+                rewardedAdButtonText.text = $"Watch Ad";
             }
 
             // Show button
@@ -919,13 +925,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             // Log to Firebase
             if (FirebaseAnalyticsManager.Instance != null)
             {
-                FirebaseAnalyticsManager.Instance.LogRewardedAdOffered("pvp_destruction_screen", bonusCoins, bonusCredits);
+                FirebaseAnalyticsManager.Instance.LogRewardedAdOffered("pvp_destruction_screen", offerCoins, offerCredits);
             }
 
             // Start timer to hide button
             StartCoroutine(HideRewardedAdOfferAfterDelay());
 
-            Debug.Log($"[PvP Rewards] Offering rewarded ad: +{bonusCoins} coins, +{bonusCredits} credits");
+            Debug.Log($"[PvP Rewards] Offering rewarded ad: +{offerCoins} coins, +{offerCredits} credits (Status: {(AdConfigManager.HasEverWatchedRewardedAd() ? "ADWATCHER" : "VIRGIN")})");
         }
 
         private IEnumerator HideRewardedAdOfferAfterDelay()
@@ -951,45 +957,124 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         /// </summary>
         public void OnWatchRewardedAdButtonClicked()
         {
-            // Ensure AppLovinManager exists (fallback)
-            if (AppLovinManager.Instance == null)
-            {
-                Debug.LogWarning("[PvP Rewards] AppLovinManager not found, creating one...");
-                GameObject adsObj = new GameObject("AppLovinManager");
-                adsObj.AddComponent<AppLovinManager>();
+            bool isPremium = DataProvider.GameModel.PremiumEdition;
 
-                // Wait for next frame to let it initialize, then try again
-                StartCoroutine(RetryShowRewardedAdAfterInit());
-                return;
+            if (isPremium)
+            {
+                // Premium: Show joke ad, then grant reward
+                ShowJokeAdAndGrantReward();
             }
-
-            if (!AppLovinManager.Instance.IsRewardedAdReady())
+            else
             {
-                Debug.LogWarning("[PvP Rewards] Rewarded ad not ready");
+                // Free: Show real AppLovin ad
+                if (AppLovinManager.Instance == null)
+                {
+                    Debug.LogWarning("[PvP Rewards] AppLovinManager not found, creating one...");
+                    GameObject adsObj = new GameObject("AppLovinManager");
+                    adsObj.AddComponent<AppLovinManager>();
 
-                // Hide button since ad isn't available
+                    // Wait for next frame to let it initialize, then try again
+                    StartCoroutine(RetryShowRewardedAdAfterInit());
+                    return;
+                }
+
+                if (!AppLovinManager.Instance.IsRewardedAdReady())
+                {
+                    Debug.LogWarning("[PvP Rewards] Rewarded ad not ready");
+
+                    // Hide button since ad isn't available
+                    if (rewardedAdButton != null)
+                    {
+                        rewardedAdButton.SetActive(false);
+                    }
+                    return;
+                }
+
+                // Hide button immediately
                 if (rewardedAdButton != null)
                 {
                     rewardedAdButton.SetActive(false);
                 }
-                return;
-            }
 
-            // Hide button immediately
+                // Log ad start to Firebase
+                if (FirebaseAnalyticsManager.Instance != null)
+                {
+                    FirebaseAnalyticsManager.Instance.LogRewardedAdStarted("pvp_destruction_screen");
+                }
+
+                // Show the real ad
+                AppLovinManager.Instance.ShowRewardedAd();
+                Debug.Log("[PvP Rewards] Showing rewarded ad");
+            }
+        }
+
+        /// <summary>
+        /// Show joke/fallback ad for premium players, then grant reward
+        /// </summary>
+        private void ShowJokeAdAndGrantReward()
+        {
+            Debug.Log("[PvP Rewards] Premium player - showing joke ad");
+            
+            // Hide button
             if (rewardedAdButton != null)
             {
                 rewardedAdButton.SetActive(false);
             }
 
-            // Log ad start to Firebase
-            if (FirebaseAnalyticsManager.Instance != null)
+            // Find FullScreenAdverts to show joke ad
+            FullScreenAdverts fullScreenAdverts = FindObjectOfType<FullScreenAdverts>();
+            if (fullScreenAdverts != null && fullScreenAdverts.defaultAd != null)
             {
-                FirebaseAnalyticsManager.Instance.LogRewardedAdStarted("pvp_destruction_screen");
+                // Show joke ad panel
+                fullScreenAdverts.defaultAd.UpdateImage();
+                fullScreenAdverts.gameObject.SetActive(true);
+                
+                // Grant reward immediately since premium players don't need to watch
+                GrantRewardedAdReward();
             }
+            else
+            {
+                // Fallback: grant reward immediately if joke ad system not available
+                Debug.LogWarning("[PvP Rewards] FullScreenAdverts not found, granting reward directly");
+                GrantRewardedAdReward();
+            }
+        }
 
-            // Show the ad
-            AppLovinManager.Instance.ShowRewardedAd();
-            Debug.Log("[PvP Rewards] Showing rewarded ad");
+        /// <summary>
+        /// Grant the rewarded ad reward to player (additional on top of base rewards)
+        /// </summary>
+        private void GrantRewardedAdReward()
+        {
+            var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+            
+            // Mark as watched (only on first time)
+            if (!AdConfigManager.HasEverWatchedRewardedAd())
+            {
+                AdConfigManager.MarkRewardedAdWatched();
+                Debug.Log("[PvP Rewards] Player marked as ADWATCHER (was VIRGIN)");
+            }
+            
+            // Grant additional rewards (base rewards already granted in UpdateGameModelVals)
+            DataProvider.GameModel.Coins += coins;
+            DataProvider.GameModel.Credits += credits;
+            DataProvider.SaveGame();
+            
+            // Update UI to show new totals (base + ad reward)
+            if (coinsCounter != null)
+            {
+                coinsCounter.SetActive(true);
+                coinsText.text = "+" + (coinsToAward + coins).ToString();
+            }
+            if (creditsCounter != null)
+            {
+                creditsCounter.SetActive(true);
+                creditsText.text = "+" + (creditsToAward + credits).ToString();
+            }
+            
+            Debug.Log($"[PvP Rewards] Granted {coins} coins, {credits} credits from ad (Base: {coinsToAward} coins, {creditsToAward} credits | Total: {coinsToAward + coins} coins, {creditsToAward + credits} credits)");
+            
+            // Mark as watched for this session
+            watchedRewardedAd = true;
         }
 
         private IEnumerator RetryShowRewardedAdAfterInit()
@@ -1021,24 +1106,25 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         /// </summary>
         private void OnRewardedAdCompleted()
         {
-            watchedRewardedAd = true;
-            Debug.Log("[PvP Rewards] User watched ad - applying multipliers");
-
-            // Recalculate rewards with multipliers
-            CalculateRewards();
+            Debug.Log("[PvP Rewards] User completed watching rewarded ad");
+            
+            // Grant the reward
+            GrantRewardedAdReward();
 
             // Log completion to Firebase
             if (FirebaseAnalyticsManager.Instance != null)
             {
+                var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+                
                 FirebaseAnalyticsManager.Instance.LogRewardedAdCompleted(
                     "pvp_destruction_screen",
-                    coinsToAward,
-                    (int)creditsToAward
+                    coins,
+                    credits
                 );
 
                 // Track as virtual currency earned
-                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("coins", coinsToAward, "rewarded_ad_pvp");
-                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("credits", (int)creditsToAward, "rewarded_ad_pvp");
+                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("coins", coins, "rewarded_ad_pvp");
+                FirebaseAnalyticsManager.Instance.LogEarnVirtualCurrency("credits", credits, "rewarded_ad_pvp");
             }
         }
 

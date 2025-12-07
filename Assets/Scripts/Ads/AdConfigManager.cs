@@ -21,6 +21,14 @@ namespace BattleCruisers.Ads
         public int ad_veteran_frequency;
         public bool ads_are_live;
         public bool ads_disabled;
+        public bool interstitial_ads_enabled;
+        public bool rewarded_ads_enabled;
+        // First-time rewards
+        public int first_rewarded_ad_coins;
+        public int first_rewarded_ad_credits;
+        // Returning rewards
+        public int rewarded_ad_coins;
+        public int rewarded_ad_credits;
     }
 
     /// <summary>
@@ -58,6 +66,26 @@ namespace BattleCruisers.Ads
         [Tooltip("If true, all ads are completely disabled (no test ads, no real ads)")]
         public bool defaultAdsDisabled = false;
 
+        [Header("Ad Type Configuration")]
+        [Tooltip("Enable interstitial ads")]
+        public bool defaultInterstitialAdsEnabled = true;
+        
+        [Tooltip("Enable rewarded ads")]
+        public bool defaultRewardedAdsEnabled = true;
+
+        [Header("Reward Configuration")]
+        [Tooltip("First-time reward: coins")]
+        public int defaultFirstRewardedAdCoins = 500;
+        
+        [Tooltip("First-time reward: credits")]
+        public int defaultFirstRewardedAdCredits = 4500;
+        
+        [Tooltip("Returning reward: coins")]
+        public int defaultRewardedAdCoins = 20;
+        
+        [Tooltip("Returning reward: credits")]
+        public int defaultRewardedAdCredits = 1200;
+
         // Current values (from Remote Config or defaults)
         public int MinimumLevelForAds { get; private set; }
         public int AdFrequency { get; private set; }
@@ -77,6 +105,36 @@ namespace BattleCruisers.Ads
         /// Use this for maintenance or to turn off ads entirely.
         /// </summary>
         public bool AdsDisabled { get; private set; }
+        
+        /// <summary>
+        /// Coins reward for watching a rewarded ad
+        /// </summary>
+        public int RewardedAdCoins { get; private set; }
+        
+        /// <summary>
+        /// Credits reward for watching a rewarded ad (returning players)
+        /// </summary>
+        public int RewardedAdCredits { get; private set; }
+        
+        /// <summary>
+        /// Enable/disable interstitial ads
+        /// </summary>
+        public bool InterstitialAdsEnabled { get; private set; }
+        
+        /// <summary>
+        /// Enable/disable rewarded ads
+        /// </summary>
+        public bool RewardedAdsEnabled { get; private set; }
+        
+        /// <summary>
+        /// First-time reward: coins
+        /// </summary>
+        public int FirstRewardedAdCoins { get; private set; }
+        
+        /// <summary>
+        /// First-time reward: credits
+        /// </summary>
+        public int FirstRewardedAdCredits { get; private set; }
 
         private bool isRemoteConfigFetched = false;
 
@@ -113,8 +171,16 @@ namespace BattleCruisers.Ads
             VeteranAdFrequency = veteranAdFrequency;
             AdsAreLive = defaultAdsAreLive;
             AdsDisabled = defaultAdsDisabled;
+            InterstitialAdsEnabled = defaultInterstitialAdsEnabled;
+            RewardedAdsEnabled = defaultRewardedAdsEnabled;
+            FirstRewardedAdCoins = defaultFirstRewardedAdCoins;
+            FirstRewardedAdCredits = defaultFirstRewardedAdCredits;
+            RewardedAdCoins = defaultRewardedAdCoins;
+            RewardedAdCredits = defaultRewardedAdCredits;
 
             Debug.Log($"[AdConfig] Using defaults: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}, Cooldown={AdCooldownMinutes}, AdsAreLive={AdsAreLive}, AdsDisabled={AdsDisabled}");
+            Debug.Log($"[AdConfig] Interstitials: {InterstitialAdsEnabled}, Rewarded: {RewardedAdsEnabled}");
+            Debug.Log($"[AdConfig] First-time: {FirstRewardedAdCoins} coins/{FirstRewardedAdCredits} credits, Returning: {RewardedAdCoins} coins/{RewardedAdCredits} credits");
         }
 
         /// <summary>
@@ -160,13 +226,22 @@ namespace BattleCruisers.Ads
                     VeteranAdFrequency = adConfig.ad_veteran_frequency > 0 ? adConfig.ad_veteran_frequency : veteranAdFrequency;
                     AdsAreLive = adConfig.ads_are_live;
                     AdsDisabled = adConfig.ads_disabled;
+                    InterstitialAdsEnabled = adConfig.interstitial_ads_enabled;
+                    RewardedAdsEnabled = adConfig.rewarded_ads_enabled;
+                    FirstRewardedAdCoins = adConfig.first_rewarded_ad_coins > 0 ? adConfig.first_rewarded_ad_coins : defaultFirstRewardedAdCoins;
+                    FirstRewardedAdCredits = adConfig.first_rewarded_ad_credits > 0 ? adConfig.first_rewarded_ad_credits : defaultFirstRewardedAdCredits;
+                    RewardedAdCoins = adConfig.rewarded_ad_coins > 0 ? adConfig.rewarded_ad_coins : defaultRewardedAdCoins;
+                    RewardedAdCredits = adConfig.rewarded_ad_credits > 0 ? adConfig.rewarded_ad_credits : defaultRewardedAdCredits;
 
                     isRemoteConfigFetched = true;
 
                     Debug.Log($"[AdConfig] AD_CONFIG parsed successfully!");
                     Debug.Log($"[AdConfig] Ad Settings: MinLevel={MinimumLevelForAds}, Frequency={AdFrequency}, Cooldown={AdCooldownMinutes}min");
                     Debug.Log($"[AdConfig] Ad Mode: AdsAreLive={AdsAreLive} (production={AdsAreLive}), AdsDisabled={AdsDisabled}");
+                    Debug.Log($"[AdConfig] Ad Types: Interstitials={InterstitialAdsEnabled}, Rewarded={RewardedAdsEnabled}");
                     Debug.Log($"[AdConfig] Veteran Settings: Boost={VeteranFrequencyBoostEnabled}, Threshold={VeteranThreshold}, Frequency={VeteranAdFrequency}");
+                    Debug.Log($"[AdConfig] First-time Rewards: {FirstRewardedAdCoins} coins, {FirstRewardedAdCredits} credits");
+                    Debug.Log($"[AdConfig] Returning Rewards: {RewardedAdCoins} coins, {RewardedAdCredits} credits");
                 }
                 else
                 {
@@ -222,6 +297,38 @@ namespace BattleCruisers.Ads
             return levelsCompleted >= VeteranThreshold;
         }
 
+        // PlayerPrefs key for tracking first-time ad watchers
+        private const string HAS_WATCHED_REWARDED_AD_KEY = "HasWatchedRewardedAd";
+
+        /// <summary>
+        /// Check if player has ever watched a rewarded ad (VIRGIN vs ADWATCHER)
+        /// Uses PlayerPrefs to avoid touching GameModel
+        /// </summary>
+        public static bool HasEverWatchedRewardedAd()
+        {
+            return PlayerPrefs.GetInt(HAS_WATCHED_REWARDED_AD_KEY, 0) == 1;
+        }
+
+        /// <summary>
+        /// Mark that player has watched a rewarded ad (changes from VIRGIN to ADWATCHER)
+        /// </summary>
+        public static void MarkRewardedAdWatched()
+        {
+            PlayerPrefs.SetInt(HAS_WATCHED_REWARDED_AD_KEY, 1);
+            PlayerPrefs.Save();
+        }
+
+        /// <summary>
+        /// Get appropriate reward amounts based on whether player is VIRGIN or ADWATCHER
+        /// </summary>
+        public (int coins, int credits) GetRewardAmountsForPlayer()
+        {
+            if (HasEverWatchedRewardedAd())
+                return (RewardedAdCoins, RewardedAdCredits);
+            else
+                return (FirstRewardedAdCoins, FirstRewardedAdCredits);
+        }
+
         /// <summary>
         /// Force refresh remote config (for testing)
         /// </summary>
@@ -246,6 +353,12 @@ namespace BattleCruisers.Ads
                 { "veteran_frequency", VeteranAdFrequency },
                 { "ads_are_live", AdsAreLive },
                 { "ads_disabled", AdsDisabled },
+                { "interstitial_ads_enabled", InterstitialAdsEnabled },
+                { "rewarded_ads_enabled", RewardedAdsEnabled },
+                { "first_rewarded_ad_coins", FirstRewardedAdCoins },
+                { "first_rewarded_ad_credits", FirstRewardedAdCredits },
+                { "rewarded_ad_coins", RewardedAdCoins },
+                { "rewarded_ad_credits", RewardedAdCredits },
                 { "is_test_mode", IsTestMode() },
                 { "remote_config_fetched", isRemoteConfigFetched },
                 { "config_source", "Unity Remote Config (AD_CONFIG)" }

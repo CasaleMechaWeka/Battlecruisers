@@ -1,6 +1,6 @@
 # Battlecruisers - AppLovin MAX & Firebase Integration Documentation
 
-**Last Updated:** November 25, 2024 (DISABLE_ADS flag & Gradle warnings fix)  
+**Last Updated:** December 7, 2024 (Hardware acceleration fix, AD_CONFIG rewards, AdminPanel testing buttons, documentation organization)  
 **Unity Version:** 2021.3.45f2  
 **Platform:** Android (API 23+)  
 **AppLovin MAX SDK:** v12.6.1 (Kotlin 1.x compatible)  
@@ -20,6 +20,32 @@
 8. [Quick Start Checklist](#quick-start-checklist)
 9. [Troubleshooting](#troubleshooting)
 10. [Changelog](#changelog)
+
+---
+
+## 📚 Related Documentation
+
+This is the primary documentation file. Additional guides are organized in the [`Docs/`](Docs/) folder:
+
+### Ad Integration & Testing
+- [AppLovin MAX Integration](Docs/APPLOVIN_MAX_INTEGRATION.md) - Complete integration guide
+- [AppLovin Migration Summary](Docs/APPLOVIN_MIGRATION_SUMMARY.md) - Migration from IronSource
+- [AppLovin MAX Quickstart](Docs/APPLOVIN_MAX_QUICKSTART.md) - Quick setup guide
+- [Ad Kill Switch Setup](Docs/AD_KILL_SWITCH_SETUP.md) - Emergency ad close button
+- [Ad Testing Guide](Docs/AD_TESTING_GUIDE.md) - Testing procedures
+- [Android Ads Setup](Docs/ANDROID_ADS_SETUP.md) - Android-specific setup
+
+### Platform Setup
+- [iOS SKAdNetwork Setup](Docs/IOS_SKADNETWORK_SETUP.md) - iOS attribution setup
+
+### Feature Guides
+- [Heckle Integration Guide](Docs/HECKLE_INTEGRATION_GUIDE.md) - Taunt system setup
+- [Heckle Implementation Summary](Docs/HECKLE_IMPLEMENTATION_SUMMARY.md) - Technical details
+- [Endless Mode Learnings](Docs/ENDLESS_MODE_LEARNINGS_REPORT.md) - Post-mortem
+
+### Architecture
+- [Battlecruisers Architecture Guide](Docs/BATTLECRUISERS_ARCHITECTURE_GUIDE.md) - System overview
+- [Integration Summary](Docs/INTEGRATION_SUMMARY.md) - Overall integration status
 
 ---
 
@@ -183,7 +209,7 @@ Unity Remote Config now stores all ad tuning values in a single JSON key named `
 **Type:** `json`  
 **Recommended Value:**
 ```json
-{"ad_minimum_level":7,"ad_frequency":3,"ad_cooldown_minutes":9.0,"ad_veteran_boost_enabled":true,"ad_veteran_threshold":15,"ad_veteran_frequency":2,"ads_are_live":false,"ads_disabled":false}
+{"ad_minimum_level":7,"ad_frequency":3,"ad_cooldown_minutes":9.0,"ad_veteran_boost_enabled":true,"ad_veteran_threshold":15,"ad_veteran_frequency":2,"ads_are_live":false,"ads_disabled":false,"rewarded_ad_coins":10,"rewarded_ad_credits":250}
 ```
 
 **Usage Notes**
@@ -935,6 +961,52 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 ---
 
 ## Changelog
+
+### December 7, 2024 - Hardware Acceleration Fix, AD_CONFIG Rewards, AdminPanel Testing, Documentation Organization
+
+**Hardware Acceleration Fix:**
+- ✅ Added `android:hardwareAccelerated="true"` to AndroidManifest.xml
+- ✅ Fixed MRAID JavaScript injection issue that prevented ad close buttons from appearing
+- ✅ Ads now properly display close buttons after required viewing time
+- ✅ Resolved `ERR_FILE_NOT_FOUND` error for `mraid.js` in ad WebViews
+
+**AD_CONFIG Extended with Reward Amounts:**
+- ✅ Added `rewarded_ad_coins` and `rewarded_ad_credits` to `AdConfig` struct
+- ✅ Added public properties `RewardedAdCoins` and `RewardedAdCredits` to `AdConfigManager`
+- ✅ Default values: 10 coins, 250 credits (configurable via Unity Remote Config)
+- ✅ Reward amounts now centralized in AD_CONFIG JSON for easy A/B testing
+- ✅ Updated `GetConfigSnapshot()` to include reward values
+
+**AdminPanel Testing Enhancements:**
+- ✅ Added `RewardedAdWatched()` button - Simulates successful rewarded ad completion
+  - Grants coins/credits from AD_CONFIG
+  - Shows before/after currency values
+  - Useful for testing reward grant logic without waiting for real ads
+- ✅ Added `RewardedAdOffline()` button - Simulates failed/offline/interrupted ad
+  - Shows joke/fallback ad panel (`FullScreenAdverts.defaultAd`)
+  - Demonstrates offline behavior for players without internet
+  - No rewards granted (as expected for incomplete ads)
+- ✅ Updated `ShowRewardedAndGrant()` to use `AdConfigManager.RewardedAdCoins/Credits` properties
+
+**Documentation Organization:**
+- ✅ Created `Docs/` folder for all project documentation
+- ✅ Moved 12 MD files from root to `Docs/` folder:
+  - All AppLovin integration guides
+  - Ad testing and setup guides
+  - Platform-specific setup (iOS, Android)
+  - Feature guides (Heckles, Endless Mode)
+  - Architecture documentation
+- ✅ Updated `PROJECT_DOCUMENTATION.md` with documentation index
+- ✅ Documentation now self-organizing for AI assistant reference
+- ✅ `PROJECT_DOCUMENTATION.md` remains at root as primary index
+
+**Files Modified:**
+- `Assets/Plugins/Android/AndroidManifest.xml` - Added hardware acceleration
+- `Assets/Scripts/Ads/AdConfigManager.cs` - Extended with reward amounts
+- `Assets/Scripts/Utils/Debugging/AdminPanel.cs` - Added testing buttons
+- `PROJECT_DOCUMENTATION.md` - Added doc index and changelog entry
+
+**Result:** ✅ Ads now properly close, reward amounts configurable via Remote Config, enhanced testing tools, organized documentation structure
 
 ### November 24, 2024 - Migration from IronSource to AppLovin MAX
 **Completed:**

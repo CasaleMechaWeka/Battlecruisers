@@ -18,7 +18,7 @@ namespace BattleCruisers.Utils.Debugging
         public GameObject buttons;
 
         [SerializeField]
-        private int levelToUnlock = 1; // The highest level to unlock, adjustable in the Inspector
+        private int levelToUnlock = 31; // The highest level to unlock, adjustable in the Inspector
 
         [Header("Ad Testing")]
         [SerializeField]
@@ -121,7 +121,7 @@ namespace BattleCruisers.Utils.Debugging
         private void Show()
         {
             buttons.SetActive(true);
-            ShowMessage("Admin Panel OPENED - Debug tools available");
+            ShowPlayerStatus();
         }
 
         public void Hide()
@@ -439,34 +439,36 @@ namespace BattleCruisers.Utils.Debugging
                 return;
             }
 
-            // Determine reward amounts (fallback to 10 coins / 250 credits)
-            int coins = 10;
-            int credits = 250;
-            if (AdConfigManager.Instance != null)
-            {
-                var snapshot = AdConfigManager.Instance.GetConfigSnapshot();
-                if (snapshot.ContainsKey("rewarded_ad_coins"))
-                {
-                    int.TryParse(snapshot["rewarded_ad_coins"].ToString(), out coins);
-                }
-                if (snapshot.ContainsKey("rewarded_ad_credits"))
-                {
-                    int.TryParse(snapshot["rewarded_ad_credits"].ToString(), out credits);
-                }
-            }
+            // Get reward amounts based on first-time vs returning
+            var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+
+            AdDebugLogger.Instance?.Log($"[AdminPanel] ShowRewardedAndGrant called - will grant {coins} coins, {credits} credits");
 
             // Grant on reward callback
             System.Action rewardHandler = null;
             rewardHandler = () =>
             {
                 long coinsBefore = DataProvider.GameModel.Coins;
-                long creditsBefore = DataProvider.GameModel.Bounty;
+                long creditsBefore = DataProvider.GameModel.Credits;
+
+                AdDebugLogger.Instance?.Log($"[AdminPanel] Reward callback fired - Before: Coins={coinsBefore}, Credits={creditsBefore}");
+
+                // Mark as watched (only on first time)
+                if (!AdConfigManager.HasEverWatchedRewardedAd())
+                {
+                    AdConfigManager.MarkRewardedAdWatched();
+                    AdDebugLogger.Instance?.Log("[AdminPanel] Player marked as ADWATCHER");
+                }
 
                 DataProvider.GameModel.Coins += coins;
-                DataProvider.GameModel.Bounty += credits;
+                DataProvider.GameModel.Credits += credits;
+                
+                AdDebugLogger.Instance?.Log($"[AdminPanel] After: Coins={DataProvider.GameModel.Coins}, Credits={DataProvider.GameModel.Credits}");
+                
                 DataProvider.SaveGame();
+                AdDebugLogger.Instance?.Log("[AdminPanel] Game saved");
 
-                ShowMessage($"REWARDED AD COMPLETED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Bounty} (+{credits})");
+                ShowMessage($"REWARDED AD COMPLETED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
 
                 AppLovinManager.Instance.OnRewardedAdRewarded -= rewardHandler;
             };
@@ -475,6 +477,111 @@ namespace BattleCruisers.Utils.Debugging
 
             ShowMessage($"Showing rewarded ad... Reward: {coins} coins, {credits} credits");
             AppLovinManager.Instance.ShowRewardedAd();
+        }
+
+        /// <summary>
+        /// Show comprehensive player status information
+        /// </summary>
+        public void ShowPlayerStatus()
+        {
+            string playerName = DataProvider.GameModel?.PlayerName ?? "Unknown";
+            string edition = DataProvider.GameModel.PremiumEdition ? "PREMIUM" : "FREE";
+            string adStatus = AdConfigManager.HasEverWatchedRewardedAd() ? "ADWATCHER" : "VIRGIN";
+            int level = DataProvider.GameModel.NumOfLevelsCompleted;
+            long coins = DataProvider.GameModel.Coins;
+            long credits = DataProvider.GameModel.Credits;
+            
+            var (nextCoins, nextCredits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (0, 0);
+            
+            string status = $"=== PLAYER STATUS ===\n" +
+                            $"Name: {playerName}\n" +
+                            $"Edition: {edition}\n" +
+                            $"Ad Status: {adStatus}\n" +
+                            $"Level: {level}\n" +
+                            $"Coins: {coins} | Credits: {credits}\n" +
+                            $"Next Reward: {nextCoins} coins, {nextCredits} credits\n" +
+                            $"Interstitials: {(AdConfigManager.Instance?.InterstitialAdsEnabled ?? false ? "ON" : "OFF")}\n" +
+                            $"Rewarded Ads: {(AdConfigManager.Instance?.RewardedAdsEnabled ?? false ? "ON" : "OFF")}";
+            
+            ShowMessage(status);
+        }
+
+        /// <summary>
+        /// Toggle between Virgin (never watched ad) and Adwatcher (has watched ad)
+        /// </summary>
+        public void ToggleAdWatcherStatus()
+        {
+            if (AdConfigManager.HasEverWatchedRewardedAd())
+            {
+                // Currently Adwatcher -> Reset to Virgin
+                PlayerPrefs.DeleteKey("HasWatchedRewardedAd");
+                PlayerPrefs.Save();
+                var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+                ShowMessage($"Ad Status: VIRGIN (reset)\nNext reward: {coins} coins, {credits} credits");
+            }
+            else
+            {
+                // Currently Virgin -> Set to Adwatcher  
+                AdConfigManager.MarkRewardedAdWatched();
+                var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (20, 1200);
+                ShowMessage($"Ad Status: ADWATCHER (set)\nNext reward: {coins} coins, {credits} credits");
+            }
+        }
+
+        /// <summary>
+        /// Simulate a successfully watched rewarded ad (for testing reward grant logic)
+        /// </summary>
+        public void RewardedAdWatched()
+        {
+            // Get reward amounts based on first-time vs returning
+            var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+
+            // Store initial values
+            long coinsBefore = DataProvider.GameModel.Coins;
+            long creditsBefore = DataProvider.GameModel.Credits;
+
+            AdDebugLogger.Instance?.Log($"[AdminPanel] RewardedAdWatched called - granting {coins} coins, {credits} credits");
+            AdDebugLogger.Instance?.Log($"[AdminPanel] Before: Coins={coinsBefore}, Credits={creditsBefore}");
+
+            // Mark as watched (only on first time)
+            if (!AdConfigManager.HasEverWatchedRewardedAd())
+            {
+                AdConfigManager.MarkRewardedAdWatched();
+                AdDebugLogger.Instance?.Log("[AdminPanel] Player marked as ADWATCHER");
+            }
+
+            // Grant rewards
+            DataProvider.GameModel.Coins += coins;
+            DataProvider.GameModel.Credits += credits;
+            
+            AdDebugLogger.Instance?.Log($"[AdminPanel] After: Coins={DataProvider.GameModel.Coins}, Credits={DataProvider.GameModel.Credits}");
+            
+            // Save game
+            DataProvider.SaveGame();
+            AdDebugLogger.Instance?.Log("[AdminPanel] Game saved");
+
+            ShowMessage($"REWARDED AD WATCHED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
+        }
+
+        /// <summary>
+        /// Simulate a failed/offline rewarded ad (shows joke ad fallback)
+        /// </summary>
+        public void RewardedAdOffline()
+        {
+            ShowMessage("REWARDED AD OFFLINE - No reward granted. Showing joke ad fallback.", true);
+            
+            Debug.Log("[AdminPanel] Simulating offline/interrupted rewarded ad - showing fallback joke ad");
+            
+            // Show the default/joke ad panel
+            if (fullScreenAdverts != null)
+            {
+                fullScreenAdverts.defaultAd.UpdateImage();
+                fullScreenAdverts.gameObject.SetActive(true);
+            }
+            else
+            {
+                ShowMessage("ERROR: FullScreenAdverts not linked! Assign in Inspector.", true);
+            }
         }
 
         /// <summary>
@@ -632,6 +739,19 @@ namespace BattleCruisers.Utils.Debugging
             // AppLovinManager.ShowMediationDebugger() already checks isInitialized internally
             ShowMessage("Opening MAX Mediation Debugger... Check ad unit status, network fill rates, and error codes.");
             AppLovinManager.Instance.ShowMediationDebugger();
+        }
+
+        /// <summary>
+        /// Show current coin and credit values
+        /// </summary>
+        public void ShowEconomyStatus()
+        {
+            long coins = DataProvider.GameModel.Coins;
+            long credits = DataProvider.GameModel.Credits;
+            
+            AdDebugLogger.Instance?.Log($"[AdminPanel] Economy Status - Coins: {coins}, Credits: {credits}");
+            
+            ShowMessage($"=== ECONOMY STATUS ===\nCoins: {coins}\nCredits: {credits}");
         }
 
         #region Exos (Captains)

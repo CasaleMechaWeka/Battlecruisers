@@ -68,6 +68,13 @@ public class FullScreenAdverts : MonoBehaviour
             return false;
         }
         
+        // Check if interstitials are enabled via Remote Config
+        if (AdConfigManager.Instance != null && !AdConfigManager.Instance.InterstitialAdsEnabled)
+        {
+            Debug.Log("[Ads] Skipped - Interstitial ads DISABLED via Remote Config");
+            return false;
+        }
+        
         // Don't show ads for premium users unless they have ads enabled in settings
         if (DataProvider.GameModel.PremiumEdition)
         {
