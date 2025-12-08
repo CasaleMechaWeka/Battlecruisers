@@ -153,6 +153,9 @@ namespace BattleCruisers.Scenes
             skipButton.Initialise(_soundPlayer, SkipAnim);
             SceneNavigator.SceneLoaded(SceneNames.DESTRUCTION_SCENE);
 
+            // Log battle values for debugging simulations
+            BattleCruisers.Utils.Debugging.AdminPanel.LogPvEBattleValues();
+
             // Hide rewarded ad button by default
             if (rewardedAdButton != null)
             {
@@ -630,9 +633,15 @@ namespace BattleCruisers.Scenes
             }
 
             // Show rewarded ad offer if rewards exist and ad is available
+            Debug.Log($"[Rewards] CalculateRewards: watchedRewardedAd={watchedRewardedAd}, coinsToAward={coinsToAward}, creditsToAward={creditsToAward}");
             if (!watchedRewardedAd && (coinsToAward > 0 || creditsToAward > 0))
             {
+                Debug.Log("[Rewards] Calling ShowRewardedAdOffer()");
                 ShowRewardedAdOffer();
+            }
+            else
+            {
+                Debug.Log("[Rewards] NOT calling ShowRewardedAdOffer() - condition failed");
             }
         }
 
@@ -806,23 +815,33 @@ namespace BattleCruisers.Scenes
 
         private void ShowRewardedAdOffer()
         {
+            Debug.Log("[Rewards] ShowRewardedAdOffer() called");
+
             // Check if rewarded ads are enabled
             if (AdConfigManager.Instance != null && !AdConfigManager.Instance.RewardedAdsEnabled)
             {
-                Debug.Log("[Rewards] Rewarded ads disabled via Remote Config");
+                Debug.Log($"[Rewards] Rewarded ads disabled via Remote Config (RewardedAdsEnabled={AdConfigManager.Instance.RewardedAdsEnabled})");
                 return;
             }
+            Debug.Log("[Rewards] Rewarded ads enabled");
 
             if (rewardedAdButton == null)
+            {
+                Debug.Log("[Rewards] rewardedAdButton is null - not assigned in scene");
                 return;
+            }
+            Debug.Log("[Rewards] rewardedAdButton is assigned");
 
             // Check if ad is ready (for free players)
             bool isPremium = DataProvider.GameModel.PremiumEdition;
+            Debug.Log($"[Rewards] isPremium={isPremium}");
+
             if (!isPremium && (AppLovinManager.Instance == null || !AppLovinManager.Instance.IsRewardedAdReady()))
             {
-                Debug.Log("[Rewards] Rewarded ad not available");
+                Debug.Log($"[Rewards] Rewarded ad not available: AppLovinManager.Instance={AppLovinManager.Instance}, IsRewardedAdReady={(AppLovinManager.Instance?.IsRewardedAdReady() ?? false)}");
                 return;
             }
+            Debug.Log("[Rewards] Ad is available (premium or ready)");
 
             // Get reward amounts based on first-time vs returning player
             var (offerCoins, offerCredits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
@@ -845,6 +864,7 @@ namespace BattleCruisers.Scenes
 
             // Show button
             rewardedAdButton.SetActive(true);
+            Debug.Log("[Rewards] Set rewardedAdButton active");
 
             // Log to Firebase
             if (FirebaseAnalyticsManager.Instance != null)
@@ -860,19 +880,27 @@ namespace BattleCruisers.Scenes
 
         private IEnumerator HideRewardedAdOfferAfterDelay()
         {
+            Debug.Log($"[Rewards] Starting hide timer: {rewardedAdOfferDuration}s");
             yield return new WaitForSeconds(rewardedAdOfferDuration);
-            
+
+            Debug.Log($"[Rewards] Hide timer expired. watchedRewardedAd={watchedRewardedAd}, button exists={rewardedAdButton != null}, activeSelf={rewardedAdButton?.activeSelf ?? false}");
+
             if (!watchedRewardedAd && rewardedAdButton != null && rewardedAdButton.activeSelf)
             {
                 rewardedAdButton.SetActive(false);
-                
+                Debug.Log("[Rewards] Hid rewarded ad button due to timer expiry");
+
                 // Log skip to Firebase
                 if (FirebaseAnalyticsManager.Instance != null)
                 {
                     FirebaseAnalyticsManager.Instance.LogRewardedAdSkipped("destruction_screen");
                 }
-                
+
                 Debug.Log("[Rewards] Rewarded ad offer expired");
+            }
+            else
+            {
+                Debug.Log("[Rewards] Not hiding button - either already watched, button null, or already hidden");
             }
         }
 
@@ -969,21 +997,35 @@ namespace BattleCruisers.Scenes
         /// <summary>
         /// Grant the rewarded ad reward to player (additional on top of base rewards)
         /// </summary>
-        private void GrantRewardedAdReward()
+        private async void GrantRewardedAdReward()
         {
             var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
-            
+
             // Mark as watched (only on first time)
             if (!AdConfigManager.HasEverWatchedRewardedAd())
             {
                 AdConfigManager.MarkRewardedAdWatched();
                 Debug.Log("[Rewards] Player marked as ADWATCHER (was VIRGIN)");
             }
-            
+
             // Grant additional rewards (base rewards already granted in UpdateGameModelVals)
             DataProvider.GameModel.Coins += coins;
             DataProvider.GameModel.Credits += credits;
+
+            // Save locally first
             DataProvider.SaveGame();
+
+            // CRITICAL: Sync rewarded currency changes to cloud immediately to prevent CloudLoad from overwriting
+            try
+            {
+                await DataProvider.SyncCoinsToCloud();
+                await DataProvider.SyncCreditsToCloud();
+                Debug.Log("[Rewards] Currency synced to cloud");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Rewards] Failed to sync to cloud: {e.Message}");
+            }
             
             // Update UI to show new totals (base + ad reward)
             if (coinsCounter != null)

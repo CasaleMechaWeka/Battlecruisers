@@ -1,12 +1,21 @@
 ﻿using BattleCruisers.Ads;
+using BattleCruisers.Buildables;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Scenes;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
@@ -42,6 +51,14 @@ namespace BattleCruisers.Utils.Debugging
         void Start()
         {
             Assert.IsNotNull(buttons);
+            
+            // Hide admin UI by default (admin button itself is controlled by ENABLE_CHEATS)
+            buttons.SetActive(false);
+            
+            if (overlayPanel != null)
+            {
+                overlayPanel.SetActive(false);
+            }
         }
 
         void Update()
@@ -239,96 +256,122 @@ namespace BattleCruisers.Utils.Debugging
             ShowMessage("RESET COMPLETE! All data deleted. RESTART GAME!");
         }
 
-        public void DvorakHotkeys()
-        {
-            ShowMessage("Setting Dvorak hotkeys...");
-            
-            HotkeysModel hotkeys = DataProvider.GameModel.Hotkeys;
-
-            // Navigation
-            hotkeys.PlayerCruiser = KeyCode.Semicolon;
-            hotkeys.Overview = KeyCode.Q;
-            hotkeys.EnemyCruiser = KeyCode.J;
-
-            // Building categories
-            hotkeys.Factories = KeyCode.A;
-            hotkeys.Defensives = KeyCode.O;
-            hotkeys.Offensives = KeyCode.E;
-            hotkeys.Tacticals = KeyCode.U;
-            hotkeys.Ultras = KeyCode.I;
-
-            // Factories
-            hotkeys.DroneStation = KeyCode.Quote;
-            hotkeys.AirFactory = KeyCode.Comma;
-            hotkeys.NavalFactory = KeyCode.Period;
-
-            // Defensives
-            hotkeys.ShipTurret = KeyCode.Quote;
-            hotkeys.AirTurret = KeyCode.Comma;
-            hotkeys.Mortar = KeyCode.Period;
-            hotkeys.SamSite = KeyCode.P;
-            hotkeys.TeslaCoil = KeyCode.Y;
-
-            // Offensives
-            hotkeys.Artillery = KeyCode.Quote;
-            hotkeys.Railgun = KeyCode.Comma;
-            hotkeys.RocketLauncher = KeyCode.Period;
-
-            // Tacticals
-            hotkeys.Shield = KeyCode.Quote;
-            hotkeys.Booster = KeyCode.Comma;
-            hotkeys.StealthGenerator = KeyCode.Period;
-            hotkeys.SpySatellite = KeyCode.P;
-            hotkeys.ControlTower = KeyCode.Y;
-
-            // Ultras
-            hotkeys.Deathstar = KeyCode.Quote;
-            hotkeys.NukeLauncher = KeyCode.Comma;
-            hotkeys.Ultralisk = KeyCode.Period;
-            hotkeys.KamikazeSignal = KeyCode.P;
-            hotkeys.Broadsides = KeyCode.Y;
-
-            // Aircraft
-            hotkeys.Bomber = KeyCode.Quote;
-            hotkeys.Gunship = KeyCode.Comma;
-            hotkeys.Fighter = KeyCode.Period;
-
-            // Ships
-            hotkeys.AttackBoat = KeyCode.Quote;
-            hotkeys.Frigate = KeyCode.Comma;
-            hotkeys.Destroyer = KeyCode.Period;
-            hotkeys.Archon = KeyCode.P;
-
-            DataProvider.SaveGame();
-            ShowMessage("Dvorak hotkeys SET! Check settings.");
-        }
-
         public void AddMoney()
         {
-            long before = DataProvider.GameModel.Coins;
-            DataProvider.GameModel.Coins += 1000;
+            long coinsBefore = DataProvider.GameModel.Coins;
+            long creditsBefore = DataProvider.GameModel.Credits;
+
+            DataProvider.GameModel.Coins += 16;
+            DataProvider.GameModel.Credits += 32;
             DataProvider.SaveGame();
-            ShowMessage($"COINS: {before} → {DataProvider.GameModel.Coins} (+1000)");
+
+            ShowMessage($"COINS: {coinsBefore} → {DataProvider.GameModel.Coins} (+16); CREDITS: {creditsBefore} → {DataProvider.GameModel.Credits} (+32)");
         }
 
         public void RemoveMoney()
         {
-            long before = DataProvider.GameModel.Coins;
-            DataProvider.GameModel.Coins -= 1000;
-            if (DataProvider.GameModel.Coins < 0)
-            {
-                DataProvider.GameModel.Coins = 0;
-            }
+            long coinsBefore = DataProvider.GameModel.Coins;
+            long creditsBefore = DataProvider.GameModel.Credits;
+
+            DataProvider.GameModel.Coins = System.Math.Max(0, DataProvider.GameModel.Coins - 15);
+            DataProvider.GameModel.Credits = System.Math.Max(0, DataProvider.GameModel.Credits - 30);
             DataProvider.SaveGame();
-            ShowMessage($"COINS: {before} → {DataProvider.GameModel.Coins} (-1000)");
+
+            ShowMessage($"COINS: {coinsBefore} → {DataProvider.GameModel.Coins} (-15); CREDITS: {creditsBefore} → {DataProvider.GameModel.Credits} (-30)");
         }
 
-        public void Add5kOnBounty()
+        private DeadBuildableCounter CreateDamageCounter(long totalDamage, int destroyedCount)
         {
-            long before = DataProvider.GameModel.Bounty;
-            DataProvider.GameModel.Bounty += 5000;
-            DataProvider.SaveGame();
-            ShowMessage($"BOUNTY: {before} → {DataProvider.GameModel.Bounty} (+5000)");
+            var counter = new DeadBuildableCounter();
+            
+            // Handle zero case: no damage and no units destroyed
+            if (destroyedCount == 0 || totalDamage == 0)
+            {
+                return counter;
+            }
+
+            int perUnit = (int)(totalDamage / destroyedCount);
+            if (perUnit < 1) perUnit = 1;
+
+            for (int i = 0; i < destroyedCount; i++)
+            {
+                counter.AddDeadBuildable(perUnit);
+            }
+
+            return counter;
+        }
+
+        private DeadBuildableCounter CreateTimeCounter(float seconds)
+        {
+            var counter = new DeadBuildableCounter();
+            counter.AddPlayedTime(seconds);
+            return counter;
+        }
+
+        public void SimulatePvEWin()
+        {
+            ApplicationModel.Mode = GameMode.Campaign;
+            DataProvider.GameModel.SelectedLevel = 31;
+
+            // Ensure at least 30 levels completed (NumOfLevelsCompleted is read-only, computed from completed levels count)
+            for (int i = 1; i <= 30; i++)
+            {
+                if (DataProvider.GameModel.NumOfLevelsCompleted < i)
+                {
+                    DataProvider.GameModel.AddCompletedLevel(new CompletedLevel(i, Difficulty.Normal));
+                }
+            }
+
+            BattleSceneGod.deadBuildables = new Dictionary<TargetType, DeadBuildableCounter>
+            {
+                { TargetType.Aircraft, CreateDamageCounter(0, 0) },
+                { TargetType.Ships, CreateDamageCounter(0, 0) },
+                { TargetType.Cruiser, CreateDamageCounter(6300, 1) },
+                { TargetType.Buildings, CreateDamageCounter(4500, 10) },
+                { TargetType.PlayedTime, CreateTimeCounter(115f) }
+            };
+
+            SceneNavigator.GoToScene(SceneNames.DESTRUCTION_SCENE, true);
+        }
+
+        public void SimulatePvPWin()
+        {
+            ApplicationModel.Mode = GameMode.PvP_1VS1;
+
+            PvPBattleSceneGodTunnel.isDisconnected = 0;
+            PvPBattleSceneGodTunnel.OpponentQuit = false;
+            PvPBattleSceneGodTunnel.PlayerACruiserType = HullType.Bullshark;
+            PvPBattleSceneGodTunnel.PlayerBCruiserType = HullType.Eagle;
+            PvPBattleSceneGodTunnel.EnemyCruiserType = PvPBattleSceneGodTunnel.PlayerBCruiserType;
+
+            PvPBattleSceneGodTunnel._levelTimeInSeconds = 180f;
+            PvPBattleSceneGodTunnel._aircraftVal = 8500;
+            PvPBattleSceneGodTunnel._shipsVal = 12000;
+            PvPBattleSceneGodTunnel._cruiserVal = 7500;
+            PvPBattleSceneGodTunnel._buildingsVal = 9200;
+            PvPBattleSceneGodTunnel._totalDestroyed = new long[4] { 15, 8, 1, 12 };
+
+            SceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
+        }
+
+        public void SimulatePvPLoss()
+        {
+            ApplicationModel.Mode = GameMode.PvP_1VS1;
+
+            PvPBattleSceneGodTunnel.isDisconnected = 0;
+            PvPBattleSceneGodTunnel.OpponentQuit = false;
+            PvPBattleSceneGodTunnel.PlayerACruiserType = HullType.Bullshark;
+            PvPBattleSceneGodTunnel.PlayerBCruiserType = HullType.Eagle;
+            PvPBattleSceneGodTunnel.EnemyCruiserType = PvPBattleSceneGodTunnel.PlayerBCruiserType;
+
+            PvPBattleSceneGodTunnel._levelTimeInSeconds = 150f;
+            PvPBattleSceneGodTunnel._aircraftVal = 3200;
+            PvPBattleSceneGodTunnel._shipsVal = 5500;
+            PvPBattleSceneGodTunnel._cruiserVal = 0;
+            PvPBattleSceneGodTunnel._buildingsVal = 4100;
+            PvPBattleSceneGodTunnel._totalDestroyed = new long[4] { 8, 4, 0, 7 };
+
+            SceneNavigator.GoToScene(SceneNames.PvP_DESTRUCTION_SCENE, true);
         }
 
         /// <summary>
@@ -358,47 +401,6 @@ namespace BattleCruisers.Utils.Debugging
             PlayerPrefs.DeleteKey("LastAdShowTime");
             PlayerPrefs.Save();
             ShowMessage("Ad frequency counter reset to 0. Cooldown timer cleared. Next ShouldShowAds() check will pass frequency/cooldown gates.");
-        }
-
-        /// <summary>
-        /// Force show an ad immediately (for testing AppLovin MAX integration)
-        /// </summary>
-        public void ForceShowAd()
-        {
-            if (fullScreenAdverts == null)
-            {
-                ShowMessage("ERROR: FullScreenAdverts not linked! Assign in Inspector.", true);
-                return;
-            }
-
-            // Check if AppLovinManager is missing
-            if (AppLovinManager.Instance == null)
-            {
-                ShowMessage("ERROR: AppLovinManager missing! Add a GameObject with AppLovinManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
-                return;
-            }
-
-            // Check if AdConfigManager is missing
-            if (AdConfigManager.Instance == null)
-            {
-                ShowMessage("ERROR: AdConfigManager missing! Add a GameObject with AdConfigManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
-                return;
-            }
-
-            // Check if ads are disabled
-            if (AdConfigManager.Instance.AdsDisabled)
-            {
-                ShowMessage("Ads are DISABLED via Remote Config. Cannot show ad.", true);
-                return;
-            }
-
-            ResetAdCounters();
-            
-            string mode = AdConfigManager.Instance.IsTestMode() ? "TEST" : "PRODUCTION";
-            
-            ShowMessage($"Resetting ad counters and attempting to show interstitial ad... Mode: {mode}");
-            fullScreenAdverts.ForceShowAd();
-            ShowMessage("Interstitial ad request sent. If no ad appears, check Mediation Debugger for fill status.");
         }
 
         /// <summary>
@@ -505,7 +507,7 @@ namespace BattleCruisers.Utils.Debugging
         /// <summary>
         /// Helper method to grant rewarded ad currency and log changes
         /// </summary>
-        private void GrantRewardedAdCurrency()
+        private async void GrantRewardedAdCurrency()
         {
             // Get reward amounts based on first-time vs returning
             var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
@@ -527,12 +529,25 @@ namespace BattleCruisers.Utils.Debugging
             // Grant rewards
             DataProvider.GameModel.Coins += coins;
             DataProvider.GameModel.Credits += credits;
-            
+
             AdDebugLogger.Instance?.Log($"[AdminPanel] After: Coins={DataProvider.GameModel.Coins}, Credits={DataProvider.GameModel.Credits}");
-            
-            // Save game
+
+            // Save locally first
             DataProvider.SaveGame();
-            AdDebugLogger.Instance?.Log("[AdminPanel] Game saved");
+
+            // CRITICAL: Sync rewarded currency changes to cloud immediately to prevent CloudLoad from overwriting
+            try
+            {
+                await DataProvider.SyncCoinsToCloud();
+                await DataProvider.SyncCreditsToCloud();
+                AdDebugLogger.Instance?.Log("[AdminPanel] Currency synced to cloud");
+            }
+            catch (System.Exception e)
+            {
+                AdDebugLogger.Instance?.LogError($"[AdminPanel] Failed to sync to cloud: {e.Message}");
+            }
+
+            AdDebugLogger.Instance?.Log("[AdminPanel] Game saved locally");
 
             ShowMessage($"REWARDED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
         }
@@ -734,6 +749,140 @@ namespace BattleCruisers.Utils.Debugging
             AdDebugLogger.Instance?.Log($"[AdminPanel] Economy Status - Coins: {coins}, Credits: {credits}");
             
             ShowMessage($"=== ECONOMY STATUS ===\nCoins: {coins}\nCredits: {credits}");
+        }
+
+        /// <summary>
+        /// Test cloud save operation with comprehensive status display
+        /// </summary>
+        public async void TestCloudSave()
+        {
+            ShowMessage("Testing Cloud Save...");
+            
+            // Capture initial state
+            bool cloudSaveDisabled = DataProvider.SettingsManager.CloudSaveDisabled;
+            bool unityServicesInitialized = UnityServices.State == ServicesInitializationState.Initialized;
+            bool isAuthenticated = AuthenticationService.Instance != null && AuthenticationService.Instance.IsSignedIn;
+            long coinsBefore = DataProvider.GameModel.Coins;
+            long creditsBefore = DataProvider.GameModel.Credits;
+            
+            // Build status message
+            StringBuilder status = new StringBuilder();
+            status.AppendLine("=== CLOUD SAVE TEST ===");
+            status.AppendLine($"Cloud Save Disabled: {(cloudSaveDisabled ? "Yes" : "No")}");
+            status.AppendLine($"Unity Services: {(unityServicesInitialized ? "Initialized" : "Not Initialized")}");
+            status.AppendLine($"Authenticated: {(isAuthenticated ? "Yes" : "No")}");
+            status.AppendLine($"Before: Coins={coinsBefore}, Credits={creditsBefore}");
+            
+            // Attempt cloud save
+            try
+            {
+                await DataProvider.CloudSave();
+                
+                long coinsAfter = DataProvider.GameModel.Coins;
+                long creditsAfter = DataProvider.GameModel.Credits;
+                
+                status.AppendLine("Result: SUCCESS");
+                status.AppendLine($"After: Coins={coinsAfter}, Credits={creditsAfter}");
+                
+                if (cloudSaveDisabled)
+                {
+                    status.AppendLine("Note: Cloud save disabled - saved locally only");
+                }
+                else if (!unityServicesInitialized || !isAuthenticated)
+                {
+                    status.AppendLine("Note: Cloud not ready - saved locally only");
+                }
+                else
+                {
+                    status.AppendLine("Note: Saved to cloud successfully");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                status.AppendLine($"Result: FAILED");
+                status.AppendLine($"Error: {ex.Message}");
+                status.AppendLine($"Stack: {ex.StackTrace}");
+            }
+            
+            ShowMessage(status.ToString());
+        }
+
+        /// <summary>
+        /// Test cloud load operation with comprehensive status display
+        /// </summary>
+        public async void TestCloudLoad()
+        {
+            ShowMessage("Testing Cloud Load...");
+            
+            // Capture initial state
+            bool cloudSaveDisabled = DataProvider.SettingsManager.CloudSaveDisabled;
+            bool unityServicesInitialized = UnityServices.State == ServicesInitializationState.Initialized;
+            bool isAuthenticated = AuthenticationService.Instance != null && AuthenticationService.Instance.IsSignedIn;
+            long coinsBefore = DataProvider.GameModel.Coins;
+            long creditsBefore = DataProvider.GameModel.Credits;
+            long lifetimeScoreBefore = DataProvider.GameModel.LifetimeDestructionScore;
+            
+            // Build status message
+            StringBuilder status = new StringBuilder();
+            status.AppendLine("=== CLOUD LOAD TEST ===");
+            status.AppendLine($"Cloud Save Disabled: {(cloudSaveDisabled ? "Yes" : "No")}");
+            status.AppendLine($"Unity Services: {(unityServicesInitialized ? "Initialized" : "Not Initialized")}");
+            status.AppendLine($"Authenticated: {(isAuthenticated ? "Yes" : "No")}");
+            status.AppendLine($"Before: Coins={coinsBefore}, Credits={creditsBefore}");
+            status.AppendLine($"Local LifetimeScore: {lifetimeScoreBefore}");
+            
+            // Attempt cloud load
+            try
+            {
+                if (cloudSaveDisabled)
+                {
+                    status.AppendLine("Result: SKIPPED (Cloud save disabled)");
+                    status.AppendLine("After: No changes (cloud load skipped)");
+                }
+                else
+                {
+                    await DataProvider.CloudLoad();
+                    
+                    long coinsAfter = DataProvider.GameModel.Coins;
+                    long creditsAfter = DataProvider.GameModel.Credits;
+                    long lifetimeScoreAfter = DataProvider.GameModel.LifetimeDestructionScore;
+                    
+                    status.AppendLine("Result: SUCCESS");
+                    status.AppendLine($"After: Coins={coinsAfter}, Credits={creditsAfter}");
+                    status.AppendLine($"Local LifetimeScore: {lifetimeScoreAfter}");
+                    
+                    // Determine what happened
+                    if (lifetimeScoreAfter > lifetimeScoreBefore)
+                    {
+                        status.AppendLine($"Cloud LifetimeScore: {lifetimeScoreBefore} → {lifetimeScoreAfter}");
+                        status.AppendLine("Result: Cloud overwrote local");
+                    }
+                    else if (lifetimeScoreAfter < lifetimeScoreBefore)
+                    {
+                        status.AppendLine($"Cloud LifetimeScore: {lifetimeScoreAfter} < Local {lifetimeScoreBefore}");
+                        status.AppendLine("Result: Local overwrote cloud");
+                    }
+                    else
+                    {
+                        status.AppendLine("Result: Scores equal - no overwrite");
+                    }
+                    
+                    long coinsChange = coinsAfter - coinsBefore;
+                    long creditsChange = creditsAfter - creditsBefore;
+                    if (coinsChange != 0 || creditsChange != 0)
+                    {
+                        status.AppendLine($"Currency Change: Coins {(coinsChange >= 0 ? "+" : "")}{coinsChange}, Credits {(creditsChange >= 0 ? "+" : "")}{creditsChange}");
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                status.AppendLine($"Result: FAILED");
+                status.AppendLine($"Error: {ex.Message}");
+                status.AppendLine($"Stack: {ex.StackTrace}");
+            }
+            
+            ShowMessage(status.ToString());
         }
 
         #region Exos (Captains)
@@ -981,6 +1130,273 @@ namespace BattleCruisers.Utils.Debugging
             DataProvider.SaveGame();
             
             ShowMessage($"VARIANTS RESET: {removed} variants removed. Selected variants cleared. Total: {DataProvider.GameModel.PurchasedVariants.Count}");
+        }
+
+        #endregion
+
+        #region Battle Logging
+
+        private static string BattleLogPath => Path.Combine(Application.persistentDataPath, "battle_log.txt");
+
+        /// <summary>
+        /// Log PvE battle values to a text file for debugging destruction scene simulations.
+        /// Call from DestructionSceneGod.PopulateScreen() or Start().
+        /// </summary>
+        public static void LogPvEBattleValues()
+        {
+            try
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine($"=== PvE BATTLE LOG === {System.DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                sb.AppendLine($"Mode: {ApplicationModel.Mode}");
+                sb.AppendLine($"SelectedLevel: {DataProvider.GameModel.SelectedLevel}");
+                sb.AppendLine($"NumOfLevelsCompleted: {DataProvider.GameModel.NumOfLevelsCompleted}");
+                sb.AppendLine();
+
+                if (BattleSceneGod.deadBuildables != null)
+                {
+                    sb.AppendLine("--- deadBuildables ---");
+                    foreach (var kvp in BattleSceneGod.deadBuildables)
+                    {
+                        sb.AppendLine($"  {kvp.Key}: Damage={kvp.Value.GetTotalDamageInCredits()}, Destroyed={kvp.Value.GetTotalDestroyed()}, Time={kvp.Value.GetPlayedTime():F2}s");
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("deadBuildables: NULL");
+                }
+
+                sb.AppendLine();
+                sb.AppendLine($"enemyCruiserSprite: {(BattleSceneGod.enemyCruiserSprite != null ? BattleSceneGod.enemyCruiserSprite.name : "NULL")}");
+                sb.AppendLine($"enemyCruiserName: {BattleSceneGod.enemyCruiserName ?? "NULL"}");
+                sb.AppendLine();
+                sb.AppendLine("--- Suggested SimulatePvEWin values ---");
+                
+                if (BattleSceneGod.deadBuildables != null)
+                {
+                    long aircraft = BattleSceneGod.deadBuildables.ContainsKey(TargetType.Aircraft) ? BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits() : 0;
+                    long ships = BattleSceneGod.deadBuildables.ContainsKey(TargetType.Ships) ? BattleSceneGod.deadBuildables[TargetType.Ships].GetTotalDamageInCredits() : 0;
+                    long cruiser = BattleSceneGod.deadBuildables.ContainsKey(TargetType.Cruiser) ? BattleSceneGod.deadBuildables[TargetType.Cruiser].GetTotalDamageInCredits() : 0;
+                    long buildings = BattleSceneGod.deadBuildables.ContainsKey(TargetType.Buildings) ? BattleSceneGod.deadBuildables[TargetType.Buildings].GetTotalDamageInCredits() : 0;
+                    float time = BattleSceneGod.deadBuildables.ContainsKey(TargetType.PlayedTime) ? BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime() : 0;
+                    
+                    int aircraftCount = (int)(BattleSceneGod.deadBuildables.ContainsKey(TargetType.Aircraft) ? BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDestroyed() : 0);
+                    int shipsCount = (int)(BattleSceneGod.deadBuildables.ContainsKey(TargetType.Ships) ? BattleSceneGod.deadBuildables[TargetType.Ships].GetTotalDestroyed() : 0);
+                    int buildingsCount = (int)(BattleSceneGod.deadBuildables.ContainsKey(TargetType.Buildings) ? BattleSceneGod.deadBuildables[TargetType.Buildings].GetTotalDestroyed() : 0);
+                    
+                    sb.AppendLine($"  CreateDamageCounter({aircraft}, {aircraftCount}) // Aircraft");
+                    sb.AppendLine($"  CreateDamageCounter({ships}, {shipsCount}) // Ships");
+                    sb.AppendLine($"  CreateDamageCounter({cruiser}, 1) // Cruiser");
+                    sb.AppendLine($"  CreateDamageCounter({buildings}, {buildingsCount}) // Buildings");
+                    sb.AppendLine($"  CreateTimeCounter({time:F1}f) // PlayedTime");
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("========================================");
+                sb.AppendLine();
+
+                File.AppendAllText(BattleLogPath, sb.ToString());
+                Debug.Log($"[AdminPanel] Battle values logged to: {BattleLogPath}");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] Failed to log battle values: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Log PvP battle values to a text file for debugging destruction scene simulations.
+        /// Call from PvPDestructionSceneGod.Start() after values are populated.
+        /// </summary>
+        public static void LogPvPBattleValues()
+        {
+            try
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine($"=== PvP BATTLE LOG === {System.DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+                sb.AppendLine($"Mode: {ApplicationModel.Mode}");
+                sb.AppendLine($"isDisconnected: {PvPBattleSceneGodTunnel.isDisconnected}");
+                sb.AppendLine($"OpponentQuit: {PvPBattleSceneGodTunnel.OpponentQuit}");
+                sb.AppendLine();
+
+                sb.AppendLine("--- Tunnel Static Values ---");
+                sb.AppendLine($"  _levelTimeInSeconds: {PvPBattleSceneGodTunnel._levelTimeInSeconds:F2}");
+                sb.AppendLine($"  _aircraftVal: {PvPBattleSceneGodTunnel._aircraftVal}");
+                sb.AppendLine($"  _shipsVal: {PvPBattleSceneGodTunnel._shipsVal}");
+                sb.AppendLine($"  _cruiserVal: {PvPBattleSceneGodTunnel._cruiserVal}");
+                sb.AppendLine($"  _buildingsVal: {PvPBattleSceneGodTunnel._buildingsVal}");
+                sb.AppendLine($"  PlayerACruiserType: {PvPBattleSceneGodTunnel.PlayerACruiserType}");
+                sb.AppendLine($"  PlayerBCruiserType: {PvPBattleSceneGodTunnel.PlayerBCruiserType}");
+                sb.AppendLine($"  EnemyCruiserType: {PvPBattleSceneGodTunnel.EnemyCruiserType}");
+
+                if (PvPBattleSceneGodTunnel._totalDestroyed != null)
+                {
+                    sb.AppendLine($"  _totalDestroyed: [{string.Join(", ", PvPBattleSceneGodTunnel._totalDestroyed)}]");
+                }
+                else
+                {
+                    sb.AppendLine("  _totalDestroyed: NULL");
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("--- Suggested SimulatePvPWin/Loss values ---");
+                sb.AppendLine($"  PvPBattleSceneGodTunnel.isDisconnected = {PvPBattleSceneGodTunnel.isDisconnected};");
+                sb.AppendLine($"  PvPBattleSceneGodTunnel._levelTimeInSeconds = {PvPBattleSceneGodTunnel._levelTimeInSeconds:F1}f;");
+                sb.AppendLine($"  PvPBattleSceneGodTunnel._aircraftVal = {PvPBattleSceneGodTunnel._aircraftVal};");
+                sb.AppendLine($"  PvPBattleSceneGodTunnel._shipsVal = {PvPBattleSceneGodTunnel._shipsVal};");
+                sb.AppendLine($"  PvPBattleSceneGodTunnel._cruiserVal = {PvPBattleSceneGodTunnel._cruiserVal};");
+                sb.AppendLine($"  PvPBattleSceneGodTunnel._buildingsVal = {PvPBattleSceneGodTunnel._buildingsVal};");
+                
+                if (PvPBattleSceneGodTunnel._totalDestroyed != null)
+                {
+                    sb.AppendLine($"  PvPBattleSceneGodTunnel._totalDestroyed = new long[4] {{ {string.Join(", ", PvPBattleSceneGodTunnel._totalDestroyed)} }};");
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("========================================");
+                sb.AppendLine();
+
+                File.AppendAllText(BattleLogPath, sb.ToString());
+                Debug.Log($"[AdminPanel] PvP battle values logged to: {BattleLogPath}");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] Failed to log PvP battle values: {e.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Clear the battle log file
+        /// </summary>
+        public void ClearBattleLog()
+        {
+            try
+            {
+                if (File.Exists(BattleLogPath))
+                {
+                    File.Delete(BattleLogPath);
+                    ShowMessage($"Battle log cleared: {BattleLogPath}");
+                }
+                else
+                {
+                    ShowMessage("No battle log file found to clear.");
+                }
+            }
+            catch (System.Exception e)
+            {
+                ShowMessage($"Failed to clear log: {e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// Show the battle log file path
+        /// </summary>
+        public void ShowBattleLogPath()
+        {
+            ShowMessage($"Battle log path:\n{BattleLogPath}");
+        }
+
+        /// <summary>
+        /// Force show rewarded ad offer for debugging
+        /// </summary>
+        public void ForceShowRewardedAdOffer()
+        {
+            var destructionGod = UnityEngine.Object.FindObjectOfType<BattleCruisers.Scenes.DestructionSceneGod>();
+            if (destructionGod != null)
+            {
+                ShowMessage("Forcing rewarded ad offer...");
+                destructionGod.GetType().GetMethod("ShowRewardedAdOffer", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.Invoke(destructionGod, null);
+            }
+            else
+            {
+                ShowMessage("ERROR: No DestructionSceneGod found in scene");
+            }
+        }
+
+        /// <summary>
+        /// Force show rewarded ad button directly (bypass all conditions)
+        /// </summary>
+        public void ForceShowRewardedAdButton()
+        {
+            var destructionGod = UnityEngine.Object.FindObjectOfType<BattleCruisers.Scenes.DestructionSceneGod>();
+            if (destructionGod != null)
+            {
+                var buttonField = destructionGod.GetType().GetField("rewardedAdButton", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                var button = buttonField?.GetValue(destructionGod) as UnityEngine.GameObject;
+                if (button != null)
+                {
+                    button.SetActive(true);
+                    ShowMessage("Forced rewarded ad button to show");
+                }
+                else
+                {
+                    ShowMessage("ERROR: rewardedAdButton field not found or null");
+                }
+            }
+            else
+            {
+                ShowMessage("ERROR: No DestructionSceneGod found in scene");
+            }
+        }
+
+        /// <summary>
+        /// Check AppLovinManager status
+        /// </summary>
+        public void CheckAppLovinStatus()
+        {
+            var appLovin = BattleCruisers.Ads.AppLovinManager.Instance;
+            if (appLovin != null)
+            {
+                var status = $"AppLovin Status:\n";
+                status += $"Initialized: {appLovin.GetType().GetField("isInitialized", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.GetValue(appLovin) ?? "unknown"}\n";
+                status += $"Interstitial Ready: {appLovin.IsInterstitialReady()}\n";
+                status += $"Rewarded Ready: {appLovin.IsRewardedAdReady()}\n";
+                status += $"Test Mode: {BattleCruisers.Ads.AdConfigManager.Instance?.IsTestMode() ?? false}\n";
+                status += $"Ads Disabled: {BattleCruisers.Ads.AdConfigManager.Instance?.AdsDisabled ?? true}\n";
+                status += $"Rewarded Ads Enabled: {BattleCruisers.Ads.AdConfigManager.Instance?.RewardedAdsEnabled ?? false}";
+                ShowMessage(status);
+            }
+            else
+            {
+                ShowMessage("ERROR: AppLovinManager.Instance is null");
+            }
+        }
+        
+        /// <summary>
+        /// Test kill switch UI visibility
+        /// </summary>
+        public void TestKillSwitchUI()
+        {
+            var appLovin = BattleCruisers.Ads.AppLovinManager.Instance;
+            if (appLovin != null)
+            {
+                // Use reflection to access the killSwitchCanvas field
+                var canvasField = appLovin.GetType().GetField("killSwitchCanvas", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                var canvas = canvasField?.GetValue(appLovin) as UnityEngine.Canvas;
+                
+                if (canvas != null)
+                {
+                    bool wasActive = canvas.gameObject.activeSelf;
+                    canvas.gameObject.SetActive(!wasActive);
+                    
+                    var textField = appLovin.GetType().GetField("killSwitchTimerText", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                    var text = textField?.GetValue(appLovin) as UnityEngine.UI.Text;
+                    if (text != null)
+                    {
+                        text.text = "TEST MODE - Kill switch visible?";
+                    }
+                    
+                    ShowMessage($"Kill Switch UI: {(wasActive ? "Hidden" : "Shown")}\nCanvas SortingOrder: {canvas.sortingOrder}\nActive: {canvas.gameObject.activeSelf}\nEnabled: {canvas.enabled}");
+                }
+                else
+                {
+                    ShowMessage("ERROR: Kill switch canvas is NULL!");
+                }
+            }
+            else
+            {
+                ShowMessage("ERROR: AppLovinManager.Instance is null");
+            }
         }
 
         #endregion

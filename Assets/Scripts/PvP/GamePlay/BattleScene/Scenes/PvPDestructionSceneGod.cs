@@ -165,6 +165,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
 #endif
             SceneNavigator.SceneLoaded(SceneNames.PvP_DESTRUCTION_SCENE);
 
+            // Log battle values for debugging simulations
+            BattleCruisers.Utils.Debugging.AdminPanel.LogPvPBattleValues();
+
             // Hide rewarded ad button by default
             if (rewardedAdButton != null)
             {
@@ -1043,21 +1046,35 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         /// <summary>
         /// Grant the rewarded ad reward to player (additional on top of base rewards)
         /// </summary>
-        private void GrantRewardedAdReward()
+        private async void GrantRewardedAdReward()
         {
             var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
-            
+
             // Mark as watched (only on first time)
             if (!AdConfigManager.HasEverWatchedRewardedAd())
             {
                 AdConfigManager.MarkRewardedAdWatched();
                 Debug.Log("[PvP Rewards] Player marked as ADWATCHER (was VIRGIN)");
             }
-            
+
             // Grant additional rewards (base rewards already granted in UpdateGameModelVals)
             DataProvider.GameModel.Coins += coins;
             DataProvider.GameModel.Credits += credits;
+
+            // Save locally first
             DataProvider.SaveGame();
+
+            // CRITICAL: Sync rewarded currency changes to cloud immediately to prevent CloudLoad from overwriting
+            try
+            {
+                await DataProvider.SyncCoinsToCloud();
+                await DataProvider.SyncCreditsToCloud();
+                Debug.Log("[PvP Rewards] Currency synced to cloud");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[PvP Rewards] Failed to sync to cloud: {e.Message}");
+            }
             
             // Update UI to show new totals (base + ad reward)
             if (coinsCounter != null)

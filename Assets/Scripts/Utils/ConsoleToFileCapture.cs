@@ -18,9 +18,16 @@ namespace BattleCruisers.Utils
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            // Create log file path (project root, next to Assets folder)
+            // Create log file path - use persistentDataPath for cross-platform compatibility
+            // On Android: /storage/emulated/0/Android/data/com.package/files/
+            // On iOS: Application sandbox Documents folder
+            // In Editor: Project root
+            #if UNITY_EDITOR
             string projectRoot = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
             logFilePath = Path.Combine(projectRoot, "RuntimeConsole.log");
+            #else
+            logFilePath = Path.Combine(Application.persistentDataPath, "RuntimeConsole.log");
+            #endif
 
             // Initialize file with header
             try
