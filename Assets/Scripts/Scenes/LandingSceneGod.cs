@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data;
+using BattleCruisers.Data;
 using BattleCruisers.UI.Music;
 using BattleCruisers.UI.Sound.AudioSources;
 using BattleCruisers.UI.Sound.Players;
@@ -195,6 +195,15 @@ namespace BattleCruisers.Scenes
             {
                 LogToScreen("Auth events failed the register"); // ONLINE SERVICES UNAVAILABLE
                 Debug.LogError("Auth events failed the register");
+            }
+
+            // Skip sign-in screen in development builds - auto-play as guest
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log("[LandingSceneGod] Development build detected - skipping sign-in screen, auto-playing as guest");
+                LogToScreen("Dev build - auto guest login");
+                AnonymousLogin();
+                return;
             }
 
             if (HasInternetConnection)
