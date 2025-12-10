@@ -61,7 +61,11 @@ namespace BattleCruisers.Ads
 #if UNITY_EDITOR
             LogDebug("Running in Editor - simulating SDK initialization");
             Invoke(nameof(SimulateInitSuccess), 1f);
-#elif UNITY_ANDROID || UNITY_IOS
+#elif UNITY_ANDROID
+            // Enable hardware acceleration for WebViews (critical for AppLovin ads)
+            UnityEngine.Android.WebView.enableWebViewAcceleration = true;
+            LogDebug("Enabled WebView hardware acceleration");
+
             if (string.IsNullOrEmpty(sdkKey) || sdkKey == "YOUR_SDK_KEY")
             {
                 Debug.LogError("[AppLovin] SDK Key not set! Please set it in the Inspector.");
