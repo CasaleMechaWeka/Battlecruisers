@@ -11,8 +11,8 @@ using UnityEditor.Android;
 /// </summary>
 public class FixGradleKotlinOptions : IPostGenerateGradleAndroidProject
 {
-    // Kotlin version compatible with Unity 2021.3 and AppLovin SDK 13.5.1
-    private const string KotlinVersion = "1.9.22";
+    // Force Unity 2022.3's native Kotlin version (1.9.0) for compatibility with Firebase 20.x
+    private const string KotlinVersion = "1.9.0";
     
     public void OnPostGenerateGradleAndroidProject(string path)
     {

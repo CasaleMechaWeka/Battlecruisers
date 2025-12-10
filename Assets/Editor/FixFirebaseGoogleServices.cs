@@ -29,36 +29,74 @@ public class FixFirebaseGoogleServices : IPostGenerateGradleAndroidProject
             UnityEngine.Debug.LogWarning($"[FixFirebaseGoogleServices] google-services.json not found at {googleServicesSource}");
         }
 
-        // Add classpath to root build.gradle
+        // Add classpath to root build.gradle - MUST be inside buildscript { dependencies { } }
         var rootGradle = Path.Combine(path, "../build.gradle");
         if (File.Exists(rootGradle))
         {
-            var rootLines = File.ReadAllLines(rootGradle).ToList();
-            if (!rootLines.Any(l => l.Contains("google-services")))
+            var content = File.ReadAllText(rootGradle);
+            
+            // Check if google-services classpath is already present
+            if (!content.Contains("google-services"))
             {
-                // Find buildscript block or add it
-                var hasBuildscript = rootLines.Any(l => l.Contains("buildscript"));
-                if (!hasBuildscript)
+                // Check if buildscript block exists at the ROOT level (not inside allprojects)
+                if (content.Contains("buildscript {") && !content.StartsWith("allprojects"))
                 {
-                    rootLines.Insert(0, "buildscript {");
-                    rootLines.Insert(1, "    repositories { google(); mavenCentral() }");
-                    rootLines.Insert(2, "    dependencies { classpath 'com.google.gms:google-services:4.4.0' }");
-                    rootLines.Insert(3, "}");
-                    rootLines.Insert(4, "");
+                    // Find buildscript dependencies block and add classpath there
+                    var lines = content.Split('\n').ToList();
+                    bool inBuildscript = false;
+                    bool foundDependencies = false;
+                    
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        var line = lines[i].Trim();
+                        
+                        // Track if we're inside the buildscript block
+                        if (line.StartsWith("buildscript") && line.Contains("{"))
+                        {
+                            inBuildscript = true;
+                        }
+                        
+                        // Find dependencies inside buildscript
+                        if (inBuildscript && line.Contains("dependencies") && line.Contains("{"))
+                        {
+                            // Insert classpath after this line
+                            lines.Insert(i + 1, "        classpath 'com.google.gms:google-services:4.4.0'");
+                            foundDependencies = true;
+                            break;
+                        }
+                        
+                        // Exit buildscript block
+                        if (inBuildscript && line == "}" && !line.Contains("{"))
+                        {
+                            inBuildscript = false;
+                        }
+                    }
+                    
+                    if (foundDependencies)
+                    {
+                        File.WriteAllText(rootGradle, string.Join("\n", lines));
+                        UnityEngine.Debug.Log("[FixFirebaseGoogleServices] Added google-services classpath to buildscript.dependencies");
+                    }
                 }
                 else
                 {
-                    // Add to existing buildscript
-                    for (int i = 0; i < rootLines.Count; i++)
-                    {
-                        if (rootLines[i].Contains("dependencies") && rootLines[i].Contains("{"))
-                        {
-                            rootLines.Insert(i + 1, "        classpath 'com.google.gms:google-services:4.4.0'");
-                            break;
-                        }
-                    }
+                    // No buildscript block at root level - create one at the beginning
+                    var newContent = "buildscript {\n" +
+                                     "    repositories {\n" +
+                                     "        google()\n" +
+                                     "        mavenCentral()\n" +
+                                     "    }\n" +
+                                     "    dependencies {\n" +
+                                     "        classpath 'com.google.gms:google-services:4.4.0'\n" +
+                                     "    }\n" +
+                                     "}\n\n" + content;
+                    File.WriteAllText(rootGradle, newContent);
+                    UnityEngine.Debug.Log("[FixFirebaseGoogleServices] Created buildscript block with google-services classpath");
                 }
-                File.WriteAllText(rootGradle, string.Join("\n", rootLines) + "\n");
+            }
+            else
+            {
+                UnityEngine.Debug.Log("[FixFirebaseGoogleServices] google-services classpath already present");
             }
         }
 

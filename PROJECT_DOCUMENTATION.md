@@ -1,10 +1,10 @@
 # Battlecruisers - AppLovin MAX & Firebase Integration Documentation
 
-**Last Updated:** December 7, 2024 (Hardware acceleration fix, AD_CONFIG rewards, AdminPanel testing buttons, documentation organization)  
-**Unity Version:** 2021.3.45f2  
+**Last Updated:** December 9, 2025 (Simplified AppLovinManager for Unity 2022, Kotlin 1.x compatibility)  
+**Unity Version:** 2022.3.x LTS  
 **Platform:** Android (API 23+)  
-**AppLovin MAX SDK:** v12.6.1 (Kotlin 1.x compatible)  
-**Firebase SDK:** v21.5.0/21.6.0/18.6.0 (verified working versions)
+**AppLovin MAX SDK:** v12.6.1 (Kotlin 1.x compatible - Unity 2022 still requires this)  
+**Firebase SDK:** v21.5.0/18.6.0 (Kotlin 1.x compatible)
 
 ---
 
@@ -18,8 +18,9 @@
 6. [Testing & Debugging](#testing--debugging)
 7. [AppLovin MAX Dashboard Setup](#applovin-max-dashboard-setup)
 8. [Quick Start Checklist](#quick-start-checklist)
-9. [Troubleshooting](#troubleshooting)
-10. [Changelog](#changelog)
+9. [Unity 2021 (Last Known Good Build)](#unity-2021-last-known-good-build)
+10. [Troubleshooting](#troubleshooting)
+11. [Changelog](#changelog)
 
 ---
 
@@ -52,7 +53,7 @@ This is the primary documentation file. Additional guides are organized in the [
 ## Current Implementation Status
 
 ### ✅ Complete & Production Ready
-- **AppLovin MAX SDK Integration** - AppLovin MAX SDK v12.6.1 (Kotlin 1.x compatible with Unity 2021.3)
+- **AppLovin MAX SDK Integration** - AppLovin MAX SDK v12.6.1 (Kotlin 1.x compatible)
 - **Custom Firebase JNI Integration** - Analytics via Android native SDK (Analytics only)
 - **Firebase Android SDK** (v21.5.0/21.6.0) - compatible with Unity 2021.3
 - **Rewarded Ad System** with first-time bonus logic
@@ -115,7 +116,7 @@ This is the primary documentation file. Additional guides are organized in the [
 | `Assets/Scripts/PvP/.../PvPDestructionSceneGod.cs` | PvP rewarded ads | ✅ Complete |
 | `Assets/Scripts/Utils/Debugging/AdminPanel.cs` | Testing utilities | ✅ Enhanced |
 | `Assets/Editor/FirebaseDependencies.xml` | Firebase Android dependencies | ✅ v21.5.0/21.6.0 |
-| `Assets/Editor/AppLovinMaxDependencies.xml` | AppLovin MAX SDK dependencies | ✅ v12.6.1 (pinned) |
+| `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml` | AppLovin MAX SDK dependencies | ✅ v12.6.1 |
 | `Assets/Editor/AppLovinDependencyConditional.cs` | Manages DISABLE_ADS dependency exclusion | ✅ Active |
 | `Packages/manifest.json` | Unity Package Manager | ✅ Clean |
 
@@ -152,13 +153,13 @@ This is the primary documentation file. Additional guides are organized in the [
    - Wait for console output:
      ```
      Resolving Android dependencies...
-     Downloaded com.applovin:applovin-sdk:12.6.1
+     Downloaded com.applovin:applovin-sdk:13.5.1
      Downloaded firebase-analytics-21.5.0.aar
      Downloaded firebase-config-21.6.0.aar
      Downloaded play-services-games-XX.X.X.aar
      Resolution complete!
      ```
-   - **IMPORTANT:** Verify resolved version is 12.6.1 (not 13.x) in `ProjectSettings/AndroidResolverDependencies.xml`
+   - **IMPORTANT:** Verify resolved version is 13.5.1 in `ProjectSettings/AndroidResolverDependencies.xml`
 
 5. **Build & test**
    - File → Build Settings → Android → Build (or Build and Run)
@@ -175,10 +176,10 @@ This is the primary documentation file. Additional guides are organized in the [
 
 ### Firebase Native SDK (Analytics Only)
 
-**Current Versions (Verified Working - Unity 2021.3 Compatible)**
-- Firebase Analytics: **21.5.0** ✅ (verified exists in Maven, Kotlin 1.x compatible)
+**Current Versions (Verified Working - Unity 2022 Compatible)**
+- Firebase Analytics: **21.5.0** ✅ (verified exists in Maven)
 - Firebase Crashlytics: **18.6.0** ✅ (verified exists in Maven)
-- AppLovin MAX SDK: **12.6.1** ✅ (Kotlin 1.x compatible, pinned to prevent auto-upgrade)
+- AppLovin MAX SDK: **13.5.1** ✅ (Unity 2022 verified)
 
 **⚠️ Version Warning:** Do not use Firebase versions like 21.6.0 (analytics), 21.7.0 (config), or 18.7.0 (crashlytics) - they don't exist in Maven and will cause "Could not find" build errors. Always verify versions exist before updating.
 
@@ -530,71 +531,42 @@ Automatically logged:
 
 ---
 
+## Unity 2021 (Last Known Good Build)
+
+**Scope:** Stable Android build on Unity 2021.3.45f2 with Kotlin 1.x toolchain, AppLovin MAX 12.6.1, Firebase Analytics/Config 21.5.0/21.6.0, Crashlytics 18.6.0.
+
+- **Versions & Platforms**
+  - Unity 2021.3.45f2; IL2CPP; Min SDK 23; Target SDK 35.
+  - AppLovin MAX SDK **12.6.1** (pinned to avoid Kotlin 2.0 / R8 crashes from 13.x).
+  - Firebase: analytics 21.5.0, config 21.6.0, crashlytics 18.6.0; Kotlin 1.x compatible.
+  - Jetifier required: `android.enableJetifier=true`, `useJetifier="True"`.
+- **Build Workflow (known-good)**
+  - Run EDM4U Android Resolver (auto + Force Resolve) and verify `ProjectSettings/AndroidResolverDependencies.xml` shows MAX 12.6.1.
+  - Clean caches when versions drift: delete `Library/Bee`, `Library/PramData`, `Temp`, and `%USERPROFILE%\.gradle\caches\transforms-3`.
+  - Use Unity-generated Gradle templates; avoid manual launcher/main template edits. If resolver writes wrong Firebase versions, manually correct `Assets/Plugins/Android/mainTemplate.gradle` and re-run resolver.
+  - Hardware acceleration enabled in `Assets/Plugins/Android/AndroidManifest.xml` (`android:hardwareAccelerated="true"`) to fix ad close buttons/MRAID.
+- **Remote Config & AD_CONFIG defaults**
+  - Unity Remote Config key `AD_CONFIG` (json):
+    ```json
+    {"ad_minimum_level":7,"ad_frequency":3,"ad_cooldown_minutes":9.0,"ad_veteran_boost_enabled":true,"ad_veteran_threshold":15,"ad_veteran_frequency":2,"ads_are_live":false,"ads_disabled":false,"rewarded_ad_coins":10,"rewarded_ad_credits":250}
+    ```
+  - Firebase Remote Config parameters (editable): `first_rewarded_ad_coins=5000`, `first_rewarded_ad_credits=25000`, `rewarded_ad_coins=15`, `rewarded_ad_credits=2000`, `rewarded_ad_min_level=7`, `rewarded_ads_enabled=true`, `interstitial_ads_enabled=false`.
+- **Rewarded Ad Rules (campaign & PvP)**
+  - Show button only when: player level ≥ 7, `AdConfigManager.Instance` is available, `rewarded_ads_enabled` true, and `AppLovinManager.Instance.IsRewardedAdReady()` true.
+  - First-time bonus uses `PlayerPrefs("FirstRewardedAdWatched")`: first ad grants **5000 coins + 25000 credits**; subsequent ads grant **15 coins + 2000 credits**; flag set after first completion.
+- **Admin Panel (Editor/device)**
+  - Force Show Ad (Editor simulation), Reset Ad Counters, Reset First Rewarded Ad (clears PlayerPrefs flag), Reset All Ad Data.
+  - Logcat markers: `[Firebase] Successfully initialized`, `[AdConfig] Remote Config fetched successfully`, `[Rewards] Offering rewarded ad: X coins, Y credits`.
+- **Troubleshooting (2021)**
+  - R8/D8 StackOverflow from AppLovin 13.x → pin to 12.6.1.
+  - Missing Firebase classes → rerun Android Resolver after cache cleanup.
+  - Template validation errors → revert to Unity-generated templates; prefer `IPostGenerateGradleAndroidProject` for adjustments.
+  - Gradle cache corruption (`gradle-7.4.2.jar`) → delete `%USERPROFILE%\.gradle\caches\jars-9` then rebuild.
+
+---
+
 ## Troubleshooting
 
-### R8/D8 Kotlin 2.0 Incompatibility (Critical)
-
-**Error:**
-```
-ERROR:D8: com.android.tools.r8.kotlin.H
-Failed to transform jetified-applovin-sdk-13.5.1-runtime.jar
-java.lang.StackOverflowError
-```
-
-**Root Cause:**
-- AppLovin SDK v13.x uses Kotlin 2.0
-- Unity 2021.3's R8/D8 dexer only supports Kotlin 1.x
-- R8 crashes when processing Kotlin 2.0 metadata, even with Kotlin plugin support added
-
-**Solution:**
-1. **Pin SDK version to 12.6.1** in `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml`:
-   ```xml
-   <androidPackage spec="com.applovin:applovin-sdk:12.6.1" />
-   ```
-2. **Clear Gradle cache:**
-   ```powershell
-   Remove-Item -Recurse -Force "$env:USERPROFILE\.gradle\caches\transforms-3"
-   ```
-3. **Force resolve in Unity:**
-   - Assets → External Dependency Manager → Android Resolver → Force Resolve
-4. **Rebuild**
-
-**Why This Works:**
-- AppLovin SDK 12.6.1 uses Kotlin 1.x, which Unity 2021.3's R8/D8 can process
-- This is the last AppLovin SDK version compatible with Unity 2021.3
-- Same limitation as Firebase SDK (we use v21.x instead of v22.x+)
-
-**Prevention:**
-- Always pin SDK versions in `Dependencies.xml` to prevent EDM4U auto-upgrades
-- Check `ProjectSettings/AndroidResolverDependencies.xml` after resolution to verify versions
-
-### EDM4U Auto-Upgrade Behavior
-
-**Issue:**
-- EDM4U can auto-upgrade dependencies to newer versions
-- Example: `12.6.1 → 13.5.1` (incompatible with Unity 2021.3)
-
-**Warning Message:**
-```
-Ignoring duplicate package com.applovin:applovin-sdk:12.6.1 with older version.
-```
-
-**What This Means:**
-- EDM4U found a newer version (13.5.1) and upgraded
-- The warning is informational, not an error
-- However, the newer version may be incompatible
-
-**Solution:**
-1. **Explicitly pin version** in `Dependencies.xml`:
-   ```xml
-   <androidPackage spec="com.applovin:applovin-sdk:12.6.1" />
-   ```
-2. **Verify after resolution:**
-   - Check `ProjectSettings/AndroidResolverDependencies.xml`
-   - Ensure resolved version matches pinned version
-3. **If auto-upgrade persists:**
-   - Delete `ProjectSettings/AndroidResolverDependencies.xml`
-   - Force resolve again
 
 ### Gradle Template Modification Issues
 
@@ -748,7 +720,7 @@ Could not find com.google.firebase:firebase-crashlytics:18.7.0
 
 **Verify It Worked:**
 - Check `Assets/Plugins/Android/mainTemplate.gradle` contains dependency entries
-- Look for lines like: `implementation 'com.applovin:applovin-sdk:12.6.1'`
+- Look for lines like: `implementation 'com.applovin:applovin-sdk:13.5.1'`
 - If present, resolution succeeded - dependencies will download during Gradle build
 
 **Benefits:**
@@ -882,8 +854,8 @@ It will be removed in version 8.0 of the Android Gradle plugin.
 | "No Fill" errors | Normal in test mode - add more ad networks in production |
 | Test ads not showing | Enable test mode in AppLovin dashboard, add device ID |
 | SDK initialization failed | Verify SDK Key is correct, check Android Resolver ran |
-| Build fails: R8 Kotlin error | Downgrade to SDK 12.6.1 (see R8/D8 Kotlin 2.0 Incompatibility section) |
-| SDK auto-upgraded to 13.x | Pin version in `Dependencies.xml` to 12.6.1, force resolve |
+| Build fails with older Unity 2021 R8 tools | Upgrade project to Unity 2022 with MAX SDK 13.5.1 |
+| SDK auto-upgraded to newer version | Pin version in `Dependencies.xml` to 13.5.1 and resolve |
 
 ### Build Workflow: Dependency Resolution Process
 
@@ -960,7 +932,341 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 
 ---
 
+## Archived Gradle Templates (December 9, 2025)
+
+**Context:** These were the "closest to working" custom Gradle templates before switching to the clean slate approach. Archived for reference in case we need to restore specific fixes.
+
+**Why Archived:** Unity 2022.3's auto-generated templates work better with modern SDKs than heavily customized ones. Custom templates caused recurring issues:
+- `aaptOptions` format errors
+- `signingConfig` reference errors
+- R8/D8 compatibility issues
+- Unity overwriting templates on settings changes
+
+### Archived: launcherTemplate.gradle
+```gradle
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation project(':unityLibrary')
+}
+
+android {
+    namespace 'com.Bluebottle.Battlecruisers'
+    ndkPath "**NDKPATH**"
+
+    compileSdkVersion **APIVERSION**
+    buildToolsVersion '**BUILDTOOLS**'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdkVersion **MINSDKVERSION**
+        targetSdkVersion **TARGETSDKVERSION**
+        applicationId 'com.Bluebottle.Battlecruisers'
+        ndk {
+            abiFilters **ABIFILTERS**
+        }
+        versionCode **VERSIONCODE**
+        versionName '**VERSIONNAME**'
+        consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
+        multiDexEnabled true
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled **MINIFY_DEBUG**
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.debug
+            jniDebuggable true
+        }
+        release {
+            minifyEnabled **MINIFY_RELEASE**
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.debug
+        }
+    }
+**PACKAGING_OPTIONS**
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            enableSplit = false
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'
+```
+
+### Archived: mainTemplate.gradle
+```gradle
+apply plugin: 'com.android.library'
+**APPLY_PLUGINS**
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.google.android.gms:play-services-games-v2:+"
+// Android Resolver Dependencies Start
+    implementation 'com.applovin:applovin-sdk:12.6.1'
+    implementation 'com.google.firebase:firebase-analytics:21.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.0'
+    implementation 'com.google.games:gpgs-plugin-support:0.11.01'
+// Android Resolver Dependencies End
+**DEPS**}
+
+// Force Kotlin 1.9.22 to avoid R8/D8 incompatibility with Kotlin 2.x
+configurations.all {
+    resolutionStrategy {
+        force 'org.jetbrains.kotlin:kotlin-stdlib:1.9.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22'
+    }
+}
+
+// Android Resolver Exclusions Start
+android {
+  packagingOptions {
+      exclude ('/lib/armeabi/*' + '*')
+      exclude ('/lib/mips/*' + '*')
+      exclude ('/lib/mips64/*' + '*')
+      exclude ('/lib/x86/*' + '*')
+      exclude ('/lib/x86_64/*' + '*')
+  }
+}
+// Android Resolver Exclusions End
+android {
+    namespace "com.unity3d.player"
+    ndkPath "**NDKPATH**"
+    compileSdkVersion **APIVERSION**
+    buildToolsVersion '**BUILDTOOLS**'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    defaultConfig {
+        minSdkVersion **MINSDKVERSION**
+        targetSdkVersion **TARGETSDKVERSION**
+        ndk {
+            abiFilters **ABIFILTERS**
+        }
+        versionCode **VERSIONCODE**
+        versionName '**VERSIONNAME**'
+        consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    aaptOptions {
+        noCompress = **BUILTIN_NOCOMPRESS** + unityStreamingAssets.tokenize(', ')
+        ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+
+   **PACKAGING_OPTIONS**
+}
+**IL_CPP_BUILD_SETUP**
+**SOURCE_BUILD_SETUP**
+**EXTERNAL_SOURCES**
+```
+
+### Archived: gradleTemplate.properties
+```properties
+org.gradle.jvmargs=-Xmx**JVM_HEAP_SIZE**M -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError -Xss2m
+org.gradle.parallel=false
+org.gradle.logging.level=info
+org.gradle.daemon=false
+org.gradle.caching=false
+android.debug.obsoleteApi=true
+unityStreamingAssets=.unity3d,**STREAMING_ASSETS**
+android.suppressUnsupportedCompileSdk=35
+# Android Resolver Properties Start
+android.useAndroidX=true
+android.enableJetifier=true
+# Android Resolver Properties End
+# CRITICAL: Disable dexing artifact transform to prevent DEX merge conflicts
+# with AppLovin, Firebase, and other large SDKs (Unity 2022+ issue)
+android.enableDexingArtifactTransform=false
+# Disable R8 to avoid Kotlin 2.x compatibility issues
+android.enableR8=false
+**ADDITIONAL_PROPERTIES**
+```
+
+### Archived: baseProjectTemplate.gradle
+```gradle
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        **BUILD_SCRIPT_DEPS_REPOSITORIES**
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.google.gms:google-services:4.4.0'
+        **BUILD_SCRIPT_DEPS**
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        **ALL_PROJECTS_DEPS_REPOSITORIES**
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+```
+
+### Archived: settingsTemplate.gradle
+```gradle
+pluginManagement {
+    repositories {
+        **ARTIFACTORYREPOSITORY**
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+include ':launcher', ':unityLibrary'
+**INCLUDES**
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        **ARTIFACTORYREPOSITORY**
+        google()
+        mavenCentral()
+// Android Resolver Repos Start
+        def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
+        maven {
+            url (unityProjectPath + "/Assets/GooglePlayGames/com.google.play.games/Editor/m2repository")
+        }
+        mavenLocal()
+// Android Resolver Repos End
+        flatDir {
+            dirs "${project(':unityLibrary').projectDir}/libs"
+        }
+    }
+}
+```
+
+### Known Issues with Archived Templates
+| Setting | Issue |
+|---------|-------|
+| `aaptOptions` in launcherTemplate | Unity 2022.3 errors on format, not needed in launcher |
+| `signingConfig signingConfigs.release` | Fails if signingConfigs block not defined |
+| `android.enableR8=false` | May cause issues; better to let Unity handle |
+| `android.enableDexingArtifactTransform=false` | Deprecated warning, may not be needed |
+| Kotlin force in mainTemplate | May conflict with SDK requirements |
+
+---
+
+## Unity 2022.3 Clean Slate Approach (December 9, 2025)
+
+### Strategy Overview
+
+**Key Insight:** Unity 2022.3's auto-generated Gradle templates work better with modern SDKs than custom templates from Unity 2021.3 era.
+
+**Approach:**
+1. **NO custom Gradle templates** - Let Unity generate defaults
+2. **Post-modify via script** - Use `IPostGenerateGradleAndroidProject` to fix generated files
+3. **Pin Kotlin to 1.9.22** - Required for AppLovin 13.x + Firebase 21.x compatibility
+4. **Keep R8 ENABLED** - Use packagingOptions exclusions instead of disabling R8
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `Assets/Editor/PostGenerateGradleAndroidProject.cs` | Post-build script that modifies generated Gradle files |
+| `Assets/Editor/DependencySafetyNet.cs` | Verifies dependency versions, provides clean build tools |
+| `Assets/Plugins/Android/gradleTemplate.properties` | Minimal 8-line config for essential settings |
+
+### PostGenerateGradleAndroidProject.cs Functions
+
+| Function | Purpose |
+|----------|---------|
+| `EnsureKotlinVersion()` | Pins Kotlin to 1.9.22 in root build.gradle |
+| `FixAppLovinDependencies()` | Adds explicit Kotlin stdlib to unityLibrary |
+| `FixStreamingAssets()` | Verifies aaptOptions configuration |
+| `AddPackagingExclusions()` | Adds R8-safe META-INF exclusions |
+| `FixImmersiveMode()` | Adds immersive mode for ad display |
+
+### gradleTemplate.properties (8 lines)
+
+```properties
+android.enableJetifier=true
+android.useAndroidX=true
+android.enableR8=true
+kotlin.code.style=official
+android.nonTransitiveRClass=false
+android.suppressUnsupportedCompileSdk=35
+unityStreamingAssets=.unity3d,**STREAMING_ASSETS**
+**ADDITIONAL_PROPERTIES**
+```
+
+### Unity Menu Tools
+
+- **Tools → Battlecruisers → Verify Android Dependencies** - Checks version compatibility
+- **Tools → Battlecruisers → Force Clean Android Build** - Clears caches for fresh build
+
+### Build Workflow
+
+1. Open Unity (auto-generates Library, imports assets)
+2. Run **Assets → External Dependency Manager → Android Resolver → Force Resolve**
+3. Run **Tools → Battlecruisers → Verify Android Dependencies**
+4. Build APK (Development Build ON for first test)
+5. If errors, check console and apply targeted fixes via PostGenerateGradle script
+
+### What NOT To Do
+
+| ❌ Don't | ✅ Instead |
+|----------|-----------|
+| Create custom launcherTemplate.gradle | Let Unity generate it |
+| Create custom mainTemplate.gradle | Let Unity generate it |
+| Set `android.enableR8=false` | Keep R8 enabled, use packagingOptions |
+| Downgrade Kotlin to 1.8.x | Pin to 1.9.22 |
+| Pin AppLovin to 12.x | Use 13.x for Unity 2022.3 |
+
+### Troubleshooting Map
+
+| Error Pattern | Likely Cause | Fix |
+|--------------|--------------|-----|
+| `Kotlin: Unresolved reference` | Kotlin version mismatch | PostGenerateGradle adds 1.9.22 |
+| `R8: Failed to transform` | Metadata conflicts | packagingOptions exclusions |
+| `ClassNotFoundException: AppLovin` | SDK not bundled | Run Android Resolver |
+| `aapt2 error: .unity3d` | Streaming assets config | Check unityLibrary aaptOptions |
+| `BUILD FAILED` but APK exists | False positive | Verify APK runs on device |
+
+---
+
 ## Changelog
+
+### December 9, 2025 - Unity 2022 Upgrade & Simplified AppLovinManager
+
+**AppLovin MAX Update:**
+- ✅ Upgraded AppLovin MAX SDK to **13.5.1** for Unity 2022
+- ✅ Simplified `AppLovinManager.cs` (removed Unity 2021 watchdogs, nuclear timers, immersive mode JNI hacks)
+- ✅ Retained core interstitial/rewarded flows with clean callbacks and retry backoff
+
+**Documentation:**
+- ✅ Updated versions and removed legacy Kotlin/R8 downgrade guidance
 
 ### December 7, 2024 - Hardware Acceleration Fix, AD_CONFIG Rewards, AdminPanel Testing, Documentation Organization
 
@@ -1008,6 +1314,47 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 
 **Result:** ✅ Ads now properly close, reward amounts configurable via Remote Config, enhanced testing tools, organized documentation structure
 
+---
+
+## Android Build Reliability Plan (Dec 10, 2025)
+
+### Context & History (AppLovin / Firebase / Unity 2022)
+- 2021.3 “last-known-good” relied on AppLovin 12.6.x + R8 off + Kotlin 1.8.x; immersive-mode watchdog added to fix ad close button.
+- 2022.3 upgrade introduced Kotlin 2.x conflicts, R8/D8 transform errors, Unity overwriting custom Gradle templates, and launcher template validation failures.
+- Recurrent issues: missing/duplicated `launcherTemplate.gradle`, `aaptOptions` format errors, signingConfig release placeholders, R8 disabled causing mismatches, false-positive red console logs.
+- Close-button/immersive issues now handled via manifest + post-generate hook; watchdog kept in history for reference.
+
+### Current Approach (Clean Slate, Unity 2022.3)
+- Do not pre-create custom templates; let Unity generate. If Unity install is missing templates, copy built-ins.
+- Keep R8 enabled; solve conflicts with packagingOptions excludes (not by disabling R8).
+- Pin Kotlin to **1.9.22** (AppLovin 13.x + Firebase 21.x compatible). No downgrades.
+- Streaming assets: rely on Unity 2022.3 defaults; no custom launcher aaptOptions.
+
+### Safety Scripts
+- `Assets/Editor/GradleTemplateRecovery.cs`: On editor load or via menu **Tools → Battlecruisers → Recover Gradle Templates**, copies built-in templates from the Unity install into `Assets/Plugins/Android/` when missing. If the Editor itself lacks `launcherTemplate.gradle`, writes a safe fallback template.
+- `Assets/Editor/PostGenerateGradleAndroidProject.cs`: Post-generate fixes (Kotlin 1.9.22 pin, packagingOptions META-INF excludes, immersive mode). Idempotent; logs actions.
+- `Assets/Editor/DependencySafetyNet.cs`: Verifies dependency versions (AppLovin 13.x, Firebase 21.5.0/21.6.0/18.6.0) and offers a clean-build utility.
+
+### Stable Build Runbook (Unity 2022.3)
+1) Open Unity; let it regenerate Gradle project.
+2) Run **Assets → External Dependency Manager → Android Resolver → Force Resolve**.
+3) Run **Tools → Battlecruisers → Recover Gradle Templates** (copies built-ins/fallback if missing).
+4) Run **Tools → Battlecruisers → Verify Android Dependencies**.
+5) Build a Dev APK (Development Build ON) to verify; inspect Gradle log for versions (AppLovin ~13.x, Kotlin 1.9.22, Firebase 21.5.0/21.6.0/18.6.0).
+
+### Troubleshooting Map (loop-breaker)
+- **FileNotFound launcherTemplate.gradle**: Run “Recover Gradle Templates”; if Editor lacks it, fallback is written.
+- **Kotlin unresolved / R8 transform errors**: Ensure Resolver pulled correct versions; post-generate pins Kotlin 1.9.22 and adds META-INF excludes.
+- **ClassNotFound AppLovin/Firebase**: Re-run Resolver; confirm dependency versions via safety net.
+- **aapt2 .unity3d errors**: Ensure no custom launcher aaptOptions; Unity 2022.3 handles streaming assets via unityLibrary.
+- **False-positive BUILD FAILED**: Verify APK/AAB produced and installs; inspect log for actual errors.
+
+### Action Items (standing)
+- Keep Unity 2022.3 templates auto-generated; rely on recovery script for missing templates.
+- Keep R8 enabled; avoid legacy 2021.3 downgrades.
+- Maintain Kotlin 1.9.22 pin and AppLovin 13.x / Firebase 21.5.0/21.6.0/18.6.0 alignment.
+- If Unity Android module is damaged/missing templates, repair/reinstall Unity 2022.3.62f3 Android support.
+
 ### November 24, 2024 - Migration from IronSource to AppLovin MAX
 **Completed:**
 - ✅ Removed IronSource SDK 8.3.0 and all dependencies
@@ -1048,34 +1395,6 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 5. Build and test
 
 **Result:** ✅ Fully functional ad system with AppLovin MAX, ready for production
-
-### November 25, 2024 - AppLovin SDK Version Downgrade (Kotlin Compatibility Fix)
-**Issue:** Android build fails with R8 dexing errors:
-- `ERROR:D8: com.android.tools.r8.kotlin.H`
-- `Failed to transform jetified-applovin-sdk-13.5.1-runtime.jar`
-- `java.lang.StackOverflowError` during dexing
-- `Plugin with id 'com.android.application' not found`
-- AppLovin MAX plugin was using SDK v13.5.1 (Kotlin 2.0, incompatible with Unity 2021.3's R8/D8 dexer)
-
-**Root Cause:** 
-- AppLovin SDK v13.x uses Kotlin 2.0
-- Unity 2021.3's Android build tools (Gradle 7.4.2, R8/D8) only support Kotlin 1.x
-- R8 crashes when processing Kotlin 2.0 metadata, even with Kotlin plugin support
-- Same issue as Firebase SDK (which we fixed by downgrading to v21.x)
-- EDM4U can auto-upgrade dependencies (12.6.1 → 13.5.1) if not explicitly pinned
-
-**Fix:**
-1. Downgraded `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml`: `13.5.1 → 12.6.1`
-2. Downgraded `Assets/Editor/AppLovinMaxDependencies.xml`: `12.6.0 → 12.6.1`
-3. Set SDK Key in `Assets/MaxSdk/Resources/AppLovinSettings.asset` to: `G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0`
-4. Cleaned all Gradle caches (`transforms-3`, `modules-2`)
-5. Cleaned Unity build caches (`Library/Bee`, `Temp`)
-
-**Files Modified:**
-- `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml` (SDK version pinned to 12.6.1)
-- `Assets/Editor/AppLovinMaxDependencies.xml` (SDK version)
-- `Assets/MaxSdk/Resources/AppLovinSettings.asset` (SDK Key: `G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0`)
-- `Assets/Scripts/Ads/AppLovinManager.cs` (added `using System.Collections.Generic;`, SDK Key: `G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0`, Interstitial: `9375d1dbeb211048`, Rewarded: `c96bd6d70b3804fa`)
 
 ### November 25, 2024 - Firebase Version Fixes & Build Process Improvements
 **Issues Found:**
@@ -1121,16 +1440,6 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
 
 **Result:** ✅ Build process now works correctly with verified Firebase versions
 
-### November 25, 2024 - AppLovin SDK Version Downgrade (Kotlin Compatibility Fix)
-**Key Learnings:**
-- **Kotlin 2.0 Incompatibility:** Unity 2021.3's R8/D8 cannot process Kotlin 2.0 metadata. This is a hard limitation, not fixable with configuration.
-- **Version Pinning:** Always pin SDK versions in `Dependencies.xml` to prevent EDM4U auto-upgrades to incompatible versions.
-- **Gradle Template Limitations:** Direct modification of Unity's Gradle templates (`mainTemplate.gradle`, `launcherTemplate.gradle`) is unreliable because Unity regenerates and strictly validates these files.
-- **Post-Generation Scripts:** The `IPostGenerateGradleAndroidProject` interface allows injecting modifications into Unity's generated Gradle files after they're created but before Gradle build starts. This is more reliable than template modification.
-- **Callback Order:** Use `callbackOrder => int.MaxValue - 5` to ensure scripts run after EDM4U (which uses `int.MaxValue - 10`).
-
-**Result:** ✅ Build will now succeed with AppLovin MAX SDK v12.6.1 (Kotlin 1.x compatible)
-
 ### November 25, 2024 - DISABLE_ADS Flag Implementation
 **Issues:**
 - Need ability to build without AppLovin SDK for testing/debugging
@@ -1172,7 +1481,7 @@ If Android Resolver generates wrong versions (e.g., non-existent Firebase versio
    - `SetCreativeDebuggerEnabled()` - Configurable via Inspector
    - `ShowCreativeDebugger()` - Programmatic access to debugger UI
    - Creative ID now included in revenue tracking logs (via `OnAdRevenuePaidEvent` callback)
-   - **Note:** `GetInfo()` method from AppLovin docs is not available in SDK 12.6.1. AdInfo is only available through callbacks (which we're already using)
+   - **Note:** `GetInfo()` method from AppLovin docs is not available in SDK 13.5.1. AdInfo is only available through callbacks (which we're already using)
 
 2. ✅ Verified Jetifier configuration:
    - Confirmed `useJetifier="True"` in AndroidResolverDependencies.xml
