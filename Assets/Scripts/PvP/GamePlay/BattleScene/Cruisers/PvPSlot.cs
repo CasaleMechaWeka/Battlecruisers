@@ -278,8 +278,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruise
             _baseBuilding = new SettableBroadcastingProperty<IPvPBuilding>(initialValue: null);
             Building = new BroadcastingProperty<IPvPBuilding>(_baseBuilding);
 
-            Transform singleBoostEffect = transform.FindNamedComponent<Transform>("SingleBoostEffect");
-            Transform doubleBoostEffect = transform.FindNamedComponent<Transform>("DoubleBoostEffect");
+            Transform boostFeedback = transform.Find("BoostFeedback");
+            Transform singleBoostEffect = boostFeedback.FindNamedComponent<Transform>("SingleBoostEffect");
+            Transform doubleBoostEffect = boostFeedback.FindNamedComponent<Transform>("DoubleBoostEffect");
 
             _boostFeedbackMonitor = new PvPSlotBoostFeedbackMonitor(
                     this,
