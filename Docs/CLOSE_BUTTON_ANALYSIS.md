@@ -1,75 +1,64 @@
 # Ad Close Button Issue - Root Cause Analysis
 
-**Date:** December 11, 2025  
-**Status:** Issue Identified - Fix Required  
-**Symptoms:** Countdown timer shows, but close button never appears
+**Date:** December 12, 2025 (Updated)  
+**Status:** Multiple fixes applied, testing required  
+**Symptoms:** Countdown timer shows, install button shows, spinner shows, but close button NEVER appears
 
 ---
 
-## Key Finding
+## Known Issue
 
-**The TextureView parameter name is LIKELY INCORRECT.**
+This is a **widespread problem** affecting many developers across platforms (Unity, React Native, native Android). There is no single confirmed fix from AppLovin.
 
-### Current Implementation (Assets/Scripts/Ads/AppLovinManager.cs:88-90)
-```csharp
-MaxSdk.SetExtraParameter("use_texture_view", "true");
-MaxSdk.SetExtraParameter("video_use_texture_view", "true");
-```
-
-### Problem
-AppLovin MAX SDK may not recognize these parameter names. The correct parameter varies by SDK version:
-
-**Common Parameter Names:**
-- `"disable_video_surface_view"` - Disables SurfaceView (forces TextureView)
-- `"use_video_renderer"` - Specifies renderer type
-- SDK version 13.x may have different parameter names than 12.x
+**GitHub Issues:**
+- AppLovin-MAX-React-Native: "Many users have reported that they couldn't find the close button" (Oct 2025)
+- AppLovin-MAX-SDK-Android: "Ad is not closing on back button press" (Nov 2025)
 
 ---
 
-## Evidence
+## ✅ All Fixes Applied (Dec 12, 2025)
 
-### 1. Countdown Timer Works, Close Button Doesn't
-- **What this means:** The ad WebView is loading and JavaScript is executing
-- **Z-order is partially working:** Timer circle renders on top of video
-- **Close button specifically fails:** Suggests the button div has different rendering path
-
-### 2. Hardware Acceleration is Enabled
-- AndroidManifest.xml line 14: `android:hardwareAccelerated="true"`
-- AndroidManifest.xml lines 28, 42, 49, 55, 63: All activities have `android:hardwareAccelerated="true"`
-- **This is correct**
-
-### 3. No Post-Process Conflicts Found
-- AppLovinPostProcessAndroid.cs only modifies:
-  - gradle.properties (AndroidX, Jetifier, DexingArtifactTransform)
-  - AndroidManifest.xml (meta-data for verbose logging, Google App ID, auto-init flags)
-  - applovin_settings.json (SDK key, consent flow, renderOutsideSafeArea)
-- **No view rendering overrides**
-
-### 4. SDK Version Matters
-- Current: AppLovin MAX SDK 13.5.1
-- Unity 2022.3.x
-- Parameter names changed between SDK versions
-
----
-
-## ✅ Fixes Applied (All 3)
-
-### Fix #1: Disable SurfaceView ✅ APPLIED
+### Fix #1: Disable SurfaceView ✅
 ```csharp
 MaxSdk.SetExtraParameter("disable_video_surface_view", "true");
 ```
+Forces TextureView rendering instead of SurfaceView to prevent z-order issues.
 
-### Fix #2: Explicitly Set Video Renderer ✅ APPLIED
+### Fix #2: Video Renderer = Texture ✅
 ```csharp
 MaxSdk.SetExtraParameter("video_renderer", "texture");
 ```
+Explicitly sets the video renderer type.
 
-### Fix #3: Force WebView Hardware Acceleration ✅ APPLIED
+### Fix #3: WebView Hardware Acceleration ✅
 ```csharp
 MaxSdk.SetExtraParameter("webview_hardware_acceleration", "true");
 ```
+Ensures WebView can render properly.
 
-**Status:** All three fixes are now active in `AppLovinManager.InitializeAppLovin()` around line 86-96.
+### Fix #4: Disable render_outside_safe_area ✅ NEW
+```csharp
+MaxSdk.SetExtraParameter("render_outside_safe_area", "false");
+```
+**Critical for Android 15+ and devices with notches** - prevents close button from being pushed off-screen.
+
+### Fix #5: Force Close Button ✅ NEW
+```csharp
+MaxSdk.SetExtraParameter("force_close_button", "true");
+```
+Undocumented parameter that might force the close button to show.
+
+### Fix #6: Disable Immersive Mode ✅ NEW
+```csharp
+MaxSdk.SetExtraParameter("disable_immersive_mode", "true");
+```
+Prevents immersive mode from hiding system UI overlays.
+
+### Creative Debugger Enabled ✅ NEW
+```csharp
+MaxSdk.SetCreativeDebuggerEnabled(true);
+```
+Flip device twice during ad to access the Creative Debugger.
 
 ### Fix #4: Check AppLovin Console for Parameter Names
 1. Go to AppLovin Dashboard

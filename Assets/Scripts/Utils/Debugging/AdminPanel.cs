@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Ads;
+using BattleCruisers.Ads;
 using BattleCruisers.Buildables;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
@@ -1514,6 +1514,21 @@ namespace BattleCruisers.Utils.Debugging
             }
         }
         
+        /// <summary>
+        /// Show detailed AppLovin debug info
+        /// </summary>
+        public void ShowAppLovinDebugInfo()
+        {
+            if (AppLovinManager.Instance == null)
+            {
+                ShowMessage("ERROR: AppLovinManager missing!", true);
+                return;
+            }
+
+            string info = AppLovinManager.Instance.GetDebugInfo();
+            ShowMessage($"=== APPLOVIN DEBUG ===\n{info}");
+        }
+
         /// <summary>
         /// Test kill switch UI visibility
         /// </summary>
