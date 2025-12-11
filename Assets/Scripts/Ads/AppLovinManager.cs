@@ -23,6 +23,7 @@ namespace BattleCruisers.Ads
 
         [Header("Debug Settings")]
         [SerializeField] private bool enableDebugLogs = true;
+        [SerializeField] private bool enableVerboseLogging = true; // For AppLovin support debugging
 
         private bool isInitialized = false;
         private int interstitialRetryAttempt = 0;
@@ -75,10 +76,31 @@ namespace BattleCruisers.Ads
             MaxSdkCallbacks.OnSdkInitializedEvent += OnSdkInitialized;
             MaxSdk.SetSdkKey(sdkKey);
             
-            if (Debug.isDebugBuild)
+            // Always enable verbose logging for debugging close button issues
+            if (enableVerboseLogging || Debug.isDebugBuild)
             {
                 MaxSdk.SetVerboseLogging(true);
+                LogDebug("Verbose logging enabled for AppLovin MAX");
             }
+
+            // FIX: Force TextureView rendering instead of SurfaceView
+            // This prevents z-order issues where SurfaceView blocks WebView close button overlays
+            // Applying multiple parameters to ensure close button appears
+            
+            // TEST (Dec 11): Reverting TextureView hacks now that we have SDK 13.5.1 + Custom Tabs
+            // These were originally added to fix Z-order issues with older SDK/config
+            /*
+            // Fix #1: Disable SurfaceView (forces TextureView)
+            MaxSdk.SetExtraParameter("disable_video_surface_view", "true");
+            
+            // Fix #2: Explicitly set video renderer to texture
+            MaxSdk.SetExtraParameter("video_renderer", "texture");
+            
+            // Fix #3: Ensure WebView hardware acceleration is enabled
+            MaxSdk.SetExtraParameter("webview_hardware_acceleration", "true");
+            
+            LogDebug("Applied 3 TextureView fixes: disable_video_surface_view, video_renderer=texture, webview_hardware_acceleration");
+            */
 
             MaxSdk.InitializeSdk();
 #else
@@ -127,19 +149,19 @@ namespace BattleCruisers.Ads
 
         private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug($"Interstitial displayed - Network: {adInfo.NetworkName}");
+            LogDebug($"[INTERSTITIAL] Displayed - Network: {adInfo.NetworkName}, Placement: {adInfo.Placement}, AdUnit: {adUnitId}, Creative: {adInfo.CreativeIdentifier}, Revenue: ${adInfo.Revenue}");
         }
 
         private void OnInterstitialFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug($"Interstitial failed to display: {errorInfo.Code}");
+            Debug.LogError($"[INTERSTITIAL] Failed to display - Code: {errorInfo.Code}, Message: {errorInfo.Message}, AdLoadFailureInfo: {errorInfo.AdLoadFailureInfo}, MediatedNetworkErrorCode: {errorInfo.MediatedNetworkErrorCode}, MediatedNetworkErrorMessage: {errorInfo.MediatedNetworkErrorMessage}, Network: {adInfo?.NetworkName}");
             OnInterstitialAdShowFailed?.Invoke();
             LoadInterstitial();
         }
 
         private void OnInterstitialDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug("Interstitial dismissed");
+            LogDebug($"[INTERSTITIAL] Dismissed - Network: {adInfo.NetworkName}, AdUnit: {adUnitId}");
             FirebaseAnalyticsManager.Instance?.LogAdClosed("applovin", "interstitial");
             OnInterstitialAdClosed?.Invoke();
             LoadInterstitial();
@@ -185,19 +207,19 @@ namespace BattleCruisers.Ads
 
         private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug($"Rewarded ad failed to display: {errorInfo.Code}");
+            Debug.LogError($"[REWARDED] Failed to display - Code: {errorInfo.Code}, Message: {errorInfo.Message}, AdLoadFailureInfo: {errorInfo.AdLoadFailureInfo}, MediatedNetworkErrorCode: {errorInfo.MediatedNetworkErrorCode}, MediatedNetworkErrorMessage: {errorInfo.MediatedNetworkErrorMessage}, Network: {adInfo?.NetworkName}");
             OnRewardedAdShowFailed?.Invoke();
             LoadRewardedAd();
         }
 
         private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug($"Rewarded ad displayed - Network: {adInfo.NetworkName}");
+            LogDebug($"[REWARDED] Displayed - Network: {adInfo.NetworkName}, Placement: {adInfo.Placement}, AdUnit: {adUnitId}, Creative: {adInfo.CreativeIdentifier}, Revenue: ${adInfo.Revenue}");
         }
 
         private void OnRewardedAdDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            LogDebug("Rewarded ad dismissed");
+            LogDebug($"[REWARDED] Dismissed - Network: {adInfo.NetworkName}, AdUnit: {adUnitId}");
             OnRewardedAdClosed?.Invoke();
             LoadRewardedAd();
         }
@@ -327,6 +349,18 @@ namespace BattleCruisers.Ads
 #else
             LogDebug("Mediation Debugger only available on Android/iOS");
 #endif
+        }
+
+        /// <summary>
+        /// Handler for Android back button (if needed in future).
+        /// NOTE (Dec 11, 2025): CustomUnityPlayerActivity was deleted - this method is currently unused.
+        /// The default Unity activity and AppLovin SDK handle back button natively.
+        /// Kept for potential future use if custom back button handling is needed.
+        /// </summary>
+        public void OnAndroidBackButton()
+        {
+            LogDebug("Android back button pressed (custom handler)");
+            // Currently unused - back button handled natively by Unity + AppLovin SDK
         }
 
         #endregion

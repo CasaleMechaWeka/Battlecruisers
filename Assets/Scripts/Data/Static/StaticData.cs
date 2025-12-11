@@ -206,6 +206,40 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
         public const int NUM_OF_SIDEQUESTS = 31;
 
+        /// <summary>
+        /// Maps captain IDs to their display names (without spaces or special characters) for sprite filenames.
+        /// Format: Exoskeleton{ID:00}{Name}.png
+        /// IMPORTANT: This must be initialized before Levels/LevelTrashTalk collections to avoid static initialization errors.
+        /// </summary>
+        private static readonly ReadOnlyDictionary<int, string> CaptainSpriteNames = new ReadOnlyDictionary<int, string>(new Dictionary<int, string>
+        {
+            { 0, "Charlie" }, { 1, "Fei" }, { 2, "Jimmo" }, { 3, "Hexapod" }, { 4, "Destruktor" },
+            { 5, "Huntress" }, { 6, "Craner" }, { 7, "Bort" }, { 8, "DogSquared" }, { 9, "Clived" },
+            { 10, "Artnuncle" }, { 11, "Androwett" }, { 12, "HuntressV2" }, { 13, "Li" }, { 14, "Spider" },
+            { 15, "AngrySpider" }, { 16, "Yark" }, { 17, "Karen" }, { 18, "Thundermonium" }, { 19, "Angel" },
+            { 20, "Murdrid" }, { 21, "HuntressV3" }, { 22, "Ultranaut" }, { 23, "Amygdala" }, { 24, "HuntressV4" },
+            { 25, "Suttron" }, { 26, "Presidentron" }, { 27, "KingKupa" }, { 28, "Chimothy" }, { 29, "Kentron" },
+            { 30, "LittleWillie" }, { 31, "HuntressPrime" }, { 32, "Marg" }, { 33, "Razza" }, { 34, "Polyhedronald" },
+            { 35, "Ferdandandy" }, { 36, "Marleaux" }, { 37, "SliceyGary" }, { 38, "INTIMID8R" }, { 39, "Yaybot" },
+            { 40, "HansGrubot" }, { 41, "LangR" }, { 42, "UrbA" }, { 43, "SpikyJoe" }, { 44, "Xilen" },
+            { 45, "Garvitron" }, { 46, "PeterMeatperson" }, { 47, "MostOfPeter" }, { 48, "RemainsOfPeter" },
+            { 49, "TracesOfPeter" }, { 50, "Barbester" }
+        });
+
+        /// <summary>
+        /// Gets the sprite filename for a captain exoskeleton by ID.
+        /// </summary>
+        /// <param name="captainId">The captain ID (0-50)</param>
+        /// <returns>The sprite filename without path (e.g., "Exoskeleton00Charlie.png")</returns>
+        public static string GetCaptainSpriteFilename(int captainId)
+        {
+            if (!CaptainSpriteNames.ContainsKey(captainId))
+            {
+                throw new System.ArgumentException($"Invalid captain ID: {captainId}. Valid range is 0-50.");
+            }
+            return $"Exoskeleton{captainId:00}{CaptainSpriteNames[captainId]}.png";
+        }
+
         public static GameModel InitialGameModel { get; } = CreateInitialGameModel();
         
         /// <summary>

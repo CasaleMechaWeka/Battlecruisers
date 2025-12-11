@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
                              bool playerTalksFirst,
                              string stringKeyBasePrefix)
         {
-            EnemySpritePath = SpritePaths.ExoImagesPath + "NPC-" + exoId.ToString("00") + ".png";
+            EnemySpritePath = SpritePaths.ExoImagesPath + StaticData.GetCaptainSpriteFilename(exoId);
             EnemyExoPrefabKey = StaticPrefabKeys.CaptainExos.GetCaptainExoKey(exoId);
 
             string stringKeyBase = $"{stringKeyBasePrefix}{levelNumber}";
