@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -429,15 +430,18 @@ namespace BattleCruisers.Utils.Debugging
         /// </summary>
         public void ShowRewardedAndGrant()
         {
+            Debug.Log("[AdminPanel] ShowRewardedAndGrant - enter");
             if (AppLovinManager.Instance == null)
             {
                 ShowMessage("ERROR: AppLovinManager missing! Add a GameObject with AppLovinManager component to LandingScene.unity as a child of SceneGod (uses DontDestroyOnLoad).", true);
+                Debug.Log("[AdminPanel] ShowRewardedAndGrant - AppLovinManager null");
                 return;
             }
 
             if (!AppLovinManager.Instance.IsRewardedAdReady())
             {
                 ShowMessage("Rewarded ad not ready yet. Use 'Show Ad Status' and wait for Rewarded Ready: True.", true);
+                Debug.Log("[AdminPanel] ShowRewardedAndGrant - rewarded not ready");
                 return;
             }
 
@@ -445,6 +449,7 @@ namespace BattleCruisers.Utils.Debugging
             System.Action rewardHandler = null;
             rewardHandler = () =>
             {
+                Debug.Log("[AdminPanel] ShowRewardedAndGrant - reward callback fired");
                 GrantRewardedAdCurrency();
                 AppLovinManager.Instance.OnRewardedAdRewarded -= rewardHandler;
             };
@@ -452,6 +457,7 @@ namespace BattleCruisers.Utils.Debugging
             AppLovinManager.Instance.OnRewardedAdRewarded += rewardHandler;
 
             var (coins, credits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (500, 4500);
+            Debug.Log($"[AdminPanel] ShowRewardedAndGrant - show rewarded (coins:{coins}, credits:{credits})");
             ShowMessage($"Showing rewarded ad... Reward: {coins} coins, {credits} credits");
             AppLovinManager.Instance.ShowRewardedAd();
         }
@@ -516,21 +522,21 @@ namespace BattleCruisers.Utils.Debugging
             long coinsBefore = DataProvider.GameModel.Coins;
             long creditsBefore = DataProvider.GameModel.Credits;
 
-            AdDebugLogger.Instance?.Log($"[AdminPanel] Granting {coins} coins, {credits} credits");
-            AdDebugLogger.Instance?.Log($"[AdminPanel] Before: Coins={coinsBefore}, Credits={creditsBefore}");
+            Debug.Log($"[AdminPanel] Granting {coins} coins, {credits} credits");
+            Debug.Log($"[AdminPanel] Before: Coins={coinsBefore}, Credits={creditsBefore}");
 
             // Mark as watched (only on first time)
             if (!AdConfigManager.HasEverWatchedRewardedAd())
             {
                 AdConfigManager.MarkRewardedAdWatched();
-                AdDebugLogger.Instance?.Log("[AdminPanel] Player marked as ADWATCHER");
+                Debug.Log("[AdminPanel] Player marked as ADWATCHER");
             }
 
             // Grant rewards
             DataProvider.GameModel.Coins += coins;
             DataProvider.GameModel.Credits += credits;
 
-            AdDebugLogger.Instance?.Log($"[AdminPanel] After: Coins={DataProvider.GameModel.Coins}, Credits={DataProvider.GameModel.Credits}");
+            Debug.Log($"[AdminPanel] After: Coins={DataProvider.GameModel.Coins}, Credits={DataProvider.GameModel.Credits}");
 
             // Save locally first
             DataProvider.SaveGame();
@@ -540,14 +546,14 @@ namespace BattleCruisers.Utils.Debugging
             {
                 await DataProvider.SyncCoinsToCloud();
                 await DataProvider.SyncCreditsToCloud();
-                AdDebugLogger.Instance?.Log("[AdminPanel] Currency synced to cloud");
+                Debug.Log("[AdminPanel] Currency synced to cloud");
             }
             catch (System.Exception e)
             {
-                AdDebugLogger.Instance?.LogError($"[AdminPanel] Failed to sync to cloud: {e.Message}");
+                Debug.LogError($"[AdminPanel] Failed to sync to cloud: {e.Message}");
             }
 
-            AdDebugLogger.Instance?.Log("[AdminPanel] Game saved locally");
+            Debug.Log("[AdminPanel] Game saved locally");
 
             ShowMessage($"REWARDED! Coins: {coinsBefore} → {DataProvider.GameModel.Coins} (+{coins}); Credits: {creditsBefore} → {DataProvider.GameModel.Credits} (+{credits})");
         }
@@ -700,6 +706,7 @@ namespace BattleCruisers.Utils.Debugging
             }
         }
 
+
         /// <summary>
         /// Show detailed Remote Config values
         /// </summary>
@@ -746,9 +753,146 @@ namespace BattleCruisers.Utils.Debugging
             long coins = DataProvider.GameModel.Coins;
             long credits = DataProvider.GameModel.Credits;
             
-            AdDebugLogger.Instance?.Log($"[AdminPanel] Economy Status - Coins: {coins}, Credits: {credits}");
+            Debug.Log($"[AdminPanel] Economy Status - Coins: {coins}, Credits: {credits}");
             
             ShowMessage($"=== ECONOMY STATUS ===\nCoins: {coins}\nCredits: {credits}");
+        }
+
+        private static string RelevantLogExportPath => Path.Combine(Application.persistentDataPath, "admin_relevant_logs.txt");
+
+        /// <summary>
+        /// Export condensed recent log lines (errors first) and show a preview in the panel.
+        /// </summary>
+        public void ShowRelevantLogs()
+        {
+            const int maxLines = 60;
+            string sourcePath = null;
+
+            List<string> lines = new List<string>();
+
+            try
+            {
+                sourcePath = Application.consoleLogPath;
+                if (!string.IsNullOrEmpty(sourcePath) && File.Exists(sourcePath))
+                {
+                    lines.AddRange(File.ReadAllLines(sourcePath));
+                }
+            }
+            catch
+            {
+                // Ignore read issues; will fall back.
+            }
+
+            // Fallback to battle log if console log is unavailable.
+            if (lines.Count == 0 && File.Exists(BattleLogPath))
+            {
+                sourcePath = BattleLogPath;
+                lines.AddRange(File.ReadAllLines(BattleLogPath));
+            }
+
+            if (lines.Count == 0)
+            {
+                ShowMessage("No logs found to export.", true);
+                return;
+            }
+
+            // Take only the most recent chunk to keep things light.
+            int startIndex = System.Math.Max(0, lines.Count - 600);
+            IEnumerable<string> recent = lines.Skip(startIndex);
+
+            var errors = new List<string>();
+            var warnings = new List<string>();
+            var infos = new List<string>();
+
+            foreach (string line in recent.Reverse())
+            {
+                string normalized = Regex.Replace(line, @"\s+", " ").Trim();
+                if (string.IsNullOrEmpty(normalized))
+                {
+                    continue;
+                }
+
+                string lower = normalized.ToLowerInvariant();
+                if (lower.Contains("exception") || lower.Contains("error"))
+                {
+                    errors.Add(normalized);
+                }
+                else if (lower.Contains("warn"))
+                {
+                    warnings.Add(normalized);
+                }
+                else
+                {
+                    infos.Add(normalized);
+                }
+
+                if (errors.Count + warnings.Count + infos.Count >= maxLines * 3)
+                {
+                    break;
+                }
+            }
+
+            var condensed = new List<string>();
+            foreach (string entry in errors)
+            {
+                if (condensed.Count >= maxLines) break;
+                condensed.Add(entry);
+            }
+            foreach (string entry in warnings)
+            {
+                if (condensed.Count >= maxLines) break;
+                condensed.Add(entry);
+            }
+            foreach (string entry in infos)
+            {
+                if (condensed.Count >= maxLines) break;
+                condensed.Add(entry);
+            }
+
+            string exportText = string.Join("\n", condensed);
+            string exportPath = RelevantLogExportPath;
+            bool writeSucceeded = false;
+
+#if UNITY_EDITOR
+            // Prefer writing next to the project for easy access in Editor.
+            string editorPath = Path.Combine(Application.dataPath, "..", "AdminRelevantLogs.txt");
+            try
+            {
+                File.WriteAllText(editorPath, exportText);
+                exportPath = editorPath;
+                writeSucceeded = true;
+                UnityEditor.EditorGUIUtility.systemCopyBuffer = exportText;
+            }
+            catch
+            {
+                // Fall back below.
+            }
+#endif
+
+            if (!writeSucceeded)
+            {
+                try
+                {
+                    File.WriteAllText(exportPath, exportText);
+                    writeSucceeded = true;
+                }
+                catch
+                {
+                    try
+                    {
+                        exportPath = Path.Combine(Path.GetTempPath(), "admin_relevant_logs.txt");
+                        File.WriteAllText(exportPath, exportText);
+                        writeSucceeded = true;
+                    }
+                    catch
+                    {
+                        exportPath = "write failed";
+                    }
+                }
+            }
+
+            string preview = condensed.Count > 0 ? string.Join(" | ", condensed.Take(3)) : "No condensed lines";
+            ShowMessage($"Relevant logs ({condensed.Count} lines) from {sourcePath} -> {exportPath}\nPreview: {preview}");
         }
 
         /// <summary>
@@ -1266,12 +1410,20 @@ namespace BattleCruisers.Utils.Debugging
         }
 
         /// <summary>
-        /// Clear the battle log file
+        /// Save AppLovin logs and clear the battle log file
         /// </summary>
         public void ClearBattleLog()
         {
             try
             {
+                // First, save AppLovin logs for support debugging
+                if (AppLovinLogCollector.Instance != null)
+                {
+                    AppLovinLogCollector.Instance.SaveLogToFile();
+                    ShowMessage("AppLovin logs saved to Downloads!\nNow clearing battle log...");
+                }
+                
+                // Then clear the battle log
                 if (File.Exists(BattleLogPath))
                 {
                     File.Delete(BattleLogPath);

@@ -11,7 +11,7 @@ namespace BattleCruisers.Ads
     {
         [Header("AppLovin MAX Configuration")]
         [Tooltip("AppLovin SDK Key from dashboard")]
-        public string appLovinSdkKey = "YOUR_SDK_KEY_HERE";
+        public string appLovinSdkKey = "G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0";
         
         [Tooltip("Enable AppLovin MAX ads")]
         public bool enableAppLovinAds = true;
@@ -21,10 +21,10 @@ namespace BattleCruisers.Ads
         
         [Header("Android Ad Unit IDs")]
         [Tooltip("Interstitial ad unit ID for Android")]
-        public string androidInterstitialAdUnitId = "YOUR_INTERSTITIAL_AD_UNIT_ID";
+        public string androidInterstitialAdUnitId = "9375d1dbeb211048";
         
         [Tooltip("Rewarded ad unit ID for Android")]
-        public string androidRewardedAdUnitId = "YOUR_REWARDED_AD_UNIT_ID";
+        public string androidRewardedAdUnitId = "c96bd6d70b3804fa";
         
         [Header("iOS Ad Unit IDs (Not Yet Used)")]
         [Tooltip("Interstitial ad unit ID for iOS")]
@@ -73,19 +73,19 @@ namespace BattleCruisers.Ads
         /// </summary>
         public bool IsValid()
         {
-            if (string.IsNullOrEmpty(appLovinSdkKey) || appLovinSdkKey == "YOUR_SDK_KEY_HERE")
+            if (string.IsNullOrEmpty(appLovinSdkKey))
             {
                 Debug.LogError("[MonetizationSettings] Invalid SDK Key! Set it in the ScriptableObject.");
                 return false;
             }
             
 #if UNITY_ANDROID
-            if (string.IsNullOrEmpty(androidInterstitialAdUnitId) || androidInterstitialAdUnitId == "YOUR_INTERSTITIAL_AD_UNIT_ID")
+            if (string.IsNullOrEmpty(androidInterstitialAdUnitId))
             {
                 Debug.LogWarning("[MonetizationSettings] Android Interstitial Ad Unit ID not set.");
             }
             
-            if (string.IsNullOrEmpty(androidRewardedAdUnitId) || androidRewardedAdUnitId == "YOUR_REWARDED_AD_UNIT_ID")
+            if (string.IsNullOrEmpty(androidRewardedAdUnitId))
             {
                 Debug.LogWarning("[MonetizationSettings] Android Rewarded Ad Unit ID not set.");
             }

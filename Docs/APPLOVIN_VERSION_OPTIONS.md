@@ -1,10 +1,59 @@
 # AppLovin MAX SDK Version Options
 
-## Current Version
-**12.6.1** - Last version using Kotlin 1.x (compatible with Unity 2021.3)
-- ✅ Compatible with Unity 2021.3
-- ❌ Version 13.x uses Kotlin 2.0 which Unity 2021.3 cannot handle
-- ❌ Cannot upgrade without upgrading Unity
+## Current Environment (Unity 2022.3)
+- Unity: **2022.3.62f3** (LTS)
+- Android targetSdkVersion: **35** (Android 15)
+- AppLovin MAX Unity plugin: **12.6.1** (Kotlin 1.x)
+- Firebase Unity SDK: **13.5.0** (Android analytics 20.1.2)
+- Google Play Games plugin: **0.11.01**
+- UGS packages (selected): Authentication 3.3.3, Remote Config 4.1.1, Purchasing 4.13.0, Netcode 1.12.0
+  (see `Packages/manifest.json` for full list)
+
+## AppLovin MAX Versions (Unity 2022.3)
+- **12.6.1 (current)** — Kotlin 1.x, known stable with our project
+- **13.x (latest)** — Kotlin 2.0, compatible with Unity 2022.3, includes bug fixes and better Android 14/15 support
+
+### Compatibility Matrix (Conservative view)
+| Component | Current | Known Compatible With | Notes |
+|-----------|---------|-----------------------|-------|
+| AppLovin MAX 13.x | Kotlin 2.0 | Unity 2022.3+ | Must retest Mali/immersive fixes; update manifests if regenerated |
+| Firebase Unity 13.5.0 | GMS 20.1.2 | Unity 2022.3 | Consider bumping Android analytics lib if AppLovin 13 pulls newer play-services |
+| Google Play Games 0.11.01 | Play Services v2 | Unity 2022.3 | Keep unless sign-in issues arise |
+| UGS packages | see manifest | Unity 2022.3 | Update incrementally via UPM |
+
+## Key Issues to Track (still apply after upgrade)
+- **Mali GPU / Samsung**: Stuck rewarded ads, invisible close button; requires immersive re-apply in callbacks.
+- **Immersive mode breakage**: Ads reset system UI flags; mitigated by `RestoreImmersiveMode()` and periodic re-apply.
+- **Back button consumption**: Solved with `CustomUnityPlayerActivity` + Unity callback.
+- **Manifest merges**: AppLovin activities need `android:exported="false"` and `tools:replace="android:configChanges"`.
+- **AD_ID permission**: Keep `com.google.android.gms.permission.AD_ID` with `tools:replace` to prevent stripping.
+
+## Upgrade Path (Unity 2022.3 → AppLovin 13.x)
+1) Update `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml` to AppLovin 13.x (Kotlin 2.0).
+2) Resolve Android dependencies (EDM4U) and ensure Gradle plugin/AGP remain compatible (Unity 2022.3 supports AGP 7.1.2+).
+3) Verify `Assets/Plugins/Android/AndroidManifest.xml` still contains:
+   - `android:exported="false"` on AppLovin activities
+   - `tools:replace="android:configChanges"` and full flags: `orientation|screenSize|keyboardHidden|screenLayout|uiMode|smallestScreenSize`
+   - AD_ID permission with `tools:replace`
+4) Retest immersive mode fix on rewarded/interstitial callbacks (Samsung/Mali devices).
+5) Smoke test Google Play Games sign-in and Firebase events.
+
+## Known Issues (architectural)
+- Native Android video layer renders above Unity UI; overlay UI can be hidden by ad view.
+- Some networks delay/omit close button; must rely on immersive re-apply + back handling.
+- Mali decoding quirks can hang; periodic immersive restore often unsticks layout/close button.
+
+## Testing Checklist (post-upgrade)
+- Rewarded & interstitial: close button visible, back button works, immersive restored.
+- Samsung Tab A8 (Mali): no stuck video, no infinite hangs; nuclear timer does not fire.
+- Google Play Games: sign-in ok on launch.
+- Firebase: events flowing; no AD_ID zeroing.
+- Build with targetSdk 33–35 without manifest merge errors.
+
+## Recommendation (now on Unity 2022.3)
+- Proceed to **AppLovin MAX 13.x** with careful regression on Mali devices.
+- Keep Firebase Unity SDK 13.5.0; consider bumping Android analytics lib only if resolver pulls newer play-services and tests pass.
+- Leave Google Play Games at 0.11.01 unless sign-in issues appear.
 
 ## Downgrade Options (All 12.x versions compatible with Unity 2021.3)
 

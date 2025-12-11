@@ -96,7 +96,7 @@ public class ProfileDetailsController : MonoBehaviour
         List<Task<Sprite>> loadTasks = new List<Task<Sprite>>();
 
         for (int i = 0; i < StaticData.Captains.Count; i++)
-            loadTasks.Add(SpriteFetcher.GetSpriteAsync($"{SpritePaths.ExoImagesPath}NPC-{i.ToString("00")}.png"));
+            loadTasks.Add(SpriteFetcher.GetSpriteAsync($"{SpritePaths.ExoImagesPath}{StaticData.GetCaptainSpriteFilename(i)}"));
 
         million = LocTableCache.CommonTable.GetString("Million");
         billion = LocTableCache.CommonTable.GetString("Billion");
