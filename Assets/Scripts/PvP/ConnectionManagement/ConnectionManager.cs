@@ -79,6 +79,8 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             set { latencyLimit = value; }
         }
 
+        public bool IsRebinding { get; private set; }
+
         internal OfflineState m_Offline;
         internal ClientConnectingState m_ClientConnecting;
         internal ClientConnectedState m_ClientConnected;
@@ -351,6 +353,48 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         {
             Debug.Log("PVP: ConnectionManager.ResetToOffline");
             ChangeState(m_Offline);
+        }
+        public async System.Threading.Tasks.Task RebindServerToNewRelay(string playerName)
+        {
+            if (NetworkManager == null || !NetworkManager.IsServer)
+            {
+                UnityEngine.Debug.LogWarning("PVP: RebindServerToNewRelay called but server not running");
+                return;
+            }
+
+            IsRebinding = true;
+            UnityEngine.Debug.Log("PVP: Shutting down server to rebind to new relay");
+            NetworkManager.Shutdown();
+
+            await System.Threading.Tasks.Task.Delay(500);
+
+            UnityEngine.Debug.Log("PVP: Reconfiguring NetworkManager with new relay");
+            ConnectionMethodBase connectionMethod = new ConnectionMethodLobby(
+                m_LobbyServiceFacade,
+                m_LocalLobby,
+                this,
+                m_ProfileManager,
+                playerName);
+            await connectionMethod.SetupHostConnectionAsync();
+
+            if (DynamicPrefabLoadingUtilities.HashOfDynamicPrefabGUIDs == -1)
+            {
+                UnityEngine.Debug.Log("PVP: RebindServerToNewRelay - initializing DynamicPrefabLoadingUtilities");
+                DynamicPrefabLoadingUtilities.Init(NetworkManager);
+            }
+
+            NetworkManager.NetworkConfig.EnableSceneManagement = true;
+            UnityEngine.Debug.Log("PVP: Starting server on new relay");
+
+            if (!NetworkManager.StartHost())
+            {
+                IsRebinding = false;
+                UnityEngine.Debug.LogError("PVP: RebindServerToNewRelay - StartHost returned false");
+                throw new System.Exception("Failed to start host on new relay");
+            }
+
+            IsRebinding = false;
+            UnityEngine.Debug.Log($"PVP: Server rebound to new relay - IsListening={NetworkManager.IsListening}, ConnectedClients={NetworkManager.ConnectedClientsIds.Count}");
         }
     }
 }

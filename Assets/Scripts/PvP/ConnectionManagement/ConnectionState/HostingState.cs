@@ -51,7 +51,13 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
         }
         public override void OnClientConnected(ulong clientId)
         {
-            Debug.Log($"PVP: HostingState.OnClientConnected CALLED - clientId={clientId}, LocalClientId={m_ConnectionManager.NetworkManager.LocalClientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}");
+            Debug.Log($"PVP: HostingState.OnClientConnected CALLED - clientId={clientId}, LocalClientId={m_ConnectionManager.NetworkManager.LocalClientId}, ConnectedClients={m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count}, IsRebinding={m_ConnectionManager.IsRebinding}");
+
+            if (m_ConnectionManager.IsRebinding)
+            {
+                Debug.Log("PVP: HOST OnClientConnected during rebind - skipping scene load (server reconnecting to itself)");
+                return;
+            }
 
             if (clientId == m_ConnectionManager.NetworkManager.LocalClientId
             && m_ConnectionManager.NetworkManager.ConnectedClientsIds.Count == 1)

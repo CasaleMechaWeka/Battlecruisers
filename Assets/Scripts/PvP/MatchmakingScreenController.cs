@@ -529,6 +529,22 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                         else
                         {
                             Debug.Log("PVP: Relay allocation refreshed");
+
+                            if (PvPBootManager.Instance.ConnectionManager.NetworkManager.IsServer)
+                            {
+                                Debug.Log("PVP: Server is running, rebinding to new relay");
+                                Task rebindTask = PvPBootManager.Instance.ConnectionManager.RebindServerToNewRelay(BattleCruisers.Data.DataProvider.GameModel.PlayerName);
+                                yield return new WaitUntil(() => rebindTask.IsCompleted);
+
+                                if (rebindTask.IsFaulted)
+                                {
+                                    Debug.LogError($"PVP: Server rebind failed: {rebindTask.Exception?.GetBaseException().Message}");
+                                }
+                                else
+                                {
+                                    Debug.Log("PVP: Server successfully rebound to new relay");
+                                }
+                            }
                         }
                     }
                     elapsedTime = 0f;
