@@ -60,11 +60,16 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
             Assert.IsNotNull(followingTargetProcessorWrapper);
 
-            foreach (var barrelWrapper in barrelWrappers)
+            if (barrelWrappers != null)
             {
-                Assert.IsNotNull(barrelWrapper);
-                barrelWrapper.StaticInitialise();
-                AddDamageStats(barrelWrapper.DamageCapability);
+                foreach (var barrelWrapper in barrelWrappers)
+                {
+                    if (barrelWrapper != null)
+                    {
+                        barrelWrapper.StaticInitialise();
+                        AddDamageStats(barrelWrapper.DamageCapability);
+                    }
+                }
             }
         }
 
