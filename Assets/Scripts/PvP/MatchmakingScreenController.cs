@@ -379,17 +379,72 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
             animator.SetBool("Found", true);
             LeaveLobby();
         }
-        public void FailedMatchmaking()
+        public void FailedMatchmaking(string reason = "Unknown")
         {
-            Debug.Log($"PVP: MatchmakingScreenController.FailedMatchmaking - isPvPBattleScenePreloaded={isPvPBattleScenePreloaded}");
+            Debug.LogError($"PVP: ===== MATCHMAKING FAILED =====");
+            Debug.LogError($"PVP: Failure Reason: {reason}");
+            Debug.LogError($"PVP: isPvPBattleScenePreloaded={isPvPBattleScenePreloaded}");
+
+            // Log detailed state for debugging
+            if (PvPBootManager.Instance?.ConnectionManager?.NetworkManager != null)
+            {
+                Unity.Netcode.NetworkManager nm = PvPBootManager.Instance.ConnectionManager.NetworkManager;
+                Debug.LogError($"PVP: NetworkManager State - IsServer={nm.IsServer}, IsClient={nm.IsClient}, IsListening={nm.IsListening}, ConnectedClients={nm.ConnectedClientsIds.Count}");
+            }
+            else
+            {
+                Debug.LogError("PVP: NetworkManager is NULL");
+            }
+
+            if (PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby != null)
+            {
+                Unity.Services.Lobbies.Models.Lobby lobby = PvPBootManager.Instance.LobbyServiceFacade.CurrentUnityLobby;
+                string relayCode = lobby.Data?.ContainsKey("RelayJoinCode") == true ? lobby.Data["RelayJoinCode"].Value : "NULL";
+                Debug.LogError($"PVP: Lobby State - Players={lobby.Players.Count}/{lobby.MaxPlayers}, RelayCode={relayCode}, LobbyId={lobby.Id}");
+            }
+            else
+            {
+                Debug.LogError("PVP: CurrentUnityLobby is NULL");
+            }
+            Debug.LogError($"PVP: ===============================");
 
             if (backgroundMusic != null && backgroundMusic.isPlaying)
                 backgroundMusic.Stop();
 
-            if (isPvPBattleScenePreloaded)
+            // Check if NetworkManager loaded the scene (takes precedence over pre-loaded flag)
+            bool networkManagerLoadedScene = false;
+            if (PvPBootManager.Instance?.ConnectionManager?.NetworkManager != null)
             {
-                Debug.LogWarning("PVP: FailedMatchmaking - PvPBattleScene still marked as pre-loaded, unloading now (should have been done in OnFleeAsync)");
-                SceneManager.UnloadSceneAsync("PvPBattleScene");
+                Unity.Netcode.NetworkManager nm = PvPBootManager.Instance.ConnectionManager.NetworkManager;
+                if (nm.IsListening || nm.IsServer || nm.IsClient)
+                {
+                    networkManagerLoadedScene = true;
+                    Debug.LogError("PVP: FailedMatchmaking - NetworkManager is running, shutting down before scene cleanup");
+                    nm.Shutdown();
+                    Debug.LogError("PVP: NetworkManager shutdown complete");
+                }
+            }
+
+            // Only try to unload pre-loaded scene if NetworkManager didn't load it
+            if (isPvPBattleScenePreloaded && !networkManagerLoadedScene)
+            {
+                Debug.LogWarning("PVP: FailedMatchmaking - PvPBattleScene still pre-loaded (additive), unloading now");
+                UnityEngine.SceneManagement.Scene battleScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("PvPBattleScene");
+                if (battleScene.isLoaded)
+                {
+                    SceneManager.UnloadSceneAsync("PvPBattleScene");
+                    Debug.LogWarning("PVP: PvPBattleScene unload started");
+                }
+                else
+                {
+                    Debug.LogWarning("PVP: PvPBattleScene not currently loaded, skipping unload");
+                }
+                isPvPBattleScenePreloaded = false;
+                disabledRootObjects.Clear();
+            }
+            else if (networkManagerLoadedScene)
+            {
+                Debug.LogWarning("PVP: FailedMatchmaking - NetworkManager already loaded scene, cleanup handled by Shutdown()");
                 isPvPBattleScenePreloaded = false;
                 disabledRootObjects.Clear();
             }
@@ -556,6 +611,10 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
         System.Collections.IEnumerator LobbyLoop()
         {
             Unity.Services.Lobbies.Models.Lobby lobby = PvPBootManager.Instance?.LobbyServiceFacade?.CurrentUnityLobby;
+            float connectionStartTime = 0f;
+            bool waitingForOpponent = false;
+            const float connectionTimeout = 10f;
+
             while (lobby != null)
             {
                 yield return new WaitForSeconds(0.1f);
@@ -568,9 +627,13 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
                         lastKnownPlayerCount = currentPlayerCount;
                         Debug.Log($"PVP: LobbyLoop - player count changed to {currentPlayerCount}/{liveLobby.MaxPlayers}");
                     }
+
+                    // Reached 2/2 - start the match
                     if (currentPlayerCount == 2 && !gameStarted && !isCancelled)
                     {
                         gameStarted = true;
+                        waitingForOpponent = true;
+                        connectionStartTime = UnityEngine.Time.time;
                         Debug.Log("PVP: LobbyLoop - opponent found (Players=2/2), starting match");
                         if (backgroundMusic != null && backgroundMusic.isPlaying)
                             backgroundMusic.Stop();
@@ -592,10 +655,79 @@ namespace BattleCruisers.UI.ScreensScene.Multiplay.ArenaScreen
 
                         Debug.Log("PVP: LobbyLoop - re-enabling PvPBattleScene GameObjects at Players=2/2");
                         ReEnableBattleSceneGameObjects();
-                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, match ready to start");
-                        StopCoroutine(nameof(LobbyLoop));
-                        yield break;
+                        Debug.Log("PVP: LobbyLoop - GameObjects re-enabled, waiting for opponent to connect");
+                        // Continue monitoring - don't break yet
                     }
+
+                    // Waiting for opponent to establish Netcode connection
+                    if (waitingForOpponent)
+                    {
+                        float elapsed = UnityEngine.Time.time - connectionStartTime;
+
+                        // Check if opponent dropped from lobby (2/2 → 1/2)
+                        if (currentPlayerCount < 2)
+                        {
+                            string relayCode = liveLobby.Data?.ContainsKey("RelayJoinCode") == true ? liveLobby.Data["RelayJoinCode"].Value : "NULL";
+                            Debug.LogError($"PVP: LobbyLoop - OPPONENT LEFT LOBBY before Netcode connection");
+                            Debug.LogError($"PVP: Players dropped from 2/2 to {currentPlayerCount}/2 after {elapsed:F2}s");
+                            Debug.LogError($"PVP: RelayCode={relayCode}, LobbyId={liveLobby.Id}");
+
+                            if (PvPBootManager.Instance?.ConnectionManager?.NetworkManager != null)
+                            {
+                                Unity.Netcode.NetworkManager nm = PvPBootManager.Instance.ConnectionManager.NetworkManager;
+                                Debug.LogError($"PVP: NetworkManager - IsServer={nm.IsServer}, ConnectedClients={nm.ConnectedClientsIds.Count}");
+                            }
+
+                            FailedMatchmaking($"Opponent left lobby (Players 2/2 → {currentPlayerCount}/2) after {elapsed:F2}s - likely failed to connect to relay {relayCode}");
+                            yield break;
+                        }
+
+                        // Check connection timeout
+                        if (elapsed > connectionTimeout)
+                        {
+                            string relayCode = liveLobby.Data?.ContainsKey("RelayJoinCode") == true ? liveLobby.Data["RelayJoinCode"].Value : "NULL";
+                            int connectedClients = 0;
+                            bool isServer = false;
+
+                            if (PvPBootManager.Instance?.ConnectionManager?.NetworkManager != null)
+                            {
+                                Unity.Netcode.NetworkManager nm = PvPBootManager.Instance.ConnectionManager.NetworkManager;
+                                connectedClients = nm.ConnectedClientsIds.Count;
+                                isServer = nm.IsServer;
+                                Debug.LogError($"PVP: LobbyLoop - CONNECTION TIMEOUT after {elapsed:F2}s");
+                                Debug.LogError($"PVP: NetworkManager - IsServer={isServer}, ConnectedClients={connectedClients} (expected 2)");
+                            }
+                            else
+                            {
+                                Debug.LogError($"PVP: LobbyLoop - CONNECTION TIMEOUT after {elapsed:F2}s (NetworkManager is NULL!)");
+                            }
+
+                            Debug.LogError($"PVP: Lobby still shows Players={currentPlayerCount}/2, RelayCode={relayCode}");
+                            Debug.LogError($"PVP: Opponent saw lobby and joined Unity Lobby but never established Netcode connection");
+
+                            FailedMatchmaking($"Connection timeout after {elapsed:F2}s - opponent in lobby but Netcode connection failed (ConnectedClients={connectedClients}, RelayCode={relayCode})");
+                            yield break;
+                        }
+
+                        // Check if opponent successfully connected (for HOST only)
+                        if (!ArenaSelectPanelScreenController.PrivateMatch && PvPBootManager.Instance != null && PvPBootManager.Instance.IsLocalUserHost)
+                        {
+                            if (PvPBootManager.Instance.ConnectionManager.NetworkManager != null &&
+                                PvPBootManager.Instance.ConnectionManager.NetworkManager.IsServer &&
+                                PvPBootManager.Instance.ConnectionManager.NetworkManager.ConnectedClientsIds.Count >= 2)
+                            {
+                                Debug.Log($"PVP: LobbyLoop - OPPONENT SUCCESSFULLY CONNECTED after {elapsed:F2}s (ConnectedClients=2), match starting");
+                                yield break; // Success - stop monitoring
+                            }
+                        }
+                        else if (ArenaSelectPanelScreenController.PrivateMatch || (PvPBootManager.Instance != null && !PvPBootManager.Instance.IsLocalUserHost))
+                        {
+                            // Client or PrivatePVP - stop monitoring after 2/2 (different flow)
+                            Debug.Log("PVP: LobbyLoop - CLIENT or PrivatePVP at 2/2, stopping monitoring");
+                            yield break;
+                        }
+                    }
+
                     if (isCancelled)
                     {
                         yield break;
