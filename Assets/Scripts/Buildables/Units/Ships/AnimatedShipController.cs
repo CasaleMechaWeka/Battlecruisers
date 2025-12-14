@@ -14,7 +14,7 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise(parent, healthBar);
 
-            Assert.IsNotNull(movementEffectInitialiser);
+            Assert.IsNotNull(movementEffectInitialiser, $"MovementEffectInitialiser is null for {name}");
             _movementEffects = movementEffectInitialiser.CreateMovementEffects();
         }
 

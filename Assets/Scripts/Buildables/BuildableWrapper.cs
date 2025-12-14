@@ -11,7 +11,7 @@ namespace BattleCruisers.Buildables
         public override void StaticInitialise()
         {
             Buildable = GetComponentInChildren<TBuildable>();
-            Assert.IsNotNull(Buildable);
+            Assert.IsNotNull(Buildable, $"Buildable for {name} is null");
             HealthBarController healthBar = GetComponentInChildren<HealthBarController>();
             Assert.IsNotNull(healthBar);
             Buildable.StaticInitialise(gameObject, healthBar);
