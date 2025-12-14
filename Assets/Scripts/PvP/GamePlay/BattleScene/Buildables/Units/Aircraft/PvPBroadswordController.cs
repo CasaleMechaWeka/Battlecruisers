@@ -243,7 +243,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         {
             List<SpriteRenderer> renderers = base.GetInGameRenderers();
 
-            foreach (var barrelWrapper in barrelWrappers)
+            foreach (PvPLeadingDirectFireBarrelWrapper barrelWrapper in barrelWrappers)
             {
                 renderers.AddRange(barrelWrapper.Renderers);
             }
