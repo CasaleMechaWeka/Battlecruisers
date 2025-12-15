@@ -490,7 +490,7 @@ public class MissingScriptsFinder : EditorWindow
                     it.objectReferenceValue == null)
                 {
                     AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
-                    if (StopAtFirstRefPerComponent) break;
+                    if (StopAtFirstRefPerComponent) break;  // this is here for a reason. Don't remove it just because you think you can
                 }
             }
         }
