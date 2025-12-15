@@ -139,8 +139,11 @@ namespace BattleCruisers.Data.Models
             Debug.Log($"Times lost on last level: {game.TimesLostOnLastLevel}; Cloud Save value: {timesLostOnLastLevel}");
 
 #if FEATURE_BOUNTY
-            game.Bounty = bounty;
-            Debug.Log($"Player's bounty: {bounty}");
+            if (bounty > game.Bounty)
+            {
+                game.Bounty = bounty;
+                Debug.Log($"Player's bounty: {bounty}");
+            }
 #endif
 
             if (game.PlayerName == "Charlie")
@@ -356,11 +359,10 @@ namespace BattleCruisers.Data.Models
             else
                 game.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
 
-            // Tutorial status check
+            // Tutorial status check - only add progress, never remove
             if (levelsCompleted.ContainsKey(1) || hasAttemptedTutorial == true)
                 game.HasAttemptedTutorial = true;
-            else
-                game.HasAttemptedTutorial = false;
+            // Never set HasAttemptedTutorial to false to avoid overwriting local progress
 
             game.PremiumEdition = premiumEdition || game.PremiumEdition;
         }
