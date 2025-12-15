@@ -22,8 +22,8 @@ public class MissingScriptsFinder : EditorWindow
     struct MissingScriptEntry
     {
         public string assetPath;
-        public MissingType missingType;    // The GameObject's name or a label for the missing item.
-        public string uniquePath;    // Full unique hierarchy path.
+        public MissingType missingType;     // The GameObject's name or a label for the missing item.
+        public string uniquePath;           // Full unique hierarchy path.
 
         public MissingScriptEntry(string assetPath, MissingType missingType, string uniquePath)
         {
