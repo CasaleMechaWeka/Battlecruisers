@@ -122,7 +122,12 @@ public class MissingScriptsFinder : EditorWindow
         LoadIgnoreList();
         LoadCacheFromDisk();
 
-        frameBudget = Mathf.Max(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
+        // Calculate refresh rate from numerator/denominator to avoid obsolete API warning
+        var refreshRateRatio = Screen.currentResolution.refreshRateRatio;
+        float refreshRate = refreshRateRatio.denominator > 0 
+            ? refreshRateRatio.numerator / (float)refreshRateRatio.denominator 
+            : 60f; // Fallback to 60Hz if denominator is 0
+        frameBudget = Mathf.Max(0.03f, 1f / refreshRate * .9f);
     }
 
     void OnDisable()
@@ -490,7 +495,7 @@ public class MissingScriptsFinder : EditorWindow
                     it.objectReferenceValue == null)
                 {
                     AddOnce(output, seen, assetPath, currentPath, MissingType.MissingReference);
-                    if (StopAtFirstRefPerComponent) break;
+                    // StopAtFirstRefPerComponent is const false, so break is unreachable - removed
                 }
             }
         }

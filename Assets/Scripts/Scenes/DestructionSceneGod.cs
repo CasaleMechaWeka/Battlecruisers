@@ -909,7 +909,15 @@ namespace BattleCruisers.Scenes
         /// </summary>
         public void OnWatchRewardedAdButtonClicked()
         {
+            Debug.Log($"[Campaign Rewards] OnWatchRewardedAdButtonClicked() called! Button clicked.");
+            Debug.Log($"[Campaign Rewards] rewardedAdButton = {rewardedAdButton}, active = {rewardedAdButton?.activeSelf}");
+
+            // Check if button has Button component
+            var buttonComponent = rewardedAdButton?.GetComponent<UnityEngine.UI.Button>();
+            Debug.Log($"[Campaign Rewards] Button component = {buttonComponent}, interactable = {buttonComponent?.interactable}");
+
             bool isPremium = DataProvider.GameModel.PremiumEdition;
+            Debug.Log($"[Campaign Rewards] isPremium = {isPremium}");
 
             if (isPremium)
             {
@@ -919,12 +927,13 @@ namespace BattleCruisers.Scenes
             else
             {
                 // Free: Show real AppLovin ad
+                Debug.Log($"[Campaign Rewards] AppLovinManager.Instance = {AppLovinManager.Instance}");
                 if (AppLovinManager.Instance == null)
                 {
                     Debug.LogWarning("[Rewards] AppLovinManager not found, creating one...");
                     GameObject adsObj = new GameObject("AppLovinManager");
                     adsObj.AddComponent<AppLovinManager>();
-                    
+
                     // Wait for next frame to let it initialize, then try again
                     StartCoroutine(RetryShowRewardedAdAfterInit());
                     return;

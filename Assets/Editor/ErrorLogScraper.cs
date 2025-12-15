@@ -16,7 +16,11 @@ public class ErrorLogScraper : EditorWindow
     private bool _includeLogcat = true;
     private bool _showDebugInfo = true;
     private string _debugMessage = "";
-    private bool _isScraping = false;
+    
+    // Log type filters
+    private bool _includeErrors = true;
+    private bool _includeWarnings = false;
+    private bool _includeMessages = false;
 
     [MenuItem("Tools/Error Log Scraper")]
     public static void ShowWindow()
@@ -32,8 +36,14 @@ public class ErrorLogScraper : EditorWindow
         _showDebugInfo = EditorGUILayout.Toggle("Show Debug Info", _showDebugInfo);
 
         EditorGUILayout.Space();
+        GUILayout.Label("Log Type Filters", EditorStyles.boldLabel);
+        _includeErrors = EditorGUILayout.Toggle("Include Errors", _includeErrors);
+        _includeWarnings = EditorGUILayout.Toggle("Include Warnings", _includeWarnings);
+        _includeMessages = EditorGUILayout.Toggle("Include Messages/Info", _includeMessages);
 
-        if (GUILayout.Button("Scrape Errors"))
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Scrape Logs"))
         {
             ScrapeErrors();
         }
@@ -45,7 +55,7 @@ public class ErrorLogScraper : EditorWindow
              EditorGUILayout.HelpBox(_debugMessage, MessageType.Info);
         }
 
-        GUILayout.Label($"Found Errors: {_scrapedErrors.Count}", EditorStyles.boldLabel);
+        GUILayout.Label($"Found Logs: {_scrapedErrors.Count}", EditorStyles.boldLabel);
 
         if (_scrapedErrors.Count > 0)
         {
@@ -71,7 +81,6 @@ public class ErrorLogScraper : EditorWindow
     {
         _scrapedErrors.Clear();
         _debugMessage = "";
-        _isScraping = true;
         
         var sb = new StringBuilder();
 
@@ -93,7 +102,6 @@ public class ErrorLogScraper : EditorWindow
         }
         finally
         {
-            _isScraping = false;
             _debugMessage = sb.ToString();
         }
     }
@@ -116,6 +124,9 @@ public class ErrorLogScraper : EditorWindow
             var startGettingEntriesMethod = logEntriesType.GetMethod("StartGettingEntries");
             var endGettingEntriesMethod = logEntriesType.GetMethod("EndGettingEntries");
             var getEntryInternalMethod = logEntriesType.GetMethod("GetEntryInternal");
+            
+            // Try GetEntry method as well (might be more reliable)
+            var getEntryMethod = logEntriesType.GetMethod("GetEntry");
 
             var logEntryType = unityEditorAssembly.GetType("UnityEditor.LogEntry");
             if (logEntryType == null)
@@ -126,8 +137,17 @@ public class ErrorLogScraper : EditorWindow
 
             var logEntry = Activator.CreateInstance(logEntryType);
             
+            // Get all available fields to understand the structure
             var messageField = logEntryType.GetField("message");
             var modeField = logEntryType.GetField("mode");
+            var conditionField = logEntryType.GetField("condition");
+            
+            // Try to find a field that gives us the LogType directly
+            var logTypeField = logEntryType.GetField("type");
+            if (logTypeField == null)
+            {
+                logTypeField = logEntryType.GetField("logType");
+            }
 
             if (startGettingEntriesMethod != null)
                 startGettingEntriesMethod.Invoke(null, null);
@@ -135,34 +155,153 @@ public class ErrorLogScraper : EditorWindow
             int count = (int)getCountMethod.Invoke(null, null);
             debugLog.AppendLine($"Unity Console Total Log Count: {count}");
 
+            int addedCount = 0;
             int errorCount = 0;
+            int warningCount = 0;
+            int messageCount = 0;
+            
             for (int i = 0; i < count; i++)
             {
-                getEntryInternalMethod.Invoke(null, new object[] { i, logEntry });
+                // Try GetEntry first, fallback to GetEntryInternal
+                if (getEntryMethod != null)
+                {
+                    try
+                    {
+                        getEntryMethod.Invoke(null, new object[] { i, logEntry });
+                    }
+                    catch
+                    {
+                        getEntryInternalMethod.Invoke(null, new object[] { i, logEntry });
+                    }
+                }
+                else
+                {
+                    getEntryInternalMethod.Invoke(null, new object[] { i, logEntry });
+                }
                 
                 int mode = (int)modeField.GetValue(logEntry);
-                string message = (string)messageField.GetValue(logEntry);
-
-                // ConsoleWindow.Mode flags:
-                // Error = 1
-                // Assert = 2
-                // Fatal = 16
-                // AssetImportError = 64
-                // ScriptingError = 256
-                // Log = 4
-                // Warning = ? (usually 4 is log, warning might be 8 or mixed)
                 
-                // Let's include everything for debugging if needed, but filter for errors per request.
-                // If mode has ANY of the error bits set, we take it.
-                bool isError = (mode & (1 | 2 | 16 | 64 | 256)) != 0;
-                
-                if (isError)
+                // Prefer condition field (first line) over message field (full text)
+                string message = conditionField != null ? (string)conditionField.GetValue(logEntry) : null;
+                if (string.IsNullOrEmpty(message))
                 {
-                    AddError(message);
+                    message = (string)messageField.GetValue(logEntry);
+                }
+
+                // Try to get LogType directly if available
+                LogType? logType = null;
+                if (logTypeField != null)
+                {
+                    try
+                    {
+                        logType = (LogType)logTypeField.GetValue(logEntry);
+                    }
+                    catch { }
+                }
+
+                bool isError = false;
+                bool isWarning = false;
+                bool isMessage = false;
+
+                if (logType.HasValue)
+                {
+                    // Use LogType enum directly if available
+                    isError = logType.Value == LogType.Error || 
+                              logType.Value == LogType.Exception || 
+                              logType.Value == LogType.Assert;
+                    isWarning = logType.Value == LogType.Warning;
+                    isMessage = logType.Value == LogType.Log;
+                }
+                else
+                {
+                    // Fallback to mode bit checking
+                    // Error types: 1 (Error), 2 (Assert), 16 (Fatal), 64 (AssetImportError), 256 (ScriptingError)
+                    isError = (mode & (1 | 2 | 16 | 64 | 256)) != 0;
+                    
+                    // Warning detection: Unity's mode values can vary
+                    // Based on Unity versions:
+                    // - Mode 4 is often used for both Warning and Log
+                    // - Mode 8 can be Warning in some versions
+                    // - The distinction is subtle and version-dependent
+                    // Strategy: If warnings are enabled, be more inclusive
+                    if (!isError)
+                    {
+                        // Check various possible warning patterns
+                        // Mode 4 alone is often a warning (but can be log)
+                        // Mode 8 is typically warning
+                        // Mode with 4 bit set but no error bits might be warning
+                        if (mode == 4)
+                        {
+                            // Mode 4 alone - could be warning or log
+                            // If user wants warnings, include it as warning
+                            // If user wants messages, also include as message
+                            // We'll prioritize warning if both are enabled
+                            if (_includeWarnings)
+                            {
+                                isWarning = true;
+                            }
+                            else if (_includeMessages)
+                            {
+                                isMessage = true;
+                            }
+                        }
+                        else if (mode == 8 || (mode & 8) != 0)
+                        {
+                            // Mode 8 is typically warning
+                            isWarning = true;
+                        }
+                        else if ((mode & 4) != 0)
+                        {
+                            // Mode has 4 bit but other bits too - likely a log
+                            isMessage = true;
+                        }
+                        else
+                        {
+                            // Other non-error modes - treat as message
+                            isMessage = true;
+                        }
+                    }
+                }
+                
+                // Debug: log mode values to understand the pattern
+                // When warnings are enabled, log more entries to see what mode values warnings actually have
+                if (_showDebugInfo)
+                {
+                    if (i < 20) // Log first 20 for debugging
+                    {
+                        debugLog.AppendLine($"Log {i}: mode={mode}, logType={logType}, msg={message?.Substring(0, Math.Min(50, message?.Length ?? 0))}...");
+                    }
+                    // Also log any entry that has mode 4 or 8 (potential warnings)
+                    if ((mode == 4 || mode == 8) && i < 100)
+                    {
+                        debugLog.AppendLine($"  -> Mode {mode} entry: {message?.Substring(0, Math.Min(80, message?.Length ?? 0))}...");
+                    }
+                }
+                
+                bool shouldInclude = false;
+                if (_includeErrors && isError) 
+                {
+                    shouldInclude = true;
                     errorCount++;
                 }
+                else if (_includeWarnings && isWarning) 
+                {
+                    shouldInclude = true;
+                    warningCount++;
+                }
+                else if (_includeMessages && isMessage) 
+                {
+                    shouldInclude = true;
+                    messageCount++;
+                }
+                
+                if (shouldInclude)
+                {
+                    AddLogEntry(message);
+                    addedCount++;
+                }
             }
-            debugLog.AppendLine($"Unity Console Errors Found: {errorCount}");
+            debugLog.AppendLine($"Unity Console Logs Added: {addedCount} (Errors: {errorCount}, Warnings: {warningCount}, Messages: {messageCount})");
 
             if (endGettingEntriesMethod != null)
                 endGettingEntriesMethod.Invoke(null, null);
@@ -191,10 +330,12 @@ public class ErrorLogScraper : EditorWindow
             
             debugLog.AppendLine($"Using ADB Path: {adbPath}");
 
+            // Build logcat filter based on selected log types
+            // Get all logs and filter in C# for more control
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
                 FileName = adbPath,
-                Arguments = "logcat -d *:E", // Dump errors only
+                Arguments = "logcat -d -v time", // Dump all logs with timestamps
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
@@ -206,7 +347,7 @@ public class ErrorLogScraper : EditorWindow
                 string output = process.StandardOutput.ReadToEnd();
                 string errorOutput = process.StandardError.ReadToEnd();
                 
-                process.WaitForExit(2000); // Wait up to 2 seconds
+                process.WaitForExit(5000); // Give more time for large logs
 
                 if (process.ExitCode == 0)
                 {
@@ -216,13 +357,30 @@ public class ErrorLogScraper : EditorWindow
                     int addedCount = 0;
                     foreach (var line in lines)
                     {
-                        if (line.Contains(" E ") || line.StartsWith("E/"))
+                        bool shouldInclude = false;
+                        
+                        // Logcat format: "12-11 15:39:00.000 1234 5678 E Tag: Message"
+                        // Or: "E/Tag   (1234): Message"
+                        if (_includeErrors && (line.Contains(" E ") || line.StartsWith("E/") || line.Contains(" E/")))
                         {
-                            AddError(line);
+                            shouldInclude = true;
+                        }
+                        else if (_includeWarnings && (line.Contains(" W ") || line.StartsWith("W/") || line.Contains(" W/")))
+                        {
+                            shouldInclude = true;
+                        }
+                        else if (_includeMessages && (line.Contains(" I ") || line.StartsWith("I/") || line.Contains(" I/")))
+                        {
+                            shouldInclude = true;
+                        }
+                        
+                        if (shouldInclude)
+                        {
+                            AddLogEntry(line);
                             addedCount++;
                         }
                     }
-                    debugLog.AppendLine($"ADB Logcat Errors added: {addedCount}");
+                    debugLog.AppendLine($"ADB Logcat Logs added: {addedCount}");
                 }
                 else
                 {
@@ -238,15 +396,23 @@ public class ErrorLogScraper : EditorWindow
         }
     }
 
-    private void AddError(string message)
+    private void AddLogEntry(string message)
     {
         if (string.IsNullOrEmpty(message)) return;
 
-        // Truncate to 256 chars
-        string truncated = message.Length > 256 ? message.Substring(0, 256) + "..." : message;
+        // Extract only the first line (before any newline)
+        string firstLine = message;
+        int newlineIndex = message.IndexOfAny(new[] { '\n', '\r' });
+        if (newlineIndex >= 0)
+        {
+            firstLine = message.Substring(0, newlineIndex);
+        }
         
-        // Clean up newlines if any, to keep it as a list item
-        truncated = truncated.Replace("\n", " ").Replace("\r", "");
+        // Truncate to 256 chars (whichever is shorter - first line or 256 chars)
+        string truncated = firstLine.Length > 256 ? firstLine.Substring(0, 256) + "..." : firstLine;
+        
+        // Clean up any remaining whitespace/newlines
+        truncated = truncated.Trim();
         
         // Avoid duplicates if desired, or keep all
         _scrapedErrors.Add(truncated);

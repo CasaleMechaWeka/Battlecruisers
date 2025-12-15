@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
+using BattleCruisers.Buildables.Buildings.Turrets.AngleCalculators;
 using BattleCruisers.Buildables.Buildings.Turrets.AttackablePositionFinders;
 using BattleCruisers.Buildables.Buildings.Turrets.PositionValidators;
 using BattleCruisers.Movement.Predictors;
@@ -71,7 +71,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers.Helpers
             float limitedDesiredAngle = _angleLimiter.LimitAngle(desiredAngleInDegrees);
             _rotationMovementController.AdjustRotation(limitedDesiredAngle);
 
-            bool isOnTarget = _rotationMovementController.IsOnTarget(desiredAngleInDegrees);
+            bool isOnTarget = _rotationMovementController.IsOnTarget(limitedDesiredAngle);
             if (isOnTarget)
             {
                 Logging.Verbose(Tags.BARREL_CONTROLLER, $"{_barrelController}  On target!");

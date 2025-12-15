@@ -960,7 +960,15 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
         /// </summary>
         public void OnWatchRewardedAdButtonClicked()
         {
+            Debug.Log($"[PvP Rewards] OnWatchRewardedAdButtonClicked() called! Button clicked.");
+            Debug.Log($"[PvP Rewards] rewardedAdButton = {rewardedAdButton}, active = {rewardedAdButton?.activeSelf}");
+
+            // Check if button has Button component
+            var buttonComponent = rewardedAdButton?.GetComponent<UnityEngine.UI.Button>();
+            Debug.Log($"[PvP Rewards] Button component = {buttonComponent}, interactable = {buttonComponent?.interactable}");
+
             bool isPremium = DataProvider.GameModel.PremiumEdition;
+            Debug.Log($"[PvP Rewards] isPremium = {isPremium}");
 
             if (isPremium)
             {
@@ -970,6 +978,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             else
             {
                 // Free: Show real AppLovin ad
+                Debug.Log($"[PvP Rewards] AppLovinManager.Instance = {AppLovinManager.Instance}");
                 if (AppLovinManager.Instance == null)
                 {
                     Debug.LogWarning("[PvP Rewards] AppLovinManager not found, creating one...");

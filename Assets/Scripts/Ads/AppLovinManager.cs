@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using AppLovinMax;
 
 namespace BattleCruisers.Ads
 {
@@ -87,20 +88,20 @@ namespace BattleCruisers.Ads
             // This prevents z-order issues where SurfaceView blocks WebView close button overlays
             // Applying multiple parameters to ensure close button appears
             
-            // TEST (Dec 11): Reverting TextureView hacks now that we have SDK 13.5.1 + Custom Tabs
-            // These were originally added to fix Z-order issues with older SDK/config
-            /*
+            // CRITICAL FIX: Force TextureView rendering to resolve close button issues
+            // SurfaceView causes z-order problems where close buttons get blocked
+            // Re-enabling these parameters based on log analysis showing WebView rendering failures
+
             // Fix #1: Disable SurfaceView (forces TextureView)
             MaxSdk.SetExtraParameter("disable_video_surface_view", "true");
-            
+
             // Fix #2: Explicitly set video renderer to texture
             MaxSdk.SetExtraParameter("video_renderer", "texture");
-            
+
             // Fix #3: Ensure WebView hardware acceleration is enabled
             MaxSdk.SetExtraParameter("webview_hardware_acceleration", "true");
-            
+
             LogDebug("Applied 3 TextureView fixes: disable_video_surface_view, video_renderer=texture, webview_hardware_acceleration");
-            */
 
             MaxSdk.InitializeSdk();
 #else
@@ -109,7 +110,7 @@ namespace BattleCruisers.Ads
         }
 
 #if UNITY_ANDROID || UNITY_IOS
-        private void OnSdkInitialized(MaxSdkBase.SdkConfiguration config)
+        private void OnSdkInitialized(MaxSdk.SdkConfiguration config)
         {
             LogDebug($"MAX SDK Initialized - Country: {config.CountryCode}, TestMode: {config.IsTestModeEnabled}");
             isInitialized = true;
@@ -132,14 +133,14 @@ namespace BattleCruisers.Ads
             LoadInterstitial();
         }
 
-        private void OnInterstitialLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnInterstitialLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"Interstitial loaded - Network: {adInfo.NetworkName}");
             interstitialRetryAttempt = 0;
             OnInterstitialAdReady?.Invoke();
         }
 
-        private void OnInterstitialFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
+        private void OnInterstitialFailedEvent(string adUnitId, MaxSdk.ErrorInfo errorInfo)
         {
             interstitialRetryAttempt++;
             double retryDelay = Math.Pow(2, Math.Min(6, interstitialRetryAttempt));
@@ -147,19 +148,19 @@ namespace BattleCruisers.Ads
             Invoke(nameof(LoadInterstitial), (float)retryDelay);
         }
 
-        private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"[INTERSTITIAL] Displayed - Network: {adInfo.NetworkName}, Placement: {adInfo.Placement}, AdUnit: {adUnitId}, Creative: {adInfo.CreativeIdentifier}, Revenue: ${adInfo.Revenue}");
         }
 
-        private void OnInterstitialFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
+        private void OnInterstitialFailedToDisplayEvent(string adUnitId, MaxSdk.ErrorInfo errorInfo, MaxSdk.AdInfo adInfo)
         {
             Debug.LogError($"[INTERSTITIAL] Failed to display - Code: {errorInfo.Code}, Message: {errorInfo.Message}, AdLoadFailureInfo: {errorInfo.AdLoadFailureInfo}, MediatedNetworkErrorCode: {errorInfo.MediatedNetworkErrorCode}, MediatedNetworkErrorMessage: {errorInfo.MediatedNetworkErrorMessage}, Network: {adInfo?.NetworkName}");
             OnInterstitialAdShowFailed?.Invoke();
             LoadInterstitial();
         }
 
-        private void OnInterstitialDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnInterstitialDismissedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"[INTERSTITIAL] Dismissed - Network: {adInfo.NetworkName}, AdUnit: {adUnitId}");
             FirebaseAnalyticsManager.Instance?.LogAdClosed("applovin", "interstitial");
@@ -167,7 +168,7 @@ namespace BattleCruisers.Ads
             LoadInterstitial();
         }
 
-        private void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"Interstitial revenue: ${adInfo.Revenue:F4} from {adInfo.NetworkName}");
             FirebaseAnalyticsManager.Instance?.LogAdImpression("applovin", "interstitial");
@@ -190,14 +191,14 @@ namespace BattleCruisers.Ads
             LoadRewardedAd();
         }
 
-        private void OnRewardedAdLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnRewardedAdLoadedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"Rewarded ad loaded - Network: {adInfo.NetworkName}");
             rewardedRetryAttempt = 0;
             OnRewardedAdReady?.Invoke();
         }
 
-        private void OnRewardedAdFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
+        private void OnRewardedAdFailedEvent(string adUnitId, MaxSdk.ErrorInfo errorInfo)
         {
             rewardedRetryAttempt++;
             double retryDelay = Math.Pow(2, Math.Min(6, rewardedRetryAttempt));
@@ -205,32 +206,32 @@ namespace BattleCruisers.Ads
             Invoke(nameof(LoadRewardedAd), (float)retryDelay);
         }
 
-        private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
+        private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdk.ErrorInfo errorInfo, MaxSdk.AdInfo adInfo)
         {
             Debug.LogError($"[REWARDED] Failed to display - Code: {errorInfo.Code}, Message: {errorInfo.Message}, AdLoadFailureInfo: {errorInfo.AdLoadFailureInfo}, MediatedNetworkErrorCode: {errorInfo.MediatedNetworkErrorCode}, MediatedNetworkErrorMessage: {errorInfo.MediatedNetworkErrorMessage}, Network: {adInfo?.NetworkName}");
             OnRewardedAdShowFailed?.Invoke();
             LoadRewardedAd();
         }
 
-        private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"[REWARDED] Displayed - Network: {adInfo.NetworkName}, Placement: {adInfo.Placement}, AdUnit: {adUnitId}, Creative: {adInfo.CreativeIdentifier}, Revenue: ${adInfo.Revenue}");
         }
 
-        private void OnRewardedAdDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnRewardedAdDismissedEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"[REWARDED] Dismissed - Network: {adInfo.NetworkName}, AdUnit: {adUnitId}");
             OnRewardedAdClosed?.Invoke();
             LoadRewardedAd();
         }
 
-        private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)
+        private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"Rewarded ad received reward: {reward.Label} x{reward.Amount}");
             OnRewardedAdRewarded?.Invoke();
         }
 
-        private void OnRewardedAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
+        private void OnRewardedAdRevenuePaidEvent(string adUnitId, MaxSdk.AdInfo adInfo)
         {
             LogDebug($"Rewarded ad revenue: ${adInfo.Revenue:F4} from {adInfo.NetworkName}");
         }
@@ -312,6 +313,8 @@ namespace BattleCruisers.Ads
 
         public void ShowRewardedAd()
         {
+            LogDebug($"[ShowRewardedAd] Called. isInitialized={isInitialized}, platform={Application.platform}");
+
 #if UNITY_EDITOR
             if (isInitialized)
             {
@@ -320,17 +323,20 @@ namespace BattleCruisers.Ads
             }
             else
             {
+                LogDebug("[EDITOR] Not initialized, failing ad");
                 OnRewardedAdShowFailed?.Invoke();
             }
 #elif UNITY_ANDROID || UNITY_IOS
             if (IsRewardedAdReady())
             {
-                LogDebug("Showing rewarded ad");
+                LogDebug($"[ShowRewardedAd] Ad ready, showing with unitId: {rewardedAdUnitId}");
                 MaxSdk.ShowRewardedAd(rewardedAdUnitId);
             }
             else
             {
-                LogDebug("Rewarded ad not ready");
+                LogDebug($"[ShowRewardedAd] Ad NOT ready. Initialized={isInitialized}, Checking readiness...");
+                bool ready = MaxSdk.IsRewardedAdReady(rewardedAdUnitId);
+                LogDebug($"[ShowRewardedAd] MaxSdk.IsRewardedAdReady({rewardedAdUnitId}) = {ready}");
                 OnRewardedAdShowFailed?.Invoke();
             }
 #endif
