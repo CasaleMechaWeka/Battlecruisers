@@ -237,7 +237,7 @@ public class ProfileDetailsController : MonoBehaviour
 
         SelectHeckleButton.gameObject.SetActive(false);
 
-        if (exoIndexToItemIndex != null)
+        if (exoIndexToItemIndex != null && currentExoIndex >= 0 && currentExoIndex < exoIndexToItemIndex.Length && exoIndexToItemIndex[currentExoIndex] >= 0 && exoIndexToItemIndex[currentExoIndex] < instantiatedExoItems.Count)
             instantiatedExoItems[exoIndexToItemIndex[currentExoIndex]].ClickedFeedback.SetActive(false);
 
         currentExoIndex = int.Parse(DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName[10..]);
@@ -350,8 +350,10 @@ public class ProfileDetailsController : MonoBehaviour
         playerExo.gameObject.transform.localScale = Vector3.one * 1f;
         currentCaptainRender = playerExo.gameObject;
 
-        instantiatedExoItems[exoIndexToItemIndex[currentExoIndex]].ClickedFeedback.SetActive(false);
-        instantiatedExoItems[exoIndexToItemIndex[newExoIndex]].ClickedFeedback.SetActive(true);
+        if (exoIndexToItemIndex != null && currentExoIndex >= 0 && currentExoIndex < exoIndexToItemIndex.Length && exoIndexToItemIndex[currentExoIndex] >= 0 && exoIndexToItemIndex[currentExoIndex] < instantiatedExoItems.Count)
+            instantiatedExoItems[exoIndexToItemIndex[currentExoIndex]].ClickedFeedback.SetActive(false);
+        if (exoIndexToItemIndex != null && newExoIndex >= 0 && newExoIndex < exoIndexToItemIndex.Length && exoIndexToItemIndex[newExoIndex] >= 0 && exoIndexToItemIndex[newExoIndex] < instantiatedExoItems.Count)
+            instantiatedExoItems[exoIndexToItemIndex[newExoIndex]].ClickedFeedback.SetActive(true);
         currentExoIndex = newExoIndex;
     }
 
@@ -411,8 +413,18 @@ public class ProfileDetailsController : MonoBehaviour
         HecklePreviewHighlights[1].SetActive(false);
         HecklePreviewHighlights[2].SetActive(false);
 
+        // Disable camera first to prevent rendering during cleanup
+        if (CaptainCamera != null)
+        {
+            CaptainCamera.SetActive(false);
+        }
+
         CancelSelectors();
-        Destroy(currentCaptainRender);
+        if (currentCaptainRender != null)
+        {
+            Destroy(currentCaptainRender);
+            currentCaptainRender = null;
+        }
         gameObject.SetActive(false);
     }
 
