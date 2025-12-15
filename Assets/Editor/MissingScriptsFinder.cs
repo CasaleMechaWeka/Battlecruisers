@@ -100,6 +100,44 @@ public class MissingScriptsFinder : EditorWindow
     static readonly GUILayoutOption[] OPT_W70 = { GUILayout.Width(70f) };
     static readonly GUILayoutOption[] OPT_W135 = { GUILayout.Width(135f) };
 
+    static Texture2D s_ZebraEvenTex, s_ZebraOddTex;
+    static GUIStyle s_ZebraEven, s_ZebraOdd;
+    static bool s_ZebraForProSkin;
+
+    static Texture2D MakeTex(Color c)
+    {
+        var t = new Texture2D(1, 1, TextureFormat.RGBA32, false) { hideFlags = HideFlags.HideAndDontSave };
+        t.SetPixel(0, 0, c);
+        t.Apply();
+        return t;
+    }
+
+    void EnsureZebraStyles()
+    {
+        if (s_ZebraEven != null && s_ZebraForProSkin == EditorGUIUtility.isProSkin)
+            return;
+
+        s_ZebraForProSkin = EditorGUIUtility.isProSkin;
+
+        if (s_ZebraEvenTex != null) DestroyImmediate(s_ZebraEvenTex);
+        if (s_ZebraOddTex != null) DestroyImmediate(s_ZebraOddTex);
+
+        // subtle overlays; tweak alphas to taste
+        var even = EditorGUIUtility.isProSkin ? new Color(1, 1, 1, 0.03f) : new Color(0, 0, 0, 0.03f);
+        var odd = EditorGUIUtility.isProSkin ? new Color(1, 1, 1, 0.07f) : new Color(0, 0, 0, 0.06f);
+
+        s_ZebraEvenTex = MakeTex(even);
+        s_ZebraOddTex = MakeTex(odd);
+
+        s_ZebraEven = new GUIStyle(GUIStyle.none);
+        s_ZebraOdd = new GUIStyle(GUIStyle.none);
+
+        s_ZebraEven.normal.background = s_ZebraEvenTex;
+        s_ZebraOdd.normal.background = s_ZebraOddTex;
+    }
+
+    GUIStyle ZebraStyle(int rowIndex) => (rowIndex & 1) == 0 ? s_ZebraEven : s_ZebraOdd;
+
     #endregion
 
     #region GUI
@@ -139,6 +177,7 @@ public class MissingScriptsFinder : EditorWindow
 
     void OnGUI()
     {
+        EnsureZebraStyles();
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button(GC_FindMissingComponents))
             FindMissingScripts();
@@ -222,9 +261,11 @@ public class MissingScriptsFinder : EditorWindow
             grouped[entry.assetPath].Add(entry);
         }
 
+        int row = 0;
         // 2) Iterate groups
         foreach (KeyValuePair<string, List<MissingScriptEntry>> kvp in grouped)
         {
+
             string assetPath = kvp.Key;
             List<MissingScriptEntry> allEntries = kvp.Value;
 
@@ -254,7 +295,8 @@ public class MissingScriptsFinder : EditorWindow
             if (filteredEntries.Count == 1)
             {
                 MissingScriptEntry single = filteredEntries[0];
-                EditorGUILayout.BeginHorizontal(OPT_ROW);
+                
+                EditorGUILayout.BeginHorizontal(ZebraStyle(row++), OPT_ROW);
                 if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
                 EditorGUILayout.LabelField(FormatPathRootArrow(single.uniquePath), GUILayout.ExpandWidth(true));
 
@@ -268,7 +310,7 @@ public class MissingScriptsFinder : EditorWindow
             }
 
             // group header (foldout)
-            EditorGUILayout.BeginHorizontal(OPT_ROW);
+            EditorGUILayout.BeginHorizontal(ZebraStyle(row++), OPT_ROW);
             if (iconTex != null) GUILayout.Label(iconTex, OPT_ICON);
 
             bool expanded = assetFoldoutStates.TryGetValue(assetPath, out bool wasExpanded) && wasExpanded;
@@ -295,7 +337,7 @@ public class MissingScriptsFinder : EditorWindow
                     MissingScriptEntry entry = filteredEntries[i];
                     string sub = SubPathAfterRoot(entry.uniquePath); // from earlier
 
-                    EditorGUILayout.BeginHorizontal(OPT_ROW);
+                    EditorGUILayout.BeginHorizontal(ZebraStyle(row++), OPT_ROW);
 
                     // indent the whole child row (icon + label + buttons)
                     float indentPx = 15f * EditorGUI.indentLevel; // Unity's standard indent width ~15
@@ -1165,7 +1207,6 @@ public class MissingScriptsFinder : EditorWindow
             ignoreList.Add(new MissingScriptEntry(assetPath, kind, uniquePath));
         }
     }
-
 
     void SaveIgnoreList()
     {
