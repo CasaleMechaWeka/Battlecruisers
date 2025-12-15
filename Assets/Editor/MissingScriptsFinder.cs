@@ -122,7 +122,7 @@ public class MissingScriptsFinder : EditorWindow
         LoadIgnoreList();
         LoadCacheFromDisk();
 
-        frameBudget = Mathf.Max(0.03f, 1f / Screen.currentResolution.refreshRate * .9f);
+        frameBudget = Mathf.Max(0.03f, 1f / (float)Screen.currentResolution.refreshRateRatio.value * .9f);
     }
 
     void OnDisable()
