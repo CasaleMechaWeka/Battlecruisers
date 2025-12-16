@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
+using BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers;
 using BattleCruisers.Buildables.Buildings.Turrets.Stats;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Movement.Deciders;
