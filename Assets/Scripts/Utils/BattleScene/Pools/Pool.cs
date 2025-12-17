@@ -71,5 +71,15 @@ namespace BattleCruisers.Utils.BattleScene.Pools
         {
             MaxLimit = amount;
         }
+
+        public int GetPoolSize()
+        {
+            return _items.Count;
+        }
+
+        public int GetTotalCreated()
+        {
+            return _createCount;
+        }
     }
 }
