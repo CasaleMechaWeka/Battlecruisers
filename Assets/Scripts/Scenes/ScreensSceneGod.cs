@@ -632,10 +632,10 @@ namespace BattleCruisers.Scenes
                     
             homeScreenArt.SetActive(false);
             environmentArt.SetActive(false);
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().bodykitDetails.CollectUnlockedBodykits();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().bodykitDetails.CollectAllBodykits();
             loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().RefreshBodykitsUI();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().buildingDetails.CollectUnlockedBuildingVariant();
-            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.CollectUnlockedUnitVariant();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().buildingDetails.CollectAllBuildingVariants();
+            loadoutScreen.GetComponent<InfiniteLoadoutScreenController>().unitDetails.CollectAllUnitVariants();
             GoToScreen(loadoutScreen);
         }
 
