@@ -8,16 +8,24 @@ namespace BattleCruisers.Utils
     /// Captures ALL Unity Console output (Debug.Log, exceptions, errors, warnings)
     /// and writes them to RuntimeConsole.log in the project root.
     /// This ensures Claude can see runtime errors that don't appear in Editor.log.
+    /// Only active when ENABLE_LOGS scripting define symbol is set.
     /// </summary>
     public static class ConsoleToFileCapture
     {
+        #if ENABLE_LOGS
         private static string logFilePath;
         private static StreamWriter logWriter;
         private static object lockObject = new object();
+        #endif
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
+            #if !ENABLE_LOGS
+            return; // Disable console capture when ENABLE_LOGS is not defined
+            #endif
+
+            #if ENABLE_LOGS
             // Create log file path - use persistentDataPath for cross-platform compatibility
             // On Android: /storage/emulated/0/Android/data/com.package/files/
             // On iOS: Application sandbox Documents folder
@@ -51,8 +59,10 @@ namespace BattleCruisers.Utils
             Application.logMessageReceived += OnLogMessageReceived;
 
             Debug.Log("ConsoleToFileCapture: Log capture started. Writing to " + logFilePath);
+            #endif
         }
 
+        #if ENABLE_LOGS
         private static void OnLogMessageReceived(string condition, string stackTrace, LogType type)
         {
             if (logWriter == null) return;
@@ -84,14 +94,18 @@ namespace BattleCruisers.Utils
                 }
             }
         }
+        #endif
 
         // Cleanup on application quit
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void RegisterCleanup()
         {
+            #if ENABLE_LOGS
             Application.quitting += OnApplicationQuit;
+            #endif
         }
 
+        #if ENABLE_LOGS
         private static void OnApplicationQuit()
         {
             if (logWriter != null)
@@ -110,5 +124,6 @@ namespace BattleCruisers.Utils
 
             Application.logMessageReceived -= OnLogMessageReceived;
         }
+        #endif
     }
 }

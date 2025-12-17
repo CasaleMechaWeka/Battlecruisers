@@ -89,6 +89,7 @@ public class MissingScriptsFinder : EditorWindow
     static readonly GUIContent GC_Remove = EditorGUIUtility.TrTextContent("Remove");
     static readonly GUIContent GC_Replace = EditorGUIUtility.TrTextContent("Replace");
     static readonly GUIContent GC_Jump = EditorGUIUtility.TrTextContent("Jump");
+    static readonly GUIContent GC_SetToNone = new GUIContent("Set to None", "Attempt to set missing references to null");
     static readonly GUIContent GC_Ignore = EditorGUIUtility.TrTextContent("Ignore");
     static readonly GUIContent GC_RemoveAll = EditorGUIUtility.TrTextContent("Remove All");
 
@@ -98,6 +99,7 @@ public class MissingScriptsFinder : EditorWindow
     static readonly GUILayoutOption[] OPT_W50 = { GUILayout.Width(50f) };
     static readonly GUILayoutOption[] OPT_W60 = { GUILayout.Width(60f) };
     static readonly GUILayoutOption[] OPT_W70 = { GUILayout.Width(70f) };
+    static readonly GUILayoutOption[] OPT_W85 = { GUILayout.Width(85f) };
     static readonly GUILayoutOption[] OPT_W135 = { GUILayout.Width(135f) };
 
     static Texture2D s_ZebraEvenTex, s_ZebraOddTex;
@@ -302,6 +304,7 @@ public class MissingScriptsFinder : EditorWindow
 
                 if (single.missingType == MissingType.MissingComponent)
                     DrawRemoveAndReplace(single.assetPath, replacementScript);
+                DrawSetToNoneForEntry(single);
                 DrawJumpForEntry(single);
                 DrawIgnoreForEntry(single, isIgnore);
 
@@ -355,6 +358,7 @@ public class MissingScriptsFinder : EditorWindow
                     if (entry.missingType == MissingType.MissingComponent)
                         DrawRemoveAndReplace(entry.assetPath, replacementScript);
 
+                    DrawSetToNoneForEntry(entry);
                     DrawJumpForEntry(entry);
                     DrawIgnoreForEntry(entry, isIgnore);
 
@@ -409,6 +413,15 @@ public class MissingScriptsFinder : EditorWindow
     {
         if (GUILayout.Button(GC_Jump, OPT_W50))
             JumpToReference(e.assetPath, e.uniquePath);
+    }
+
+    void DrawSetToNoneForEntry(in MissingScriptEntry e)
+    {
+        using (new EditorGUI.DisabledScope(e.missingType != MissingType.MissingReference))
+        {
+            if (GUILayout.Button(GC_SetToNone, OPT_W85))
+                SetReferenceToNone(e.assetPath, e.uniquePath);
+        }
     }
 
     void DrawJumpForAsset(string assetPath)
@@ -833,6 +846,143 @@ public class MissingScriptsFinder : EditorWindow
             OpenPrefabAndSelect(assetPath, uniquePath);
         else if (assetPath.EndsWith(".unity"))
             OpenSceneAndSelect(assetPath, uniquePath);
+    }
+
+    void SetReferenceToNone(string assetPath, string uniquePath)
+    {
+        try
+        {
+            if (assetPath.EndsWith(".prefab"))
+            {
+                SetReferenceToNoneInPrefab(assetPath, uniquePath);
+            }
+            else if (assetPath.EndsWith(".unity"))
+            {
+                SetReferenceToNoneInScene(assetPath, uniquePath);
+            }
+
+            // Refresh the missing entries list
+            missingScriptEntries.RemoveAll(e => e.assetPath == assetPath && e.uniquePath == uniquePath && e.missingType == MissingType.MissingReference);
+            Repaint();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Failed to set reference to None in {assetPath}: {ex.Message}");
+        }
+    }
+
+    void SetReferenceToNoneInPrefab(string assetPath, string uniquePath)
+    {
+        GameObject prefabContents = null;
+        try
+        {
+            prefabContents = PrefabUtility.LoadPrefabContents(assetPath);
+            GameObject targetObject = FindGameObjectByUniquePath(prefabContents, uniquePath);
+
+            if (targetObject != null)
+            {
+                SetReferencesToNoneOnGameObject(targetObject);
+                PrefabUtility.SaveAsPrefabAsset(prefabContents, assetPath);
+            }
+            else
+            {
+                Debug.LogWarning($"Could not find GameObject with path {uniquePath} in prefab: {assetPath}");
+            }
+        }
+        catch (ArgumentException e)
+        {
+            Debug.LogWarning($"Skipping prefab with multiple roots or invalid format: {assetPath}\n  {e.Message}");
+        }
+        finally
+        {
+            if (prefabContents != null)
+            {
+                PrefabUtility.UnloadPrefabContents(prefabContents);
+            }
+        }
+    }
+
+    void SetReferenceToNoneInScene(string assetPath, string uniquePath)
+    {
+        Scene scene = new Scene();
+        bool sceneWasOpen = false;
+
+        try
+        {
+            scene = EditorSceneManager.OpenScene(assetPath, OpenSceneMode.Additive);
+            sceneWasOpen = true;
+
+            if (scene.isLoaded)
+            {
+                GameObject targetObject = null;
+                foreach (GameObject root in scene.GetRootGameObjects())
+                {
+                    targetObject = FindGameObjectByUniquePath(root, uniquePath);
+                    if (targetObject != null)
+                        break;
+                }
+
+                if (targetObject != null)
+                {
+                    SetReferencesToNoneOnGameObject(targetObject);
+                    EditorSceneManager.MarkSceneDirty(scene);
+                    EditorSceneManager.SaveScene(scene);
+                }
+                else
+                {
+                    Debug.LogWarning($"Could not find GameObject with path {uniquePath} in scene: {assetPath}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error setting references to None in scene: {assetPath}\n{ex}");
+        }
+        finally
+        {
+            if (sceneWasOpen && scene.isLoaded)
+            {
+                EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+    }
+
+    void SetReferencesToNoneOnGameObject(GameObject go)
+    {
+        Component[] components = go.GetComponents<Component>();
+        bool foundAnyMissingRefs = false;
+
+        foreach (Component comp in components)
+        {
+            if (comp == null) continue; // Skip missing components
+            if (comp is Transform) continue;
+
+            SerializedObject so = new SerializedObject(comp);
+            SerializedProperty it = so.GetIterator();
+
+            while (it.NextVisible(true))
+            {
+                if (it.propertyType == SerializedPropertyType.ObjectReference &&
+                    it.objectReferenceInstanceIDValue != 0 &&
+                    it.objectReferenceValue == null)
+                {
+                    // Found a missing reference - set it to null explicitly
+                    it.objectReferenceValue = null;
+                    foundAnyMissingRefs = true;
+                    Debug.Log($"Set missing reference '{it.propertyPath}' to None on component {comp.GetType().Name} of GameObject {go.name}");
+                }
+            }
+
+            if (foundAnyMissingRefs)
+            {
+                so.ApplyModifiedProperties();
+            }
+        }
+
+        if (!foundAnyMissingRefs)
+        {
+            Debug.Log($"No missing references found to set to None on GameObject {go.name}");
+        }
     }
 
     void OpenPrefabAndSelect(string assetPath, string uniquePath)

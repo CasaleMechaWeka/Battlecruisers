@@ -14,6 +14,7 @@ namespace BattleCruisers.Ads
 
         [Header("AppLovin MAX Configuration")]
         [Tooltip("Your AppLovin SDK Key from the dashboard")]
+#pragma warning disable CS0414 // Field is assigned but never used (used conditionally in platform-specific code)
         [SerializeField] private string sdkKey = "G4pcLyqOtAarkEgzzsKcBiIQ8Mtx9mxARSfP_wfhnMtIyW5RwTdAZ2sZD5ToV03CELZoBHBXTX6_987r4ChTp0";
         
         [Tooltip("Interstitial Ad Unit ID from AppLovin dashboard")]
@@ -25,6 +26,7 @@ namespace BattleCruisers.Ads
         [Header("Debug Settings")]
         [SerializeField] private bool enableDebugLogs = true;
         [SerializeField] private bool enableVerboseLogging = true; // For AppLovin support debugging
+#pragma warning restore CS0414
 
         private bool isInitialized = false;
         private int interstitialRetryAttempt = 0;

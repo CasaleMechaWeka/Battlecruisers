@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Boost.GlobalProviders;
 using BattleCruisers.Buildables.Buildings;

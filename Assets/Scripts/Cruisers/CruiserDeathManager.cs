@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data;
+using BattleCruisers.Data;
 using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.BattleScene.Pools;

@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
