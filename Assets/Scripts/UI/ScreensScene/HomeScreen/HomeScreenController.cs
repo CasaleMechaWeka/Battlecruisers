@@ -3,6 +3,7 @@ using BattleCruisers.Data.Models;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -107,6 +108,39 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
         public void ShowNewsPanel()
         {
             _screensSceneGod.ShowNewsPanel();
+        }
+
+        /// <summary>
+        /// Manual cloud save - saves current game state to cloud
+        /// </summary>
+        public async void CloudSave()
+        {
+            try
+            {
+                await DataProvider.CloudSave();
+                Debug.Log("[HomeScreen] Cloud save completed successfully");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] Cloud save failed: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Manual cloud load - loads game state from cloud (overwrites local if cloud is newer)
+        /// </summary>
+        public async void CloudLoad()
+        {
+            try
+            {
+                await DataProvider.CloudLoad();
+                Debug.Log("[HomeScreen] Cloud load completed successfully");
+                // Note: UI will refresh automatically when navigating to other screens
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[HomeScreen] Cloud load failed: {ex.Message}");
+            }
         }
     }
 }

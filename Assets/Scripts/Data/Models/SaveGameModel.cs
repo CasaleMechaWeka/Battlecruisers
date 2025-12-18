@@ -313,6 +313,12 @@ namespace BattleCruisers.Data.Models
             if (unlockedHulls != null)
                 foreach (string hull in unlockedHulls)
                 {
+                    // Skip null or empty hull strings to prevent invalid HullKey creation
+                    if (string.IsNullOrEmpty(hull))
+                    {
+                        Debug.LogWarning($"Skipping null or empty hull string in unlockedHulls");
+                        continue;
+                    }
                     HullKey hk = new HullKey(hull);
                     game.AddUnlockedHull(hk);
                 }

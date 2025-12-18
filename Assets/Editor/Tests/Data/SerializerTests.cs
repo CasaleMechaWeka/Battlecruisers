@@ -93,33 +93,34 @@ namespace BattleCruisers.Tests.Data
 				wasVictory: true);
 		}
 
-		private List<HullKey> CreateUnlockedHulls()
+	private List<HullKey> CreateUnlockedHulls()
+	{
+		return new List<HullKey>()
 		{
-			return new List<HullKey>()
-			{
-				new HullKey("Bergsteiger"),
-				new HullKey("Abstieg")
-			};
-		}
+			new HullKey("Trident"),
+			new HullKey("Raptor"),
+			new HullKey("Hammerhead")
+		};
+	}
 
-		private List<BuildingKey> CreateUnlockedBuildings()
+	private List<BuildingKey> CreateUnlockedBuildings()
+	{
+		return new List<BuildingKey>()
 		{
-			return new List<BuildingKey>()
-			{
-				new BuildingKey(BuildingCategory.Defence, "Ritter"),
-				new BuildingKey(BuildingCategory.Factory, "Medizin"),
-				new BuildingKey(BuildingCategory.Tactical, "Prinzessin")
-			};
-		}
+			new BuildingKey(BuildingCategory.Defence, "AntiShipTurret"),
+			new BuildingKey(BuildingCategory.Factory, "AirFactory"),
+			new BuildingKey(BuildingCategory.Tactical, "ShieldGenerator")
+		};
+	}
 
-		private List<UnitKey> CreateUnlockedUnits()
+	private List<UnitKey> CreateUnlockedUnits()
+	{
+		return new List<UnitKey>()
 		{
-			return new List<UnitKey>()
-			{
-				new UnitKey(UnitCategory.Aircraft, "Messerschmitt"),
-				new UnitKey(UnitCategory.Naval, "Herzog")
-			};
-		}
+			new UnitKey(UnitCategory.Aircraft, "Fighter"),
+			new UnitKey(UnitCategory.Naval, "Frigate")
+		};
+	}
 
 		[TearDown]
 		public void TearDown()
