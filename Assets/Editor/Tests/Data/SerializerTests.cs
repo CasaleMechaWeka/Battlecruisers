@@ -156,11 +156,16 @@ namespace BattleCruisers.Tests.Data
 			Assert.AreEqual(_originalGameModel, loadedGame);
 		}
 
-		[Test]
-		public void LoadGame_NoSavedGameThrows()
-		{
-			Assert.Throws<UnityAsserts.AssertionException>(() => _serializer.LoadGame());
-		}
+	[Test]
+	public void LoadGame_NoSavedGame_ReturnsEmergencyRecovery()
+	{
+		// LoadGame now returns EmergencyRecovery() instead of throwing when no save exists
+		GameModel result = _serializer.LoadGame();
+		Assert.IsNotNull(result, "Should return a GameModel from EmergencyRecovery");
+		int currentVersion = ScreensSceneGod.VersionToInt(Application.version);
+		Assert.AreEqual(currentVersion, result.SaveVersion, "Should have current version");
+		Assert.AreEqual("Charlie", result.PlayerName, "Should have default player name");
+	}
 
 		[Test]
 		public void DeleteSavedGame()

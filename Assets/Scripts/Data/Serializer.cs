@@ -61,9 +61,29 @@ namespace BattleCruisers.Data
             return File.Exists(defaultGameModelFilePath);
         }
 
+        /// <summary>
+        /// Gets the normalized save version from Application.version.
+        /// Extracts major.minor and converts to save format (e.g., "6.5.107" -> 650, "6.4.0" -> 640)
+        /// </summary>
+        private static int GetCurrentSaveVersion()
+        {
+            string version = Application.version;
+            string[] parts = version.Split('.');
+            if (parts.Length >= 2)
+            {
+                if (int.TryParse(parts[0], out int major) && int.TryParse(parts[1], out int minor))
+                {
+                    // Convert major.minor to save version format: 6.5 -> 650, 6.4 -> 640
+                    return major * 100 + minor * 10; // 6.5 -> 650, 6.4 -> 640
+                }
+            }
+            // Fallback: use full version conversion if parsing fails
+            return ScreensSceneGod.VersionToInt(version);
+        }
+
         public void SaveGame(GameModel game)
         {
-            game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            game.SaveVersion = GetCurrentSaveVersion();
             using (FileStream file = File.Create(preferredGameModelFilePath))
             {
                 _binaryFormatter.Serialize(file, game);
@@ -109,6 +129,12 @@ namespace BattleCruisers.Data
             int version = GetSaveVersion(output);
             GameModel game;
 
+            // Version compatibility system:
+            // - Legacy versions (0-5): Old format saves (v3, v4, v5, etc.) - migrate to current version (6.5 = 650)
+            // - Current format (640+): Modern saves using app version numbers
+            //   - 640 = 6.4.0 (in production, compatible)
+            //   - 650 = 6.5.0 (current/newest version)
+            //   - All versions >= 640 use the same format and are compatible with each other
             switch (version)
             {
                 case 0:
@@ -117,20 +143,28 @@ namespace BattleCruisers.Data
                 case 3:
                 case 4:
                 case 5:
-                    // Legacy/hypothetical formats - migrate
+                    // Legacy formats (v3, v4, v5, etc.) - migrate to current version (6.5 = 650)
+                    Debug.Log($"Loading legacy save version {version}, migrating to current version");
                     game = MigrateToCurrentVersion(output);
                     break;
 
                 default:
-                    // Real versions: 640 (6.4.0), 650 (6.5.0), etc.
+                    // Modern format versions: 640 (6.4.0), 650 (6.5.0), etc.
+                    // All versions >= 640 use the same format and are compatible
                     if (version >= 640)
                     {
                         game = output as GameModel;
                         if (game == null || !ValidateCurrentSave(game))
                             return EmergencyRecovery();
+                        // Version is already correct (640, 650, etc.), no migration needed
+                        Debug.Log($"Loading modern format save version {version} (compatible with current version)");
                     }
                     else
-                        return EmergencyRecovery();
+                    {
+                        // Versions between 5 and 640 are invalid/unknown - migrate to current
+                        Debug.LogWarning($"Unknown save version {version} (between legacy and modern), migrating to current version");
+                        game = MigrateToCurrentVersion(output);
+                    }
                     break;
             }
 
@@ -163,7 +197,7 @@ namespace BattleCruisers.Data
 
         private GameModel MakeCompatible(object gameData)
         {
-            Debug.Log("MakeCompatible");
+            Debug.Log("MakeCompatible - Migrating legacy save to current format");
 
             // perhaps be more conservative for these other fields too?
             var tut = gameData.GetType().GetProperty("HasAttemptedTutorial").GetValue(gameData);
@@ -173,12 +207,18 @@ namespace BattleCruisers.Data
             var lbr = gameData.GetType().GetProperty("LastBattleResult").GetValue(gameData);
             var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
             var sav = gameData.GetType().GetProperty("SaveVersion");
-            int saveVersion = 0;
-
-            if(sav == null)
-                saveVersion = ScreensSceneGod.VersionToInt(Application.version);
-            else
-                saveVersion = (int)sav.GetValue(gameData);
+            
+            // Get the original save version for logging
+            int originalSaveVersion = 0;
+            if(sav != null)
+                originalSaveVersion = (int)sav.GetValue(gameData);
+            
+            // Always use current version when migrating legacy saves (0-5, or any version < 640)
+            // This ensures old saves (v3, v4, v5, etc.) are migrated to the current version (6.5 = 650)
+            int currentVersion = GetCurrentSaveVersion();
+            int saveVersion = currentVersion;
+            
+            Debug.Log($"Migrating save from version {originalSaveVersion} to current version {currentVersion}");
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
             foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
@@ -482,7 +522,7 @@ namespace BattleCruisers.Data
         private GameModel MigrateToCurrentVersion(object gameData)
         {
             GameModel game = MakeCompatible(gameData);
-            game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            game.SaveVersion = GetCurrentSaveVersion();
             SaveGame(game);
             return game;
         }
@@ -495,7 +535,7 @@ namespace BattleCruisers.Data
         private GameModel EmergencyRecovery()
         {
             GameModel minimal = BuildMinimalDefaults();
-            minimal.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
+            minimal.SaveVersion = GetCurrentSaveVersion();
             SaveGame(minimal);
             return minimal;
         }
@@ -510,7 +550,13 @@ namespace BattleCruisers.Data
 
         public object DeserializeGameModel(string gameModelJSON)
         {
-            return JsonConvert.DeserializeObject<SaveGameModel>(gameModelJSON);
+            // Configure to handle both underscore-prefixed (legacy) and non-prefixed (current) formats
+            var settings = new JsonSerializerSettings
+            {
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            return JsonConvert.DeserializeObject<SaveGameModel>(gameModelJSON, settings);
         }
 
         public string SerializeGameModel(object saveGameModel)
@@ -526,7 +572,7 @@ namespace BattleCruisers.Data
         {
             try
             {
-                game.SaveVersion = ScreensSceneGod.VersionToInt(Application.version);
+                game.SaveVersion = GetCurrentSaveVersion();
                 SaveGameModel saveData = new SaveGameModel(game);
                 if (CloudSaveService.Instance != null && CloudSaveService.Instance.Data != null)
                 {

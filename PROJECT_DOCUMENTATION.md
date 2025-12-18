@@ -1,23 +1,23 @@
 # Battlecruisers - AppLovin MAX & Firebase Integration Documentation
 
-**Last Updated:** December 11, 2025 (Stable Build: SDK 13.5.1 + Custom Tabs Fix)  
+**Last Updated:** Current State (Verified Working)  
 **Unity Version:** 2022.3.x LTS  
 **Platform:** Android (API 23+)  
-**AppLovin MAX SDK:** v13.5.1 (Maven) / Unity Plugin 7.x  
-**Firebase SDK:** v20.1.2 (Analytics only, Kotlin 1.x compatible)
+**AppLovin MAX SDK:** v8.5.1 (Unity Package Manager)  
+**Firebase SDK:** Custom JNI implementation (Analytics)
 
 ## ⚠️ CRITICAL: SDK Version Constraints
 
 **Current Position on AppLovin:**  
-- **SDK Version:** 13.5.1 (Verified working Dec 11, 2025)
-- **Dependency Requirement:** Requires `androidx.browser:browser:1.8.0` for Custom Tabs support (rendering ads).
-- **Kotlin:** Works with Unity 2022.3 default (1.9.22).
-- **Unity Plugin:** 7.x line.
+- **SDK Version:** 8.5.1 (Installed via Unity Package Manager)
+- **Installation Method:** Unity Package Manager using AppLovin Integration Manager migration tool
+- **Package:** `com.applovin.mediation.ads:8.5.1` in `Packages/manifest.json`
+- **Scoped Registry:** AppLovin MAX Unity registry configured
 
 **Status:** ✅ **STABLE**
-- Ad Close Button: **FIXED** (Removed custom activity interceptor).
-- Network Init: **FIXED** (SDK 13.5.1 resolved version mismatch).
-- Render Issues: **FIXED** (TextureView + Hardware Acceleration).
+- AppLovin MAX SDK: **WORKING** (Unity Package Manager installation)
+- Ad System: **FUNCTIONAL** (Rewarded and Interstitial ads working)
+- Firebase: **WORKING** (Custom JNI implementation)
 
 ---
 
@@ -137,8 +137,8 @@ This is the primary documentation file. Additional guides are organized in the [
 | `Assets/Scripts/Scenes/DestructionSceneGod.cs` | Campaign rewarded ads | ✅ Complete |
 | `Assets/Scripts/PvP/.../PvPDestructionSceneGod.cs` | PvP rewarded ads | ✅ Complete |
 | `Assets/Scripts/Utils/Debugging/AdminPanel.cs` | Testing utilities | ✅ Enhanced |
-| `Assets/Editor/FirebaseDependencies.xml` | Firebase Android dependencies | ✅ v21.5.0/21.6.0 |
-| `Assets/MaxSdk/AppLovin/Editor/Dependencies.xml` | AppLovin MAX SDK dependencies | ✅ v12.6.1 |
+| `Assets/Editor/FirebaseDependencies.xml` | Firebase Android dependencies | ✅ Custom JNI |
+| `Packages/manifest.json` | Unity Package Manager (AppLovin MAX 8.5.1) | ✅ UPM |
 | `Assets/Editor/AppLovinDependencyConditional.cs` | Manages DISABLE_ADS dependency exclusion | ✅ Active |
 | `Assets/Editor/PostGenerateGradleAndroidProject.cs` | R8 packagingOptions exclusions (simplified Dec 11) | ✅ Active |
 | `Packages/manifest.json` | Unity Package Manager | ✅ Clean |
@@ -169,25 +169,22 @@ This is the primary documentation file. Additional guides are organized in the [
    
    **Note:** These values are also hardcoded as defaults in `Assets/Scripts/Ads/AppLovinManager.cs` (lines 17, 20, 23) and the SDK Key is stored in `Assets/MaxSdk/Resources/AppLovinSettings.asset` (line 16).
 
-4. **Resolve Android dependencies** (AppLovin MAX plugin 7.x pulls Maven SDK 13.5.1)
+4. **AppLovin MAX SDK Installation** (Unity Package Manager)
+   - The SDK is installed via Unity Package Manager
+   - Package: `com.applovin.mediation.ads:8.5.1`
+   - Scoped registry configured in `Packages/manifest.json`
+   - Migration was performed using AppLovin Integration Manager's built-in migration tool
+   - **Note:** SDK Key is configured in `Assets/MaxSdk/Resources/AppLovinSettings.asset`
+
+5. **Resolve Android dependencies** (if needed)
    - Assets → External Dependency Manager → Android Resolver → Settings
      - Enable Auto-Resolution and Resolution On Build
    - Assets → External Dependency Manager → Android Resolver → Force Resolve
-   - Wait for console output:
-     ```
-     Resolving Android dependencies...
-     Downloaded com.applovin:applovin-sdk:13.5.1
-     Downloaded firebase-analytics-21.5.0.aar
-     Downloaded firebase-crashlytics-18.6.0.aar
-     Downloaded play-services-games-XX.X.X.aar
-     Resolution complete!
-     ```
-   - **IMPORTANT:** Verify resolved version is 13.5.1 in `ProjectSettings/AndroidResolverDependencies.xml`
-   - **NOTE:** Keep Unity MAX plugin on 7.x. If bumping the Maven SDK beyond 13.5.x, re-validate Kotlin (<2.0) or upgrade Unity/Gradle accordingly.
+   - Wait for console output showing resolution complete
 
-5. **Build & test**
+6. **Build & test**
    - File → Build Settings → Android → Build (or Build and Run)
-   - Unity regenerates `mainTemplate.gradle`, bundles AppLovin MAX + Firebase + Play Games SDKs
+   - Unity bundles AppLovin MAX SDK (via UPM) + Firebase + Play Games SDKs
 
 ### AppLovin MAX Dashboard Checklist
 

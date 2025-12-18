@@ -7,6 +7,8 @@ using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static.LevelLoot;
 using BattleCruisers.UI.ScreensScene.PostBattleScreen;
+using BattleCruisers.Scenes;
+using Newtonsoft.Json;
 
 // Remember, this class is going to be fed into a JSON (de)serializer!
 // Keep data types primitive.
@@ -17,19 +19,28 @@ namespace BattleCruisers.Data.Models
     [Serializable]
     public class SaveGameModel
     {
+        // Support both underscore-prefixed (legacy) and non-prefixed (current) JSON formats
+        [JsonProperty(PropertyName = "_saveVersion", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int saveVersion;
 
         // What do we need to save, critically? Just the assets and progress.
 
         // Total historic destruction score.
+        [JsonProperty(PropertyName = "_lifetimeDestructionScore", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public long lifetimeDestructionScore;
+        
+        [JsonProperty(PropertyName = "_battleWinScore", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public float battleWinScore;
 
         // Number of times lost in the most recent level
+        [JsonProperty(PropertyName = "_timesLostOnLastLevel", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int timesLostOnLastLevel;
+        
+        [JsonProperty(PropertyName = "_bounty", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int bounty;
 
         // My callsign.
+        [JsonProperty(PropertyName = "_playerName", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string playerName;
 
         // My selected loadout.
@@ -119,11 +130,68 @@ namespace BattleCruisers.Data.Models
             premiumEdition = game.PremiumEdition || game.PurchasedBodykits.Contains(0);
         }
 
+        /// <summary>
+        /// Gets the normalized save version from Application.version.
+        /// Extracts major.minor and converts to save format (e.g., "6.5.107" -> 650, "6.4.0" -> 640)
+        /// </summary>
+        private static int GetCurrentSaveVersion()
+        {
+            string version = Application.version;
+            string[] parts = version.Split('.');
+            if (parts.Length >= 2)
+            {
+                if (int.TryParse(parts[0], out int major) && int.TryParse(parts[1], out int minor))
+                {
+                    // Convert major.minor to save version format: 6.5 -> 650, 6.4 -> 640
+                    return major * 100 + minor * 10; // 6.5 -> 650, 6.4 -> 640
+                }
+            }
+            // Fallback: use full version conversion if parsing fails
+            return ScreensSceneGod.VersionToInt(version);
+        }
+
+        /// <summary>
+        /// Validates and normalizes save version for cloud save compatibility.
+        /// Uses the same logic as Serializer.LoadGame() version handling.
+        /// 
+        /// Version system:
+        /// - Legacy versions (0-5): Old format saves (v3, v4, v5, etc.) - migrate to current version (6.5 = 650)
+        /// - Current format (640+): Modern saves using app version numbers
+        ///   - 640 = 6.4.0 (in production)
+        ///   - 650 = 6.5.0 (current/newest version)
+        ///   - All versions >= 640 are compatible with each other
+        /// </summary>
+        private static int ValidateCloudSaveVersion(int saveVersion)
+        {
+            int currentVersion = GetCurrentSaveVersion();
+
+            // Legacy versions (0-5): Old format saves (v3, v4, v5, etc.) - migrate to current version (6.5 = 650)
+            if (saveVersion >= 0 && saveVersion <= 5)
+            {
+                Debug.Log($"Cloud save version {saveVersion} is legacy format, migrating to current version {currentVersion}");
+                return currentVersion;
+            }
+
+            // Current format versions (640+): All modern saves are compatible
+            // 640 (6.4.0) and 650 (6.5.0) use the same format, so accept as-is
+            if (saveVersion >= 640)
+            {
+                Debug.Log($"Cloud save version {saveVersion} is compatible with current version {currentVersion} (both use modern format)");
+                return saveVersion; // Accept the version as-is (640, 650, etc. are all valid)
+            }
+
+            // Invalid versions (between 5 and 640, or negative): migrate to current
+            Debug.LogWarning($"Cloud save version {saveVersion} is invalid/unknown. Migrating to current version {currentVersion}");
+            return currentVersion;
+        }
+
         // Takes in GameModel, converts and assigns values from SaveGameModel to GameModel
         public void AssignSaveToGameModel(GameModel game)
         {
-            game.SaveVersion = saveVersion;
-            Debug.Log("Assigning save data to GameModel...");
+            // Validate and normalize save version for compatibility (same logic as LoadGame)
+            int normalizedVersion = ValidateCloudSaveVersion(saveVersion);
+            game.SaveVersion = normalizedVersion;
+            Debug.Log($"Assigning save data to GameModel... (original version: {saveVersion}, normalized: {normalizedVersion})");
 
             if (lifetimeDestructionScore > game.LifetimeDestructionScore)
                 game.LifetimeDestructionScore = lifetimeDestructionScore;
@@ -153,8 +221,9 @@ namespace BattleCruisers.Data.Models
             }
 
             // Log completed levels
-            foreach (KeyValuePair<int, int> level in levelsCompleted)
-                Debug.Log($"Completed Level: {level.Key}, Difficulty: {level.Value}");
+            if (levelsCompleted != null)
+                foreach (KeyValuePair<int, int> level in levelsCompleted)
+                    Debug.Log($"Completed Level: {level.Key}, Difficulty: {level.Value}");
 
             // Log completed side quests
             if (sideQuestsCompleted != null)
@@ -162,16 +231,19 @@ namespace BattleCruisers.Data.Models
                     Debug.Log($"Completed SideQuest: {sideQuest.Key}, Difficulty: {sideQuest.Value}");
 
             // Log unlocked hulls
-            foreach (string hull in unlockedHulls)
-                Debug.Log($"Unlocked Hull: {hull}");
+            if (unlockedHulls != null)
+                foreach (string hull in unlockedHulls)
+                    Debug.Log($"Unlocked Hull: {hull}");
 
             // Log unlocked buildings
-            foreach (KeyValuePair<string, string> building in unlockedBuildings)
-                Debug.Log($"Unlocked Building: {building.Key}, Category: {building.Value}");
+            if (unlockedBuildings != null)
+                foreach (KeyValuePair<string, string> building in unlockedBuildings)
+                    Debug.Log($"Unlocked Building: {building.Key}, Category: {building.Value}");
 
             // Log unlocked units
-            foreach (KeyValuePair<string, string> unit in unlockedUnits)
-                Debug.Log($"Unlocked Unit: {unit.Key}, Category: {unit.Value}");
+            if (unlockedUnits != null)
+                foreach (KeyValuePair<string, string> unit in unlockedUnits)
+                    Debug.Log($"Unlocked Unit: {unit.Key}, Category: {unit.Value}");
 
             // IAPs
             // Exos
@@ -221,12 +293,13 @@ namespace BattleCruisers.Data.Models
             }
 
             // levels completed
-            foreach (KeyValuePair<int, int> level in levelsCompleted)
-            {
-                CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
-                game.AddCompletedLevel(cLevel);
-                //LootManager.UnlockLevelLoot(level.Value);
-            }
+            if (levelsCompleted != null)
+                foreach (KeyValuePair<int, int> level in levelsCompleted)
+                {
+                    CompletedLevel cLevel = new CompletedLevel(level.Key, (Settings.Difficulty)level.Value);
+                    game.AddCompletedLevel(cLevel);
+                    //LootManager.UnlockLevelLoot(level.Value);
+                }
 
             if (sideQuestsCompleted != null)
                 foreach (KeyValuePair<int, int> sideQuest in sideQuestsCompleted)
@@ -237,94 +310,109 @@ namespace BattleCruisers.Data.Models
                 }
 
             // unlocked hulls
-            foreach (string hull in unlockedHulls)
-            {
-                HullKey hk = new HullKey(hull);
-                game.AddUnlockedHull(hk);
-            }
+            if (unlockedHulls != null)
+                foreach (string hull in unlockedHulls)
+                {
+                    HullKey hk = new HullKey(hull);
+                    game.AddUnlockedHull(hk);
+                }
 
             // Keys and Vals are reversed for unlocks and current units, because dictionaries require their Keys to be
             // unique. The AddUnlocked methods take an enum as their first arg, which definitionally is not unique.
 
             // unlocked buildings
-            foreach (KeyValuePair<string, string> building in unlockedBuildings)
-            {
-                Enum.TryParse(building.Value, out BuildingCategory bc);
-                BuildingKey bk = new BuildingKey(bc, building.Key);
-                game.AddUnlockedBuilding(bk);
-            }
+            if (unlockedBuildings != null)
+                foreach (KeyValuePair<string, string> building in unlockedBuildings)
+                {
+                    Enum.TryParse(building.Value, out BuildingCategory bc);
+                    BuildingKey bk = new BuildingKey(bc, building.Key);
+                    game.AddUnlockedBuilding(bk);
+                }
 
             // unlocked units
-            foreach (KeyValuePair<string, string> unit in unlockedUnits)
-            {
-                Enum.TryParse(unit.Value, out UnitCategory uc);
-                UnitKey uk = new UnitKey(uc, unit.Key);
-                game.AddUnlockedUnit(uk);
-            }
+            if (unlockedUnits != null)
+                foreach (KeyValuePair<string, string> unit in unlockedUnits)
+                {
+                    Enum.TryParse(unit.Value, out UnitCategory uc);
+                    UnitKey uk = new UnitKey(uc, unit.Key);
+                    game.AddUnlockedUnit(uk);
+                }
 
             // Loadout fields, we create a new loadout from scratch and feed it into the constructor:
             // current hull
+            if (string.IsNullOrEmpty(currentHullKey))
+                currentHullKey = "Trident"; // Default hull
             HullKey cHull = new HullKey(currentHullKey);
 
             // current buildings
             List<BuildingKey> buildings = new List<BuildingKey>();
-            foreach (var building in currentBuildings)
-            {
-                Enum.TryParse(building.Value, out BuildingCategory bc);
-                BuildingKey bk = new BuildingKey(bc, building.Key);
-                buildings.Add(bk);
-            }
+            if (currentBuildings != null)
+                foreach (var building in currentBuildings)
+                {
+                    Enum.TryParse(building.Value, out BuildingCategory bc);
+                    BuildingKey bk = new BuildingKey(bc, building.Key);
+                    buildings.Add(bk);
+                }
 
             // current units
             List<UnitKey> units = new List<UnitKey>();
-            foreach (var unit in unlockedUnits)
-            {
-                Enum.TryParse(unit.Value, out UnitCategory uc);
-                UnitKey uk = new UnitKey(uc, unit.Key);
-                units.Add(uk);
-            }
+            if (currentUnits != null)
+                foreach (var unit in currentUnits)
+                {
+                    Enum.TryParse(unit.Value, out UnitCategory uc);
+                    UnitKey uk = new UnitKey(uc, unit.Key);
+                    units.Add(uk);
+                }
 
             // selected buildings
             // the data structure here is pretty tough to process.
             Dictionary<BuildingCategory, List<BuildingKey>> buildLimits = new Dictionary<BuildingCategory, List<BuildingKey>>();
-            foreach (string buildCat in buildingsToCategories.Keys)
-            {
-                Enum.TryParse(buildCat, out BuildingCategory bc);
-
-                Dictionary<string, string> buildingKeys;
-                buildingsToCategories.TryGetValue(buildCat, out buildingKeys);
-
-                List<BuildingKey> parsedBuildingKeys = new List<BuildingKey>();
-                foreach (var buildKey in buildingKeys)
+            if (buildingsToCategories != null)
+                foreach (string buildCat in buildingsToCategories.Keys)
                 {
-                    Enum.TryParse(buildKey.Value, out BuildingCategory keycat);
-                    BuildingKey newKey = new BuildingKey(keycat, buildKey.Key);
-                    if (parsedBuildingKeys.Count == 0 || newKey.PrefabName != parsedBuildingKeys[parsedBuildingKeys.Count - 1].PrefabName)
-                        parsedBuildingKeys.Add(newKey);
+                    Enum.TryParse(buildCat, out BuildingCategory bc);
+
+                    Dictionary<string, string> buildingKeys;
+                    buildingsToCategories.TryGetValue(buildCat, out buildingKeys);
+
+                    if (buildingKeys != null)
+                    {
+                        List<BuildingKey> parsedBuildingKeys = new List<BuildingKey>();
+                        foreach (var buildKey in buildingKeys)
+                        {
+                            Enum.TryParse(buildKey.Value, out BuildingCategory keycat);
+                            BuildingKey newKey = new BuildingKey(keycat, buildKey.Key);
+                            if (parsedBuildingKeys.Count == 0 || newKey.PrefabName != parsedBuildingKeys[parsedBuildingKeys.Count - 1].PrefabName)
+                                parsedBuildingKeys.Add(newKey);
+                        }
+                        buildLimits.Add(bc, parsedBuildingKeys);
+                    }
                 }
-                buildLimits.Add(bc, parsedBuildingKeys);
-            }
 
             // selected units
             // the data structure here is pretty tough to process.
             Dictionary<UnitCategory, List<UnitKey>> unitLimits = new Dictionary<UnitCategory, List<UnitKey>>();
-            foreach (string unitCat in unitsToCategories.Keys)
-            {
-                Enum.TryParse(unitCat, out UnitCategory uc);
-
-                Dictionary<string, string> unitKeys;
-                unitsToCategories.TryGetValue(unitCat, out unitKeys);
-
-                List<UnitKey> parsedUnitKeys = new List<UnitKey>();
-                foreach (var unitKey in unitKeys)
+            if (unitsToCategories != null)
+                foreach (string unitCat in unitsToCategories.Keys)
                 {
-                    Enum.TryParse(unitKey.Value, out UnitCategory keycat);
-                    UnitKey newKey = new UnitKey(keycat, unitKey.Key);
-                    if (parsedUnitKeys.Count == 0 || newKey.PrefabName != parsedUnitKeys[parsedUnitKeys.Count - 1].PrefabName)
-                        parsedUnitKeys.Add(newKey);
+                    Enum.TryParse(unitCat, out UnitCategory uc);
+
+                    Dictionary<string, string> unitKeys;
+                    unitsToCategories.TryGetValue(unitCat, out unitKeys);
+
+                    if (unitKeys != null)
+                    {
+                        List<UnitKey> parsedUnitKeys = new List<UnitKey>();
+                        foreach (var unitKey in unitKeys)
+                        {
+                            Enum.TryParse(unitKey.Value, out UnitCategory keycat);
+                            UnitKey newKey = new UnitKey(keycat, unitKey.Key);
+                            if (parsedUnitKeys.Count == 0 || newKey.PrefabName != parsedUnitKeys[parsedUnitKeys.Count - 1].PrefabName)
+                                parsedUnitKeys.Add(newKey);
+                        }
+                        unitLimits.Add(uc, parsedUnitKeys);
+                    }
                 }
-                unitLimits.Add(uc, parsedUnitKeys);
-            }
 
             // loadout construction actually happens finally:
             game.PlayerLoadout = new Loadout(cHull, buildings, units, buildLimits, unitLimits);
@@ -360,7 +448,7 @@ namespace BattleCruisers.Data.Models
                 game.PlayerLoadout.CurrentCaptain = new CaptainExoKey("CaptainExo000");
 
             // Tutorial status check - only add progress, never remove
-            if (levelsCompleted.ContainsKey(1) || hasAttemptedTutorial == true)
+            if ((levelsCompleted != null && levelsCompleted.ContainsKey(1)) || hasAttemptedTutorial == true)
                 game.HasAttemptedTutorial = true;
             // Never set HasAttemptedTutorial to false to avoid overwriting local progress
 
