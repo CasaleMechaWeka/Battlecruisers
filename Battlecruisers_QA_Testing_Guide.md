@@ -7,6 +7,149 @@ This guide provides comprehensive testing instructions for Battlecruisers, a rea
 
 ---
 
+## 📖 What is QA Testing?
+
+**QA (Quality Assurance) testing** is the process of checking that the game works correctly before players see it. Think of it like checking a car before selling it - you test all the buttons, make sure nothing breaks, and verify everything works as expected.
+
+### Why We Do QA Testing
+- **Find bugs early**: Catch problems before players do
+- **Ensure quality**: Make sure the game is fun and works well
+- **Protect revenue**: Ads and purchases must work correctly
+- **Player satisfaction**: Players expect a smooth experience
+
+### What the Process Looks Like
+1. **Open the app** on your test device
+2. **Follow the test checklist** - try each feature step by step
+3. **Take screenshots** or write notes when you find problems
+4. **Report bugs** to the QA kanban board (notify Lucas or the QA lead)
+5. **Test again** after fixes are made
+
+### For New QA Testers
+If you're new to game testing, don't worry! This guide explains everything step by step. Start with the **Quick Checklist** below - it covers the most important features. Once you're comfortable, move to the detailed sections.
+
+**Remember**: Your job is to find problems, not to fix them. Report everything you find, even if you're not sure it's a bug. It's better to report too much than to miss something important.
+
+---
+
+## ⚡ Quick Checklist (Start Here!)
+
+Use this checklist for a fast test of critical features. Perfect for new testers or quick verification.
+
+### Essential Functions (5-10 minutes)
+- [ ] **App launches** without crashing
+- [ ] **Main menu** appears and buttons work
+- [ ] **Start a battle** - Level 1 loads correctly
+- [ ] **Build a building** - Can place and construct
+- [ ] **Produce units** - Units spawn and move
+- [ ] **Win a battle** - Victory screen appears
+- [ ] **Rewarded ad button** appears after level 7+ (if free edition)
+- [ ] **Watch rewarded ad** - Rewards granted correctly
+- [ ] **Progress saves** - Close app, reopen, progress still there
+
+### Ad System (Critical for Revenue)
+- [ ] **Rewarded ad button** shows after completing level 7+
+- [ ] **First ad** grants big reward (5000 coins + 25000 credits)
+- [ ] **Second ad** grants smaller reward (15 coins + 2000 credits)
+- [ ] **Interstitial ads** appear every 3 battles (free edition only)
+- [ ] **Premium users** see no ads
+
+### Progression
+- [ ] **Level unlocks** work (complete level 1, level 2 unlocks)
+- [ ] **New buildings unlock** as you progress
+- [ ] **Currency** (coins/credits) increases correctly
+
+**If all these pass, the game is in good shape!** For detailed testing, continue to the sections below.
+
+---
+
+## 🔧 Admin Panel
+
+The Admin Panel is a special testing tool for QA testers and developers. It lets you quickly test features without playing through the entire game.
+
+### How to Access
+1. **Open the Battle Hub** (main menu screen)
+2. **Look for the big spanner/wrench icon button** in the top-right corner
+3. **Tap the spanner icon** - Admin Panel opens
+4. **Note**: Admin Panel only appears when `ENABLE_CHEATS` is enabled in the build
+
+### Admin Panel Buttons
+
+#### Player Management
+- **Unlock Everything** - Unlocks all levels, buildings, units, hulls
+- **Reset to State** - Resets to a specific level (default: level 31)
+- **Reset** - Deletes all save data (full reset)
+- **Add Money** - Adds 16 coins and 32 credits
+- **Remove Money** - Removes 15 coins and 30 credits
+- **Show Player Status** - Shows current player info (level, coins, credits, edition)
+
+#### Ad Testing
+- **Toggle Premium Edition** - Switch between free and premium (premium = no ads)
+- **Reset Ad Counters** - Clears ad frequency and cooldown timers
+- **Toggle Ad Watcher Status** - Switch between first-time ad viewer and returning viewer
+- **Show Interstitial If Ready** - Shows interstitial ad immediately (if loaded)
+- **Show Rewarded And Grant** - Shows rewarded ad and grants rewards
+- **Rewarded Ad Watched** - Simulates successful ad completion (grants rewards)
+- **Rewarded Ad Offline** - Simulates failed/offline ad (shows joke ad, no rewards)
+- **Show Ad Status** - Shows current ad configuration and readiness
+- **Show Mediation Debugger** - Opens AppLovin MAX debugger UI
+
+#### Content Unlocks
+- **Unlock Exos** - Unlocks all captain exos (0-50)
+- **Reset Exos** - Resets to only Charlie (captain 0)
+- **Unlock Heckles** - Unlocks all heckles (0-278)
+- **Reset Heckles** - Resets to random 3 heckles
+- **Unlock Bodykits** - Unlocks all bodykits (respects premium/free edition)
+- **Reset Bodykits** - Removes all bodykits (keeps Trident Prototype for premium)
+- **Unlock Variants** - Unlocks all building/unit variants
+- **Reset Variants** - Removes all variants
+
+#### Battle Simulation
+- **Simulate PvE Win** - Simulates a campaign victory (goes to destruction screen)
+- **Simulate PvP Win** - Simulates a PvP victory
+- **Simulate PvP Loss** - Simulates a PvP defeat
+
+#### Testing & Debugging
+- **Test Firebase Analytics** - Sends a test analytics event
+- **Refresh Ad Config** - Reloads ad configuration from Unity Remote Config
+- **Show Remote Config Details** - Displays all remote config values
+- **Show Economy Status** - Shows current coins and credits
+- **Show Relevant Logs** - Exports recent error/warning logs
+- **Clear Battle Log** - Saves AppLovin logs and clears battle log file
+- **Show Battle Log Path** - Shows where battle logs are saved
+- **Force Show Rewarded Ad Offer** - Forces rewarded ad button to appear
+- **Force Show Rewarded Ad Button** - Shows button directly (bypasses conditions)
+- **Check AppLovin Status** - Shows AppLovin SDK initialization status
+- **Test Kill Switch UI** - Tests the ad kill switch overlay visibility
+
+#### Cloud Save Testing
+- **Test Cloud Save** - Tests saving game data to cloud
+- **Test Cloud Load** - Tests loading game data from cloud
+
+### Common Testing Workflows
+
+**Test First-Time Ad Reward:**
+1. Reset → Clear all data
+2. Unlock Everything → Get to level 7+
+3. Simulate PvE Win → Go to destruction screen
+4. Watch rewarded ad → Should get 5000 coins + 25000 credits
+
+**Test Subsequent Ad Reward:**
+1. Toggle Ad Watcher Status → Set to "ADWATCHER"
+2. Simulate PvE Win → Go to destruction screen
+3. Watch rewarded ad → Should get 15 coins + 2000 credits
+
+**Test Premium Edition (No Ads):**
+1. Toggle Premium Edition → Set to PREMIUM
+2. Complete multiple battles → No ads should appear
+3. Check Show Ad Status → Should show ads disabled
+
+**Test Ad Frequency:**
+1. Reset Ad Counters → Clear cooldown
+2. Complete 3 battles → Interstitial should appear after 3rd
+3. Check Show Ad Status → Verify counter and cooldown
+
+---
+
 ## 📋 Pre-Testing Setup
 
 ### 1. Device Requirements
@@ -113,30 +256,6 @@ Test Steps:
 - [ ] Skip tutorial option works
 - [ ] Progress saves after tutorial completion
 
-#### ✅ Skirmish Mode
-**Objective**: Practice against AI
-```
-Test Steps:
-1. Select Skirmish → Choose difficulty
-2. Test different AI difficulty levels
-3. Verify AI aggression scales with difficulty
-```
-- [ ] All difficulty levels work
-- [ ] AI behavior differs between difficulties
-- [ ] Score tracking functions
-
-#### ✅ Endless Mode
-**Objective**: Survival gameplay
-```
-Test Steps:
-1. Start Endless mode
-2. Survive multiple waves
-3. Test increasing difficulty
-```
-- [ ] Wave progression works
-- [ ] Difficulty scaling functions
-- [ ] Score tracking persists
-
 ---
 
 ### 4. Progression & Unlocks System
@@ -184,6 +303,8 @@ Battlecruisers uses **AppLovin MAX SDK** with:
 
 #### ✅ Rewarded Ad Testing
 **Test Requirements**: Reach level 7+, Free edition
+
+**Method 1: Normal Gameplay**
 ```
 Test Steps:
 1. Complete level 7 or higher
@@ -193,13 +314,26 @@ Test Steps:
 5. Watch second ad (subsequent: 15 coins + 2000 credits)
 ```
 
+**Method 2: Using Admin Panel (Faster)**
+```
+Test Steps:
+1. Open Admin Panel → "Unlock Everything" (gets you to level 7+)
+2. "Simulate PvE Win" → Goes to destruction screen
+3. "Show Rewarded And Grant" → Shows ad and grants rewards
+4. Check "Show Player Status" → Verify rewards were added
+5. "Toggle Ad Watcher Status" → Switch to returning viewer
+6. "Simulate PvE Win" again → "Show Rewarded And Grant"
+7. Verify smaller rewards (15 coins + 2000 credits)
+```
+
 **Expected Behaviors**:
 - [ ] Button appears only after level 7
-- [ ] First ad shows big reward message
+- [ ] First ad shows big reward message (5000 coins + 25000 credits)
 - [ ] Ad plays successfully
 - [ ] Rewards granted immediately after ad completion
-- [ ] Subsequent ads show smaller rewards
+- [ ] Subsequent ads show smaller rewards (15 coins + 2000 credits)
 - [ ] Button disappears if ad unavailable
+- [ ] "Show Ad Status" shows correct ad readiness
 
 #### ✅ Interstitial Ad Testing
 **Test Requirements**: Free edition, multiple battles
@@ -221,15 +355,18 @@ Test Steps:
 **Test Requirements**: Toggle to premium mode
 ```
 Test Steps:
-1. Use Admin Panel → Toggle Premium Edition
-2. Complete multiple battles
-3. Verify NO ads appear
+1. Open Admin Panel (spanner icon in Battle Hub)
+2. Tap "Toggle Premium Edition" button
+3. Complete multiple battles
+4. Verify NO ads appear
+5. Check "Show Ad Status" - should show "PREMIUM" and ads disabled
 ```
 
 **Expected Behaviors**:
 - [ ] Premium users never see ads
 - [ ] All ad buttons hidden
-- [ ] Console shows: "Skipped - Premium user"
+- [ ] Show Ad Status shows "Edition: PREMIUM"
+- [ ] Interstitials and rewarded ads both disabled
 
 ---
 

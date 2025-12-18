@@ -14,6 +14,7 @@ using BattleCruisers.Utils.Localisation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace BattleCruisers.UI.ScreensScene
@@ -118,6 +119,11 @@ namespace BattleCruisers.UI.ScreensScene
             {
                 // Use cruiser prefab name, as this has been localised
                 ICruiser cruiser = PrefabFactory.GetCruiserPrefab(hull);
+                if (cruiser == null)
+                {
+                    Debug.LogError($"Failed to get cruiser prefab for hull: {hull?.PrefabName ?? "null"}. Skipping this hull.");
+                    continue;
+                }
                 hullNames.Add(cruiser.Name);
             }
 
@@ -131,6 +137,11 @@ namespace BattleCruisers.UI.ScreensScene
                 && !Skirmish.WasRandomPlayerCruiser)
             {
                 ICruiser cruiser = PrefabFactory.GetCruiserPrefab(Skirmish.PlayerCruiser);
+                if (cruiser == null)
+                {
+                    Debug.LogError($"Failed to get cruiser prefab for player cruiser: {Skirmish.PlayerCruiser?.PrefabName ?? "null"}. Using random entry.");
+                    return _randomDropdownEntry;
+                }
                 return cruiser.Name;
             }
             else
@@ -145,6 +156,11 @@ namespace BattleCruisers.UI.ScreensScene
                 && !Skirmish.WasRandomAICruiser)
             {
                 ICruiser cruiser = PrefabFactory.GetCruiserPrefab(Skirmish.AICruiser);
+                if (cruiser == null)
+                {
+                    Debug.LogError($"Failed to get cruiser prefab for AI cruiser: {Skirmish.AICruiser?.PrefabName ?? "null"}. Using random entry.");
+                    return _randomDropdownEntry;
+                }
                 return cruiser.Name;
             }
             else

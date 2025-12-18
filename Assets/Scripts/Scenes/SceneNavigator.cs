@@ -19,17 +19,14 @@ namespace BattleCruisers.Scenes
         public static void GoToScene(string sceneName, bool stopMusic)
         {
             string hint = null;
-            if (sceneName == SceneNames.BATTLE_SCENE
-                && !ApplicationModel.IsTutorial)
-            {
-                hint = HintProvider.GetHint();
-            }
-            if (sceneName == SceneNames.PvP_INITIALIZE_SCENE && !ApplicationModel.IsTutorial)
-            {
-                // should be replace with PvP
-                hint = HintProvider.GetHint();
-            }
-            if (sceneName == SceneNames.PRIVATE_PVP_INITIALIZER_SCENE && !ApplicationModel.IsTutorial)
+            
+            // Check if we're coming from the landing scene - if so, don't show hints (use starting text)
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            bool isComingFromLandingScene = currentSceneName == SceneNames.LANDING_SCENE;
+            
+            // Show random hints for all scene transitions except when coming from landing scene
+            // Also skip hints during tutorial
+            if (!isComingFromLandingScene && !ApplicationModel.IsTutorial)
             {
                 hint = HintProvider.GetHint();
             }

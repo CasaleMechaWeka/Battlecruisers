@@ -144,9 +144,9 @@ namespace BattleCruisers.Scenes
                 try
                 {
                     Task refreshEcoConfig = DataProvider.RefreshEconomyConfiguration();
+                    // Automatic cloud loading removed - now manual only via home screen menu
                     if (IsFirstTimeLoad)
                     {
-                        await DataProvider.CloudLoad();
                         IsFirstTimeLoad = false;
                     }
 
