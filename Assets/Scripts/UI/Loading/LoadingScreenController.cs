@@ -111,7 +111,7 @@ namespace BattleCruisers.UI.Loading
                         }
                         else
                         {*/
-            return LandingSceneGod.LoadingScreenHint ?? startingText;
+            return SceneNavigator.LoadingScreenHint ?? startingText;
             //         }
         }
 
