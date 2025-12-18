@@ -12,6 +12,7 @@ using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
+using System;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             get { return _selectedUnit; }
             set
             {
+                Debug.Log($"UnitDetailController.SelectedUnit SET: old={(_selectedUnit == null ? "NULL" : _selectedUnit.ToString())}, new={(value == null ? "NULL" : value.ToString())}");
                 _selectedUnit = value;
                 SetInitVariant();
             }
@@ -55,7 +57,11 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         [SerializeField] Text creditsBalanceText;
         [SerializeField] GameObject tooExpensiveOverlay;
         [SerializeField] CanvasGroupButton buyButton;
-        private int selectedVariant; public void Initialize(SingleSoundPlayer soundPlayer)
+        private int selectedVariant;
+
+        public event Action<bool> PurchaseModeToggled;
+
+        public void Initialize(SingleSoundPlayer soundPlayer)
         {
             Helper.AssertIsNotNull(soundPlayer);
             Helper.AssertIsNotNull(leftNav, rightNav);
@@ -141,14 +147,23 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (index < 0)
                 return;
-            variantIcon.gameObject.SetActive(true);
-            variantName.gameObject.SetActive(true);
+            if (variantIcon != null)
+                variantIcon.gameObject.SetActive(true);
+            if (variantName != null)
+                variantName.gameObject.SetActive(true);
             VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
-            variantName.text = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
-            variantIcon.sprite = variant.variantSprite;
-            variantParentName.text = variant.GetParentName();
-            variantDescription.text = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);
-            variantStats.ShowStatsOfVariant(_selectedUnit, variant);
+            if (variant == null)
+                return;
+            if (variantName != null)
+                variantName.text = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase);
+            if (variantIcon != null)
+                variantIcon.sprite = variant.variantSprite;
+            if (variantParentName != null)
+                variantParentName.text = variant.GetParentName();
+            if (variantDescription != null)
+                variantDescription.text = LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantDescriptionStringKeyBase);
+            if (variantStats != null)
+                variantStats.ShowStatsOfVariant(_selectedUnit, variant);
 
             selectedVariant = index;
 
@@ -163,6 +178,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
         private void ShowOriginalUnit()
         {
+            SetPurchaseMode(false);
             variantIcon.gameObject.SetActive(false);
             variantName.gameObject.SetActive(false);
             GetComponent<ComparableUnitDetailsController>().ShowItemDetails();
@@ -235,119 +251,125 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (purchasingPanel != null)
                 purchasingPanel.SetActive(showPurchase);
+
+            PurchaseModeToggled?.Invoke(showPurchase);
+        }
+        private async void BuyVariant()
+        {
+            Debug.Log($"BuyVariant called. _selectedUnit: {(_selectedUnit == null ? "NULL" : _selectedUnit.ToString())}, _index: {_index}");
+
+            if (_selectedUnit == null || !_unlockedVariants.ContainsKey(_selectedUnit))
+            {
+                Debug.LogError($"BuyVariant early exit: _selectedUnit null={_selectedUnit == null}, containsKey={(_selectedUnit != null && _unlockedVariants.ContainsKey(_selectedUnit))}");
+                ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
+                return;
+            }
+
+            int variantId = _unlockedVariants[_selectedUnit][_index];
+            Debug.Log($"BuyVariant processing variantId: {variantId}");
+
+            await TransactionLocker.ProcessTransaction(variantId, async () =>
+            {
+                VariantData variantData = StaticData.Variants[variantId];
+
+                if (DataProvider.GameModel.Credits >= variantData.VariantCredits)
+                {
+                    if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                    {
+                        try
+                        {
+                            bool result = await DataProvider.PurchaseVariant(variantData.Index);
+                            if (result)
+                            {
+                                PlayerInfoPanelController.Instance.UpdateInfo();
+                                DataProvider.GameModel.AddVariant(variantData.Index);
+                                DataProvider.SaveGame();
+                                await DataProvider.CloudSave();
+                                ShowVariantDetail(variantData.Index);
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(
+                    LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " +
+                    LocTableCache.CommonTable.GetString(variantData.VariantNameStringKeyBase));
+                            }
+                            else
+                            {
+                                Debug.LogError("BuyVariant: PurchaseVariant returned false");
+                                ScreensSceneGod.Instance.messageBox.ShowMessage(
+                    LocTableCache.ScreensSceneTable.GetString("TryAgain"));
+                            }
+                        }
+                        catch
+                        {
+                            Debug.LogError("BuyVariant: Exception during purchase");
+                            ScreensSceneGod.Instance.messageBox.ShowMessage(
+                LocTableCache.ScreensSceneTable.GetString("TryAgain"));
+                        }
+                    }
+                    else
+                    {
+                        DataProvider.GameModel.AddVariant(variantData.Index);
+                        ShowVariantDetail(variantData.Index);
+                        ScreensSceneGod.Instance.messageBox.ShowMessage(
+            LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " +
+            LocTableCache.CommonTable.GetString(variantData.VariantNameStringKeyBase));
+
+                        DataProvider.GameModel.Credits -= variantData.VariantCredits;
+                        PlayerInfoPanelController.Instance.UpdateInfo();
+                        DataProvider.GameModel.CreditsChange -= variantData.VariantCredits;
+
+                        if (DataProvider.GameModel.OutstandingVariantTransactions == null)
+                            DataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
+
+                        DataProvider.GameModel.OutstandingVariantTransactions.Add(variantData);
+                        DataProvider.SaveGame();
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"BuyVariant: Insufficient credits. Has: {DataProvider.GameModel.Credits}, Needs: {variantData.VariantCredits}");
+                    ScreensSceneGod.Instance.messageBox.ShowMessage(
+        LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"), null, null);
+                }
+            });
+        }
+        private void ShowPurchaseInfo(int variantIndex)
+        {
+            int cost = StaticData.Variants[variantIndex].VariantCredits;
+            long balance = DataProvider.GameModel.Credits;
+
+            ToggleCurrencyGroups(useCredits: true);
+
+            if (creditsBalanceText != null)
+                creditsBalanceText.text = balance.ToString();
+            if (variantCostText != null)
+                variantCostText.text = cost.ToString();
+
+            SetPurchaseMode(true);
+
+            bool canAffordVariant = cost <= balance;
+            if (tooExpensiveOverlay != null)
+                tooExpensiveOverlay.SetActive(!canAffordVariant);
+            if (buyButton != null)
+            {
+                CanvasGroup buyCg = buyButton.GetComponent<CanvasGroup>();
+                if (buyCg != null)
+                    buyCg.interactable = canAffordVariant;
+            }
         }
 
-private async void BuyVariant()
-{
-if (_selectedUnit == null || !_unlockedVariants.ContainsKey(_selectedUnit))
-{
-ScreensSceneGod.Instance.messageBox.ShowMessage(LocTableCache.ScreensSceneTable.GetString("TryAgain"));
-return;
-}
-
-int variantId = _unlockedVariants[_selectedUnit][_index];
-
-await TransactionLocker.ProcessTransaction(variantId, async () =>
-{
-VariantData variantData = StaticData.Variants[variantId];
-
-if (DataProvider.GameModel.Credits >= variantData.VariantCredits)
-{
-if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
-{
-try
-{
-bool result = await DataProvider.PurchaseVariant(variantData.Index);
-if (result)
-{
-PlayerInfoPanelController.Instance.UpdateInfo();
-HidePurchasingPanel();
-DataProvider.GameModel.AddVariant(variantData.Index);
-DataProvider.SaveGame();
-await DataProvider.CloudSave();
-ScreensSceneGod.Instance.messageBox.ShowMessage(
-LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " +
-LocTableCache.CommonTable.GetString(variantData.VariantNameStringKeyBase));
-}
-else
-{
-ScreensSceneGod.Instance.messageBox.ShowMessage(
-LocTableCache.ScreensSceneTable.GetString("TryAgain"));
-}
-}
-catch
-{
-ScreensSceneGod.Instance.messageBox.ShowMessage(
-LocTableCache.ScreensSceneTable.GetString("TryAgain"));
-}
-}
-else
-{
-HidePurchasingPanel();
-DataProvider.GameModel.AddVariant(variantData.Index);
-ScreensSceneGod.Instance.messageBox.ShowMessage(
-LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " +
-LocTableCache.CommonTable.GetString(variantData.VariantNameStringKeyBase));
-
-DataProvider.GameModel.Credits -= variantData.VariantCredits;
-PlayerInfoPanelController.Instance.UpdateInfo();
-DataProvider.GameModel.CreditsChange -= variantData.VariantCredits;
-
-if (DataProvider.GameModel.OutstandingVariantTransactions == null)
-DataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
-
-DataProvider.GameModel.OutstandingVariantTransactions.Add(variantData);
-DataProvider.SaveGame();
-}
-}
-else
-{
-ScreensSceneGod.Instance.messageBox.ShowMessage(
-LocTableCache.ScreensSceneTable.GetString("InsufficientCredits"), null, null);
-}
-});
-}
-
-private void ShowPurchaseInfo(int variantIndex)
-{
-int cost = StaticData.Variants[variantIndex].VariantCredits;
-long balance = DataProvider.GameModel.Credits;
-
-ToggleCurrencyGroups(useCredits: true);
-
-if (creditsBalanceText != null)
-creditsBalanceText.text = balance.ToString();
-if (variantCostText != null)
-variantCostText.text = cost.ToString();
-
-SetPurchaseMode(true);
-
-bool canAffordVariant = cost <= balance;
-if (tooExpensiveOverlay != null)
-tooExpensiveOverlay.SetActive(!canAffordVariant);
-if (buyButton != null)
-{
-CanvasGroup buyCg = buyButton.GetComponent<CanvasGroup>();
-if (buyCg != null)
-buyCg.interactable = canAffordVariant;
-}
-}
-
-private void ToggleCurrencyGroups(bool useCredits)
-{
-if (purchasingPanel == null)
-return;
-Transform credits = purchasingPanel.transform.Find("BuyWithCreditsButton");
-Transform coins = purchasingPanel.transform.Find("BuyWithCoinsButton");
-if (credits != null)
-credits.gameObject.SetActive(useCredits);
-if (coins != null)
-coins.gameObject.SetActive(!useCredits);
-}
-
-private void HidePurchasingPanel()
-{
-if (purchasingPanel != null)
-purchasingPanel.SetActive(false);
-}    }
+        private void ToggleCurrencyGroups(bool useCredits)
+        {
+            if (purchasingPanel == null)
+                return;
+            Transform credits = purchasingPanel.transform.Find("BuyWithCreditsButton");
+            Transform coins = purchasingPanel.transform.Find("BuyWithCoinsButton");
+            if (credits != null)
+                credits.gameObject.SetActive(useCredits);
+            if (coins != null)
+                coins.gameObject.SetActive(!useCredits);
+        }
+        private void HidePurchasingPanel()
+        {
+            SetPurchaseMode(false);
+        }
+    }
 }

@@ -68,6 +68,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         private void ItemButton_Clicked(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.LOADOUT_SCREEN);
+            _itemsPanel.RegisterSelection(_itemButton);
             MakeOld(_gameModel);
             UpdateNewItemMarkVisibility();
         }

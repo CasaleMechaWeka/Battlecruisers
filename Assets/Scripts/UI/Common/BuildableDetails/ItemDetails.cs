@@ -87,7 +87,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (GetComponent<BodykitDetailController>() != null)
             {
-                GetComponent<BodykitDetailController>().hullType = hullType;
+                GetComponent<BodykitDetailController>().HullType = hullType;
             }
         }
 
@@ -103,7 +103,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (GetComponent<BuildingDetailController>() != null)
             {
-                GetComponent<BuildingDetailController>().CureentButton = button;
+                GetComponent<BuildingDetailController>().currentButton = button;
                 GetComponent<BuildingDetailController>().SelectedBuilding = building;
             }
         }

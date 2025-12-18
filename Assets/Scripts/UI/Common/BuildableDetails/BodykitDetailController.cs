@@ -26,7 +26,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         IBroadcastingProperty<HullKey> _selectedHull;
         private HullType _selectedHullType => StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull);
         private HullType _hullType;
-        public HullType hullType
+        public HullType HullType
         {
             get { return _hullType; }
             set
@@ -197,9 +197,18 @@ namespace BattleCruisers.UI.Common.BuildableDetails
             if (index < 0)
                 return;
             Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
-            GetComponent<ComparableCruiserDetailsController>().itemName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
-            GetComponent<ComparableCruiserDetailsController>().itemDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
-            GetComponent<ComparableCruiserDetailsController>().itemImage.sprite = bodykit.BodykitImage;
+            if (bodykit == null)
+                return;
+            var cruiserDetailsController = GetComponent<ComparableCruiserDetailsController>();
+            if (cruiserDetailsController != null)
+            {
+                if (cruiserDetailsController.itemName != null)
+                    cruiserDetailsController.itemName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
+                if (cruiserDetailsController.itemDescription != null)
+                    cruiserDetailsController.itemDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
+                if (cruiserDetailsController.itemImage != null)
+                    cruiserDetailsController.itemImage.sprite = bodykit.BodykitImage;
+            }
 
             selectedBodykit = index;
 
@@ -214,6 +223,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         }
         private void ShowOriginCruiser()
         {
+            HidePurchasingPanel();
             GetComponent<ComparableCruiserDetailsController>().ShowItemDetails();
         }
         public void CollectAllBodykits()
@@ -298,8 +308,14 @@ namespace BattleCruisers.UI.Common.BuildableDetails
         {
             if (purchasingPanel != null)
                 purchasingPanel.SetActive(false);
+            bool showSelector = true;
+            if (selectCruiserButton != null)
+            {
+                var cg = selectCruiserButton.GetComponent<CanvasGroup>();
+                showSelector = cg == null ? true : (cg.interactable && cg.alpha > 0.0f);
+            }
             if (selectorPanel != null)
-                selectorPanel.SetActive(true);
+                selectorPanel.SetActive(showSelector);
         }
         private async void BuyBodykit()
         {

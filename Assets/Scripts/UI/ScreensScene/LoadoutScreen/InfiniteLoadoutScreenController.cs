@@ -13,7 +13,9 @@ using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 {
@@ -40,9 +42,12 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
         public CanvasGroupButton profileButton;
         public CanvasGroupButton shopButton;
 
-
         private SingleSoundPlayer _soundPlayer;
         private IList<ItemButton> _itemButtons = new List<ItemButton>();
+        private bool _purchaseModeActive;
+
+        [SerializeField, Tooltip("Limit tracker container to force-hide on Hulls")]
+        private GameObject limitTrackerGroup;
 
         public void Initialise(
             ScreensSceneGod screensSceneGod,
@@ -120,11 +125,70 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             categoryButtonsPanel.Initialise(itemPanels, _comparingFamilyTracker.ComparingFamily, soundPlayer, DataProvider.GameModel, itemButtons, _comparingFamilyTracker);
             homeButton.Initialise(soundPlayer, this);
             profileButton.Initialise(soundPlayer, ShowProfile);
-            shopButton.Initialise(soundPlayer, GoToBodykitsShop);
+            if (shopButton != null)
+                shopButton.Initialise(soundPlayer, GoToBodykitsShop);
+
+            // Subscribe to purchase mode events from all detail controllers
+            var allUnitControllers = GetComponentsInChildren<UnitDetailController>(true);
+            foreach (var ctrl in allUnitControllers)
+            {
+                if (ctrl != null)
+                    ctrl.PurchaseModeToggled += OnAnyPurchaseModeToggled;
+            }
+
+            var allBuildingControllers = GetComponentsInChildren<BuildingDetailController>(true);
+            foreach (var ctrl in allBuildingControllers)
+            {
+                if (ctrl != null)
+                    ctrl.PurchaseModeToggled += OnAnyPurchaseModeToggled;
+            }
+
+            var allBodykitControllers = GetComponentsInChildren<BodykitDetailController>(true);
+            foreach (var ctrl in allBodykitControllers)
+            {
+                if (ctrl != null)
+                    ctrl.PurchaseModeToggled += OnAnyPurchaseModeToggled;
+            }
+
+            // Track panel changes to reset selection UI state and handle categories without variants
+            itemPanels.PotentialMatchChange += OnPanelChanged;
 
             ShowPlayerHull();
 
             Logging.Log(Tags.SCREENS_SCENE_GOD, "END");
+        }
+
+        private void OnAnyPurchaseModeToggled(bool showPurchase)
+        {
+            _purchaseModeActive = showPurchase;
+            ToggleSelectionUi(!showPurchase);
+        }
+
+        private void OnPanelChanged(object sender, System.EventArgs e)
+        {
+            // Defer final visibility until after the first item details render
+            _purchaseModeActive = false;
+            ToggleSelectionUi(true);
+            StartCoroutine(ApplyPanelChangeUiNextFrame());
+        }
+
+        private IEnumerator ApplyPanelChangeUiNextFrame()
+        {
+            yield return null; // wait one frame for ShowDetails to run
+            ToggleSelectionUi(!_purchaseModeActive);
+        }
+
+        private void ToggleSelectionUi(bool show)
+        {
+            // Marker-based discovery: toggle any SelectionUiGroup components under this screen
+            var selectionGroups = GetComponentsInChildren<SelectionUiGroup>(true);
+            foreach (var m in selectionGroups)
+            {
+                if (m == null || m.gameObject == null)
+                    continue;
+                bool isLimitTracker = limitTrackerGroup != null && m.gameObject == limitTrackerGroup;
+                m.gameObject.SetActive(show && (!isLimitTracker || !itemPanels.IsMatch(Items.ItemType.Hull)));
+            }
         }
 
         public void AddHeckle(HeckleData heckleData)
@@ -162,6 +226,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _itemDetailsManager.ShowDetails(StaticPrefabKeys.Hulls.GetHullType(DataProvider.GameModel.PlayerLoadout.Hull));
             _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
             _comparingFamilyTracker.SetComparingFamily(null);
+            ToggleSelectionUi(true);
         }
 
         public void RefreshBodykitsUI()

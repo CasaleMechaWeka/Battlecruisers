@@ -17,6 +17,7 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
     public class ItemsPanel : Panel
     {
         private IList<ItemButton> _button;
+        private ItemButton _lastSelectedButton;
 
         public ItemType itemType;
         public ItemType ItemType => itemType;
@@ -104,6 +105,17 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 _button = buttons;
                 return buttons;
             }
+        }
+
+        public void RegisterSelection(ItemButton button)
+        {
+            if (button != null && button.IsUnlocked)
+                _lastSelectedButton = button;
+        }
+
+        public ItemButton GetPreferredItemButton()
+        {
+            return _lastSelectedButton ?? GetFirstItemButton();
         }
 
         public ItemButton GetFirstItemButton()
