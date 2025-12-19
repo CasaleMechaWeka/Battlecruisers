@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class ErrorLogScraper : EditorWindow
 {
@@ -408,11 +409,40 @@ public class ErrorLogScraper : EditorWindow
             firstLine = message.Substring(0, newlineIndex);
         }
         
-        // Truncate to 256 chars (whichever is shorter - first line or 256 chars)
-        string truncated = firstLine.Length > 256 ? firstLine.Substring(0, 256) + "..." : firstLine;
+        // Extract file and line information from the first line
+        string filePath = null;
+        string lineNumber = null;
         
-        // Clean up any remaining whitespace/newlines
+        // Pattern 1: (at Path/To/File.cs:123) or (at Path/To/File.cs:123:0)
+        Match match = Regex.Match(firstLine, @"\(at\s+([^:)]+):(\d+)");
+        if (match.Success)
+        {
+            filePath = match.Groups[1].Value;
+            lineNumber = match.Groups[2].Value;
+        }
+        else
+        {
+            // Pattern 2: File.cs:123 (without "at")
+            match = Regex.Match(firstLine, @"([A-Za-z0-9_/\\]+\.(cs|js|ts|cpp|h)):(\d+)");
+            if (match.Success)
+            {
+                filePath = match.Groups[1].Value;
+                lineNumber = match.Groups[3].Value;
+            }
+        }
+        
+        // Build the output string with file and line info
+        string truncated = firstLine.Length > 256 ? firstLine.Substring(0, 256) + "..." : firstLine;
         truncated = truncated.Trim();
+        
+        // Prepend file and line info if found
+        if (!string.IsNullOrEmpty(filePath) && !string.IsNullOrEmpty(lineNumber))
+        {
+            // Extract just the filename if path is long
+            string fileName = Path.GetFileName(filePath);
+            string displayPath = filePath.Length > 50 ? fileName : filePath;
+            truncated = $"[{displayPath}:{lineNumber}] {truncated}";
+        }
         
         // Avoid duplicates if desired, or keep all
         _scrapedErrors.Add(truncated);
