@@ -147,7 +147,7 @@ namespace BattleCruisers.Utils.Debugging
             buttons.SetActive(false);
         }
 
-        public void UnlockEverything()
+        public async void UnlockEverything()
         {
             ShowMessage("UNLOCKING EVERYTHING...");
             
@@ -201,18 +201,34 @@ namespace BattleCruisers.Utils.Debugging
 
             DataProvider.GameModel.HasAttemptedTutorial = true;
 
-            // If never played a level, need to set last battle result
-            if (DataProvider.GameModel.LastBattleResult == null)
-            {
-                DataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 1, wasVictory: false);
-            }
+            // Set last battle result to level 25 with victory to ensure DefaultLayout is shown
+            // This prevents FirstTimeLayout or FirstTimeNonTutorial from showing
+            DataProvider.GameModel.LastBattleResult = new BattleResult(levelNum: 25, wasVictory: true);
 
             DataProvider.SaveGame();
+            
+            // CRITICAL: Sync to cloud after unlocking everything
+            try
+            {
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
+                if (cloudSaveSuccess)
+                {
+                    Debug.Log("[AdminPanel] UnlockEverything: Cloud save completed successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdminPanel] UnlockEverything: Cloud save failed - data saved locally only");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] UnlockEverything: Exception during cloud save: {e.Message}");
+            }
 
             ShowMessage($"UNLOCKED: {levelCount} levels, {sideQuestCount} side quests, {hullCount} hulls, {buildingCount} buildings, {unitCount} units. RESTART GAME!");
         }
 
-        public void ResetToState()
+        public async void ResetToState()
         {
             ShowMessage($"RESETTING to level {levelToUnlock}...");
             
@@ -246,6 +262,24 @@ namespace BattleCruisers.Utils.Debugging
             }
 
             DataProvider.SaveGame();
+            
+            // CRITICAL: Sync to cloud after resetting state
+            try
+            {
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
+                if (cloudSaveSuccess)
+                {
+                    Debug.Log("[AdminPanel] ResetToState: Cloud save completed successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdminPanel] ResetToState: Cloud save failed - data saved locally only");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] ResetToState: Exception during cloud save: {e.Message}");
+            }
 
             ShowMessage($"RESET complete! Levels 1-{levelToUnlock} unlocked. RESTART GAME!");
         }
@@ -468,6 +502,23 @@ namespace BattleCruisers.Utils.Debugging
         public void ShowPlayerStatus()
         {
             string playerName = DataProvider.GameModel?.PlayerName ?? "Unknown";
+            
+            // Get Unity Authentication Player ID
+            string playerId = "Not Available";
+            try
+            {
+                if (Unity.Services.Core.UnityServices.State == Unity.Services.Core.ServicesInitializationState.Initialized
+                    && AuthenticationService.Instance != null
+                    && AuthenticationService.Instance.IsSignedIn)
+                {
+                    playerId = AuthenticationService.Instance.PlayerId ?? "Not Available";
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[AdminPanel] Failed to get PlayerId: {e.Message}");
+            }
+            
             string edition = DataProvider.GameModel.PremiumEdition ? "PREMIUM" : "FREE";
             string adStatus = AdConfigManager.HasEverWatchedRewardedAd() ? "ADWATCHER" : "VIRGIN";
             int level = DataProvider.GameModel.NumOfLevelsCompleted;
@@ -477,7 +528,8 @@ namespace BattleCruisers.Utils.Debugging
             var (nextCoins, nextCredits) = AdConfigManager.Instance?.GetRewardAmountsForPlayer() ?? (0, 0);
             
             string status = $"=== PLAYER STATUS ===\n" +
-                            $"Name: {playerName}\n" +
+                            $"Player ID: {playerId}\n" +
+                            $"Player Name: {playerName}\n" +
                             $"Edition: {edition}\n" +
                             $"Ad Status: {adStatus}\n" +
                             $"Level: {level}\n" +
@@ -920,25 +972,31 @@ namespace BattleCruisers.Utils.Debugging
             // Attempt cloud save
             try
             {
-                await DataProvider.CloudSave();
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
                 
                 long coinsAfter = DataProvider.GameModel.Coins;
                 long creditsAfter = DataProvider.GameModel.Credits;
                 
-                status.AppendLine("Result: SUCCESS");
+                if (cloudSaveSuccess)
+                {
+                    status.AppendLine("Result: SUCCESS");
+                    status.AppendLine("Note: Saved to cloud successfully");
+                }
+                else
+                {
+                    status.AppendLine("Result: FAILED");
+                    status.AppendLine("Note: Cloud save failed - saved locally only");
+                }
+                
                 status.AppendLine($"After: Coins={coinsAfter}, Credits={creditsAfter}");
                 
                 if (cloudSaveDisabled)
                 {
-                    status.AppendLine("Note: Cloud save disabled - saved locally only");
+                    status.AppendLine("Reason: Cloud save disabled in settings");
                 }
                 else if (!unityServicesInitialized || !isAuthenticated)
                 {
-                    status.AppendLine("Note: Cloud not ready - saved locally only");
-                }
-                else
-                {
-                    status.AppendLine("Note: Saved to cloud successfully");
+                    status.AppendLine("Reason: Cloud not ready (not initialized or not signed in)");
                 }
             }
             catch (System.Exception ex)
@@ -1034,7 +1092,7 @@ namespace BattleCruisers.Utils.Debugging
         /// <summary>
         /// Unlock all captain exos (0-50, where 0 is Charlie)
         /// </summary>
-        public void UnlockExos()
+        public async void UnlockExos()
         {
             ShowMessage("UNLOCKING ALL EXOS (Captains)...");
             
@@ -1051,6 +1109,24 @@ namespace BattleCruisers.Utils.Debugging
             }
             
             DataProvider.SaveGame();
+            
+            // CRITICAL: Sync to cloud after unlocking exos
+            try
+            {
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
+                if (cloudSaveSuccess)
+                {
+                    Debug.Log("[AdminPanel] UnlockExos: Cloud save completed successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdminPanel] UnlockExos: Cloud save failed - data saved locally only");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] UnlockExos: Exception during cloud save: {e.Message}");
+            }
             
             string captainName = StaticData.Captains[0].NameStringKeyBase;
             ShowMessage($"EXOS UNLOCKED: {unlocked} new captains added (total: {DataProvider.GameModel.PurchasedExos.Count}/{totalCaptains}). Current captain: {DataProvider.GameModel.PlayerLoadout.CurrentCaptain.PrefabName}");
@@ -1094,7 +1170,7 @@ namespace BattleCruisers.Utils.Debugging
         /// <summary>
         /// Unlock all heckles (0-278, 279 total)
         /// </summary>
-        public void UnlockHeckles()
+        public async void UnlockHeckles()
         {
             ShowMessage("UNLOCKING ALL HECKLES...");
             
@@ -1111,6 +1187,24 @@ namespace BattleCruisers.Utils.Debugging
             }
             
             DataProvider.SaveGame();
+            
+            // CRITICAL: Sync to cloud after unlocking heckles
+            try
+            {
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
+                if (cloudSaveSuccess)
+                {
+                    Debug.Log("[AdminPanel] UnlockHeckles: Cloud save completed successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdminPanel] UnlockHeckles: Cloud save failed - data saved locally only");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] UnlockHeckles: Exception during cloud save: {e.Message}");
+            }
             
             ShowMessage($"HECKLES UNLOCKED: {unlocked} new heckles added (total: {DataProvider.GameModel.PurchasedHeckles.Count}/{totalHeckles})");
         }
@@ -1161,7 +1255,7 @@ namespace BattleCruisers.Utils.Debugging
         /// Unlock all bodykits (all except Trident Prototype for free edition, all for premium)
         /// Bodykit 0 = Trident Prototype (premium only, cost 999999)
         /// </summary>
-        public void UnlockBodykits()
+        public async void UnlockBodykits()
         {
             bool isPremium = DataProvider.GameModel.PremiumEdition;
             ShowMessage($"UNLOCKING BODYKITS... (Edition: {(isPremium ? "PREMIUM" : "FREE")})");
@@ -1187,6 +1281,24 @@ namespace BattleCruisers.Utils.Debugging
             }
             
             DataProvider.SaveGame();
+            
+            // CRITICAL: Sync to cloud after unlocking bodykits
+            try
+            {
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
+                if (cloudSaveSuccess)
+                {
+                    Debug.Log("[AdminPanel] UnlockBodykits: Cloud save completed successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdminPanel] UnlockBodykits: Cloud save failed - data saved locally only");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] UnlockBodykits: Exception during cloud save: {e.Message}");
+            }
             
             string skipMsg = skipped > 0 ? $" (Trident Prototype skipped - premium only)" : "";
             ShowMessage($"BODYKITS UNLOCKED: {unlocked} new bodykits added{skipMsg}. Total: {DataProvider.GameModel.PurchasedBodykits.Count}/{totalBodykits}");
@@ -1231,7 +1343,7 @@ namespace BattleCruisers.Utils.Debugging
         /// <summary>
         /// Unlock all variants for buildings and units
         /// </summary>
-        public void UnlockVariants()
+        public async void UnlockVariants()
         {
             ShowMessage("UNLOCKING ALL VARIANTS...");
             
@@ -1248,6 +1360,24 @@ namespace BattleCruisers.Utils.Debugging
             }
             
             DataProvider.SaveGame();
+            
+            // CRITICAL: Sync to cloud after unlocking variants
+            try
+            {
+                bool cloudSaveSuccess = await DataProvider.CloudSave();
+                if (cloudSaveSuccess)
+                {
+                    Debug.Log("[AdminPanel] UnlockVariants: Cloud save completed successfully");
+                }
+                else
+                {
+                    Debug.LogWarning("[AdminPanel] UnlockVariants: Cloud save failed - data saved locally only");
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[AdminPanel] UnlockVariants: Exception during cloud save: {e.Message}");
+            }
             
             ShowMessage($"VARIANTS UNLOCKED: {unlocked} new variants added (total: {DataProvider.GameModel.PurchasedVariants.Count}/{totalVariants})");
         }

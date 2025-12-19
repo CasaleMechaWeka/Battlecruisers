@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
@@ -102,26 +102,39 @@ namespace BattleCruisers.Data
             _serializer.DeleteCloudSave();
         }
 
-        public static async Task CloudSave()
+        public static async Task<bool> CloudSave()
         {
             if (!SettingsManager.CloudSaveDisabled)
             {
                 if (Unity.Services.Core.UnityServices.State == Unity.Services.Core.ServicesInitializationState.Initialized
+                    && AuthenticationService.Instance != null
                     && AuthenticationService.Instance.IsSignedIn)
                 {
-                    await _serializer.CloudSave(_gameModel);
-                    Debug.Log("Cloud saved.");
+                    bool success = await _serializer.CloudSave(_gameModel);
+                    if (success)
+                    {
+                        Debug.Log("Cloud saved successfully.");
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Cloud save failed - saved locally instead.");
+                        _serializer.SaveGame(_gameModel);
+                        return false;
+                    }
                 }
                 else
                 {
                     _serializer.SaveGame(_gameModel);
-                    Debug.Log("Cloud not ready; saved locally.");
+                    Debug.Log("Cloud not ready (not initialized or not signed in); saved locally.");
+                    return false;
                 }
             }
             else
             {
                 _serializer.SaveGame(_gameModel);
                 Debug.Log("Cloud save disabled. Saving locally instead");
+                return false;
             }
         }
 

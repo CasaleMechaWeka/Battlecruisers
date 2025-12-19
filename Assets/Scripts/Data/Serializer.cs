@@ -568,7 +568,7 @@ namespace BattleCruisers.Data
             // ^ uncomment this if serializing vectors
         }
 
-        public async Task CloudSave(GameModel game)
+        public async Task<bool> CloudSave(GameModel game)
         {
             try
             {
@@ -581,24 +581,29 @@ namespace BattleCruisers.Data
                     {
                         var data = new Dictionary<string, object> { { "GameModel", serializedData } };
                         await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+                        return true; // Success
                     }
                     else
                     {
                         Debug.LogError("CloudSave Error: Serialized data is empty or null.");
+                        return false;
                     }
                 }
                 else
                 {
                     Debug.LogError("CloudSave Error: CloudSaveService instance or Data is null.");
+                    return false;
                 }
             }
             catch (TimeoutException e)
             {
-                Debug.LogWarning("Timeout occurred: " + e.Message);
+                Debug.LogWarning("CloudSave Timeout occurred: " + e.Message);
+                return false;
             }
             catch (Exception e)
             {
                 Debug.LogError("CloudSave Error: " + e);
+                return false;
             }
         }
 
