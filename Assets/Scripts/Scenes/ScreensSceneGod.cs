@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
@@ -467,14 +467,26 @@ namespace BattleCruisers.Scenes
 
         void ShowCharlieOnMainMenu()
         {
-            if (charlie is not null)
+            // Clean up any existing charlie to prevent duplicates
+            if (charlie != null)
             {
                 Destroy(charlie.gameObject);
                 charlie = null;
             }
+            
+            // Also check ContainerCaptain for any orphaned exos that might have been created
+            foreach (Transform child in ContainerCaptain)
+            {
+                if (child.GetComponent<CaptainExo>() != null)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+            
             CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(_gameModel.PlayerLoadout.CurrentCaptain);
             charlie = Instantiate(charliePrefab, ContainerCaptain);
             charlie.gameObject.transform.localScale = Vector3.one * 1; //0.5f
+            charlie.gameObject.SetActive(true); // Ensure it's active
             characterOfCharlie = charlie.gameObject;
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
@@ -498,12 +510,13 @@ namespace BattleCruisers.Scenes
         public void GoToHomeScreen()
         {
             homeScreen.gameObject.SetActive(true);
-            ShowCharlieOnMainMenu();
+            ShowCharlieOnMainMenu(); // This sets cameraOfCaptains to false, which is correct for home screen
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
             characterOfCharlie.SetActive(true);
             cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(true);
+            // Don't activate cameraOfCaptains here - ShowCharlieOnMainMenu() already set it to false
+            // cameraOfCaptains should only be active when showing multiple captains (shop/blackmarket)
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             GoToScreen(homeScreen);
