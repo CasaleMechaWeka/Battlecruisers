@@ -36,7 +36,8 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
 
         private void UpdateSelectedFeedback()
         {
-            IsSelected = _itemPanels.IsMatch(itemType);
+            // Profile button is selected when no panel is shown (profile state)
+            IsSelected = _itemPanels.CurrentlyShownPanel == null;
         }
 
         public void OnClickedAction() { OnClicked(); }

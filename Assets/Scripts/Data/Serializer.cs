@@ -5,6 +5,8 @@ using BattleCruisers.Data.Models;
 using UnityEngine.Assertions;
 using Newtonsoft.Json;
 using Unity.Services.CloudSave;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using System.Threading.Tasks;
 using UnityEngine;
 using System;
@@ -572,6 +574,26 @@ namespace BattleCruisers.Data
         {
             try
             {
+                // CRITICAL: Verify authentication state right before attempting save
+                // This prevents race conditions where sign-out happens between checks
+                if (Unity.Services.Core.UnityServices.State != Unity.Services.Core.ServicesInitializationState.Initialized)
+                {
+                    Debug.LogWarning("CloudSave: Unity Services not initialized");
+                    return false;
+                }
+
+                if (Unity.Services.Authentication.AuthenticationService.Instance == null)
+                {
+                    Debug.LogWarning("CloudSave: AuthenticationService.Instance is null");
+                    return false;
+                }
+
+                if (!Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
+                {
+                    Debug.LogWarning("CloudSave: User is not signed in - cannot save to cloud");
+                    return false;
+                }
+
                 game.SaveVersion = GetCurrentSaveVersion();
                 SaveGameModel saveData = new SaveGameModel(game);
                 if (CloudSaveService.Instance != null && CloudSaveService.Instance.Data != null)
@@ -580,7 +602,16 @@ namespace BattleCruisers.Data
                     if (!string.IsNullOrEmpty(serializedData))
                     {
                         var data = new Dictionary<string, object> { { "GameModel", serializedData } };
+                        
+                        // Double-check authentication right before the actual save call
+                        if (!Unity.Services.Authentication.AuthenticationService.Instance.IsSignedIn)
+                        {
+                            Debug.LogWarning("CloudSave: User signed out during save operation");
+                            return false;
+                        }
+                        
                         await CloudSaveService.Instance.Data.ForceSaveAsync(data);
+                        Debug.Log($"[Serializer] CloudSave: Successfully saved to cloud (PlayerId: {Unity.Services.Authentication.AuthenticationService.Instance.PlayerId})");
                         return true; // Success
                     }
                     else
@@ -597,12 +628,17 @@ namespace BattleCruisers.Data
             }
             catch (TimeoutException e)
             {
-                Debug.LogWarning("CloudSave Timeout occurred: " + e.Message);
+                Debug.LogWarning($"CloudSave Timeout occurred: {e.Message}");
+                return false;
+            }
+            catch (Unity.Services.Authentication.AuthenticationException e)
+            {
+                Debug.LogError($"CloudSave Authentication Error: {e.Message}");
                 return false;
             }
             catch (Exception e)
             {
-                Debug.LogError("CloudSave Error: " + e);
+                Debug.LogError($"CloudSave Error: {e.GetType().Name} - {e.Message}");
                 return false;
             }
         }

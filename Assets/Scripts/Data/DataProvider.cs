@@ -106,19 +106,25 @@ namespace BattleCruisers.Data
         {
             if (!SettingsManager.CloudSaveDisabled)
             {
-                if (Unity.Services.Core.UnityServices.State == Unity.Services.Core.ServicesInitializationState.Initialized
-                    && AuthenticationService.Instance != null
-                    && AuthenticationService.Instance.IsSignedIn)
+                // Check authentication state with detailed logging
+                bool unityServicesInitialized = Unity.Services.Core.UnityServices.State == Unity.Services.Core.ServicesInitializationState.Initialized;
+                bool authServiceExists = AuthenticationService.Instance != null;
+                bool isSignedIn = authServiceExists && AuthenticationService.Instance.IsSignedIn;
+                
+                if (unityServicesInitialized && authServiceExists && isSignedIn)
                 {
+                    string playerId = AuthenticationService.Instance.PlayerId ?? "Unknown";
+                    Debug.Log($"[DataProvider] CloudSave: Attempting save (PlayerId: {playerId}, SignedIn: {isSignedIn})");
+                    
                     bool success = await _serializer.CloudSave(_gameModel);
                     if (success)
                     {
-                        Debug.Log("Cloud saved successfully.");
+                        Debug.Log($"[DataProvider] Cloud saved successfully (PlayerId: {playerId})");
                         return true;
                     }
                     else
                     {
-                        Debug.LogWarning("Cloud save failed - saved locally instead.");
+                        Debug.LogWarning("[DataProvider] Cloud save failed - saved locally instead.");
                         _serializer.SaveGame(_gameModel);
                         return false;
                     }
@@ -126,14 +132,18 @@ namespace BattleCruisers.Data
                 else
                 {
                     _serializer.SaveGame(_gameModel);
-                    Debug.Log("Cloud not ready (not initialized or not signed in); saved locally.");
+                    string reason = !unityServicesInitialized ? "Unity Services not initialized" 
+                        : !authServiceExists ? "AuthenticationService.Instance is null"
+                        : !isSignedIn ? "User not signed in"
+                        : "Unknown reason";
+                    Debug.Log($"[DataProvider] Cloud not ready ({reason}); saved locally.");
                     return false;
                 }
             }
             else
             {
                 _serializer.SaveGame(_gameModel);
-                Debug.Log("Cloud save disabled. Saving locally instead");
+                Debug.Log("[DataProvider] Cloud save disabled. Saving locally instead");
                 return false;
             }
         }

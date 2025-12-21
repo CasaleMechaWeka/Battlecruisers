@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Data;
+using BattleCruisers.Data;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Data.Settings;
 using BattleCruisers.Scenes;
@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public Transform accountHelpRow;
         public GameObject idContainer;
         public TextMeshProUGUI idString;
-        public CanvasGroupButton idButton, iapRefreshButton, deleteCloudDataButton;
+        public CanvasGroupButton idButton, iapRefreshButton, deleteCloudDataButton, cloudLoadButton;
         public GameObject idHighlight, iapHighlight, deleteCloudDataHighlight;
         public AnimationClip idAnim, iapAnim, deleteCloudDataAnim;
 
@@ -56,7 +56,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         {
             base.Initialise(screensSceneGod);
 
-            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudSaveToggle);
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudLoadButton, cloudSaveToggle);
             Helper.AssertIsNotNull(cloudSaveLabel, accountHelpRow);
             Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
             Helper.AssertIsNotNull(soundPlayer, settingsManager, hotkeysModel);
@@ -158,6 +158,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
             iapRefreshButton.gameObject.SetActive(true);
             deleteCloudDataButton.Initialise(soundPlayer, DeleteCloudData, this);
+            cloudLoadButton.Initialise(soundPlayer, CloudLoad, this);
+            
             if (Camera.main.aspect < 1.5f)
                 accountHelpRow.transform.localScale = new Vector3(.85f, .85f, 1f);
 
@@ -340,6 +342,23 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _settingsManager.CloudSaveDisabled = true;
             cloudSaveToggle.ResetToDefaults(false);
             StartCoroutine(AnimateDeleteCloudData());
+        }
+
+        /// <summary>
+        /// Manual cloud load - loads game state from cloud (overwrites local if cloud is newer)
+        /// </summary>
+        public async void CloudLoad()
+        {
+            try
+            {
+                await DataProvider.CloudLoad();
+                Debug.Log("[SettingsScreen] Cloud load completed successfully");
+                // Note: UI will refresh automatically when navigating to other screens
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[SettingsScreen] Cloud load failed: {ex.Message}");
+            }
         }
 
         IEnumerator AnimateDeleteCloudData()

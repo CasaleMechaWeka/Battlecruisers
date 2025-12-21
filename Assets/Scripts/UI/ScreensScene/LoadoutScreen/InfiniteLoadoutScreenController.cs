@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
@@ -187,7 +187,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
                 if (m == null || m.gameObject == null)
                     continue;
                 bool isLimitTracker = limitTrackerGroup != null && m.gameObject == limitTrackerGroup;
-                m.gameObject.SetActive(show && (!isLimitTracker || !itemPanels.IsMatch(Items.ItemType.Hull)));
+                // Hide limit tracker on hulls and profile screens
+                bool shouldShowLimitTracker = !isLimitTracker || (!itemPanels.IsMatch(Items.ItemType.Hull) && _itemDetailsManager.SelectedItemFamily != Items.ItemFamily.Profile);
+                m.gameObject.SetActive(show && shouldShowLimitTracker);
             }
         }
 
@@ -227,6 +229,30 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
             _comparingFamilyTracker.SetComparingFamily(ItemFamily.Hulls);
             _comparingFamilyTracker.SetComparingFamily(null);
             ToggleSelectionUi(true);
+
+            // Scroll to the player's selected hull in the hull panel
+            ScrollToSelectedHull();
+        }
+
+        private void ScrollToSelectedHull()
+        {
+            ItemsPanel hullPanel = itemPanels.GetPanel(Items.ItemType.Hull);
+            if (hullPanel != null)
+            {
+                HullKey selectedHullKey = DataProvider.GameModel.PlayerLoadout.Hull;
+
+                // Find the hull button that corresponds to the player's selected hull
+                foreach (ItemButton button in hullPanel.GetAllButtons())
+                {
+                    if (button is HullButtonV2 hullButton && hullButton.GetHullKey().Equals(selectedHullKey))
+                    {
+                        // Scroll to this button and make sure it's registered as selected
+                        hullPanel.ScrollToButton(button);
+                        hullPanel.RegisterSelection(button);
+                        break;
+                    }
+                }
+            }
         }
 
         public void RefreshBodykitsUI()

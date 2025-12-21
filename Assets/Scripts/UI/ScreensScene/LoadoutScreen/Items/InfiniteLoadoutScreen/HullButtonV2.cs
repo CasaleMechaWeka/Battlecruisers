@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
@@ -24,6 +24,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public GameObject clickedFeedBack;
         public Button toggleHullButton;
         public SelectCruiserButton selectCruiserButton;
+
+        public HullKey GetHullKey()
+        {
+            return _hullKey;
+        }
 
         public void Initialise(
             SingleSoundPlayer soundPlayer,

@@ -906,20 +906,36 @@ namespace BattleCruisers.Scenes
                         thankYouPlane.SetTrigger("Play");
         }
 
-        void OnApplicationQuit()
+        async void OnApplicationQuit()
         {
             try
             {
                 DataProvider.SaveGame();
-                DataProvider.SyncCoinsToCloud();
-                DataProvider.SyncCreditsToCloud();
-
-                // Save changes:
-                DataProvider.CloudSave();
+                
+                // CRITICAL: Save to cloud BEFORE sign-out happens
+                // Use fire-and-forget but with timeout protection
+                var cloudSaveTask = DataProvider.CloudSave();
+                var syncCoinsTask = DataProvider.SyncCoinsToCloud();
+                var syncCreditsTask = DataProvider.SyncCreditsToCloud();
+                
+                // Wait for all with timeout (max 2 seconds)
+                var allTasks = Task.WhenAll(cloudSaveTask, syncCoinsTask, syncCreditsTask);
+                var timeoutTask = Task.Delay(2000);
+                var completedTask = await Task.WhenAny(allTasks, timeoutTask);
+                
+                if (completedTask == timeoutTask)
+                {
+                    Debug.LogWarning("[ScreensSceneGod] OnApplicationQuit: Cloud save timed out after 2 seconds");
+                }
+                else
+                {
+                    bool cloudSaveSuccess = await cloudSaveTask;
+                    Debug.Log($"[ScreensSceneGod] OnApplicationQuit: Cloud save {(cloudSaveSuccess ? "succeeded" : "failed")}");
+                }
             }
             catch (Exception ex)
             {
-                Debug.Log(ex);
+                Debug.LogError($"[ScreensSceneGod] OnApplicationQuit error: {ex.Message}");
             }
         }
 

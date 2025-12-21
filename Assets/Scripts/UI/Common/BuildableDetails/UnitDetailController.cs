@@ -274,14 +274,22 @@ namespace BattleCruisers.UI.Common.BuildableDetails
 
                 if (DataProvider.GameModel.Credits >= variantData.VariantCredits)
                 {
-                    if (await LandingSceneGod.CheckForInternetConnection() && AuthenticationService.Instance.IsSignedIn)
+                    bool hasInternet = await LandingSceneGod.CheckForInternetConnection();
+                    bool isSignedIn = AuthenticationService.Instance.IsSignedIn;
+                    Debug.Log($"BuyVariant: Internet={hasInternet}, SignedIn={isSignedIn}");
+
+                    if (hasInternet && isSignedIn)
                     {
+                        // Online purchase with cloud sync
+                        Debug.Log("BuyVariant: Attempting online purchase");
                         try
                         {
                             bool result = await DataProvider.PurchaseVariant(variantData.Index);
                             if (result)
                             {
+                                Debug.Log("BuyVariant: Online purchase successful");
                                 PlayerInfoPanelController.Instance.UpdateInfo();
+                                HidePurchasingPanel();
                                 DataProvider.GameModel.AddVariant(variantData.Index);
                                 DataProvider.SaveGame();
                                 await DataProvider.CloudSave();
@@ -292,35 +300,36 @@ namespace BattleCruisers.UI.Common.BuildableDetails
                             }
                             else
                             {
-                                Debug.LogError("BuyVariant: PurchaseVariant returned false");
+                                Debug.LogError("BuyVariant: Online purchase failed - PurchaseVariant returned false");
                                 ScreensSceneGod.Instance.messageBox.ShowMessage(
                     LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                             }
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            Debug.LogError("BuyVariant: Exception during purchase");
+                            Debug.LogError($"BuyVariant: Online purchase exception: {ex.Message}");
                             ScreensSceneGod.Instance.messageBox.ShowMessage(
                 LocTableCache.ScreensSceneTable.GetString("TryAgain"));
                         }
                     }
                     else
                     {
+                        // Offline purchase
+                        HidePurchasingPanel();
                         DataProvider.GameModel.AddVariant(variantData.Index);
-                        ShowVariantDetail(variantData.Index);
                         ScreensSceneGod.Instance.messageBox.ShowMessage(
             LocTableCache.ScreensSceneTable.GetString("PurchasedVariant") + " " +
             LocTableCache.CommonTable.GetString(variantData.VariantNameStringKeyBase));
 
+                        // Subtract from local economy
                         DataProvider.GameModel.Credits -= variantData.VariantCredits;
                         PlayerInfoPanelController.Instance.UpdateInfo();
+
+                        // Keep track of transaction for later
                         DataProvider.GameModel.CreditsChange -= variantData.VariantCredits;
 
-                        if (DataProvider.GameModel.OutstandingVariantTransactions == null)
-                            DataProvider.GameModel.OutstandingVariantTransactions = new List<VariantData>();
-
-                        DataProvider.GameModel.OutstandingVariantTransactions.Add(variantData);
                         DataProvider.SaveGame();
+                        ShowVariantDetail(variantData.Index);
                     }
                 }
                 else

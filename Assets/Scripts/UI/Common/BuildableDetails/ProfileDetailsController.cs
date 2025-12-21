@@ -37,9 +37,6 @@ public class ProfileDetailsController : MonoBehaviour
 
     public GameObject ExoSelectorPanel;
 
-    public CanvasGroupButton EditExoButton;
-
-    public CanvasGroupButton SelectExoButton;
 
     public CanvasGroupButton LeftCancelZone;
     public CanvasGroupButton RightCancelZone;
@@ -107,8 +104,8 @@ public class ProfileDetailsController : MonoBehaviour
 
         SoundPlayer = soundPlayer;
 
-        Helper.AssertIsNotNull(HeckleSelector, ExoSelectorPanel, EditHeckleButton, EditExoButton,
-                               SelectExoButton, SelectHeckleButton, LeftCancelZone, RightCancelZone,
+        Helper.AssertIsNotNull(HeckleSelector, ExoSelectorPanel, EditHeckleButton,
+                               SelectHeckleButton, LeftCancelZone, RightCancelZone,
                                EloContainer, HeckleText, HeckleButtons, HecklePreviews,
                                HecklePreviewHighlights, CaptainCamera, CaptainRenderContainer, ExoContainer,
                                HeckleContainer, ExoButonPrefab, HeckleButonPrefab, EloText,
@@ -126,9 +123,7 @@ public class ProfileDetailsController : MonoBehaviour
         HecklePreviewHighlights[2].SetActive(false);
 
         EditHeckleButton.Initialise(soundPlayer, ShowHeckleSelector);
-        EditExoButton.Initialise(soundPlayer, ShowExoSelector);
 
-        SelectExoButton.Initialise(soundPlayer, SelectExo);
         SelectHeckleButton.Initialise(soundPlayer, SelectHeckle);
 
         LeftCancelZone.Initialise(soundPlayer, CancelSelectors);
@@ -179,6 +174,7 @@ public class ProfileDetailsController : MonoBehaviour
         ChangeHeckleSlot(0);
         CancelSelectors();
 
+
         gameObject.SetActive(true);
         CaptainCamera.SetActive(true);
 
@@ -193,15 +189,13 @@ public class ProfileDetailsController : MonoBehaviour
         BountyText.text = DataProvider.GameModel.Bounty.ToString("F0");
 #endif
         UpdatePlayerName();
-        
+
         // Show the exo selector panel by default
         ShowExoSelector();
     }
 
     void ShowHeckleSelector()
     {
-        EloContainer.SetActive(false);
-        BountyContainer.SetActive(false);
         ExoSelectorPanel.SetActive(false);
         HeckleSelector.SetActive(true);
 
@@ -213,8 +207,6 @@ public class ProfileDetailsController : MonoBehaviour
 
     void ShowExoSelector()
     {
-        EloContainer.SetActive(false);
-        BountyContainer.SetActive(false);
         HeckleSelector.SetActive(false);
         ExoSelectorPanel.SetActive(true);
 
@@ -228,12 +220,8 @@ public class ProfileDetailsController : MonoBehaviour
     {
         LeftCancelZone.gameObject.SetActive(false);
         RightCancelZone.gameObject.SetActive(false);
-        EloContainer.SetActive(true);
-#if ENABLE_BOUNTIES
-        BountyContainer.SetActive(true);
-#endif
         HeckleSelector.SetActive(false);
-        ExoSelectorPanel.SetActive(false);
+        // ExoSelectorPanel stays open by default, don't close it
 
         SelectHeckleButton.gameObject.SetActive(false);
 
@@ -348,6 +336,8 @@ public class ProfileDetailsController : MonoBehaviour
         CaptainExoKey exoKey = StaticPrefabKeys.CaptainExos.GetCaptainExoKey(newExoIndex);
         CaptainExo playerExo = Instantiate(PrefabFactory.GetCaptainExo(exoKey), CaptainRenderContainer);
         playerExo.gameObject.transform.localScale = Vector3.one * 1f;
+        playerExo.gameObject.transform.localPosition = Vector3.zero;
+        playerExo.gameObject.transform.localRotation = Quaternion.identity;
         currentCaptainRender = playerExo.gameObject;
 
         if (exoIndexToItemIndex != null && currentExoIndex >= 0 && currentExoIndex < exoIndexToItemIndex.Length && exoIndexToItemIndex[currentExoIndex] >= 0 && exoIndexToItemIndex[currentExoIndex] < instantiatedExoItems.Count)
@@ -355,15 +345,38 @@ public class ProfileDetailsController : MonoBehaviour
         if (exoIndexToItemIndex != null && newExoIndex >= 0 && newExoIndex < exoIndexToItemIndex.Length && exoIndexToItemIndex[newExoIndex] >= 0 && exoIndexToItemIndex[newExoIndex] < instantiatedExoItems.Count)
             instantiatedExoItems[exoIndexToItemIndex[newExoIndex]].ClickedFeedback.SetActive(true);
         currentExoIndex = newExoIndex;
+
+        // Immediately select the captain when clicked
+        DataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(StaticData.Captains[currentExoIndex].NameStringKeyBase);
+        RibbonIcon.sprite = exoSprites[currentExoIndex];
+        RibbonIconHighlight.sprite = exoSprites[currentExoIndex];
+
+        DataProvider.SaveGame();
+        _ = DataProvider.CloudSave();
+
+        // Ensure the captain camera is active
+        if (CaptainCamera != null)
+        {
+            CaptainCamera.SetActive(true);
+        }
     }
 
     void ShowCurrentCaptain()
     {
         if (currentCaptainRender != null)
             Destroy(currentCaptainRender);
+
         CaptainExo playerExo = Instantiate(PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain), CaptainRenderContainer);
         playerExo.gameObject.transform.localScale = Vector3.one * 1f;
+        playerExo.gameObject.transform.localPosition = Vector3.zero;
+        playerExo.gameObject.transform.localRotation = Quaternion.identity;
         currentCaptainRender = playerExo.gameObject;
+
+        // Ensure the captain camera is active and properly positioned
+        if (CaptainCamera != null)
+        {
+            CaptainCamera.SetActive(true);
+        }
     }
 
     public void ShowHeckle(int newHeckleIndex)
@@ -385,17 +398,6 @@ public class ProfileDetailsController : MonoBehaviour
         HeckleText.text = LocTableCache.HecklesTable.GetString($"Heckle{heckleIndex.ToString("000")}");
     }
 
-    void SelectExo()
-    {
-        DataProvider.GameModel.PlayerLoadout.CurrentCaptain = new CaptainExoKey(StaticData.Captains[currentExoIndex].NameStringKeyBase);
-        RibbonIcon.sprite = exoSprites[currentExoIndex];
-        RibbonIconHighlight.sprite = exoSprites[currentExoIndex];
-
-        DataProvider.SaveGame();
-        _ = DataProvider.CloudSave();
-
-        CancelSelectors();
-    }
 
     void SelectHeckle()
     {
@@ -412,6 +414,12 @@ public class ProfileDetailsController : MonoBehaviour
         HecklePreviewHighlights[0].SetActive(false);
         HecklePreviewHighlights[1].SetActive(false);
         HecklePreviewHighlights[2].SetActive(false);
+
+        // Deactivate the exo selector panel when profile screen is hidden
+        if (ExoSelectorPanel != null)
+        {
+            ExoSelectorPanel.SetActive(false);
+        }
 
         // Disable camera first to prevent rendering during cleanup
         if (CaptainCamera != null)

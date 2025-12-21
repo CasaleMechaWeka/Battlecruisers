@@ -126,21 +126,5 @@ namespace BattleCruisers.UI.ScreensScene.HomeScreen
             }
         }
 
-        /// <summary>
-        /// Manual cloud load - loads game state from cloud (overwrites local if cloud is newer)
-        /// </summary>
-        public async void CloudLoad()
-        {
-            try
-            {
-                await DataProvider.CloudLoad();
-                Debug.Log("[HomeScreen] Cloud load completed successfully");
-                // Note: UI will refresh automatically when navigating to other screens
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"[HomeScreen] Cloud load failed: {ex.Message}");
-            }
-        }
     }
 }

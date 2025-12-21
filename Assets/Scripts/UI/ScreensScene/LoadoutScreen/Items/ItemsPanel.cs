@@ -24,6 +24,9 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
 
         public bool HasUnlockedItem { get; private set; }
 
+        [SerializeField]
+        private UnityEngine.UI.ScrollRect scrollRect;
+
         public HeckleItemContainerV2 HeckleItemContainerV2Prefab;
         public Transform heckleParent;
         private IList<ItemButton> buttons = new List<ItemButton>();
@@ -113,6 +116,11 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
                 _lastSelectedButton = button;
         }
 
+        public ItemButton GetLastSelectedButton()
+        {
+            return _lastSelectedButton;
+        }
+
         public ItemButton GetPreferredItemButton()
         {
             return _lastSelectedButton ?? GetFirstItemButton();
@@ -121,6 +129,45 @@ namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
         public ItemButton GetFirstItemButton()
         {
             return _button[0];
+        }
+
+        public IList<ItemButton> GetAllButtons()
+        {
+            return _button;
+        }
+
+        public void ScrollToButton(ItemButton targetButton)
+        {
+            // Try to find ScrollRect if not assigned
+            if (scrollRect == null)
+            {
+                scrollRect = GetComponent<UnityEngine.UI.ScrollRect>();
+                if (scrollRect == null)
+                {
+                    scrollRect = GetComponentInParent<UnityEngine.UI.ScrollRect>();
+                }
+                if (scrollRect == null)
+                {
+                    scrollRect = GetComponentInChildren<UnityEngine.UI.ScrollRect>();
+                }
+            }
+
+            if (scrollRect == null || _button == null || !_button.Contains(targetButton))
+                return;
+
+            // Calculate the position of the target button within the content
+            int buttonIndex = _button.IndexOf(targetButton);
+            if (buttonIndex < 0) return;
+
+            // Assuming horizontal layout, calculate the normalized scroll position
+            // This centers the target button in the viewport
+            float totalButtons = _button.Count;
+            if (totalButtons <= 1) return;
+
+            float normalizedPosition = buttonIndex / (totalButtons - 1f);
+
+            // For horizontal scrolling, we set horizontalNormalizedPosition
+            scrollRect.horizontalNormalizedPosition = Mathf.Clamp01(normalizedPosition);
         }
     }
 
