@@ -42,8 +42,8 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
         public GameObject idContainer;
         public TextMeshProUGUI idString;
         public CanvasGroupButton idButton, iapRefreshButton, deleteCloudDataButton, cloudLoadButton;
-        public GameObject idHighlight, iapHighlight, deleteCloudDataHighlight;
-        public AnimationClip idAnim, iapAnim, deleteCloudDataAnim;
+        public GameObject idHighlight, iapHighlight, deleteCloudDataHighlight, cloudLoadHighlight;
+        public AnimationClip idAnim, iapAnim, deleteCloudDataAnim, cloudLoadAnim;
 
         //public GameObject premiumTab;
 
@@ -298,10 +298,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private void DisplayUserID()
         {
-            if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null && !_settingsManager.CloudSaveDisabled)
+            // Show ID if we have it, always (works offline and regardless of cloud save status)
+            string playerId = AuthenticationService.Instance.PlayerId;
+            if (playerId != null)
             {
                 idContainer.SetActive(true);
-                idString.text = "ID: " + AuthenticationService.Instance.PlayerId;
+                idString.text = "ID: " + playerId;
             }
             else
             {
@@ -354,11 +356,19 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 await DataProvider.CloudLoad();
                 Debug.Log("[SettingsScreen] Cloud load completed successfully");
                 // Note: UI will refresh automatically when navigating to other screens
+                StartCoroutine(AnimateCloudLoad());
             }
             catch (System.Exception ex)
             {
                 Debug.LogError($"[SettingsScreen] Cloud load failed: {ex.Message}");
             }
+        }
+
+        IEnumerator AnimateCloudLoad()
+        {
+            cloudLoadHighlight.SetActive(true);
+            yield return new WaitForSeconds(cloudLoadAnim.length);
+            cloudLoadHighlight.SetActive(false);
         }
 
         IEnumerator AnimateDeleteCloudData()
