@@ -4,6 +4,7 @@ using BattleCruisers.Network.Multiplay.Matchplay.Shared;
 using BattleCruisers.UI.BattleScene.Navigation;
 using BattleCruisers.Utils;
 using System;
+using System.Diagnostics;
 
 namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkeys
 {
@@ -26,10 +27,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         private void _hotkeyDetector_PlayerCruiser(object sender, EventArgs e)
         {
-            if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
-                _cameraFocuser.FocusOnLeftCruiser();
-            else
-                _cameraFocuser.FocusOnRightCruiser();
+            _cameraFocuser.FocusOnLeftCruiser();
         }
 
         private void _hotkeyDetector_Overview(object sender, EventArgs e)
@@ -39,10 +37,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Hotkey
 
         private void _hotkeyDetector_EnemyCruiser(object sender, EventArgs e)
         {
-            if (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT)
-                _cameraFocuser.FocusOnRightCruiser();
-            else
-                _cameraFocuser.FocusOnLeftCruiser();
+            _cameraFocuser.FocusOnRightCruiser();
         }
 
         public void DisposeManagedState()
