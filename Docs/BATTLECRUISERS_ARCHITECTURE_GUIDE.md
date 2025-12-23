@@ -108,6 +108,29 @@ public class Cruiser
 }
 ```
 
+**4. Battle Scene Scripting via BattleSequencer**
+```csharp
+// BattleSequencer.cs enables dynamic in-battle content control
+public class BattleSequencer : MonoBehaviour
+{
+    public SequencePoint[] sequencePoints;
+
+    // Can control:
+    // - Building construction/destruction on specific cruiser slots
+    // - Unit spawning at precise positions/timing
+    // - Dynamic boost application/removal for cruisers
+    // - Script execution at specific battle moments
+
+    public async Task ProcessSequencePoint(SequencePoint sq)
+    {
+        // Handle building actions (Add/Destroy on specific slots)
+        // Handle boost actions (Add/Remove/Replace)
+        // Handle unit spawning (positioned or area-based)
+        // Execute UnityEvents for custom logic
+    }
+}
+```
+
 ## Common Pitfalls and Anti-Patterns
 
 This section documents common mistakes discovered during development, particularly from the Endless Mode implementation. Understanding these pitfalls helps prevent architectural violations and ensures new features integrate smoothly.
@@ -632,6 +655,108 @@ public class BattleSceneGod : MonoBehaviour
 }
 ```
 
+### Battle State Tracking and Analytics
+
+**Battle Statistics Collection:**
+```csharp
+// BattleSceneGod.cs - Tracks comprehensive battle metrics
+public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
+
+// Tracks damage dealt to different target types
+deadBuildables = new Dictionary<TargetType, DeadBuildableCounter>();
+deadBuildables.Add(TargetType.Aircraft, new DeadBuildableCounter());
+deadBuildables.Add(TargetType.Ships, new DeadBuildableCounter());
+deadBuildables.Add(TargetType.Cruiser, new DeadBuildableCounter());
+deadBuildables.Add(TargetType.Buildings, new DeadBuildableCounter());
+deadBuildables.Add(TargetType.PlayedTime, new DeadBuildableCounter()); // Battle duration
+```
+
+**Available Battle Metrics:**
+- **Damage Totals:** By target type (Aircraft, Ships, Cruiser, Buildings)
+- **Battle Duration:** Real time played (excludes paused/fast-forward time)
+- **Unit Counts:** Number of units spawned by type
+- **Building State:** Which buildings exist on which slots
+- **Victory Conditions:** How and when the battle ended
+
+**Battle State Limitations:**
+- ⚠️ **No Battle State Preservation:** Battles cannot be paused and resumed in exact state
+- ⚠️ **Final Results Only:** Only end-of-battle statistics are available
+- ⚠️ **No Mid-Battle Save:** Cannot checkpoint battle progress
+
+### Battle Scene Scripting with BattleSequencer
+
+**Location:** `Assets/Scripts/Scenes/BattleScene/BattleSequencer.cs`
+
+The `BattleSequencer` provides **powerful dynamic control** over battle scenes through scripted sequence points:
+
+```csharp
+public class BattleSequencer : MonoBehaviour
+{
+    public SequencePoint[] sequencePoints; // Unity-configured battle events
+
+    public async void StartF()
+    {
+        // Process all sequence points in order
+        foreach (SequencePoint sq in sequencePoints)
+            await ProcessSequencePoint(sq);
+    }
+}
+
+// Sequence Point Actions Available:
+public class SequencePoint
+{
+    public int DelayMS = 0;           // Timing control
+    public Faction Faction;           // Which cruiser (Player/Enemy)
+
+    // Building Actions
+    public List<BuildingAction> BuildingActions; // Add/Destroy buildings
+
+    // Boost Actions
+    public List<BoostAction> BoostActions;       // Add/Remove/Replace boosts
+
+    // Unit Actions
+    public List<UnitAction> UnitActions;         // Spawn units
+
+    // Custom Logic
+    public ScriptCallAction ScriptCallActions;   // UnityEvents for custom code
+}
+```
+
+**Building Action Capabilities:**
+```csharp
+public class BuildingAction
+{
+    public enum BuildingOp { Add = 0, Destroy = 1 }
+    public BuildingOp Operation;
+    public PrefabKeyName PrefabKeyName;    // Which building to add
+    public byte SlotID;                    // Which slot to use
+    public bool IgnoreDroneReq = false;    // Bypass drone requirements
+    public bool IgnoreBuildTime = false;   // Instant construction
+}
+```
+
+**Boost Action Capabilities:**
+```csharp
+public class BoostAction
+{
+    public enum BoostOp { Add = 0, Remove = 1, Replace = 2 }
+    public BoostOp Operation;
+    public BoostType BoostType;      // Damage, FireRate, Accuracy, etc.
+    public float BoostAmount = 1;    // Multiplier value
+}
+```
+
+**Unit Action Capabilities:**
+```csharp
+public class UnitAction
+{
+    public PrefabKeyName PrefabKeyName; // Which unit to spawn
+    public Vector2 Postion;             // Exact spawn position
+    public Vector2 SpawnArea;           // Random area spawning
+    public byte Amount = 1;             // How many to spawn
+}
+```
+
 ### Component-Based Architecture
 
 BattleSceneGod uses composition to manage complex systems:
@@ -705,7 +830,7 @@ public class EndlessHelper : BattleSceneHelper
 
 ### Cruiser Architecture
 
-Cruisers are complex entities composed of multiple subsystems:
+Cruisers are complex entities composed of multiple subsystems with **comprehensive boost/perk systems**:
 
 ```csharp
 public class Cruiser : MonoBehaviour, ICruiser
@@ -734,6 +859,92 @@ public class Cruiser : MonoBehaviour, ICruiser
     public event EventHandler BuildingCompleted;
 }
 ```
+
+### Cruiser Boost and Perk System
+
+**Boost Architecture:**
+```csharp
+// Cruiser.cs - Dynamic boost management
+[Serializable]
+public class BoostStats
+{
+    public BoostType boostType;     // Type of boost (Damage, FireRate, etc.)
+    public float boostAmount = 1f;  // Multiplier value
+}
+
+public class Cruiser : MonoBehaviour, ICruiser
+{
+    public List<BoostStats> Boosts;                    // Active boosts
+    List<IBoostProvider> BoostsProvided = new List<IBoostProvider>();
+
+    // Dynamic boost management
+    public void AddBoost(BoostStats boost)
+    {
+        Boosts.Add(boost);
+        IBoostProvider boostProvider = new BoostProvider(boost.boostAmount);
+        BoostsProvided.Add(boostProvider);
+
+        // Apply to global boost system
+        CruiserSpecificFactories.GlobalBoostProviders
+            .BoostTypeToBoostProvider(boost.boostType)
+            .Add(boostProvider);
+    }
+
+    public void RemoveBoost(BoostStats boost)
+    {
+        // Find and remove matching boost
+        for(int i = 0; i < Boosts.Count; i++)
+        {
+            if(Boosts[i].boostType == boost.boostType)
+            {
+                Boosts.RemoveAt(i);
+                CruiserSpecificFactories.GlobalBoostProviders
+                    .BoostTypeToBoostProvider(boost.boostType)
+                    .Remove(BoostsProvided[i]);
+                BoostsProvided.RemoveAt(i);
+                break;
+            }
+        }
+    }
+}
+```
+
+**Available Boost Types:**
+```csharp
+public enum BoostType
+{
+    Damage,           // Increases damage output
+    FireRate,         // Increases firing speed
+    Accuracy,         // Improves targeting accuracy
+    Range,            // Extends attack range
+    Health,           // Increases health pool
+    BuildSpeed,       // Faster construction
+    DroneCapacity,    // More drones available
+    // ... additional boost types
+}
+```
+
+**Boost Application Example:**
+```csharp
+// BoostedTurretStats.cs - How boosts affect turret performance
+public class BoostedTurretStats : BoostedBasicTurretStats<ITurretStats>, ITurretStats
+{
+    private readonly IBoostable _accuracyBoostable;
+    private readonly IBoostableGroup _accuracyBoostableGroup;
+
+    public float Accuracy => Mathf.Clamp01(_accuracyBoostable.BoostMultiplier * _baseStats.Accuracy);
+    public float FireRate => _fireRateBoostable.BoostMultiplier * _baseStats.FireRate;
+
+    // Boosts are applied through IBoostable interfaces
+    // Changes propagate automatically through the boost system
+}
+```
+
+**Boost Persistence and Application:**
+- **Runtime:** Boosts applied immediately through `AddBoost()`/`RemoveBoost()`
+- **Initialization:** Boosts loaded from `Cruiser.Boosts` list during cruiser setup
+- **Global System:** Boosts affect all buildings/units through `GlobalBoostProviders`
+- **Stacking:** Multiple boosts of same type combine multiplicatively
 
 ### Buildable System
 
@@ -1182,6 +1393,52 @@ public class CompletedLevel
         CompletedAt = DateTime.UtcNow;
     }
 }
+```
+
+### Battle Result Analysis System
+
+**Battle Statistics Available:**
+```csharp
+// BattleSceneGod.cs - Comprehensive battle tracking
+public static Dictionary<TargetType, DeadBuildableCounter> deadBuildables;
+
+// Contains damage totals by category:
+deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();    // Player damage to enemy aircraft
+deadBuildables[TargetType.Ships].GetTotalDamageInCredits();      // Player damage to enemy ships
+deadBuildables[TargetType.Cruiser].GetTotalDamageInCredits();    // Player damage to enemy cruiser
+deadBuildables[TargetType.Buildings].GetTotalDamageInCredits();  // Player damage to enemy buildings
+deadBuildables[TargetType.PlayedTime].GetPlayedTime();           // Battle duration in seconds
+
+// DestructionSceneGod.cs processes these into rewards:
+private void PopulateScreen()
+{
+    // Get damage values from battle results
+    aircraftVal = BattleSceneGod.deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();
+    shipsVal = BattleSceneGod.deadBuildables[TargetType.Ships].GetTotalDamageInCredits();
+    cruiserVal = BattleSceneGod.deadBuildables[TargetType.Cruiser].GetTotalDamageInCredits();
+    buildingsVal = BattleSceneGod.deadBuildables[TargetType.Buildings].GetTotalDamageInCredits();
+    levelTimeInSeconds = BattleSceneGod.deadBuildables[TargetType.PlayedTime].GetPlayedTime();
+}
+```
+
+**Battle Duration Tracking:**
+```csharp
+// Accurate battle time (excludes pause/fast-forward)
+private void Update()
+{
+    if (!isPaused && !isFastForward)
+    {
+        float dt = Time.deltaTime;
+        deadBuildables?[TargetType.PlayedTime]?.AddPlayedTime(dt);
+    }
+}
+```
+
+**Unit and Building Tracking Limitations:**
+- **Final State Only:** Only tracks destroyed units/buildings, not active ones
+- **No Slot Information:** Cannot determine which buildings were on which slots
+- **No Construction Progress:** Cannot tell if buildings were completed or in-progress
+- **Aggregate Only:** Cannot distinguish between different unit types in damage totals
 
 // In GameModel.cs
 public void AddCompletedLevel(CompletedLevel completedLevel)
@@ -2247,6 +2504,771 @@ private GameModel MakeCompatible(object gameData)
 - Maintain resolver XMLs under `Assets/Editor/` (e.g., `FirebaseDependencies.xml`, `IronSourceDependencies.xml`).
 - After changing dependencies, run the Android Resolver (Assets → External Dependency Manager → Android Resolver → Resolve).
 - Keep SDK versions pinned in XML to avoid unexpected API changes; update intentionally and test platform guards.
+
+---
+
+## Endless Mode Implementation Plan
+
+**Date:** December 23, 2025
+**Objective:** Create a rogue-like endless wave defense mode where players face exponentially stronger opponents with power-up choices between battles
+
+### Core Concept
+
+**Gameplay Flow:**
+1. **Battle Phase:** Face a randomized enemy cruiser with escalating difficulty
+2. **Victory Phase:** Choose power-ups/perks to strengthen for next battle
+3. **Progression:** Opponents grow exponentially stronger, player builds power through choices
+4. **End Condition:** Player cruiser destruction ends the run
+
+**Key Requirements:**
+- ✅ **Battle Scene Scripting:** Full control via BattleSequencer
+- ✅ **Dynamic Boosts/Perks:** Real-time cruiser stat modification
+- ✅ **Battle Result Analysis:** Comprehensive post-battle statistics
+- ✅ **Run Persistence:** Save progress across multiple battles
+- ✅ **Power-Up Choices:** Strategic upgrade selection between battles
+
+---
+
+### 1. Battle Scene Integration Points
+
+#### What Can Be Controlled In-Battle
+
+**Building Management (via BattleSequencer):**
+```csharp
+// Enemy cruiser starts with pre-built defenses
+SequencePoint startSequence = new SequencePoint
+{
+    Faction = Faction.Enemy,
+    BuildingActions = new List<BuildingAction>
+    {
+        new BuildingAction
+        {
+            Operation = BuildingOp.Add,
+            PrefabKeyName = Building_Turret,  // From StaticPrefabKeys
+            SlotID = 0,                       // Specific slot position
+            IgnoreDroneReq = true,            // Bypass drone requirements
+            IgnoreBuildTime = true            // Instant construction
+        },
+        new BuildingAction
+        {
+            Operation = BuildingOp.Add,
+            PrefabKeyName = Building_Shield,
+            SlotID = 1,
+            IgnoreDroneReq = true,
+            IgnoreBuildTime = true
+        }
+    }
+};
+```
+
+**Unit Spawning (via BattleSequencer):**
+```csharp
+// Spawn enemy units throughout battle
+SequencePoint wavePoint = new SequencePoint
+{
+    DelayMS = 30000,  // 30 seconds into battle
+    Faction = Faction.Enemy,
+    UnitActions = new List<UnitAction>
+    {
+        new UnitAction
+        {
+            PrefabKeyName = Unit_Fighter,     // From StaticPrefabKeys
+            Postion = new Vector2(100, 0),    // Off-screen spawn
+            Amount = 3                        // Spawn 3 fighters
+        },
+        new UnitAction
+        {
+            PrefabKeyName = Unit_Destroyer,
+            SpawnArea = new Vector2(10, 5),   // Random area spawn
+            Amount = 2
+        }
+    }
+};
+```
+
+**Dynamic Boosts (via BattleSequencer):**
+```csharp
+// Apply temporary or permanent boosts during battle
+SequencePoint boostPoint = new SequencePoint
+{
+    DelayMS = 60000,  // 1 minute in
+    Faction = Faction.Enemy,
+    BoostActions = new List<BoostAction>
+    {
+        new BoostAction
+        {
+            Operation = BoostOp.Add,
+            BoostType = BoostType.Damage,
+            BoostAmount = 1.5f  // 50% damage increase
+        },
+        new BoostAction
+        {
+            Operation = BoostOp.Add,
+            BoostType = BoostType.FireRate,
+            BoostAmount = 2.0f  // Double fire rate
+        }
+    }
+};
+```
+
+**Custom Battle Logic (via BattleSequencer):**
+```csharp
+// Execute custom C# code at specific battle moments
+SequencePoint customPoint = new SequencePoint
+{
+    DelayMS = 120000,  // 2 minutes in
+    ScriptCallActions = new ScriptCallAction()  // UnityEvent
+};
+
+// Attach to method in EndlessModeManager:
+public void OnWave2Start()
+{
+    // Custom wave logic here
+    enemyAIStrategy.IncreaseAggression(0.3f);
+    SpawnBossUnit();
+}
+```
+
+#### Battle State Tracking
+
+**Available Battle Metrics:**
+```csharp
+// In DestructionSceneGod.cs - Access battle results
+private void AnalyzeBattleResults()
+{
+    // Damage dealt by player
+    float aircraftDamage = deadBuildables[TargetType.Aircraft].GetTotalDamageInCredits();
+    float shipDamage = deadBuildables[TargetType.Ships].GetTotalDamageInCredits();
+    float cruiserDamage = deadBuildables[TargetType.Cruiser].GetTotalDamageInCredits();
+    float buildingDamage = deadBuildables[TargetType.Buildings].GetTotalDamageInCredits();
+
+    // Battle duration (real time played)
+    float battleTime = deadBuildables[TargetType.PlayedTime].GetPlayedTime();
+
+    // Calculate performance score
+    float performance = CalculatePerformance(aircraftDamage, shipDamage, cruiserDamage, battleTime);
+    int waveNumber = GetCurrentWaveNumber();
+
+    // Store for between-battle UI
+    BattleResult result = new BattleResult
+    {
+        WaveNumber = waveNumber,
+        Performance = performance,
+        BattleTime = battleTime,
+        DamageDealt = new Dictionary<TargetType, float>
+        {
+            { TargetType.Aircraft, aircraftDamage },
+            { TargetType.Ships, shipDamage },
+            { TargetType.Cruiser, cruiserDamage },
+            { TargetType.Buildings, buildingDamage }
+        }
+    };
+
+    EndlessRunManager.Instance.RecordBattleResult(result);
+}
+```
+
+**Battle State Limitations:**
+- ❌ **No Mid-Battle State:** Cannot pause and resume battles
+- ❌ **No Building Positions:** Cannot determine slot locations of buildings
+- ❌ **No Unit Counts:** Cannot track how many units were spawned by each side
+- ❌ **No Construction Status:** Cannot tell if buildings were completed or in-progress
+
+---
+
+### 2. Perk and Power-Up System
+
+#### Cruiser Boost Integration
+
+**Persistent Perks (Applied Between Battles):**
+```csharp
+public class EndlessPerkManager
+{
+    // Available perk types
+    public enum PerkType
+    {
+        DamageBoost,        // Permanent damage increase
+        FireRateBoost,      // Permanent fire rate increase
+        HealthBoost,        // Permanent health increase
+        BuildSpeedBoost,    // Faster construction
+        ExtraDrones,        // More drone capacity
+        StartingCredits,    // More starting credits
+        UnitSpawnRate,      // Faster unit production
+        ShieldRegeneration, // Auto-shield repair
+        CriticalHitChance,  // Chance for double damage
+        ArmorPiercing       // Ignore enemy armor
+    }
+
+    // Apply persistent perk to player cruiser
+    public void ApplyPersistentPerk(Cruiser playerCruiser, PerkType perk)
+    {
+        switch (perk)
+        {
+            case PerkType.DamageBoost:
+                playerCruiser.AddBoost(new Cruiser.BoostStats
+                {
+                    boostType = BoostType.Damage,
+                    boostAmount = 1.2f  // 20% permanent damage increase
+                });
+                break;
+
+            case PerkType.HealthBoost:
+                playerCruiser.HealthTracker.MaxHealth *= 1.15f;
+                playerCruiser.HealthTracker.Health = playerCruiser.HealthTracker.MaxHealth;
+                break;
+
+            case PerkType.ExtraDrones:
+                playerCruiser.NumOfDrones += 1;
+                break;
+        }
+    }
+}
+```
+
+**Battle-Specific Power-Ups (Applied During Battle):**
+```csharp
+public class EndlessPowerUpManager
+{
+    // Temporary boosts for current battle only
+    public enum PowerUpType
+    {
+        EmergencyShield,    // Instant shield activation
+        NukeStrike,         // Destroy random enemy units
+        DroneSurge,         // Temporary extra drones
+        DamageSurge,        // Temporary damage boost
+        SpeedBoost          // Temporary unit speed increase
+    }
+
+    // Apply temporary power-up via BattleSequencer
+    public SequencePoint CreatePowerUpSequence(PowerUpType powerUp)
+    {
+        return new SequencePoint
+        {
+            Faction = Faction.Player,
+            BoostActions = GetPowerUpBoosts(powerUp),
+            UnitActions = GetPowerUpUnits(powerUp),
+            ScriptCallActions = GetPowerUpScripts(powerUp)
+        };
+    }
+}
+```
+
+#### Dynamic Boost Management
+
+**Real-Time Boost Application:**
+```csharp
+public class EndlessBoostController
+{
+    private Cruiser _playerCruiser;
+    private List<Cruiser.BoostStats> _activeBoosts = new List<Cruiser.BoostStats>();
+
+    public void ApplyWaveScalingBoost(int waveNumber)
+    {
+        // Remove previous wave scaling
+        foreach (var boost in _activeBoosts)
+        {
+            _playerCruiser.RemoveBoost(boost);
+        }
+        _activeBoosts.Clear();
+
+        // Apply new wave scaling
+        float scalingFactor = 1.0f + (waveNumber - 1) * 0.1f; // 10% per wave
+
+        var damageBoost = new Cruiser.BoostStats
+        {
+            boostType = BoostType.Damage,
+            boostAmount = scalingFactor
+        };
+
+        var healthBoost = new Cruiser.BoostStats
+        {
+            boostType = BoostType.Health,
+            boostAmount = scalingFactor
+        };
+
+        _playerCruiser.AddBoost(damageBoost);
+        _playerCruiser.AddBoost(healthBoost);
+
+        _activeBoosts.Add(damageBoost);
+        _activeBoosts.Add(healthBoost);
+    }
+}
+```
+
+---
+
+### 3. Run Management and Persistence
+
+#### Endless Run Data Structure
+
+**Run State Tracking:**
+```csharp
+[Serializable]
+public class EndlessRunData
+{
+    public int RunID { get; set; }
+    public int CurrentWave { get; set; } = 1;
+    public DateTime RunStartTime { get; set; }
+    public List<BattleResult> BattleHistory { get; set; } = new List<BattleResult>();
+    public List<PerkType> AcquiredPerks { get; set; } = new List<PerkType>();
+    public Dictionary<string, int> RunStatistics { get; set; } = new Dictionary<string, int>();
+
+    // Player progression within run
+    public int TotalCreditsEarned { get; set; }
+    public int TotalEnemiesDefeated { get; set; }
+    public float BestBattleTime { get; set; }
+    public float TotalPlayTime { get; set; }
+}
+
+[Serializable]
+public class BattleResult
+{
+    public int WaveNumber { get; set; }
+    public float Performance { get; set; }  // 0.0 to 1.0 score
+    public float BattleTime { get; set; }   // Real seconds played
+    public Dictionary<TargetType, float> DamageDealt { get; set; }
+    public List<PerkType> PerksChosen { get; set; }  // Perks selected after this battle
+}
+```
+
+**Run Persistence:**
+```csharp
+public class EndlessRunManager
+{
+    private const string RUN_DATA_KEY = "EndlessRunData";
+
+    public static EndlessRunData CurrentRun { get; private set; }
+
+    public static void StartNewRun()
+    {
+        CurrentRun = new EndlessRunData
+        {
+            RunID = GenerateRunID(),
+            RunStartTime = DateTime.UtcNow,
+            CurrentWave = 1
+        };
+        SaveRunData();
+    }
+
+    public static void RecordBattleResult(BattleResult result)
+    {
+        CurrentRun.BattleHistory.Add(result);
+        CurrentRun.CurrentWave++;
+        CurrentRun.TotalEnemiesDefeated++;
+        CurrentRun.TotalCreditsEarned += CalculateCreditsFromResult(result);
+        SaveRunData();
+    }
+
+    private static void SaveRunData()
+    {
+        string json = JsonUtility.ToJson(CurrentRun);
+        PlayerPrefs.SetString(RUN_DATA_KEY, json);
+        PlayerPrefs.Save();
+    }
+
+    public static void LoadRunData()
+    {
+        if (PlayerPrefs.HasKey(RUN_DATA_KEY))
+        {
+            string json = PlayerPrefs.GetString(RUN_DATA_KEY);
+            CurrentRun = JsonUtility.FromJson<EndlessRunData>(json);
+        }
+    }
+
+    public static void EndRun()
+    {
+        // Calculate final statistics
+        CurrentRun.RunStatistics["TotalWaves"] = CurrentRun.CurrentWave - 1;
+        CurrentRun.RunStatistics["TotalCredits"] = CurrentRun.TotalCreditsEarned;
+        CurrentRun.RunStatistics["BestWave"] = CurrentRun.BattleHistory.Max(r => r.WaveNumber);
+
+        // Could submit to leaderboard here
+        SubmitRunToLeaderboard(CurrentRun);
+
+        // Clear run data
+        CurrentRun = null;
+        PlayerPrefs.DeleteKey(RUN_DATA_KEY);
+    }
+}
+```
+
+---
+
+### 4. Between-Battle UI and Progression
+
+#### Post-Battle Screen Integration
+
+**Extend DestructionSceneGod for Endless Mode:**
+```csharp
+public class EndlessDestructionSceneGod : DestructionSceneGod
+{
+    private EndlessRunData _currentRun;
+
+    protected override void Start()
+    {
+        base.Start(); // Process normal battle results
+
+        // Load current endless run
+        _currentRun = EndlessRunManager.CurrentRun;
+
+        if (_currentRun != null)
+        {
+            // Modify UI for endless mode
+            screenTitle.text = $"Wave {_currentRun.CurrentWave} Complete!";
+
+            // Show wave-specific rewards
+            ShowWaveRewards(_currentRun.CurrentWave);
+
+            // Show perk selection instead of normal "continue"
+            ShowPerkSelection();
+        }
+    }
+
+    private void ShowWaveRewards(int waveNumber)
+    {
+        // Calculate wave-specific multipliers
+        float creditMultiplier = 1.0f + (waveNumber - 1) * 0.2f; // 20% more per wave
+        float coinMultiplier = 1.0f + (waveNumber - 1) * 0.1f;   // 10% more per wave
+
+        creditsToAward = (long)(baseCredits * creditMultiplier);
+        coinsToAward = (int)(baseCoins * coinMultiplier);
+
+        // Update UI
+        creditsText.text = $"+{FormatNumber(creditsToAward)}";
+        coinsText.text = $"+{coinsToAward}";
+    }
+
+    private void ShowPerkSelection()
+    {
+        // Hide normal continue button
+        nextButton.gameObject.SetActive(false);
+
+        // Show perk selection UI
+        perkSelectionPanel.SetActive(true);
+
+        // Generate 3 random perk choices
+        var availablePerks = GetAvailablePerksForWave(_currentRun.CurrentWave);
+        var chosenPerks = SelectRandomPerks(availablePerks, 3);
+
+        perkButton1.Setup(chosenPerks[0]);
+        perkButton2.Setup(chosenPerks[1]);
+        perkButton3.Setup(chosenPerks[2]);
+    }
+
+    public void OnPerkSelected(PerkType selectedPerk)
+    {
+        // Record perk choice
+        var battleResult = new BattleResult
+        {
+            WaveNumber = _currentRun.CurrentWave,
+            Performance = CalculatePerformance(),
+            BattleTime = levelTimeInSeconds,
+            PerksChosen = new List<PerkType> { selectedPerk }
+        };
+
+        EndlessRunManager.RecordBattleResult(battleResult);
+
+        // Apply perk
+        EndlessPerkManager.ApplyPersistentPerk(playerCruiser, selectedPerk);
+
+        // Continue to next wave
+        SceneNavigator.LoadBattleScene();
+    }
+}
+```
+
+#### Perk Selection UI
+
+**Perk Button Implementation:**
+```csharp
+public class PerkButton : MonoBehaviour
+{
+    [SerializeField] private Text perkNameText;
+    [SerializeField] private Text perkDescriptionText;
+    [SerializeField] private Image perkIcon;
+
+    private PerkType _perkType;
+
+    public void Setup(PerkType perkType)
+    {
+        _perkType = perkType;
+
+        perkNameText.text = GetPerkDisplayName(perkType);
+        perkDescriptionText.text = GetPerkDescription(perkType);
+        perkIcon.sprite = GetPerkIcon(perkType);
+    }
+
+    public void OnClick()
+    {
+        // Notify EndlessDestructionSceneGod
+        endlessDestructionSceneGod.OnPerkSelected(_perkType);
+    }
+}
+```
+
+---
+
+### 5. Enemy Scaling and AI Progression
+
+#### Wave-Based Enemy Configuration
+
+**Enemy Cruiser Generation:**
+```csharp
+public class EndlessEnemyGenerator
+{
+    public static Cruiser GenerateEnemyForWave(int waveNumber)
+    {
+        // Base difficulty scaling
+        float healthMultiplier = 1.0f + (waveNumber - 1) * 0.25f;  // 25% health per wave
+        float damageMultiplier = 1.0f + (waveNumber - 1) * 0.2f;   // 20% damage per wave
+
+        // Random cruiser selection
+        var availableCruisers = GetAvailableCruisersForWave(waveNumber);
+        var selectedCruiser = availableCruisers[UnityEngine.Random.Range(0, availableCruisers.Length)];
+
+        // Create cruiser with scaling
+        var cruiser = CruiserFactory.CreateAICruiser(selectedCruiser);
+
+        // Apply wave scaling
+        cruiser.HealthTracker.MaxHealth *= healthMultiplier;
+        cruiser.HealthTracker.Health = cruiser.HealthTracker.MaxHealth;
+
+        cruiser.AddBoost(new Cruiser.BoostStats
+        {
+            boostType = BoostType.Damage,
+            boostAmount = damageMultiplier
+        });
+
+        return cruiser;
+    }
+}
+```
+
+#### Dynamic BattleSequencer Generation
+
+**Wave-Specific Sequence Generation:**
+```csharp
+public class EndlessBattleSequencerGenerator
+{
+    public static SequencePoint[] GenerateSequenceForWave(int waveNumber)
+    {
+        var sequences = new List<SequencePoint>();
+
+        // Starting buildings scale with wave
+        sequences.Add(GenerateStartingBuildingsSequence(waveNumber));
+
+        // Unit spawn waves increase in frequency and numbers
+        for (int i = 1; i <= waveNumber; i++)
+        {
+            sequences.Add(GenerateUnitWaveSequence(i, waveNumber));
+        }
+
+        // Boss units or special events
+        if (waveNumber % 5 == 0) // Every 5th wave
+        {
+            sequences.Add(GenerateBossSequence(waveNumber));
+        }
+
+        return sequences.ToArray();
+    }
+
+    private static SequencePoint GenerateStartingBuildingsSequence(int waveNumber)
+    {
+        int numTurrets = Mathf.Min(2 + waveNumber / 3, 6); // Up to 6 turrets
+        int numShields = Mathf.Min(1 + waveNumber / 5, 3);  // Up to 3 shields
+
+        var buildingActions = new List<BuildingAction>();
+
+        // Add turrets to random slots
+        for (int i = 0; i < numTurrets; i++)
+        {
+            buildingActions.Add(new BuildingAction
+            {
+                Operation = BuildingOp.Add,
+                PrefabKeyName = Building_Turret,
+                SlotID = (byte)UnityEngine.Random.Range(0, 8), // Random slot
+                IgnoreDroneReq = true,
+                IgnoreBuildTime = true
+            });
+        }
+
+        return new SequencePoint
+        {
+            DelayMS = 0, // Immediate
+            Faction = Faction.Enemy,
+            BuildingActions = buildingActions
+        };
+    }
+}
+```
+
+---
+
+### 6. Implementation Architecture
+
+#### Component Structure
+
+**New Components Required:**
+```
+Assets/Scripts/Scenes/EndlessMode/
+├── EndlessModeManager.cs          # Main coordinator
+├── EndlessRunManager.cs           # Run persistence
+├── EndlessPerkManager.cs          # Perk system
+├── EndlessEnemyGenerator.cs       # Enemy scaling
+├── EndlessBattleSequencerGenerator.cs # Dynamic sequences
+└── EndlessDestructionSceneGod.cs  # Between-battle UI
+
+Assets/Scripts/Scenes/BattleScene/
+├── EndlessHelper.cs               # BattleSceneGod integration
+└── EndlessAIStrategy.cs           # Enemy AI scaling
+
+Assets/Scripts/UI/EndlessMode/
+├── PerkSelectionPanel.cs          # Perk choice UI
+├── RunStatisticsPanel.cs          # Run progress display
+└── WaveTransitionScreen.cs        # Between-wave screen
+```
+
+#### Integration Points
+
+**BattleSceneGod Integration:**
+```csharp
+// In BattleSceneGod.CreateHelper()
+case GameMode.Endless:
+    return new EndlessHelper(deferrer);
+
+// In BattleSceneGod.Start()
+if (ApplicationModel.Mode == GameMode.Endless)
+{
+    var endlessManager = gameObject.AddComponent<EndlessModeManager>();
+    endlessManager.Initialize(playerCruiser, aiCruiser, EndlessRunManager.CurrentRun);
+}
+```
+
+**Scene Flow:**
+```
+LandingScene → EndlessRunStartScreen → BattleScene (Wave 1) → EndlessDestructionScene
+    ↑                                                                        ↓
+    └───────────────────── Run End Screen ◄──────────────────── Wave Complete
+                                                                        ↓
+                                                            Perk Selection → Next Battle
+```
+
+---
+
+### 7. Success Metrics and Balancing
+
+#### Run Analytics
+
+**Track Player Performance:**
+```csharp
+public class EndlessAnalyticsManager
+{
+    public static void TrackRunStart(int runID)
+    {
+        if (FirebaseAnalyticsManager.Instance != null)
+        {
+            FirebaseAnalyticsManager.Instance.LogEvent("endless_run_start",
+                new Dictionary<string, object> { { "run_id", runID } });
+        }
+    }
+
+    public static void TrackWaveComplete(int runID, int waveNumber, float performance, float battleTime)
+    {
+        if (FirebaseAnalyticsManager.Instance != null)
+        {
+            FirebaseAnalyticsManager.Instance.LogEvent("endless_wave_complete",
+                new Dictionary<string, object>
+                {
+                    { "run_id", runID },
+                    { "wave_number", waveNumber },
+                    { "performance", performance },
+                    { "battle_time", battleTime }
+                });
+        }
+    }
+
+    public static void TrackPerkSelected(int runID, PerkType perk, int waveNumber)
+    {
+        if (FirebaseAnalyticsManager.Instance != null)
+        {
+            FirebaseAnalyticsManager.Instance.LogEvent("endless_perk_selected",
+                new Dictionary<string, object>
+                {
+                    { "run_id", runID },
+                    { "perk_type", perk.ToString() },
+                    { "wave_number", waveNumber }
+                });
+        }
+    }
+}
+```
+
+#### Balancing Framework
+
+**Difficulty Scaling:**
+```csharp
+public class EndlessDifficultyManager
+{
+    // Health scaling: Exponential growth
+    public static float GetHealthMultiplier(int waveNumber)
+    {
+        return Mathf.Pow(1.15f, waveNumber - 1); // 15% increase per wave
+    }
+
+    // Damage scaling: Linear growth
+    public static float GetDamageMultiplier(int waveNumber)
+    {
+        return 1.0f + (waveNumber - 1) * 0.1f; // 10% increase per wave
+    }
+
+    // Unit spawn rate scaling
+    public static float GetSpawnRateMultiplier(int waveNumber)
+    {
+        return 1.0f + (waveNumber - 1) * 0.05f; // 5% faster spawns per wave
+    }
+
+    // Reward scaling
+    public static float GetCreditMultiplier(int waveNumber)
+    {
+        return 1.0f + (waveNumber - 1) * 0.2f; // 20% more credits per wave
+    }
+}
+```
+
+---
+
+### 8. Technical Feasibility Assessment
+
+#### ✅ **Fully Feasible Features:**
+
+1. **Battle Scene Control:** BattleSequencer provides complete control over enemy buildings, unit spawning, and dynamic boosts
+2. **Perk System:** Cruiser boost system supports permanent and temporary stat modifications
+3. **Battle Analytics:** DestructionSceneGod provides comprehensive battle result analysis
+4. **Run Persistence:** PlayerPrefs + JSON can handle run state across multiple battles
+5. **UI Integration:** Can extend existing destruction scene for between-battle UI
+
+#### ⚠️ **Constraints and Limitations:**
+
+1. **No Battle State Preservation:** Cannot save/load mid-battle state - must design around complete battle cycles
+2. **Limited Battle Metrics:** Cannot track building positions or construction progress - focus on damage dealt and duration
+3. **Unit Tracking:** Cannot determine which specific units were spawned - aggregate damage tracking only
+4. **Real-Time Duration:** Battle time excludes pause/fast-forward - need clear "real play time" tracking
+
+#### 🎯 **Recommended Approach:**
+
+**Focus on Complete Battle Cycles:**
+- Design for definitive battle outcomes (victory/defeat)
+- Use between-battle screens for all progression
+- Leverage comprehensive battle result data
+- Implement robust run persistence
+
+**Embrace the Constraints:**
+- Build around complete battle sessions
+- Use aggregate statistics effectively
+- Create engaging between-battle progression
+- Focus on strategic perk choices
+
+This endless mode design leverages BattleCruisers' existing architecture while working within its established patterns and limitations. The result will be a compelling rogue-like experience that feels integrated with the core game systems.
 
 ---
 

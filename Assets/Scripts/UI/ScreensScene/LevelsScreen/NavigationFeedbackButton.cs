@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public Button button;
 
-        private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.5f;
+        private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.75f;
 
         public void Initialise(LevelsScreenController levelScreenController, int setIndex, bool isEnabled)
         {

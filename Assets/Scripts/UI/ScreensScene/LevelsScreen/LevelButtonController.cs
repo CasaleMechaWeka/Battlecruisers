@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using BattleCruisers.Utils.Localisation;
 using UnityEngine;
@@ -18,11 +21,12 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public Text levelNumberText, levelNameText;
         public LevelStatsController levelStatsController;
-        public Image captainImage, backgroundImage, targeter;
-        public int enabledCaptainImageWidth = 300;
-        public int disabledCaptainImageWidth = 150;
-        public Sprite defaultBackground, clickedBackground;
-        public Color battlecruisersRed;
+        public Image captainImage, backgroundImage;
+        public Image hullImage; // Image component for displaying the enemy cruiser hull
+        public Image skyImage; // Image component for displaying the sky background
+        
+        private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
+        private const string SPRITES_FILE_EXTENSION = ".png";
 
         public async Task Initialise(
             SingleSoundPlayer soundPlayer,
@@ -35,7 +39,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.Initialise(soundPlayer, parent: parent);
 
-            Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage, targeter, defaultBackground, clickedBackground);
+            Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage);
             Helper.AssertIsNotNull(level, screensSceneGod, difficultyIndicators, trashTalkData);
 
             _level = level;
@@ -44,6 +48,32 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             levelNumberText.text = level.Num.ToString();
             levelNameText.text = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
             captainImage.sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
+            
+            // Set the hull image and sky image for this level
+            int levelIndex = level.Num - 1;
+            if (levelIndex >= 0 && levelIndex < StaticData.Levels.Count)
+            {
+                Level staticLevel = StaticData.Levels[levelIndex];
+                
+                // Set the hull image
+                if (hullImage != null)
+                {
+                    ICruiser enemyCruiserPrefab = PrefabFactory.GetCruiserPrefab(staticLevel.Hull);
+                    hullImage.sprite = enemyCruiserPrefab.Sprite;
+                }
+                
+                // Set the sky image
+                if (skyImage != null)
+                {
+                    string skyPath = SKY_SPRITE_ROOT_PATH + staticLevel.SkyMaterialName + SPRITES_FILE_EXTENSION;
+                    skyImage.sprite = await SpriteFetcher.GetSpriteAsync(skyPath);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Level {level.Num}: Level index {levelIndex} is out of range for StaticData.Levels");
+            }
+            
             levelStatsController.Initialise(level.DifficultyCompleted, difficultyIndicators);
 
             Enabled = numOfLevelsUnlocked >= level.Num;
@@ -58,16 +88,14 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         protected override void ShowDisabledState()
         {
-            captainImage.rectTransform.sizeDelta = new Vector2(disabledCaptainImageWidth, disabledCaptainImageWidth);
-            SetEnabledState(isEnabled: false);
+            // When disabled, deactivate the entire button (captain image visibility handled separately)
+            gameObject.SetActive(false);
         }
 
         protected override void ShowEnabledState()
         {
-            captainImage.rectTransform.sizeDelta = new Vector2(enabledCaptainImageWidth, enabledCaptainImageWidth);
-            SetEnabledState(isEnabled: true);
-
-            backgroundImage.sprite = defaultBackground;
+            // Activate the button when enabled
+            gameObject.SetActive(true);
 
             captainImage.color = Color.black;
             levelNumberText.color = Color.white;
@@ -77,30 +105,19 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         protected override void ShowClickedState()
         {
-            captainImage.rectTransform.sizeDelta = new Vector2(enabledCaptainImageWidth, enabledCaptainImageWidth);
-            SetEnabledState(isEnabled: true);
+            // Ensure button is active when clicked
+            gameObject.SetActive(true);
 
-            backgroundImage.sprite = clickedBackground;
-
-            captainImage.color = battlecruisersRed;
-            levelNumberText.color = battlecruisersRed;
-            levelNameText.color = battlecruisersRed;
-            levelStatsController.SetColour(battlecruisersRed);
+            captainImage.color = Color.red;
+            levelNumberText.color = Color.red;
+            levelNameText.color = Color.red;
+            levelStatsController.SetColour(Color.red);
         }
 
         protected override void ShowHoverState()
         {
             ShowEnabledState();
             captainImage.color = Color.white;
-        }
-
-        private void SetEnabledState(bool isEnabled)
-        {
-            levelNumberText.enabled = isEnabled;
-            levelNameText.enabled = isEnabled;
-            levelStatsController.enabled = isEnabled;
-            backgroundImage.enabled = isEnabled;
-            targeter.enabled = isEnabled;
         }
     }
 }

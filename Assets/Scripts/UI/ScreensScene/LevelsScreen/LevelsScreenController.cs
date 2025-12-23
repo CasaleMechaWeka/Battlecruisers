@@ -1,3 +1,4 @@
+using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
@@ -6,6 +7,7 @@ using BattleCruisers.UI.Common;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
@@ -152,7 +154,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         }
 
         /// <summary>
-        /// Programmatically assigns captain images to all level and sidequest buttons.
+        /// Programmatically assigns captain images and hull images to all level and sidequest buttons.
         /// This fixes image references after the NPC naming convention change.
         /// </summary>
         private async Task AssignCaptainImagesAsync(IList<LevelInfo> levels)
