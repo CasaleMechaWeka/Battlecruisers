@@ -451,6 +451,16 @@ namespace BattleCruisers.Data.Models
             }
         }
 
+        public void RemoveCompletedLevel(int levelNum)
+        {
+            Assert.IsTrue(levelNum > 0 && levelNum <= _completedLevels.Count, "Level number out of valid range");
+
+            if (levelNum <= _completedLevels.Count)
+            {
+                _completedLevels.RemoveAt(levelNum - 1);
+            }
+        }
+
         public void AddCompletedSideQuest(CompletedLevel completedSideQuest)
         {
             Assert.IsTrue(completedSideQuest.LevelNum <= StaticData.NUM_OF_SIDEQUESTS,

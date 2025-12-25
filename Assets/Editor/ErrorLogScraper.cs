@@ -60,10 +60,16 @@ public class ErrorLogScraper : EditorWindow
 
         if (_scrapedErrors.Count > 0)
         {
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Copy to Clipboard"))
             {
                 CopyToClipboard();
             }
+            if (GUILayout.Button("Copy Compact"))
+            {
+                CopyCompactToClipboard();
+            }
+            EditorGUILayout.EndHorizontal();
 
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             for (int i = 0; i < _scrapedErrors.Count; i++)
@@ -457,5 +463,31 @@ public class ErrorLogScraper : EditorWindow
         }
         EditorGUIUtility.systemCopyBuffer = sb.ToString();
         UnityEngine.Debug.Log("Errors copied to clipboard!");
+    }
+
+    private void CopyCompactToClipboard()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < _scrapedErrors.Count; i++)
+        {
+            // Extract just the first line of each error (remove stack traces)
+            string compactError = _scrapedErrors[i];
+            int newlineIndex = compactError.IndexOfAny(new[] { '\n', '\r' });
+            if (newlineIndex >= 0)
+            {
+                compactError = compactError.Substring(0, newlineIndex);
+            }
+
+            // Trim and limit length for chat-friendly format
+            compactError = compactError.Trim();
+            if (compactError.Length > 200)
+            {
+                compactError = compactError.Substring(0, 200) + "...";
+            }
+
+            sb.AppendLine($"Assets{Path.DirectorySeparatorChar}{compactError}");
+        }
+        EditorGUIUtility.systemCopyBuffer = sb.ToString();
+        UnityEngine.Debug.Log("Compact errors copied to clipboard!");
     }
 }

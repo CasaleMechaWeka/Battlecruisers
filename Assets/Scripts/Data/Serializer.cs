@@ -409,6 +409,53 @@ namespace BattleCruisers.Data
                 compatibleGameModel.AddCompletedLevel(completedLevels.ElementAt(i));
             }
 
+            // Version 651 Migration: Handle transition from secret levels 32-40 to regular campaign levels
+            // For saves with version < 651, if players had completed secret levels 32-40,
+            // preserve their loot by marking corresponding side quests as complete,
+            // but reset campaign levels 32-40 as incomplete so they can be played as regular levels
+            if (originalSaveVersion < 651)
+            {
+                Debug.Log("MakeCompatible - Applying version 651 migration for levels 32-40");
+
+                // Find completed levels in the range 32-40 (old secret levels)
+                var secretLevelsToMigrate = compatibleGameModel.CompletedLevels
+                    .Where(cl => cl.LevelNum >= 32 && cl.LevelNum <= 40)
+                    .ToList();
+
+                if (secretLevelsToMigrate.Any())
+                {
+                    Debug.Log($"MakeCompatible - Found {secretLevelsToMigrate.Count} completed secret levels (32-40) to migrate");
+
+                    // For each completed secret level, mark the corresponding side quest as complete
+                    // Level 32 -> Side quest 0, Level 33 -> Side quest 1, ..., Level 40 -> Side quest 8
+                    foreach (var completedLevel in secretLevelsToMigrate)
+                    {
+                        int sideQuestId = completedLevel.LevelNum - 32; // 32->0, 33->1, ..., 40->8
+                        if (sideQuestId >= 0 && sideQuestId <= 8)
+                        {
+                            compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(sideQuestId, completedLevel.HardestDifficulty));
+                            Debug.Log($"MakeCompatible - Marked side quest {sideQuestId} as complete (migrated from level {completedLevel.LevelNum})");
+                        }
+                    }
+
+                    // Remove the completed level records for levels 32-40 so they appear incomplete
+                    // This allows players to play them as regular campaign levels
+                    foreach (var levelToRemove in secretLevelsToMigrate)
+                    {
+                        compatibleGameModel.RemoveCompletedLevel(levelToRemove.LevelNum);
+                        Debug.Log($"MakeCompatible - Reset level {levelToRemove.LevelNum} as incomplete (can now be played as regular campaign level)");
+                    }
+                }
+                else
+                {
+                    Debug.Log("MakeCompatible - No secret levels (32-40) found to migrate");
+                }
+            }
+            else
+            {
+                Debug.Log("MakeCompatible - Skipping version 651 migration (save version >= 651)");
+            }
+
             List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
 
             //needs to be hardcoded since otherwise access to StaticData.cs would be required

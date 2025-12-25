@@ -80,6 +80,13 @@ namespace BattleCruisers.Scenes.BattleScene
 #endif
                 levelTrashTalkData = StaticData.SideQuestTrashTalk[levelNum];
             }
+            else if (ApplicationModel.Mode == GameMode.ChainBattle)
+            {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                Debug.Log($"[BattleSceneHelper] Getting ChainBattle trash talk for level {levelNum}");
+#endif
+                levelTrashTalkData = StaticData.GetChainBattleTrashTalk(ApplicationModel.SelectedChainBattle);
+            }
             else
             {
 #if UNITY_EDITOR || DEVELOPMENT_BUILD

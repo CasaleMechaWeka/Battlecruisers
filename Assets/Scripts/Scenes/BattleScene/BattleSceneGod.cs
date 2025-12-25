@@ -18,6 +18,7 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
@@ -145,6 +146,17 @@ namespace BattleCruisers.Scenes.BattleScene
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(components.Deferrer, navigationPermitters);
+
+            // ChainBattle setup
+            if (ApplicationModel.Mode == GameMode.ChainBattle)
+            {
+                var chainBattleConfig = ApplicationModel.SelectedChainBattle;
+                if (chainBattleConfig != null)
+                {
+                    SetupChainBattle(chainBattleConfig);
+                }
+            }
+
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -206,6 +218,23 @@ namespace BattleCruisers.Scenes.BattleScene
                 currentSideQuest = helper.GetSideQuest();
                 enemyName = await helper.GetEnemyNameAsync(currentSideQuest.SideLevelNum);
                 aiCaptainExoPrefab = PrefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
+            }
+            else if (ApplicationModel.Mode == GameMode.ChainBattle)
+            {
+                // For ChainBattles, create a synthetic level with ChainBattle-specific data from config
+                var chainBattleConfig = ApplicationModel.SelectedChainBattle;
+                // Create a disabled heckle config (no automatic heckling in scripted battles)
+                var disabledHeckleConfig = new HeckleConfig { enableHeckles = false };
+                currentLevel = new Level(
+                    chainBattleConfig.levelNumber,
+                    chainBattleConfig.captainExoKey, // Captain from config (same throughout all phases)
+                    chainBattleConfig.musicKeys, // Music from config
+                    chainBattleConfig.skyMaterialName, // Sky from config
+                    chainBattleConfig.captainExoKey, // Captain (duplicate for Level constructor)
+                    disabledHeckleConfig // No automatic heckling
+                );
+                enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
+                aiCaptainExoPrefab = PrefabFactory.GetCaptainExo(currentLevel.Captains);
             }
             else
             {
@@ -556,6 +585,10 @@ namespace BattleCruisers.Scenes.BattleScene
                 case GameMode.SideQuest:
                     return new SideQuestHelper(deferrer);
 
+                case GameMode.ChainBattle:
+                    // ChainBattle uses regular Campaign helper but with ChainBattle extensions
+                    return new NormalHelper(deferrer);
+
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {ApplicationModel.Mode}");
             }
@@ -637,6 +670,44 @@ namespace BattleCruisers.Scenes.BattleScene
             {
                 Debug.Log(ex);
             }
+        }
+
+        // ChainBattle setup method
+        private void SetupChainBattle(ChainBattleConfiguration config)
+        {
+            // Initialize ChainBattle manager
+            var chainBattleManager = gameObject.AddComponent<ChainBattleManager>();
+            chainBattleManager.SetConfiguration(config);
+
+            // Pass cruiser references to ChainBattleManager
+            chainBattleManager.InitializeCruisers(playerCruiser, aiCruiser);
+
+            // Initialize dialog system
+            var heckleManager = gameObject.AddComponent<ExtendedNPCHeckleManager>();
+            if (enemyHeckleMessage != null)
+            {
+                // Use customChats if available, otherwise fall back to dialogKeys for legacy support
+                var chats = new List<ChainBattleChat>();
+                if (config.customChats != null && config.customChats.Count > 0)
+                {
+                    chats.AddRange(config.customChats);
+                }
+                else if (config.dialogKeys != null && config.dialogKeys.Count > 0)
+                {
+                    // Legacy support: convert dialog keys to chat objects
+                    foreach (var key in config.dialogKeys)
+                    {
+                        chats.Add(new ChainBattleChat {
+                            chatKey = key,
+                            speaker = ChainBattleChat.SpeakerType.EnemyCaptain,
+                            displayDuration = 4f
+                        });
+                    }
+                }
+                heckleManager.Initialize(enemyHeckleMessage, chats);
+            }
+
+            Debug.Log($"ChainBattle initialized: {LocTableCache.StoryTable.GetString(config.levelNameKey)} with {config.cruiserPhases.Count} phases");
         }
     }
 }

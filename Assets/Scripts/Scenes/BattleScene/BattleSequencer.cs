@@ -256,6 +256,7 @@ namespace BattleCruisers.Scenes.BattleScene
             public Vector2 Postion;
             public Vector2 SpawnArea;
             [Min(1)] public byte Amount = 1;
+            public PrefabKeyName RequiredFactory; // Factory building required for this unit (e.g., AirFactory for aircraft)
 
             public override string ToString()
             {

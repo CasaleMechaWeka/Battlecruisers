@@ -46,7 +46,25 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _screensSceneGod = screensSceneGod;
 
             levelNumberText.text = level.Num.ToString();
+
+            // For ChainBattle levels, use the ChainBattle name instead of enemy name
+            var chainBattle = StaticData.GetChainBattle(level.Num);
+            if (chainBattle != null)
+            {
+                // For Fei ChainBattle level 32, use fallback text since localization key doesn't exist
+                if (level.Num == 32 && chainBattle.levelNameKey.Contains("FEI"))
+                {
+                    levelNameText.text = "Stealth Raptor - Fei";
+                }
+                else
+                {
+                    levelNameText.text = LocTableCache.StoryTable.GetString(chainBattle.levelNameKey);
+                }
+            }
+            else
+            {
             levelNameText.text = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
+            }
             captainImage.sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
             
             // Set the hull image and sky image for this level
@@ -82,8 +100,24 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
+
+            // Check if this is a ChainBattle level
+            var chainBattle = StaticData.GetChainBattle(_level.Num);
+            if (chainBattle != null)
+            {
+                // This is a ChainBattle level - use integrated BattleScene approach
+                ApplicationModel.Mode = GameMode.ChainBattle;
+                ApplicationModel.SelectedLevel = chainBattle.levelNumber;
+                ApplicationModel.SelectedChainBattle = chainBattle;
+
+                // Continue with normal battle loading flow (BattleSceneGod will handle ChainBattle setup)
+            }
+            else
+            {
+                // Regular campaign level
             ApplicationModel.Mode = GameMode.Campaign;
             _screensSceneGod.GoToTrashScreen(_level.Num);
+            }
         }
 
         protected override void ShowDisabledState()

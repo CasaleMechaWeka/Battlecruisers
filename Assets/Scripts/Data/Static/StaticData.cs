@@ -12,6 +12,7 @@ using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,6 +23,7 @@ using UnityEngine;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Data.Static
 {
@@ -321,19 +323,54 @@ namespace BattleCruisers.Data.Static
             new Level(28, Hulls.BlackRig, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(28), GetDefaultHeckleConfig()),
             new Level(29, Hulls.Rickshaw, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(29), GetDefaultHeckleConfig()),
             new Level(30, Hulls.Yeti, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(30), GetDefaultHeckleConfig()),
-            new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31), GetDefaultHeckleConfig()), //HUNTRESS PRIME
-
-                // Set 9:  Secret Levels
-            new Level(32, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(32), GetDefaultHeckleConfig()),
-            new Level(33, Hulls.Raptor, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(33), GetDefaultHeckleConfig()),
-            new Level(34, Hulls.Bullshark, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(34), GetDefaultHeckleConfig()),
-            new Level(35, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(35), GetDefaultHeckleConfig()),
-            new Level(36, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(36), GetDefaultHeckleConfig()),
-            new Level(37, Hulls.Hammerhead, BackgroundMusic.Sleeper, SkyMaterials.Midday, Exos.GetCaptainExoKey(37), GetDefaultHeckleConfig()),
-            new Level(38, Hulls.Longbow, BackgroundMusic.Nothing, SkyMaterials.Morning, Exos.GetCaptainExoKey(38), GetDefaultHeckleConfig()),
-            new Level(39, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(39), GetDefaultHeckleConfig()),
-            new Level(40, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(40), GetDefaultHeckleConfig()) //TODO: Change to new boss broadsword
+            new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31), GetDefaultHeckleConfig()) //HUNTRESS PRIME - END OF MAIN CAMPAIGN
         });
+
+        private static List<ChainBattleConfiguration> _chainBattles;
+        public static ReadOnlyCollection<ChainBattleConfiguration> ChainBattles
+        {
+            get
+            {
+                if (_chainBattles == null)
+                {
+                    _chainBattles = Resources.LoadAll<ChainBattleConfiguration>("ChainBattles").ToList();
+                }
+                return new ReadOnlyCollection<ChainBattleConfiguration>(_chainBattles);
+            }
+        }
+
+        public static ChainBattleConfiguration GetChainBattle(int levelNumber)
+        {
+            return ChainBattles.FirstOrDefault(cb => cb.levelNumber == levelNumber);
+        }
+
+        public static Loot GetChainBattleLoot(int chainBattleLevelNumber)
+        {
+            // ChainBattle loot is calculated the same way as regular level loot
+            // but we use a special level number mapping for ChainBattles
+            int effectiveLevelForLoot = chainBattleLevelNumber + ChainBattles.Count - 1;
+
+            Assert.IsTrue(effectiveLevelForLoot >= MIN_AVAILABILITY_LEVEL_NUM);
+            Assert.IsTrue(effectiveLevelForLoot <= Levels.Count + ChainBattles.Count);
+
+            return
+                new Loot(
+                    hullKeys: GetHullsUnlockedInLevel(effectiveLevelForLoot),
+                    unitKeys: GetUnitsUnlockedInLevel(effectiveLevelForLoot),
+                    buildingKeys: GetBuildingsUnlockedInLevel(effectiveLevelForLoot));
+        }
+
+
+        public static TrashTalkData GetChainBattleTrashTalk(ChainBattleConfiguration chainBattleConfig)
+        {
+            // For ChainBattles, use the configuration to determine who talks first
+            return new TrashTalkData(
+                chainBattleConfig.levelNumber, // levelNumber
+                0, // exoId (default captain)
+                chainBattleConfig.playerTalksFirst, // playerTalksFirst from config
+                "level" // stringKeyBasePrefix - use same format as regular levels
+            );
+        }
 
         public static ReadOnlyCollection<BackgroundImageStats> LevelBackgrounds = new ReadOnlyCollection<BackgroundImageStats>(new List<BackgroundImageStats>()
         {
@@ -448,17 +485,7 @@ namespace BattleCruisers.Data.Static
             new TrashTalkData(28, 28, false, "level"),
             new TrashTalkData(29, 29, true,  "level"),
             new TrashTalkData(30, 30, false, "level"),
-            new TrashTalkData(31, 31, false, "level"),
-
-            new TrashTalkData(0,  32, false, "sideQuest"),
-            new TrashTalkData(1,  33, false, "sideQuest"),
-            new TrashTalkData(2,  34, false, "sideQuest"),
-            new TrashTalkData(3,  35, true,  "sideQuest"),
-            new TrashTalkData(4,  36, false, "sideQuest"),
-            new TrashTalkData(5,  37, true,  "sideQuest"),
-            new TrashTalkData(6,  38, false, "sideQuest"),
-            new TrashTalkData(7,  39, false, "sideQuest"),
-            new TrashTalkData(8,  40, false, "sideQuest"),
+            new TrashTalkData(31, 31, false, "level") // END OF MAIN CAMPAIGN
         });
 
         public static ReadOnlyCollection<TrashTalkData> SideQuestTrashTalk = new ReadOnlyCollection<TrashTalkData>(new List<TrashTalkData>()

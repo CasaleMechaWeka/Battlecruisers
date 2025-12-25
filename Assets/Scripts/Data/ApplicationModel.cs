@@ -1,4 +1,6 @@
-﻿namespace BattleCruisers.Data
+﻿using BattleCruisers.Data;
+
+namespace BattleCruisers.Data
 {
     public enum GameMode
     {
@@ -7,7 +9,8 @@
         Skirmish = 3,
         PvP_1VS1 = 4,
         CoinBattle = 5,
-        SideQuest = 6
+        SideQuest = 6,
+        ChainBattle = 7
 
         //Voyage = 5
     }
@@ -48,6 +51,7 @@
         public static GameMode Mode { get; set; } = GameMode.Campaign;
         public static bool IsTutorial => Mode == GameMode.Tutorial;
         public static bool UserWonSkirmish { get; set; }
+        public static ChainBattleConfiguration SelectedChainBattle { get; set; }
 
         public static void Initialise()
         {
