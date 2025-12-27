@@ -202,9 +202,9 @@ namespace BattleCruisers.Data.Static
         });
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
-        public const int NUM_OF_LEVELS = 31;
+        public const int NUM_OF_LEVELS = 40;
         public const int NUM_OF_PvPLEVELS = 9;
-        public const int NUM_OF_STANDARD_LEVELS = 31;
+        public const int NUM_OF_STANDARD_LEVELS = 40;
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
         public const int NUM_OF_SIDEQUESTS = 31;
 
@@ -323,7 +323,18 @@ namespace BattleCruisers.Data.Static
             new Level(28, Hulls.BlackRig, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(28), GetDefaultHeckleConfig()),
             new Level(29, Hulls.Rickshaw, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(29), GetDefaultHeckleConfig()),
             new Level(30, Hulls.Yeti, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(30), GetDefaultHeckleConfig()),
-            new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31), GetDefaultHeckleConfig()) //HUNTRESS PRIME - END OF MAIN CAMPAIGN
+            new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31), GetDefaultHeckleConfig()), //HUNTRESS PRIME - END OF MAIN CAMPAIGN
+
+            // Set 9: ChainBattle Levels (32-40)
+            new Level(32, Hulls.Raptor, BackgroundMusic.Fortress, SkyMaterials.Purple, Exos.GetCaptainExoKey(1), GetDefaultHeckleConfig()),  // Fei ChainBattle
+            new Level(33, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Midnight, Exos.GetCaptainExoKey(3), GetDefaultHeckleConfig()),
+            new Level(34, Hulls.Rockjaw, BackgroundMusic.Juggernaut, SkyMaterials.Morning, Exos.GetCaptainExoKey(4), GetDefaultHeckleConfig()),
+            new Level(35, Hulls.Eagle, BackgroundMusic.Confusion, SkyMaterials.Dusk, Exos.GetCaptainExoKey(5), GetDefaultHeckleConfig()),
+            new Level(36, Hulls.Hammerhead, BackgroundMusic.Experimental, SkyMaterials.Cold, Exos.GetCaptainExoKey(6), GetDefaultHeckleConfig()),
+            new Level(37, Hulls.Longbow, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(7), GetDefaultHeckleConfig()),
+            new Level(38, Hulls.Megalodon, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(8), GetDefaultHeckleConfig()),
+            new Level(39, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Purple, Exos.GetCaptainExoKey(9), GetDefaultHeckleConfig()),
+            new Level(40, Hulls.Yeti, BackgroundMusic.Fortress, SkyMaterials.Midnight, Exos.GetCaptainExoKey(10), GetDefaultHeckleConfig())
         });
 
         private static List<ChainBattleConfiguration> _chainBattles;
@@ -363,12 +374,11 @@ namespace BattleCruisers.Data.Static
 
         public static TrashTalkData GetChainBattleTrashTalk(ChainBattleConfiguration chainBattleConfig)
         {
-            // For ChainBattles, use the configuration to determine who talks first
             return new TrashTalkData(
-                chainBattleConfig.levelNumber, // levelNumber
-                0, // exoId (default captain)
-                chainBattleConfig.playerTalksFirst, // playerTalksFirst from config
-                "level" // stringKeyBasePrefix - use same format as regular levels
+                chainBattleConfig.levelNumber,
+                chainBattleConfig.captainExoId,  // Use config value instead of hardcoded 0
+                chainBattleConfig.playerTalksFirst,
+                "chainBattle"  // Use chainBattle prefix for localization
             );
         }
 
@@ -414,6 +424,17 @@ namespace BattleCruisers.Data.Static
             new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "NuclearDome",      new Color(0.745283f,   0.5127987f,  0.3831879f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.01960784f, 0.01176471f, 0.01176471f),            false, 10),
             new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  420),  660,  730,  "MercenaryOne",     new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
+
+            // Backgrounds for levels 32-40 (ChainBattle levels)
+            new BackgroundImageStats(160, new Vector2(0,  500),  655,  740,  "Wreckyards",       new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Oz",               new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "FightClub",        new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
+            new BackgroundImageStats(140, new Vector2(0,  420),  640,  730,  "UACBattleNight",   new Color(0.1501869f,   0.1964908f,  0.2358491f),             false, 10),
+            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "NuclearDome",      new Color(0.745283f,    0.5127987f,  0.3831879f),             false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  420),  660,  730,  "MercenaryOne",     new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
         });
@@ -485,7 +506,18 @@ namespace BattleCruisers.Data.Static
             new TrashTalkData(28, 28, false, "level"),
             new TrashTalkData(29, 29, true,  "level"),
             new TrashTalkData(30, 30, false, "level"),
-            new TrashTalkData(31, 31, false, "level") // END OF MAIN CAMPAIGN
+            new TrashTalkData(31, 31, false, "level"), // END OF MAIN CAMPAIGN
+
+            // ChainBattle levels 32-40
+            new TrashTalkData(32, 1,  false, "level"),  // Fei
+            new TrashTalkData(33, 3,  false, "level"),
+            new TrashTalkData(34, 4,  true,  "level"),
+            new TrashTalkData(35, 5,  false, "level"),
+            new TrashTalkData(36, 6,  true,  "level"),
+            new TrashTalkData(37, 7,  false, "level"),
+            new TrashTalkData(38, 8,  false, "level"),
+            new TrashTalkData(39, 9,  true,  "level"),
+            new TrashTalkData(40, 10, false, "level")
         });
 
         public static ReadOnlyCollection<TrashTalkData> SideQuestTrashTalk = new ReadOnlyCollection<TrashTalkData>(new List<TrashTalkData>()

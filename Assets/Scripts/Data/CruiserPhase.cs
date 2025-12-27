@@ -11,8 +11,9 @@ namespace BattleCruisers.Data
     public class CruiserPhase
     {
         [Header("Cruiser Configuration")]
-        public IPrefabKey hullKey;
-        public BodykitData[] bodykits;
+        public HullKey hullKey;
+        [Tooltip("Bodykit index (0 = none, 1+ = specific bodykit). Only one bodykit can be assigned per hull.")]
+        public int bodykitIndex = 0; // 0 = none, 1+ = bodykit index from StaticData.Bodykits
         public bool isFinalPhase = false; // If true, battle ends when this phase is defeated
 
         [Header("Visual & Animation")]

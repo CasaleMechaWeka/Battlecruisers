@@ -105,19 +105,16 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             var chainBattle = StaticData.GetChainBattle(_level.Num);
             if (chainBattle != null)
             {
-                // This is a ChainBattle level - use integrated BattleScene approach
                 ApplicationModel.Mode = GameMode.ChainBattle;
                 ApplicationModel.SelectedLevel = chainBattle.levelNumber;
                 ApplicationModel.SelectedChainBattle = chainBattle;
-
-                // Continue with normal battle loading flow (BattleSceneGod will handle ChainBattle setup)
             }
             else
             {
-                // Regular campaign level
-            ApplicationModel.Mode = GameMode.Campaign;
-            _screensSceneGod.GoToTrashScreen(_level.Num);
+                ApplicationModel.Mode = GameMode.Campaign;
             }
+            // Always navigate to trash screen
+            _screensSceneGod.GoToTrashScreen(_level.Num);
         }
 
         protected override void ShowDisabledState()

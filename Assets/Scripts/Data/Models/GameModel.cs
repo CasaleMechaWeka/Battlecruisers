@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
@@ -453,11 +454,10 @@ namespace BattleCruisers.Data.Models
 
         public void RemoveCompletedLevel(int levelNum)
         {
-            Assert.IsTrue(levelNum > 0 && levelNum <= _completedLevels.Count, "Level number out of valid range");
-
-            if (levelNum <= _completedLevels.Count)
+            var levelToRemove = _completedLevels.FirstOrDefault(cl => cl.LevelNum == levelNum);
+            if (levelToRemove != null)
             {
-                _completedLevels.RemoveAt(levelNum - 1);
+                _completedLevels.Remove(levelToRemove);
             }
         }
 

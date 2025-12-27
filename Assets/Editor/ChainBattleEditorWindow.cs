@@ -95,7 +95,7 @@ public class ChainBattleEditorWindow : EditorWindow
             currentConfig.levelNumber = GetNextAvailableLevelNumber();
             currentConfig.musicKeys = GetMusicFromIndex(1); // Default to Bobby
             currentConfig.skyMaterialName = SkyMaterials.Dusk; // Default sky
-            currentConfig.captainExoKey = GetCaptainFromIndex(1); // Default captain
+            currentConfig.captainExoId = 1; // Default captain (Fei)
             currentConfig.cruiserPhases = new List<CruiserPhase> { new CruiserPhase() };
             currentConfig.conditionalActions = new List<ConditionalAction>();
         }
@@ -141,11 +141,11 @@ public class ChainBattleEditorWindow : EditorWindow
             // Captain selection
             EditorGUILayout.LabelField("Captain", EditorStyles.boldLabel);
             string[] captainOptions = GetCaptainOptions();
-            int captainIndex = GetCaptainIndex(currentConfig.captainExoKey as CaptainExoKey);
+            int captainIndex = currentConfig.captainExoId;
             int newCaptainIndex = EditorGUILayout.Popup("Captain Exo", captainIndex, captainOptions);
             if (newCaptainIndex != captainIndex)
             {
-                currentConfig.captainExoKey = GetCaptainFromIndex(newCaptainIndex);
+                currentConfig.captainExoId = newCaptainIndex;
                 EditorUtility.SetDirty(currentConfig);
             }
             EditorGUILayout.HelpBox("Captain remains the same throughout all phases. Level Name Key should match the captain name.", MessageType.Info);
@@ -310,6 +310,10 @@ public class ChainBattleEditorWindow : EditorWindow
             if (newHullIndex != hullIndex)
             {
                 currentPhase.hullKey = GetHullFromIndex(newHullIndex);
+                // Clear bodykit when hull changes (old bodykit may not be compatible)
+                currentPhase.bodykitIndex = 0;
+                // Reassign phase to list to ensure Unity detects the change
+                currentConfig.cruiserPhases[phaseIndex] = currentPhase;
                 EditorUtility.SetDirty(currentConfig);
             }
 
@@ -318,38 +322,48 @@ public class ChainBattleEditorWindow : EditorWindow
 
             // Bodykit selection (single selection with None default)
             EditorGUILayout.LabelField("Bodykit", EditorStyles.miniBoldLabel);
-            EditorGUILayout.HelpBox("Select one bodykit for this phase cruiser (optional cosmetic upgrade).", MessageType.Info);
-
-            // Get compatible bodykits for selected hull
-            var compatibleBodykits = GetCompatibleBodykits(currentPhase.hullKey as HullKey);
-            var bodykitOptions = new List<string> { "None (Default)" };
-            bodykitOptions.AddRange(compatibleBodykits.Select(b => $"{LocTableCache.CommonTable.GetString(b.NameStringKeyBase)} (ID: {b.Index})"));
-
-            int currentBodykitIndex = 0; // Default to None
-            if (currentPhase.bodykits != null && currentPhase.bodykits.Length > 0)
+            
+            if (currentPhase.hullKey == null)
             {
-                var selectedBodykit = currentPhase.bodykits[0];
-                var bodykitIndex = compatibleBodykits.FindIndex(b => b.Index == selectedBodykit.Index);
-                if (bodykitIndex >= 0)
-                {
-                    currentBodykitIndex = bodykitIndex + 1; // +1 because "None" is at index 0
-                }
+                EditorGUILayout.HelpBox("Please select a hull first to see compatible bodykits.", MessageType.Warning);
             }
-
-            int newBodykitIndex = EditorGUILayout.Popup("Bodykit", currentBodykitIndex, bodykitOptions.ToArray());
-            if (newBodykitIndex != currentBodykitIndex)
+            else
             {
-                if (newBodykitIndex == 0)
+                EditorGUILayout.HelpBox("Select one bodykit for this phase cruiser (optional cosmetic upgrade). Only bodykits compatible with the selected hull are shown.", MessageType.Info);
+
+                // Get compatible bodykits for selected hull
+                var compatibleBodykits = GetCompatibleBodykits(currentPhase.hullKey as HullKey);
+                var bodykitOptions = new List<string> { "None (Default)" };
+                bodykitOptions.AddRange(compatibleBodykits.Select(b => $"{LocTableCache.CommonTable.GetString(b.NameStringKeyBase)} (ID: {b.Index})"));
+
+                // Find current selection in popup (0 = None, 1+ = compatible bodykit index)
+                int currentPopupIndex = 0; // Default to None
+                if (currentPhase.bodykitIndex > 0)
                 {
-                    // None selected
-                    currentPhase.bodykits = new BodykitData[0];
+                    var bodykitIndexInList = compatibleBodykits.FindIndex(b => b.Index == currentPhase.bodykitIndex);
+                    if (bodykitIndexInList >= 0)
+                    {
+                        currentPopupIndex = bodykitIndexInList + 1; // +1 because "None" is at index 0
+                    }
                 }
-                else
+
+                int newPopupIndex = EditorGUILayout.Popup("Bodykit", currentPopupIndex, bodykitOptions.ToArray());
+                if (newPopupIndex != currentPopupIndex)
                 {
-                    // Specific bodykit selected
-                    currentPhase.bodykits = new BodykitData[] { compatibleBodykits[newBodykitIndex - 1] };
+                    if (newPopupIndex == 0)
+                    {
+                        // None selected
+                        currentPhase.bodykitIndex = 0;
+                    }
+                    else
+                    {
+                        // Specific bodykit selected - store the bodykit's Index
+                        currentPhase.bodykitIndex = compatibleBodykits[newPopupIndex - 1].Index;
+                    }
+                    // Reassign phase to list to ensure Unity detects the change
+                    currentConfig.cruiserPhases[phaseIndex] = currentPhase;
+                    EditorUtility.SetDirty(currentConfig);
                 }
-                EditorUtility.SetDirty(currentConfig);
             }
 
             currentPhase.isFinalPhase = EditorGUILayout.Toggle("Is Final Phase", currentPhase.isFinalPhase);
@@ -983,7 +997,7 @@ public class ChainBattleEditorWindow : EditorWindow
             if (string.IsNullOrEmpty(currentConfig.skyMaterialName))
                 errors.Add("• Sky material is required.");
             
-            if (currentConfig.captainExoKey == null)
+            if (currentConfig.captainExoId <= 0 || currentConfig.captainExoId > 50)
                 errors.Add("• Captain exoskeleton is required (applies to all phases).");
 
             // Check phases
@@ -1417,13 +1431,13 @@ public class ChainBattleEditorWindow : EditorWindow
         // Set music, sky, and captain (Fei)
         currentConfig.musicKeys = SoundKeys.Music.Background.Fortress; // Boss music
         currentConfig.skyMaterialName = SkyMaterials.Purple; // BG with other cruisers closing in
-        currentConfig.captainExoKey = StaticPrefabKeys.CaptainExos.GetCaptainExoKey(1); // Fei (captain 1)
+        currentConfig.captainExoId = 1; // Fei (captain 1)
 
         // Create Phase 1: Stealth Raptor - Fei introduction
         CruiserPhase phase1 = new CruiserPhase
         {
             hullKey = StaticPrefabKeys.Hulls.Raptor,
-            bodykits = new BodykitData[0], // Will be selected via filtered UI
+            bodykitIndex = 0, // Will be selected via filtered UI (0 = none)
             isFinalPhase = false,
             entryAnimationDuration = 10,
             phaseStartChats = new List<ChainBattleChat>
@@ -1469,7 +1483,7 @@ public class ChainBattleEditorWindow : EditorWindow
         CruiserPhase phase2 = new CruiserPhase
         {
             hullKey = StaticPrefabKeys.Hulls.Hammerhead,
-            bodykits = new BodykitData[0], // Will be selected via filtered UI
+            bodykitIndex = 0, // Will be selected via filtered UI (0 = none)
             isFinalPhase = false,
             entryAnimationDuration = 8,
             phaseStartChats = new List<ChainBattleChat>
@@ -1520,7 +1534,7 @@ public class ChainBattleEditorWindow : EditorWindow
         CruiserPhase phase3 = new CruiserPhase
         {
             hullKey = StaticPrefabKeys.Hulls.Megalodon,
-            bodykits = new BodykitData[0], // Will be selected via filtered UI
+            bodykitIndex = 0, // Will be selected via filtered UI (0 = none)
             isFinalPhase = true,
             entryAnimationDuration = 6,
             phaseStartChats = new List<ChainBattleChat>

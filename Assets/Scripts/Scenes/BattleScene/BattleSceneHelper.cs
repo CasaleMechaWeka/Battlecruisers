@@ -57,6 +57,19 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual Level GetLevel()
         {
+            if (ApplicationModel.Mode == GameMode.ChainBattle && ApplicationModel.SelectedChainBattle != null)
+            {
+                var config = ApplicationModel.SelectedChainBattle;
+                // Create a synthetic Level from ChainBattle config
+                return new Level(
+                    config.levelNumber,
+                    config.cruiserPhases[0].hullKey,  // First phase hull
+                    config.musicKeys,
+                    config.skyMaterialName,
+                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(config.captainExoId),
+                    new HeckleConfig { enableHeckles = true, maxHeckles = 3 }
+                );
+            }
             return StaticData.Levels[ApplicationModel.SelectedLevel - 1];
         }
 
@@ -108,10 +121,16 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public virtual IPrefabKey GetAiCruiserKey()
         {
-            if (ApplicationModel.Mode == GameMode.SideQuest)
+            if (ApplicationModel.Mode == GameMode.ChainBattle && ApplicationModel.SelectedChainBattle != null)
+            {
+                var config = ApplicationModel.SelectedChainBattle;
+                if (config.cruiserPhases.Count > 0)
+                    return config.cruiserPhases[0].hullKey;
+            }
+            else if (ApplicationModel.Mode == GameMode.SideQuest)
                 return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
-            else
-                return StaticData.Levels[ApplicationModel.SelectedLevel - 1].Hull;
+
+            return StaticData.Levels[ApplicationModel.SelectedLevel - 1].Hull;
         }
     }
 }

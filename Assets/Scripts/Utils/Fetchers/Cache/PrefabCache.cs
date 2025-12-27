@@ -34,9 +34,28 @@ namespace BattleCruisers.Utils.Fetchers.Cache
         private static MultiCache<VariantPrefab> _variants;
         private static MultiCache<Prefab> _projectiles;
 
-        public static BuildableWrapper<IBuilding> GetBuilding(IPrefabKey key) => _buildings.GetPrefab(key);
-        public static BuildableWrapper<IUnit> GetUnit(IPrefabKey key) => _units.GetPrefab(key);
-        public static Cruiser GetCruiser(IPrefabKey key) => _cruisers.GetPrefab(key);
+        public static bool IsInitialized => _units != null && _buildings != null && _cruisers != null;
+
+        public static BuildableWrapper<IBuilding> GetBuilding(IPrefabKey key)
+        {
+            if (_buildings == null)
+                throw new System.InvalidOperationException("PrefabCache has not been initialized. Call PrefabCache.CreatePrefabCacheAsync() first and await it.");
+            return _buildings.GetPrefab(key);
+        }
+        
+        public static BuildableWrapper<IUnit> GetUnit(IPrefabKey key)
+        {
+            if (_units == null)
+                throw new System.InvalidOperationException("PrefabCache has not been initialized. Call PrefabCache.CreatePrefabCacheAsync() first and await it.");
+            return _units.GetPrefab(key);
+        }
+        
+        public static Cruiser GetCruiser(IPrefabKey key)
+        {
+            if (_cruisers == null)
+                throw new System.InvalidOperationException("PrefabCache has not been initialized. Call PrefabCache.CreatePrefabCacheAsync() first and await it.");
+            return _cruisers.GetPrefab(key);
+        }
         public static ExplosionController GetExplosion(IPrefabKey key) => _explosions.GetPrefab(key);
         public static ShipDeathInitialiser GetShipDeath(IPrefabKey key) => _shipDeaths.GetPrefab(key);
         public static CaptainExo GetCaptainExo(IPrefabKey key) => _captains.GetPrefab(key);

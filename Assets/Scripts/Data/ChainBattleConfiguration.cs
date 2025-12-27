@@ -21,7 +21,7 @@ namespace BattleCruisers.Data
         [Header("Battle Settings")]
         public SoundKeyPair musicKeys; // Music tracks for this ChainBattle
         public string skyMaterialName; // Sky material name
-        public IPrefabKey captainExoKey; // Captain exoskeleton (same throughout all phases)
+        [Range(0, 50)] public int captainExoId = 1; // Captain exoskeleton ID (same throughout all phases)
 
         [Header("Battle Structure")]
         public List<CruiserPhase> cruiserPhases = new List<CruiserPhase>();
@@ -50,7 +50,7 @@ namespace BattleCruisers.Data
     public class ConditionalAction
     {
         [Header("Trigger")]
-        public IPrefabKey playerBuildingTrigger; // Player building prefab to watch for
+        public BuildingKey playerBuildingTrigger; // Player building prefab to watch for
         
         [Header("Response")]
         public float delayAfterTrigger; // Wait time in seconds before executing response
@@ -66,7 +66,7 @@ namespace BattleCruisers.Data
     public class SlotReplacementAction
     {
         public byte slotID; // Slot index to modify
-        public IPrefabKey replacementPrefab; // Building prefab to place in slot (null = just destroy)
+        public BuildingKey replacementPrefab; // Building prefab to place in slot (null = just destroy)
         public bool ignoreDroneReq = false;
         public bool ignoreBuildTime = false;
     }

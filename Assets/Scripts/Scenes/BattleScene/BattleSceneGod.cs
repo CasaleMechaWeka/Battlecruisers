@@ -27,6 +27,7 @@ using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -165,6 +166,14 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
+            
+            // Ensure PrefabCache is initialized before creating pools
+            if (!PrefabCache.IsInitialized)
+            {
+                Debug.LogWarning("PrefabCache not initialized yet, initializing now...");
+                await PrefabCache.CreatePrefabCacheAsync();
+            }
+            
             FactoryProvider.Initialise(components, DataProvider.SettingsManager);
             PrefabFactory.CreatePools();
             CruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
@@ -227,10 +236,10 @@ namespace BattleCruisers.Scenes.BattleScene
                 var disabledHeckleConfig = new HeckleConfig { enableHeckles = false };
                 currentLevel = new Level(
                     chainBattleConfig.levelNumber,
-                    chainBattleConfig.captainExoKey, // Captain from config (same throughout all phases)
+                    chainBattleConfig.cruiserPhases[0].hullKey, // First phase hull
                     chainBattleConfig.musicKeys, // Music from config
                     chainBattleConfig.skyMaterialName, // Sky from config
-                    chainBattleConfig.captainExoKey, // Captain (duplicate for Level constructor)
+                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(chainBattleConfig.captainExoId), // Captain from config
                     disabledHeckleConfig // No automatic heckling
                 );
                 enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
