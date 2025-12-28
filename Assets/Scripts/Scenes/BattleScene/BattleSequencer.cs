@@ -26,6 +26,13 @@ namespace BattleCruisers.Scenes.BattleScene
         public SequencePoint[] sequencePoints;  // -> this is currently assigned in BattleScene!
         [Serializable] public class ScriptCallAction : UnityEvent { }
 
+        [Header("ChainBattle Phases")]
+        [Tooltip("Additional cruiser phases. Index 0 is the main AI cruiser, set via Cruisers[1]")]
+        public Cruiser[] AdditionalPhases;
+
+        private int _currentPhase = 0;
+        private bool _isChainBattle = false;
+
 #if UNITY_EDITOR
         // Optional: toggle if you sometimes want to assign other targets
         [SerializeField] bool autoBindEventTargetsToSelf = true;
@@ -65,6 +72,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public async void StartF()
         {
+            // Initialize ChainBattle phases if we have additional phases
+            if (AdditionalPhases != null && AdditionalPhases.Length > 0)
+            {
+                InitializeChainBattle();
+            }
+
             if (sequencePoints != null)
                 foreach (SequencePoint pt in sequencePoints)
                     await ProcessSequencePoint(pt);
@@ -195,7 +208,67 @@ namespace BattleCruisers.Scenes.BattleScene
             unit.NumOfDronesRequired = droneNum;
             unit.BuildTimeInS /= droneNum;
         }
-    }
+
+        /// <summary>
+        /// Call this to set up ChainBattle phase transitions.
+        /// The main aiCruiser is phase 0, AdditionalPhases are 1+
+        /// </summary>
+        public void InitializeChainBattle()
+        {
+            _isChainBattle = true;
+            _currentPhase = 0;
+
+            // Disable additional phases initially
+            if (AdditionalPhases != null)
+            {
+                foreach (var phase in AdditionalPhases)
+                {
+                    if (phase != null)
+                        phase.gameObject.SetActive(false);
+                }
+            }
+
+            Debug.Log($"[ChainBattle] Initialized with {AdditionalPhases?.Length ?? 0} phases");
+        }
+
+        /// <summary>
+        /// Called when the current AI cruiser is destroyed.
+        /// Advances to the next phase if available.
+        /// </summary>
+        public void OnCurrentPhaseDestroyed()
+        {
+            if (!_isChainBattle) return;
+
+            _currentPhase++;
+
+            if (AdditionalPhases == null || _currentPhase > AdditionalPhases.Length)
+            {
+                // No more phases - battle ends normally via existing GameEndMonitor
+                Debug.Log("[ChainBattle] Final phase defeated, victory!");
+                return;
+            }
+
+            // Activate next phase
+            Cruiser nextCruiser = AdditionalPhases[_currentPhase - 1];
+            if (nextCruiser != null)
+            {
+                nextCruiser.gameObject.SetActive(true);
+
+                // Update BattleSceneGod reference
+                if (BattleSceneGod.Instance != null)
+                {
+                    BattleSceneGod.Instance.aiCruiser = nextCruiser;
+                }
+
+                // Update Cruisers
+                if (Cruisers != null && Cruisers.Length > 1)
+                {
+                    Cruisers[1] = nextCruiser;
+                }
+
+                Debug.Log($"[ChainBattle] Phase {_currentPhase} activated: {nextCruiser.name}");
+            }
+        }
 
     [Serializable]
     public class SequencePoint
@@ -310,5 +383,8 @@ namespace BattleCruisers.Scenes.BattleScene
 
             return s;
         }
+
+
+    }
     }
 }

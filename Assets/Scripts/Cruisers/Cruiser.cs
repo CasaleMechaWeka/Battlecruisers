@@ -452,7 +452,8 @@ namespace BattleCruisers.Cruisers
         protected override void OnDestroyed()
         {
             base.OnDestroyed();
-            
+
+
             // Persist specified GameObjects in the scene after cruiser destruction
             if (persistentObjects != null && persistentObjects.Length > 0)
             {

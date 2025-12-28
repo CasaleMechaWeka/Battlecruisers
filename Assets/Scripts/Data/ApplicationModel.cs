@@ -9,10 +9,8 @@ namespace BattleCruisers.Data
         Skirmish = 3,
         PvP_1VS1 = 4,
         CoinBattle = 5,
-        SideQuest = 6,
-        ChainBattle = 7
-
-        //Voyage = 5
+        SideQuest = 6
+        // ChainBattle removed - it's just Campaign with a sequencer
     }
 
     public static class ApplicationModel
@@ -51,7 +49,6 @@ namespace BattleCruisers.Data
         public static GameMode Mode { get; set; } = GameMode.Campaign;
         public static bool IsTutorial => Mode == GameMode.Tutorial;
         public static bool UserWonSkirmish { get; set; }
-        public static ChainBattleConfiguration SelectedChainBattle { get; set; }
 
         public static void Initialise()
         {

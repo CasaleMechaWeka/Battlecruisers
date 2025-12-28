@@ -10,6 +10,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -54,22 +55,8 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         public abstract IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
 
-
         public virtual Level GetLevel()
         {
-            if (ApplicationModel.Mode == GameMode.ChainBattle && ApplicationModel.SelectedChainBattle != null)
-            {
-                var config = ApplicationModel.SelectedChainBattle;
-                // Create a synthetic Level from ChainBattle config
-                return new Level(
-                    config.levelNumber,
-                    config.cruiserPhases[0].hullKey,  // First phase hull
-                    config.musicKeys,
-                    config.skyMaterialName,
-                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(config.captainExoId),
-                    new HeckleConfig { enableHeckles = true, maxHeckles = 3 }
-                );
-            }
             return StaticData.Levels[ApplicationModel.SelectedLevel - 1];
         }
 
@@ -82,53 +69,24 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             TrashTalkData levelTrashTalkData;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {ApplicationModel.Mode}");
-#endif
-
             if (ApplicationModel.Mode == GameMode.SideQuest)
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log($"[BattleSceneHelper] Getting side quest trash talk for level {levelNum}");
-#endif
                 levelTrashTalkData = StaticData.SideQuestTrashTalk[levelNum];
-            }
-            else if (ApplicationModel.Mode == GameMode.ChainBattle)
-            {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log($"[BattleSceneHelper] Getting ChainBattle trash talk for level {levelNum}");
-#endif
-                levelTrashTalkData = StaticData.GetChainBattleTrashTalk(ApplicationModel.SelectedChainBattle);
             }
             else
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log($"[BattleSceneHelper] Getting campaign trash talk for level {levelNum}");
-#endif
                 levelTrashTalkData = StaticData.LevelTrashTalk[levelNum];
             }
-
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[BattleSceneHelper] Full trash talk data for {(ApplicationModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
-                     $"  Enemy Name:         {LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey)}\n" +
-                     $"  Player Text:        {LocTableCache.StoryTable.GetString(levelTrashTalkData.PlayerTextKey)}\n" +
-                     $"  Enemy Text:         {LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyTextKey)}\n" +
-                     $"  Player Talks First: {levelTrashTalkData.PlayerTalksFirst}\n");
-#endif
 
             return LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey);
         }
 
         public virtual IPrefabKey GetAiCruiserKey()
         {
-            if (ApplicationModel.Mode == GameMode.ChainBattle && ApplicationModel.SelectedChainBattle != null)
+            if (ApplicationModel.Mode == GameMode.SideQuest)
             {
-                var config = ApplicationModel.SelectedChainBattle;
-                if (config.cruiserPhases.Count > 0)
-                    return config.cruiserPhases[0].hullKey;
-            }
-            else if (ApplicationModel.Mode == GameMode.SideQuest)
                 return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
+            }
 
             return StaticData.Levels[ApplicationModel.SelectedLevel - 1].Hull;
         }

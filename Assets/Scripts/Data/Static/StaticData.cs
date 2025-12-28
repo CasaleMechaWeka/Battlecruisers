@@ -27,8 +27,10 @@ using BattleCruisers.Data;
 
 namespace BattleCruisers.Data.Static
 {
+    // Adjusted for ChainBattle logic v1.1
     public static class StaticData
     {
+        // Version: 1.1
         private static ReadOnlyDictionary<BuildingKey, int> _buildingToUnlockedLevel
         = new ReadOnlyDictionary<BuildingKey, int>(new Dictionary<BuildingKey, int>()
         {
@@ -209,6 +211,26 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_SIDEQUESTS = 31;
 
         /// <summary>
+        /// ChainBattle levels are 32-40. They use normal Level data but load a BattleSequencer prefab.
+        /// </summary>
+        public static bool IsChainBattleLevel(int levelNum)
+        {
+            return levelNum >= 32 && levelNum <= 40;
+        }
+
+        /// <summary>
+        /// Gets the BattleSequencer prefab path for a ChainBattle level.
+        /// Returns null if not a ChainBattle level.
+        /// </summary>
+        public static string GetChainBattleSequencerPath(int levelNum)
+        {
+            if (!IsChainBattleLevel(levelNum))
+                return null;
+
+            return $"ChainBattles/ChainBattle_{levelNum:D3}";
+        }
+
+        /// <summary>
         /// Maps captain IDs to their display names (without spaces or special characters) for sprite filenames.
         /// Format: Exoskeleton{ID:00}{Name}.png
         /// IMPORTANT: This must be initialized before Levels/LevelTrashTalk collections to avoid static initialization errors.
@@ -336,51 +358,6 @@ namespace BattleCruisers.Data.Static
             new Level(39, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Purple, Exos.GetCaptainExoKey(9), GetDefaultHeckleConfig()),
             new Level(40, Hulls.Yeti, BackgroundMusic.Fortress, SkyMaterials.Midnight, Exos.GetCaptainExoKey(10), GetDefaultHeckleConfig())
         });
-
-        private static List<ChainBattleConfiguration> _chainBattles;
-        public static ReadOnlyCollection<ChainBattleConfiguration> ChainBattles
-        {
-            get
-            {
-                if (_chainBattles == null)
-                {
-                    _chainBattles = Resources.LoadAll<ChainBattleConfiguration>("ChainBattles").ToList();
-                }
-                return new ReadOnlyCollection<ChainBattleConfiguration>(_chainBattles);
-            }
-        }
-
-        public static ChainBattleConfiguration GetChainBattle(int levelNumber)
-        {
-            return ChainBattles.FirstOrDefault(cb => cb.levelNumber == levelNumber);
-        }
-
-        public static Loot GetChainBattleLoot(int chainBattleLevelNumber)
-        {
-            // ChainBattle loot is calculated the same way as regular level loot
-            // but we use a special level number mapping for ChainBattles
-            int effectiveLevelForLoot = chainBattleLevelNumber + ChainBattles.Count - 1;
-
-            Assert.IsTrue(effectiveLevelForLoot >= MIN_AVAILABILITY_LEVEL_NUM);
-            Assert.IsTrue(effectiveLevelForLoot <= Levels.Count + ChainBattles.Count);
-
-            return
-                new Loot(
-                    hullKeys: GetHullsUnlockedInLevel(effectiveLevelForLoot),
-                    unitKeys: GetUnitsUnlockedInLevel(effectiveLevelForLoot),
-                    buildingKeys: GetBuildingsUnlockedInLevel(effectiveLevelForLoot));
-        }
-
-
-        public static TrashTalkData GetChainBattleTrashTalk(ChainBattleConfiguration chainBattleConfig)
-        {
-            return new TrashTalkData(
-                chainBattleConfig.levelNumber,
-                chainBattleConfig.captainExoId,  // Use config value instead of hardcoded 0
-                chainBattleConfig.playerTalksFirst,
-                "chainBattle"  // Use chainBattle prefix for localization
-            );
-        }
 
         public static ReadOnlyCollection<BackgroundImageStats> LevelBackgrounds = new ReadOnlyCollection<BackgroundImageStats>(new List<BackgroundImageStats>()
         {

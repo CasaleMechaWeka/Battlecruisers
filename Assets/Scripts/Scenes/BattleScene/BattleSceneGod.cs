@@ -46,6 +46,7 @@ using BattleCruisers.Cruisers.Construction;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 
+// Adjusted for ChainBattle logic v1.0
 // === Tag keys :D ===
 // FELIX    => Code todo
 // TEMP     => Temporary for testing
@@ -63,6 +64,7 @@ namespace BattleCruisers.Scenes.BattleScene
         // Hold references to avoid garbage collectio
         private TutorialHelper _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
+        private IBattleSceneHelper _battleSceneHelper;
         private BuildableButtonColourController _buildableButtonColourController;
         private CruiserDeathManager _cruiserDeathManager;
         private LifetimeManager _lifetimeManager;
@@ -83,6 +85,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject enemyCharacterImages;
         public Cruiser playerCruiser;
         public Cruiser aiCruiser;
+
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
         private CameraComponents cameraComponents;
@@ -147,16 +150,8 @@ namespace BattleCruisers.Scenes.BattleScene
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(components.Deferrer, navigationPermitters);
+            _battleSceneHelper = helper;
 
-            // ChainBattle setup
-            if (ApplicationModel.Mode == GameMode.ChainBattle)
-            {
-                var chainBattleConfig = ApplicationModel.SelectedChainBattle;
-                if (chainBattleConfig != null)
-                {
-                    SetupChainBattle(chainBattleConfig);
-                }
-            }
 
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
@@ -166,23 +161,26 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
-            
+
             // Ensure PrefabCache is initialized before creating pools
             if (!PrefabCache.IsInitialized)
             {
                 Debug.LogWarning("PrefabCache not initialized yet, initializing now...");
                 await PrefabCache.CreatePrefabCacheAsync();
             }
-            
+
             FactoryProvider.Initialise(components, DataProvider.SettingsManager);
             PrefabFactory.CreatePools();
             CruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
+
+            // Create AI cruiser (same for all campaign levels including ChainBattle)
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
             enemyCruiserSprite = aiCruiser.Sprite;
             enemyCruiserName = aiCruiser.Name;
+
 
             // Camera
             cameraComponents
@@ -227,23 +225,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 currentSideQuest = helper.GetSideQuest();
                 enemyName = await helper.GetEnemyNameAsync(currentSideQuest.SideLevelNum);
                 aiCaptainExoPrefab = PrefabFactory.GetCaptainExo(currentSideQuest.EnemyCaptainExo);
-            }
-            else if (ApplicationModel.Mode == GameMode.ChainBattle)
-            {
-                // For ChainBattles, create a synthetic level with ChainBattle-specific data from config
-                var chainBattleConfig = ApplicationModel.SelectedChainBattle;
-                // Create a disabled heckle config (no automatic heckling in scripted battles)
-                var disabledHeckleConfig = new HeckleConfig { enableHeckles = false };
-                currentLevel = new Level(
-                    chainBattleConfig.levelNumber,
-                    chainBattleConfig.cruiserPhases[0].hullKey, // First phase hull
-                    chainBattleConfig.musicKeys, // Music from config
-                    chainBattleConfig.skyMaterialName, // Sky from config
-                    StaticPrefabKeys.CaptainExos.GetCaptainExoKey(chainBattleConfig.captainExoId), // Captain from config
-                    disabledHeckleConfig // No automatic heckling
-                );
-                enemyName = await helper.GetEnemyNameAsync(currentLevel.Num);
-                aiCaptainExoPrefab = PrefabFactory.GetCaptainExo(currentLevel.Captains);
             }
             else
             {
@@ -549,6 +530,30 @@ namespace BattleCruisers.Scenes.BattleScene
                     battleSequencer.StartF();
                 }
             }
+
+            // Load ChainBattle sequencer if this is a ChainBattle level
+            if (ApplicationModel.Mode == GameMode.Campaign && StaticData.IsChainBattleLevel(ApplicationModel.SelectedLevel))
+            {
+                string sequencerPath = StaticData.GetChainBattleSequencerPath(ApplicationModel.SelectedLevel);
+                if (!string.IsNullOrEmpty(sequencerPath))
+                {
+                    string fullPath = SEQUENCER_PATH + sequencerPath + ".prefab";
+                    AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(fullPath);
+                    await handle.Task;
+
+                    if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
+                    {
+                        battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
+                        battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+                        battleSequencer.StartF();
+                        Debug.Log($"[ChainBattle] Loaded sequencer for level {ApplicationModel.SelectedLevel}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[ChainBattle] No sequencer found at {fullPath}, running as normal level");
+                    }
+                }
+            }
             /*
             string logName = "Battle_Begin";
             #if LOG_ANALYTICS
@@ -594,9 +599,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 case GameMode.SideQuest:
                     return new SideQuestHelper(deferrer);
 
-                case GameMode.ChainBattle:
-                    // ChainBattle uses regular Campaign helper but with ChainBattle extensions
-                    return new NormalHelper(deferrer);
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {ApplicationModel.Mode}");
@@ -681,42 +683,5 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
-        // ChainBattle setup method
-        private void SetupChainBattle(ChainBattleConfiguration config)
-        {
-            // Initialize ChainBattle manager
-            var chainBattleManager = gameObject.AddComponent<ChainBattleManager>();
-            chainBattleManager.SetConfiguration(config);
-
-            // Pass cruiser references to ChainBattleManager
-            chainBattleManager.InitializeCruisers(playerCruiser, aiCruiser);
-
-            // Initialize dialog system
-            var heckleManager = gameObject.AddComponent<ExtendedNPCHeckleManager>();
-            if (enemyHeckleMessage != null)
-            {
-                // Use customChats if available, otherwise fall back to dialogKeys for legacy support
-                var chats = new List<ChainBattleChat>();
-                if (config.customChats != null && config.customChats.Count > 0)
-                {
-                    chats.AddRange(config.customChats);
-                }
-                else if (config.dialogKeys != null && config.dialogKeys.Count > 0)
-                {
-                    // Legacy support: convert dialog keys to chat objects
-                    foreach (var key in config.dialogKeys)
-                    {
-                        chats.Add(new ChainBattleChat {
-                            chatKey = key,
-                            speaker = ChainBattleChat.SpeakerType.EnemyCaptain,
-                            displayDuration = 4f
-                        });
-                    }
-                }
-                heckleManager.Initialize(enemyHeckleMessage, chats);
-            }
-
-            Debug.Log($"ChainBattle initialized: {LocTableCache.StoryTable.GetString(config.levelNameKey)} with {config.cruiserPhases.Count} phases");
-        }
     }
 }

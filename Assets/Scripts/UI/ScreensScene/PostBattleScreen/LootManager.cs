@@ -64,7 +64,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
 
         public bool ShouldShowChainBattleLoot(int chainBattleLevelNumber)
         {
-            Loot unlockedLoot = StaticData.GetChainBattleLoot(chainBattleLevelNumber);
+            Loot unlockedLoot = StaticData.GetLevelLoot(chainBattleLevelNumber);
             bool containsNewLoot = false;
             if (unlockedLoot.Items.Count != 0)
                 for (int i = 0; i < unlockedLoot.Items.Count; i++)
@@ -107,7 +107,7 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         public static Loot UnlockChainBattleLoot(int chainBattleLevelNumber)
         {
             Debug.Log($"UnlockChainBattleLoot called for ChainBattle level: {chainBattleLevelNumber}");
-            Loot unlockedLoot = StaticData.GetChainBattleLoot(chainBattleLevelNumber);
+            Loot unlockedLoot = StaticData.GetLevelLoot(chainBattleLevelNumber);
 
             if (unlockedLoot.Items.Count != 0)
             {

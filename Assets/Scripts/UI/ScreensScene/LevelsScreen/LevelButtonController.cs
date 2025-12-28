@@ -14,6 +14,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
+    // Adjusted for ChainBattle logic v1.0
     public class LevelButtonController : ElementWithClickSound
     {
         private LevelInfo _level;
@@ -47,24 +48,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             levelNumberText.text = level.Num.ToString();
 
-            // For ChainBattle levels, use the ChainBattle name instead of enemy name
-            var chainBattle = StaticData.GetChainBattle(level.Num);
-            if (chainBattle != null)
-            {
-                // For Fei ChainBattle level 32, use fallback text since localization key doesn't exist
-                if (level.Num == 32 && chainBattle.levelNameKey.Contains("FEI"))
-                {
-                    levelNameText.text = "Stealth Raptor - Fei";
-                }
-                else
-                {
-                    levelNameText.text = LocTableCache.StoryTable.GetString(chainBattle.levelNameKey);
-                }
-            }
-            else
-            {
             levelNameText.text = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
-            }
             captainImage.sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
             
             // Set the hull image and sky image for this level
@@ -101,19 +85,11 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             base.OnClicked();
 
-            // Check if this is a ChainBattle level
-            var chainBattle = StaticData.GetChainBattle(_level.Num);
-            if (chainBattle != null)
-            {
-                ApplicationModel.Mode = GameMode.ChainBattle;
-                ApplicationModel.SelectedLevel = chainBattle.levelNumber;
-                ApplicationModel.SelectedChainBattle = chainBattle;
-            }
-            else
-            {
-                ApplicationModel.Mode = GameMode.Campaign;
-            }
-            // Always navigate to trash screen
+            // All levels (including ChainBattle 32-40) use Campaign mode
+            // ChainBattle behavior is added via BattleSequencer in BattleSceneGod
+            ApplicationModel.Mode = GameMode.Campaign;
+            ApplicationModel.SelectedLevel = _level.Num;
+
             _screensSceneGod.GoToTrashScreen(_level.Num);
         }
 
