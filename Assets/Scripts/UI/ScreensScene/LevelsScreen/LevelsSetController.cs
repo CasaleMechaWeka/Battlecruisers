@@ -51,7 +51,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelInfo level = allLevels[firstLevelIndex + i];
                 TrashTalkData trashTalkData = StaticData.LevelTrashTalk[level.Num];
 
-                button.Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen);
+                await button.Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen);
             }
 
             // Set up Secret levels
