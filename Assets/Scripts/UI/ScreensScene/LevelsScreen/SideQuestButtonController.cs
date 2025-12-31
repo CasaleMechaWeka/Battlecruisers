@@ -1,0 +1,76 @@
+using BattleCruisers.Scenes;
+using BattleCruisers.UI;
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
+using UnityEngine;
+using BattleCruisers.UI.ScreensScene.LevelsScreen;
+using BattleCruisers.Data;
+
+public class SideQuestButtonController : ElementWithClickSound
+{
+    private bool isButtonEnabled;
+    private ScreensSceneGod _screensSceneGod;
+    public int sideQuestID;
+    protected override SoundKey ClickSound => SoundKeys.UI.Click;
+    private GameObject checkmark;
+    private GameObject sideQuestCompleted;
+    private GameObject sideQuestIncomplete;
+    private GameObject checkbox;
+    private int requiredLevel;
+    private int requiredSideQuestID;
+    private Transform buttonImages;
+
+    private LevelsSetController levelsSetController;
+
+    public void Initialise(
+        ScreensSceneGod screensSceneGod,
+        SingleSoundPlayer soundPlayer,
+        int numOfLevelsUnlocked,
+        bool completed)
+    {
+        //Most of side quest scripts will need to be modified once side quest manager is done
+        _screensSceneGod = screensSceneGod;
+        levelsSetController = transform.parent.GetComponent<LevelsSetController>();
+
+        if (levelsSetController == null)
+            Debug.LogError("LevelsSetController component was not found");
+
+        base.Initialise(soundPlayer);
+        requiredLevel = StaticData.SideQuests[sideQuestID].UnlockRequirementLevel;
+        requiredSideQuestID = StaticData.SideQuests[sideQuestID].RequiredSideQuestID;
+
+        completed = DataProvider.GameModel.IsSideQuestCompleted(sideQuestID);
+
+        if (requiredSideQuestID != -1)
+            isButtonEnabled = (numOfLevelsUnlocked >= requiredLevel) && DataProvider.GameModel.IsSideQuestCompleted(requiredSideQuestID);
+        else
+            isButtonEnabled = numOfLevelsUnlocked >= requiredLevel;
+
+        Enabled = isButtonEnabled;
+        checkmark = transform.Find("Checked").gameObject;
+        checkmark.SetActive(completed && isButtonEnabled);
+        buttonImages = transform.Find("ButtonImages");
+        checkbox = transform.Find("Unchecked").gameObject;
+        checkbox.SetActive(isButtonEnabled);
+
+        if (buttonImages != null)
+        {
+            sideQuestCompleted = buttonImages.transform.Find("CompleteSideQuest").gameObject;
+            sideQuestCompleted.SetActive(completed && isButtonEnabled);
+            sideQuestIncomplete = buttonImages.transform.Find("IncompleteSideQuest").gameObject;
+            sideQuestIncomplete.SetActive(!completed && isButtonEnabled);
+        }
+    }
+
+    protected override void OnClicked()
+    {
+        base.OnClicked();
+        Debug.Log($"SideQuestButton clicked for sideQuestID: {sideQuestID}");
+
+        int firstLevelOfStage = -1;
+        if (levelsSetController != null)
+            firstLevelOfStage = levelsSetController.firstLevelIndex;
+        _screensSceneGod.GoToSideQuestTrashScreen(sideQuestID, firstLevelOfStage);
+    }
+}

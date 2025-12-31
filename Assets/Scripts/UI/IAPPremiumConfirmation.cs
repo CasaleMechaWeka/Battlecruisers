@@ -1,0 +1,62 @@
+using BattleCruisers.UI;
+using BattleCruisers.UI.Sound.AudioSources;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using UnityEngine;
+using UnityEngine.Purchasing;
+using UnityEngine.UI;
+
+public class IAPPremiumConfirmation : MonoBehaviour
+{
+    [SerializeField]
+    public AudioSource _uiAudioSource;
+    private SingleSoundPlayer _soundPlayer;
+    public CanvasGroupButton Button_No;
+    public CanvasGroupButton Button_Upgrade;
+    public AdvertisingBannerScrollingText AdvertistingBanner;
+    public Text TextPrice;
+
+    void Start()
+    {
+        _soundPlayer
+        = new SingleSoundPlayer(
+            new EffectVolumeAudioSource(
+                new AudioSourceBC(_uiAudioSource), 1));
+        Button_No.Initialise(_soundPlayer, Close);
+        Button_Upgrade.Initialise(_soundPlayer, UpgradeToPremium);
+    }
+
+    void OnEnable()
+    {
+        Product premiumVersionProduct = IAPManager.instance.storeController.products.WithID("premium_version");
+        if (premiumVersionProduct != null)
+        {
+            TextPrice.text = premiumVersionProduct.metadata.localizedPriceString;
+        }
+
+        AdvertistingBanner.stopAdvert();
+    }
+
+    private void Close()
+    {
+        Invoke("HideSelf", 0.25f);
+    }
+
+    private void HideSelf()
+    {
+        gameObject.SetActive(false);
+        AdvertistingBanner.startAdvert();
+    }
+
+    public void UpgradeToPremium()
+    {
+        Close();
+        IAPManager.instance.storeController.InitiatePurchase(IAPManager.premium_version_product);
+    }
+
+    public void UpgradeToPremiumFailed()
+    {
+        Debug.LogWarning("Upgraing has failed please try again");
+        //UpgradeToPremium has failed do nothing - things will remain unchanged
+    }
+}

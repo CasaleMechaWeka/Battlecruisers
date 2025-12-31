@@ -1,0 +1,31 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using System;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.HeckleMessage;
+using BattleCruisers.UI;
+
+namespace BattleCruisers.Network.Multiplay.MultiplayBattleScene.UI.BattleScene
+{
+    public class PvPInformatorDismisser
+    {
+        private readonly IClickableEmitter _background;
+        private readonly PvPUIManager _uiManager;
+        private readonly PvPHecklePanelController _panelController;
+
+        public PvPInformatorDismisser(IClickableEmitter background, PvPUIManager uiManager, PvPHecklePanelController hecklePanel)
+        {
+            PvPHelper.AssertIsNotNull(background, uiManager);
+
+            _background = background;
+            _uiManager = uiManager;
+            _panelController = hecklePanel;
+            _background.Clicked += _background_Clicked;
+        }
+
+        private void _background_Clicked(object sender, EventArgs e)
+        {
+            _uiManager.HideItemDetails();
+            _panelController.Hide();
+        }
+    }
+}

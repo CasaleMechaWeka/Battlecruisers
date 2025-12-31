@@ -1,0 +1,41 @@
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
+
+namespace BattleCruisers.AI.Tasks
+{
+    public class TaskFactory : ITaskFactory
+    {
+        private readonly ICruiserController _cruiser;
+        private readonly IDeferrer _deferrer;
+
+        // For cheating :)
+        public static float delayInS;
+
+        public const float DEFAULT_DELAY_IN_S = 1.5f;
+        public const float MIN_DELAY_IN_S = 0.1f;
+
+        public TaskFactory(ICruiserController cruiser, IDeferrer deferrer)
+        {
+            Helper.AssertIsNotNull(cruiser, deferrer);
+
+            _cruiser = cruiser;
+            _deferrer = deferrer;
+
+            delayInS = DEFAULT_DELAY_IN_S;
+        }
+
+        public IPrioritisedTask CreateConstructBuildingTask(TaskPriority priority, IPrefabKey buildingKey)
+        {
+            ITask constructBuildingTask = new ConstructBuildingTask(buildingKey, _cruiser);
+            return CreatePrioritisedTask(constructBuildingTask, priority);
+        }
+
+        private IPrioritisedTask CreatePrioritisedTask(ITask task, TaskPriority priority)
+        {
+            IPrioritisedTask prioritisedTask = new PrioritisedTask(priority, task);
+            return new DeferredPrioritisedTask(prioritisedTask, _deferrer, delayInS);
+        }
+    }
+}

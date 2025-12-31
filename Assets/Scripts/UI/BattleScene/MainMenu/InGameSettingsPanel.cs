@@ -1,0 +1,93 @@
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Panels;
+using BattleCruisers.UI.ScreensScene.SettingsScreen;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+using System;
+
+namespace BattleCruisers.UI.BattleScene.MainMenu
+{
+    public class InGameSettingsPanel : Panel
+    {
+        private SettingsManager _settingsManager;
+
+        public InGameSaveButton saveButton;
+        public CanvasGroupButton cancelButton;
+        public FloatSliderController masterVolumeSlider, musicVolumeSlider, effectVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
+        public ToggleController showToolTipsToggle;
+        public SliderController zoomSlider, scrollSlider;
+
+        public void Initialise(
+            SingleSoundPlayer soundPlayer,
+            IMainMenuManager mainMenuManager,
+            SettingsManager settingsManager)
+        {
+            Helper.AssertIsNotNull(saveButton, cancelButton, musicVolumeSlider, effectVolumeSlider);
+            Helper.AssertIsNotNull(soundPlayer, mainMenuManager, settingsManager);
+
+            _settingsManager = settingsManager;
+
+            IRange<float> masterVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            masterVolumeSlider.Initialise(settingsManager.MasterVolume, masterVolumeRange);
+
+            IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            effectVolumeSlider.Initialise(settingsManager.EffectVolume, effectVolumeRange);
+
+            IRange<float> ambientVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            ambientVolumeSlider.Initialise(settingsManager.AmbientVolume, ambientVolumeRange);
+
+            IRange<float> alertVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            alertVolumeSlider.Initialise(settingsManager.AlertVolume, alertVolumeRange);
+
+            IRange<float> interfaceVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            interfaceVolumeSlider.Initialise(settingsManager.InterfaceVolume, interfaceVolumeRange);
+
+            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            musicVolumeSlider.Initialise(settingsManager.MusicVolume, musicVolumeRange);
+
+            IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
+            zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
+
+            IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
+            scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
+
+            showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
+
+
+            saveButton
+                .Initialise(
+                    soundPlayer,
+                    mainMenuManager,
+                    settingsManager,
+                    masterVolumeSlider.SliderValue,
+                    effectVolumeSlider.SliderValue,
+                    ambientVolumeSlider.SliderValue,
+                    alertVolumeSlider.SliderValue,
+                    interfaceVolumeSlider.SliderValue,
+                    musicVolumeSlider.SliderValue,
+                    zoomSlider.SliderValue,
+                    scrollSlider.SliderValue,
+                    showToolTipsToggle.IsChecked);
+
+            cancelButton.Initialise(soundPlayer, mainMenuManager.DismissMenu);
+
+            mainMenuManager.Dismissed += MainMenuManager_Dismissed;
+        }
+
+        private void MainMenuManager_Dismissed(object sender, EventArgs e)
+        {
+            // Discard unsaved changes
+            masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);
+            effectVolumeSlider.ResetToDefaults(_settingsManager.EffectVolume);
+            ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
+            alertVolumeSlider.ResetToDefaults(_settingsManager.AlertVolume);
+            interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
+            musicVolumeSlider.ResetToDefaults(_settingsManager.MusicVolume);
+            zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
+            scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
+            showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
+        }
+    }
+}

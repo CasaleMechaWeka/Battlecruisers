@@ -1,0 +1,88 @@
+﻿using System.Threading.Tasks;
+using BattleCruisers.UI.BattleScene.Clouds.Stats;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.DataStrctures;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
+
+namespace BattleCruisers.UI.BattleScene.Clouds
+{
+    public class CloudInitialiser : MonoBehaviour
+    {
+        private CloudTeleporter _cloudTeleporter;
+
+        public CloudController leftCloud, rightCloud;
+        public MistController mist;
+        public MoonController moon;
+        public FogController fog;
+        public SkyStatsGroup skyStatsGroup;
+        public BackgroundImageController background;
+        public SpriteRenderer underwaterGlowSprite;
+        public Image seaShadeCanvas;
+
+
+        public async Task Initialise(
+            string skyMaterialName,
+            IUpdater updater,
+            float cameraAspectRatio,
+            BackgroundImageStats backgroundStats)
+        {
+            Helper.AssertIsNotNull(skyMaterialName, updater, moon, fog, skyStatsGroup, background);
+            Helper.AssertIsNotNull(leftCloud, rightCloud, mist, backgroundStats);
+            Assert.IsTrue(rightCloud.Position.x > leftCloud.Position.x);
+
+            skyStatsGroup.Initialise();
+            SkyStatsController skyStats = skyStatsGroup.GetSkyStats(skyMaterialName);
+
+            await background.Initialise(backgroundStats, cameraAspectRatio, new BackgroundImageCalculator());
+
+            leftCloud.Initialise(skyStats);
+            rightCloud.Initialise(skyStats);
+
+            CloudRandomiser cloudRandomiser
+                = new CloudRandomiser(new Range<float>(min: -100, max: 400));
+            cloudRandomiser.RandomiseStartingPosition(leftCloud, rightCloud);
+
+            _cloudTeleporter
+                = new CloudTeleporter(
+                    updater,
+                    leftCloud,
+                    rightCloud);
+
+            mist.Initialise(skyStats);
+            moon.Initialise(skyStats.MoonStats);
+            fog.Initialise(skyStats.FogColour);
+
+
+            if (skyStats is SkyStatsController skyStatsController)
+            {
+                ApplyColoursToElements(skyStatsController.WaterColour, skyStatsController.UnderwaterGlowColour);
+            }
+        }
+
+        private void ApplyColoursToElements(Color waterColour, Color underwaterGlowColour)
+        {
+            // Set the SeaShade canvas to WaterColour
+            if (seaShadeCanvas != null)
+            {
+                seaShadeCanvas.color = waterColour;
+            }
+            else
+            {
+                Debug.LogError("SeaShade Canvas Image is not assigned! Please assign it in the Inspector.");
+            }
+
+            // Set the UnderwaterGlow sprite to UnderwaterGlowColour
+            if (underwaterGlowSprite != null)
+            {
+                underwaterGlowSprite.color = underwaterGlowColour;
+            }
+            else
+            {
+                Debug.LogError("UnderwaterGlow SpriteRenderer is not assigned! Please assign it in the Inspector.");
+            }
+        }
+    }
+}

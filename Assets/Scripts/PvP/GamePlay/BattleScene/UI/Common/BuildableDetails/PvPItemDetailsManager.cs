@@ -1,0 +1,138 @@
+using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.Properties;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails
+{
+    public class PvPItemDetailsManager
+    {
+        private readonly PvPInformatorPanelController _informatorPanel;
+        private readonly PvPItemDetails<IPvPBuilding> _buildingDetails;
+        private readonly PvPItemDetails<IPvPUnit> _unitDetails;
+        private readonly PvPItemDetails<IPvPCruiser> _cruiserDetails;
+
+        private ISettableBroadcastingProperty<ITarget> _selectedItem;
+        public IBroadcastingProperty<ITarget> SelectedItem { get; }
+
+        public PvPItemDetailsManager(PvPInformatorPanelController informator)
+        {
+            PvPHelper.AssertIsNotNull(informator);
+
+            _informatorPanel = informator;
+            _buildingDetails = informator.BuildingDetails;
+            _unitDetails = informator.UnitDetails;
+            _cruiserDetails = informator.CruiserDetails;
+
+            _selectedItem = new SettableBroadcastingProperty<ITarget>(initialValue: null);
+            SelectedItem = new BroadcastingProperty<ITarget>(_selectedItem);
+        }
+
+        public void ShowDetails(IPvPBuilding building)
+        {
+            HideInformatorContent();
+
+            _informatorPanel.Show(building);
+            ShowItemDetailsV2(building);
+            /*            _buildingDetails.ShowItemDetails(building);
+                        _selectedItem.Value = building;*/
+        }
+
+        private async void ShowItemDetailsV2(IPvPBuilding building)
+        {
+            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedBuildingVariantIndex(building);
+
+            if (index != -1)
+            {
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                IPvPBuilding staticBuilding = variant.GetPvPBuilding();
+                _buildingDetails.ShowItemDetails(staticBuilding, variant);
+                _buildingDetails.GetBuildingVariantDetailController().variantName.text =
+                    LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
+                     + " " + LocTableCache.CommonTable.GetString("Buildables/Buildings/" + building.keyName + "Name");
+                //_buildingDetails.GetBuildingVariantDetailController().variantDescription.text = _commonString.GetString(DataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(true);
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.sprite = variant.variantSprite;
+                _selectedItem.Value = building;
+            }
+            else
+            {
+                _buildingDetails.GetBuildingVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _buildingDetails.ShowItemDetails(building);
+                _selectedItem.Value = building;
+            }
+        }
+
+        public void SelectBuilding(IPvPBuilding building)
+        {
+            _selectedItem.Value = building;
+        }
+
+        public void ShowDetails(IPvPUnit unit)
+        {
+            HideInformatorContent();
+
+            _informatorPanel.Show(unit);
+            ShowItemDetailsV2(unit);
+            /*            _unitDetails.ShowItemDetails(unit);
+                        _selectedItem.Value = unit;*/
+        }
+
+        private async void ShowItemDetailsV2(IPvPUnit unit)
+        {
+            int index = await DataProvider.GameModel.PlayerLoadout.GetSelectedUnitVariantIndex(unit);
+            if (index != -1)
+            {
+                VariantPrefab variant = await PvPPrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                IPvPUnit staticUnit = variant.GetPvPUnit();
+                _unitDetails.ShowItemDetails(staticUnit, variant);
+                _unitDetails.GetUnitVariantDetailController().variantName.text =
+                    LocTableCache.CommonTable.GetString(StaticData.Variants[index].VariantNameStringKeyBase)
+                     + " " + LocTableCache.CommonTable.GetString("Buildables/Units/" + unit.keyName + "Name");
+                //_unitDetails.GetUnitVariantDetailController().variantDescription.text = _commonString.GetString(DataProvider.GameModel.Variants[index].variantDescriptionStringKeyBase);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(true);
+                _unitDetails.GetUnitVariantDetailController().variantIcon.sprite = variant.variantSprite;
+                _selectedItem.Value = unit;
+            }
+            else
+            {
+                _unitDetails.GetUnitVariantDetailController().variantIcon.gameObject.SetActive(false);
+                _unitDetails.ShowItemDetails(unit);
+                _selectedItem.Value = unit;
+            }
+        }
+
+        public void SelectUnit(IPvPUnit unit)
+        {
+            _selectedItem.Value = unit;
+        }
+
+        public void ShowDetails(IPvPCruiser cruiser)
+        {
+            HideInformatorContent();
+            _informatorPanel.Show(cruiser);
+            _cruiserDetails.ShowItemDetails(cruiser);
+            _selectedItem.Value = cruiser;
+        }
+
+        public void HideDetails()
+        {
+            _informatorPanel.Hide();
+            _selectedItem.Value = null;
+        }
+
+        private void HideInformatorContent()
+        {
+            _buildingDetails.Hide();
+            _unitDetails.Hide();
+            _cruiserDetails.Hide();
+        }
+    }
+}

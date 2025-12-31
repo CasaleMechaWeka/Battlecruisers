@@ -1,0 +1,107 @@
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.GameSpeed;
+using BattleCruisers.UI.BattleScene.MainMenu;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.UI.BattleScene
+{
+    /// <summary>
+    /// Contains:
+    /// + Informator (item details)
+    /// + Game speed buttons
+    /// + Help button
+    /// + Menu button
+    /// </summary>
+    public class RightPanelInitialiser : MonoBehaviour
+    {
+        public ModalMenuController modalMenu;
+        public MainMenuButtonController modalMainMenuButton;
+        public HelpButton helpButton;
+
+        public RightPanelComponents Initialise(
+            UIManager uiManager,
+            ICruiser playerCruiser,
+            IUserChosenTargetHelper userChosenTargetHelper,
+            ButtonVisibilityFilters buttonVisibilityFilters,
+            PauseGameManager pauseGameManager,
+            BattleCompletionHandler battleCompletionHandler,
+            SingleSoundPlayer soundPlayer,
+            NavigationPermitterManager navigationPermitterManager)
+        {
+            Helper.AssertIsNotNull(modalMenu, modalMainMenuButton, helpButton);
+            Helper.AssertIsNotNull(
+                uiManager,
+                playerCruiser,
+                userChosenTargetHelper,
+                buttonVisibilityFilters,
+                pauseGameManager,
+                battleCompletionHandler,
+                soundPlayer,
+                navigationPermitterManager);
+
+            InformatorPanelController informator = SetupInformator(uiManager, playerCruiser, userChosenTargetHelper, buttonVisibilityFilters, soundPlayer);
+            SpeedComponents speedComponents = SetupSpeedPanel(soundPlayer, buttonVisibilityFilters);
+            IMainMenuManager mainMenuManager = new MainMenuManager(navigationPermitterManager, pauseGameManager, modalMenu, battleCompletionHandler);
+            modalMenu.Initialise(soundPlayer, ApplicationModel.IsTutorial, mainMenuManager, DataProvider.SettingsManager);
+            SetupMainMenuButtons(soundPlayer, mainMenuManager);
+
+            return
+                new RightPanelComponents(
+                    informator,
+                    mainMenuManager,
+                    modalMenu,
+                    speedComponents,
+                    helpButton);
+        }
+
+        private InformatorPanelController SetupInformator(
+            UIManager uiManager,
+            ICruiser playerCruiser,
+            IUserChosenTargetHelper userChosenTargetHelper,
+            ButtonVisibilityFilters buttonVisibilityFilters,
+            SingleSoundPlayer soundPlayer)
+        {
+            InformatorPanelController informator = GetComponentInChildren<InformatorPanelController>();
+            Assert.IsNotNull(informator);
+
+            informator
+                .Initialise(
+                    uiManager,
+                    playerCruiser,
+                    userChosenTargetHelper,
+                    buttonVisibilityFilters,
+                    soundPlayer);
+
+            return informator;
+        }
+
+        private SpeedComponents SetupSpeedPanel(SingleSoundPlayer soundPlayer, ButtonVisibilityFilters buttonVisibilityFilters)
+        {
+            SpeedPanelController speedPanelInitialiser = GetComponentInChildren<SpeedPanelController>();
+            Assert.IsNotNull(speedPanelInitialiser);
+            return speedPanelInitialiser.Initialise(soundPlayer, buttonVisibilityFilters.SpeedButtonsEnabledFilter);
+        }
+
+        private void SetupMainMenuButtons(SingleSoundPlayer soundPlayer, IMainMenuManager mainMenuManager)
+        {
+            MainMenuButtonController mainMenuButton = GetComponentInChildren<MainMenuButtonController>();
+            Assert.IsNotNull(mainMenuButton);
+            mainMenuButton.Initialise(soundPlayer, mainMenuManager);
+
+            modalMainMenuButton.Initialise(soundPlayer, mainMenuManager);
+        }
+
+
+    }
+}

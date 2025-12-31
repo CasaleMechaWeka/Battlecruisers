@@ -1,0 +1,371 @@
+using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Movement.Velocity;
+using BattleCruisers.Movement.Velocity.Providers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Targets.TargetProviders;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Seabed;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Assertions;
+using Unity.Netcode;
+using BattleCruisers.Movement.Velocity.Homing;
+using BattleCruisers.Buildables.Units.Aircraft;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Aircraft
+{
+    public abstract class PvPAircraftController : PvPUnit, IVelocityProvider, IPatrollingVelocityProvider, ISeabedImpactable
+    {
+        private PvPKamikazeController _kamikazeController;
+        private Collider2D _collider;
+        protected SpriteRenderer _spriteRenderer;
+        private IBoostable _velocityBoostable;
+        private float _fuzziedMaxVelocityInMPerS;
+        protected TrailRenderer _aircraftTrail;
+        protected GameObject _aircraftTrailObj;
+        protected bool _isAtCruisingHeight;
+
+        private bool _onSeabed;
+
+        protected PvPSpriteChooser _spriteChooser;
+
+        public float cruisingAltitudeInM;
+        public float seabedParkTimeInS = 10;
+
+        private const float MAX_VELOCITY_FUZZING_PROPORTION = 0.1f;
+        private const float ON_DEATH_GRAVITY_SCALE = 0.4f;
+        private const float SEABED_SAFE_POSITION_Y = -40;
+
+        protected bool IsInKamikazeMode => _kamikazeController.isActiveAndEnabled;
+        public override TargetType TargetType => TargetType.Aircraft;
+        public override Vector2 Velocity => ActiveMovementController.Velocity;
+        protected virtual float MaxPatrollingVelocity => EffectiveMaxVelocityInMPerS;
+        protected float EffectiveMaxVelocityInMPerS => _velocityBoostable.BoostMultiplier * _fuzziedMaxVelocityInMPerS;
+        public float PatrollingVelocityInMPerS => MaxPatrollingVelocity;
+        public float VelocityInMPerS => EffectiveMaxVelocityInMPerS;
+        protected virtual float PositionEqualityMarginInM => 0.5f;
+        protected override bool ShowSmokeWhenDestroyed => true;
+
+        protected IMovementController DummyMovementController { get; private set; }
+        protected IMovementController PatrollingMovementController { get; private set; }
+
+        private IMovementController _activeMovementController;
+        protected IMovementController ActiveMovementController
+        {
+            get { return _activeMovementController; }
+            set
+            {
+                // Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}  {ActiveMovementController}  => {value}");
+                Assert.IsNotNull(value);
+
+                if (ReferenceEquals(ActiveMovementController, value))
+                {
+                    // Already have the desired movement controller
+                    return;
+                }
+
+                if (ActiveMovementController != null)
+                {
+                    value.Velocity = ActiveMovementController.Velocity;
+                    ActiveMovementController.DirectionChanged -= _movementController_DirectionChanged;
+                }
+
+                _activeMovementController = value;
+                ActiveMovementController.DirectionChanged += _movementController_DirectionChanged;
+                ActiveMovementController.Activate();
+            }
+        }
+
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
+
+            _kamikazeController = GetComponentInChildren<PvPKamikazeController>(includeInactive: true);
+            Assert.IsNotNull(_kamikazeController);
+            Assert.IsFalse(IsInKamikazeMode);
+
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
+
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>(includeInactive: true);
+            Assert.IsNotNull(_spriteRenderer);
+
+            _aircraftTrail = transform.FindNamedComponent<TrailRenderer>("AircraftTrail");
+            _aircraftTrailObj = transform.FindNamedComponent<TrailRenderer>("AircraftTrail").gameObject;
+        }
+
+        public override void Initialise()
+        {
+            base.Initialise();
+            _velocityBoostable = new Boostable(1);
+            _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
+            DummyMovementController = new DummyMovementController();
+        }
+
+        public override void Initialise(PvPUIManager uiManager)
+        {
+            base.Initialise(uiManager);
+            _velocityBoostable = new Boostable(1);
+            _fuzziedMaxVelocityInMPerS = RandomGenerator.Randomise(maxVelocityInMPerS, MAX_VELOCITY_FUZZING_PROPORTION, ChangeDirection.Both);
+            DummyMovementController = new DummyMovementController();
+        }
+
+        public override void Activate(PvPBuildableActivationArgs activationArgs)
+        {
+            // Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
+
+            // Needs to happen before we are moved to a new position and have our game object enabled, otherwise get trail from last death position.
+            _aircraftTrail.Clear();
+
+            base.Activate(activationArgs);
+
+            _localBoosterBoostableGroup.AddBoostable(_velocityBoostable);
+            _localBoosterBoostableGroup.AddBoostProvidersList(_cruiserSpecificFactories.GlobalBoostProviders.AircraftBoostProviders);
+            _localBoosterBoostableGroup.BoostChanged += _boostableGroup_BoostChanged;
+
+            PatrollingMovementController
+                = new PatrollingMovementController(
+                    rigidBody,
+                    maxVelocityProvider: new PatrollingVelocityProvider(this),
+                    patrolPoints: GetPatrolPoints(),
+                    positionEqualityMarginInM: PositionEqualityMarginInM);
+
+            ActiveMovementController = DummyMovementController;
+            ActiveMovementController.Velocity = Vector2.zero;
+            _spriteChooser = new PvPSpriteChooser(new List<Sprite> { _spriteRenderer.sprite }, null);
+            _onSeabed = false;
+            _kamikazeController.gameObject.SetActive(false);
+        }
+
+        public override void Activate_PvPClient()
+        {
+            _aircraftTrail.Clear();
+            _spriteChooser = new PvPSpriteChooser(new List<Sprite> { _spriteRenderer.sprite }, null);
+            PatrollingMovementController
+                = new PatrollingMovementController(
+                        rigidBody,
+                        maxVelocityProvider: new PatrollingVelocityProvider(this),
+                        patrolPoints: GetPatrolPoints(),
+                        positionEqualityMarginInM: PositionEqualityMarginInM);
+
+            ActiveMovementController = DummyMovementController;
+            ActiveMovementController.Velocity = Vector2.zero;
+            _kamikazeController.gameObject.SetActive(false);
+            base.Activate_PvPClient();
+        }
+
+        protected override void OnBuildableCompleted()
+        {
+
+            base.OnBuildableCompleted();
+            ActiveMovementController = PatrollingMovementController;
+            _aircraftTrailObj.SetActive(true);
+        }
+        protected override void OnBuildableCompleted_PvPClient()
+        {
+            base.OnBuildableCompleted_PvPClient();
+            ActiveMovementController = PatrollingMovementController;
+        }
+
+        protected abstract IList<IPatrolPoint> GetPatrolPoints();
+
+        private void _movementController_DirectionChanged(object sender, XDirectionChangeEventArgs e)
+        {
+            FacingDirection = e.NewDirection;
+        }
+
+        protected override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+
+            //        Assert.IsNotNull(ActiveMovementController, "OnInitialised() should always be called before OnFixedUpdate()");
+            if (ActiveMovementController == null)
+            {
+                Debug.Log("OnInitialised() should always be called before OnFixedUpdate()");
+                return;
+            }
+            ActiveMovementController.AdjustVelocity();
+            //compare sprite number choses to sprite name
+            if (_spriteChooser != null)
+            {
+                var spriteOfAircraft = _spriteChooser.ChooseSprite(Velocity);
+                _spriteRenderer.sprite = spriteOfAircraft.Item1;
+            }
+        }
+
+        public void Kamikaze(ITarget kamikazeTarget)
+        {
+            Assert.AreEqual(UnitCategory.Aircraft, Category, "Only aircraft should kamikaze");
+            Assert.AreEqual(PvPBuildableState.Completed, BuildableState, "Only completed aircraft should kamikaze.");
+
+            if (IsInKamikazeMode)
+            {
+                // Already in kamikaze mode, no need to do anything again :)
+                return;
+            }
+
+            ITargetProvider cruiserTarget = new StaticTargetProvider(kamikazeTarget);
+            ActiveMovementController = new HomingMovementController(rigidBody, this, cruiserTarget);
+
+            UpdateFaction(kamikazeTarget);
+
+            OnKamikaze();
+        }
+
+        private void UpdateFaction(ITarget kamikazeTarget)
+        {
+            _collider.enabled = false;
+            Faction = PvPHelper.GetOppositeFaction(kamikazeTarget.Faction);
+
+            // Make our collider be lost and refound by all target detectors.
+            // Means target detectors that we are already in range of can 
+            // re-evaluate whether we are a target, as our faction has just changed.
+            _collider.enabled = true;
+
+            _kamikazeController.Initialise(this, kamikazeTarget);
+            _kamikazeController.gameObject.SetActive(true);
+        }
+
+        protected IList<IPatrolPoint> ProcessPatrolPoints(IList<Vector2> patrolPositions, Action onFirstPatrolPointReached)
+        {
+            IList<IPatrolPoint> patrolPoints = new List<IPatrolPoint>(patrolPositions.Count);
+
+            patrolPoints.Add(new PatrolPoint(patrolPositions[0], removeOnceReached: false, actionOnReached: onFirstPatrolPointReached));
+
+            for (int i = 1; i < patrolPositions.Count; ++i)
+            {
+                patrolPoints.Add(new PatrolPoint(patrolPositions[i]));
+            }
+
+            return patrolPoints;
+        }
+
+        private void _boostableGroup_BoostChanged(object sender, EventArgs e)
+        {
+            OnBoostChanged();
+        }
+
+        protected virtual void OnBoostChanged() { }
+
+        protected override void OnDestroyed()
+        {
+            // Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
+
+            base.OnDestroyed();
+
+            _localBoosterBoostableGroup.BoostChanged -= _boostableGroup_BoostChanged;
+
+            if (BuildableState == PvPBuildableState.Completed
+                && !IsInKamikazeMode)
+            {
+                CleanUp();
+            }
+            _aircraftTrail.Clear();
+        }
+
+        protected override void OnDestroyedEvent()
+        {
+            base.OnDestroyedEvent();
+        }
+
+        protected override bool ShouldShowDeathEffects()
+        {
+            return
+                base.ShouldShowDeathEffects()
+                && !IsInKamikazeMode;
+        }
+
+        protected override void ShowDeathEffects()
+        {
+            // Logging.Log(Tags.AIRCRAFT, $"{GetInstanceID()}");
+            HealthBar.IsVisible = false;
+
+            // Make gravity take effect
+            rigidBody.bodyType = RigidbodyType2D.Dynamic;
+            rigidBody.gravityScale = ON_DEATH_GRAVITY_SCALE;
+
+            // Pass on current velocity
+            rigidBody.AddForce(Velocity, ForceMode2D.Impulse);
+
+            // Make aircraft spin a bit for coolness
+            rigidBody.AddTorque(0.5f, ForceMode2D.Impulse);
+        }
+
+        protected override void CallRpc_ProgressControllerVisible(bool isEnabled)
+        {
+            if (IsServer)
+            {
+                OnProgressControllerVisibleClientRpc(isEnabled);
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+            }
+            else
+                base.CallRpc_ProgressControllerVisible(isEnabled);
+        }
+
+        [ClientRpc]
+        private void OnProgressControllerVisibleClientRpc(bool isEnabled)
+        {
+            _buildableProgress.gameObject.SetActive(isEnabled);
+            if (!IsHost && !isEnabled)
+                Invoke("ActiveTrail", 0.5f);
+        }
+        
+        void ActiveTrail()
+        {
+            _aircraftTrailObj.SetActive(true);
+        }
+
+        private void OnKamikaze()
+        {
+            CleanUp();
+        }
+
+        protected virtual void CleanUp() { }
+
+        /// <summary>
+        /// Stop movement, wait until smoke trail has dissipated before removing
+        /// game object from scene.  Otherwise smoke trail insta-disappears :P
+        /// </summary>
+        public void OnHitSeabed()
+        {
+            // Logging.Log(Tags.AIRCRAFT, this);
+
+            if (_onSeabed)
+            {
+                // Logging.Warn(Tags.AIRCRAFT, $"{GetInstanceID()}  Should not be called when already on seabed :/");
+                return;
+            }
+
+            // Freeze unit
+            rigidBody.bodyType = RigidbodyType2D.Kinematic;
+            rigidBody.velocity = new Vector2(0, 0);
+
+            // Move unit below seabed collider, so it does not recollide in subsequent frames.
+            Vector3 currentPosition = rigidBody.position;
+            rigidBody.position = new Vector3(currentPosition.x, SEABED_SAFE_POSITION_Y, currentPosition.z);
+
+            PvPFactoryProvider.DeferrerProvider.Deferrer.Defer(((IRemovable)this).RemoveFromScene, seabedParkTimeInS);
+        }
+
+        [ClientRpc]
+        protected void OnActivatePvPClientRpc(Vector3 ParentCruiserPosition, Vector3 EnemyCruiserPosition, Direction facingDirection, bool isAtCruiserHeight)
+        {
+            if (!IsHost)
+            {
+                _aircraftProvider = new AircraftProvider(ParentCruiserPosition, EnemyCruiserPosition);
+                FacingDirection = facingDirection;
+                _isAtCruisingHeight = isAtCruiserHeight;
+                Activate_PvPClient();
+            }
+        }
+
+    }
+}

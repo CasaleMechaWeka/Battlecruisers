@@ -1,0 +1,95 @@
+using BattleCruisers.Effects;
+using BattleCruisers.Effects.ParticleSystems;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.ParticleSystems;
+using BattleCruisers.Utils.BattleScene.Pools;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Deaths
+{
+    public class PvPShipDeathInitialiser : PvPMonoBehaviourWrapper
+    {
+        public GameObject effects_parent;
+        private PvPShipDeath shipDeath;
+        private BroadcastingAnimationController sinkingAnimation;
+        private IList<IParticleSystemGroup> effects;
+        public IPoolable<Vector3> CreateShipDeath()
+        {
+            BroadcastingAnimationController sinkingAnimation = GetComponent<BroadcastingAnimationController>();
+            Assert.IsNotNull(sinkingAnimation);
+
+            PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
+            IList<IParticleSystemGroup> effects
+                = particleSystemGroupInitialisers
+                    .Select(initialiser => initialiser.CreateParticleSystemGroup())
+                    .ToList();
+
+            PvPShipDeath death = new PvPShipDeath(
+                    this,
+                    sinkingAnimation);
+
+            Position = new Vector3(0, -1000, 0);
+
+            return death;
+        }
+        protected virtual void Awake()
+        {
+            if (effects_parent == null)
+                effects_parent = transform.Find("Effects").gameObject;
+            sinkingAnimation = GetComponent<BroadcastingAnimationController>();
+            Assert.IsNotNull(sinkingAnimation);
+
+            PvPParticleSystemGroupInitialiser[] particleSystemGroupInitialisers = GetComponentsInChildren<PvPParticleSystemGroupInitialiser>();
+            effects
+                = particleSystemGroupInitialisers
+                    .Select(initialiser => initialiser.CreateParticleSystemGroup())
+                    .ToList();
+
+            shipDeath =
+                new PvPShipDeath(
+                    this,
+                    sinkingAnimation);
+            Position = new Vector3(0, -1000, 0);
+        }
+        protected override void SetVisible(bool isVisible)
+        {
+            //   StartCoroutine(iSetVisible(isVisible));
+            if (effects_parent != null)
+                effects_parent.SetActive(isVisible);
+        }
+
+        protected override void CallRpc_SetVisible(bool isVisible)
+        {
+            SetVisibleClientRpc(isVisible);
+        }
+        protected override void CallRpc_SetPosition(Vector3 position)
+        {
+            SetPositionClientRpc(position);
+        }
+
+        [ClientRpc]
+        private void SetPositionClientRpc(Vector3 position)
+        {
+            if (!IsHost)
+                Position = position;
+        }
+
+        [ClientRpc]
+        private void SetVisibleClientRpc(bool isVisible)
+        {
+            if (!IsHost)
+            {
+                IsVisible = isVisible;
+            }
+            if (isVisible)
+            {
+                sinkingAnimation.Play();
+                foreach (IParticleSystemGroup effect in effects)
+                    effect.Play();
+            }
+        }
+    }
+}

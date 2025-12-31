@@ -1,0 +1,19 @@
+﻿using BattleCruisers.Targets.TargetDetectors;
+using BattleCruisers.Targets.TargetFinders;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Targets.TargetProcessors
+{
+    public class SquareProximityTargetProcessorWrapper : ProximityTargetProcessorWrapper
+    {
+        protected override ITargetFinder CreateTargetFinder(TargetProcessorArgs args)
+        {
+            TargetDetectorController enemyDetector = GetComponentInChildren<TargetDetectorController>();
+            Assert.IsNotNull(enemyDetector);
+
+            ITargetFilter enemyDetectionFilter = new FactionAndTargetTypeFilter(args.EnemyFaction, args.AttackCapabilities);
+            return new RangedTargetFinder(enemyDetector, enemyDetectionFilter);
+        }
+    }
+}

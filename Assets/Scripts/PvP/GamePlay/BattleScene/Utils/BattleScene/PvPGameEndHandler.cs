@@ -1,0 +1,176 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units.Ships;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene
+{
+    public class PvPGameEndHandler
+    {
+        private readonly PvPCruiser _playerACruiser, _playerBCruiser;
+        private IManagedDisposable _ai_LeftPlayer;
+        private IManagedDisposable _ai_RightPlayer;
+        private readonly PvPBattleSceneGodTunnel _battleSceneGodTunnel;
+        private readonly IDeferrer _deferrer;
+
+        private bool _handledCruiserDeath, _handledGameEnd;
+
+        private const float POST_GAME_WAIT_TIME_IN_S = 10;
+
+        public PvPGameEndHandler(
+            PvPCruiser playerACruiser,
+            PvPCruiser playerBCruiser,
+            PvPBattleSceneGodTunnel battleSceneGodTunnel,
+            IDeferrer deferrer
+            )
+        {
+            PvPHelper.AssertIsNotNull(
+                playerACruiser,
+                playerBCruiser,
+                battleSceneGodTunnel,
+                deferrer
+                );
+
+            _playerACruiser = playerACruiser;
+            _playerBCruiser = playerBCruiser;
+            _battleSceneGodTunnel = battleSceneGodTunnel;
+            _deferrer = deferrer;
+            _handledCruiserDeath = false;
+            _handledGameEnd = false;
+        }
+
+        public void HandleCruiserDestroyed(bool wasPlayerVictory)
+        {
+            Assert.IsFalse(_handledCruiserDeath, "Should only be called once.");
+            Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
+            _handledCruiserDeath = true;
+
+            PvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
+            PvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
+
+            PvPBattleSceneGodServer.EnemyCruiserType = losingCruiser.HullType;
+
+            //---> Code by ANUJ
+            ClearProjectiles();
+            //<---
+            PvPFactoryProvider.Sound.IPrioritisedSoundPlayer.Enabled = false;
+
+            if (_ai_LeftPlayer != null)
+                _ai_LeftPlayer.DisposeManagedState();
+            if (_ai_RightPlayer != null)
+                _ai_RightPlayer?.DisposeManagedState();
+
+            victoryCruiser.MakeInvincible();
+
+            DestroyCruiserBuildables(losingCruiser);
+            StopAllShips(victoryCruiser);
+
+            //    _battleSceneGodTunnel.HandleCruiserDestroyed();
+            _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false);
+            //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false), POST_GAME_WAIT_TIME_IN_S);
+        }
+
+        public void HandleCruiserDestroyed(bool wasPlayerVictory, long destructionScore)
+        {
+            Assert.IsFalse(_handledCruiserDeath, "Should only be called once.");
+            Assert.IsFalse(_handledGameEnd, "Should never be called after the game has ended.");
+            _handledCruiserDeath = true;
+
+            PvPCruiser victoryCruiser = wasPlayerVictory ? _playerACruiser : _playerBCruiser;
+            PvPCruiser losingCruiser = wasPlayerVictory ? _playerBCruiser : _playerACruiser;
+
+            PvPBattleSceneGodServer.EnemyCruiserType = losingCruiser.HullType;
+            //---> Code by ANUJ
+            ClearProjectiles();
+            //<---
+            if (_ai_LeftPlayer != null)
+                _ai_LeftPlayer.DisposeManagedState();
+            if (_ai_RightPlayer != null)
+                _ai_RightPlayer?.DisposeManagedState();
+            victoryCruiser.MakeInvincible();
+            DestroyCruiserBuildables(losingCruiser);
+            StopAllShips(victoryCruiser);
+            _deferrer.Defer(() => DestroyCruiserBuildables(victoryCruiser), POST_GAME_WAIT_TIME_IN_S / 2);
+            //    _battleSceneGodTunnel.HandleCruiserDestroyed();
+            _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore);
+            //    _deferrer.Defer(() => _battleSceneGodTunnel.CompleteBattle(wasPlayerVictory, retryLevel: false, destructionScore), POST_GAME_WAIT_TIME_IN_S);
+        }
+
+        public void RegisterAIOfLeftPlayer(IManagedDisposable ai_LeftPlayer)
+        {
+            _ai_LeftPlayer = ai_LeftPlayer;
+        }
+
+        public void RegisterAIOfRightPlayer(IManagedDisposable ai_RightPlayer)
+        {
+            _ai_RightPlayer = ai_RightPlayer;
+        }
+
+        private void DestroyCruiserBuildables(IPvPCruiser cruiser)
+        {
+            foreach (IPvPBuilding building in cruiser.BuildingMonitor.AliveBuildings.ToList())
+            {
+                if (!building.IsDestroyed)
+                {
+                    building.Destroy();
+                }
+            }
+
+            foreach (IPvPUnit unit in cruiser.UnitMonitor.AliveUnits.ToList())
+            {
+                if (!unit.IsDestroyed)
+                {
+                    unit.Destroy();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prevent ships from moving, otherwise they will happily move into the
+        /// sinking cruiser.  Can disregard the losing cruiser's ships, as they
+        /// have been automatically destroyed.
+        /// </summary>
+        private void StopAllShips(IPvPCruiser victoryCruiser)
+        {
+            foreach (IPvPUnit unit in victoryCruiser.UnitMonitor.AliveUnits)
+            {
+                if (unit is PvPShipController ship)
+                {
+                    ship.DisableMovement();
+                    ship.StopMoving();
+                }
+            }
+        }
+
+        //---> Code by ANUJ
+        private void ClearProjectiles()
+        {
+            PvPSmartMissileController[] smartMissiles = MonoBehaviour.FindObjectsOfType<PvPSmartMissileController>();
+            foreach (PvPSmartMissileController missile in smartMissiles)
+            {
+                missile.enabled = false;
+            }
+        }
+        //<---
+        public void HandleGameEnd()
+        {
+            Assert.IsFalse(_handledGameEnd, "Should only be called once.");
+            _handledGameEnd = true;
+
+            if (!_handledCruiserDeath)
+            {
+                if (_ai_LeftPlayer != null)
+                    _ai_LeftPlayer.DisposeManagedState();
+                if (_ai_RightPlayer != null)
+                    _ai_RightPlayer.DisposeManagedState();
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Buildings.Factories;
+using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Utils;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.AI.Drones.BuildingMonitors
+{
+    public class FactoriesMonitor : IManagedDisposable
+    {
+        private readonly ICruiserBuildingMonitor _bulidingMonitor;
+        private readonly IList<FactoryMonitor> _completedFactories;
+
+        public IReadOnlyCollection<FactoryMonitor> CompletedFactories { get; }
+
+        public FactoriesMonitor(ICruiserBuildingMonitor buildingMonitor)
+        {
+            Helper.AssertIsNotNull(buildingMonitor);
+
+            _bulidingMonitor = buildingMonitor;
+            _completedFactories = new List<FactoryMonitor>();
+            CompletedFactories = new ReadOnlyCollection<FactoryMonitor>(_completedFactories);
+
+            _bulidingMonitor.BuildingCompleted += _buildingMonitor_BuildingCompleted;
+        }
+
+        private void _buildingMonitor_BuildingCompleted(object sender, BuildingCompletedEventArgs e)
+        {
+            IFactory factory = e.CompletedBuilding as IFactory;
+
+            if (factory != null)
+            {
+                Assert.IsNull(GetMonitor(factory));
+                _completedFactories.Add(new FactoryMonitor(factory, RandomGenerator.Range(2, 4)));
+
+                factory.Destroyed += Factory_Destroyed;
+            }
+        }
+
+        private void Factory_Destroyed(object sender, DestroyedEventArgs e)
+        {
+            IFactory destroyedFactory = e.DestroyedTarget.Parse<IFactory>();
+            destroyedFactory.Destroyed -= Factory_Destroyed;
+
+            FactoryMonitor factoryMonitor = GetMonitor(destroyedFactory);
+            Assert.IsNotNull(factoryMonitor);
+            _completedFactories.Remove(factoryMonitor);
+        }
+
+        /// <returns>
+        /// The montior for the given factory, or null if no monitor exists.
+        /// </returns>
+        private FactoryMonitor GetMonitor(IFactory factory)
+        {
+            return _completedFactories.FirstOrDefault(monitor => ReferenceEquals(monitor.Factory, factory));
+        }
+
+        public void DisposeManagedState()
+        {
+            foreach (FactoryMonitor factoryMonitor in _completedFactories)
+            {
+                factoryMonitor.Factory.Destroyed -= Factory_Destroyed;
+            }
+            _completedFactories.Clear();
+
+            _bulidingMonitor.BuildingCompleted -= _buildingMonitor_BuildingCompleted;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+using BattleCruisers.Data.Static;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.Utils.Fetchers;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
+{
+    public class LeaderboradPanel : MonoBehaviour
+    {
+        public GameObject PlayerName;
+        public GameObject EOL;
+        public GameObject Captain;
+        public GameObject PlaceNumber;
+
+        public void Initialise(
+            string playerName,
+            double eol,
+            int placenumber,
+            string captain)
+        {
+            string str_index = captain.ToUpper().Replace("CAPTAINEXO", "");
+            int index = 0;
+            int.TryParse(str_index, out index);
+            CaptainExo captainexo = PrefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+            Text name = PlayerName.gameObject.GetComponent<Text>();
+            name.text = playerName;
+            Text eolString = EOL.GetComponent<Text>();
+            eolString.text = Mathf.Floor((float)eol).ToString();
+            Text number = PlaceNumber.GetComponent<Text>();
+            number.text = (placenumber + 1).ToString();
+            Image image = Captain.GetComponent<Image>();
+            image.sprite = captainexo.captainExoImage;
+        }
+    }
+}

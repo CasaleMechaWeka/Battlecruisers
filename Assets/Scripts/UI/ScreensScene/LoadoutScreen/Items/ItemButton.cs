@@ -1,0 +1,87 @@
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using System;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
+{
+    public abstract class ItemButton : ElementWithClickSound
+    {
+        private Image _itemImage;
+        public Text _itemName;  // for heckle
+        private ClickedFeedBack _clickedFeedBack;
+        private VariantClickedFeedback _variantClickedFeedback;
+
+        protected ItemDetailsManager _itemDetailsManager;
+        protected ComparingItemFamilyTracker _comparingFamiltyTracker;
+
+        private CanvasGroup _canvasGroup;
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
+
+        public bool IsUnlocked => IsVisible;
+        public abstract IComparableItem Item { get; }
+
+        public abstract void ShowDetails();
+        public EventHandler<VariantChangeEventArgs> variantChanged;
+        public Color Color
+        {
+            set
+            {
+                _itemImage.color = value;
+            }
+        }
+
+        public bool UpdateClickedFeedback
+        {
+            set
+            {
+                _clickedFeedBack.IsVisible = value;
+                if (_variantClickedFeedback != null)
+                    _variantClickedFeedback.IsVisible = value;
+            }
+        }
+
+        public ItemFamily itemFamily;
+
+        protected virtual void Initialise(SingleSoundPlayer soundPlayer, ItemDetailsManager itemDetailsManager, ComparingItemFamilyTracker comparingFamiltyTracker)
+        {
+            base.Initialise(soundPlayer);
+
+            Helper.AssertIsNotNull(itemDetailsManager, comparingFamiltyTracker);
+
+            _itemDetailsManager = itemDetailsManager;
+            _comparingFamiltyTracker = comparingFamiltyTracker;
+            _itemImage = transform.FindNamedComponent<Image>("ItemImage");
+            // _itemName = transform.FindNamedComponent<Text>("ItemName");
+            _clickedFeedBack = GetComponentInChildren<ClickedFeedBack>(includeInactive: true);
+            _variantClickedFeedback = GetComponentInChildren<VariantClickedFeedback>(includeInactive: true);
+            Assert.IsNotNull(_clickedFeedBack);
+
+            _canvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(_canvasGroup);
+
+            _comparingFamiltyTracker.ComparingFamily.ValueChanged += _comparingFamiltyTracker_ValueChanged;
+        }
+
+        private void _comparingFamiltyTracker_ValueChanged(object sender, EventArgs e)
+        {
+            Enabled
+                = _comparingFamiltyTracker.ComparingFamily.Value == null
+                    || itemFamily == _comparingFamiltyTracker.ComparingFamily.Value;
+        }
+
+        protected override void ShowHoverState()
+        {
+            ShowEnabledState();
+        }
+
+        protected override void ShowClickedState()
+        {
+            ShowEnabledState();
+        }
+    }
+}

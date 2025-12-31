@@ -1,0 +1,88 @@
+﻿using BattleCruisers.Utils.Fetchers.Sprites;
+using NSubstitute;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine;
+
+namespace BattleCruisers.Tests.Utils.Fetchers
+{
+    public class SpriteProviderTests
+    {
+        private IList<Sprite> _bomberSprites, _fighterSprites;
+
+        private const int NUM_OF_BOMBER_SPRITES = 8;
+        private const int NUM_OF_FIGHTER_SPRITES = 7;
+
+        [SetUp]
+        public void SetuUp()
+        {
+            _bomberSprites = CreateSprites(NUM_OF_BOMBER_SPRITES);
+            _fighterSprites = CreateSprites(NUM_OF_FIGHTER_SPRITES);
+        }
+
+        private IList<Sprite> CreateSprites(int numOfSprites)
+        {
+            IList<Sprite> sprites = new List<Sprite>();
+
+            for (int i = 0; i < numOfSprites; ++i)
+            {
+                sprites.Add(Substitute.For<Sprite>());
+            }
+
+            return sprites;
+        }
+
+        [Test]
+        public void GetBomberSprites_ReversesList()
+        {
+            string bomberSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/bomber.png";
+            SpriteFetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
+
+            IList<Sprite> expectedSprites = _bomberSprites.Reverse().ToList();
+            IList<Sprite> bomberSprites = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
+
+            Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, bomberSprites));
+        }
+
+        [Test]
+        public void GetBomberSprites_InvalidNumberOfSprites_Throws()
+        {
+            string bomberSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/bomber.png";
+            _bomberSprites.RemoveAt(0);
+            SpriteFetcher.GetMultiSpritesAsync(bomberSpritesPath).Returns(Task.FromResult(_bomberSprites));
+
+            Assert.Throws<AggregateException>(() =>
+            {
+                var result = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Bomber).Result;
+            });
+        }
+
+        [Test]
+        public void GetFighterSprites_ReversesList()
+        {
+            string fighterSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/fighter.png";
+            SpriteFetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
+
+            IList<Sprite> expectedSprites = _fighterSprites.Reverse().ToList();
+            IList<Sprite> fighterSprites = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
+
+            Assert.IsTrue(Enumerable.SequenceEqual(expectedSprites, fighterSprites));
+        }
+
+        [Test]
+        public void GetFighterSprites_InvalidNumberOfSprites_Throws()
+        {
+            string fighterSpritesPath = "Assets/Resources_moved/Sprites/Buildables/Units/Aircraft/fighter.png";
+            _fighterSprites.RemoveAt(0);
+            SpriteFetcher.GetMultiSpritesAsync(fighterSpritesPath).Returns(Task.FromResult(_fighterSprites));
+
+            Assert.Throws<AggregateException>(() =>
+            {
+                var result = SpriteProvider.GetAircraftSpritesAsync(BattleCruisers.Utils.PrefabKeyName.Unit_Fighter).Result;
+            });
+        }
+    }
+}

@@ -1,0 +1,148 @@
+﻿using BattleCruisers.Data.Models;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Items;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
+using BattleCruisers.Utils.Properties;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen
+{
+    public abstract class ItemCategoryButton : ElementWithClickSound, IPointerClickHandler, IManagedDisposable
+    {
+        private ItemPanelsController _itemPanels;
+        private IBroadcastingProperty<ItemFamily?> _itemFamilyToCompare;
+        private GameModel _gameModel;
+        private bool _hasUnlockedItem;
+        private GameObject _selectedFeedback;
+        private NewItemMark _newItemMark;
+        // private RectTransform _itemCategoryButton;
+
+        private ComparingItemFamilyTracker _itemFamilyTracker;
+
+        public Vector2 buttonWidth;
+        public ItemType itemType;
+
+        protected abstract ItemFamily ItemFamily { get; }
+
+        private new bool IsSelected
+        {
+            set
+            {
+                _selectedFeedback.SetActive(value);
+            }
+        }
+
+        private CanvasGroup _canvasGroup;
+        protected override CanvasGroup CanvasGroup => _canvasGroup;
+
+        public void Initialise(
+            SingleSoundPlayer soundPlayer,
+            ItemPanelsController itemPanels,
+            IBroadcastingProperty<ItemFamily?> itemFamilyToCompare,
+            GameModel gameModel,
+            IList<ItemButton> itemButtons,
+            ComparingItemFamilyTracker itemFamilyTracker)
+        {
+            base.Initialise(soundPlayer);
+
+            Helper.AssertIsNotNull(itemPanels, itemFamilyToCompare, gameModel, itemButtons);
+
+            _itemPanels = itemPanels;
+            _itemPanels.PotentialMatchChange += _itemPanels_PotentialMatchChange;
+
+
+            _itemFamilyTracker = itemFamilyTracker;
+
+            _itemFamilyToCompare = itemFamilyToCompare;
+            _itemFamilyToCompare.ValueChanged += _itemFamilyToCompare_ValueChanged;
+
+            _gameModel = gameModel;
+            _hasUnlockedItem = itemPanels.GetPanel(itemType).HasUnlockedItem;
+
+            _canvasGroup = GetComponent<CanvasGroup>();
+            Assert.IsNotNull(_canvasGroup);
+
+            _selectedFeedback = transform.FindNamedComponent<Transform>("SelectedFeedback").gameObject;
+            // _itemCategoryButton = GetComponent<RectTransform>();
+            UpdateSelectedFeedback();
+
+            _newItemMark = GetComponentInChildren<NewItemMark>();
+            Assert.IsNotNull(_newItemMark);
+            SetupNewMarkVisibilityCallback(_gameModel);
+            UpdateNewItemMarkVisibility();
+
+            foreach (ItemButton button in itemButtons)
+            {
+                button.Clicked += (sender, e) => UpdateNewItemMarkVisibility();
+            }
+
+            Enabled = ShouldBeEnabled();
+        }
+
+        private void _itemPanels_PotentialMatchChange(object sender, EventArgs e)
+        {
+            UpdateSelectedFeedback();
+        }
+
+        private void _itemFamilyToCompare_ValueChanged(object sender, EventArgs e)
+        {
+            Enabled = ShouldBeEnabled();
+        }
+
+        private bool ShouldBeEnabled()
+        {
+            return _hasUnlockedItem
+                && (_itemFamilyToCompare.Value == null
+                    || _itemFamilyToCompare.Value == ItemFamily);
+        }
+
+        private void UpdateSelectedFeedback()
+        {
+            /* if (_itemPanels.IsMatch(itemType))
+             {
+                 _itemCategoryButton.sizeDelta = buttonWidth;
+             }
+             else
+             {
+                 _itemCategoryButton.sizeDelta = new Vector2(150, 150);
+             } */
+            IsSelected = _itemPanels.IsMatch(itemType);
+        }
+
+        public void OnClickedAction() { OnClicked(); }
+
+        protected override void OnClicked()
+        {
+            base.OnClicked();
+            _itemPanels.ShowItemsPanel(itemType);
+            _itemFamilyTracker.SetComparingFamily(ItemFamily);
+            _itemFamilyTracker.SetComparingFamily(null);
+        }
+
+        protected abstract void SetupNewMarkVisibilityCallback(GameModel gameModel);
+        protected abstract bool HasNewItems(GameModel gameModel);
+
+        protected void UpdateNewItemMarkVisibility()
+        {
+            if (_newItemMark == null)
+            {
+                return;
+            }
+            Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
+            _newItemMark.IsVisible = HasNewItems(_gameModel);
+            Logging.Log(Tags.LOADOUT_SCREEN, $"_newItemMark.IsVisible: {_newItemMark.IsVisible}");
+        }
+
+        public void DisposeManagedState()
+        {
+            CleanUp(_gameModel);
+        }
+
+        protected abstract void CleanUp(GameModel gameModel);
+    }
+}

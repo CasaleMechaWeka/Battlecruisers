@@ -1,0 +1,114 @@
+using BattleCruisers.Buildables;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI;
+using BattleCruisers.UI.Sound;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.BattleScene.Update;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.UI;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Common.BuildableDetails.Buttons
+{
+    public class PvPDeleteButtonController : PvPCanvasGroupButton
+    {
+        public GameObject PvPbuildingMenu;
+        private CanvasGroup PvPcanvasGroup;
+        private PvPUIManager _uiManager;
+        private IFilter<ITarget> _buttonVisibilityFilter;
+        private LongPressIdentifier _longPressIdentifier;
+
+        public float lightUpIntervalS = 0.25f;
+        public Image activeImage;
+        public List<Sprite> activeStateImages;
+        protected override SoundKey ClickSound => SoundKeys.UI.Delete;
+
+        private const int NUMBER_OF_ACTIVE_STATES = 3;
+
+        private IPvPBuildable _buildable;
+        public IPvPBuildable Buildable
+        {
+            private get { return _buildable; }
+            set
+            {
+                _buildable = value;
+                gameObject.SetActive(_buildable != null && (SynchedServerData.Instance.GetTeam() == Cruisers.Team.LEFT ? _buildable.Faction == Faction.Blues : _buildable.Faction == Faction.Reds) && _buttonVisibilityFilter.IsMatch(_buildable));
+            }
+        }
+
+        public void Initialise(
+            SingleSoundPlayer soundPlayer,
+            PvPUIManager uiManager,
+            IFilter<ITarget> buttonVisibilityFilter,
+            IUpdater updater
+            )
+        {
+            base.Initialise(soundPlayer);
+
+            PvPHelper.AssertIsNotNull(uiManager, buttonVisibilityFilter, updater);
+            Assert.IsNotNull(activeImage);
+            Assert.AreEqual(NUMBER_OF_ACTIVE_STATES, activeStateImages.Count);
+
+            _uiManager = uiManager;
+            _buttonVisibilityFilter = buttonVisibilityFilter;
+            _longPressIdentifier = new LongPressIdentifier(this, TimeBC.Instance, updater, lightUpIntervalS);
+
+            _longPressIdentifier.LongPressStart += _longPressIdentifier_LongPressStart;
+            _longPressIdentifier.LongPressEnd += _longPressIdentifier_LongPressEnd;
+            _longPressIdentifier.LongPressInterval += _longPressIdentifier_LongPressInterval;
+            PvPcanvasGroup = PvPbuildingMenu.GetComponent<CanvasGroup>();
+        }
+
+        private void _longPressIdentifier_LongPressStart(object sender, EventArgs e)
+        {
+            SetCanvasGroupProperties(false, false);
+            activeImage.sprite = activeStateImages[0];
+            activeImage.gameObject.SetActive(true);
+            _soundPlayer.PlaySoundAsync(ClickSound);
+            if (Buildable.BuildableState == PvPBuildableState.NotStarted)
+            {
+                Buildable.Destroy();
+            }
+        }
+
+        private void _longPressIdentifier_LongPressEnd(object sender, EventArgs e)
+        {
+            activeImage.gameObject.SetActive(false);
+            SetCanvasGroupProperties(true, true);
+        }
+
+        private void _longPressIdentifier_LongPressInterval(object sender, EventArgs e)
+        {
+            if (_longPressIdentifier.IntervalNumber >= NUMBER_OF_ACTIVE_STATES)
+            {
+                OnLongPressComplete();
+            }
+            else
+            {
+                activeImage.sprite = activeStateImages[_longPressIdentifier.IntervalNumber];
+            }
+        }
+
+        private void OnLongPressComplete()
+        {
+            _uiManager.HideItemDetails();
+            Buildable.Destroy();
+        }
+        private void SetCanvasGroupProperties(bool interactable, bool blocksRaycasts) //This function is made for BugFixing
+        {
+            if (PvPcanvasGroup != null)
+            {
+                PvPcanvasGroup.interactable = interactable;
+                PvPcanvasGroup.blocksRaycasts = blocksRaycasts;
+            }
+        }
+    }
+}

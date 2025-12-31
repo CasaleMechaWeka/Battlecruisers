@@ -1,0 +1,83 @@
+﻿using System.Collections.Generic;
+using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Tutorial.Steps.BoostSteps;
+using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.Tutorial.Steps.WaitSteps;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Threading;
+
+namespace BattleCruisers.Tutorial.Steps.Factories.EnemyUnit
+{
+    public class EnemyBomberStepsFactory : EnemyUnitDefenceStepsFactory
+    {
+        private readonly ICruiser _aiCruiser;
+        private readonly IDeferrer _deferrer;
+
+        protected override IPrefabKey FactoryKey => StaticPrefabKeys.Buildings.AirFactory;
+        protected override CameraFocuserTarget UnitCameraFocusTarget => CameraFocuserTarget.AICruiser;
+
+        private readonly BuildableInfo _unitToBuild;
+        protected override BuildableInfo UnitToBuild => _unitToBuild;
+
+        private readonly ISingleBuildableProvider _unitBuiltProvider;
+        protected override ISingleBuildableProvider UnitBuiltProvider => _unitBuiltProvider;
+
+        private readonly BuildableInfo _defenceToBuild;
+        protected override BuildableInfo DefenceToBuild => _defenceToBuild;
+
+        private readonly ISlotSpecification _slotSpecification;
+        protected override ISlotSpecification SlotSpecification => _slotSpecification;
+
+        public EnemyBomberStepsFactory(
+            TutorialStepArgsFactory argsFactory,
+            EnemyUnitArgs enemyUnitArgs,
+            ICruiser aiCruiser,
+            IDeferrer deferrer,
+            ISingleBuildableProvider unitBuiltProvider)
+            : base(argsFactory, enemyUnitArgs)
+        {
+            Helper.AssertIsNotNull(aiCruiser, deferrer, unitBuiltProvider);
+
+            _aiCruiser = aiCruiser;
+            _deferrer = deferrer;
+            _unitBuiltProvider = unitBuiltProvider;
+
+            string bomberName = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeys.Units.Bomber).Buildable.Name;
+            _unitToBuild = new BuildableInfo(StaticPrefabKeys.Units.Bomber, bomberName);
+
+            string airTurretName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.AntiAirTurret).Buildable.Name;
+            _defenceToBuild = new BuildableInfo(StaticPrefabKeys.Buildings.AntiAirTurret, airTurretName);
+
+            _slotSpecification = new SlotSpecification(SlotType.Deck, BuildingFunction.AntiAir, preferCruiserFront: true);
+        }
+
+        protected override IList<TutorialStep> CreateSpeedBoostSteps(string unitUpcomingText)
+        {
+            IBoostProvider boostProvider = new BoostProvider(boostMultiplier: 8);
+
+            return new List<TutorialStep>()
+            {
+                new AddAircraftBoostStep(
+                    _argsFactory.CreateTutorialStepArgs(unitUpcomingText),
+                    _aiCruiser.CruiserSpecificFactories.GlobalBoostProviders,
+                    boostProvider),
+
+                new DelayWaitStep(
+                    _argsFactory.CreateTutorialStepArgs(),
+                    _deferrer,
+                    waitTimeInS: 3.2f),
+
+                new RemoveAircraftBoostStep(
+                    _argsFactory.CreateTutorialStepArgs(),
+                    _aiCruiser.CruiserSpecificFactories.GlobalBoostProviders,
+                    boostProvider)
+            };
+        }
+    }
+}

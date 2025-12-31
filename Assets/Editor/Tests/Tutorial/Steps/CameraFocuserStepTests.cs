@@ -1,0 +1,70 @@
+﻿using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.UI.BattleScene.Navigation;
+using NSubstitute;
+using NUnit.Framework;
+
+namespace BattleCruisers.Tests.Tutorial.Steps
+{
+    public class CameraFocuserStepTests : TutorialStepTestsBase
+    {
+        private ICameraFocuser _cameraFocuser;
+
+        [SetUp]
+        public override void SetuUp()
+        {
+            base.SetuUp();
+
+            _cameraFocuser = Substitute.For<ICameraFocuser>();
+        }
+
+        [Test]
+        public void Start_PlayerCruiserTarget()
+        {
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.PlayerCruiser);
+            step.Start(_completionCallback);
+
+            _cameraFocuser.Received().FocusOnLeftCruiser();
+            Assert.AreEqual(1, _callbackCounter);
+        }
+
+        [Test]
+        public void Start_AICruiserTarget()
+        {
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiser);
+            step.Start(_completionCallback);
+
+            _cameraFocuser.Received().FocusOnRightCruiser();
+            Assert.AreEqual(1, _callbackCounter);
+        }
+
+        [Test]
+        public void Start_AICruiserNavalFactoryTarget()
+        {
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.AICruiserNavalFactory);
+            step.Start(_completionCallback);
+
+            _cameraFocuser.Received().FocusOnRightNavalFactory();
+            Assert.AreEqual(1, _callbackCounter);
+        }
+
+        [Test]
+        public void Start_MidLeftTarget()
+        {
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.MidLeft);
+            step.Start(_completionCallback);
+
+            _cameraFocuser.Received().FocusMidLeft();
+            Assert.AreEqual(1, _callbackCounter);
+        }
+
+        [Test]
+        public void Start_OverviewTarget()
+        {
+            TutorialStep step = new CameraFocuserStep(_args, _cameraFocuser, CameraFocuserTarget.Overview);
+            step.Start(_completionCallback);
+
+            _cameraFocuser.Received().FocusOnOverview();
+            Assert.AreEqual(1, _callbackCounter);
+        }
+    }
+}

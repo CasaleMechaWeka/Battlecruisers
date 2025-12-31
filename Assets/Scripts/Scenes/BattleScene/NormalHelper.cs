@@ -1,0 +1,156 @@
+﻿using BattleCruisers.AI;
+using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Data.Static.Strategies.Helper;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Common.BuildableDetails.Buttons;
+using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
+using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.Timers;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Scenes.BattleScene
+{
+    public class NormalHelper : BattleSceneHelper
+    {
+        private readonly IDeferrer _deferrer;
+
+        private UIManager _uiManager;
+        private const int IN_GAME_HINTS_CUTOFF = 4;
+
+        public override bool ShowInGameHints { get; }
+
+        private readonly BuildingCategoryFilter _buildingCategoryFilter;
+        public override BuildingCategoryFilter BuildingCategoryPermitter => _buildingCategoryFilter;
+
+        public NormalHelper(
+            IDeferrer deferrer)
+            : base()
+        {
+            Helper.AssertIsNotNull(deferrer);
+
+            _deferrer = deferrer;
+
+            ShowInGameHints =
+                DataProvider.SettingsManager.ShowInGameHints
+                && DataProvider.GameModel.NumOfLevelsCompleted <= IN_GAME_HINTS_CUTOFF;
+
+            // For the real game want to enable all building categories :)
+            _buildingCategoryFilter = new BuildingCategoryFilter();
+            _buildingCategoryFilter.AllowAllCategories();
+        }
+
+        public override Loadout GetPlayerLoadout()
+        {
+            return DataProvider.GameModel.PlayerLoadout;
+        }
+
+        public override IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum)
+        {
+            LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser);
+            IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
+            AIManager aiManager = new AIManager(_deferrer, playerCruiser, strategyFactory);
+            return aiManager.CreateAI(levelInfo);
+        }
+
+        public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
+        {
+            return _calculatorFactory.CreatePlayerCruiserCalculator();
+        }
+
+        public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
+        {
+            return _calculatorFactory.CreateIncrementalAICruiserCalculator(FindDifficulty(), ApplicationModel.SelectedLevel, false);
+        }
+
+        protected virtual Difficulty FindDifficulty()
+        {
+            return DataProvider.SettingsManager.AIDifficulty;
+        }
+
+        protected virtual IStrategyFactory CreateStrategyFactory(int currentLevelNum)
+        {
+            return new DefaultStrategyFactory(StaticData.Strategies, StaticData.SideQuestStrategies, currentLevelNum, ApplicationModel.Mode == GameMode.SideQuest);
+        }
+
+        public override IFilter<Slot> CreateHighlightableSlotFilter()
+        {
+            return new FreeSlotFilter();
+        }
+
+        public override ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
+        {
+            return
+                new ButtonVisibilityFilters(
+                    new AffordableBuildableFilter(droneManager),
+                    _buildingCategoryFilter,
+                    new ChooseTargetButtonVisibilityFilter(),
+                    new DeleteButtonVisibilityFilter(),
+                    new BroadcastingFilter(isMatch: true),
+                    new StaticBroadcastingFilter(isMatch: true));
+        }
+
+        public override IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
+        {
+            return
+                new DroneEventSoundPlayer(
+                    new DroneManagerMonitor(playerCruiser.DroneManager, deferrer),
+                    FactoryProvider.Sound.IPrioritisedSoundPlayer,
+                    new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS: 20));
+        }
+
+        public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
+        {
+            return FactoryProvider.Sound.IPrioritisedSoundPlayer;
+        }
+
+        public override UIManager CreateUIManager()
+        {
+            Assert.IsNull(_uiManager, "Should only call CreateUIManager() once");
+            _uiManager = new UIManager();
+            return _uiManager;
+        }
+
+        public override void InitialiseUIManager(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            BuildMenu buildMenu,
+            ItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            SingleSoundPlayer uiSoundPlayer)
+        {
+            Assert.IsNotNull(_uiManager, "Should only call after CreateUIManager()");
+            _uiManager.Initialise(playerCruiser,
+                aiCruiser,
+                buildMenu,
+                detailsManager,
+                soundPlayer,
+                uiSoundPlayer);
+        }
+
+        public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            TargetIndicatorController targetIndicator)
+        {
+            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
+
+            return new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
+        }
+    }
+}

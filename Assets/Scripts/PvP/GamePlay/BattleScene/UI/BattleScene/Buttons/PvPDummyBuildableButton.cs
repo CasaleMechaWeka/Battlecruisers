@@ -1,0 +1,28 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Tutorial.Highlighting;
+using System;
+using UnityEngine;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons
+{
+    public class PvPDummyBuildableButton : IPvPBuildableButton
+    {
+        public IPvPBuildable Buildable => null;
+        public Color Color { set { /* empty */ } }
+        public bool IsPresented { get; set; }
+
+#pragma warning disable 67  // Unused event
+        public event EventHandler Clicked;
+        public event EventHandler Dismissed;
+#pragma warning restore 67  // Unused event
+
+        public HighlightArgs CreateHighlightArgs(HighlightArgsFactory highlightArgsFactory)
+        {
+            return null;
+        }
+
+        public void OnDismissing() { }
+        public void OnPresenting(object activationParameter) { }
+        public void TriggerClick() { }
+    }
+}

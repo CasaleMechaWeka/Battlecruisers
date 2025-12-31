@@ -1,0 +1,108 @@
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Cruisers.Construction;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.ClickHandlers;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Sorting;
+using BattleCruisers.UI.Cameras.Helpers;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.BuildMenus
+{
+    public class PvPBuildMenuInitialiser : MonoBehaviour
+    {
+        public AudioClip buildingButtonSelectedSound, selectorOpeningSound;
+
+        public PvPBuildMenu Initialise(
+            PvPCruiser playerCruiser,
+            PvPUIManager uiManager,
+            IList<IPvPBuildingGroup> buildingGroups,
+            IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> units,
+            PvPButtonVisibilityFilters buttonVisibilityFilters,
+            IPlayerCruiserFocusHelper playerCruiserFocusHelper,
+            IPrioritisedSoundPlayer eventSoundPlayer,
+            SingleSoundPlayer uiSoundPlayer,
+            IPopulationLimitMonitor populationLimitMonitor,
+            bool flipClickAndDragIcon)
+        {
+            PvPHelper.AssertIsNotNull(
+                uiManager,
+                buildingGroups,
+                units,
+                buttonVisibilityFilters,
+                playerCruiserFocusHelper,
+                eventSoundPlayer,
+                uiSoundPlayer,
+                populationLimitMonitor,
+                flipClickAndDragIcon);
+            PvPHelper.AssertIsNotNull(buildingButtonSelectedSound, selectorOpeningSound);
+
+            // Selector panel
+            PvPSelectorPanelController selectorPanel = GetComponentInChildren<PvPSelectorPanelController>();
+            Assert.IsNotNull(selectorPanel);
+            selectorPanel.Initialise(uiManager, buttonVisibilityFilters, uiSoundPlayer);
+
+            // Building categories menu
+            PvPBuildingCategoriesMenu buildingCategoriesMenu = GetComponentInChildren<PvPBuildingCategoriesMenu>();
+            Assert.IsNotNull(buildingCategoriesMenu);
+            buildingCategoriesMenu.Initialise(uiSoundPlayer, uiManager, buttonVisibilityFilters, buildingGroups);
+
+            // Building menus
+            PvPBuildingMenus buildingMenus = GetComponentInChildren<PvPBuildingMenus>();
+            Assert.IsNotNull(buildingMenus);
+            IPvPBuildableSorter<IPvPBuilding> buildingSorter = new PvPBuildingUnlockedLevelSorter();
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = ConvertGroupsToDictionary(buildingGroups);
+            PvPBuildingClickHandler buildingClickHandler
+                = new PvPBuildingClickHandler(
+                    uiManager,
+                    eventSoundPlayer,
+                    uiSoundPlayer,
+                    playerCruiserFocusHelper,
+                    new AudioClipWrapper(buildingButtonSelectedSound));
+            buildingMenus.Initialise(categoryToBuildings, uiManager, buttonVisibilityFilters, buildingSorter, uiSoundPlayer, buildingClickHandler, flipClickAndDragIcon);
+
+            // Unit menus
+            PvPUnitClickHandler unitClickHandler
+                = new PvPUnitClickHandler(
+                    playerCruiser,
+                    uiManager,
+                    eventSoundPlayer,
+                    uiSoundPlayer,
+                    new PvPPopulationLimitReachedDecider(populationLimitMonitor));
+            PvPUnitMenus unitMenus = GetComponentInChildren<PvPUnitMenus>();
+            Assert.IsNotNull(unitMenus);
+            IPvPBuildableSorter<IPvPUnit> unitSorter = new PvPUnitUnlockedLevelSorter();
+            unitMenus.Initialise(units, uiManager, buttonVisibilityFilters, unitSorter, uiSoundPlayer, unitClickHandler);
+
+            return
+                new PvPBuildMenu(
+                    selectorPanel,
+                    buildingCategoriesMenu,
+                    buildingMenus,
+                    unitMenus,
+                    uiSoundPlayer,
+                    new AudioClipWrapper(selectorOpeningSound));
+        }
+
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> ConvertGroupsToDictionary(IList<IPvPBuildingGroup> buildingGroups)
+        {
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
+
+            foreach (IPvPBuildingGroup group in buildingGroups)
+            {
+                categoryToBuildings.Add(group.BuildingCategory, group.Buildings);
+            }
+
+            return categoryToBuildings;
+        }
+    }
+}

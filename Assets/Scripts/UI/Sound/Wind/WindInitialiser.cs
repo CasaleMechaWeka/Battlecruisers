@@ -1,0 +1,33 @@
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.UI.Cameras.Helpers.Calculators;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.PlatformAbstractions;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.UI.Sound.Wind
+{
+    public class WindInitialiser : MonoBehaviour
+    {
+        public AudioSource audioSource;
+
+        public WindManager Initialise(
+            ICamera camera,
+            CameraCalculatorSettings cameraCalculatorSettings,
+            SettingsManager settingsManager)
+        {
+            Assert.IsNotNull(audioSource);
+            Helper.AssertIsNotNull(camera, cameraCalculatorSettings, settingsManager);
+
+            return
+                new WindManager(
+                    new AudioSourceBC(audioSource),
+                    camera,
+                    new VolumeCalculator(
+                        cameraCalculatorSettings.ValidOrthographicSizes,
+                        settingsManager),
+                    settingsManager);
+        }
+    }
+}

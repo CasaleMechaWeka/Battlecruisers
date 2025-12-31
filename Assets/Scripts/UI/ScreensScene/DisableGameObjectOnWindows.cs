@@ -1,0 +1,15 @@
+using UnityEngine;
+
+public class DisableGameObjectOnWindows : MonoBehaviour
+{
+
+    void Start()
+    {
+        if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.WindowsEditor ||
+     UnityEngine.Application.platform == UnityEngine.RuntimePlatform.WindowsPlayer)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+}

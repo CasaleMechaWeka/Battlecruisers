@@ -1,0 +1,66 @@
+﻿using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.Tutorial.Steps;
+using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using NSubstitute;
+using NUnit.Framework;
+
+namespace BattleCruisers.Tests.Tutorial.Steps.ClickSteps
+{
+    public class BuildingButtonStepTests : TutorialStepTestsBase
+    {
+        private TutorialStep _clickStep;
+        private IBuildableButton _buildableButton;
+        private BuildingNameFilter _buildingPermitter;
+        private IPrefabKey _buildingToAllow;
+        private SpecificSlotsFilter _slotPermitter;
+        private Slot _slot;
+        private SlotProvider _slotProvider;
+        private IItemProvider<Slot> _explicitSlotProvider;
+
+        [SetUp]
+        public override void SetuUp()
+        {
+            base.SetuUp();
+
+            _buildableButton = Substitute.For<IBuildableButton>();
+            _buildingPermitter = Substitute.For<BuildingNameFilter>();
+            _buildingToAllow = Substitute.For<IPrefabKey>();
+
+            _slotPermitter = Substitute.For<SpecificSlotsFilter>();
+
+            _slot = Substitute.For<Slot>();
+            _slotProvider = Substitute.For<SlotProvider>();
+
+            _explicitSlotProvider = _slotProvider;
+            _explicitSlotProvider.FindItem().Returns(_slot);
+
+            _clickStep = new BuildingButtonStep(_args, _buildableButton, _buildingPermitter, _buildingToAllow, _slotProvider, _slotPermitter);
+        }
+
+        [Test]
+        public void Start_PermitsBuilding()
+        {
+            _clickStep.Start(_completionCallback);
+
+            _buildingPermitter.Received().PermittedBuilding = _buildingToAllow;
+            _slotPermitter.Received().PermittedSlot = _slot;
+        }
+
+        [Test]
+        public void Click_PermittedBuildingCleared()
+        {
+            Start_PermitsBuilding();
+            _slotPermitter.ClearReceivedCalls();
+
+            _buildableButton.Clicked += Raise.Event();
+
+            _buildingPermitter.Received().PermittedBuilding = null;
+            _slotPermitter.DidNotReceiveWithAnyArgs().PermittedSlot = null;
+        }
+    }
+}

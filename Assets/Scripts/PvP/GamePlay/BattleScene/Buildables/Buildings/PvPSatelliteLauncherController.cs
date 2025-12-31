@@ -1,0 +1,54 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Pools;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene.ProgressBars;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using Unity.Netcode.Components;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings
+{
+    public abstract class PvPSatelliteLauncherController : PvPBuilding
+    {
+        private IPvPUnit _satellite;
+
+        public PvPUnitWrapper satellitePrefab;
+
+        protected abstract Vector3 SpawnPositionAdjustment { get; }
+
+        public override void StaticInitialise(GameObject parent, PvPHealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
+            Assert.IsNotNull(satellitePrefab);
+        }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+
+            _satellite = PvPPrefabFactory.CreateUnit(satellitePrefab);
+            _satellite.Position = transform.position + SpawnPositionAdjustment;
+            // pvp
+            _satellite.GameObject.GetComponent<NetworkTransform>().Teleport(transform.position + SpawnPositionAdjustment, transform.rotation, transform.localScale);
+
+            _satellite.Activate(
+                new PvPBuildableActivationArgs(
+                    ParentCruiser,
+                    EnemyCruiser,
+                    _cruiserSpecificFactories,
+                    variantIndex));
+
+            _satellite.StartConstruction();
+        }
+
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed();
+
+            if (BuildableState == PvPBuildableState.Completed)
+            {
+                _satellite.Destroy();
+            }
+        }
+    }
+}

@@ -1,0 +1,182 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Drones;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Targets.TargetTrackers.UserChosen;
+using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.BuildMenus;
+using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Manager;
+using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Common.BuildableDetails;
+using BattleCruisers.UI.Filters;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Threading;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Scenes.BattleScene
+{
+    public class TutorialHelper : BattleSceneHelper
+    {
+        private readonly SpecificSlotsFilter _slotFilter;
+        private readonly BuildingNameFilter _buildingNameFilter;
+        private readonly BuildingCategoryFilter _buildingCategoryFilter;
+        private readonly BroadcastingFilter _backButtonPermitter;
+        private LimitableUIManager _uiManager;
+        private IBuildProgressCalculator _playerBuildProgressCalculator, _aiBuildProgressCalculator;
+
+        public override bool ShowInGameHints => false;
+        public SpecificSlotsFilter SlotPermitter => _slotFilter;
+        public override BuildingCategoryFilter BuildingCategoryPermitter => _buildingCategoryFilter;
+        public IBroadcastingFilter<IBuildable> ShouldBuildingBeEnabledFilter => _buildingNameFilter;
+        public BuildingNameFilter BuildingPermitter => _buildingNameFilter;
+        public UIManagerPermissions UIManagerPermissions { get; private set; }
+        public NavigationPermitters NavigationPermitters { get; }
+
+        private BroadcastingFilter _speedButtonsFilter;
+        public IPermitter SpeedButtonsPermitter => _speedButtonsFilter;
+
+        public ISingleBuildableProvider SingleAircraftProvider { get; }
+        public ISingleBuildableProvider SingleShipProvider { get; }
+        public ISingleBuildableProvider SingleOffensiveProvider { get; }
+
+        public CompositeCalculator PlayerCruiserBuildSpeedController { get; }
+        public CompositeCalculator AICruiserBuildSpeedController { get; }
+
+        public TutorialHelper(NavigationPermitters navigationPermitters)
+            : base()
+        {
+            NavigationPermitters = navigationPermitters;
+
+            _slotFilter = new SpecificSlotsFilter();
+            _buildingNameFilter = new BuildingNameFilter();
+            _buildingCategoryFilter = new BuildingCategoryFilter();
+            _backButtonPermitter = new BroadcastingFilter(isMatch: false);
+            SingleAircraftProvider = new SingleBuildableProvider(GameObjectTags.AIRCRAFT);
+            SingleShipProvider = new SingleBuildableProvider(GameObjectTags.SHIP);
+            SingleOffensiveProvider = new SingleBuildableProvider(GameObjectTags.OFFENSIVE);
+            _speedButtonsFilter = new BroadcastingFilter(isMatch: false);
+
+            IBuildProgressCalculator slowCalculator = new AsymptoticCalculator();
+            IBuildProgressCalculator normalCalculator = new LinearCalculator(BuildSpeedMultipliers.DEFAULT_TUTORIAL);
+            IBuildProgressCalculator fastCalculator = new LinearCalculator(BuildSpeedMultipliers.FAST);
+
+            CompositeCalculator playerCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
+            _playerBuildProgressCalculator = playerCruiserBuildSpeedCalculator;
+            PlayerCruiserBuildSpeedController = playerCruiserBuildSpeedCalculator;
+
+            CompositeCalculator aiCruiserBuildSpeedCalculator = new CompositeCalculator(slowCalculator, normalCalculator, fastCalculator);
+            _aiBuildProgressCalculator = aiCruiserBuildSpeedCalculator;
+            AICruiserBuildSpeedController = aiCruiserBuildSpeedCalculator;
+        }
+
+        public override Loadout GetPlayerLoadout()
+        {
+            return StaticData.InitialGameModel.PlayerLoadout;
+        }
+
+        public override IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum)
+        {
+            // There is no AI for the tutorial :)
+            return new DummyManagedDisposable();
+        }
+
+        public override IFilter<Slot> CreateHighlightableSlotFilter()
+        {
+            return _slotFilter;
+        }
+
+        public ISingleBuildableProvider CreateLastIncompleteBuildingStartedProvider(ICruiserController cruiser)
+        {
+            return new LastIncompleteBuildingStartedProvider(cruiser.BuildingMonitor);
+        }
+
+        public IFilter<ITarget> CreateDeletButtonVisiblityFilter()
+        {
+            return new StaticFilter<ITarget>(isMatch: false);
+        }
+
+        public override ButtonVisibilityFilters CreateButtonVisibilityFilters(DroneManager droneManager)
+        {
+            return
+                new ButtonVisibilityFilters(
+                    _buildingNameFilter,
+                    _buildingCategoryFilter,
+                    new StaticFilter<ITarget>(isMatch: false),
+                    new StaticFilter<ITarget>(isMatch: false),
+                    _backButtonPermitter,
+                    _speedButtonsFilter);
+        }
+
+        public override IManagedDisposable CreateDroneEventSoundPlayer(ICruiser playerCruiser, IDeferrer deferrer)
+        {
+            return new DummyManagedDisposable();
+        }
+
+        public override IPrioritisedSoundPlayer GetBuildableButtonSoundPlayer(ICruiser playerCruiser)
+        {
+            return new DummySoundPlayer();
+        }
+
+        public override UIManager CreateUIManager()
+        {
+            Assert.IsNull(_uiManager, "CreateUIManager() should only be called once");
+            _uiManager = new LimitableUIManager();
+            return _uiManager;
+        }
+
+        public override void InitialiseUIManager(
+            ICruiser playerCruiser,
+            ICruiser aiCruiser,
+            BuildMenu buildMenu,
+            ItemDetailsManager detailsManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            SingleSoundPlayer uiSoundPlayer)
+        {
+            Assert.IsNotNull(_uiManager, "InitialiseUIManager() should only be called after CreaetUIManager()");
+
+            UIManagerPermissions uiManagerPermissions = new UIManagerPermissions()
+            {
+                CanDismissItemDetails = false,
+                CanShowItemDetails = false
+            };
+            UIManagerPermissions = uiManagerPermissions;
+
+            _uiManager.Initialise(playerCruiser,
+                aiCruiser,
+                buildMenu,
+                detailsManager,
+                soundPlayer,
+                uiSoundPlayer,
+                uiManagerPermissions);
+        }
+
+        public override IUserChosenTargetHelper CreateUserChosenTargetHelper(
+            IUserChosenTargetManager playerCruiserUserChosenTargetManager,
+            IPrioritisedSoundPlayer soundPlayer,
+            TargetIndicatorController targetIndicator)
+        {
+            Helper.AssertIsNotNull(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator);
+
+            return
+                new TogglableUserChosenTargetHelper(
+                    new UserChosenTargetHelper(playerCruiserUserChosenTargetManager, soundPlayer, targetIndicator),
+                    false);
+        }
+
+        public override IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator()
+        {
+            return _playerBuildProgressCalculator;
+        }
+
+        public override IBuildProgressCalculator CreateAICruiserBuildProgressCalculator()
+        {
+            return _aiBuildProgressCalculator;
+        }
+    }
+}

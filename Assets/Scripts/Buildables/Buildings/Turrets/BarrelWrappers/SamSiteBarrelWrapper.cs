@@ -1,0 +1,21 @@
+﻿using BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers;
+using BattleCruisers.Targets.TargetFinders.Filters;
+using BattleCruisers.Utils;
+
+namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
+{
+    public class SamSiteBarrelWrapper : DirectFireBarrelWrapper
+    {
+        protected override void InitialiseBarrelController(BarrelController barrel, BarrelControllerArgs args)
+        {
+            IExactMatchTargetFilter exatMatchTargetFilter = args.TargetFilter.Parse<IExactMatchTargetFilter>();
+            SamSiteBarrelController samSiteBarrel = barrel.Parse<SamSiteBarrelController>();
+            _ = samSiteBarrel.InitialiseAsync(exatMatchTargetFilter, args);
+        }
+
+        protected override ITargetFilter CreateTargetFilter()
+        {
+            return new ExactMatchTargetFilter();
+        }
+    }
+}

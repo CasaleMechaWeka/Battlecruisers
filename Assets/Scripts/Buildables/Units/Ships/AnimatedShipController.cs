@@ -1,0 +1,43 @@
+﻿using BattleCruisers.Effects.Movement;
+using BattleCruisers.UI.BattleScene.ProgressBars;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Buildables.Units.Ships
+{
+    public class AnimatedShipController : ShipController
+    {
+        private ShipMovementEffect _movementEffects;
+        public MovementEffectInitialiser movementEffectInitialiser;
+
+        public override void StaticInitialise(GameObject parent, HealthBarController healthBar)
+        {
+            base.StaticInitialise(parent, healthBar);
+
+            Assert.IsNotNull(movementEffectInitialiser, $"MovementEffectInitialiser is null for {name}");
+            _movementEffects = movementEffectInitialiser.CreateMovementEffects();
+        }
+
+        protected override void OnBuildableCompleted()
+        {
+            base.OnBuildableCompleted();
+            _movementEffects.Show();
+        }
+
+        protected override void StartMovementEffects()
+        {
+            _movementEffects.StartEffects();
+        }
+
+        protected override void StopMovementEffects()
+        {
+            _movementEffects.StopEffects();
+        }
+
+        protected override void Deactivate()
+        {
+            base.Deactivate();
+            _movementEffects.ResetAndHide();
+        }
+    }
+}

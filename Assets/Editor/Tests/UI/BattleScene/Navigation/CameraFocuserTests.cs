@@ -1,0 +1,141 @@
+﻿using BattleCruisers.UI.BattleScene.Navigation;
+using BattleCruisers.UI.Cameras.Adjusters;
+using BattleCruisers.UI.Cameras.Targets;
+using BattleCruisers.UI.Cameras.Targets.Providers;
+using NSubstitute;
+using NUnit.Framework;
+
+namespace BattleCruisers.Tests.UI.BattleScene.Navigation
+{
+    public class CameraFocuserTests
+    {
+        private ICameraFocuser _cameraFocuser;
+        private ICameraTargets _targets;
+        private StaticCameraTargetProvider _trumpCameraTargetProvider, _defaultCameraTargetProvider;
+        private CameraTransitionSpeedManager _cameraTransitionSpeedManager;
+        private CameraTarget _target;
+
+        [SetUp]
+        public void TestSetup()
+        {
+            _targets = Substitute.For<ICameraTargets>();
+            _trumpCameraTargetProvider = Substitute.For<StaticCameraTargetProvider>();
+            _defaultCameraTargetProvider = Substitute.For<StaticCameraTargetProvider>();
+            _cameraTransitionSpeedManager = Substitute.For<CameraTransitionSpeedManager>();
+
+            _cameraFocuser = new CameraFocuser(_targets, _trumpCameraTargetProvider, _defaultCameraTargetProvider, _cameraTransitionSpeedManager);
+
+            _target = Substitute.For<CameraTarget>();
+        }
+
+        [Test]
+        public void FocusOnPlayerCruiser()
+        {
+            _targets.PlayerCruiserTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnLeftCruiser();
+
+            _cameraTransitionSpeedManager.Received().SetNormalTransitionSpeed();
+            _defaultCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnPlayerCruiserZoomedOut()
+        {
+            _targets.PlayerCruiserDeathTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnLeftCruiserDeath();
+
+            _cameraTransitionSpeedManager.Received().SetSlowTransitionSpeed();
+            _trumpCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnPlayerNavalFactory()
+        {
+            _targets.PlayerNavalFactoryTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnLeftNavalFactory();
+
+            _cameraTransitionSpeedManager.Received().SetNormalTransitionSpeed();
+            _defaultCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnAICruiser()
+        {
+            _targets.EnemyCruiserTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnRightCruiser();
+
+            _cameraTransitionSpeedManager.Received().SetNormalTransitionSpeed();
+            _defaultCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnAICruiserZoomedOut()
+        {
+            _targets.EnemyCruiserDeathTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnRightCruiserDeath();
+
+            _cameraTransitionSpeedManager.Received().SetSlowTransitionSpeed();
+            _trumpCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnAINavalFactory()
+        {
+            _targets.EnemyNavalFactoryTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnRightNavalFactory();
+
+            _cameraTransitionSpeedManager.Received().SetNormalTransitionSpeed();
+            _defaultCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnMidLeft()
+        {
+            _targets.MidLeftTarget.Returns(_target);
+
+            _cameraFocuser.FocusMidLeft();
+
+            _cameraTransitionSpeedManager.Received().SetNormalTransitionSpeed();
+            _defaultCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnOverview()
+        {
+            _targets.OverviewTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnOverview();
+
+            _cameraTransitionSpeedManager.Received().SetNormalTransitionSpeed();
+            _defaultCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnPlayerCruiserNuke()
+        {
+            _targets.PlayerCruiserNukedTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnLeftCruiserNuke();
+
+            _cameraTransitionSpeedManager.Received().SetSlowTransitionSpeed();
+            _trumpCameraTargetProvider.Received().SetTarget(_target);
+        }
+
+        [Test]
+        public void FocusOnAICruiserNuke()
+        {
+            _targets.EnemyCruiserNukedTarget.Returns(_target);
+
+            _cameraFocuser.FocusOnRightCruiserNuke();
+
+            _cameraTransitionSpeedManager.Received().SetSlowTransitionSpeed();
+            _trumpCameraTargetProvider.Received().SetTarget(_target);
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿using BattleCruisers.UI.Filters;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Tutorial.Steps.Factories
+{
+    public class MousePanStepsFactory : SwipeStepsFactoryBase
+    {
+        private readonly IPermitter _scrollWheelPermitter;
+
+        public MousePanStepsFactory(
+            TutorialStepArgsFactory argsFactory,
+            FeaturePermitterStepFactory featurePermitterStepFactory,
+            IPermitter swipePermitter,
+            IPermitter scrollWheelPermitter,
+            ExplanationDismissableStepFactory explanationDismissableStepFactory)
+            : base(
+                  argsFactory,
+                  featurePermitterStepFactory,
+                  swipePermitter,
+                  explanationDismissableStepFactory,
+                  "Steps/MousePan")
+        {
+            Assert.IsNotNull(scrollWheelPermitter);
+            _scrollWheelPermitter = scrollWheelPermitter;
+        }
+
+        protected override void EnableNavigation(IList<TutorialStep> steps)
+        {
+            base.EnableNavigation(steps);
+            steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: true));
+        }
+
+        protected override void DisableNavigation(IList<TutorialStep> steps)
+        {
+            base.DisableNavigation(steps);
+            steps.Add(_featurePermitterStepFactory.CreateStep(_scrollWheelPermitter, enableFeature: false));
+        }
+    }
+}

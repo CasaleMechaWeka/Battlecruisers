@@ -1,0 +1,72 @@
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Utils;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Cruisers.Slots
+{
+    public class PvPSlotInitialiser
+    {
+        private const int DEFAULT_NUM_OF_NEIGHBOURS = 2;
+
+        public IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> InitialiseSlots(IPvPCruiser parentCruiser, IList<PvPSlot> slots)
+        {
+            Helper.AssertIsNotNull(parentCruiser, slots);
+
+            // Sort slots by position (cruiser front to cruiser rear)
+            slots
+                = slots
+                    .OrderBy(slot => slot.Index)
+                    .ToList();
+
+            // Initialise slots
+            for (int i = 0; i < slots.Count; ++i)
+            {
+                PvPSlot slot = slots[i];
+                ReadOnlyCollection<PvPSlot> neighbouringSlots = FindSlotNeighbours(slots, i);
+                slot.Initialise(parentCruiser, neighbouringSlots);
+                slot.IsVisibleRederer = false;
+            }
+
+            return CreateSlotsMap(slots);
+        }
+
+        private ReadOnlyCollection<PvPSlot> FindSlotNeighbours(IList<PvPSlot> slots, int slotIndex)
+        {
+            List<PvPSlot> neighbouringSlots = new List<PvPSlot>(DEFAULT_NUM_OF_NEIGHBOURS);
+
+            // Add slot to the front
+            if (slotIndex != 0)
+            {
+                neighbouringSlots.Add(slots[slotIndex - 1]);
+            }
+
+            // Add slot to the rear
+            if (slotIndex != slots.Count - 1)
+            {
+                neighbouringSlots.Add(slots[slotIndex + 1]);
+            }
+
+            return neighbouringSlots.AsReadOnly();
+        }
+
+        private IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> CreateSlotsMap(IList<PvPSlot> slots)
+        {
+            IDictionary<SlotType, ReadOnlyCollection<PvPSlot>> typeToSlots = new Dictionary<SlotType, ReadOnlyCollection<PvPSlot>>();
+
+            foreach (SlotType slotType in (SlotType[])Enum.GetValues(typeof(SlotType)))
+            {
+                ReadOnlyCollection<PvPSlot> slotsOfType
+                    = slots
+                        .Where(slot => slot.Type == slotType)
+                        .ToList()
+                        .AsReadOnly();
+                typeToSlots.Add(slotType, slotsOfType);
+            }
+
+            return typeToSlots;
+        }
+    }
+}

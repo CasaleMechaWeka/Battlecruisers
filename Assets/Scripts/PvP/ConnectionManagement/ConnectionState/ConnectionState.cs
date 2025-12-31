@@ -1,0 +1,38 @@
+using BattleCruisers.Network.Multiplay.Infrastructure;
+using Unity.Netcode;
+
+namespace BattleCruisers.Network.Multiplay.ConnectionManagement
+{
+    abstract class ConnectionState
+    {
+        protected ConnectionManager m_ConnectionManager;
+
+        protected IPublisher<ConnectStatus> m_ConnectStatusPublisher;
+
+        public ConnectionState(
+            ConnectionManager connectionManager,
+            IPublisher<ConnectStatus> connectStatusPublisher)
+        {
+            m_ConnectionManager = connectionManager;
+            m_ConnectStatusPublisher = connectStatusPublisher;
+        }
+
+        public abstract void Enter();
+        public virtual void Exit() { }
+
+        public virtual void OnClientConnected(ulong clientId) { }
+        public virtual void OnClientDisconnect(ulong clientId) { }
+
+        public virtual void OnServerStarted() { }
+        public virtual void StartClientIP(string playerName, string ipaddress, int port) { }
+        public virtual void StartClientLobby(string playerName) { }
+        public virtual void StartHostIP(string playerName, string ipaddress, int port) { }
+        public virtual void StartHostLobby(string playerName) { }
+        public virtual void OnUserRequestedShutdown() { }
+        public virtual void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response) { }
+        public virtual void OnTransportFailure() { }
+        public virtual void LeaveLobby() { }
+        public virtual void LockLobby() { }
+    }
+}
+

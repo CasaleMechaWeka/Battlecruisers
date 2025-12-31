@@ -1,0 +1,31 @@
+﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Buildings.Turrets.Stats;
+using BattleCruisers.Buildables.Units;
+using BattleCruisers.Effects;
+using BattleCruisers.Targets;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Factories;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using UnityEngine;
+
+namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelWrappers
+{
+    public interface IBarrelWrapper : ITargetConsumer, IManagedDisposable
+    {
+        IDamageCapability DamageCapability { get; }
+        float RangeInM { get; }
+        Vector2 Position { get; }
+        IList<SpriteRenderer> Renderers { get; }
+
+        void StaticInitialise();
+        void Initialise(
+            IBuildable parent,
+            CruiserSpecificFactories cruiserSpecificFactories,
+            ObservableCollection<IBoostProvider> localBoostProviders = null,
+            List<ObservableCollection<IBoostProvider>> globalFireRateBoostProviders = null,
+            IAnimation barrelFiringAnimation = null);
+        void ApplyVariantStats(IBuilding building);
+        void ApplyVariantStats(IUnit unit);
+    }
+}

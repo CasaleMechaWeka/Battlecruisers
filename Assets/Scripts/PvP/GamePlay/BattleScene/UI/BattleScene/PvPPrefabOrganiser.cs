@@ -1,0 +1,220 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Units;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Models.PrefabKeys;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Fetchers;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Buildables.Units;
+using System;
+using System.Collections.Generic;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.BattleScene
+{
+    public class PvPPrefabOrganiser
+    {
+        private readonly Loadout _playerLoadout;
+
+        // User needs to be able to build at least one building
+        private const int MIN_NUM_OF_BUILDING_GROUPS = 1;
+        // Currently only support 6 types of buildings, so the UI is optimsed for this.  Ie, there is no space for more!
+        private const int MAX_NUM_OF_BUILDING_GROUPS = 6;
+
+        public PvPPrefabOrganiser(Loadout playerLoadout)
+        {
+            PvPHelper.AssertIsNotNull(playerLoadout);
+
+            _playerLoadout = playerLoadout;
+        }
+
+        public IList<IPvPBuildingGroup> GetBuildingGroups()
+        {
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildings = GetBuildingsFromKeys(_playerLoadout);
+            return CreateBuildingGroups(buildings);
+        }
+
+        private PvPBuildingKey ConvertToPvP(BuildingKey bKey)
+        {
+            switch (bKey.BuildingCategory)
+            {
+                case BuildingCategory.Defence:
+                    return new PvPBuildingKey(BuildingCategory.Defence, "PvP" + bKey.PrefabName);
+                case BuildingCategory.Factory:
+                    return new PvPBuildingKey(BuildingCategory.Factory, "PvP" + bKey.PrefabName);
+                case BuildingCategory.Offence:
+                    return new PvPBuildingKey(BuildingCategory.Offence, "PvP" + bKey.PrefabName);
+                case BuildingCategory.Tactical:
+                    return new PvPBuildingKey(BuildingCategory.Tactical, "PvP" + bKey.PrefabName);
+                case BuildingCategory.Ultra:
+                    return new PvPBuildingKey(BuildingCategory.Ultra, "PvP" + bKey.PrefabName);
+                default:
+                    throw new NullReferenceException();
+            }
+        }
+
+        private BuildingCategory convertToPvP(BuildingCategory category)
+        {
+            switch (category)
+            {
+                case BuildingCategory.Defence:
+                    return BuildingCategory.Defence;
+                case BuildingCategory.Factory:
+                    return BuildingCategory.Factory;
+                case BuildingCategory.Offence:
+                    return BuildingCategory.Offence;
+                case BuildingCategory.Tactical:
+                    return BuildingCategory.Tactical;
+                case BuildingCategory.Ultra:
+                    return BuildingCategory.Ultra;
+                default:
+                    throw new NullReferenceException();
+            }
+        }
+
+        private IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> GetBuildingsFromKeys(Loadout loadout)
+        {
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings = new Dictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>>();
+
+            foreach (BuildingCategory category in Enum.GetValues(typeof(BuildingCategory)))
+            {
+                //   IList<BuildingKey> buildingKeys = loadout.GetBuildings(category);
+                IList<BuildingKey> buildingKeys = loadout.GetBuildingKeys(category);
+                IList<PvPBuildingKey> pvp_buildingKeys = new List<PvPBuildingKey>();
+                foreach (BuildingKey bKey in buildingKeys)
+                {
+                    pvp_buildingKeys.Add(ConvertToPvP(bKey));
+                }
+                IList<IPvPBuildableWrapper<IPvPBuilding>> buildings = new List<IPvPBuildableWrapper<IPvPBuilding>>();
+                categoryToBuildings.Add(convertToPvP(category), buildings);
+
+                foreach (PvPBuildingKey buildingKey in pvp_buildingKeys)
+                {
+                    IPvPBuildableWrapper<IPvPBuilding> buildingWrapper = PvPPrefabFactory.GetBuildingWrapperPrefab(buildingKey).UnityObject;
+                    //    SynchedServerData.Instance.TryPreLoadBuildablePrefab(buildingWrapper.Buildable.Category, buildingWrapper.Buildable.PrefabName);
+                    categoryToBuildings[buildingWrapper.Buildable.Category].Add(buildingWrapper);
+                }
+            }
+
+            return categoryToBuildings;
+        }
+
+        private IList<IPvPBuildingGroup> CreateBuildingGroups(
+            IDictionary<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> buildingCategoryToGroups)
+        {
+            IList<IPvPBuildingGroup> buildingGroups = new List<IPvPBuildingGroup>();
+
+            foreach (KeyValuePair<BuildingCategory, IList<IPvPBuildableWrapper<IPvPBuilding>>> categoryToBuildings in buildingCategoryToGroups)
+            {
+                IPvPBuildingGroup group = new PvPBuildingGroup(categoryToBuildings.Key,
+                                                                categoryToBuildings.Value,
+                                                                GetGroupName(categoryToBuildings.Key),
+                                                                GetGroupDescription(categoryToBuildings.Key));
+                buildingGroups.Add(group);
+            }
+
+            if (buildingGroups.Count < MIN_NUM_OF_BUILDING_GROUPS
+                || buildingGroups.Count > MAX_NUM_OF_BUILDING_GROUPS)
+            {
+                throw new InvalidProgramException();
+            }
+
+            return buildingGroups;
+        }
+
+
+        private PvPUnitKey ConvertToPvP(UnitKey uKey)
+        {
+            switch (uKey.UnitCategory)
+            {
+                case UnitCategory.Aircraft:
+                    return new PvPUnitKey(UnitCategory.Aircraft, "PvP" + uKey.PrefabName);
+                case UnitCategory.Naval:
+                    return new PvPUnitKey(UnitCategory.Naval, "PvP" + uKey.PrefabName);
+                // case UnitCategory.Untouchable:
+                //     return new PvPUnitKey(UnitCategory.Untouchable, "PvP" + uKey.PrefabName);
+                default:
+                    throw new NullReferenceException();
+            }
+        }
+
+        private UnitCategory ConvertToPvP(UnitCategory category)
+        {
+            switch (category)
+            {
+                case UnitCategory.Aircraft:
+                    return UnitCategory.Aircraft;
+                case UnitCategory.Naval:
+                    return UnitCategory.Naval;
+                // case UnitCategory.Untouchable:
+                //     return UnitCategory.Untouchable;
+                default:
+                    throw new NullReferenceException();
+            }
+        }
+
+        public IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> GetUnits()
+        {
+            IDictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>> categoryToUnits = new Dictionary<UnitCategory, IList<IPvPBuildableWrapper<IPvPUnit>>>();
+
+            foreach (UnitCategory unitCategory in Enum.GetValues(typeof(UnitCategory)))
+            {
+                //   IList<UnitKey> unitKeys = _playerLoadout.GetUnits(unitCategory);
+                IList<UnitKey> unitKeys = _playerLoadout.GetUnitKeys(unitCategory);
+                IList<PvPUnitKey> pvp_unitKeys = new List<PvPUnitKey>();
+                foreach (UnitKey uKey in unitKeys)
+                {
+                    PvPUnitKey _uKey = ConvertToPvP(uKey);
+                    pvp_unitKeys.Add(_uKey);
+                }
+
+                if (pvp_unitKeys.Count != 0)
+                {
+                    categoryToUnits[ConvertToPvP(unitCategory)] = GetUnits(pvp_unitKeys);
+                }
+            }
+
+            return categoryToUnits;
+        }
+
+        private IList<IPvPBuildableWrapper<IPvPUnit>> GetUnits(IList<PvPUnitKey> unitKeys)
+        {
+            IList<IPvPBuildableWrapper<IPvPUnit>> unitWrappers = new List<IPvPBuildableWrapper<IPvPUnit>>(unitKeys.Count);
+
+            foreach (PvPUnitKey unitKey in unitKeys)
+            {
+                IPvPBuildableWrapper<IPvPUnit> unitWrapper = PvPPrefabFactory.GetUnitWrapperPrefab(unitKey);
+                unitWrappers.Add(unitWrapper);
+            }
+
+            return unitWrappers;
+        }
+
+        private string GetGroupName(BuildingCategory category)
+        {
+            return category switch
+            {
+                BuildingCategory.Factory => "Factories",
+                BuildingCategory.Tactical => "Tactical",
+                BuildingCategory.Defence => "Defence",
+                BuildingCategory.Offence => "Offence",
+                BuildingCategory.Ultra => "Ultras",
+                _ => throw new ArgumentException(),
+            };
+        }
+
+        private string GetGroupDescription(BuildingCategory category)
+        {
+            return category switch
+            {
+                BuildingCategory.Factory => "Buildings that produce units",
+                BuildingCategory.Tactical => "Specialised buildings",
+                BuildingCategory.Defence => "Defensive buildings to protect your cruiser",
+                BuildingCategory.Offence => "Offensive buildings to destroy the enemy cruiser",
+                BuildingCategory.Ultra => "Ridiculously awesome creations meant to end to game",
+                _ => throw new ArgumentException(),
+            };
+        }
+    }
+}

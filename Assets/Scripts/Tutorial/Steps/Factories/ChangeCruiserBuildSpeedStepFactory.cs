@@ -1,0 +1,22 @@
+﻿using BattleCruisers.Buildables.BuildProgress;
+
+namespace BattleCruisers.Tutorial.Steps.Factories
+{
+    public class ChangeCruiserBuildSpeedStepFactory : TutorialFactoryBase
+    {
+        public ChangeCruiserBuildSpeedStepFactory(TutorialStepArgsFactory argsFactory)
+            : base(argsFactory)
+        {
+            // empty
+        }
+
+        public TutorialStep CreateStep(CompositeCalculator speedController, BuildSpeed buildSpeed)
+        {
+            return
+                new ChangeCruiserBuildSpeedStep(
+                    _argsFactory.CreateTutorialStepArgs(),
+                    speedController,
+                    buildSpeed);
+        }
+    }
+}

@@ -1,0 +1,98 @@
+﻿using BattleCruisers.Buildables;
+using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.BuildProgress;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial.Providers;
+using BattleCruisers.Tutorial.Steps.BoostSteps;
+using BattleCruisers.Tutorial.Steps.WaitSteps;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
+using System.Collections.Generic;
+
+namespace BattleCruisers.Tutorial.Steps.Factories
+{
+    public class EndgameStepsFactory : TutorialFactoryBase, ITutorialStepsFactory
+    {
+        private readonly ChangeCruiserBuildSpeedStepFactory _changeCruiserBuildSpeedStepFactory;
+        private readonly AutoNavigationStepFactory _autoNavigationStepFactory;
+        private readonly TutorialHelper _tutorialProvider;
+        private readonly ICruiser _playerCruiser, _aiCruiser;
+
+        public EndgameStepsFactory(
+            TutorialStepArgsFactory argsFactory,
+            ChangeCruiserBuildSpeedStepFactory changeCruiserBuildSpeedStepFactory,
+            AutoNavigationStepFactory autoNavigationStepFactory,
+            TutorialHelper tutorialProvider,
+            ICruiser playerCruiser,
+            ICruiser aiCruiser)
+            : base(argsFactory)
+        {
+            Helper.AssertIsNotNull(changeCruiserBuildSpeedStepFactory, autoNavigationStepFactory, tutorialProvider, playerCruiser, aiCruiser);
+
+            _changeCruiserBuildSpeedStepFactory = changeCruiserBuildSpeedStepFactory;
+            _autoNavigationStepFactory = autoNavigationStepFactory;
+            _tutorialProvider = tutorialProvider;
+            _playerCruiser = playerCruiser;
+            _aiCruiser = aiCruiser;
+        }
+
+        public IList<TutorialStep> CreateSteps()
+        {
+            List<TutorialStep> steps = new List<TutorialStep>();
+
+            // Return build speed to normal
+            steps.Add(
+                _changeCruiserBuildSpeedStepFactory.CreateStep(
+                    _tutorialProvider.PlayerCruiserBuildSpeedController,
+                    BuildSpeed.Normal));
+
+            // Navigate to player cruiser
+            steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.PlayerCruiser));
+
+            // Wait for artillery to complete
+            string artilleryName = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeys.Buildings.Artillery).Buildable.Name;
+            string waitForArtilleryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForArtillery");
+            steps.Add(
+                new BuildableCompletedWaitStep(
+                    _argsFactory.CreateTutorialStepArgs(
+                        string.Format(waitForArtilleryBase, artilleryName)),
+                    _tutorialProvider.SingleOffensiveProvider));
+
+            // Boost artillery accuracy and fire rate, so that enemy cruiser is destroyed more quickly :)
+            steps.AddRange(CreateSteps_BoostArtillery());
+
+            // Zoom out so user can see artillery firing
+            steps.AddRange(_autoNavigationStepFactory.CreateSteps(CameraFocuserTarget.Overview));
+
+            // Wait for enemy cruiser to be destroyed
+            string waitForVictoryBase = LocTableCache.TutorialTable.GetString("Steps/Endgame/WaitForVictory");
+            steps.Add(
+                new TargetDestroyedWaitStep(
+                    _argsFactory.CreateTutorialStepArgs(
+                        string.Format(waitForVictoryBase, artilleryName)),
+                    new StaticProvider<ITarget>(_aiCruiser)));
+
+            return steps;
+        }
+
+        private IList<TutorialStep> CreateSteps_BoostArtillery()
+        {
+            return new List<TutorialStep>()
+            {
+                new AddTurretAccuracyBoostStep(
+                    _argsFactory.CreateTutorialStepArgs(),
+                    _playerCruiser.CruiserSpecificFactories.GlobalBoostProviders,
+                    // 0.05 * 20 = 1 (100% accuracy)
+                    new BoostProvider(20)),
+
+                new AddArtilleryFireRateBoostStep(
+                    _argsFactory.CreateTutorialStepArgs(),
+                    _playerCruiser.CruiserSpecificFactories.GlobalBoostProviders,
+                    new BoostProvider(3))
+            };
+        }
+    }
+}

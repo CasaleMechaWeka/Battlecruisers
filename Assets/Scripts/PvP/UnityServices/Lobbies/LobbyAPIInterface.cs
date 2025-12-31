@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.Services.Lobbies;
+using Unity.Services.Lobbies.Models;
+using UnityEngine;
+
+namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
+{
+    /// <summary>
+    /// Wrapper for all the interactions with the Lobby API.
+    /// </summary>
+    public class LobbyAPIInterface
+    {
+        const int k_MaxLobbiesToShow = 16; // If more are necessary, consider retrieving paginated results or using filters.
+
+        public async Task<Lobby> CreateLobby(string requesterUasId, string lobbyName, int maxPlayers, bool isPrivate, Dictionary<string, PlayerDataObject> hostUserData, Dictionary<string, DataObject> lobbyData)
+        {
+            CreateLobbyOptions createOptions = new CreateLobbyOptions
+            {
+                IsPrivate = isPrivate,
+                Player = new Player(id: requesterUasId, data: hostUserData),
+                Data = lobbyData
+            };
+            try
+            {
+                return await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, createOptions);
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.Log(e.Message);
+                return null;
+            }
+        }
+
+        public async Task DeleteLobby(string lobbyId)
+        {
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
+            }
+            catch (LobbyServiceException e)
+            {
+                UnityEngine.Debug.Log(e.Message);
+            }
+        }
+        public async Task<Lobby> JoinLobbyByCode(string requesterUasId, string lobbyCode, Dictionary<string, PlayerDataObject> localUserData)
+        {
+            JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions { Player = new Player(id: requesterUasId, data: localUserData) };
+            try
+            {
+                return await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode, joinOptions);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"UNITY LOBBIES SDK EXCEPTION in JoinLobbyByCode:\nType: {e.GetType().Name}\nMessage: {e.Message}\nStack:\n{e.StackTrace}");
+                if (e.InnerException != null)
+                {
+                    Debug.LogError($"INNER EXCEPTION:\nType: {e.InnerException.GetType().Name}\nMessage: {e.InnerException.Message}");
+                }
+                return null;
+            }
+        }
+        public async Task<Lobby> JoinLobbyById(string requesterUasId, string lobbyId, Dictionary<string, PlayerDataObject> localUserData)
+        {
+            JoinLobbyByIdOptions joinOptions = new JoinLobbyByIdOptions { Player = new Player(id: requesterUasId, data: localUserData) };
+            return await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId, joinOptions);
+        }
+
+        public async Task<Lobby> QuickJoinLobby(string requesterUasId, Dictionary<string, PlayerDataObject> localUserData, List<QueryFilter> mFilters)
+        {
+            var joinRequest = new QuickJoinLobbyOptions
+            {
+                Filter = mFilters,
+                Player = new Player(id: requesterUasId, data: localUserData)
+            };
+            return await LobbyService.Instance.QuickJoinLobbyAsync(joinRequest);
+        }
+
+        public async Task<Lobby> ReconnectToLobby(string lobbyId)
+        {
+            return await LobbyService.Instance.ReconnectToLobbyAsync(lobbyId);
+        }
+
+        public async Task RemovePlayerFromLobby(string requesterUasId, string lobbyId)
+        {
+            try
+            {
+                await LobbyService.Instance.RemovePlayerAsync(lobbyId, requesterUasId);
+            }
+            catch (LobbyServiceException e)
+                when (e is { Reason: LobbyExceptionReason.PlayerNotFound })
+            {
+                // If Player is not found, they have already left the lobby or have been kicked out. No need to throw here
+            }
+        }
+
+        public async Task<QueryResponse> QueryAllLobbies(List<QueryFilter> mFilters, List<QueryOrder> mOrders)
+        {
+            QueryLobbiesOptions queryOptions = new QueryLobbiesOptions
+            {
+                Count = k_MaxLobbiesToShow,
+                Filters = mFilters,
+                Order = mOrders
+            };
+
+            return await LobbyService.Instance.QueryLobbiesAsync(queryOptions);
+        }
+
+        public async Task<Lobby> GetLobby(string lobbyId)
+        {
+            try
+            {
+                return await LobbyService.Instance.GetLobbyAsync(lobbyId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<Lobby> UpdateLobby(string lobbyId, Dictionary<string, DataObject> data, bool shouldLock)
+        {
+            UpdateLobbyOptions updateOptions = new UpdateLobbyOptions { Data = data, IsLocked = shouldLock };
+            return await LobbyService.Instance.UpdateLobbyAsync(lobbyId, updateOptions);
+        }
+
+        public async Task<Lobby> UpdateLobbyWithPrivate(string lobbyId, Dictionary<string, DataObject> data, bool isPrivate)
+        {
+            UpdateLobbyOptions updateOptions = new UpdateLobbyOptions { Data = data, IsPrivate = isPrivate };
+            return await LobbyService.Instance.UpdateLobbyAsync(lobbyId, updateOptions);
+        }
+
+        public async Task<Lobby> UpdatePlayer(string lobbyId, string playerId, Dictionary<string, PlayerDataObject> data, string allocationId, string connectionInfo)
+        {
+            UpdatePlayerOptions updateOptions = new UpdatePlayerOptions
+            {
+                Data = data,
+                AllocationId = allocationId,
+                ConnectionInfo = connectionInfo
+            };
+            return await LobbyService.Instance.UpdatePlayerAsync(lobbyId, playerId, updateOptions);
+        }
+
+        public async void SendHeartbeatPing(string lobbyId)
+        {
+            await LobbyService.Instance.SendHeartbeatPingAsync(lobbyId);
+        }
+    }
+}

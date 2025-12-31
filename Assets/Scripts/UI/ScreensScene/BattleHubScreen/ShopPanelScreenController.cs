@@ -1,0 +1,593 @@
+using BattleCruisers.Data;
+using BattleCruisers.Data.Static;
+using BattleCruisers.Scenes;
+using UnityEngine.UI;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Localisation;
+using UnityEngine;
+using System;
+using System.Collections.Generic;
+using Unity.Services.Core;
+using System.Collections;
+
+namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
+{
+    public class ShopPanelScreenController : ScreenController
+    {
+        public CanvasGroupButton backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton;
+        public CanvasGroupButton captainsButton, hecklesButton, bodykitButton, variantsButton;
+        public Transform captainItemContainer, heckleItemContainer, bodykitItemContainer, variantsItemContainer;
+        public GameObject captainItemPrefab, heckleItemPrefab, bodykitItemPrefab, variantItemPrefab;
+        public CaptainsContainer captainsContainer;
+        public HecklesContainer hecklesContainer;
+        public BodykitsContainer bodykitsContainer;
+        public VariantsContainer variantsContainer;
+        public GameObject hecklesMessage;
+        private SingleSoundPlayer _soundPlayer;
+        public Transform captainCamContainer;
+        public Text blackMarketText;
+        private bool InternetConnection;
+        private List<int> variantList;
+        private List<VariantPrefab> variants = new List<VariantPrefab>();
+
+        private List<int> bodykitList;
+        private List<Bodykit> bodykits = new List<Bodykit>();
+
+        private List<int> exoBaseList;
+        private List<CaptainExo> captains = new List<CaptainExo>();
+
+        public void Initialise(
+            ScreensSceneGod screensSceneGod,
+            SingleSoundPlayer soundPlayer,
+            bool hasInternetonnection = false)
+        {
+            base.Initialise(screensSceneGod);
+            Helper.AssertIsNotNull(backButton, /*buyCaptainButton, buyHeckleButton,*/ blackMarketButton, captainsContainer, bodykitsContainer, variantsContainer);
+            Helper.AssertIsNotNull(captainsButton, hecklesButton, bodykitButton, variantsButton);
+            _soundPlayer = soundPlayer;
+
+            //Initialise each button with its function
+            backButton.Initialise(_soundPlayer, GoHome, this);
+            /*            buyCaptainButton.Initialise(_soundPlayer, PurchaseCaptainExo, this);
+                        buyHeckleButton.Initialise(_soundPlayer, PurchaseHeckle, this);*/
+            captainsButton.Initialise(_soundPlayer, CaptainsButton_OnClick);
+            hecklesButton.Initialise(_soundPlayer, HeckesButton_OnClick);
+            bodykitButton.Initialise(_soundPlayer, BodykitButton_OnClick);
+            variantsButton.Initialise(_soundPlayer, VariantsButton_OnClick);
+            captainsContainer.Initialize(_soundPlayer);
+            hecklesContainer.Initialize(_soundPlayer);
+            bodykitsContainer.Initialize(_soundPlayer);
+            variantsContainer.Initialize(_soundPlayer);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
+            HighlightCaptainsNavButton();
+
+            InternetConnection = hasInternetonnection;
+            if (UnityServices.State != ServicesInitializationState.Uninitialized && InternetConnection)
+            {
+                // Only make cash shop available if there's an internet connection
+                // Without one, we can't process transactions.
+                blackMarketButton.Initialise(_soundPlayer, GotoBlackMarket, this);
+                blackMarketText.text = LocTableCache.ScreensSceneTable.GetString("BlackMarketOpen");
+            }
+            else
+                blackMarketButton.gameObject.SetActive(false);
+
+#if DISABLE_BLACK_MARKET
+                blackMarketButton.gameObject.SetActive(false);
+#endif
+
+            exoBaseList = GeneratePseudoRandomList(14, StaticData.Captains.Count - 1, 1, 1);
+#if UNITY_EDITOR
+            exoBaseList = GenerateFullList(StaticData.Captains.Count);
+#endif
+            foreach (int index in exoBaseList)
+            {
+                CaptainExo captainExo = PrefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));
+                captains.Add(captainExo);
+            }
+
+            variantList = VariantsForOwnedItems();
+            foreach (int index in variantList)
+            {
+                VariantPrefab variant = PrefabFactory.GetVariant(StaticPrefabKeys.Variants.GetVariantKey(index));
+                variants.Add(variant);
+            }
+
+            //bodykitList = GeneratePseudoRandomList(6, DataProvider.GameModel.Bodykits.Count - 1, 6, 1);
+
+            bodykitList = GenerateFullList(StaticData.Bodykits.Count);
+
+            foreach (int index in bodykitList)
+            {
+                Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(index));
+                bodykits.Add(bodykit);
+            }
+        }
+
+        void OnEnable()
+        {
+            HighlightCaptainsNavButton();
+        }
+
+        //All the button fucntions for shop screen
+        public void GoHome()
+        {
+            _screensSceneGod.GotoHubScreen();
+        }
+
+        public void InfoButton_OnClick()
+        {
+            ScreensSceneGod.Instance.messageBoxBig.ShowMessage(LocTableCache.ScreensSceneTable.GetString("ShopInfoTitle"), LocTableCache.ScreensSceneTable.GetString("ShopInfoText"));
+        }
+
+        public void GotoBlackMarket()
+        {
+            _screensSceneGod.GotoBlackMarketScreen();
+        }
+
+        public void CaptainsButton_OnClick()
+        {
+            InitiaiseCaptains();
+            HighlightCaptainsNavButton();
+        }
+
+        public void HeckesButton_OnClick()
+        {
+            InitialiseHeckles();
+            HighlightHecklesNavButton();
+        }
+
+        public void BodykitButton_OnClick()
+        {
+            InitialiseBodykits();
+            HightlightBodykitsNavButton();
+        }
+        public void VariantsButton_OnClick()
+        {
+            InitialiseVariants();
+            HightlightVariantsNavButton();
+        }
+
+        private void HightlightVariantsNavButton()
+        {
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+
+            // Change text and icon color to red
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+        }
+        private void HightlightBodykitsNavButton()
+        {
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+
+            // Change text and icon color to red
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+        }
+        private void HighlightCaptainsNavButton()
+        {
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+
+            // Change text and icon color to red
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+        }
+
+        private void HighlightHecklesNavButton()
+        {
+            captainsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            hecklesButton.transform.Find("ShopButtonActive").gameObject.SetActive(true);
+            bodykitButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+            variantsButton.transform.Find("ShopButtonActive").gameObject.SetActive(false);
+
+            // Change text and icon color to red
+            hecklesButton.transform.Find("Text").GetComponent<Text>().color = new Color32(194, 59, 33, 255);
+            hecklesButton.transform.Find("Icon").GetComponent<Image>().color = new Color32(194, 59, 33, 255);
+
+            captainsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            captainsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            bodykitButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            bodykitButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+
+            variantsButton.transform.Find("Text").GetComponent<Text>().color = Color.black;
+            variantsButton.transform.Find("Icon").GetComponent<Image>().color = Color.black;
+        }
+
+        private void RemoveAllCaptainsFromRenderCamera()
+        {
+            foreach (GameObject obj in captainsContainer.visualOfCaptains)
+                if (obj != null)
+                    DestroyImmediate(obj);
+
+            captainsContainer.visualOfCaptains.Clear();
+        }
+        public void InitialiseVariants()
+        {
+            // Deactivate other containers
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
+            bodykitsContainer.gameObject.SetActive(false);
+            variantsContainer.gameObject.SetActive(true);
+
+            // Remove old variant items
+            VariantItemController[] items = variantsItemContainer.gameObject.GetComponentsInChildren<VariantItemController>();
+            foreach (VariantItemController item in items)
+                DestroyImmediate(item.gameObject);
+
+            // Hide buy button and feedback initially
+            variantsContainer.btnBuy.SetActive(false);
+            variantsContainer.ownFeedback.SetActive(false);
+
+            // Initialize the variant items
+            StopAllCoroutines();
+            IEnumerator initialiseVariantsItemPanel = InitialiseVariantsItemPanel();
+            StartCoroutine(initialiseVariantsItemPanel);
+
+            // Show the message panel and hide the item details initially
+            variantsContainer.variantMessagePanel.SetActive(true);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+
+            // Set the variants help message
+            variantsContainer.t_variantsMessage.text = LocTableCache.ScreensSceneTable.GetString("VariantsShopHelp");
+        }
+
+        private IEnumerator InitialiseVariantsItemPanel()
+        {
+            int completedVariants = 0;
+            int variantsPerFrame = 15;
+            byte ii = 0;
+            while (completedVariants < variantList.Count)
+            {
+                for (int i = completedVariants; i < Mathf.Min(completedVariants + variantsPerFrame, variantList.Count); i++)
+                {
+                    GameObject variantItem = Instantiate(variantItemPrefab, variantsItemContainer) as GameObject;
+                    VariantPrefab variant = variants[ii]; // Use the variant list index ii
+                    Sprite parentSprite = variant.IsUnit() ? variant.GetUnit().Sprite : variant.GetBuilding().Sprite;
+
+                    int variantPrice = StaticData.Variants[variant.variantIndex].VariantCredits;
+                    // Debug.Log($"Variant {variant.variantIndex} Price: {variantPrice}");
+
+                    variantItem.GetComponent<VariantItemController>().StaticInitialise(
+                        _soundPlayer,
+                        parentSprite,
+                        variant.variantSprite,
+                        variant.GetParentName(),
+                        StaticData.Variants[variant.variantIndex],
+                        variantsContainer,
+                        variant,
+                        variant.variantIndex,
+                        DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
+                    );
+
+                    if (ii == 0)
+                    {
+                        variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
+                        variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color = new Color(
+                            variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.r,
+                            variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.g,
+                            variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color.b,
+                            1f
+                        );
+
+                        variantsContainer.currentItem = variantItem.GetComponent<VariantItemController>();
+                        variantsContainer.ParentImage.sprite = parentSprite;
+                        variantsContainer.VariantPrice.text = variantPrice.ToString();
+                        variantsContainer.variantIcon.sprite = variant.variantSprite;
+                        variantsContainer.VariantName.text = LocTableCache.CommonTable.GetString(StaticData.Variants[variant.variantIndex].VariantNameStringKeyBase);
+                        variantsContainer.variantDescription.text = LocTableCache.CommonTable.GetString(StaticData.Variants[variant.variantIndex].VariantDescriptionStringKeyBase);
+                        variantsContainer.ParentName.text = variant.GetParentName();
+                        variantsContainer.currentVariantData = StaticData.Variants[variant.variantIndex];
+
+                        if (variant.IsUnit())
+                        {
+                            variantsContainer.buildingStatsController.gameObject.SetActive(false);
+                            variantsContainer.unitStatsController.gameObject.SetActive(true);
+                            variantsContainer.unitStatsController.ShowStatsOfVariant(variant.GetUnit(), variant);
+                        }
+                        else
+                        {
+                            variantsContainer.buildingStatsController.gameObject.SetActive(true);
+                            variantsContainer.unitStatsController.gameObject.SetActive(false);
+                            variantsContainer.buildingStatsController.ShowStatsOfVariant(variant.GetBuilding(), variant);
+                        }
+
+                        if (DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex))
+                        {
+                            variantsContainer.btnBuy.SetActive(false);
+                            variantsContainer.priceLabel.SetActive(false);
+                            variantsContainer.ownFeedback.SetActive(true);
+                        }
+                        else
+                        {
+                            variantsContainer.btnBuy.SetActive(true);
+                            variantsContainer.priceLabel.SetActive(true);
+                            variantsContainer.ownFeedback.SetActive(false);
+                        }
+                    }
+                    ii++;
+                }
+                completedVariants += Mathf.Min(variantsPerFrame, variantList.Count);
+                yield return null;
+            }
+        }
+
+
+        public void InitialiseBodykits()
+        {
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
+            bodykitsContainer.gameObject.SetActive(true);
+            variantsContainer.gameObject.SetActive(false);
+
+            BodykitItemController[] items = bodykitItemContainer.gameObject.GetComponentsInChildren<BodykitItemController>();
+            foreach (BodykitItemController item in items)
+                DestroyImmediate(item.gameObject);
+
+            bodykitsContainer.btnBuy.SetActive(false);
+            bodykitsContainer.ownFeedback.SetActive(false);
+
+            //    List<int> bodykitList = GeneratePseudoRandomList(6, 11, 6, 1);
+
+            byte ii = 0;
+            // bodykitItemContainer.gameObject.SetActive(false);
+            foreach (int index in bodykitList)
+            {
+                GameObject bodykitItem = Instantiate(bodykitItemPrefab, bodykitItemContainer);
+                Bodykit bodykit = bodykits[ii]/*await _prefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.AllKeys[index])*/;
+                bodykitItem.GetComponent<BodykitItemController>().StaticInitialise(
+                    _soundPlayer, bodykit.bodykitImage, StaticData.Bodykits[index], bodykitsContainer, ii, DataProvider.GameModel.PurchasedBodykits.Contains(index));
+                if (ii == 0)
+                {
+                    bodykitItem.GetComponent<BodykitItemController>()._clickedFeedback.SetActive(true);
+                    bodykitsContainer.currentItem = bodykitItem.GetComponent<BodykitItemController>();
+                    bodykitsContainer.bodykitImage.sprite = bodykit.bodykitImage;
+                    bodykitsContainer.bodykitPrice.text = StaticData.Bodykits[index].BodykitCost.ToString();
+                    bodykitsContainer.bodykitName.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].NameStringKeyBase);
+                    bodykitsContainer.bodykitDescription.text = LocTableCache.CommonTable.GetString(StaticData.Bodykits[index].DescriptionKeyBase);
+                    bodykitsContainer.currentBodykitData = StaticData.Bodykits[index];
+                    if (DataProvider.GameModel.PurchasedBodykits.Contains(index))
+                    {
+                        bodykitsContainer.btnBuy.SetActive(false);
+                        bodykitsContainer.priceLabel.SetActive(false);
+                        bodykitsContainer.ownFeedback.SetActive(true);
+                        bodykitsContainer.premiumButton.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        bodykitsContainer.btnBuy.SetActive(true);
+                        bodykitsContainer.priceLabel.SetActive(true);
+                        bodykitsContainer.ownFeedback.SetActive(false);
+                        bodykitsContainer.btnBuy.transform.parent.gameObject.SetActive(false);
+                        bodykitsContainer.premiumButton.gameObject.SetActive(true);
+                    }
+                }
+                ii++;
+            }
+            // Show the message panel and hide the item details initially
+            bodykitsContainer.bodykitMessagePanel.SetActive(true);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
+
+            bodykitsContainer.t_bodykitsMessage.text = LocTableCache.ScreensSceneTable.GetString("BodykitsShopHelp");
+        }
+        public void InitialiseHeckles()
+        {
+            captainsContainer.gameObject.SetActive(false);
+            hecklesContainer.gameObject.SetActive(true);
+            bodykitsContainer.gameObject.SetActive(false);
+            variantsContainer.gameObject.SetActive(false);
+
+            hecklesMessage.gameObject.SetActive(true);
+            // remove all old children to refresh
+            HeckleItemController[] items = heckleItemContainer.gameObject.GetComponentsInChildren<HeckleItemController>();
+            foreach (HeckleItemController item in items)
+                DestroyImmediate(item.gameObject);
+
+            RemoveAllCaptainsFromRenderCamera();
+
+            hecklesContainer.btnBuy.SetActive(false);
+            hecklesContainer.ownFeedback.SetActive(false);
+            CaptainExo charliePrefab = PrefabFactory.GetCaptainExo(DataProvider.GameModel.PlayerLoadout.CurrentCaptain);
+            CaptainExo captainExo = Instantiate(charliePrefab, captainCamContainer);
+            captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+            captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
+
+            List<int> heckleBaseList = GeneratePseudoRandomList(15, StaticData.Heckles.Count - 1, 10);
+#if UNITY_EDITOR
+            heckleBaseList = GenerateFullList(StaticData.Heckles.Count);
+#endif
+            byte ii = 0;
+            foreach (int index in heckleBaseList)
+            {
+                GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
+                heckleItem.GetComponent<HeckleItemController>().StaticInitialise(
+                    _soundPlayer, StaticData.Heckles[index], hecklesContainer, ii, DataProvider.GameModel.PurchasedHeckles.Contains(index));
+
+
+
+                heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(false);
+
+                if (ii == 0)
+                {
+                    // heckleItem.GetComponent<HeckleItemController>()._clickedFeedback.SetActive(true);
+                    hecklesContainer.currentItem = heckleItem.GetComponent<HeckleItemController>();
+
+                    heckleItem.GetComponent<HeckleItemController>().OnClicked();
+                    hecklesContainer.hecklePrice.text = StaticData.Heckles[index].HeckleCost.ToString();
+                    hecklesContainer.currentHeckleData = StaticData.Heckles[index];
+                    //hecklesContainer.t_heckleMessage.text = LandingSceneGod.Instance.hecklesStrings.GetString(DataProvider.GameModel.Heckles[index].StringKeyBase);
+
+                    if (DataProvider.GameModel.PurchasedHeckles.Contains(index))
+                    {
+                        hecklesContainer.hecklePrice.text = "0";
+                        hecklesContainer.btnBuy.SetActive(false);
+                        hecklesContainer.priceLabel.SetActive(false);
+                        hecklesContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        hecklesContainer.btnBuy.SetActive(true);
+                        hecklesContainer.priceLabel.SetActive(true);
+                        hecklesContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
+
+            // special heckle-specific infotext handling here
+            hecklesContainer.t_heckleMessage.text = LocTableCache.ScreensSceneTable.GetString("HecklesShopHelp");
+        }
+
+        public override void OnDismissing()
+        {
+            base.OnDismissing();
+            RemoveAllCaptainsFromRenderCamera();
+        }
+        public void InitiaiseCaptains()
+        {
+            captainsContainer.gameObject.SetActive(true);
+            hecklesContainer.gameObject.SetActive(false);
+            bodykitsContainer.gameObject.SetActive(false);
+            variantsContainer.gameObject.SetActive(false);
+
+            hecklesContainer.gameObject.SetActive(false);
+            hecklesMessage.gameObject.SetActive(false);
+            // remove all old children to refersh
+            CaptainItemController[] items = captainItemContainer.gameObject.GetComponentsInChildren<CaptainItemController>();
+            foreach (CaptainItemController item in items)
+                DestroyImmediate(item.gameObject);
+
+            captainsContainer.btnBuy.SetActive(false);
+            captainsContainer.ownFeedback.SetActive(false);
+
+
+            RemoveAllCaptainsFromRenderCamera();
+
+            /*            exoBaseList = GeneratePseudoRandomList(14, DataProvider.GameModel.Captains.Count - 1, 1, 1);
+                        exoBaseList.Insert(0, 0);*/
+
+            byte ii = 0;
+            foreach (int index in exoBaseList)
+            {
+                GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
+                CaptainExo captainExoPrefab = captains[ii];/*await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));*/
+                CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);
+                captainExo.gameObject.transform.localScale = Vector3.one * 0.5f;
+                captainExo.gameObject.SetActive(false);
+                captainsContainer.visualOfCaptains.Add(captainExo.gameObject);
+                captainItem.GetComponent<CaptainItemController>().StaticInitialise(
+                    _soundPlayer, captainExo.CaptainExoImage, StaticData.Captains[index], captainsContainer, ii, DataProvider.GameModel.PurchasedExos.Contains(index));
+
+                if (ii == 0)  // the first item should be clicked :)
+                {
+                    captainItem.GetComponent<CaptainItemController>()._clickedFeedback.SetActive(true);
+                    captainsContainer.currentItem = captainItem.GetComponent<CaptainItemController>();
+                    //    captainItem.GetComponent<CaptainItemController>().OnClicked(); // to display Captain's price
+                    if (index == 0)
+                    {
+                        captainsContainer.captainPrice.text = "0"; // CaptainExo000 is default item. :)
+                        captainsContainer.captainName.text = LocTableCache.CommonTable.GetString(StaticData.Captains[0].NameStringKeyBase);
+                        captainsContainer.captainDescription.text = LocTableCache.CommonTable.GetString(StaticData.Captains[0].DescriptionKeyBase);
+                    }
+                    captainExo.gameObject.SetActive(true);
+                    if (DataProvider.GameModel.PurchasedExos.Contains(index))
+                    {
+                        captainsContainer.btnBuy.SetActive(false);
+                        captainsContainer.priceLabel.SetActive(false);
+                        captainsContainer.ownFeedback.SetActive(true);
+                    }
+                    else
+                    {
+                        captainsContainer.btnBuy.SetActive(true);
+                        captainsContainer.priceLabel.SetActive(true);
+                        captainsContainer.ownFeedback.SetActive(false);
+                    }
+                }
+                ii++;
+            }
+
+            captainsContainer.captainMessagePanel.SetActive(true);
+            variantsContainer.itemDetailsPanel.SetActive(false);
+            bodykitsContainer.itemDetailsPanel.SetActive(false);
+            captainsContainer.itemDetailsPanel.SetActive(false);
+            // this keeps the details panels from popping in for a frame on changing shop tabs
+            captainsContainer.t_captainMessage.text = LocTableCache.ScreensSceneTable.GetString("CaptainsShopHelp");
+        }
+
+        List<int> GeneratePseudoRandomList(int elements, int maxValue, int dailyShift, int startValue = 0)  //elements = number of elements in output list
+        {
+            DateTime utcNow = DateTime.UtcNow;
+            List<int> randomList = new List<int>();
+            for (int i = startValue; i < elements + startValue; i++)
+                randomList.Add(startValue + (maxValue / elements * i + dailyShift * utcNow.Day + utcNow.Month) % (1 + maxValue - startValue));
+
+            return randomList;
+        }
+
+        List<int> VariantsForOwnedItems()
+        {
+            // Use original implementation, uncomment line below to use VariantOrganizer.
+            // return new VariantOrganizer(_prefabFactory).GetOrganizedVariants();
+            // For categorized sorting and logging, uncomment line below to use VariantSorter.
+            return new VariantSorter().GetOrganizedVariants();
+        }
+
+        List<int> GenerateFullList(int elements)
+        {
+            List<int> fullList = new List<int>();
+            for (int i = 0; i < elements; i++)
+                fullList.Add(i);
+
+            return fullList;
+        }
+    }
+}

@@ -1,0 +1,50 @@
+using BattleCruisers.UI.ScreensScene.ShopScreen;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers.Sprites;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace BattleCruisers.UI.ScreensScene
+{
+    public class IAPItemController : MonoBehaviour
+    {
+        public Image _iapImage;
+        public CanvasGroupButton clickingArea;
+        public GameObject _clickedFeedback;
+        public IAPData _iapData;
+        private SingleSoundPlayer _soundPlayer;
+        private BlackMarketScreenController _blackMarketScreenController;
+
+        public async void StaticInitialise(
+            SingleSoundPlayer soundPlayer,
+            IAPData iapData,
+            BlackMarketScreenController blackMarketScreenController
+            )
+        {
+            Helper.AssertIsNotNull(soundPlayer, iapData, _iapImage, clickingArea, _clickedFeedback, blackMarketScreenController);
+            _soundPlayer = soundPlayer;
+            _iapData = iapData;
+            _blackMarketScreenController = blackMarketScreenController;
+
+            //    _iapImage.sprite = iapIcon;
+
+            _iapImage.sprite = await SpriteFetcher.GetSpriteAsync("Assets/Resources_moved/Sprites/UI/IAP/" + _iapData.IAPIconName + ".png");
+            // _clickedFeedback.SetActive(false);
+
+            clickingArea.Initialise(_soundPlayer, OnClicked);
+        }
+
+        public void OnClicked()
+        {
+            if (!_clickedFeedback.activeSelf)
+            {
+                _clickedFeedback.SetActive(true);
+                _blackMarketScreenController.iapDataChanged.Invoke(this, new IAPDataEventArgs
+                {
+                    iapData = _iapData
+                });
+            }
+        }
+    }
+}

@@ -1,0 +1,81 @@
+using BattleCruisers.Data.Static;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles.Spawners;
+using BattleCruisers.Projectiles.Stats;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+using System.Threading.Tasks;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Buildables.Buildings.Turrets.BarrelControllers
+{
+    public class PvPRocketBarrelController : PvPBarrelController
+    {
+        private ICircularList<PvPRocketSpawner> _rocketSpawners;
+        private PvPRocketSpawner _middleSpawner;
+        private ProjectileStats _rocketStats;
+
+        public override Vector3 ProjectileSpawnerPosition
+        {
+            get
+            {
+                if (_middleSpawner != null) return _middleSpawner.transform.position;
+                return Vector3.zero;
+            }
+        }
+
+        public override bool CanFireWithoutTarget => false;
+
+        public override void StaticInitialise()
+        {
+            base.StaticInitialise();
+
+            PvPRocketSpawner[] rocketSpawners = gameObject.GetComponentsInChildren<PvPRocketSpawner>();
+            Assert.IsTrue(rocketSpawners.Length != 0);
+            _rocketSpawners = new CircularList<PvPRocketSpawner>(rocketSpawners);
+
+            _middleSpawner = rocketSpawners.Middle();
+        }
+
+        protected override ProjectileStats GetProjectileStats()
+        {
+            _rocketStats = GetComponent<ProjectileStats>();
+            Assert.IsNotNull(_rocketStats);
+            return _rocketStats;
+        }
+
+        protected override async Task InternalInitialiseAsync(PvPBarrelControllerArgs args)
+        {
+            PvPProjectileSpawnerArgs spawnerArgs = new PvPProjectileSpawnerArgs(args, _rocketStats, TurretStats.BurstSize);
+
+            // PERF we can use concurrency here
+            foreach (PvPRocketSpawner rocketSpawner in _rocketSpawners.Items)
+                await rocketSpawner.InitialiseAsync(spawnerArgs, SoundKeys.Firing.FiringSoundToKey(FiringSound), _rocketStats);
+        }
+
+        public override void Fire(float angleInDegrees)
+        {
+            _rocketSpawners
+                .Next()
+                .SpawnRocket(
+                    angleInDegrees,
+                    transform.IsMirrored(),
+                    Target,
+                    _targetFilter);
+            if (IsServer)
+                MuzzleFlashEffectClientRpc();
+        }
+
+        public override void CleanUp()
+        {
+            base.CleanUp();
+        }
+
+        [ClientRpc]
+        void MuzzleFlashEffectClientRpc()
+        {
+            _muzzleFlash.Play();
+        }
+    }
+}

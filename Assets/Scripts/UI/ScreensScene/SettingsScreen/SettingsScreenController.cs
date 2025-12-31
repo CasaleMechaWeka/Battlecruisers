@@ -1,0 +1,409 @@
+using BattleCruisers.Data;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Settings;
+using BattleCruisers.Scenes;
+using BattleCruisers.UI.Panels;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.DataStrctures;
+using BattleCruisers.Utils.Localisation;
+using BattleCruisers.Utils.PlatformAbstractions;
+using System.Collections;
+using TMPro;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace BattleCruisers.UI.ScreensScene.SettingsScreen
+{
+    public class SettingsScreenController : ScreenController
+    {
+        private SettingsManager _settingsManager;
+
+        public DifficultyDropdown difficultyDropdown;
+        public LanguageDropdown languageDropdown;
+        public ResolutionDropdown resolutionDropdown;
+        public SliderController zoomSlider, scrollSlider;
+        public FloatSliderController musicVolumeSlider, effectVolumeSlider, masterVolumeSlider, alertVolumeSlider, interfaceVolumeSlider, ambientVolumeSlider;
+        public ToggleController showInGameHintsToggle, showToolTipsToggle, altDroneSoundsToggle, fullScreenToggle, VSyncToggle, adsToggle, turboToggle, richToggle, hecklesToggle, cloudSaveToggle;
+        public Text cloudSaveLabel;
+        public SaveButton saveButton;
+        public CancelButton cancelButton;
+        public CanvasGroupButton resetHotkeysButton;
+
+        public Panel gameSettingsPanel, audioPanel, videoPanel, premiumPanel;
+        public HotkeysPanel hotkeysPanel;
+        public SettingsTabButton gameSettingsButton, hotkeysButton, audioButton, languageButton, premiumButton;
+
+        public bool showGameSettingsFirst = true;
+
+        public Transform accountHelpRow;
+        public GameObject idContainer;
+        public TextMeshProUGUI idString;
+        public CanvasGroupButton idButton, iapRefreshButton, deleteCloudDataButton, cloudLoadButton;
+        public GameObject idHighlight, iapHighlight, deleteCloudDataHighlight, cloudLoadHighlight;
+        public AnimationClip idAnim, iapAnim, deleteCloudDataAnim, cloudLoadAnim;
+
+        //public GameObject premiumTab;
+
+
+        public void Initialise(
+            ScreensSceneGod screensSceneGod,
+            SingleSoundPlayer soundPlayer,
+            SettingsManager settingsManager,
+            HotkeysModel hotkeysModel)
+        {
+            base.Initialise(screensSceneGod);
+
+            Helper.AssertIsNotNull(difficultyDropdown, zoomSlider, scrollSlider, musicVolumeSlider, effectVolumeSlider, showInGameHintsToggle, saveButton, cancelButton, resetHotkeysButton, idButton, iapRefreshButton, deleteCloudDataButton, cloudLoadButton, cloudSaveToggle);
+            Helper.AssertIsNotNull(cloudSaveLabel, accountHelpRow);
+            Helper.AssertIsNotNull(gameSettingsPanel, hotkeysPanel, gameSettingsButton, hotkeysButton, audioButton);
+            Helper.AssertIsNotNull(soundPlayer, settingsManager, hotkeysModel);
+
+            _settingsManager = settingsManager;
+
+            // Scroll speed used to be 0.1 - 3.9 instead of 1 - 9.  Hence, reset :)
+            if (_settingsManager.ScrollSpeedLevel < SettingsModel.MIN_SCROLL_SPEED_LEVEL
+                || _settingsManager.ScrollSpeedLevel > SettingsModel.MAX_SCROLL_SPEED_LEVEL)
+            {
+                _settingsManager.ScrollSpeedLevel = SettingsModel.DEFAULT_SCROLL_SPEED_LEVEL;
+                _settingsManager.Save();
+            }
+
+            difficultyDropdown.Initialise(_settingsManager.AIDifficulty);
+            languageDropdown.Initialise(_settingsManager.Language);
+
+            DataProvider.GameModel.Settings.InitialiseGraphicsSettings();
+
+            resolutionDropdown.Initialise(_settingsManager.Resolution);
+
+            IRange<int> zoomlLevelRange = new Range<int>(SettingsModel.MIN_ZOOM_SPEED_LEVEL, SettingsModel.MAX_ZOOM_SPEED_LEVEL);
+            zoomSlider.Initialise(_settingsManager.ZoomSpeedLevel, zoomlLevelRange);
+
+            IRange<int> scrollLevelRange = new Range<int>(SettingsModel.MIN_SCROLL_SPEED_LEVEL, SettingsModel.MAX_SCROLL_SPEED_LEVEL);
+            scrollSlider.Initialise(_settingsManager.ScrollSpeedLevel, scrollLevelRange);
+
+            IRange<float> masterVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            masterVolumeSlider.Initialise(_settingsManager.MasterVolume, masterVolumeRange);
+
+            IRange<float> effectVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            effectVolumeSlider.Initialise(_settingsManager.EffectVolume, effectVolumeRange);
+
+            IRange<float> ambientVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            ambientVolumeSlider.Initialise(_settingsManager.AmbientVolume, ambientVolumeRange);
+
+            IRange<float> alertVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            alertVolumeSlider.Initialise(_settingsManager.AlertVolume, alertVolumeRange);
+
+            IRange<float> interfaceVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            interfaceVolumeSlider.Initialise(_settingsManager.InterfaceVolume, interfaceVolumeRange);
+
+            IRange<float> musicVolumeRange = new Range<float>(SettingsModel.MIN_VOLUME, SettingsModel.MAX_VOLUME);
+            musicVolumeSlider.Initialise(_settingsManager.MusicVolume, musicVolumeRange);
+
+            showInGameHintsToggle.Initialise(_settingsManager.ShowInGameHints);
+            showToolTipsToggle.Initialise(_settingsManager.ShowToolTips);
+            altDroneSoundsToggle.Initialise(_settingsManager.AltDroneSounds);
+            fullScreenToggle.Initialise(_settingsManager.FullScreen);
+            VSyncToggle.Initialise(_settingsManager.VSync);
+            adsToggle.Initialise(_settingsManager.ShowAds);
+            turboToggle.Initialise(_settingsManager.TurboMode);
+            richToggle.Initialise(_settingsManager.RichMode);
+            hecklesToggle.Initialise(_settingsManager.HecklesAllowed);
+            cloudSaveToggle.Initialise(!_settingsManager.CloudSaveDisabled);
+
+            hotkeysPanel.Initialise(hotkeysModel);
+
+            saveButton
+                .Initialise(
+                    soundPlayer,
+                    this,
+                    _settingsManager,
+                    difficultyDropdown,
+                    languageDropdown,
+                    resolutionDropdown,
+                    zoomSlider.SliderValue,
+                    scrollSlider.SliderValue,
+                    masterVolumeSlider.SliderValue,
+                    effectVolumeSlider.SliderValue,
+                    ambientVolumeSlider.SliderValue,
+                    alertVolumeSlider.SliderValue,
+                    interfaceVolumeSlider.SliderValue,
+                    musicVolumeSlider.SliderValue,
+                    showInGameHintsToggle.IsChecked,
+                    showToolTipsToggle.IsChecked,
+                    altDroneSoundsToggle.IsChecked,
+                    adsToggle.IsChecked,
+                    turboToggle.IsChecked,
+                    richToggle.IsChecked,
+                    hecklesToggle.IsChecked,
+                    cloudSaveToggle.IsChecked,
+                    fullScreenToggle.IsChecked,
+                    VSyncToggle.IsChecked,
+                    hotkeysPanel);
+
+            cancelButton.Initialise(soundPlayer, this);
+            resetHotkeysButton.Initialise(soundPlayer, hotkeysPanel.ResetToDefaults);
+
+            gameSettingsButton.Initialise(soundPlayer, ShowGameSettings, this);
+            hotkeysButton.Initialise(soundPlayer, ShowHotkeys, this);
+            audioButton.Initialise(soundPlayer, ShowAudioSettings, this);
+            languageButton.Initialise(soundPlayer, ShowLanguageSettings, this);
+            premiumButton.Initialise(soundPlayer, ShowPremiumSettings, this);
+
+            ShowTab(); //Hotkeys tab - only show for keyboard devices
+
+            idButton.Initialise(soundPlayer, CopyID, this);
+            iapRefreshButton.Initialise(soundPlayer, RefreshIAPs, this);
+            iapRefreshButton.gameObject.SetActive(true);
+            deleteCloudDataButton.Initialise(soundPlayer, DeleteCloudData, this);
+            cloudLoadButton.Initialise(soundPlayer, CloudLoad, this);
+            
+            if (Camera.main.aspect < 1.5f)
+                accountHelpRow.transform.localScale = new Vector3(.85f, .85f, 1f);
+
+            DisplayUserID();
+            iapRefreshButton.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("RefreshPurchasesButtonLabel");
+            deleteCloudDataButton.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/SettingsScreen/DeleteCloudData");
+            cloudSaveLabel.GetComponentInChildren<Text>().text = LocTableCache.ScreensSceneTable.GetString("UI/SettingsScreen/EnableCloudSave");
+
+            // #if FREE_EDITION && (UNITY_ANDROID || UNITY_IOS)
+#if THIRD_PARTY_PUBLISHER
+            DataProvider.GameModel.PremiumEdition = true;
+            premiumButton.gameObject.SetActive(false);
+#elif UNITY_ANDROID || UNITY_IOS
+            premiumButton.gameObject.SetActive(false);
+            if (DataProvider.GameModel.PremiumEdition)
+                premiumButton.gameObject.SetActive(true);
+#elif UNITY_EDITOR
+            premiumButton.gameObject.SetActive(false);
+            if (DataProvider.GameModel.PremiumEdition)
+                premiumButton.gameObject.SetActive(true);
+#endif
+        }
+
+        private void ShowTab()
+        {
+            if (SystemInfoBC.Instance.IsHandheld)
+            {
+                // There are no hotkeys for handheld devices
+                ShowGameSettings();
+
+                hotkeysPanel.Hide();
+                //gameSettingsButton.IsVisible = false;
+                hotkeysButton.IsVisible = false;
+                return;
+            }
+
+            if (showGameSettingsFirst)
+                ShowGameSettings();
+            else
+                ShowHotkeys();
+        }
+
+        public override void Cancel()
+        {
+            _screensSceneGod.GoToHomeScreen();
+        }
+
+        public void ShowPremiumSettings()
+        {
+            hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
+
+            audioButton.IsSelected = false;
+            audioPanel.Hide();
+            languageButton.IsSelected = false;
+            videoPanel.Hide();
+
+            gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+
+            premiumPanel.Show();
+            premiumButton.IsSelected = true;
+        }
+
+        public void ShowGameSettings()
+        {
+            hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
+
+            audioButton.IsSelected = false;
+            audioPanel.Hide();
+            languageButton.IsSelected = false;
+            videoPanel.Hide();
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
+
+            gameSettingsPanel.Show();
+            gameSettingsButton.IsSelected = true;
+        }
+
+        public void ShowHotkeys()
+        {
+            gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+
+            audioButton.IsSelected = false;
+            audioPanel.Hide();
+
+            languageButton.IsSelected = false;
+            videoPanel.Hide();
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
+
+            hotkeysPanel.Show();
+            hotkeysButton.IsSelected = true;
+            resetHotkeysButton.IsVisible = true;
+        }
+
+        public void ShowAudioSettings()
+        {
+            hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
+            gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+            languageButton.IsSelected = false;
+            videoPanel.Hide();
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
+
+            audioButton.IsSelected = true;
+            audioPanel.Show();
+        }
+
+        public void ShowLanguageSettings()
+        {
+            hotkeysPanel.Hide();
+            hotkeysButton.IsSelected = false;
+            resetHotkeysButton.IsVisible = false;
+            gameSettingsPanel.Hide();
+            gameSettingsButton.IsSelected = false;
+            audioButton.IsSelected = false;
+            audioPanel.Hide();
+
+            premiumPanel.Hide();
+            premiumButton.IsSelected = false;
+
+            languageButton.IsSelected = true;
+            videoPanel.Show();
+        }
+
+        private void DisplayUserID()
+        {
+            // Show ID if we have it, always (works offline and regardless of cloud save status)
+            string playerId = AuthenticationService.Instance.PlayerId;
+            if (playerId != null)
+            {
+                idContainer.SetActive(true);
+                idString.text = "ID: " + playerId;
+            }
+            else
+            {
+                idContainer.SetActive(false);
+            }
+        }
+
+        public void CopyID()
+        {
+            UniClipboard.SetText(AuthenticationService.Instance.PlayerId);
+            StartCoroutine(AnimateCopy());
+        }
+
+        IEnumerator AnimateCopy()
+        {
+            idHighlight.SetActive(true);
+            yield return new WaitForSeconds(idAnim.length);
+            idHighlight.SetActive(false);
+        }
+
+        public void RefreshIAPs()
+        {
+            IAPManager.instance.RestorePurchases();
+            StartCoroutine(AnimateRefresh());
+        }
+
+        IEnumerator AnimateRefresh()
+        {
+            iapHighlight.SetActive(true);
+            yield return new WaitForSeconds(iapAnim.length);
+            iapHighlight.SetActive(false);
+        }
+
+        public void DeleteCloudData()
+        {
+            AuthenticationService.Instance.DeleteAccountAsync();
+            idButton.gameObject.SetActive(false);
+            _settingsManager.CloudSaveDisabled = true;
+            cloudSaveToggle.ResetToDefaults(false);
+            StartCoroutine(AnimateDeleteCloudData());
+        }
+
+        /// <summary>
+        /// Manual cloud load - loads game state from cloud (overwrites local if cloud is newer)
+        /// </summary>
+        public async void CloudLoad()
+        {
+            try
+            {
+                await DataProvider.CloudLoad();
+                Debug.Log("[SettingsScreen] Cloud load completed successfully");
+                // Note: UI will refresh automatically when navigating to other screens
+                StartCoroutine(AnimateCloudLoad());
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[SettingsScreen] Cloud load failed: {ex.Message}");
+            }
+        }
+
+        IEnumerator AnimateCloudLoad()
+        {
+            cloudLoadHighlight.SetActive(true);
+            yield return new WaitForSeconds(cloudLoadAnim.length);
+            cloudLoadHighlight.SetActive(false);
+        }
+
+        IEnumerator AnimateDeleteCloudData()
+        {
+            deleteCloudDataHighlight.SetActive(true);
+            yield return new WaitForSeconds(deleteCloudDataAnim.length);
+            deleteCloudDataHighlight.SetActive(false);
+        }
+
+        public override void OnDismissing()
+        {
+            base.OnDismissing();
+
+            hotkeysPanel.ResetToSavedState();
+            difficultyDropdown.ResetToDefaults(_settingsManager.AIDifficulty);
+            languageDropdown.ResetToDefaults(_settingsManager.Language);
+            zoomSlider.ResetToDefaults(_settingsManager.ZoomSpeedLevel);
+            scrollSlider.ResetToDefaults(_settingsManager.ScrollSpeedLevel);
+            masterVolumeSlider.ResetToDefaults(_settingsManager.MasterVolume);
+            effectVolumeSlider.ResetToDefaults(_settingsManager.EffectVolume);
+            ambientVolumeSlider.ResetToDefaults(_settingsManager.AmbientVolume);
+            alertVolumeSlider.ResetToDefaults(_settingsManager.AlertVolume);
+            interfaceVolumeSlider.ResetToDefaults(_settingsManager.InterfaceVolume);
+            musicVolumeSlider.ResetToDefaults(_settingsManager.MusicVolume);
+            showInGameHintsToggle.ResetToDefaults(_settingsManager.ShowInGameHints);
+            showToolTipsToggle.ResetToDefaults(_settingsManager.ShowToolTips);
+            VSyncToggle.ResetToDefaults(_settingsManager.VSync);
+            fullScreenToggle.ResetToDefaults(_settingsManager.FullScreen);
+            resolutionDropdown.ResetToDefaults(_settingsManager.Resolution);
+            altDroneSoundsToggle.ResetToDefaults(_settingsManager.AltDroneSounds);
+            adsToggle.ResetToDefaults(_settingsManager.ShowAds);
+            turboToggle.ResetToDefaults(_settingsManager.TurboMode);
+            richToggle.ResetToDefaults(_settingsManager.RichMode);
+            hecklesToggle.ResetToDefaults(_settingsManager.HecklesAllowed);
+            cloudSaveToggle.ResetToDefaults(!_settingsManager.CloudSaveDisabled);
+        }
+    }
+}

@@ -1,0 +1,18 @@
+﻿using BattleCruisers.Data.Settings;
+using BattleCruisers.Utils.PlatformAbstractions.Audio;
+
+namespace BattleCruisers.UI.Sound.AudioSources
+{
+    public class MusicVolumeAudioSource : VolumeAwareAudioSource
+    {
+        public MusicVolumeAudioSource(IAudioSource audioSource, SettingsManager settingsManager)
+            : base(audioSource)
+        {
+        }
+
+        protected override float GetVolume(SettingsManager settingsManager)
+        {
+            return settingsManager.MusicVolume * settingsManager.MasterVolume;
+        }
+    }
+}

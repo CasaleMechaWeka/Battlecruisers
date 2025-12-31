@@ -1,0 +1,60 @@
+﻿using BattleCruisers.Cruisers;
+using BattleCruisers.Data.Models;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
+using BattleCruisers.UI.ScreensScene.LoadoutScreen.ItemDetails;
+using BattleCruisers.UI.Sound.Players;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Properties;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.UI.ScreensScene.LoadoutScreen.Items
+{
+    public class HullItemContainerV2 : ItemContainer
+    {
+        public PrefabKeyName hullKeyName;
+
+        private HullKey _hullKey;
+        private HullKey HullKey
+        {
+            get
+            {
+                if (_hullKey == null)
+                {
+                    _hullKey = StaticPrefabKeyHelper.GetPrefabKey<HullKey>(hullKeyName);
+                }
+                return _hullKey;
+            }
+        }
+
+        protected override ItemButton InitialiseItemButton(
+            ItemDetailsManager itemDetailsManager,
+            ComparingItemFamilyTracker comparingFamilyTracker,
+            IBroadcastingProperty<HullKey> selectedHull,
+            SingleSoundPlayer soundPlayer,
+            GameModel gameModel)
+        {
+            Cruiser cruiserPrefab = PrefabFactory.GetCruiserPrefab(HullKey);
+            HullButtonV2 hullButton = GetComponentInChildren<HullButtonV2>(includeInactive: true);
+            Assert.IsNotNull(hullButton);
+            hullButton.Initialise(soundPlayer, itemDetailsManager, comparingFamilyTracker, HullKey, cruiserPrefab, selectedHull);
+            return hullButton;
+        }
+
+        protected override bool IsUnlocked(GameModel gameModel)
+        {
+            return gameModel.UnlockedHulls.Contains(HullKey);
+        }
+
+        protected override bool IsNew(GameModel gameModel)
+        {
+            return gameModel.NewHulls.Items.Contains(HullKey);
+        }
+
+        protected override void MakeOld(GameModel gameModel)
+        {
+            gameModel.NewHulls.RemoveItem(HullKey);
+        }
+    }
+}

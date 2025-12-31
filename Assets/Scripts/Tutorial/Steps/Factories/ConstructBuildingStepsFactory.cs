@@ -1,0 +1,119 @@
+﻿using BattleCruisers.Buildables.Buildings;
+using BattleCruisers.Cruisers;
+using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Scenes.BattleScene;
+using BattleCruisers.Tutorial.Steps.ClickSteps;
+using BattleCruisers.Tutorial.Steps.Providers;
+using BattleCruisers.Tutorial.Steps.WaitSteps;
+using BattleCruisers.UI.BattleScene;
+using BattleCruisers.UI.BattleScene.Buttons;
+using BattleCruisers.Utils;
+using BattleCruisers.Utils.Localisation;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using UnityEngine.Assertions;
+
+namespace BattleCruisers.Tutorial.Steps.Factories
+{
+    public class ConstructBuildingStepsFactory : TutorialFactoryBase
+    {
+        private readonly LeftPanelComponents _leftPanelComponents;
+        private readonly TutorialHelper _tutorialProvider;
+        private readonly ICruiser _playerCruiser;
+        private readonly ISingleBuildableProvider _lastPlayerIncompleteBuildingStartedProvider;
+        private readonly SlidingPanelWaitStepFactory _slidingPanelWaitStepFactory;
+
+        public ConstructBuildingStepsFactory(
+            TutorialStepArgsFactory argsFactory,
+            LeftPanelComponents leftPanelComponents,
+            TutorialHelper tutorialProvider,
+            ICruiser playerCruiser,
+            ISingleBuildableProvider lastPlayerIncompleteBuildingStartedProvider,
+            SlidingPanelWaitStepFactory slidingPanelWaitStepFactory)
+            : base(argsFactory)
+        {
+            Helper.AssertIsNotNull(leftPanelComponents, tutorialProvider, playerCruiser, lastPlayerIncompleteBuildingStartedProvider, slidingPanelWaitStepFactory);
+
+            _leftPanelComponents = leftPanelComponents;
+            _tutorialProvider = tutorialProvider;
+            _playerCruiser = playerCruiser;
+            _lastPlayerIncompleteBuildingStartedProvider = lastPlayerIncompleteBuildingStartedProvider;
+            _slidingPanelWaitStepFactory = slidingPanelWaitStepFactory;
+        }
+
+        public IList<TutorialStep> CreateSteps(
+            BuildingCategory buildingCategory,
+            BuildableInfo buildingToConstruct,
+            ISlotSpecification slotSpecification,
+            string constructBuildingInstruction,
+            bool waitForBuildingToComplete = true)
+        {
+            IList<TutorialStep> constructionSteps = new List<TutorialStep>();
+
+            // Select building category
+            IBuildingCategoryButton buildingCategoryButton = _leftPanelComponents.BuildMenu.GetBuildingCategoryButton(buildingCategory);
+            Assert.IsNotNull(buildingCategoryButton);
+            TutorialStepArgs buildingCategoryArgs = _argsFactory.CreateTutorialStepArgs(constructBuildingInstruction, buildingCategoryButton, shouldUnhighlight: false);
+            constructionSteps.Add(new CategoryButtonStep(buildingCategoryArgs, buildingCategoryButton, _tutorialProvider.BuildingCategoryPermitter));
+
+            // Wait for selector panel to slide out
+            constructionSteps.Add(_slidingPanelWaitStepFactory.CreateSelectorShownWaitStep());
+
+            // Select building
+            IBuildableButton buildingButton = FindBuildableButton(buildingCategory, buildingToConstruct.Key);
+            string textToDisplay = null;  // Means previous text is displayed
+            TutorialStepArgs buldingButtonArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, buildingButton);
+            SlotProvider slotProvider = new SlotProvider(_playerCruiser.SlotAccessor, slotSpecification);
+            constructionSteps.Add(
+                new BuildingButtonStep(
+                    buldingButtonArgs,
+                    buildingButton,
+                    _tutorialProvider.BuildingPermitter,
+                    buildingToConstruct.Key,
+                    slotProvider,
+                    _tutorialProvider.SlotPermitter));
+
+            // Select a slot
+            TutorialStepArgs buildingSlotsArgs = _argsFactory.CreateTutorialStepArgs(textToDisplay, slotProvider);
+            constructionSteps.Add(
+                new SlotStep(
+                    buildingSlotsArgs,
+                    _tutorialProvider.SlotPermitter,
+                    slotProvider));
+
+            if (waitForBuildingToComplete)
+            {
+                // Wait for building to complete construction
+                string waitTextBase = LocTableCache.TutorialTable.GetString("Steps/ConstructBuliding/WaitStep");
+                string waitText = string.Format(waitTextBase, buildingToConstruct.Name);
+                constructionSteps.Add(CreateStep_WaitForLastIncomlpeteBuildingToComplete(waitText));
+            }
+
+            return constructionSteps;
+        }
+
+        private IBuildableButton FindBuildableButton(BuildingCategory buildingCategory, IPrefabKey buildingKey)
+        {
+            _tutorialProvider.BuildingPermitter.PermittedBuilding = buildingKey;
+
+            ReadOnlyCollection<IBuildableButton> categoryButtons = _leftPanelComponents.BuildMenu.GetBuildingButtons(buildingCategory);
+
+            IBuildableButton buildableButton
+                = categoryButtons
+                    .FirstOrDefault(button => _tutorialProvider.ShouldBuildingBeEnabledFilter.IsMatch(button.Buildable));
+
+            _tutorialProvider.BuildingPermitter.PermittedBuilding = null;
+
+            Assert.IsNotNull(buildableButton);
+            return buildableButton;
+        }
+
+        private TutorialStep CreateStep_WaitForLastIncomlpeteBuildingToComplete(string textToDisplay)
+        {
+            TutorialStepArgs args = _argsFactory.CreateTutorialStepArgs(textToDisplay);
+            return new BuildableCompletedWaitStep(args, _lastPlayerIncompleteBuildingStartedProvider);
+        }
+    }
+}

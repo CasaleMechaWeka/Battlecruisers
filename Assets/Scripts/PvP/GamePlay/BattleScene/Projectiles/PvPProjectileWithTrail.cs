@@ -1,0 +1,108 @@
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Effects.Trails;
+using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.Factories;
+using BattleCruisers.Projectiles;
+using UnityEngine;
+using UnityEngine.Assertions;
+using BattleCruisers.Utils.Threading;
+using BattleCruisers.Utils.BattleScene;
+using BattleCruisers.Utils.BattleScene.Pools;
+
+namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Projectiles
+{
+    /// <summary>
+    /// Projectiles with trails (eg: rockets) should not have the trail disappear on impact.
+    /// Instead, the projectile should be inert, but set the trail hang around and dissipate
+    /// before deactivating completely and being recycled.
+    /// </summary>
+    public abstract class PvPProjectileWithTrail : PvPProjectileControllerBase,
+        IRemovable,
+        IPoolable<ProjectileActivationArgs>
+    {
+        private Collider2D _collider;
+        private IDeferrer _deferrer;
+        private IPvPProjectileTrail _trail;
+        protected virtual float timeToActiveTrail { get => 0.05f; }
+        protected virtual float TrailLifetimeInS { get => 10; }
+
+        public override void Initialise()
+        {
+            base.Initialise();
+            _deferrer = PvPFactoryProvider.DeferrerProvider.Deferrer;
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
+            _trail = GetComponentInChildren<IPvPProjectileTrail>();
+            Assert.IsNotNull(_trail);
+            _trail.Initialise();
+        }
+
+        public override void Activate(ProjectileActivationArgs activationArgs)
+        {
+            base.Activate(activationArgs);
+            _collider.enabled = true;
+            _trail.ShowAllEffects();
+            //Debug.Log("[PvPProjectileWithTrail] Activate() called at Position: " + activationArgs.Position + ", Initial Velocity: " + activationArgs.InitialVelocityInMPerS);
+            ShowAllEffectsOfClient();
+            //Debug.Log("[PvPProjectileWithTrail] Collider and trail effects enabled.");
+        }
+
+        protected virtual void ShowAllEffectsOfClient()
+        {
+            if (IsClient)
+            {
+                _trail.ShowAllEffects();
+            }
+        }
+        /*public override void Initialise()
+        {
+            base.Initialise();
+            _collider = GetComponent<Collider2D>();
+            Assert.IsNotNull(_collider);
+        }*/
+
+        public void InitialiseTril()
+        {
+            _trail = GetComponentInChildren<IPvPProjectileTrail>();
+            Assert.IsNotNull(_trail);
+            _trail.Initialise();
+        }
+
+        protected override void DestroyProjectile()
+        {
+            Debug.Log("[PvPProjectileWithTrail] DestroyProjectile() called.");
+            ShowExplosion();
+            OnImpactCleanUp();
+            Debug.Log("[PvPProjectileWithTrail] Explosion shown and impact cleanup executed.");
+            InvokeDestroyed();
+            _deferrer.Defer(OnTrailsDoneCleanup, TrailLifetimeInS);
+        }
+
+        protected virtual void OnImpactCleanUp()
+        {
+            // Dummy movement controller doesn't set velocity to 0, so need to set rigid body velocity manually.
+            _rigidBody.velocity = Vector2.zero;
+            MovementController = null;
+            _collider.enabled = false;
+            _trail.HideEffects();
+            HideEffectsOfClient();
+        }
+
+        protected virtual void HideEffectsOfClient()
+        {
+            _trail.HideEffects();
+        }
+
+        private void OnTrailsDoneCleanup()
+        {
+            if (this == null || gameObject == null)
+            {
+                Debug.LogWarning("[PvPProjectileWithTrail] OnTrailsDoneCleanup aborted because the object is destroyed.");
+                return;
+            }
+
+            Debug.Log("[PvPProjectileWithTrail] OnTrailsDoneCleanup called. Proceeding with cleanup.");
+            OnSetPosition_Visible(Position, false);
+            gameObject.SetActive(false);
+            InvokeDeactivated();
+        }
+    }
+}
