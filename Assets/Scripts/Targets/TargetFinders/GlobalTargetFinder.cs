@@ -6,6 +6,7 @@ using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
+using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -42,6 +43,18 @@ namespace BattleCruisers.Targets.TargetFinders
         private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             InvokeTargetLostEvent(_enemyCruiser);
+
+            // If this is a ChainCruiser, also remove its hull sections as targets
+            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.HullSections != null)
+            {
+                foreach (var hullSection in chainCruiser.HullSections)
+                {
+                    if (hullSection != null)
+                    {
+                        InvokeTargetLostEvent(hullSection);
+                    }
+                }
+            }
         }
 
 		private void _enemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
@@ -82,6 +95,18 @@ namespace BattleCruisers.Targets.TargetFinders
         public void EmitCruiserAsGlobalTarget()
         {
             InvokeTargetFoundEvent(_enemyCruiser);
+
+            // If this is a ChainCruiser, also emit its hull sections as targets
+            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.HullSections != null)
+            {
+                foreach (var hullSection in chainCruiser.HullSections)
+                {
+                    if (hullSection != null && hullSection.PrimaryCollider != null)
+                    {
+                        InvokeTargetFoundEvent(hullSection);
+                    }
+                }
+            }
         }
 
 		private void InvokeTargetFoundEvent(ITarget targetFound)

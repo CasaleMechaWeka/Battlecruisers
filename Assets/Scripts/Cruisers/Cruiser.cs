@@ -38,23 +38,21 @@ namespace BattleCruisers.Cruisers
 {
     public class Cruiser : Target, ICruiser, IComparableItem
     {
-        protected readonly float UltraCruiserBoostModifier = 2.0f;
-        protected readonly float UltraCruiserHealthModifier = 1.25f;
         protected UIManager _uiManager;
         protected ICruiser _enemyCruiser;
-        private SpriteRenderer _renderer;
+        protected SpriteRenderer _renderer;
         protected Collider2D _collider;
-        private ICruiserHelper _helper;
+        protected ICruiserHelper _helper;
         public SlotWrapperController SlotWrapperController;
-        private ClickHandler _clickHandler;
-        private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
-        private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
+        protected ClickHandler _clickHandler;
+        protected IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
+        protected IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
         private AudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
+        protected IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        private SettingsManager settingsManager;
+        protected SettingsManager settingsManager;
 
         public string stringKeyBase;
         public int numOfDrones = 4;
@@ -66,33 +64,60 @@ namespace BattleCruisers.Cruisers
         [Tooltip("GameObjects that persist in the scene after this cruiser is destroyed (e.g., CivBuildings)")]
         public GameObject[] persistentObjects;
 
+        [Header("Additional Colliders")]
+        [Tooltip("Enable to use additional PolygonCollider2D components as part of this cruiser's hitbox. Useful for animated cruisers with backup enemies that appear.")]
+        public bool useAdditionalColliders = false;
+
+        [Tooltip("Additional PolygonCollider2D components that should be treated as part of this cruiser's hitbox. These can be on child GameObjects.")]
+        public PolygonCollider2D[] additionalColliders;
+
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
         public override Color Color { set { _renderer.color = value; } }
-        public override Vector2 Size => _collider.bounds.size;
+        public override Vector2 Size
+        {
+            get
+            {
+                if (!useAdditionalColliders || additionalColliders == null || additionalColliders.Length == 0)
+                {
+                    return _collider.bounds.size;
+                }
+
+                // Combine bounds from main collider and all additional colliders
+                Bounds combinedBounds = _collider.bounds;
+                foreach (var extraCollider in additionalColliders)
+                {
+                    if (extraCollider != null)
+                    {
+                        combinedBounds.Encapsulate(extraCollider.bounds);
+                    }
+                }
+                return combinedBounds.size;
+            }
+        }
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
 
-        private Vector2 _droneAreaSize;
+        protected Vector2 _droneAreaSize;
         public override Vector2 DroneAreaSize => _droneAreaSize;
 
 
         // IComparableItem
-        public string Description { get; private set; }
-        public string Name { get; private set; }
+        public string Description { get; protected set; }
+        public string Name { get; protected set; }
         public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
-        public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
-        public Direction Direction { get; private set; }
+        public IDroneConsumerProvider DroneConsumerProvider { get; protected set; }
+        public Direction Direction { get; protected set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public CruiserSpecificFactories CruiserSpecificFactories { get; private set; }
-        private FogOfWar _fog;
+        public CruiserSpecificFactories CruiserSpecificFactories { get; protected set; }
+        protected FogOfWar _fog;
         public IGameObject Fog => _fog;
-        public IRepairManager RepairManager { get; private set; }
+        public IRepairManager RepairManager { get; protected set; }
         public int NumOfDrones => numOfDrones;
-        public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
+        public IBuildProgressCalculator BuildProgressCalculator { get; protected set; }
         public bool IsPlayerCruiser => Position.x < 0;
         public CruiserDeathExplosion deathPrefab;
         public CruiserDeathExplosion DeathPrefab => deathPrefab;
@@ -100,16 +125,16 @@ namespace BattleCruisers.Cruisers
 
         // ICruiserController
         public bool IsAlive => !IsDestroyed;
-        public SlotAccessor SlotAccessor { get; private set; }
-        public SlotHighlighter SlotHighlighter { get; private set; }
-        public ISlotNumProvider SlotNumProvider { get; private set; }
-        public DroneManager DroneManager { get; private set; }
-        public IDroneFocuser DroneFocuser { get; private set; }
-        public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
-        public ICruiserUnitMonitor UnitMonitor { get; private set; }
-        public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
-        public IUnitTargets UnitTargets { get; private set; }
-        public TargetTracker BlockedShipsTracker { get; private set; }
+        public SlotAccessor SlotAccessor { get; protected set; }
+        public SlotHighlighter SlotHighlighter { get; protected set; }
+        public ISlotNumProvider SlotNumProvider { get; protected set; }
+        public DroneManager DroneManager { get; protected set; }
+        public IDroneFocuser DroneFocuser { get; protected set; }
+        public ICruiserBuildingMonitor BuildingMonitor { get; protected set; }
+        public ICruiserUnitMonitor UnitMonitor { get; protected set; }
+        public IPopulationLimitMonitor PopulationLimitMonitor { get; protected set; }
+        public IUnitTargets UnitTargets { get; protected set; }
+        public TargetTracker BlockedShipsTracker { get; protected set; }
 
         public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
@@ -126,7 +151,6 @@ namespace BattleCruisers.Cruisers
         }
 
         public List<BoostStats> Boosts;
-        public List<int> UltraCruiserLevels;
         List<IBoostProvider> BoostsProvided = new List<IBoostProvider>();
 
         public override void StaticInitialise()
@@ -141,6 +165,27 @@ namespace BattleCruisers.Cruisers
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
 
+            // Validate additional colliders if enabled
+            if (useAdditionalColliders)
+            {
+                if (additionalColliders == null || additionalColliders.Length == 0)
+                {
+                    Debug.LogWarning($"[Cruiser] {name}: useAdditionalColliders is enabled but additionalColliders array is empty or null. Additional colliders will be ignored.");
+                }
+                else
+                {
+                    int nullCount = 0;
+                    foreach (var collider in additionalColliders)
+                    {
+                        if (collider == null)
+                            nullCount++;
+                    }
+                    if (nullCount > 0)
+                    {
+                        Debug.LogWarning($"[Cruiser] {name}: {nullCount} null collider(s) found in additionalColliders array. They will be ignored.");
+                    }
+                }
+            }
 
             SlotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             Assert.IsNotNull(SlotWrapperController);
@@ -278,14 +323,6 @@ namespace BattleCruisers.Cruisers
                 }
             }
 
-            if (UltraCruiserLevels.Contains(ApplicationModel.SelectedLevel))
-            {
-                SetUltraCruiserHealth(args);
-                if (Boosts != null)
-                    foreach (BoostStats boost in Boosts)
-                        boost.boostAmount = SetUltraCruiserBoost(args, boost.boostAmount);
-            }
-
             if (Boosts != null)
                 foreach (BoostStats boost in Boosts)
                 {
@@ -315,7 +352,7 @@ namespace BattleCruisers.Cruisers
                 }
         }
 
-        private void _clickHandler_SingleClick(object sender, EventArgs e)
+        protected virtual void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);
 
@@ -326,9 +363,14 @@ namespace BattleCruisers.Cruisers
             Clicked?.Invoke(this, EventArgs.Empty);
         }
 
-        private void _clickHandler_DoubleClick(object sender, EventArgs e)
+        protected virtual void _clickHandler_DoubleClick(object sender, EventArgs e)
         {
             _cruiserDoubleClickHandler.OnDoubleClick(this);
+        }
+
+        protected void OnClicked()
+        {
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot,
@@ -479,37 +521,6 @@ namespace BattleCruisers.Cruisers
         public bool IsCruiser()
         {
             return isCruiser;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        protected void SetUltraCruiserHealth(CruiserArgs args)
-        {
-            if (args.Faction == Faction.Reds)
-            {
-                float health = UltraCruiserHealthModifier * this.MaxHealth;
-                this._healthTracker.MaxHealth = health;
-                //Debug.Log("Enemy health value: "+health);
-            }
-            else
-            {
-                this._healthTracker.MaxHealth = base.maxHealth;
-                //Debug.Log("Player health value: "+maxHealth);
-            }
-        }
-
-        protected float SetUltraCruiserBoost(CruiserArgs args, float cruiserBaseUtility)
-        {
-            if (args.Faction == Faction.Reds)
-            {
-                //Debug.Log("Enemy utility value: "+cruiserBaseUtility * UltraCruiserUtilityModifier);
-                return cruiserBaseUtility * UltraCruiserBoostModifier;
-            }
-            else
-            {
-                //Debug.Log("Player utility value: "+cruiserBaseUtility);
-                return cruiserBaseUtility;
-            }
         }
 
     }
