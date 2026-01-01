@@ -78,20 +78,32 @@ namespace BattleCruisers.Cruisers.Slots
             set { _renderer.gameObject.SetActive(value); }
         }
 
-        public void controlBuildingPlacementFeedback(bool active)   // let's describe a publicly-accessible function that returns nothing, 
+        public void controlBuildingPlacementFeedback(bool active)   // let's describe a publicly-accessible function that returns nothing,
                                                                     // named contorlBuildingPlacementFeedback
                                                                     // which will be passed a bool (true or false) and active??
         {
             _renderer.gameObject.SetActive(active);
-            _buildingPlacementFeedback.gameObject.SetActive(active);
-            Invoke("stopBuildingPlacementFeedback", _buildingPlacementFeedback.GetComponent<ParticleSystem>().main.duration);
-            _buildingPlacementBeacon.gameObject.SetActive(false);
-
+            if (_buildingPlacementFeedback != null)
+            {
+                _buildingPlacementFeedback.gameObject.SetActive(active);
+                ParticleSystem particleSystem = _buildingPlacementFeedback.GetComponent<ParticleSystem>();
+                if (particleSystem != null)
+                {
+                    Invoke("stopBuildingPlacementFeedback", particleSystem.main.duration);
+                }
+            }
+            if (_buildingPlacementBeacon != null)
+            {
+                _buildingPlacementBeacon.gameObject.SetActive(false);
+            }
         }
 
         public void stopBuildingPlacementFeedback()
         {
-            _buildingPlacementFeedback.gameObject.SetActive(false);
+            if (_buildingPlacementFeedback != null)
+            {
+                _buildingPlacementFeedback.gameObject.SetActive(false);
+            }
             _renderer.gameObject.SetActive(false);
         }
 
@@ -131,10 +143,11 @@ namespace BattleCruisers.Cruisers.Slots
                     // Using worldPositionStays=true keeps the building at the same world position during reparenting
                     building.SetParent(transform, worldPositionStays: true);
 
-                    // Match the slot's rotation
-                    _baseBuilding.Value.Rotation = Transform.Rotation;
+                    // For child objects, set local rotation to identity so the building inherits the parent's rotation
+                    // This ensures the building's world rotation matches the slot's world rotation
+                    building.Transform.PlatformObject.localRotation = Quaternion.identity;
 
-                    // Set the world position (the local position will be calculated automatically after parenting)
+                    // Set the world position to the calculated target
                     building.Position = targetWorldPosition;
 
                     if (building.HealthBar.Offset.x == 0
