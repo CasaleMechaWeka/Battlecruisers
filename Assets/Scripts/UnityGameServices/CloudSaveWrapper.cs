@@ -81,7 +81,11 @@ public class CloudSaveWrapper : ISaveClient
     {
         try
         {
-            await action;
+            await action.WaitAsync(TimeSpan.FromSeconds(10));
+        }
+        catch (TimeoutException e)
+        {
+            Debug.LogError($"Cloud save operation timed out: {e.Message}");
         }
         catch (CloudSaveValidationException e)
         {
@@ -101,7 +105,11 @@ public class CloudSaveWrapper : ISaveClient
     {
         try
         {
-            return await action;
+            return await action.WaitAsync(TimeSpan.FromSeconds(10));
+        }
+        catch (TimeoutException e)
+        {
+            Debug.LogError($"Cloud save operation timed out: {e.Message}");
         }
         catch (CloudSaveValidationException e)
         {

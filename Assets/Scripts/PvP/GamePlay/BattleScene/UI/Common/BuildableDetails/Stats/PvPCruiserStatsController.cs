@@ -25,7 +25,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
 
         protected override void InternalShowStats(IPvPCruiser item, IPvPCruiser itemToCompareTo)
         {
-            health.ShowResult(ValueToStarsConverter.ConvertValueToStars(item.MaxHealth, ValueType.AntiCruiser), HigherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
+            health.ShowResult(ValueToStarsConverter.ConvertValueToStars(item.MaxHealth, ValueType.CruiserHealth), HigherIsBetterComparer.CompareStats(item.MaxHealth, itemToCompareTo.MaxHealth));
 
             int platformSlotCount = item.SlotNumProvider.GetSlotCount(SlotType.Platform);
             platformSlots.ShowResult(platformSlotCount, HigherIsBetterComparer.CompareStats(platformSlotCount, itemToCompareTo.SlotNumProvider.GetSlotCount(SlotType.Platform)));

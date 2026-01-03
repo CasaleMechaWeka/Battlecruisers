@@ -85,7 +85,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
             battlePanel.Initialise(screensSceneGod);
             leaderboardPanel.Initialise(screensSceneGod);
-            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer);
+            arenaSelectPanel.Initialise(screensSceneGod, _soundPlayer, coinBattleController);
 
             coinBattleController.Initialise(screensSceneGod);
             playerInfoPanelController.UpdateInfo();
@@ -102,7 +102,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 Text privateMatchText = privateMatchButton.GetComponentInChildren<Text>();
                 if (privateMatchText != null)
                 {
-                    privateMatchText.text = "Private Match";
+                    privateMatchText.text = LocTableCache.ScreensSceneTable.GetString("PRIVATE_MATCH");
                 }
             }
         }

@@ -49,7 +49,7 @@ namespace BattleCruisers.UI.ScreensScene
                     // Online purchasing
                     try
                     {
-                        bool result = await DataProvider.PurchaseHeckleV2(currentHeckleData.Index);
+                        bool result = await DataProvider.PurchaseHeckleV2(currentHeckleData.Index).WaitAsync(TimeSpan.FromSeconds(10));
                         if (result)
                         {
                             //    await DataProvider.SyncCurrencyFromCloud();
@@ -61,7 +61,7 @@ namespace BattleCruisers.UI.ScreensScene
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             DataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                             DataProvider.SaveGame();
-                            await DataProvider.CloudSave();
+                            await DataProvider.CloudSave().WaitAsync(TimeSpan.FromSeconds(10));
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {

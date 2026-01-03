@@ -13,6 +13,7 @@ using BattleCruisers.UI.Commands;
 using BattleCruisers.Utils.Localisation;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Utils.BattleScene;
+using BattleCruisers.UI.ScreensScene.CoinBattleScreen;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Unity.Services.Qos;
@@ -48,6 +49,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public ButtonController navLeftButton;
         public GameObject loadingSpinner;
         private ScreensSceneGod _screenSceneGod;
+        private CoinBattleScreenController _coinBattleController;
 
         private bool isTransitioning = false;
         private bool isClickedBattleButton = false;
@@ -57,13 +59,15 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 
         public void Initialise(
             ScreensSceneGod screensSceneGod,
-            SingleSoundPlayer soundPlayer)
+            SingleSoundPlayer soundPlayer,
+            CoinBattleScreenController coinBattleController = null)
         {
             loadingSpinner.SetActive(false);
             base.Initialise(screensSceneGod);
             Helper.AssertIsNotNull(battleButton, navRightButton, navLeftButton);
 
             _screenSceneGod = screensSceneGod;
+            _coinBattleController = coinBattleController;
 
             battleButton.Initialise(soundPlayer, StartBattle);
 
@@ -185,6 +189,24 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 isClickedBattleButton = true;
                 loadingSpinner.SetActive(true);
                 battleButton.gameObject.SetActive(false);
+
+                // Handle 1vAI (CoinBattle) mode
+                if (ApplicationModel.Mode == GameMode.CoinBattle)
+                {
+                    if (_coinBattleController != null)
+                    {
+                        _coinBattleController.Battle();
+                    }
+                    else
+                    {
+                        Debug.LogError("CoinBattleController not set for 1vAI battle");
+                        loadingSpinner.SetActive(false);
+                        battleButton.gameObject.SetActive(true);
+                        isClickedBattleButton = false;
+                    }
+                    return;
+                }
+
                 if (AuthenticationService.Instance.IsSignedIn)
                 {
                     if (DataProvider.GameModel.Coins >= StaticData.Arenas[indexCurrentArena + 1].costcoins

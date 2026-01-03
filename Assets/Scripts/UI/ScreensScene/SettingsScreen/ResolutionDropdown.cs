@@ -34,7 +34,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                     || nativeResolution.x == resolutions[i].x && nativeResolution.y >= resolutions[i].y)
                     {
                         resolutions.Insert(i, nativeResolution);
-                        options.Insert(i, new Dropdown.OptionData($"{nativeResolution.x} x {nativeResolution.y} (native)"));
+                        options.Insert(i, new Dropdown.OptionData($"{nativeResolution.x} x {nativeResolution.y} {LocTableCache.ScreensSceneTable.GetString("SETTINGS_NATIVE_RES")}"));
                         break;
                     }
 
