@@ -472,7 +472,7 @@ namespace BattleCruisers.Cruisers
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
 
-            if (IsPlayerCruiser && _enemyCruiser.IsAlive)
+            if (IsPlayerCruiser && _enemyCruiser != null && _enemyCruiser.IsAlive)
                 BattleSceneGod.AddPlayedTime(TargetType.PlayedTime, _time.DeltaTime);
         }
 
