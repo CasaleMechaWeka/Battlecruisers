@@ -39,7 +39,7 @@ namespace BattleCruisers.Targets.TargetFinders
             _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
 
-            // Subscribe to secondary hull destruction for multi-hull cruisers
+            // Subscribe to secondary section destruction for multi-section cruisers
             if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
                 cruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
@@ -50,14 +50,14 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetLostEvent(_enemyCruiser);
 
-            // If this is a multi-hull cruiser, also remove its hulls as targets
+            // If this is a multi-section cruiser, also remove its sections as targets
             if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                foreach (var hull in cruiser.Hulls)
+                foreach (var section in cruiser.Hulls)
                 {
-                    if (hull != null)
+                    if (section != null)
                     {
-                        InvokeTargetLostEvent(hull);
+                        InvokeTargetLostEvent(section);
                     }
                 }
             }
@@ -110,14 +110,14 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetFoundEvent(_enemyCruiser);
 
-            // If this is a multi-hull cruiser, also emit its hulls as targets
+            // If this is a multi-section cruiser, also emit its sections as targets
             if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                foreach (var hull in cruiser.Hulls)
+                foreach (var section in cruiser.Hulls)
                 {
-                    if (hull != null && hull.PrimaryCollider != null)
+                    if (section != null && section.PrimaryCollider != null)
                     {
-                        InvokeTargetFoundEvent(hull);
+                        InvokeTargetFoundEvent(section);
                     }
                 }
             }
@@ -145,7 +145,7 @@ namespace BattleCruisers.Targets.TargetFinders
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;
 
-            // Unsubscribe from secondary hull destruction for multi-hull cruisers
+            // Unsubscribe from secondary section destruction for multi-section cruisers
             if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
                 cruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
