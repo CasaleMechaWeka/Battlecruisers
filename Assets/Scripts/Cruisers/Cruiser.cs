@@ -238,9 +238,9 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
 
-        // Multi-hull events (for secondary hull destruction scoring)
-        public event EventHandler<HullSectionTargetedEventArgs> HullSectionTargeted;
-        public event EventHandler<HullSectionDestroyedEventArgs> SecondaryHullDestroyed;
+        // Multi-section events (for secondary section destruction scoring)
+        public event EventHandler<CruiserSectionTargetedEventArgs> CruiserSectionTargeted;
+        public event EventHandler<CruiserSectionDestroyedEventArgs> SecondaryHullDestroyed;
 
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
@@ -487,7 +487,7 @@ namespace BattleCruisers.Cruisers
             else if (_hulls != null && _hulls.Length > 1)
             {
                 // Secondary section destruction in multi-section cruiser: award points
-                SecondaryHullDestroyed?.Invoke(this, new HullSectionDestroyedEventArgs(section));
+                SecondaryHullDestroyed?.Invoke(this, new CruiserSectionDestroyedEventArgs(section));
 
                 // Add partial destruction score for enemy cruisers
                 if (Faction == Faction.Reds)
