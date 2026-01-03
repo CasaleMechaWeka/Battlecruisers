@@ -41,22 +41,22 @@ namespace BattleCruisers.Cruisers
     public class ChainCruiser : Cruiser
     {
         [Header("Multi-Hull Configuration")]
-        [Tooltip("Individual hull sections that can be independently targeted and selected.")]
-        public HullSection[] HullSections;
+        [Tooltip("Individual hulls that can be independently targeted and selected.")]
+        public Hull[] Hulls;
 
 
-        private HullSection _primaryHull;
+        private Hull _primaryHull;
         private ITargetConsumer _userChosenTargetConsumer;
 
 
-        // Override Color to apply to all hull sections (ChainCruiser has no root renderer)
+        // Override Color to apply to all hulls (ChainCruiser has no root renderer)
         public override Color Color {
             set {
-                // Apply color to all hull sections
-                if (HullSections != null) {
-                    foreach (var hullSection in HullSections) {
-                        if (hullSection != null) {
-                            hullSection.Color = value;
+                // Apply color to all hulls
+                if (Hulls != null) {
+                    foreach (var hull in Hulls) {
+                        if (hull != null) {
+                            hull.Color = value;
                         }
                     }
                 }
@@ -71,7 +71,7 @@ namespace BattleCruisers.Cruisers
                     return _primaryHull.SpriteRenderer.sprite;
                 }
 
-                foreach (var hull in HullSections) {
+                foreach (var hull in Hulls) {
                     if (hull != null && hull.SpriteRenderer != null && hull.SpriteRenderer.sprite != null) {
                         return hull.SpriteRenderer.sprite;
                     }
@@ -109,9 +109,9 @@ namespace BattleCruisers.Cruisers
 
         public new void MakeInvincible()
         {
-            if (HullSections != null)
+            if (Hulls != null)
             {
-                foreach (var hull in HullSections)
+                foreach (var hull in Hulls)
                 {
                     hull?.MakeInvincible();
                 }
@@ -120,9 +120,9 @@ namespace BattleCruisers.Cruisers
 
         public new void MakeDamagable()
         {
-            if (HullSections != null)
+            if (Hulls != null)
             {
-                foreach (var hull in HullSections)
+                foreach (var hull in Hulls)
                 {
                     hull?.MakeDamageable();
                 }
@@ -157,9 +157,9 @@ namespace BattleCruisers.Cruisers
         public override void StaticInitialise()
         {
             // Find primary hull BEFORE base.StaticInitialise so maxHealth is set correctly
-            if (HullSections != null && HullSections.Length > 0)
+            if (Hulls != null && Hulls.Length > 0)
             {
-                _primaryHull = System.Linq.Enumerable.FirstOrDefault(HullSections, h => h != null && h.IsPrimary);
+                _primaryHull = System.Linq.Enumerable.FirstOrDefault(Hulls, h => h != null && h.IsPrimary);
 
                 if (_primaryHull != null)
                 {
@@ -169,7 +169,7 @@ namespace BattleCruisers.Cruisers
                 }
             }
 
-            // ChainCruiser doesn't need its own SpriteRenderer (hull sections have sprites)
+            // ChainCruiser doesn't need its own SpriteRenderer (hulls have sprites)
             // Initialize SlotWrapperController
             if (SlotWrapperController == null)
             {
@@ -209,28 +209,28 @@ namespace BattleCruisers.Cruisers
             // Validate
             if (_primaryHull == null)
             {
-                Debug.LogError($"[ChainCruiser] {name}: No primary hull section found!");
+                Debug.LogError($"[ChainCruiser] {name}: No primary hull found!");
             }
 
-            Debug.Log($"[ChainCruiser] {name} StaticInitialise - Primary: {_primaryHull?.HullId}, Hulls: {HullSections?.Length}");
+            Debug.Log($"[ChainCruiser] {name} StaticInitialise - Primary: {_primaryHull?.HullId}, Hulls: {Hulls?.Length}");
         }
 
         public override async void Initialise(CruiserArgs args)
         {
             base.Initialise(args);
 
-            // Set up hull section targeting for ChainCruisers
+            // Set up hull targeting for ChainCruisers
             _userChosenTargetConsumer = (ITargetConsumer)CruiserSpecificFactories.Targets.UserChosenTargetTracker;
 
-            // Initialize all hull sections
-            if (HullSections != null)
+            // Initialize all hulls
+            if (Hulls != null)
             {
-                foreach (var hull in HullSections)
+                foreach (var hull in Hulls)
                 {
                     if (hull != null)
                     {
                         hull.Initialize();
-                        hull.Destroyed += OnHullSectionDestroyedEvent;
+                        hull.Destroyed += OnHullDestroyedEvent;
                     }
                 }
             }
@@ -238,17 +238,17 @@ namespace BattleCruisers.Cruisers
             Debug.Log($"[ChainCruiser] {name} Initialise complete");
         }
 
-        private void OnHullSectionDestroyedEvent(object sender, DestroyedEventArgs e)
+        private void OnHullDestroyedEvent(object sender, DestroyedEventArgs e)
         {
-            // Event handler - actual logic in OnHullSectionDestroyed
+            // Event handler - actual logic in OnHullDestroyed
         }
 
 
 
         /// <summary>
-        /// Called when any hull section is clicked. Routes the click to the main cruiser selection.
+        /// Called when any hull is clicked. Routes the click to the main cruiser selection.
         /// </summary>
-        public void OnHullSectionClicked(HullSection hullSection)
+        public void OnHullClicked(Hull hull)
         {
             // Reuse the inherited click behavior
             _uiManager.ShowCruiserDetails(this);
@@ -258,31 +258,31 @@ namespace BattleCruisers.Cruisers
         }
 
         /// <summary>
-        /// Called when any hull section is double-clicked. Routes to cruiser double-click handler.
+        /// Called when any hull is double-clicked. Routes to cruiser double-click handler.
         /// </summary>
-        public void OnHullSectionDoubleClicked(HullSection hullSection)
+        public void OnHullDoubleClicked(Hull hull)
         {
             _cruiserDoubleClickHandler?.OnDoubleClick(this);
         }
 
         /// <summary>
-        /// Called when any hull section is triple-clicked. Used for hull-specific targeting.
+        /// Called when any hull is triple-clicked. Used for hull-specific targeting.
         /// </summary>
-        public void OnHullSectionTripleClicked(HullSection hullSection)
+        public void OnHullTripleClicked(Hull hull)
         {
-            Logging.Log(Tags.CRUISER, $"Hull section {hullSection.HullId} triple-clicked for targeting");
+            Logging.Log(Tags.CRUISER, $"Hull {hull.HullId} triple-clicked for targeting");
 
-            // Raise event to notify listeners that a hull section should be targeted
-            HullSectionTargeted?.Invoke(this, new HullSectionTargetedEventArgs(hullSection));
+            // Raise event to notify listeners that a hull should be targeted
+            HullSectionTargeted?.Invoke(this, new HullSectionTargetedEventArgs(hull));
 
             // Also call the cruiser double-click handler for standard targeting behavior
             _cruiserDoubleClickHandler?.OnDoubleClick(this);
         }
 
         /// <summary>
-        /// Called by HullSection when it is destroyed.
+        /// Called by Hull when it is destroyed.
         /// </summary>
-        public void OnHullSectionDestroyed(HullSection hull)
+        public void OnHullDestroyed(Hull hull)
         {
             Debug.Log($"[ChainCruiser] Hull destroyed: {hull.HullId}, IsPrimary: {hull.IsPrimary}");
 
@@ -307,7 +307,7 @@ namespace BattleCruisers.Cruisers
 
 
         /// <summary>
-        /// Gets the health tracker for sharing with hull sections.
+        /// Gets the health tracker for sharing with hulls.
         /// </summary>
         public IHealthTracker GetHealthTracker()
         {

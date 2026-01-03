@@ -13,14 +13,15 @@ using UnityEngine;
 namespace BattleCruisers.Cruisers
 {
     /// <summary>
-    /// Represents an individual hull section that can be independently targeted and selected.
-    /// Each hull section has its own collider, sprite renderer, and building slots.
+    /// Represents an individual hull that can be independently targeted and selected.
+    /// Each hull has its own collider, sprite renderer, and building slots.
+    /// Works with any Cruiser (single-hull or multi-hull).
     /// </summary>
-    public class HullSection : MonoBehaviour, ITarget
+    public class Hull : MonoBehaviour, ITarget
     {
-        [Header("Hull Section Configuration")]
-        [Tooltip("Reference to the parent ChainCruiser this hull belongs to")]
-        public ChainCruiser ParentCruiser;
+        [Header("Hull Configuration")]
+        [Tooltip("Reference to the parent Cruiser this hull belongs to")]
+        public Cruiser ParentCruiser;
 
         [Tooltip("Unique identifier for this hull section")]
         public string HullId;
@@ -105,7 +106,7 @@ namespace BattleCruisers.Cruisers
         {
             if (ParentCruiser == null)
             {
-                Debug.LogError($"[HullSection] {name}: ParentCruiser is null! Cannot initialize.");
+                Debug.LogError($"[Hull] {name}: ParentCruiser is null! Cannot initialize.");
                 return;
             }
 
@@ -140,7 +141,7 @@ namespace BattleCruisers.Cruisers
                 SlotController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             }
 
-            Debug.Log($"[HullSection] {HullId} initialized successfully");
+            Debug.Log($"[Hull] {HullId} initialized successfully");
         }
 
         private void OnHealthChangedInternal(object sender, EventArgs e)
@@ -154,7 +155,7 @@ namespace BattleCruisers.Cruisers
 
             _isDestroyed = true;
 
-            Debug.Log($"[HullSection] {HullId} destroyed!");
+            Debug.Log($"[Hull] {HullId} destroyed!");
 
             // Spawn death explosion
             if (DeathPrefab != null)
@@ -162,18 +163,18 @@ namespace BattleCruisers.Cruisers
                 Instantiate(DeathPrefab, transform.position, transform.rotation);
             }
 
-            // Hide this hull section
-            HideHullSection();
+            // Hide this hull
+            HideHull();
 
             // Raise destroyed event
             Destroyed?.Invoke(this, new DestroyedEventArgs(this));
 
-            // Notify parent
-            ParentCruiser?.OnHullSectionDestroyed(this);
+            // Notify parent cruiser
+            ParentCruiser?.OnHullDestroyed(this);
         }
 
 
-        private void HideHullSection()
+        private void HideHull()
         {
             // Hide sprite
             if (SpriteRenderer != null)
@@ -191,19 +192,19 @@ namespace BattleCruisers.Cruisers
         private void OnSingleClick(object sender, EventArgs e)
         {
             // Forward click to parent cruiser
-            ParentCruiser.OnHullSectionClicked(this);
+            ParentCruiser.OnHullClicked(this);
         }
 
         private void OnDoubleClick(object sender, EventArgs e)
         {
             // Forward double-click to parent cruiser
-            ParentCruiser.OnHullSectionDoubleClicked(this);
+            ParentCruiser.OnHullDoubleClicked(this);
         }
 
         private void OnTripleClick(object sender, EventArgs e)
         {
             // Forward triple-click to parent cruiser for hull-specific targeting
-            ParentCruiser.OnHullSectionTripleClicked(this);
+            ParentCruiser.OnHullTripleClicked(this);
         }
 
         public void TakeDamage(float damageAmount, ITarget damageSource, bool ignoreImmuneStatus = false)
@@ -211,7 +212,7 @@ namespace BattleCruisers.Cruisers
             if (_isDestroyed) return;
             if (IsBuildingImmune() && !ignoreImmuneStatus) return;
 
-            Logging.Log(Tags.TARGET, $"[HullSection] {HullId} taking {damageAmount} damage from {damageSource}");
+            Logging.Log(Tags.TARGET, $"[Hull] {HullId} taking {damageAmount} damage from {damageSource}");
 
             _lastDamagedSource = damageSource;
 
@@ -253,7 +254,7 @@ namespace BattleCruisers.Cruisers
 
         public override string ToString()
         {
-            return $"HullSection '{HullId}' [{(_isDestroyed ? "DESTROYED" : $"HP: {Health}/{MaxHealth}")}]";
+            return $"Hull '{HullId}' [{(_isDestroyed ? "DESTROYED" : $"HP: {Health}/{MaxHealth}")}]";
         }
 
 
