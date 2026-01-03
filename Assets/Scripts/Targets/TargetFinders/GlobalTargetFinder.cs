@@ -50,14 +50,14 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetLostEvent(_enemyCruiser);
 
-            // If this is a ChainCruiser, also remove its hull sections as targets
-            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.HullSections != null)
+            // If this is a ChainCruiser, also remove its hulls as targets
+            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.Hulls != null)
             {
-                foreach (var hullSection in chainCruiser.HullSections)
+                foreach (var hull in chainCruiser.Hulls)
                 {
-                    if (hullSection != null)
+                    if (hull != null)
                     {
-                        InvokeTargetLostEvent(hullSection);
+                        InvokeTargetLostEvent(hull);
                     }
                 }
             }
@@ -110,14 +110,14 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetFoundEvent(_enemyCruiser);
 
-            // If this is a ChainCruiser, also emit its hull sections as targets
-            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.HullSections != null)
+            // If this is a ChainCruiser, also emit its hulls as targets
+            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.Hulls != null)
             {
-                foreach (var hullSection in chainCruiser.HullSections)
+                foreach (var hull in chainCruiser.Hulls)
                 {
-                    if (hullSection != null && hullSection.PrimaryCollider != null)
+                    if (hull != null && hull.PrimaryCollider != null)
                     {
-                        InvokeTargetFoundEvent(hullSection);
+                        InvokeTargetFoundEvent(hull);
                     }
                 }
             }
