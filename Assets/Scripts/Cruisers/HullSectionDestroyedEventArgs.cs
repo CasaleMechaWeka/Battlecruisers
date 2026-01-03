@@ -4,9 +4,9 @@ namespace BattleCruisers.Cruisers
 {
     public class HullSectionDestroyedEventArgs : EventArgs
     {
-        public Hull DestroyedHull { get; }
+        public CruiserSection DestroyedHull { get; }
 
-        public HullSectionDestroyedEventArgs(Hull destroyedHull)
+        public HullSectionDestroyedEventArgs(CruiserSection destroyedHull)
         {
             DestroyedHull = destroyedHull;
         }

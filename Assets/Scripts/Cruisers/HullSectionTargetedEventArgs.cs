@@ -4,9 +4,9 @@ namespace BattleCruisers.Cruisers
 {
     public class HullSectionTargetedEventArgs : EventArgs
     {
-        public Hull Hull { get; }
+        public CruiserSection Hull { get; }
 
-        public HullSectionTargetedEventArgs(Hull hull)
+        public HullSectionTargetedEventArgs(CruiserSection hull)
         {
             Hull = hull;
         }
