@@ -44,8 +44,6 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Individual hull sections that can be independently targeted and selected.")]
         public HullSection[] HullSections;
 
-        [Tooltip("GameObjects that persist in the scene after this cruiser is destroyed")]
-        public GameObject[] persistentObjects;
 
         private HullSection _primaryHull;
         private ITargetConsumer _userChosenTargetConsumer;
@@ -65,7 +63,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        // Hide base Sprite to return primary hull sprite
+        // Hide base Sprite to return primary hull sprite (base not virtual)
         public new Sprite Sprite {
             get {
                 // Return primary hull sprite, or first available
@@ -131,13 +129,25 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        // Override to handle ChainCruiser-specific persistent objects
+        // Override to handle ChainCruiser-specific destruction behavior
         protected override void OnDestroyed()
         {
-            base.OnDestroyed(); // Call base first to handle standard persistent objects
+            base.OnDestroyed(); // Call base first to handle standard persistent objects and destruction
+        }
 
-            // ChainCruiser-specific: persist any additional objects attached to hull sections
-            // (base.OnDestroyed() already handles the cruiser's persistentObjects array)
+        // Override FixedUpdate to add null check for _enemyCruiser (prevents crash during initialization)
+        public override void FixedUpdate()
+        {
+            // Add null check before accessing _enemyCruiser.IsAlive
+            if (IsPlayerCruiser && _enemyCruiser != null && _enemyCruiser.IsAlive)
+            {
+                BattleSceneGod.AddPlayedTime(TargetType.PlayedTime, _time.DeltaTime);
+            }
+
+            if (RepairManager != null)
+            {
+                RepairManager.Repair(_time.DeltaTime);
+            }
         }
 
         // Multi-hull specific events

@@ -101,8 +101,8 @@ namespace BattleCruisers.Targets.TargetFinders
             if (e.DestroyedHull != null)
             {
                 InvokeTargetLostEvent(e.DestroyedHull);
-            }
-        }
+			}
+		}
 
         // Not in constructor because then client code has not had a chance
         // to subribe to our target found event.
