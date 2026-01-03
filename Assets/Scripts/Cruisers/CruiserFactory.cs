@@ -191,6 +191,29 @@ namespace BattleCruisers.Cruisers
                     parentCruiserHasActiveDrones);
 
             cruiser.Initialise(cruiserArgs);
+
+            // Setup multi-section cruiser if it has CruiserSection children
+            // This is separate from Initialise to allow Initialise to set up framework components first
+            CruiserSection[] sections = cruiser.GetComponentsInChildren<CruiserSection>(includeInactive: false);
+            if (sections.Length > 0)
+            {
+                // Assign sections to cruiser
+                cruiser.SetupHulls(sections);
+
+                // Initialize each section
+                for (int i = 0; i < sections.Length; i++)
+                {
+                    CruiserSection section = sections[i];
+                    section.ParentCruiser = cruiser;
+
+                    // First section is primary (health-determining for UI, destruction = game over)
+                    if (i == 0)
+                        section.IsPrimary = true;
+
+                    // Initialize the section (sets up health tracker, click handlers, etc.)
+                    section.Initialize();
+                }
+            }
         }
 
         private IDroneFocuser CreateDroneFocuser(bool isPlayerCruiser, DroneManager droneManager, IPrioritisedSoundPlayer soundPlayer)

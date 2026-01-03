@@ -261,8 +261,9 @@ namespace BattleCruisers.Cruisers
 
             Assert.IsNotNull(deathPrefab, $"Death prefab for Cruiser {name} is null");
 
+            // Renderer is optional - single-section cruisers have it on this object,
+            // multi-section cruisers have it on CruiserSection children
             _renderer = GetComponent<SpriteRenderer>();
-            Assert.IsNotNull(_renderer);
 
             _collider = GetComponent<Collider2D>();
             Assert.IsNotNull(_collider);
