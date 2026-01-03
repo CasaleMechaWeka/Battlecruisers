@@ -1,5 +1,67 @@
 # Multi-Section Cruiser System - Implementation Guide
 
+---
+
+## 📖 Context for LLMs and Future Developers
+
+**System Overview**: This system enables a single `Cruiser` class to handle 1-N independent, targetable sections. Previously, multi-section cruisers required a specialized `ChainCruiser` subclass. This refactor inverted that architecture so the base `Cruiser` is flexible enough to handle any configuration.
+
+**Key Files to Know**:
+- **Cruiser.cs** (Assets/Scripts/Cruisers/) - Base class, handles both single and multi-section
+- **CruiserSection.cs** (Assets/Scripts/Cruisers/) - Individual targetable section component
+- **CruiserFactory.cs** (Assets/Scripts/Cruisers/) - Handles automatic section detection and initialization
+- **GlobalTargetFinder.cs** (Assets/Scripts/Targets/TargetFinders/) - Emits sections as targets
+
+**Core Design Pattern**:
+1. **Single-section**: Cruiser root has SpriteRenderer + Collider2D, no CruiserSection children, `_hulls = null`
+2. **Multi-section**: Cruiser root has NO renderer/collider, has 2+ CruiserSection children, `_hulls = array of sections`
+3. **Automatic Setup**: CruiserFactory detects which pattern and initializes accordingly
+4. **No Specialization**: Same code path handles both - determined entirely by prefab structure
+
+**Critical Implementation Detail**: First CruiserSection child in hierarchy is automatically marked as primary. This is intentional and matters.
+
+**Health & UI**:
+- Cruiser.Health property always returns primary section's health (for UI display)
+- But each section tracks its own health independently
+- Primary section destruction = cruiser destroyed = game over
+- Secondary section destruction = continues battle + score awarded
+
+---
+
+## 📋 Version History & Changes
+
+### Version 3.0 - Final Fixes (January 3, 2026)
+**Commit: 7a8c191**
+- **Fixed**: Removed unused `deathPrefab` assertion - legacy field kept for backwards compatibility
+- **Fixed**: Made Collider2D assertion conditional on cruiser type (single vs multi)
+- **What we learned**: Each CruiserSection has its own DeathPrefab that actually gets spawned; the Cruiser's deathPrefab field was never used and was breaking multi-section prefabs
+
+### Version 2.0 - Event Args Renaming (January 2, 2026)
+**Commits: c403a65, 702efa2**
+- **Changed**: Renamed HullSectionDestroyedEventArgs → CruiserSectionDestroyedEventArgs
+- **Changed**: Renamed HullSectionTargetedEventArgs → CruiserSectionTargetedEventArgs
+- **Changed**: Properties renamed (DestroyedHull → DestroyedSection, Hull → Section)
+- **Why**: These are NEW features (not legacy), so should follow the CruiserSection naming convention
+- **Updated**: All references in Cruiser.cs and GlobalTargetFinder.cs
+
+### Version 1.0 - Architecture Inversion (January 1-2, 2026)
+**Commits: 859dbc9, cb26e2d, d51fa54, 49e41f7, ad0d26a, e88e9f7, f1edab5**
+- **Deleted**: ChainCruiser class entirely
+- **Inverted**: Architecture from inheritance-based to composition-based (Cruiser + CruiserSection array)
+- **Added**: Automatic section detection in CruiserFactory
+- **Renamed**: Hull → CruiserSection throughout codebase
+- **Updated**: Documentation with new implementation guide
+- **Made flexible**: SpriteRenderer optional on root (only required for single-section)
+
+### Known Issues / Resolved
+- ✅ Collider2D assertion was breaking multi-section (FIXED)
+- ✅ DeathPrefab duplication - Cruiser's was unused (FIXED)
+- ✅ AdditionalColliders only apply single-section (SAFE - handled correctly)
+- ✅ SlotWrapperController found via GetComponentsInChildren (SAFE)
+- ✅ MaxHealth syncing via SetupHulls (SAFE)
+
+---
+
 ## 🎯 Executive Summary
 
 **Status**: ✅ Complete and Production Ready
@@ -120,7 +182,182 @@ public class CruiserSection : MonoBehaviour, ITarget
 
 ---
 
+## 🎨 Comprehensive Unity Hierarchy & Component Setup Guide
+
+### SINGLE-SECTION CRUISER HIERARCHY
+
+```
+PlayerCruiser (GameObject)
+├── Components:
+│   ├── Cruiser (script)
+│   ├── SpriteRenderer
+│   ├── PolygonCollider2D
+│   ├── ClickHandlerWrapper
+│   ├── FogOfWar
+│   └── (Other components)
+├── Child: SlotWrapperController
+│   ├── Slot[0]
+│   ├── Slot[1]
+│   └── ...
+└── Child: PersistentObjects (if any)
+```
+
+**Single-Section Setup**:
+- Cruiser component on root
+- SpriteRenderer on root (renderer for display)
+- PolygonCollider2D on root (hitbox for damage)
+- NO CruiserSection children
+- _hulls = null (system detects single-section mode)
+
+---
+
+### MULTI-SECTION CRUISER HIERARCHY
+
+```
+EnemyBoss (GameObject)
+├── Components:
+│   ├── Cruiser (script) - NO SpriteRenderer on root!
+│   ├── ClickHandlerWrapper
+│   ├── FogOfWar
+│   ├── (Other shared components)
+│   └── [NO PolygonCollider2D on root!]
+│
+├── Child[0]: PrimarySection (MUST be first child!)
+│   ├── Components:
+│   │   ├── CruiserSection (script)
+│   │   ├── SpriteRenderer (assign sprite)
+│   │   └── PolygonCollider2D (trace outline)
+│   └── CruiserSection Inspector:
+│       ├── HullId: "Primary"
+│       ├── IsPrimary: TRUE ⚠️
+│       ├── maxHealth: 3000
+│       ├── healthGainPerDroneS: 1.0
+│       ├── SpriteRenderer: [drag the SpriteRenderer]
+│       ├── PrimaryCollider: [drag the PolygonCollider2D]
+│       └── DeathPrefab: [explosion effect prefab]
+│
+├── Child[1]: LeftWing
+│   ├── Components:
+│   │   ├── CruiserSection (script)
+│   │   ├── SpriteRenderer (assign sprite)
+│   │   └── PolygonCollider2D (trace outline)
+│   └── CruiserSection Inspector:
+│       ├── HullId: "LeftWing"
+│       ├── IsPrimary: FALSE
+│       ├── maxHealth: 1500
+│       ├── SpriteRenderer: [drag the SpriteRenderer]
+│       ├── PrimaryCollider: [drag the PolygonCollider2D]
+│       └── DeathPrefab: [explosion effect prefab]
+│
+├── Child[2]: RightWing
+│   ├── Components:
+│   │   ├── CruiserSection (script)
+│   │   ├── SpriteRenderer (assign sprite)
+│   │   └── PolygonCollider2D (trace outline)
+│   └── CruiserSection Inspector:
+│       ├── HullId: "RightWing"
+│       ├── IsPrimary: FALSE
+│       ├── maxHealth: 1500
+│       ├── SpriteRenderer: [drag the SpriteRenderer]
+│       ├── PrimaryCollider: [drag the PolygonCollider2D]
+│       └── DeathPrefab: [explosion effect prefab]
+│
+└── Child: SlotWrapperController (found by GetComponentsInChildren)
+    ├── Slot[0]
+    └── ...
+```
+
+**Multi-Section Setup**:
+- Cruiser component on root (NO renderer/collider!)
+- CruiserSection children (one per section)
+- First child automatically becomes primary
+- Each section has own SpriteRenderer + PolygonCollider2D
+- Each section has own CruiserSection component with maxHealth
+- _hulls = populated automatically by CruiserFactory
+- System detects multi-section mode and handles initialization
+
+---
+
+### COMPONENT CONFIGURATION CHECKLIST
+
+#### Root Cruiser Component
+```
+✅ stringKeyBase: [unique name, e.g., "Boss", "Trident"]
+✅ numOfDrones: [4-8, depends on design]
+✅ hullType: HullType.Cruiser (or appropriate type)
+✅ yAdjustmentInM: [vertical offset for UI, e.g., 5]
+✅ trashTalkScreenPosition: [screen coords for dialog]
+✅ startsWithFogOfWar: [true/false]
+✅ persistentObjects: [any objects to keep after destruction]
+
+❌ deathPrefab: [OPTIONAL/LEGACY - not used, CruiserSection handles it]
+❌ useAdditionalColliders: [only for single-section complex shapes]
+
+For Single-Section Only:
+✅ SpriteRenderer: [renderer on same object]
+✅ PolygonCollider2D: [collider on same object]
+```
+
+#### Each CruiserSection Component
+```
+✅ HullId: [unique identifier, e.g., "Primary", "LeftWing"]
+✅ IsPrimary: [TRUE only for first child, FALSE for others]
+✅ maxHealth: [health pool for this section, e.g., 3000]
+✅ healthGainPerDroneS: [repair rate, e.g., 1.0]
+✅ SpriteRenderer: [DRAG the SpriteRenderer component on same object]
+✅ PrimaryCollider: [DRAG the PolygonCollider2D component]
+✅ DeathPrefab: [explosion effect that spawns when destroyed]
+```
+
+---
+
+### INITIALIZATION FLOW (WHAT HAPPENS AUTOMATICALLY)
+
+```
+1. BattleSceneGod.Start()
+   → CruiserFactory.CreateAICruiser(key)
+
+2. PrefabFactory.CreateCruiser()
+   → Instantiate(cruiserPrefab)
+   → cruiser.StaticInitialise()
+      ├─ Finds SpriteRenderer (optional, only if exists)
+      ├─ Finds Collider2D (optional for multi-section)
+      └─ Validates additional colliders if enabled
+
+3. BattleSceneGod sets up camera, UI
+
+4. CruiserFactory.InitialisePlayerCruiser()
+   → cruiser.Initialise(args)
+      ├─ Sets faction, drones, repair, UI, etc.
+      └─ Returns
+
+5. CruiserFactory.InitialiseCruiser() [NEW AUTOMATIC PART]
+   → CruiserSection[] sections = GetComponentsInChildren<CruiserSection>()
+   ├─ if (sections.Length > 0):
+   │  ├─ cruiser.SetupHulls(sections)
+   │  │  └─ _hulls = sections array
+   │  │  └─ maxHealth = sections[0].maxHealth
+   │  └─ for each section:
+   │     ├─ section.ParentCruiser = cruiser
+   │     ├─ if (i == 0) section.IsPrimary = true
+   │     └─ section.Initialize()
+   │        ├─ Creates health tracker
+   │        ├─ Subscribes to health events
+   │        └─ Sets up click handlers
+   └─ if (no sections):
+      └─ Single-section mode, _hulls stays null
+
+6. GlobalTargetFinder detects multi-section
+   → Subscribes to SecondaryHullDestroyed event
+   → Will emit all sections as targets
+
+7. Battle ready!
+```
+
+---
+
 ## 🎮 How to Build a Multi-Section Level
+
 
 ### Key Concept: Automatic Detection
 When a Cruiser is instantiated, **CruiserFactory automatically detects and initializes any CruiserSection children**. No manual array assignment needed.
