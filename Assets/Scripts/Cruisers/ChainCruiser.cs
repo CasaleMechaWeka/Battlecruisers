@@ -137,7 +137,42 @@ namespace BattleCruisers.Cruisers
                 }
             }
 
-            base.StaticInitialise();
+            // ChainCruiser doesn't need its own SpriteRenderer (hull sections have sprites)
+            // Initialize SlotWrapperController
+            if (SlotWrapperController == null)
+            {
+                SlotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
+            }
+
+            if (SlotWrapperController != null)
+            {
+                SlotWrapperController.StaticInitialise();
+                SlotNumProvider = SlotWrapperController;
+            }
+
+            // Initialize fog
+            _fog = GetComponentInChildren<FogOfWar>(includeInactive: true);
+            Assert.IsNotNull(_fog, $"[ChainCruiser] {name}: No FogOfWar component found!");
+
+            // Initialize click handler
+            ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
+            if (clickHandlerWrapper != null)
+            {
+                _clickHandler = clickHandlerWrapper.GetClickHandler();
+            }
+
+            // Initialize name and description
+            Name = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
+            Description = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
+
+            // Initialize monitors
+            BuildingMonitor = new CruiserBuildingMonitor(this);
+            UnitMonitor = new CruiserUnitMonitor(BuildingMonitor);
+            PopulationLimitMonitor = new PopulationLimitMonitor(UnitMonitor);
+            UnitTargets = new UnitTargets(UnitMonitor);
+
+            // Calculate drone area size
+            _droneAreaSize = new Vector2(Size.x, Size.y * 0.8f);
 
             // Validate
             if (_primaryHull == null)

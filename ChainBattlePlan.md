@@ -12,7 +12,7 @@ ChainCruiser is a multi-hull boss entity system where each hull section has inde
 - **Independent Hulls**: Each hull section can be independently targeted and damaged
 - **Primary/Secondary Logic**: Primary hull destruction = victory, secondary hulls = continued battle
 - **Shared Cruiser Identity**: One cruiser with multiple targetable sections
-- **Independent Death Sequences**: Each hull has its own explosion and wreckage effects
+- **Independent Death Sequences**: Each hull has its own explosion effects
 
 ### 🎨 **Hybrid Inheritance Design**
 - Inherits from `Cruiser` for full ICruiser compatibility
@@ -40,9 +40,7 @@ Assets/Scripts/Cruisers/
 │   ├── maxHealth                          # Independent health pool
 │   ├── _healthTracker                     # Own HealthTracker instance
 │   ├── IsPrimary                          # Victory condition flag
-│   ├── DeathPrefab                        # Explosion on destruction
-│   ├── WreckagePrefab                     # Debris after death
-│   └── WreckagePrefab                     # Debris after destruction
+│   └── DeathPrefab                        # Explosion on destruction
 └── HullSectionDestroyedEventArgs.cs       # Event args for hull destruction
 ```
 
@@ -87,8 +85,7 @@ ChainCruiser (Root GameObject)
 │   ├── ClickHandlerWrapper            # Click handling
 │   ├── SlotWrapperController?         # Optional building slots
 │   ├── maxHealth = 2000               # Independent health pool
-│   ├── DeathPrefab                    # Hull-specific explosion
-│   ├── WreckagePrefab                 # Debris after destruction
+│   └── DeathPrefab                    # Hull-specific explosion
 ├── HullSection_B (Child)              # Secondary hull (IsPrimary = false)
 │   ├── HullSection.cs                 # Independent hull component
 │   ├── AudioSource                    # Sound effects for this hull
@@ -127,7 +124,6 @@ HullSection_A.TakeDamage(damage, source);
 // HullSection_A dies (IsPrimary = true)
 HullSection_A.OnHealthGone()
 ├── Spawn DeathPrefab explosion
-├── Spawn WreckagePrefab debris
 ├── Hide sprite/collider
 └── ParentCruiser.OnHullSectionDestroyed(this)
 
@@ -194,7 +190,6 @@ OnSecondaryHullDestroyed()
 #### Step 3: Configure Death Effects
 **For Each Hull Section**:
 1. **Death Explosion**: Assign unique explosion prefab
-2. **Wreckage**: Assign debris GameObject
 
 #### Step 4: Set Up Building Slots (Optional)
 **Primary Hull** gets main slots:
@@ -250,7 +245,6 @@ OnSecondaryHullDestroyed()
 
 **Death Effects**:
 - `DeathPrefab`: Explosion GameObject spawned on destruction
-- `WreckagePrefab`: Debris GameObject left after explosion
 
 **Optional Features**:
 - `SlotController`: SlotWrapperController for building slots on this hull
@@ -291,10 +285,8 @@ OnSecondaryHullDestroyed()
 **Individual Hull Death**:
 1. Health reaches 0
 2. Spawn `DeathPrefab` explosion
-3. Spawn `WreckagePrefab` debris
-4. Hide sprite and disable collider
-5. Notify `ParentCruiser.OnHullSectionDestroyed()`
-7. Spawn wreckage debris
+3. Hide sprite and disable collider
+4. Notify `ParentCruiser.OnHullSectionDestroyed()`
 
 **Primary Hull Death** → **Victory**:
 - Triggers standard cruiser destruction
@@ -349,10 +341,6 @@ ChainCruiser_Boss
 - Primary hull: Large explosion, screen shake
 - Secondary hulls: Medium explosions, hull-specific
 
-**Wreckage Setup**:
-- Create debris GameObjects
-- Assign to `WreckagePrefab`
-- Position debris at hull death location
 
 ---
 
@@ -373,7 +361,7 @@ ChainCruiser_Boss
 ### 🎨 **Hull Design Guidelines**
 - **Visual Distinction**: Each hull should look unique and targetable
 - **Health Balance**: Primary hull strongest, secondaries progressively weaker
-- **Death Spectacle**: Unique explosions and wreckage effects per hull
+- **Death Spectacle**: Unique explosions per hull
 - **Slot Distribution**: Primary gets heavy weapons, secondaries get support
 
 ### 🧪 **Testing Workflow**
@@ -497,15 +485,17 @@ public void OnHullSectionDestroyed(HullSection hull)
     }
 }
 
-// Initialization sequence
+// Initialization sequence (bypasses SpriteRenderer requirement)
 public override void StaticInitialise()
 {
-    // Find primary hull BEFORE base init (sets maxHealth)
+    // Find primary hull BEFORE component init (sets maxHealth)
     _primaryHull = HullSections.FirstOrDefault(h => h.IsPrimary);
     if (_primaryHull != null)
         maxHealth = _primaryHull.maxHealth;
 
-    base.StaticInitialise(); // Full Cruiser initialization
+    // Manual initialization - skips base.SpriteRenderer assertion
+    // ChainCruiser gets sprite from hull sections, not root object
+    // ... initialize SlotWrapperController, Fog, ClickHandler, etc. ...
 }
 ```
 
@@ -534,8 +524,7 @@ private void OnHealthGone(object sender, EventArgs e)
     // Spawn explosion
     Instantiate(DeathPrefab, transform.position, transform.rotation);
 
-    // Spawn wreckage
-    SpawnWreckage();
+    // Hide this hull section
     HideHullSection();
 
     // Notify parent cruiser
@@ -589,10 +578,10 @@ private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventAr
 - Confirm `TakeDamage()` calls local `_healthTracker.RemoveHealth()`
 
 ### ❌ **Death Effects Don't Trigger**
-**Symptoms**: Hull reaches 0 health but no explosion/wreckage
+**Symptoms**: Hull reaches 0 health but no explosion
 **Fixes**:
-- Verify `DeathPrefab` and `WreckagePrefab` are assigned
-- Check prefabs exist in project and are not null
+- Verify `DeathPrefab` is assigned
+- Check prefab exists in project and is not null
 - Ensure `OnHealthGone` event handler is subscribed
 - Confirm hull has `HealthTracker.HealthGone += OnHealthGone`
 
@@ -649,7 +638,7 @@ private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventAr
 
 ✅ **Independent Hulls** - Each section can be targeted and destroyed separately
 ✅ **Primary/Secondary Logic** - Primary death triggers victory, secondaries continue battle
-✅ **Spectacular Effects** - Unique explosions and wreckage per hull
+✅ **Spectacular Effects** - Unique explosions per hull
 ✅ **Full Inheritance** - Complete Cruiser compatibility and all existing features
 ✅ **Flexible Configuration** - Buildings, boosts, and effects per hull section
 ✅ **Production Ready** - Hybrid inheritance design, fully functional
@@ -659,7 +648,7 @@ private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventAr
 **Recommended Workflow**:
 1. Create ChainCruiser root with multiple HullSection children
 2. Configure one primary hull, multiple secondary hulls
-3. Set up unique death effects and wreckage
+3. Set up unique death effects
 4. Assign building slots and stat boosts
 5. Test multi-hull combat and victory conditions
 
@@ -667,7 +656,7 @@ private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventAr
 
 ---
 
-**Last Updated**: 2026-01-02
+**Last Updated**: 2026-01-04
 **System Version**: 1.0 (Multi-Hull Hybrid Inheritance)
 **Status**: Implementation Complete
 **Compatibility**: Full Cruiser inheritance + hull extensions

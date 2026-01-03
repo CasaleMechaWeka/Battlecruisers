@@ -48,8 +48,6 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Explosion prefab spawned when this hull is destroyed")]
         public CruiserDeathExplosion DeathPrefab;
 
-        [Tooltip("Wreckage object spawned at death position")]
-        public GameObject WreckagePrefab;
 
         // ITarget implementation
         public Faction Faction => ParentCruiser?.Faction ?? Faction.Reds;
@@ -164,9 +162,6 @@ namespace BattleCruisers.Cruisers
                 Instantiate(DeathPrefab, transform.position, transform.rotation);
             }
 
-            // Handle wreckage
-            SpawnWreckage();
-
             // Hide this hull section
             HideHullSection();
 
@@ -177,12 +172,6 @@ namespace BattleCruisers.Cruisers
             ParentCruiser?.OnHullSectionDestroyed(this);
         }
 
-        private void SpawnWreckage()
-        {
-            if (WreckagePrefab == null) return;
-
-            Instantiate(WreckagePrefab, transform.position, transform.rotation);
-        }
 
         private void HideHullSection()
         {
