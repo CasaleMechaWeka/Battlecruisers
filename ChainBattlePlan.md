@@ -30,11 +30,17 @@
 
 ## 📋 Version History & Changes
 
+### Version 3.1 - Code Cleanup (January 3, 2026)
+**Commit: 2f5a9b1**
+- **Removed**: Dead code `CruiserSection.SlotController` field and assignment
+- **Clarified**: Cruiser.deathPrefab IS USED (instantiated by CruiserDeathManager, not dead code)
+- **What we learned**: Only CruiserSection.SlotController was actually unused. Cruiser.deathPrefab is essential for single-section cruisers and for the final cruiser death explosion in multi-section cruisers.
+
 ### Version 3.0 - Final Fixes (January 3, 2026)
 **Commit: 7a8c191**
-- **Fixed**: Removed unused `deathPrefab` assertion - legacy field kept for backwards compatibility
-- **Fixed**: Made Collider2D assertion conditional on cruiser type (single vs multi)
-- **What we learned**: Each CruiserSection has its own DeathPrefab that actually gets spawned; the Cruiser's deathPrefab field was never used and was breaking multi-section prefabs
+- **Fixed**: Removed unused `deathPrefab` assertion from StaticInitialise
+- **Fixed**: Made Collider2D assertion optional (multi-section cruisers have colliders on children)
+- **What we learned**: SpriteRenderer and Collider2D are only required on root for single-section; multi-section has them on CruiserSection children
 
 ### Version 2.0 - Event Args Renaming (January 2, 2026)
 **Commits: c403a65, 702efa2**
@@ -54,11 +60,12 @@
 - **Made flexible**: SpriteRenderer optional on root (only required for single-section)
 
 ### Known Issues / Resolved
-- ✅ Collider2D assertion was breaking multi-section (FIXED)
-- ✅ DeathPrefab duplication - Cruiser's was unused (FIXED)
-- ✅ AdditionalColliders only apply single-section (SAFE - handled correctly)
-- ✅ SlotWrapperController found via GetComponentsInChildren (SAFE)
-- ✅ MaxHealth syncing via SetupHulls (SAFE)
+- ✅ Collider2D assertion was breaking multi-section (FIXED - made optional)
+- ✅ DeathPrefab confusion - Cruiser's IS USED (by CruiserDeathManager, not dead code)
+- ✅ CruiserSection.SlotController was dead code (REMOVED)
+- ✅ AdditionalColliders only apply single-section (SAFE - early return in multi-section)
+- ✅ SlotWrapperController found via GetComponentsInChildren (SAFE - uses root's)
+- ✅ MaxHealth syncing via SetupHulls (SAFE - synchronized at initialization)
 
 ---
 
@@ -289,9 +296,8 @@ EnemyBoss (GameObject)
 ✅ trashTalkScreenPosition: [screen coords for dialog]
 ✅ startsWithFogOfWar: [true/false]
 ✅ persistentObjects: [any objects to keep after destruction]
-
-❌ deathPrefab: [OPTIONAL/LEGACY - not used, CruiserSection handles it]
-❌ useAdditionalColliders: [only for single-section complex shapes]
+✅ deathPrefab: [REQUIRED - used by CruiserDeathManager for final death explosion]
+❌ useAdditionalColliders: [only for single-section complex shapes, multi-section ignores]
 
 For Single-Section Only:
 ✅ SpriteRenderer: [renderer on same object]
