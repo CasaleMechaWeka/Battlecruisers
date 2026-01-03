@@ -54,6 +54,9 @@ namespace BattleCruisers.Cruisers
 #pragma warning restore CS0414  // Variable is assigned but never used
         protected SettingsManager settingsManager;
 
+        // Hull array: supports 1-N hulls (1 for single-hull, N for multi-hull)
+        protected Hull[] _hulls;
+
         public string stringKeyBase;
         public int numOfDrones = 4;
         public float yAdjustmentInM;
@@ -73,11 +76,37 @@ namespace BattleCruisers.Cruisers
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
-        public override Color Color { set { _renderer.color = value; } }
+        public override Color Color {
+            set {
+                // Apply color to all hulls if they exist
+                if (_hulls != null)
+                {
+                    foreach (var hull in _hulls)
+                    {
+                        if (hull != null)
+                        {
+                            hull.Color = value;
+                        }
+                    }
+                }
+                // Also apply to root renderer if it exists (for single-hull legacy)
+                if (_renderer != null)
+                {
+                    _renderer.color = value;
+                }
+            }
+        }
         public override Vector2 Size
         {
             get
             {
+                // If we have hulls, use primary hull's size
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].Size;
+                }
+
+                // Fallback to single-hull logic
                 if (!useAdditionalColliders || additionalColliders == null || additionalColliders.Length == 0)
                 {
                     return _collider.bounds.size;
@@ -104,7 +133,19 @@ namespace BattleCruisers.Cruisers
         // IComparableItem
         public string Description { get; protected set; }
         public string Name { get; protected set; }
-        public Sprite Sprite => _renderer.sprite;
+        public Sprite Sprite
+        {
+            get
+            {
+                // Return primary hull sprite if available
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null && _hulls[0].SpriteRenderer != null)
+                {
+                    return _hulls[0].SpriteRenderer.sprite;
+                }
+                // Fallback to root renderer
+                return _renderer?.sprite;
+            }
+        }
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
@@ -124,7 +165,62 @@ namespace BattleCruisers.Cruisers
 
 
         // ICruiserController
-        public virtual bool IsAlive => !IsDestroyed;
+        // Override health properties to route through primary hull if available
+        public new virtual float Health
+        {
+            get
+            {
+                // If we have hulls, return primary hull's health
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].Health;
+                }
+                // Fallback to base class health
+                return base.Health;
+            }
+        }
+
+        public new virtual float MaxHealth
+        {
+            get
+            {
+                // If we have hulls, return primary hull's max health
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].MaxHealth;
+                }
+                // Fallback to base class maxHealth
+                return maxHealth;
+            }
+        }
+
+        public new virtual bool IsDestroyed
+        {
+            get
+            {
+                // If we have hulls, return primary hull's destroyed state
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].IsDestroyed;
+                }
+                // Fallback to base class logic
+                return base.IsDestroyed;
+            }
+        }
+
+        public override bool IsAlive
+        {
+            get
+            {
+                // If we have hulls, return primary hull's alive state
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return !_hulls[0].IsDestroyed;
+                }
+                // Fallback to base class logic
+                return !IsDestroyed;
+            }
+        }
         public SlotAccessor SlotAccessor { get; protected set; }
         public SlotHighlighter SlotHighlighter { get; protected set; }
         public ISlotNumProvider SlotNumProvider { get; protected set; }
@@ -352,6 +448,51 @@ namespace BattleCruisers.Cruisers
                 }
         }
 
+        // ============== Hull Event Callbacks ==============
+        // Called by Hull when clicked - can be overridden for multi-hull behavior
+        public virtual void OnHullClicked(Hull hull)
+        {
+            // Default: forward to standard click behavior
+            _clickHandler_SingleClick(null, EventArgs.Empty);
+        }
+
+        // Called by Hull when double-clicked
+        public virtual void OnHullDoubleClicked(Hull hull)
+        {
+            // Default: forward to standard double-click behavior
+            _clickHandler_DoubleClick(null, EventArgs.Empty);
+        }
+
+        // Called by Hull when triple-clicked
+        public virtual void OnHullTripleClicked(Hull hull)
+        {
+            // Default: forward to standard double-click behavior (targeting)
+            _clickHandler_DoubleClick(null, EventArgs.Empty);
+        }
+
+        // Called by Hull when destroyed
+        public virtual void OnHullDestroyed(Hull hull)
+        {
+            // Default: if primary hull is destroyed, cruiser is destroyed
+            if (hull.IsPrimary)
+            {
+                Destroy();
+            }
+        }
+
+        // Setup the hull array - called during initialization
+        public virtual void SetupHulls(Hull[] hulls)
+        {
+            _hulls = hulls;
+            if (_hulls != null && _hulls.Length > 0)
+            {
+                // Set cruiser's max health from primary hull
+                maxHealth = _hulls[0].maxHealth;
+            }
+        }
+
+        // ============== End Hull Event Callbacks ==============
+
         protected virtual void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);
@@ -478,12 +619,36 @@ namespace BattleCruisers.Cruisers
 
         public void MakeInvincible()
         {
-            _healthTracker.State = HealthTrackerState.Immutable;
+            // Apply to all hulls if they exist
+            if (_hulls != null)
+            {
+                foreach (var hull in _hulls)
+                {
+                    hull?.MakeInvincible();
+                }
+            }
+            // Also apply to base health tracker
+            if (_healthTracker != null)
+            {
+                _healthTracker.State = HealthTrackerState.Immutable;
+            }
         }
 
         public void MakeDamagable()
         {
-            _healthTracker.State = HealthTrackerState.Mutable;
+            // Apply to all hulls if they exist
+            if (_hulls != null)
+            {
+                foreach (var hull in _hulls)
+                {
+                    hull?.MakeDamageable();
+                }
+            }
+            // Also apply to base health tracker
+            if (_healthTracker != null)
+            {
+                _healthTracker.State = HealthTrackerState.Mutable;
+            }
         }
 
         public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)
