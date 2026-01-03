@@ -39,10 +39,10 @@ namespace BattleCruisers.Targets.TargetFinders
             _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
 
-            // Subscribe to secondary hull destruction for ChainCruiser
-            if (_enemyCruiser is ChainCruiser chainCruiser)
+            // Subscribe to secondary section destruction for multi-section cruisers
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                chainCruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
+                cruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
             }
 		}
 
@@ -50,14 +50,14 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetLostEvent(_enemyCruiser);
 
-            // If this is a ChainCruiser, also remove its hull sections as targets
-            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.HullSections != null)
+            // If this is a multi-section cruiser, also remove its sections as targets
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                foreach (var hullSection in chainCruiser.HullSections)
+                foreach (var section in cruiser.Hulls)
                 {
-                    if (hullSection != null)
+                    if (section != null)
                     {
-                        InvokeTargetLostEvent(hullSection);
+                        InvokeTargetLostEvent(section);
                     }
                 }
             }
@@ -110,14 +110,14 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetFoundEvent(_enemyCruiser);
 
-            // If this is a ChainCruiser, also emit its hull sections as targets
-            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.HullSections != null)
+            // If this is a multi-section cruiser, also emit its sections as targets
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                foreach (var hullSection in chainCruiser.HullSections)
+                foreach (var section in cruiser.Hulls)
                 {
-                    if (hullSection != null && hullSection.PrimaryCollider != null)
+                    if (section != null && section.PrimaryCollider != null)
                     {
-                        InvokeTargetFoundEvent(hullSection);
+                        InvokeTargetFoundEvent(section);
                     }
                 }
             }
@@ -145,9 +145,10 @@ namespace BattleCruisers.Targets.TargetFinders
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;
 
-            if (_enemyCruiser is ChainCruiser chainCruiser)
+            // Unsubscribe from secondary section destruction for multi-section cruisers
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                chainCruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
+                cruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
             }
 		}
 	}

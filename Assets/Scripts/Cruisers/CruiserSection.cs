@@ -13,32 +13,33 @@ using UnityEngine;
 namespace BattleCruisers.Cruisers
 {
     /// <summary>
-    /// Represents an individual hull section that can be independently targeted and selected.
-    /// Each hull section has its own collider, sprite renderer, and building slots.
+    /// Represents an individual cruiser section that can be independently targeted and selected.
+    /// Each section has its own collider, sprite renderer, and building slots.
+    /// Works with any Cruiser (single-section or multi-section).
     /// </summary>
-    public class HullSection : MonoBehaviour, ITarget
+    public class CruiserSection : MonoBehaviour, ITarget
     {
-        [Header("Hull Section Configuration")]
-        [Tooltip("Reference to the parent ChainCruiser this hull belongs to")]
-        public ChainCruiser ParentCruiser;
+        [Header("Cruiser Section Configuration")]
+        [Tooltip("Reference to the parent Cruiser this section belongs to")]
+        public Cruiser ParentCruiser;
 
-        [Tooltip("Unique identifier for this hull section")]
+        [Tooltip("Unique identifier for this cruiser section")]
         public string HullId;
 
         [Tooltip("If true, destroying this hull ends the battle (victory for player)")]
         public bool IsPrimary = false;
 
-        [Tooltip("Sprite renderer for this hull section")]
+        [Tooltip("Sprite renderer for this cruiser section")]
         public SpriteRenderer SpriteRenderer;
 
-        [Tooltip("Primary collider for this hull section (used for targeting)")]
+        [Tooltip("Primary collider for this cruiser section (used for targeting)")]
         public PolygonCollider2D PrimaryCollider;
 
-        [Tooltip("SlotWrapperController managing buildings for this hull section")]
+        [Tooltip("SlotWrapperController managing buildings for this cruiser section")]
         public SlotWrapperController SlotController;
 
         [Header("Health Configuration")]
-        [Tooltip("Maximum health for this hull section")]
+        [Tooltip("Maximum health for this cruiser section")]
         public float maxHealth = 1000f;
 
         [Tooltip("Health regeneration rate per drone per second")]
@@ -105,7 +106,7 @@ namespace BattleCruisers.Cruisers
         {
             if (ParentCruiser == null)
             {
-                Debug.LogError($"[HullSection] {name}: ParentCruiser is null! Cannot initialize.");
+                Debug.LogError($"[CruiserSection] {name}: ParentCruiser is null! Cannot initialize.");
                 return;
             }
 
@@ -140,7 +141,7 @@ namespace BattleCruisers.Cruisers
                 SlotController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             }
 
-            Debug.Log($"[HullSection] {HullId} initialized successfully");
+            Debug.Log($"[CruiserSection] {HullId} initialized successfully");
         }
 
         private void OnHealthChangedInternal(object sender, EventArgs e)
@@ -154,7 +155,7 @@ namespace BattleCruisers.Cruisers
 
             _isDestroyed = true;
 
-            Debug.Log($"[HullSection] {HullId} destroyed!");
+            Debug.Log($"[CruiserSection] {HullId} destroyed!");
 
             // Spawn death explosion
             if (DeathPrefab != null)
@@ -162,18 +163,18 @@ namespace BattleCruisers.Cruisers
                 Instantiate(DeathPrefab, transform.position, transform.rotation);
             }
 
-            // Hide this hull section
-            HideHullSection();
+            // Hide this section
+            HideSection();
 
             // Raise destroyed event
             Destroyed?.Invoke(this, new DestroyedEventArgs(this));
 
-            // Notify parent
-            ParentCruiser?.OnHullSectionDestroyed(this);
+            // Notify parent cruiser
+            ParentCruiser?.OnHullDestroyed(this);
         }
 
 
-        private void HideHullSection()
+        private void HideSection()
         {
             // Hide sprite
             if (SpriteRenderer != null)
@@ -191,19 +192,19 @@ namespace BattleCruisers.Cruisers
         private void OnSingleClick(object sender, EventArgs e)
         {
             // Forward click to parent cruiser
-            ParentCruiser.OnHullSectionClicked(this);
+            ParentCruiser.OnHullClicked(this);
         }
 
         private void OnDoubleClick(object sender, EventArgs e)
         {
             // Forward double-click to parent cruiser
-            ParentCruiser.OnHullSectionDoubleClicked(this);
+            ParentCruiser.OnHullDoubleClicked(this);
         }
 
         private void OnTripleClick(object sender, EventArgs e)
         {
             // Forward triple-click to parent cruiser for hull-specific targeting
-            ParentCruiser.OnHullSectionTripleClicked(this);
+            ParentCruiser.OnHullTripleClicked(this);
         }
 
         public void TakeDamage(float damageAmount, ITarget damageSource, bool ignoreImmuneStatus = false)
@@ -211,7 +212,7 @@ namespace BattleCruisers.Cruisers
             if (_isDestroyed) return;
             if (IsBuildingImmune() && !ignoreImmuneStatus) return;
 
-            Logging.Log(Tags.TARGET, $"[HullSection] {HullId} taking {damageAmount} damage from {damageSource}");
+            Logging.Log(Tags.TARGET, $"[CruiserSection] {HullId} taking {damageAmount} damage from {damageSource}");
 
             _lastDamagedSource = damageSource;
 
@@ -253,7 +254,7 @@ namespace BattleCruisers.Cruisers
 
         public override string ToString()
         {
-            return $"HullSection '{HullId}' [{(_isDestroyed ? "DESTROYED" : $"HP: {Health}/{MaxHealth}")}]";
+            return $"CruiserSection '{HullId}' [{(_isDestroyed ? "DESTROYED" : $"HP: {Health}/{MaxHealth}")}]";
         }
 
 

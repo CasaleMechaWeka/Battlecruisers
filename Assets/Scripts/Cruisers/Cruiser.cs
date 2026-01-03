@@ -54,6 +54,10 @@ namespace BattleCruisers.Cruisers
 #pragma warning restore CS0414  // Variable is assigned but never used
         protected SettingsManager settingsManager;
 
+        // CruiserSection array: supports 1-N sections (1 for single-section, N for multi-section)
+        protected CruiserSection[] _hulls;
+        public CruiserSection[] Hulls => _hulls;  // Public accessor for external code
+
         public string stringKeyBase;
         public int numOfDrones = 4;
         public float yAdjustmentInM;
@@ -73,11 +77,37 @@ namespace BattleCruisers.Cruisers
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
-        public override Color Color { set { _renderer.color = value; } }
+        public override Color Color {
+            set {
+                // Apply color to all sections if they exist
+                if (_hulls != null)
+                {
+                    foreach (var section in _hulls)
+                    {
+                        if (section != null)
+                        {
+                            section.Color = value;
+                        }
+                    }
+                }
+                // Also apply to root renderer if it exists (for single-section legacy)
+                if (_renderer != null)
+                {
+                    _renderer.color = value;
+                }
+            }
+        }
         public override Vector2 Size
         {
             get
             {
+                // If we have sections, use primary section's size
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].Size;
+                }
+
+                // Fallback to single-section logic
                 if (!useAdditionalColliders || additionalColliders == null || additionalColliders.Length == 0)
                 {
                     return _collider.bounds.size;
@@ -104,7 +134,19 @@ namespace BattleCruisers.Cruisers
         // IComparableItem
         public string Description { get; protected set; }
         public string Name { get; protected set; }
-        public Sprite Sprite => _renderer.sprite;
+        public Sprite Sprite
+        {
+            get
+            {
+                // Return primary hull sprite if available
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null && _hulls[0].SpriteRenderer != null)
+                {
+                    return _hulls[0].SpriteRenderer.sprite;
+                }
+                // Fallback to root renderer
+                return _renderer?.sprite;
+            }
+        }
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
@@ -124,7 +166,62 @@ namespace BattleCruisers.Cruisers
 
 
         // ICruiserController
-        public virtual bool IsAlive => !IsDestroyed;
+        // Override health properties to route through primary section if available
+        public new virtual float Health
+        {
+            get
+            {
+                // If we have sections, return primary section's health
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].Health;
+                }
+                // Fallback to base class health
+                return base.Health;
+            }
+        }
+
+        public new virtual float MaxHealth
+        {
+            get
+            {
+                // If we have sections, return primary section's max health
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].MaxHealth;
+                }
+                // Fallback to base class maxHealth
+                return maxHealth;
+            }
+        }
+
+        public new virtual bool IsDestroyed
+        {
+            get
+            {
+                // If we have sections, return primary section's destroyed state
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return _hulls[0].IsDestroyed;
+                }
+                // Fallback to base class logic
+                return base.IsDestroyed;
+            }
+        }
+
+        public new virtual bool IsAlive
+        {
+            get
+            {
+                // If we have sections, return primary section's alive state
+                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
+                {
+                    return !_hulls[0].IsDestroyed;
+                }
+                // Fallback to base class logic
+                return !IsDestroyed;
+            }
+        }
         public SlotAccessor SlotAccessor { get; protected set; }
         public SlotHighlighter SlotHighlighter { get; protected set; }
         public ISlotNumProvider SlotNumProvider { get; protected set; }
@@ -140,6 +237,11 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
+
+        // Multi-hull events (for secondary hull destruction scoring)
+        public event EventHandler<HullSectionTargetedEventArgs> HullSectionTargeted;
+        public event EventHandler<HullSectionDestroyedEventArgs> SecondaryHullDestroyed;
+
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
 
@@ -352,6 +454,62 @@ namespace BattleCruisers.Cruisers
                 }
         }
 
+        // ============== CruiserSection Event Callbacks ==============
+        // Called by CruiserSection when clicked - can be overridden for multi-section behavior
+        public virtual void OnHullClicked(CruiserSection section)
+        {
+            // Default: forward to standard click behavior
+            _clickHandler_SingleClick(null, EventArgs.Empty);
+        }
+
+        // Called by CruiserSection when double-clicked
+        public virtual void OnHullDoubleClicked(CruiserSection section)
+        {
+            // Default: forward to standard double-click behavior
+            _clickHandler_DoubleClick(null, EventArgs.Empty);
+        }
+
+        // Called by CruiserSection when triple-clicked
+        public virtual void OnHullTripleClicked(CruiserSection section)
+        {
+            // Default: forward to standard double-click behavior (targeting)
+            _clickHandler_DoubleClick(null, EventArgs.Empty);
+        }
+
+        // Called by CruiserSection when destroyed
+        public virtual void OnHullDestroyed(CruiserSection section)
+        {
+            // Default: if primary section is destroyed, cruiser is destroyed
+            if (section.IsPrimary)
+            {
+                Destroy();
+            }
+            else if (_hulls != null && _hulls.Length > 1)
+            {
+                // Secondary section destruction in multi-section cruiser: award points
+                SecondaryHullDestroyed?.Invoke(this, new HullSectionDestroyedEventArgs(section));
+
+                // Add partial destruction score for enemy cruisers
+                if (Faction == Faction.Reds)
+                {
+                    BattleSceneGod.AddDeadBuildable(TargetType.Buildings, (int)(section.maxHealth * 0.3f));
+                }
+            }
+        }
+
+        // Setup the section array - called during initialization
+        public virtual void SetupHulls(CruiserSection[] sections)
+        {
+            _hulls = sections;
+            if (_hulls != null && _hulls.Length > 0)
+            {
+                // Set cruiser's max health from primary section
+                maxHealth = _hulls[0].maxHealth;
+            }
+        }
+
+        // ============== End CruiserSection Event Callbacks ==============
+
         protected virtual void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);
@@ -472,18 +630,42 @@ namespace BattleCruisers.Cruisers
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
 
-            if (IsPlayerCruiser && _enemyCruiser.IsAlive)
+            if (IsPlayerCruiser && _enemyCruiser != null && _enemyCruiser.IsAlive)
                 BattleSceneGod.AddPlayedTime(TargetType.PlayedTime, _time.DeltaTime);
         }
 
         public void MakeInvincible()
         {
-            _healthTracker.State = HealthTrackerState.Immutable;
+            // Apply to all sections if they exist
+            if (_hulls != null)
+            {
+                foreach (var section in _hulls)
+                {
+                    section?.MakeInvincible();
+                }
+            }
+            // Also apply to base health tracker
+            if (_healthTracker != null)
+            {
+                _healthTracker.State = HealthTrackerState.Immutable;
+            }
         }
 
         public void MakeDamagable()
         {
-            _healthTracker.State = HealthTrackerState.Mutable;
+            // Apply to all sections if they exist
+            if (_hulls != null)
+            {
+                foreach (var section in _hulls)
+                {
+                    section?.MakeDamageable();
+                }
+            }
+            // Also apply to base health tracker
+            if (_healthTracker != null)
+            {
+                _healthTracker.State = HealthTrackerState.Mutable;
+            }
         }
 
         public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)

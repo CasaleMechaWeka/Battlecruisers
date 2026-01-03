@@ -4,11 +4,11 @@ namespace BattleCruisers.Cruisers
 {
     public class HullSectionTargetedEventArgs : EventArgs
     {
-        public HullSection HullSection { get; }
+        public Hull Hull { get; }
 
-        public HullSectionTargetedEventArgs(HullSection hullSection)
+        public HullSectionTargetedEventArgs(Hull hull)
         {
-            HullSection = hullSection;
+            Hull = hull;
         }
     }
 }
