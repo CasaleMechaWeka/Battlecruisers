@@ -1,28 +1,29 @@
-# Multi-Hull Cruiser System - Implementation Guide
+# Multi-Section Cruiser System - Implementation Guide
 
 ## 🎯 Executive Summary
 
 **Status**: ✅ Complete and Production Ready
-**Architecture**: Flexible Single-Class System (Cruiser natively supports 1-N hulls)
+**Architecture**: Flexible Single-Class System (Cruiser natively supports 1-N sections)
 **Date**: January 2026
 
 ### The Simple Idea
-**Cruiser = Hull(s)**
+**Cruiser = Section(s)**
 
-One `Cruiser` class handles both single-hull and multi-hull configurations. Prefabs determine complexity:
-- **Single-hull cruiser**: 1 Hull child
-- **Multi-hull cruiser**: 3+ Hull children
-- **Same code path** - no specialization
+One `Cruiser` class handles both single-section and multi-section configurations. Prefabs determine complexity:
+- **Single-section cruiser**: No CruiserSection children (renderer on Cruiser object)
+- **Multi-section cruiser**: 2+ CruiserSection children (one renderer per section)
+- **Same code path** - no specialization, **automatic initialization**
 
 ### What Was Done
-Inverted the architecture from "ChainCruiser extends Cruiser with special logic" to "Cruiser natively supports any hull count."
+Inverted the architecture from "ChainCruiser extends Cruiser with special logic" to "Cruiser natively supports any section count."
 
 **Result**:
 - ❌ Deleted ChainCruiser entirely (no longer needed)
-- ✅ Merged all multi-hull logic into base Cruiser
-- ✅ Hull[] array in base class
-- ✅ Property routing works for 1-N hulls
-- ✅ Secondary hull destruction scoring built-in
+- ✅ Merged all multi-section logic into base Cruiser
+- ✅ CruiserSection[] array in base class
+- ✅ Property routing works for 1-N sections
+- ✅ Secondary section destruction scoring built-in
+- ✅ **Automatic section detection and initialization in CruiserFactory**
 
 ---
 
@@ -35,30 +36,31 @@ Inverted the architecture from "ChainCruiser extends Cruiser with special logic"
 │          Cruiser                    │
 ├─────────────────────────────────────┤
 │                                     │
-│  Hull[] _hulls                      │
+│  CruiserSection[] _hulls            │
 │  ├─ Properties route through [0]    │
-│  ├─ Events for hull destruction     │
-│  └─ Secondary hull scoring logic    │
+│  ├─ Events for section destruction  │
+│  └─ Secondary section scoring logic │
 │                                     │
-│  Virtual hull callbacks:            │
-│  ├─ OnHullClicked(hull)             │
-│  ├─ OnHullDestroyed(hull)           │
-│  └─ SetupHulls(hull[])              │
+│  Virtual section callbacks:         │
+│  ├─ OnHullClicked(section)          │
+│  ├─ OnHullDestroyed(section)        │
+│  └─ SetupHulls(section[])           │
 │                                     │
 └─────────────────────────────────────┘
          ▲
          │
     Configuration via Prefab:
 
-    Single-Hull:        Multi-Hull:
+    Single-Section:     Multi-Section:
     ┌──────────┐        ┌──────────┐
     │ Cruiser  │        │ Cruiser  │
     ├──────────┤        ├──────────┤
-    │ Hull[1]  │        │ Hull[3]  │
-    │ - Primary│        │ - Primary│
-    │          │        │ - Wing L │
-    │          │        │ - Wing R │
+    │Renderer* │        │Section[3]│
+    │Collider* │        │- Primary │
+    │          │        │- Wing L  │
+    │          │        │- Wing R  │
     └──────────┘        └──────────┘
+    * No children       * Has children
 ```
 
 ### Key Classes
@@ -67,46 +69,49 @@ Inverted the architecture from "ChainCruiser extends Cruiser with special logic"
 ```csharp
 public class Cruiser : Target, ICruiser
 {
-    // Hull array for 1-N hulls
-    protected Hull[] _hulls;
-    public Hull[] Hulls => _hulls;  // Public accessor
+    // Section array for 1-N sections
+    protected CruiserSection[] _hulls;
+    public CruiserSection[] Hulls => _hulls;  // Public accessor
 
-    // Properties automatically route through primary hull
-    public float Health => _hulls?[0]?.Health ?? maxHealth;
+    // Properties automatically route through primary section
+    public float Health => _hulls?[0]?.Health ?? base.Health;
     public float MaxHealth => _hulls?[0]?.MaxHealth ?? maxHealth;
     public bool IsDestroyed => _hulls?[0]?.IsDestroyed ?? false;
 
-    // Virtual methods for hull events
-    public virtual void OnHullDestroyed(Hull hull)
+    // Virtual methods for section events
+    public virtual void OnHullDestroyed(CruiserSection section)
     {
-        if (hull.IsPrimary)
+        if (section.IsPrimary)
             Destroy();  // Primary = game over
-        else if (_hulls.Length > 1)
+        else if (_hulls?.Length > 1)
         {
-            SecondaryHullDestroyed?.Invoke(this, new HullSectionDestroyedEventArgs(hull));
-            BattleSceneGod.AddDeadBuildable(TargetType.Buildings, (int)(hull.maxHealth * 0.3f));
+            SecondaryHullDestroyed?.Invoke(this, new CruiserSectionDestroyedEventArgs(section));
+            BattleSceneGod.AddDeadBuildable(TargetType.Buildings, (int)(section.maxHealth * 0.3f));
         }
     }
 
-    public virtual void SetupHulls(Hull[] hulls)
+    public virtual void SetupHulls(CruiserSection[] sections)
     {
-        _hulls = hulls;
+        _hulls = sections;
         if (_hulls?[0] != null)
             maxHealth = _hulls[0].maxHealth;
     }
 }
 ```
 
-**Hull.cs** (formerly HullSection - generic component):
+**CruiserSection.cs** (individual targetable section component):
 ```csharp
-public class Hull : MonoBehaviour, ITarget
+public class CruiserSection : MonoBehaviour, ITarget
 {
-    public Cruiser ParentCruiser;      // Generic reference
-    public string HullId;
-    public bool IsPrimary;              // Only one = true
+    public Cruiser ParentCruiser;      // Reference to parent cruiser
+    public string HullId;               // Unique identifier
+    public bool IsPrimary;              // Only one should be true
+    public float maxHealth = 1000f;
+    public SpriteRenderer SpriteRenderer;   // For rendering
+    public PolygonCollider2D PrimaryCollider; // For targeting
 
     // Notifies parent when destroyed
-    private void OnHealthGone()
+    private void OnHealthGone(object sender, EventArgs e)
     {
         ParentCruiser?.OnHullDestroyed(this);
     }
@@ -115,132 +120,144 @@ public class Hull : MonoBehaviour, ITarget
 
 ---
 
-## 🎮 How to Build a Multi-Hull Level
+## 🎮 How to Build a Multi-Section Level
+
+### Key Concept: Automatic Detection
+When a Cruiser is instantiated, **CruiserFactory automatically detects and initializes any CruiserSection children**. No manual array assignment needed.
 
 ### Step 1: Create Base Cruiser Prefab
 
 ```
-In Scene:
+In Unity:
 1. Create empty GameObject: "EnemyBoss"
-2. Add Component: Cruiser (yes, just "Cruiser", no "Chain")
-3. Configure:
-   - stringKeyBase: "Boss"
-   - numOfDrones: 6
-   - hullType: Cruiser
+2. Add Component: Cruiser
+3. Configure Cruiser component:
+   ├─ stringKeyBase: "Boss"
+   ├─ numOfDrones: 6
+   ├─ hullType: Cruiser
+   └─ [other settings]
 ```
 
-### Step 2: Create Hull Children
+### Step 2: Create CruiserSection Children
 
-For each hull section you want (primary + secondaries):
+For each section you want (primary + secondaries):
 
 ```
 EnemyBoss/
-├─ PrimaryHull (Child GameObject)
-│  ├─ Add Component: Hull
+├─ PrimarySection (Child GameObject)
+│  ├─ Add Component: CruiserSection
 │  ├─ Add Component: SpriteRenderer (assign sprite)
 │  ├─ Add Component: PolygonCollider2D (trace outline)
-│  ├─ Configure Hull component:
-│  │  ├─ HullId: "Primary"
-│  │  ├─ IsPrimary: TRUE ⚠️ (only one!)
-│  │  ├─ maxHealth: 3000
-│  │  └─ healthGainPerDroneS: 1.0
-│  └─ Assign DeathPrefab: (explosion effect)
+│  └─ Configure CruiserSection component:
+│     ├─ HullId: "Primary"
+│     ├─ IsPrimary: TRUE ⚠️ (MUST be first child!)
+│     ├─ maxHealth: 3000
+│     ├─ SpriteRenderer: [drag the SpriteRenderer]
+│     ├─ PrimaryCollider: [drag the PolygonCollider2D]
+│     └─ DeathPrefab: [explosion effect]
 │
 ├─ LeftWing (Child GameObject)
-│  ├─ Add Component: Hull
+│  ├─ Add Component: CruiserSection
 │  ├─ Add Component: SpriteRenderer
 │  ├─ Add Component: PolygonCollider2D
-│  ├─ Configure Hull component:
-│  │  ├─ HullId: "LeftWing"
-│  │  ├─ IsPrimary: FALSE
-│  │  ├─ maxHealth: 1500
-│  │  └─ healthGainPerDroneS: 0.8
-│  └─ Assign DeathPrefab: (explosion)
+│  └─ Configure CruiserSection component:
+│     ├─ HullId: "LeftWing"
+│     ├─ IsPrimary: FALSE
+│     ├─ maxHealth: 1500
+│     └─ [assign components as above]
 │
 └─ RightWing (Child GameObject)
-   ├─ Add Component: Hull
-   ├─ [same as LeftWing]
+   ├─ Add Component: CruiserSection
+   ├─ [same configuration as LeftWing]
 ```
 
-### Step 3: Assign Hull Array
+### Step 3: Hierarchy Order Matters ⚠️
 
-```
-1. Select: EnemyBoss (root)
-2. In Inspector, Cruiser component:
-   ├─ Hulls size: 3
-   ├─ Hulls[0]: Drag PrimaryHull
-   ├─ Hulls[1]: Drag LeftWing
-   └─ Hulls[2]: Drag RightWing
+**The first CruiserSection child MUST be the primary section**. When CruiserFactory initializes:
+```csharp
+// First child found → marked IsPrimary = true
+// Remaining children → marked IsPrimary = false
 ```
 
-**Order matters**: Primary hull MUST be first (index 0)
-
-### Step 4: Configure Each Hull
-
-For each hull in the Hulls array, assign:
-- **SpriteRenderer** field: The renderer component
-- **PrimaryCollider** field: The PolygonCollider2D component
-- **DeathPrefab** field: Explosion effect for that hull
-
-### Step 5: Save as Prefab
-
+So arrange your hierarchy carefully:
 ```
-1. Drag EnemyBoss to: Assets/Resources/Cruisers/
-2. Name: "Boss_MultiHull.prefab" (or your boss name)
+Good:    Bad:
+├─ Primary      ├─ LeftWing ← Will be marked Primary!
+├─ LeftWing     ├─ RightWing
+└─ RightWing    └─ Primary
+
+✅ Good         ❌ Wrong
 ```
 
-### Step 6: Use in Level
+### Step 4: Save as Prefab
+
+```
+1. Drag "EnemyBoss" to: Assets/Resources/Cruisers/
+2. Name: "Boss_MultiSection.prefab" (or your boss name)
+```
+
+### Step 5: Use in Level - It Just Works!
 
 ```csharp
 // In BattleSceneGod or level config:
-Cruiser boss = PrefabFactory.GetCruiserPrefab("Boss_MultiHull");
-// Automatically works - Cruiser handles all hull setup
+IPrefabKey bossKey = new HullKey("Boss_MultiSection");
+Cruiser boss = cruiserFactory.CreateAICruiser(bossKey);
+
+// At this point, CruiserFactory has ALREADY:
+// ✅ Found all CruiserSection children
+// ✅ Called boss.SetupHulls(sections)
+// ✅ Initialized each section with ParentCruiser reference
+// ✅ Marked first as primary
+// ✅ Called section.Initialize() on each
+
+// Battle is ready to go!
 ```
 
 ---
 
-## 🧪 Testing Multi-Hull Combat
+## 🧪 Testing Multi-Section Combat
 
 ```
-1. Load level with your multi-hull boss
-2. Target each hull individually:
-   - Click PrimaryHull: Should select boss, show primary health
+1. Load level with your multi-section boss
+2. Target each section individually:
+   - Click Primary: Should select boss, show primary health
    - Click LeftWing: Should select boss, still show primary health
    - Click RightWing: Should select boss, still show primary health
-3. Damage secondary hull:
+3. Damage secondary section:
    - Attack LeftWing for ~1500 damage
-   - LeftWing should hide/explode
+   - LeftWing should hide/explode (DeathPrefab spawned)
    - Battle continues
-   - Score awarded (~450 points)
-4. Damage primary hull:
-   - Attack PrimaryHull for ~3000 damage
-   - PrimaryHull hides/explodes
-   - GAME OVER/VICTORY
+   - Score awarded (~450 points from maxHealth * 0.3f)
+4. Damage primary section:
+   - Attack Primary for ~3000 damage
+   - Primary hides/explodes
+   - GAME OVER/VICTORY (primary destroyed = cruiser destroyed)
 ```
 
 ---
 
 ## 🎨 Example Boss Configurations
 
-### Simple 3-Hull Boss
+### Simple 3-Section Boss
 ```
-PrimaryHull (HP: 3000, IsPrimary: true)
-LeftWing   (HP: 1500, IsPrimary: false)
-RightWing  (HP: 1500, IsPrimary: false)
+Primary (HP: 3000, IsPrimary: true)   ← First child in hierarchy
+LeftWing (HP: 1500, IsPrimary: false)
+RightWing (HP: 1500, IsPrimary: false)
 
 Total perceived health: 3000 (primary shown in UI)
-Secondary destruction: Continues battle + awards points
+Secondary destruction: Continues battle + awards points (450+450)
 ```
 
-### Complex 5-Hull Boss
+### Complex 5-Section Boss
 ```
-MainHull   (HP: 4000, IsPrimary: true)  - center
-Engine1    (HP: 1200, IsPrimary: false) - rear left
-Engine2    (HP: 1200, IsPrimary: false) - rear right
-CannonLeft (HP: 800,  IsPrimary: false) - side
-CannonRight(HP: 800,  IsPrimary: false) - side
+Main (HP: 4000, IsPrimary: true)      ← First child
+Engine1 (HP: 1200, IsPrimary: false)
+Engine2 (HP: 1200, IsPrimary: false)
+CannonLeft (HP: 800, IsPrimary: false)
+CannonRight (HP: 800, IsPrimary: false)
 
-Total: 8000 possible damage, but game ends at 4000 (primary)
+Total: 8000 possible damage, but game ends at 4000 (primary destroyed)
+Secondary destruction awards: 360 + 360 + 240 + 240 = 1200 points
 ```
 
 ---
@@ -249,119 +266,167 @@ Total: 8000 possible damage, but game ends at 4000 (primary)
 
 ### How It All Works
 
-#### When Battle Starts
+#### Initialization Flow (CruiserFactory - Automatic)
 ```
-1. Cruiser GameObject instantiated
-2. StaticInitialise():
-   ├─ Load Hull[] children from prefab
-   └─ SetupHulls(_hulls) called
-3. Initialise(args):
-   ├─ Initialize each hull in _hulls[]
-   └─ Subscribe to destruction events
-4. Ready for combat
+1. BattleSceneGod calls: cruiserFactory.CreateAICruiser(aiCruiserKey)
+2. PrefabFactory instantiates prefab: new Cruiser()
+3. PrefabFactory calls: cruiser.StaticInitialise()
+   ├─ Finds SpriteRenderer (optional - only if on same object)
+   └─ Finds Collider2D
+
+4. BattleSceneGod calls: cruiserFactory.InitialisePlayerCruiser()
+5. CruiserFactory calls: cruiser.Initialise(args)
+   ├─ Sets faction, UI manager, drones, repair, etc.
+   └─ No hull setup yet
+
+6. CruiserFactory (NEW!) Automatically Detects Sections:
+   ├─ GetComponentsInChildren<CruiserSection>()
+   ├─ if (sections.Length > 0):
+   │  ├─ cruiser.SetupHulls(sections)  ← Populates _hulls array
+   │  └─ for each section:
+   │     ├─ section.ParentCruiser = cruiser
+   │     ├─ if (first) section.IsPrimary = true
+   │     └─ section.Initialize()  ← Sets up health tracking, click handlers
+   └─ if (no sections) → Single-section mode, _hulls stays null
+
+7. Battle ready!
 ```
 
-#### When Hull Takes Damage
+#### When a Section Takes Damage
 ```
-1. Player targets LeftWing hull
-2. LeftWing.TakeDamage(100)
-3. LeftWing._healthTracker.RemoveHealth(100)
-4. LeftWing health: 1500 → 1400
-5. UI shows cruiser health (still primary: 3000)
+1. Player clicks a section (e.g., LeftWing)
+2. GlobalTargetFinder emits it as a target (via Hulls array)
+3. Weapon fires on LeftWing
+4. LeftWing.TakeDamage(100) called
+5. LeftWing._healthTracker.RemoveHealth(100)
+6. LeftWing health: 1500 → 1400
+7. UI displays cruiser.Health (routes to primary: still 3000)
 ```
 
-#### When Secondary Hull Dies
+#### When Secondary Section Dies
 ```
 1. LeftWing.TakeDamage(1500) [remaining health]
 2. LeftWing._healthTracker reaches 0
-3. Hull.OnHealthGone() triggered
-4. Spawn DeathPrefab (explosion)
+3. CruiserSection.OnHealthGone() triggered
+4. Spawn LeftWing.DeathPrefab (explosion)
 5. Call ParentCruiser.OnHullDestroyed(leftWing)
-6. Cruiser.OnHullDestroyed() checks:
-   ├─ if (IsPrimary) → Destroy() → Game over
-   └─ else → SecondaryHullDestroyed event → Score awarded → Battle continues
+6. Cruiser.OnHullDestroyed(leftWing) checks:
+   ├─ if (leftWing.IsPrimary) → Destroy() → GAME OVER
+   └─ else →
+      ├─ SecondaryHullDestroyed event fires
+      ├─ BattleSceneGod.AddDeadBuildable() → Score += 450
+      └─ Battle continues with remaining sections
 ```
 
-#### When Primary Hull Dies
+#### When Primary Section Dies
 ```
-1. PrimaryHull.TakeDamage(3000)
-2. Hull.OnHealthGone() triggered
-3. Call ParentCruiser.OnHullDestroyed(primaryHull)
-4. Cruiser.OnHullDestroyed() checks:
-   └─ if (IsPrimary) → Destroy() → Triggers victory
+1. Primary.TakeDamage(3000) [remaining health]
+2. Primary._healthTracker reaches 0
+3. CruiserSection.OnHealthGone() triggered
+4. Spawn Primary.DeathPrefab (explosion)
+5. Call ParentCruiser.OnHullDestroyed(primary)
+6. Cruiser.OnHullDestroyed(primary) checks:
+   └─ if (primary.IsPrimary) → Destroy() → VICTORY!
 ```
 
-### Properties Always Route Through Primary Hull
+### Properties Always Route Through Primary Section
 
 ```csharp
-// These all return primary hull values
-boss.Health           // ← Primary hull health
-boss.MaxHealth        // ← Primary hull max health
-boss.IsDestroyed      // ← Primary hull destroyed?
-boss.IsAlive          // ← Primary hull alive?
-boss.Size             // ← Primary hull collider size
+// These all return primary section values (for UI display)
+boss.Health           // ← Primary section health (shown in UI)
+boss.MaxHealth        // ← Primary section max health
+boss.IsDestroyed      // ← Primary section destroyed? (→ game over)
+boss.IsAlive          // ← Primary section alive?
+boss.Size             // ← Primary section collider bounds
 
-// These apply to ALL hulls
-boss.Color = red      // ← All hulls turn red
-boss.MakeInvincible() // ← All hulls invincible
+// But each section tracks its own health independently!
+boss.Hulls[0].Health  // ← Primary section's actual health
+boss.Hulls[1].Health  // ← LeftWing section's actual health
+boss.Hulls[2].Health  // ← RightWing section's actual health
+
+// These apply to ALL sections
+boss.Color = red         // ← All sections turn red
+boss.MakeInvincible()    // ← All sections become invincible
+boss.MakeDamagable()     // ← All sections become damageable
 ```
 
 ---
 
-## 📋 Checklist for Creating Multi-Hull Boss
+## 📋 Checklist for Creating Multi-Section Boss
 
-- [ ] Create Cruiser GameObject
-- [ ] Add Cruiser component
-- [ ] Create Hull children (at least 2: 1 primary, 1+ secondary)
-- [ ] For each Hull:
-  - [ ] Add Hull component
-  - [ ] Set HullId unique name
-  - [ ] Set IsPrimary (only ONE = true)
+- [ ] Create Cruiser GameObject (root)
+- [ ] Add Cruiser component to root
+- [ ] Configure Cruiser: stringKeyBase, numOfDrones, etc.
+- [ ] Create CruiserSection children (at least 1 primary, 1+ secondary)
+  - [ ] **First child MUST be Primary** (CruiserFactory marks it)
+- [ ] For each CruiserSection child:
+  - [ ] Add CruiserSection component
+  - [ ] Set HullId (unique name)
   - [ ] Set maxHealth
-  - [ ] Add SpriteRenderer, assign sprite
-  - [ ] Add PolygonCollider2D, trace outline
-  - [ ] Assign to Hull component fields
-  - [ ] Assign DeathPrefab
-- [ ] In root Cruiser, assign Hulls array
-- [ ] Save as prefab
-- [ ] Test in scene
+  - [ ] Add SpriteRenderer (assign sprite)
+  - [ ] Add PolygonCollider2D (trace outline)
+  - [ ] In CruiserSection inspector, assign:
+    - [ ] SpriteRenderer field → drag SpriteRenderer component
+    - [ ] PrimaryCollider field → drag PolygonCollider2D component
+    - [ ] DeathPrefab field → explosion effect prefab
+  - [ ] Set IsPrimary (only first child!)
+- [ ] **NO manual Hulls array assignment needed** (automatic detection)
+- [ ] Save as prefab to Resources/Cruisers/
+- [ ] Test in battle scene
 
 ---
 
 ## ❓ FAQ
 
-**Q: Can I have more than 3 hulls?**
-A: Yes, any number. Just add more Hull children and extend the Hulls array.
+**Q: Do I need to manually assign the Hulls array?**
+A: **No!** CruiserFactory automatically detects CruiserSection children and calls SetupHulls. Just add children to the prefab.
 
-**Q: What if I have no HullSections in my prefab?**
-A: Not recommended - Cruiser expects at least one. Will fall back to legacy single-hull logic.
+**Q: Can I have more than 3 sections?**
+A: Yes, unlimited. Add as many CruiserSection children as you want. Only the first becomes primary.
 
-**Q: Do secondary hulls need SlotWrapperController?**
-A: Optional. Primary usually has slots, secondaries can have their own or none.
+**Q: What if I have no CruiserSection children?**
+A: That's fine! The cruiser works in single-section mode - renderer on the root object, no _hulls array.
 
-**Q: Can I change which hull is primary at runtime?**
-A: Not recommended. Set IsPrimary in prefab before instantiation.
+**Q: Why is the FIRST child important?**
+A: CruiserFactory marks the first child as IsPrimary. If ordered wrong, wrong section will be primary. This is intentional - hierarchy order matters.
 
-**Q: How does targeting work?**
-A: GlobalTargetFinder emits each Hull as an independent target. Clicking any hull selects the cruiser, but targeting info goes to that specific hull.
+**Q: Do secondary sections need SlotWrapperController?**
+A: No. Only the root Cruiser needs SlotWrapperController. Sections just need SpriteRenderer and PolygonCollider2D.
 
-**Q: What's the score for secondary destruction?**
-A: `(int)(hull.maxHealth * 0.3f)` - 30% of hull's max health as points.
+**Q: Can I change which section is primary at runtime?**
+A: Not recommended. IsPrimary is set during initialization based on hierarchy order. Changing it won't affect gameplay.
+
+**Q: How does click targeting work?**
+A: GlobalTargetFinder detects multi-section cruisers and emits each section as a separate target via the Hulls array. Clicking a section targets that specific section, but the UI still shows primary health.
+
+**Q: What's the destruction score formula?**
+A: `(int)(section.maxHealth * 0.3f)` - 30% of the section's max health as points. Only for secondary sections (primary = game over, no points).
+
+**Q: Can I have sections with different health independently tracked?**
+A: Yes! Each CruiserSection has its own maxHealth and health tracker. The Cruiser's Health property just displays the primary's value for UI purposes.
 
 ---
 
 ## Summary
 
-### Old Way (Deleted)
-- ChainCruiser class extends Cruiser
-- HullSection components
-- Special initialization, property overrides
-- Complex inheritance
+### Before This Refactor (Deleted)
+- `ChainCruiser` class extended `Cruiser`
+- Specialized `HullSection` components (separate from Cruiser)
+- Complex initialization, property overrides, duplication
+- Fragile inheritance hierarchy
 
-### New Way (Current) ✅
-- One Cruiser class
-- Hull[] array in base class
-- Prefab determines complexity
-- Zero inheritance specialization
+### After This Refactor (Current) ✅
+- **One `Cruiser` class** handles all configurations
+- **`CruiserSection[]` array** in base class
+- **Prefab structure determines complexity** (not code)
+- **Zero inheritance specialization** - same code path for all
+- **Automatic initialization** in CruiserFactory - no manual array setup
 
-**That's it.** Create a Cruiser prefab with multiple Hull children, save it, and use it. The system handles the rest.
+### The Process
+1. **Design**: Create Cruiser prefab with CruiserSection children
+2. **Structure**: First child = primary, rest = secondary
+3. **Configuration**: Assign sprites, colliders, health values
+4. **Instantiation**: CruiserFactory auto-detects sections
+5. **Battle**: Sections targeted independently, primary controls game state
+
+**That's it.** Design a Cruiser prefab with multiple CruiserSection children in the hierarchy, and the system handles everything automatically. Same code path, no specialization.
