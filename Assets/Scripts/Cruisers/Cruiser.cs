@@ -259,14 +259,23 @@ namespace BattleCruisers.Cruisers
         {
             base.StaticInitialise();
 
-            Assert.IsNotNull(deathPrefab, $"Death prefab for Cruiser {name} is null");
+            // DeathPrefab is optional and unused - legacy field kept for backwards compatibility
+            // Each CruiserSection spawns its own death effect when destroyed
 
             // Renderer is optional - single-section cruisers have it on this object,
             // multi-section cruisers have it on CruiserSection children
             _renderer = GetComponent<SpriteRenderer>();
 
+            // Collider is only on root for single-section cruisers
+            // Multi-section cruisers have colliders on CruiserSection children
             _collider = GetComponent<Collider2D>();
-            Assert.IsNotNull(_collider);
+
+            // Only assert collider exists if this is a single-section cruiser (no CruiserSection children)
+            CruiserSection[] sections = GetComponentsInChildren<CruiserSection>(includeInactive: false);
+            if (sections.Length == 0)
+            {
+                Assert.IsNotNull(_collider, $"Single-section Cruiser {name} must have a Collider2D on the root object");
+            }
 
             // Validate additional colliders if enabled
             if (useAdditionalColliders)
