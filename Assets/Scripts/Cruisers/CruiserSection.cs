@@ -35,9 +35,6 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Primary collider for this cruiser section (used for targeting)")]
         public PolygonCollider2D PrimaryCollider;
 
-        [Tooltip("SlotWrapperController managing buildings for this cruiser section")]
-        public SlotWrapperController SlotController;
-
         [Header("Health Configuration")]
         [Tooltip("Maximum health for this cruiser section")]
         public float maxHealth = 1000f;
@@ -134,11 +131,6 @@ namespace BattleCruisers.Cruisers
             if (PrimaryCollider == null)
             {
                 PrimaryCollider = GetComponent<PolygonCollider2D>();
-            }
-
-            if (SlotController == null)
-            {
-                SlotController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
             }
 
             Debug.Log($"[CruiserSection] {HullId} initialized successfully");
