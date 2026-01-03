@@ -72,7 +72,9 @@ namespace BattleCruisers.Scenes.BattleScene
         private PausableAudioListener _pausableAudioListener;
         private BattleSequencer battleSequencer;
 
+        [Tooltip("Debug field: Override the selected level.")]
         public int defaultLevel;
+        [Tooltip("Debug field: Override the selected side quest ID for testing side quest battles.")]
         public int defaultSideQuest;
         public bool isTutorial = false;
 
@@ -181,7 +183,6 @@ namespace BattleCruisers.Scenes.BattleScene
             enemyCruiserSprite = aiCruiser.Sprite;
             enemyCruiserName = aiCruiser.Name;
 
-
             // Camera
             cameraComponents
                 = cameraInitialiser.Initialise(
@@ -210,6 +211,16 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
 
+            // Check if AI cruiser has embedded BattleSequencer (new ChainBattle approach)
+            // MUST be after cruiser initialization so SlotAccessor is ready
+            BattleSequencer embeddedSequencer = aiCruiser.GetComponent<BattleSequencer>();
+            if (embeddedSequencer != null)
+            {
+                embeddedSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+                embeddedSequencer.StartF();
+                battleSequencer = embeddedSequencer;
+                Debug.Log($"[ChainBattle] Using embedded BattleSequencer from cruiser prefab for level {ApplicationModel.SelectedLevel}");
+            }
 
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
@@ -531,8 +542,9 @@ namespace BattleCruisers.Scenes.BattleScene
                 }
             }
 
-            // Load ChainBattle sequencer if this is a ChainBattle level
-            if (ApplicationModel.Mode == GameMode.Campaign && StaticData.IsChainBattleLevel(ApplicationModel.SelectedLevel))
+            // Load ChainBattle sequencer if this is a ChainBattle level (fallback for old prefab-based approach)
+            // Only load if no embedded sequencer was found on the cruiser
+            if (battleSequencer == null && ApplicationModel.Mode == GameMode.Campaign && StaticData.IsChainBattleLevel(ApplicationModel.SelectedLevel))
             {
                 string sequencerPath = StaticData.GetChainBattleSequencerPath(ApplicationModel.SelectedLevel);
                 if (!string.IsNullOrEmpty(sequencerPath))
@@ -546,7 +558,7 @@ namespace BattleCruisers.Scenes.BattleScene
                         battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
                         battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
                         battleSequencer.StartF();
-                        Debug.Log($"[ChainBattle] Loaded sequencer for level {ApplicationModel.SelectedLevel}");
+                        Debug.Log($"[ChainBattle] Loaded sequencer prefab for level {ApplicationModel.SelectedLevel} (fallback method)");
                     }
                     else
                     {

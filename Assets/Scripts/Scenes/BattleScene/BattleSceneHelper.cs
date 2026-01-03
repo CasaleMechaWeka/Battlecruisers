@@ -65,7 +65,7 @@ namespace BattleCruisers.Scenes.BattleScene
             return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID];
         }
 
-        public virtual async Task<string> GetEnemyNameAsync(int levelNum)
+        public virtual Task<string> GetEnemyNameAsync(int levelNum)
         {
             TrashTalkData levelTrashTalkData;
 
@@ -78,7 +78,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 levelTrashTalkData = StaticData.LevelTrashTalk[levelNum];
             }
 
-            return LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey);
+            return Task.FromResult(LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey));
         }
 
         public virtual IPrefabKey GetAiCruiserKey()

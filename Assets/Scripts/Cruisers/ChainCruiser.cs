@@ -44,6 +44,7 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Individual hull sections that can be independently targeted and selected.")]
         public HullSection[] HullSections;
 
+        private HullSection _primaryHull;
         private ITargetConsumer _userChosenTargetConsumer;
 
 
@@ -66,20 +67,17 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        // Hide base Sprite to check hull sections
+        // Hide base Sprite to return primary hull sprite
         public new Sprite Sprite {
             get {
-                // Use root sprite if available
-                if (_renderer != null && _renderer.sprite != null) {
-                    return _renderer.sprite;
+                // Return primary hull sprite, or first available
+                if (_primaryHull != null && _primaryHull.SpriteRenderer != null) {
+                    return _primaryHull.SpriteRenderer.sprite;
                 }
 
-                // Fall back to first hull section sprite
-                if (HullSections != null) {
-                    foreach (var hullSection in HullSections) {
-                        if (hullSection != null && hullSection.SpriteRenderer != null && hullSection.SpriteRenderer.sprite != null) {
-                            return hullSection.SpriteRenderer.sprite;
-                        }
+                foreach (var hull in HullSections) {
+                    if (hull != null && hull.SpriteRenderer != null && hull.SpriteRenderer.sprite != null) {
+                        return hull.SpriteRenderer.sprite;
                     }
                 }
 
@@ -87,57 +85,95 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        // Multi-hull specific events
-        public event EventHandler<HullSectionTargetedEventArgs> HullSectionTargeted;
+        /// <summary>
+        /// Returns the primary hull's health for UI compatibility.
+        /// </summary>
+        public new float Health => _primaryHull?.Health ?? 0;
 
-        public override void StaticInitialise()
+        public new float MaxHealth => _primaryHull?.MaxHealth ?? maxHealth;
+
+        public new bool IsDestroyed => _primaryHull?.IsDestroyed ?? true;
+
+        public override bool IsAlive => _primaryHull != null && !_primaryHull.IsDestroyed;
+
+        public new void MakeInvincible()
         {
-            base.StaticInitialise();
-
-            // Initialize hull sections
             if (HullSections != null)
             {
-                Debug.Log($"[ChainCruiser] Initializing {HullSections.Length} hull sections");
-                int nullCount = 0;
-                foreach (var hullSection in HullSections)
+                foreach (var hull in HullSections)
                 {
-                    if (hullSection == null)
-                    {
-                        nullCount++;
-                        continue;
-                    }
-
-                    // Set parent cruiser reference and initialize
-                    hullSection.ParentCruiser = this;
-                    hullSection.Initialize();
-                }
-
-                if (nullCount > 0)
-                {
-                    Debug.LogWarning($"[ChainCruiser] {name}: {nullCount} null hull section(s) found in HullSections array. They will be ignored.");
+                    hull?.MakeInvincible();
                 }
             }
         }
 
-        public override void Initialise(CruiserArgs args)
+        public new void MakeDamagable()
+        {
+            if (HullSections != null)
+            {
+                foreach (var hull in HullSections)
+                {
+                    hull?.MakeDamageable();
+                }
+            }
+        }
+
+        // Multi-hull specific events
+        public event EventHandler<HullSectionTargetedEventArgs> HullSectionTargeted;
+        public event EventHandler<HullSectionDestroyedEventArgs> SecondaryHullDestroyed;
+
+        public override void StaticInitialise()
+        {
+            // Find primary hull BEFORE base.StaticInitialise so maxHealth is set correctly
+            if (HullSections != null && HullSections.Length > 0)
+            {
+                _primaryHull = System.Linq.Enumerable.FirstOrDefault(HullSections, h => h != null && h.IsPrimary);
+
+                if (_primaryHull != null)
+                {
+                    // Set ChainCruiser's maxHealth to primary hull's maxHealth
+                    // This ensures the inherited health bar UI works correctly
+                    maxHealth = _primaryHull.maxHealth;
+                }
+            }
+
+            base.StaticInitialise();
+
+            // Validate
+            if (_primaryHull == null)
+            {
+                Debug.LogError($"[ChainCruiser] {name}: No primary hull section found!");
+            }
+
+            Debug.Log($"[ChainCruiser] {name} StaticInitialise - Primary: {_primaryHull?.HullId}, Hulls: {HullSections?.Length}");
+        }
+
+        public override async void Initialise(CruiserArgs args)
         {
             base.Initialise(args);
 
             // Set up hull section targeting for ChainCruisers
             _userChosenTargetConsumer = (ITargetConsumer)CruiserSpecificFactories.Targets.UserChosenTargetTracker;
-            HullSectionTargeted += OnHullSectionTargeted;
 
-            // Initialize hull sections
+            // Initialize all hull sections
             if (HullSections != null)
             {
-                foreach (var hullSection in HullSections)
+                foreach (var hull in HullSections)
                 {
-                    if (hullSection != null)
+                    if (hull != null)
                     {
-                        hullSection.Initialize();
+                        hull.Initialize();
+                        hull.Destroyed += OnHullSectionDestroyedEvent;
                     }
                 }
             }
+
+            Debug.Log($"[ChainCruiser] {name} Initialise complete");
+        }
+
+        private void OnHullSectionDestroyedEvent(object sender, DestroyedEventArgs e)
+        {
+            // Event handler - actual logic in OnHullSectionDestroyed
         }
 
 
@@ -147,9 +183,11 @@ namespace BattleCruisers.Cruisers
         /// </summary>
         public void OnHullSectionClicked(HullSection hullSection)
         {
-            Logging.Log(Tags.CRUISER, $"Hull section {hullSection.HullId} clicked");
-
-            OnClicked();
+            // Reuse the inherited click behavior
+            _uiManager.ShowCruiserDetails(this);
+            _helper.FocusCameraOnCruiser();
+            FactoryProvider.Sound.UISoundPlayer.PlaySound(_selectedSound);
+            // Clicked event is handled by base class - don't invoke it directly
         }
 
         /// <summary>
@@ -157,9 +195,7 @@ namespace BattleCruisers.Cruisers
         /// </summary>
         public void OnHullSectionDoubleClicked(HullSection hullSection)
         {
-            Logging.Log(Tags.CRUISER, $"Hull section {hullSection.HullId} double-clicked");
-
-            _cruiserDoubleClickHandler.OnDoubleClick(this);
+            _cruiserDoubleClickHandler?.OnDoubleClick(this);
         }
 
         /// <summary>
@@ -173,21 +209,35 @@ namespace BattleCruisers.Cruisers
             HullSectionTargeted?.Invoke(this, new HullSectionTargetedEventArgs(hullSection));
 
             // Also call the cruiser double-click handler for standard targeting behavior
-            _cruiserDoubleClickHandler.OnDoubleClick(this);
+            _cruiserDoubleClickHandler?.OnDoubleClick(this);
         }
 
         /// <summary>
-        /// Event handler for when a hull section is targeted. Sets it as the user-chosen target.
+        /// Called by HullSection when it is destroyed.
         /// </summary>
-        private void OnHullSectionTargeted(object sender, HullSectionTargetedEventArgs e)
+        public void OnHullSectionDestroyed(HullSection hull)
         {
-            if (_userChosenTargetConsumer != null)
+            Debug.Log($"[ChainCruiser] Hull destroyed: {hull.HullId}, IsPrimary: {hull.IsPrimary}");
+
+            if (hull.IsPrimary)
             {
-                // Set the hull section as the highest priority target
-                _userChosenTargetConsumer.Target = e.HullSection;
-                Debug.Log($"[ChainCruiser] Set hull section {e.HullSection.HullId} as user-chosen target");
+                // Primary hull death = game over
+                // Trigger the inherited death flow from Cruiser/Target
+                Destroy();
+            }
+            else
+            {
+                // Secondary hull death = battle continues
+                SecondaryHullDestroyed?.Invoke(this, new HullSectionDestroyedEventArgs(hull));
+
+                // Add partial destruction score
+                if (Faction == Faction.Reds)
+                {
+                    BattleSceneGod.AddDeadBuildable(TargetType.Buildings, (int)(hull.maxHealth * 0.3f));
+                }
             }
         }
+
 
         /// <summary>
         /// Gets the health tracker for sharing with hull sections.
@@ -199,3 +249,4 @@ namespace BattleCruisers.Cruisers
 
     }
 }
+

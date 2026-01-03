@@ -149,6 +149,17 @@ public class ErrorLogScraper : EditorWindow
             var modeField = logEntryType.GetField("mode");
             var conditionField = logEntryType.GetField("condition");
             
+            // Try to find file and line fields directly
+            var fileField = logEntryType.GetField("file");
+            if (fileField == null)
+                fileField = logEntryType.GetField("filePath");
+            if (fileField == null)
+                fileField = logEntryType.GetField("fileName");
+            
+            var lineField = logEntryType.GetField("line");
+            if (lineField == null)
+                lineField = logEntryType.GetField("lineNumber");
+            
             // Try to find a field that gives us the LogType directly
             var logTypeField = logEntryType.GetField("type");
             if (logTypeField == null)
@@ -188,11 +199,44 @@ public class ErrorLogScraper : EditorWindow
                 
                 int mode = (int)modeField.GetValue(logEntry);
                 
+                // Try to get file and line directly from LogEntry fields
+                string directFilePath = null;
+                int? directLineNumber = null;
+                
+                if (fileField != null)
+                {
+                    try
+                    {
+                        directFilePath = fileField.GetValue(logEntry) as string;
+                    }
+                    catch { }
+                }
+                
+                if (lineField != null)
+                {
+                    try
+                    {
+                        object lineValue = lineField.GetValue(logEntry);
+                        if (lineValue != null)
+                        {
+                            if (lineValue is int)
+                                directLineNumber = (int)lineValue;
+                            else if (lineValue is string)
+                            {
+                                if (int.TryParse((string)lineValue, out int parsedLine))
+                                    directLineNumber = parsedLine;
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                
                 // Prefer condition field (first line) over message field (full text)
                 string message = conditionField != null ? (string)conditionField.GetValue(logEntry) : null;
+                string fullMessage = (string)messageField.GetValue(logEntry);
                 if (string.IsNullOrEmpty(message))
                 {
-                    message = (string)messageField.GetValue(logEntry);
+                    message = fullMessage;
                 }
 
                 // Try to get LogType directly if available
@@ -276,7 +320,10 @@ public class ErrorLogScraper : EditorWindow
                 {
                     if (i < 20) // Log first 20 for debugging
                     {
-                        debugLog.AppendLine($"Log {i}: mode={mode}, logType={logType}, msg={message?.Substring(0, Math.Min(50, message?.Length ?? 0))}...");
+                        string fileInfo = directFilePath != null && directLineNumber.HasValue 
+                            ? $" file={directFilePath}:{directLineNumber}" 
+                            : " (extracting from message)";
+                        debugLog.AppendLine($"Log {i}: mode={mode}, logType={logType}, msg={message?.Substring(0, Math.Min(50, message?.Length ?? 0))}...{fileInfo}");
                     }
                     // Also log any entry that has mode 4 or 8 (potential warnings)
                     if ((mode == 4 || mode == 8) && i < 100)
@@ -304,7 +351,8 @@ public class ErrorLogScraper : EditorWindow
                 
                 if (shouldInclude)
                 {
-                    AddLogEntry(message);
+                    // Use direct file/line if available, otherwise extract from message
+                    AddLogEntry(message, fullMessage, directFilePath, directLineNumber);
                     addedCount++;
                 }
             }
@@ -403,7 +451,7 @@ public class ErrorLogScraper : EditorWindow
         }
     }
 
-    private void AddLogEntry(string message)
+    private void AddLogEntry(string message, string fullMessage = null, string directFilePath = null, int? directLineNumber = null)
     {
         if (string.IsNullOrEmpty(message)) return;
 
@@ -415,25 +463,60 @@ public class ErrorLogScraper : EditorWindow
             firstLine = message.Substring(0, newlineIndex);
         }
         
-        // Extract file and line information from the first line
-        string filePath = null;
-        string lineNumber = null;
+        // Use direct file/line if available
+        string filePath = directFilePath;
+        string lineNumber = directLineNumber.HasValue ? directLineNumber.Value.ToString() : null;
         
-        // Pattern 1: (at Path/To/File.cs:123) or (at Path/To/File.cs:123:0)
-        Match match = Regex.Match(firstLine, @"\(at\s+([^:)]+):(\d+)");
-        if (match.Success)
+        // If not found directly, try to extract from message or full message
+        if (string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(lineNumber))
         {
-            filePath = match.Groups[1].Value;
-            lineNumber = match.Groups[2].Value;
-        }
-        else
-        {
-            // Pattern 2: File.cs:123 (without "at")
-            match = Regex.Match(firstLine, @"([A-Za-z0-9_/\\]+\.(cs|js|ts|cpp|h)):(\d+)");
+            // Try to extract from first line
+            Match match = Regex.Match(firstLine, @"\(at\s+([^:)]+):(\d+)");
             if (match.Success)
             {
-                filePath = match.Groups[1].Value;
-                lineNumber = match.Groups[3].Value;
+                if (string.IsNullOrEmpty(filePath))
+                    filePath = match.Groups[1].Value;
+                if (string.IsNullOrEmpty(lineNumber))
+                    lineNumber = match.Groups[2].Value;
+            }
+            else
+            {
+                // Pattern 2: File.cs:123 (without "at")
+                match = Regex.Match(firstLine, @"([A-Za-z0-9_/\\]+\.(cs|js|ts|cpp|h)):(\d+)");
+                if (match.Success)
+                {
+                    if (string.IsNullOrEmpty(filePath))
+                        filePath = match.Groups[1].Value;
+                    if (string.IsNullOrEmpty(lineNumber))
+                        lineNumber = match.Groups[3].Value;
+                }
+            }
+            
+            // If still not found and we have full message, try extracting from stack trace
+            if ((string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(lineNumber)) && !string.IsNullOrEmpty(fullMessage))
+            {
+                // Look for stack trace patterns in full message
+                // Pattern: at ClassName.MethodName() in Path/To/File.cs:line 123
+                Match stackMatch = Regex.Match(fullMessage, @"in\s+([A-Za-z0-9_/\\\.]+\.(cs|js|ts|cpp|h)):line\s+(\d+)", RegexOptions.Multiline);
+                if (stackMatch.Success)
+                {
+                    if (string.IsNullOrEmpty(filePath))
+                        filePath = stackMatch.Groups[1].Value;
+                    if (string.IsNullOrEmpty(lineNumber))
+                        lineNumber = stackMatch.Groups[3].Value;
+                }
+                else
+                {
+                    // Pattern: (at Path/To/File.cs:123) in stack trace
+                    stackMatch = Regex.Match(fullMessage, @"\(at\s+([A-Za-z0-9_/\\\.]+\.(cs|js|ts|cpp|h)):(\d+)\)", RegexOptions.Multiline);
+                    if (stackMatch.Success)
+                    {
+                        if (string.IsNullOrEmpty(filePath))
+                            filePath = stackMatch.Groups[1].Value;
+                        if (string.IsNullOrEmpty(lineNumber))
+                            lineNumber = stackMatch.Groups[3].Value;
+                    }
+                }
             }
         }
         

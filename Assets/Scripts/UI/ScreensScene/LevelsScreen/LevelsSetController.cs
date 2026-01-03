@@ -20,7 +20,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         public int SetIndex { get; private set; }
         public int LastLevelNum { get; private set; }
 
-        public GameObject[] trails;
+        public GameObject[] trails; // Optional - can be empty if no trails wanted
 
         public async Task InitialiseAsync(
             ScreensSceneGod screensSceneGod,
@@ -69,14 +69,24 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             for (int i = 0; i < sideQuestButtons.Count(); i++)
                 sideQuestButtons[i].Initialise(screensSceneGod, soundPlayer, numOfLevelsUnlocked, true);
 
-            // Set up trails
-            int expectedNumberOfTrails = _numOfLevels - 1;
-            //Assert.AreEqual(expectedNumberOfTrails, trails.Length, $"Expected {expectedNumberOfTrails} trails, not {trails.Length}.");
-
-            for (int i = 0; i < trails.Length; ++i)
+            // Set up trails (optional)
+            if (trails != null && trails.Length > 0)
             {
-                bool isTrailVisible = numOfLevelsUnlocked - firstLevelIndex - 1 > i;
-                trails[i].SetActive(isTrailVisible);
+                int expectedNumberOfTrails = _numOfLevels - 1;
+                // Only warn if trails are provided but wrong count - don't enforce
+                if (trails.Length != expectedNumberOfTrails)
+                {
+                    Debug.LogWarning($"Level set {SetIndex} has {trails.Length} trails but expected {expectedNumberOfTrails} (_numOfLevels={_numOfLevels}). This is optional.");
+                }
+
+                for (int i = 0; i < trails.Length; ++i)
+                {
+                    if (trails[i] != null)
+                    {
+                        bool isTrailVisible = numOfLevelsUnlocked - firstLevelIndex - 1 > i;
+                        trails[i].SetActive(isTrailVisible);
+                    }
+                }
             }
 
             // Setup navigation feedback button
@@ -90,16 +100,27 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         public void OnValidate()
         {
-            if (trails.Length == 0)
+            // Only auto-populate trails if the array is empty and there are child transforms
+            // This allows level sets to have no trails if desired
+            if (trails == null || trails.Length == 0)
             {
-                Transform trailsParent = transform.GetChild(0);
-                List<GameObject> children = new List<GameObject>();
-                foreach (Transform t in trailsParent)
-                    children.Add(t.gameObject);
+                if (transform.childCount > 0)
+                {
+                    Transform trailsParent = transform.GetChild(0);
+                    List<GameObject> children = new List<GameObject>();
+                    foreach (Transform t in trailsParent)
+                    {
+                        if (t.gameObject != null)
+                            children.Add(t.gameObject);
+                    }
 
-                if (children.Count == 0)
-                    Debug.LogError("Didn't find any trails. Please validate manually.");
-                trails = children.ToArray();
+                    if (children.Count > 0)
+                    {
+                        trails = children.ToArray();
+                        Debug.Log($"Auto-populated {trails.Length} trails for level set {name}");
+                    }
+                    // If no children found, trails remains empty - this is now allowed
+                }
             }
         }
 

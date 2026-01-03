@@ -10,6 +10,7 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
+using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Fetchers;
 using UnityEditor;
 using UnityEngine;
@@ -23,15 +24,14 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         [HideInInspector] public Cruiser[] Cruisers;
 
-        public SequencePoint[] sequencePoints;  // -> this is currently assigned in BattleScene!
+        [Tooltip("Array of sequence points that define the battle progression. Each point contains timed actions like spawning units, adding buildings, or applying boosts. Assigned in BattleScene.")]
+        public SequencePoint[] sequencePoints;
         [Serializable] public class ScriptCallAction : UnityEvent { }
 
-        [Header("ChainBattle Phases")]
-        [Tooltip("Additional cruiser phases. Index 0 is the main AI cruiser, set via Cruisers[1]")]
-        public Cruiser[] AdditionalPhases;
+        [Header("Debug Message Display")]
+        [Tooltip("Optional message display component for on-screen admin messages. Drag from your admin panel canvas.")]
+        public BattleSceneMessageDisplay messageDisplay;
 
-        private int _currentPhase = 0;
-        private bool _isChainBattle = false;
 
 #if UNITY_EDITOR
         // Optional: toggle if you sometimes want to assign other targets
@@ -72,21 +72,67 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public async void StartF()
         {
-            // Initialize ChainBattle phases if we have additional phases
-            if (AdditionalPhases != null && AdditionalPhases.Length > 0)
-            {
-                InitializeChainBattle();
-            }
+            Debug.Log($"[BattleSequencer] StartF() called. Sequence points: {sequencePoints?.Length ?? 0}");
 
-            if (sequencePoints != null)
-                foreach (SequencePoint pt in sequencePoints)
-                    await ProcessSequencePoint(pt);
+            if (sequencePoints != null && sequencePoints.Length > 0)
+            {
+                Debug.Log($"[BattleSequencer] Processing {sequencePoints.Length} sequence point(s)...");
+                for (int i = 0; i < sequencePoints.Length; i++)
+                {
+                    Debug.Log($"[BattleSequencer] Starting sequence point {i + 1}/{sequencePoints.Length} (Delay: {sequencePoints[i].DelayMS}ms)");
+                    await ProcessSequencePoint(sequencePoints[i]);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[BattleSequencer] No sequence points to process");
+            }
         }
 
+        /// <summary>
+        /// Process a sequence point immediately, skipping the delay. Useful for triggering from animation events.
+        /// </summary>
+        /// <param name="sequencePointIndex">Index of the sequence point in the sequencePoints array (0-based)</param>
+        public void TriggerSequencePoint(int sequencePointIndex)
+        {
+            if (sequencePoints == null || sequencePointIndex < 0 || sequencePointIndex >= sequencePoints.Length)
+            {
+                Debug.LogWarning($"[BattleSequencer] Invalid sequence point index: {sequencePointIndex}. Array length: {sequencePoints?.Length ?? 0}");
+                return;
+            }
+
+            SequencePoint sq = sequencePoints[sequencePointIndex];
+            ProcessSequencePointImmediate(sq);
+        }
+
+        /// <summary>
+        /// Process a sequence point with its configured delay. Called automatically from StartF().
+        /// </summary>
         public async Task ProcessSequencePoint(SequencePoint sq)
         {
             await Task.Delay(sq.DelayMS);
+            ProcessSequencePointImmediate(sq);
+        }
+
+        /// <summary>
+        /// Internal method that executes sequence point actions without delay.
+        /// </summary>
+        private void ProcessSequencePointImmediate(SequencePoint sq)
+        {
+            if (Cruisers == null || Cruisers.Length == 0)
+            {
+                Debug.LogError("[BattleSequencer] Cannot process sequence point: Cruisers array is null or empty");
+                return;
+            }
+
+            if ((int)sq.Faction >= Cruisers.Length || Cruisers[(int)sq.Faction] == null)
+            {
+                Debug.LogError($"[BattleSequencer] Cannot process sequence point: Invalid faction {sq.Faction} or cruiser is null");
+                return;
+            }
+
             Cruiser cruiser = Cruisers[(int)sq.Faction];
+            Debug.Log($"[BattleSequencer] Processing sequence point for {sq.Faction} cruiser. BuildingActions: {sq.BuildingActions?.Count ?? 0}, UnitActions: {sq.UnitActions?.Count ?? 0}, BoostActions: {sq.BoostActions?.Count ?? 0}");
 
             if (sq.BuildingActions != null)
                 foreach (SequencePoint.BuildingAction buildingAction in sq.BuildingActions)
@@ -113,14 +159,57 @@ namespace BattleCruisers.Scenes.BattleScene
                              && (prefabID < (int)Unit_Bomber))
                             {
                                 IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingAction.PrefabKeyName));
+                                if (building == null || building.Buildable == null)
+                                {
+                                    string errorMsg = $"Failed to get building prefab for {buildingAction.PrefabKeyName}";
+                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
+                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    return;
+                                }
+
+                                if (cruiser.SlotAccessor == null)
+                                {
+                                    string errorMsg = $"Cruiser {cruiser.name} SlotAccessor is null! Cruiser may not be fully initialized.";
+                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
+                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    return;
+                                }
+
                                 IList<Slot> slots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
+                                if (slots == null || slots.Count == 0)
+                                {
+                                    string errorMsg = $"No free slots of type {building.Buildable.SlotSpecification.SlotType} found on {cruiser.name}";
+                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
+                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    return;
+                                }
+
                                 Slot slot = slots[Math.Min(slots.Count - 1, buildingAction.SlotID)];
                                 if (slot == null)
                                 {
-                                    Debug.LogError($"{slot.type} Slot #{buildingAction.SlotID} is already occupied!");
+                                    string errorMsg = $"Slot #{buildingAction.SlotID} is already occupied or invalid!";
+                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
+                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
                                     return;
                                 }
-                                cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
+
+                                IBuilding constructedBuilding = cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
+                                
+                                if (constructedBuilding != null)
+                                {
+                                    string successMsg = $"Added {buildingAction.PrefabKeyName} to {sq.Faction} cruiser slot {buildingAction.SlotID}";
+                                    Debug.Log($"[BattleSequencer] {successMsg}");
+                                    ShowMessage(successMsg, BattleSceneMessageDisplay.MessageType.Building);
+                                    
+                                    // Log building stats
+                                    LogBuildingStats(constructedBuilding, cruiser);
+                                }
+                                else
+                                {
+                                    string errorMsg = $"Failed to construct {buildingAction.PrefabKeyName} in slot {buildingAction.SlotID}";
+                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
+                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                }
                             }
                             else
                             {
@@ -136,7 +225,13 @@ namespace BattleCruisers.Scenes.BattleScene
                 foreach (SequencePoint.BoostAction boostAction in sq.BoostActions)
                 {
                     if (boostAction.Operation == SequencePoint.BoostAction.BoostOp.Remove)
+                    {
                         cruiser.RemoveBoost(new Cruiser.BoostStats() { boostType = boostAction.BoostType });
+                        string msg = $"Removed {boostAction.BoostType} boost from {sq.Faction} cruiser";
+                        Debug.Log($"[BattleSequencer] {msg}");
+                        ShowMessage(msg, BattleSceneMessageDisplay.MessageType.Boost);
+                        LogCruiserBoosts(cruiser);
+                    }
                     else if(boostAction.Operation == SequencePoint.BoostAction.BoostOp.Replace)
                     {
                         cruiser.RemoveBoost(new Cruiser.BoostStats() { boostType = boostAction.BoostType });
@@ -146,6 +241,10 @@ namespace BattleCruisers.Scenes.BattleScene
                                 boostType = boostAction.BoostType,
                                 boostAmount = boostAction.BoostAmount
                             });
+                        string msg = $"Replaced {boostAction.BoostType} boost on {sq.Faction} cruiser: {boostAction.BoostAmount}x";
+                        Debug.Log($"[BattleSequencer] {msg}");
+                        ShowMessage(msg, BattleSceneMessageDisplay.MessageType.Boost);
+                        LogCruiserBoosts(cruiser);
                     }
                     else if (boostAction.Operation == SequencePoint.BoostAction.BoostOp.Add)
                     {
@@ -155,6 +254,10 @@ namespace BattleCruisers.Scenes.BattleScene
                                 boostType = boostAction.BoostType,
                                 boostAmount = boostAction.BoostAmount
                             });
+                        string msg = $"Added {boostAction.BoostType} boost to {sq.Faction} cruiser: {boostAction.BoostAmount}x";
+                        Debug.Log($"[BattleSequencer] {msg}");
+                        ShowMessage(msg, BattleSceneMessageDisplay.MessageType.Boost);
+                        LogCruiserBoosts(cruiser);
                     }
                 }
 
@@ -164,14 +267,16 @@ namespace BattleCruisers.Scenes.BattleScene
                     int prefabID = (int)unitAction.PrefabKeyName;
                     if (prefabID < (int)Building_AirFactory)
                     {
-                        Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{unitAction}");
+                        Debug.LogError($"[BattleSequencer] Can't instantiate cruisers through BattleSequencer.\n{unitAction}");
                         return;
                     }
                     if (prefabID < (int)Unit_Bomber)
                     {
-                        Debug.LogError($"Invalid UnitAction: {unitAction}");
+                        Debug.LogError($"[BattleSequencer] Invalid UnitAction: {unitAction}");
                         continue;
                     }
+
+                    Debug.Log($"[BattleSequencer] Spawning {unitAction.Amount} unit(s) of type {unitAction.PrefabKeyName} at position {unitAction.Postion}");
 
                     if (unitAction.Amount == 1)
                         SpawnUnit(unitAction.PrefabKeyName, unitAction.Postion, cruiser);
@@ -193,107 +298,162 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void SpawnUnit(PrefabKeyName prefabKey, Vector2 position, Cruiser cruiser)
         {
-            IBuildableWrapper<IUnit> unitWrapper = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(prefabKey));
-            IUnit unit = PrefabFactory.CreateUnit(unitWrapper);
-            unit.Transform.Position = new Vector3(position.x, position.y, 0);
-            BuildableActivationArgs buildableActivationArgs = new BuildableActivationArgs(cruiser,
-                                                                                          cruiser.CruiserSpecificFactories.EnemyCruiser,
-                                                                                          cruiser.CruiserSpecificFactories);
-            unit.Activate(buildableActivationArgs);
-            int droneNum = unit.NumOfDronesRequired;
-            unit.NumOfDronesRequired = 1;
-            unit.BuildTimeInS *= droneNum;
-            unit.StartConstruction();
-            ((Buildable<BuildableActivationArgs>)unit).FinishConstruction();
-            unit.NumOfDronesRequired = droneNum;
-            unit.BuildTimeInS /= droneNum;
-        }
-
-        /// <summary>
-        /// Call this to set up ChainBattle phase transitions.
-        /// The main aiCruiser is phase 0, AdditionalPhases are 1+
-        /// </summary>
-        public void InitializeChainBattle()
-        {
-            _isChainBattle = true;
-            _currentPhase = 0;
-
-            // Disable additional phases initially
-            if (AdditionalPhases != null)
+            try
             {
-                foreach (var phase in AdditionalPhases)
+                if (cruiser == null)
                 {
-                    if (phase != null)
-                        phase.gameObject.SetActive(false);
+                    Debug.LogError($"[BattleSequencer] Cannot spawn unit {prefabKey}: cruiser is null");
+                    return;
                 }
-            }
 
-            Debug.Log($"[ChainBattle] Initialized with {AdditionalPhases?.Length ?? 0} phases");
+                if (cruiser.CruiserSpecificFactories == null)
+                {
+                    Debug.LogError($"[BattleSequencer] Cannot spawn unit {prefabKey}: cruiser.CruiserSpecificFactories is null");
+                    return;
+                }
+
+                IBuildableWrapper<IUnit> unitWrapper = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(prefabKey));
+                if (unitWrapper == null)
+                {
+                    Debug.LogError($"[BattleSequencer] Failed to get unit wrapper for {prefabKey}. Check that the prefab key is correct.");
+                    return;
+                }
+
+                IUnit unit = PrefabFactory.CreateUnit(unitWrapper);
+                if (unit == null)
+                {
+                    Debug.LogError($"[BattleSequencer] Failed to create unit from wrapper for {prefabKey}");
+                    return;
+                }
+
+                unit.Transform.Position = new Vector3(position.x, position.y, 0);
+                BuildableActivationArgs buildableActivationArgs = new BuildableActivationArgs(cruiser,
+                                                                                              cruiser.CruiserSpecificFactories.EnemyCruiser,
+                                                                                              cruiser.CruiserSpecificFactories);
+
+                int droneNum = unit.NumOfDronesRequired;
+                unit.NumOfDronesRequired = 1;
+                unit.BuildTimeInS *= droneNum;
+                unit.Activate(buildableActivationArgs);
+                unit.StartConstruction();
+                ((Buildable<BuildableActivationArgs>)unit).FinishConstruction();
+                unit.NumOfDronesRequired = droneNum;
+                unit.BuildTimeInS /= droneNum;
+
+                string successMsg = $"Spawned {prefabKey} at ({position.x:F1}, {position.y:F1}) for {cruiser.name}";
+                Debug.Log($"[BattleSequencer] {successMsg}");
+                ShowMessage(successMsg, BattleSceneMessageDisplay.MessageType.Success);
+            }
+            catch (System.Exception ex)
+            {
+                string errorMsg = $"Exception spawning {prefabKey} at {position}: {ex.Message}";
+                Debug.LogError($"[BattleSequencer] {errorMsg}\n{ex.StackTrace}");
+                ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+            }
         }
 
         /// <summary>
-        /// Called when the current AI cruiser is destroyed.
-        /// Advances to the next phase if available.
+        /// Helper method to show messages on screen and in console
         /// </summary>
-        public void OnCurrentPhaseDestroyed()
+        private void ShowMessage(string message, BattleSceneMessageDisplay.MessageType type = BattleSceneMessageDisplay.MessageType.Info)
         {
-            if (!_isChainBattle) return;
-
-            _currentPhase++;
-
-            if (AdditionalPhases == null || _currentPhase > AdditionalPhases.Length)
+            if (messageDisplay != null)
             {
-                // No more phases - battle ends normally via existing GameEndMonitor
-                Debug.Log("[ChainBattle] Final phase defeated, victory!");
+                messageDisplay.ShowMessage(message, type);
+            }
+        }
+
+        /// <summary>
+        /// Log detailed building statistics
+        /// </summary>
+        private void LogBuildingStats(IBuilding building, Cruiser cruiser)
+        {
+            if (building == null) return;
+
+            Debug.Log($"[BattleSequencer] Building Stats - Name: {building.Name}, " +
+                     $"Health: {building.Health}/{building.MaxHealth}, " +
+                     $"State: {building.BuildableState}, " +
+                     $"Cruiser: {cruiser.name}, " +
+                     $"Faction: {cruiser.Faction}");
+            
+            ShowMessage($"Building: {building.Name} | HP: {building.Health:F0}/{building.MaxHealth:F0} | State: {building.BuildableState}", 
+                       BattleSceneMessageDisplay.MessageType.Building);
+        }
+
+        /// <summary>
+        /// Log all active boosts on a cruiser
+        /// </summary>
+        private void LogCruiserBoosts(Cruiser cruiser)
+        {
+            if (cruiser == null || cruiser.Boosts == null)
+            {
+                Debug.Log($"[BattleSequencer] {cruiser?.name ?? "Unknown"} has no active boosts");
                 return;
             }
 
-            // Activate next phase
-            Cruiser nextCruiser = AdditionalPhases[_currentPhase - 1];
-            if (nextCruiser != null)
+            if (cruiser.Boosts.Count == 0)
             {
-                nextCruiser.gameObject.SetActive(true);
-
-                // Update BattleSceneGod reference
-                if (BattleSceneGod.Instance != null)
-                {
-                    BattleSceneGod.Instance.aiCruiser = nextCruiser;
-                }
-
-                // Update Cruisers
-                if (Cruisers != null && Cruisers.Length > 1)
-                {
-                    Cruisers[1] = nextCruiser;
-                }
-
-                Debug.Log($"[ChainBattle] Phase {_currentPhase} activated: {nextCruiser.name}");
+                Debug.Log($"[BattleSequencer] {cruiser.name} has no active boosts");
+                ShowMessage($"{cruiser.name}: No active boosts", BattleSceneMessageDisplay.MessageType.Boost);
+                return;
             }
+
+            System.Text.StringBuilder boostList = new System.Text.StringBuilder();
+            boostList.Append($"{cruiser.name} Active Boosts: ");
+            
+            foreach (var boost in cruiser.Boosts)
+            {
+                boostList.Append($"{boost.boostType}={boost.boostAmount}x; ");
+            }
+
+            string boostMsg = boostList.ToString().TrimEnd(' ', ';');
+            Debug.Log($"[BattleSequencer] {boostMsg}");
+            ShowMessage(boostMsg, BattleSceneMessageDisplay.MessageType.Boost);
         }
+
+
 
     [Serializable]
     public class SequencePoint
     {
+        [Tooltip("Delay in milliseconds before executing this sequence point's actions after the previous one.")]
         public int DelayMS = 0;
+
+        [Tooltip("Which faction/cruiser this sequence point affects (Blues = Player, Reds = AI).")]
         public Faction Faction;
+
+        [Tooltip("List of building operations to perform (add buildings to slots or destroy existing ones).")]
         public List<BuildingAction> BuildingActions;
+
+        [Tooltip("List of boost operations to perform (add, remove, or replace cruiser-wide boosts).")]
         public List<BoostAction> BoostActions;
+
+        [Tooltip("List of unit spawning operations to perform.")]
         public List<UnitAction> UnitActions;
 
         [Serializable]
         public class BuildingAction
         {
-
             public enum BuildingOp
             {
                 Add = 0,
                 Destroy = 1,
             }
 
+            [Tooltip("Whether to add a new building or destroy an existing one.")]
             public BuildingOp Operation;
+
+            [Tooltip("The prefab key name of the building to add (only used for Add operations).")]
             public PrefabKeyName PrefabKeyName;
+
+            [Tooltip("The slot index where the building should be placed (0-based, only used for Add operations).")]
             public byte SlotID;
-            public bool IgnoreDroneReq = false;
-            public bool IgnoreBuildTime = false;
+
+            [Tooltip("If true, skips drone requirements for construction (recommended for sequenced battles to avoid assertion errors).")]
+            public bool IgnoreDroneReq = true;
+
+            [Tooltip("If true, builds the building instantly without waiting for construction time (recommended for sequenced battles).")]
+            public bool IgnoreBuildTime = true;
 
             public override string ToString()
             {
@@ -317,19 +477,33 @@ namespace BattleCruisers.Scenes.BattleScene
                 Replace = 2,
             }
 
+            [Tooltip("Whether to add, remove, or replace the boost.")]
             public BoostOp Operation;
+
+            [Tooltip("The type of boost to modify (e.g., BuildSpeed, FireRate, Health, etc.).")]
             public BoostType BoostType;
+
+            [Tooltip("The boost multiplier value (1.0 = no boost, 2.0 = double effect, etc.). Only used for Add and Replace operations.")]
             public float BoostAmount = 1;
         }
 
         [Serializable]
         public class UnitAction
         {
+            [Tooltip("The prefab key name of the unit to spawn (e.g., Unit_Bomber, Unit_Fighter).")]
             public PrefabKeyName PrefabKeyName;
+
+            [Tooltip("The base/center position where units will spawn. For single units, this is exact spawn location. For multiple units, this is the bottom-left corner of the spawn area.")]
             public Vector2 Postion;
+
+            [Tooltip("The rectangular area (width,height) around the Position where multiple units can spawn randomly. Only used when Amount > 1. Units spawn randomly within the rectangle starting at Position.")]
             public Vector2 SpawnArea;
+
+            [Tooltip("Number of units to spawn. If 1, spawns exactly at Position. If > 1, spawns randomly within the SpawnArea rectangle.")]
             [Min(1)] public byte Amount = 1;
-            public PrefabKeyName RequiredFactory; // Factory building required for this unit (e.g., AirFactory for aircraft)
+
+            [Tooltip("Factory building required for this unit type (e.g., AirFactory for aircraft, NavalFactory for ships). Currently not enforced in sequencer.")]
+            public PrefabKeyName RequiredFactory;
 
             public override string ToString()
             {
@@ -343,6 +517,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
+        [Tooltip("Unity events that will be invoked when this sequence point executes. Use for custom scripting or animation triggers.")]
         public ScriptCallAction ScriptCallActions;
 
         public override string ToString()

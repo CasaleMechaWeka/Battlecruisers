@@ -110,7 +110,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             NetworkManager.Singleton.SceneManager.OnSceneEvent -= OnSceneEvent;
         }
 
-        async void OnSceneEvent(SceneEvent sceneEvent)
+        void OnSceneEvent(SceneEvent sceneEvent)
         {
             switch (sceneEvent.SceneEventType)
             {

@@ -175,6 +175,12 @@ namespace BattleCruisers.Buildables.Buildings.Factories
             BuildableActivationArgs activationArgs = new BuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories);
             UnitUnderConstruction = _unitPool.GetItem(activationArgs);
 
+            if (UnitUnderConstruction == null)
+            {
+                Logging.Warn(Tags.FACTORY, $"Failed to get unit from pool - reached creation limit");
+                return;
+            }
+
             UnitUnderConstruction.DroneConsumerProvider = this;
 
             Vector3 spawnPosition = _unitSpawnPositionFinder.FindSpawnPosition(UnitUnderConstruction);

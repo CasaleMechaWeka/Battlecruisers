@@ -23,8 +23,8 @@ namespace BattleCruisers.Utils.Fetchers.Cache
                 return _prefabs[prefabKey];
             else
             {
-                Debug.LogWarning("PrefabKey ----------------> " + prefabKey.PrefabName + " is missing!");
-                return null;
+                Debug.LogError($"PrefabKey '{prefabKey.PrefabName}' with path '{prefabKey.PrefabPath}' is missing from cache! This prefab may not be configured as an Addressable Asset.");
+                throw new KeyNotFoundException($"Required prefab '{prefabKey.PrefabName}' not found in cache. Check Addressable Assets configuration.");
             }
         }
     }

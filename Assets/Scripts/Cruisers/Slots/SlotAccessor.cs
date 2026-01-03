@@ -52,6 +52,12 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
+        public ReadOnlyCollection<Slot> GetAllSlots(SlotType slotType)
+        {
+            Assert.IsTrue(_slots.ContainsKey(slotType));
+            return _slots[slotType];
+        }
+
         public IList<Slot> GetFreeSlots(SlotType slotType)
         {
             Assert.IsTrue(_slots.ContainsKey(slotType));
@@ -89,6 +95,34 @@ namespace BattleCruisers.Cruisers.Slots
         public int GetSlotCount(SlotType slotType)
         {
             return _slots[slotType].Count;
+        }
+    }
+
+    public class CompositeSlotAccessor : SlotAccessor
+    {
+        private readonly SlotAccessor[] _accessors;
+
+        public CompositeSlotAccessor(SlotAccessor[] accessors)
+            : base(CreateCombinedSlots(accessors))
+        {
+            _accessors = accessors;
+        }
+
+        private static IDictionary<SlotType, ReadOnlyCollection<Slot>> CreateCombinedSlots(SlotAccessor[] accessors)
+        {
+            var combinedSlots = new Dictionary<SlotType, ReadOnlyCollection<Slot>>();
+
+            foreach (SlotType slotType in System.Enum.GetValues(typeof(SlotType)))
+            {
+                var allSlotsOfType = new List<Slot>();
+                foreach (var accessor in accessors)
+                {
+                    allSlotsOfType.AddRange(accessor.GetAllSlots(slotType));
+                }
+                combinedSlots[slotType] = allSlotsOfType.AsReadOnly();
+            }
+
+            return combinedSlots;
         }
     }
 }

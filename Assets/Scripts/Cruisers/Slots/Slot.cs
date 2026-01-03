@@ -68,10 +68,6 @@ namespace BattleCruisers.Cruisers.Slots
         private Transform _buildingPlacementBeacon;
 
         private BuildableClickAndDrag _clickAndDrag;
-
-        /// <summary>
-        /// Only show/hide slot sprite renderer.  Always show boost feedback.
-        /// </summary>
         public bool IsVisible
         {
             get { return _renderer.gameObject.activeSelf; }
@@ -97,7 +93,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public void controlBuildingPlacementBeacon(bool active)
         {
-            if (_renderer.gameObject.activeSelf && _buildingPlacementBeacon != null)
+            if (_renderer != null && _renderer.gameObject.activeSelf && _buildingPlacementBeacon != null)
             {
                 _buildingPlacementBeacon.gameObject.SetActive(active);
             }
@@ -119,14 +115,23 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     IBuilding building = _baseBuilding.Value;
 
-                    _baseBuilding.Value.Rotation = Transform.Rotation;
-
+                    // Calculate the building's world position based on slot placement point and puzzle root offset
                     float verticalChange = building.Position.y - building.PuzzleRootPoint.y;
                     float horizontalChange = building.Position.x - building.PuzzleRootPoint.x;
 
-                    building.Position = BuildingPlacementPoint
-                                        + (Transform.Up * verticalChange)
-                                        + (Transform.Right * horizontalChange);
+                    Vector3 targetWorldPosition = BuildingPlacementPoint
+                                                + (Transform.Up * verticalChange)
+                                                + (Transform.Right * horizontalChange);
+
+                    // Parent the building to this slot so it follows slot movement and rotation
+                    // Using worldPositionStays=true keeps the building at the same world position during reparenting
+                    building.Transform.SetParent(transform, worldPositionStays: true);
+
+                    // Match the slot's rotation
+                    _baseBuilding.Value.Rotation = Transform.Rotation;
+
+                    // Set the world position (the local position will be calculated automatically after parenting)
+                    building.Position = targetWorldPosition;
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)

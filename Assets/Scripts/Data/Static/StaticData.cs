@@ -207,7 +207,7 @@ namespace BattleCruisers.Data.Static
         public const int NUM_OF_LEVELS = 40;
         public const int NUM_OF_PvPLEVELS = 9;
         public const int NUM_OF_STANDARD_LEVELS = 40;
-        public const int NUM_OF_CAMPAIGN_LEVELS = 31;  // End of main campaign (Huntress Prime)
+        public const int NUM_OF_CAMPAIGN_LEVELS = 40;  // End of main campaign + ChainBattle levels (32-40)
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
         public const int NUM_OF_SIDEQUESTS = 31;
 
@@ -349,7 +349,7 @@ namespace BattleCruisers.Data.Static
             new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31), GetDefaultHeckleConfig()), //HUNTRESS PRIME - END OF MAIN CAMPAIGN
 
             // Set 9: ChainBattle Levels (32-40)
-            new Level(32, Hulls.Raptor, BackgroundMusic.Fortress, SkyMaterials.Purple, Exos.GetCaptainExoKey(1), GetDefaultHeckleConfig()),  // Fei ChainBattle
+            new Level(32, Hulls.CB32Raptor, BackgroundMusic.Fortress, SkyMaterials.Purple, Exos.GetCaptainExoKey(1), GetDefaultHeckleConfig()),  // Fei ChainBattle - uses embedded BattleSequencer
             new Level(33, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Midnight, Exos.GetCaptainExoKey(3), GetDefaultHeckleConfig()),
             new Level(34, Hulls.Rockjaw, BackgroundMusic.Juggernaut, SkyMaterials.Morning, Exos.GetCaptainExoKey(4), GetDefaultHeckleConfig()),
             new Level(35, Hulls.Eagle, BackgroundMusic.Confusion, SkyMaterials.Dusk, Exos.GetCaptainExoKey(5), GetDefaultHeckleConfig()),
@@ -393,17 +393,6 @@ namespace BattleCruisers.Data.Static
             new BackgroundImageStats(50,  new Vector2(0,  240),  300,  450,  "Antarctica",       new Color(0.631675f,   0.7289388f, 0.8018868f),              false, 10),
             new BackgroundImageStats(150, new Vector2(0,  330),  550,  690,  "CapeTown",         new Color(0.2392157f,  0.1843137f, 0.3215686f),              false, 10),
             new BackgroundImageStats(140, new Vector2(0,  -110), 140,  300,  "TableMountain",    new Color(0.1501869f,  0.1964908f, 0.2358491f),              false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  180),  380,  500,  "BGENZ",            new Color(0.745283f,   0.5127987f, 0.3831879f),              true,  10),
-
-            new BackgroundImageStats(160, new Vector2(0,  550),  660,  790,  "Wreckyards",       new Color(0.01960784f, 0.01176471f, 0.01176471f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Oz",               new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "FightClub",        new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  420),  640,  730,  "UACBattleNight",   new Color(0.1501869f,  0.1964908f,  0.2358491f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "NuclearDome",      new Color(0.745283f,   0.5127987f,  0.3831879f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.01960784f, 0.01176471f, 0.01176471f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  420),  660,  730,  "MercenaryOne",     new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
 
             // Backgrounds for levels 32-40 (ChainBattle levels)
             new BackgroundImageStats(160, new Vector2(0,  500),  655,  740,  "Wreckyards",       new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
@@ -433,22 +422,6 @@ namespace BattleCruisers.Data.Static
             new BackgroundImageStats(160, new Vector2(0,  460),  595,  730,  "BlockCity",        new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  460),  595,  730,  "RicketyCity",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
             new BackgroundImageStats(140, new Vector2(0,  380),  540,  650,  "UACHQ",            new Color(0.1254902f,  0.0627451f,  0.0627451f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  445),  636,  730,  "FPIslandDistant",  new Color(0.4716981f,  0.3597144f,  0.2647739f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  445),  595,  730,  "FPIsland",         new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
-            new BackgroundImageStats(110, new Vector2(0,  224),  372,  444,  "FortressPrime",    new Color(0.3490196f,  0.3764706f,  0.3960784f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  500),  650,  730,  "FPIslandOnly",     new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Oz",               new Color(0.7843137f,  0.7019608f,  0.6470588f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "FightClub",        new Color(0.09019608f, 0.04705882f, 0.1333333f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "UACBattleNight",   new Color(0.135502f,   0.1489414f,  0.1981132f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  460),  600,  700,  "NuclearDome",      new Color(0.05762725f, 0.06384827f, 0.06603771f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.09019608f, 0.04705882f, 0.1333333f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.1960784f,  0.2313726f,  0.345098f),              false, 10),
         });
 
         public static ReadOnlyCollection<TrashTalkData> LevelTrashTalk = new ReadOnlyCollection<TrashTalkData>(new List<TrashTalkData>()

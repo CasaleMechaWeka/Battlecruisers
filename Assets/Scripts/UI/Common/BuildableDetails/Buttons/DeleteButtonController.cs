@@ -67,7 +67,7 @@ namespace BattleCruisers.UI.Common.BuildableDetails.Buttons
             SetCanvasGroupProperties(false, false);
             activeImage.sprite = activeStateImages[0];
             activeImage.gameObject.SetActive(true);
-            _soundPlayer.PlaySoundAsync(ClickSound);
+            _ = _soundPlayer.PlaySoundAsync(ClickSound);
             if (Buildable.BuildableState == BuildableState.NotStarted)
             {
                 OnLongPressComplete();

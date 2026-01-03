@@ -47,7 +47,7 @@ namespace BattleCruisers.Cruisers
         protected ClickHandler _clickHandler;
         protected IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
         protected IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
-        private AudioClipWrapper _selectedSound;
+        protected AudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
         protected IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
@@ -124,7 +124,7 @@ namespace BattleCruisers.Cruisers
 
 
         // ICruiserController
-        public bool IsAlive => !IsDestroyed;
+        public virtual bool IsAlive => !IsDestroyed;
         public SlotAccessor SlotAccessor { get; protected set; }
         public SlotHighlighter SlotHighlighter { get; protected set; }
         public ISlotNumProvider SlotNumProvider { get; protected set; }

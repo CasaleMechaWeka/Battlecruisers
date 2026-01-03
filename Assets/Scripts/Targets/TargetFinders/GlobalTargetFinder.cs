@@ -38,6 +38,12 @@ namespace BattleCruisers.Targets.TargetFinders
 
             _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
+
+            // Subscribe to secondary hull destruction for ChainCruiser
+            if (_enemyCruiser is ChainCruiser chainCruiser)
+            {
+                chainCruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
+            }
 		}
 
         private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
@@ -90,6 +96,14 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
+        private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventArgs e)
+        {
+            if (e.DestroyedHull != null)
+            {
+                InvokeTargetLostEvent(e.DestroyedHull);
+            }
+        }
+
         // Not in constructor because then client code has not had a chance
         // to subribe to our target found event.
         public void EmitCruiserAsGlobalTarget()
@@ -130,6 +144,11 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;
+
+            if (_enemyCruiser is ChainCruiser chainCruiser)
+            {
+                chainCruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
+            }
 		}
 	}
 }

@@ -1,8 +1,10 @@
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Repairables;
 using BattleCruisers.Cruisers.Slots;
+using BattleCruisers.Effects.Explosions;
 using BattleCruisers.Tutorial.Highlighting;
 using BattleCruisers.UI.Common.Click;
+using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions;
 using System;
 using System.Collections.ObjectModel;
@@ -23,6 +25,9 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Unique identifier for this hull section")]
         public string HullId;
 
+        [Tooltip("If true, destroying this hull ends the battle (victory for player)")]
+        public bool IsPrimary = false;
+
         [Tooltip("Sprite renderer for this hull section")]
         public SpriteRenderer SpriteRenderer;
 
@@ -31,6 +36,20 @@ namespace BattleCruisers.Cruisers
 
         [Tooltip("SlotWrapperController managing buildings for this hull section")]
         public SlotWrapperController SlotController;
+
+        [Header("Health Configuration")]
+        [Tooltip("Maximum health for this hull section")]
+        public float maxHealth = 1000f;
+
+        [Tooltip("Health regeneration rate per drone per second")]
+        public float healthGainPerDroneS = 0.667f;
+
+        [Header("Death Configuration")]
+        [Tooltip("Explosion prefab spawned when this hull is destroyed")]
+        public CruiserDeathExplosion DeathPrefab;
+
+        [Tooltip("Wreckage object spawned at death position")]
+        public GameObject WreckagePrefab;
 
         // ITarget implementation
         public Faction Faction => ParentCruiser?.Faction ?? Faction.Reds;
@@ -63,23 +82,26 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<DamagedEventArgs> Damaged;
         public event EventHandler HealthChanged;
 
-        // Health tracking - hull sections share the parent cruiser's health
-        private IHealthTracker _healthTracker;
-        public float MaxHealth => ParentCruiser?.MaxHealth ?? 0;
-        public bool IsDestroyed => ParentCruiser?.IsDestroyed ?? true;
-        public float Health => ParentCruiser?.Health ?? 0;
+        public float MaxHealth => maxHealth;
+        public float Health => _healthTracker?.Health ?? maxHealth;
+        public bool IsDestroyed => _isDestroyed;
 
         // Additional ITarget interface members
         public GameObject GameObject => gameObject;
-        public ITarget LastDamagedSource => ParentCruiser?.LastDamagedSource;
+        public ITarget LastDamagedSource => _lastDamagedSource;
 
         // IRepairable members
-        public float HealthGainPerDroneS => ParentCruiser?.HealthGainPerDroneS ?? 0;
+        public float HealthGainPerDroneS => healthGainPerDroneS;
         public RepairCommand RepairCommand => ParentCruiser?.RepairCommand;
 
         // Click handling
         private ClickHandler _clickHandler;
         private ClickHandlerWrapper _clickHandlerWrapper;
+
+        // Health and death handling
+        private HealthTracker _healthTracker;
+        private bool _isDestroyed = false;
+        private ITarget _lastDamagedSource;
 
         public void Initialize()
         {
@@ -89,12 +111,10 @@ namespace BattleCruisers.Cruisers
                 return;
             }
 
-            // Set up health tracking (shared with parent)
-            _healthTracker = ParentCruiser.GetHealthTracker();
-            if (_healthTracker != null)
-            {
-                _healthTracker.HealthChanged += OnHealthChanged;
-            }
+            // Set up health tracking (own health tracker)
+            _healthTracker = new HealthTracker(maxHealth);
+            _healthTracker.HealthGone += OnHealthGone;
+            _healthTracker.HealthChanged += OnHealthChangedInternal;
 
             // Set up click handling
             _clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
@@ -125,9 +145,58 @@ namespace BattleCruisers.Cruisers
             Debug.Log($"[HullSection] {HullId} initialized successfully");
         }
 
-        private void OnHealthChanged(object sender, EventArgs e)
+        private void OnHealthChangedInternal(object sender, EventArgs e)
         {
             HealthChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OnHealthGone(object sender, EventArgs e)
+        {
+            if (_isDestroyed) return;
+
+            _isDestroyed = true;
+
+            Debug.Log($"[HullSection] {HullId} destroyed!");
+
+            // Spawn death explosion
+            if (DeathPrefab != null)
+            {
+                Instantiate(DeathPrefab, transform.position, transform.rotation);
+            }
+
+            // Handle wreckage
+            SpawnWreckage();
+
+            // Hide this hull section
+            HideHullSection();
+
+            // Raise destroyed event
+            Destroyed?.Invoke(this, new DestroyedEventArgs(this));
+
+            // Notify parent
+            ParentCruiser?.OnHullSectionDestroyed(this);
+        }
+
+        private void SpawnWreckage()
+        {
+            if (WreckagePrefab == null) return;
+
+            Instantiate(WreckagePrefab, transform.position, transform.rotation);
+        }
+
+        private void HideHullSection()
+        {
+            // Hide sprite
+            if (SpriteRenderer != null)
+            {
+                SpriteRenderer.enabled = false;
+            }
+
+            // Disable collider so it can't be targeted
+            if (PrimaryCollider != null)
+            {
+                PrimaryCollider.enabled = false;
+            }
         }
 
         private void OnSingleClick(object sender, EventArgs e)
@@ -150,15 +219,25 @@ namespace BattleCruisers.Cruisers
 
         public void TakeDamage(float damageAmount, ITarget damageSource, bool ignoreImmuneStatus = false)
         {
-            // Forward damage to parent cruiser
-            ParentCruiser.TakeDamage(damageAmount, damageSource, ignoreImmuneStatus);
+            if (_isDestroyed) return;
+            if (IsBuildingImmune() && !ignoreImmuneStatus) return;
+
+            Logging.Log(Tags.TARGET, $"[HullSection] {HullId} taking {damageAmount} damage from {damageSource}");
+
+            _lastDamagedSource = damageSource;
+
+            if (_healthTracker.RemoveHealth(damageAmount))
+            {
+                Damaged?.Invoke(this, new DamagedEventArgs(damageSource));
+            }
         }
 
         public void Destroy()
         {
-            // Hull sections don't destroy independently - forward to parent
-            Debug.LogWarning($"[HullSection] {HullId}: Destroy() called on hull section. Forwarding to parent cruiser.");
-            ParentCruiser?.Destroy();
+            if (!_isDestroyed)
+            {
+                _healthTracker.RemoveHealth(_healthTracker.MaxHealth);
+            }
         }
 
         public bool IsShield()
@@ -185,7 +264,18 @@ namespace BattleCruisers.Cruisers
 
         public override string ToString()
         {
-            return $"HullSection '{HullId}' of {ParentCruiser?.name ?? "Unknown Cruiser"}";
+            return $"HullSection '{HullId}' [{(_isDestroyed ? "DESTROYED" : $"HP: {Health}/{MaxHealth}")}]";
+        }
+
+
+        public void MakeInvincible()
+        {
+            _healthTracker.State = HealthTrackerState.Immutable;
+        }
+
+        public void MakeDamageable()
+        {
+            _healthTracker.State = HealthTrackerState.Mutable;
         }
 
         private void OnDestroy()
@@ -193,7 +283,8 @@ namespace BattleCruisers.Cruisers
             // Clean up event handlers
             if (_healthTracker != null)
             {
-                _healthTracker.HealthChanged -= OnHealthChanged;
+                _healthTracker.HealthGone -= OnHealthGone;
+                _healthTracker.HealthChanged -= OnHealthChangedInternal;
             }
 
             if (_clickHandler != null)

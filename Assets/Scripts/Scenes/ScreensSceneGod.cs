@@ -151,7 +151,7 @@ namespace BattleCruisers.Scenes
                     }
 
                     await refreshEcoConfig;
-                    await DataProvider.ApplyRemoteConfig();
+                    DataProvider.ApplyRemoteConfig(); // Fire-and-forget - method sets up async callback
 
                     // local transactions syncing:
                     if (DataProvider.GameModel.OutstandingCaptainTransactions != null &&

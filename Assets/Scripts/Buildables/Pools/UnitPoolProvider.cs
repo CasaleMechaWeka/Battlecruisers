@@ -119,12 +119,12 @@ namespace BattleCruisers.Buildables.Pools
             }
             
             try
-            {
-                Pool<Unit, BuildableActivationArgs> pool
-                    = new Pool<Unit, BuildableActivationArgs>(
-                        new UnitFactory(unitKey));
-                _pools.Add(pool);
-                return pool;
+        {
+            Pool<Unit, BuildableActivationArgs> pool
+                = new Pool<Unit, BuildableActivationArgs>(
+                    new UnitFactory(unitKey));
+            _pools.Add(pool);
+            return pool;
             }
             catch (System.Exception ex)
             {

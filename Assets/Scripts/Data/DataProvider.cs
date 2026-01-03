@@ -221,7 +221,7 @@ namespace BattleCruisers.Data
             m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
         }
 
-        public static async Task ApplyRemoteConfig()
+        public static void ApplyRemoteConfig()
         {
             Debug.Log("ApplyRemoteSettings");
             RemoteConfigService.Instance.FetchCompleted += ApplyRemoteConfig;
