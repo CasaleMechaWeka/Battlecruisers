@@ -49,85 +49,8 @@ namespace BattleCruisers.Cruisers
         private ITargetConsumer _userChosenTargetConsumer;
 
 
-        // Override Color to apply to all hulls (ChainCruiser has no root renderer)
-        public override Color Color {
-            set {
-                // Apply color to all hulls
-                if (Hulls != null) {
-                    foreach (var hull in Hulls) {
-                        if (hull != null) {
-                            hull.Color = value;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Hide base Sprite to return primary hull sprite (base not virtual)
-        public new Sprite Sprite {
-            get {
-                // Return primary hull sprite, or first available
-                if (_primaryHull != null && _primaryHull.SpriteRenderer != null) {
-                    return _primaryHull.SpriteRenderer.sprite;
-                }
-
-                foreach (var hull in Hulls) {
-                    if (hull != null && hull.SpriteRenderer != null && hull.SpriteRenderer.sprite != null) {
-                        return hull.SpriteRenderer.sprite;
-                    }
-                }
-
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns the primary hull's health for UI compatibility.
-        /// </summary>
-        public new float Health => _primaryHull?.Health ?? 0;
-
-        public new float MaxHealth => _primaryHull?.MaxHealth ?? maxHealth;
-
-        public new bool IsDestroyed => _primaryHull?.IsDestroyed ?? true;
-
-        public override bool IsAlive => _primaryHull != null && !_primaryHull.IsDestroyed;
-
-        // Override Size for ChainCruiser - use primary hull collider only (for camera zoom consistency)
-        public override Vector2 Size
-        {
-            get
-            {
-                // Use primary hull's collider for camera zoom calculations
-                if (_primaryHull != null && _primaryHull.PrimaryCollider != null)
-                {
-                    return (Vector2)_primaryHull.PrimaryCollider.bounds.size;
-                }
-
-                return Vector2.one; // Fallback size
-            }
-        }
-
-        public new void MakeInvincible()
-        {
-            if (Hulls != null)
-            {
-                foreach (var hull in Hulls)
-                {
-                    hull?.MakeInvincible();
-                }
-            }
-        }
-
-        public new void MakeDamagable()
-        {
-            if (Hulls != null)
-            {
-                foreach (var hull in Hulls)
-                {
-                    hull?.MakeDamageable();
-                }
-            }
-        }
+        // Note: Color, Sprite, Health, MaxHealth, IsDestroyed, IsAlive, Size, MakeInvincible, MakeDamagable
+        // are all handled by base Cruiser class now - no need to override them here!
 
         // Override to handle ChainCruiser-specific destruction behavior
         protected override void OnDestroyed()
@@ -135,20 +58,7 @@ namespace BattleCruisers.Cruisers
             base.OnDestroyed(); // Call base first to handle standard persistent objects and destruction
         }
 
-        // Override FixedUpdate to add null check for _enemyCruiser (prevents crash during initialization)
-        public override void FixedUpdate()
-        {
-            // Add null check before accessing _enemyCruiser.IsAlive
-            if (IsPlayerCruiser && _enemyCruiser != null && _enemyCruiser.IsAlive)
-            {
-                BattleSceneGod.AddPlayedTime(TargetType.PlayedTime, _time.DeltaTime);
-            }
-
-            if (RepairManager != null)
-            {
-                RepairManager.Repair(_time.DeltaTime);
-            }
-        }
+        // Note: FixedUpdate is handled by base Cruiser class - no override needed!
 
         // Multi-hull specific events
         public event EventHandler<HullSectionTargetedEventArgs> HullSectionTargeted;
@@ -156,21 +66,21 @@ namespace BattleCruisers.Cruisers
 
         public override void StaticInitialise()
         {
-            // Find primary hull BEFORE base.StaticInitialise so maxHealth is set correctly
+            // Find primary hull for reference
             if (Hulls != null && Hulls.Length > 0)
             {
                 _primaryHull = System.Linq.Enumerable.FirstOrDefault(Hulls, h => h != null && h.IsPrimary);
-
-                if (_primaryHull != null)
-                {
-                    // Set ChainCruiser's maxHealth to primary hull's maxHealth
-                    // This ensures the inherited health bar UI works correctly
-                    maxHealth = _primaryHull.maxHealth;
-                }
             }
 
-            // ChainCruiser doesn't need its own SpriteRenderer (hulls have sprites)
-            // Initialize SlotWrapperController
+            // Call base class to handle all standard initialization
+            // SetupHulls will be called from base.StaticInitialise if needed
+            // For now, manually setup the hulls
+            SetupHulls(Hulls);
+
+            // Base class handles: SlotWrapperController, fog, click handler, name, description, monitors, drone area size
+            // We just call the parent implementation which sets those up
+            // Actually, since ChainCruiser doesn't have a root SpriteRenderer, we need to handle initialization ourselves
+
             if (SlotWrapperController == null)
             {
                 SlotWrapperController = GetComponentInChildren<SlotWrapperController>(includeInactive: true);
@@ -222,7 +132,7 @@ namespace BattleCruisers.Cruisers
             // Set up hull targeting for ChainCruisers
             _userChosenTargetConsumer = (ITargetConsumer)CruiserSpecificFactories.Targets.UserChosenTargetTracker;
 
-            // Initialize all hulls
+            // Initialize all hulls and hook up destruction events
             if (Hulls != null)
             {
                 foreach (var hull in Hulls)
@@ -238,9 +148,11 @@ namespace BattleCruisers.Cruisers
             Debug.Log($"[ChainCruiser] {name} Initialise complete");
         }
 
+        // Event handler for when a hull is destroyed
         private void OnHullDestroyedEvent(object sender, DestroyedEventArgs e)
         {
-            // Event handler - actual logic in OnHullDestroyed
+            // Forward to the virtual method
+            OnHullDestroyed(sender as Hull);
         }
 
 
@@ -280,17 +192,16 @@ namespace BattleCruisers.Cruisers
         }
 
         /// <summary>
-        /// Called by Hull when it is destroyed.
+        /// Override hull destruction to handle secondary hull scoring.
         /// </summary>
-        public void OnHullDestroyed(Hull hull)
+        public override void OnHullDestroyed(Hull hull)
         {
             Debug.Log($"[ChainCruiser] Hull destroyed: {hull.HullId}, IsPrimary: {hull.IsPrimary}");
 
             if (hull.IsPrimary)
             {
-                // Primary hull death = game over
-                // Trigger the inherited death flow from Cruiser/Target
-                Destroy();
+                // Primary hull death = game over - call base implementation
+                base.OnHullDestroyed(hull);
             }
             else
             {
