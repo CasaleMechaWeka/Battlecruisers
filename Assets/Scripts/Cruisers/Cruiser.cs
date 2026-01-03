@@ -56,6 +56,7 @@ namespace BattleCruisers.Cruisers
 
         // Hull array: supports 1-N hulls (1 for single-hull, N for multi-hull)
         protected Hull[] _hulls;
+        public Hull[] Hulls => _hulls;  // Public accessor for external code
 
         public string stringKeyBase;
         public int numOfDrones = 4;
@@ -236,6 +237,11 @@ namespace BattleCruisers.Cruisers
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
+
+        // Multi-hull events (for secondary hull destruction scoring)
+        public event EventHandler<HullSectionTargetedEventArgs> HullSectionTargeted;
+        public event EventHandler<HullSectionDestroyedEventArgs> SecondaryHullDestroyed;
+
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
 
@@ -477,6 +483,17 @@ namespace BattleCruisers.Cruisers
             if (hull.IsPrimary)
             {
                 Destroy();
+            }
+            else if (_hulls != null && _hulls.Length > 1)
+            {
+                // Secondary hull destruction in multi-hull cruiser: award points
+                SecondaryHullDestroyed?.Invoke(this, new HullSectionDestroyedEventArgs(hull));
+
+                // Add partial destruction score for enemy cruisers
+                if (Faction == Faction.Reds)
+                {
+                    BattleSceneGod.AddDeadBuildable(TargetType.Buildings, (int)(hull.maxHealth * 0.3f));
+                }
             }
         }
 

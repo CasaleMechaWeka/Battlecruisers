@@ -39,10 +39,10 @@ namespace BattleCruisers.Targets.TargetFinders
             _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
 
-            // Subscribe to secondary hull destruction for ChainCruiser
-            if (_enemyCruiser is ChainCruiser chainCruiser)
+            // Subscribe to secondary hull destruction for multi-hull cruisers
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                chainCruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
+                cruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
             }
 		}
 
@@ -50,10 +50,10 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetLostEvent(_enemyCruiser);
 
-            // If this is a ChainCruiser, also remove its hulls as targets
-            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.Hulls != null)
+            // If this is a multi-hull cruiser, also remove its hulls as targets
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                foreach (var hull in chainCruiser.Hulls)
+                foreach (var hull in cruiser.Hulls)
                 {
                     if (hull != null)
                     {
@@ -110,10 +110,10 @@ namespace BattleCruisers.Targets.TargetFinders
         {
             InvokeTargetFoundEvent(_enemyCruiser);
 
-            // If this is a ChainCruiser, also emit its hulls as targets
-            if (_enemyCruiser is ChainCruiser chainCruiser && chainCruiser.Hulls != null)
+            // If this is a multi-hull cruiser, also emit its hulls as targets
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                foreach (var hull in chainCruiser.Hulls)
+                foreach (var hull in cruiser.Hulls)
                 {
                     if (hull != null && hull.PrimaryCollider != null)
                     {
