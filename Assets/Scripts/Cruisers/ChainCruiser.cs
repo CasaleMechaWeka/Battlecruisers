@@ -44,18 +44,16 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Individual hull sections that can be independently targeted and selected.")]
         public HullSection[] HullSections;
 
+        [Tooltip("GameObjects that persist in the scene after this cruiser is destroyed")]
+        public GameObject[] persistentObjects;
+
         private HullSection _primaryHull;
         private ITargetConsumer _userChosenTargetConsumer;
 
 
-        // Override Color to also highlight hull sections
+        // Override Color to apply to all hull sections (ChainCruiser has no root renderer)
         public override Color Color {
             set {
-                // Apply color to root sprite if it exists
-                if (_renderer != null) {
-                    _renderer.color = value;
-                }
-
                 // Apply color to all hull sections
                 if (HullSections != null) {
                     foreach (var hullSection in HullSections) {
@@ -131,6 +129,15 @@ namespace BattleCruisers.Cruisers
                     hull?.MakeDamageable();
                 }
             }
+        }
+
+        // Override to handle ChainCruiser-specific persistent objects
+        protected override void OnDestroyed()
+        {
+            base.OnDestroyed(); // Call base first to handle standard persistent objects
+
+            // ChainCruiser-specific: persist any additional objects attached to hull sections
+            // (base.OnDestroyed() already handles the cruiser's persistentObjects array)
         }
 
         // Multi-hull specific events

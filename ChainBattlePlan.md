@@ -72,6 +72,7 @@ Assets/Scripts/Cruisers/
 ChainCruiser (Root GameObject)
 ├── ChainCruiser.cs                    # Main coordinator component
 ├── Animator                           # Boss animations and effects
+├── persistentObjects[]                # Objects that survive cruiser destruction
 ├── Cruiser components...              # Inherited from Cruiser base class
 │   ├── CruiserDeathExplosion          # Primary death explosion prefab
 │   ├── FogOfWar                       # Vision/obscurement system
@@ -473,6 +474,9 @@ public override bool IsAlive => _primaryHull != null && !_primaryHull.IsDestroye
 // Size calculation based on primary hull only (for camera zoom consistency)
 public override Vector2 Size => _primaryHull.PrimaryCollider.bounds.size;
 
+// Color override applies to all hull sections (no root renderer)
+public override Color Color => applies color to all HullSections;
+
 // Hull destruction handling
 public void OnHullSectionDestroyed(HullSection hull)
 {
@@ -659,7 +663,7 @@ private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventAr
 
 ---
 
-**Last Updated**: 2026-01-06
+**Last Updated**: 2026-01-07
 **System Version**: 1.0 (Multi-Hull Hybrid Inheritance)
 **Status**: Implementation Complete
 **Compatibility**: Full Cruiser inheritance + hull extensions
