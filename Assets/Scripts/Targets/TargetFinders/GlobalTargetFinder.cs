@@ -145,9 +145,10 @@ namespace BattleCruisers.Targets.TargetFinders
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;
 
-            if (_enemyCruiser is ChainCruiser chainCruiser)
+            // Unsubscribe from secondary hull destruction for multi-hull cruisers
+            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
             {
-                chainCruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
+                cruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
             }
 		}
 	}
