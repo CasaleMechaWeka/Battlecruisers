@@ -96,11 +96,11 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-        private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventArgs e)
+        private void OnSecondaryHullDestroyed(object sender, CruiserSectionDestroyedEventArgs e)
         {
-            if (e.DestroyedHull != null)
+            if (e.DestroyedSection != null)
             {
-                InvokeTargetLostEvent(e.DestroyedHull);
+                InvokeTargetLostEvent(e.DestroyedSection);
 			}
 		}
 
