@@ -470,6 +470,9 @@ public new float MaxHealth => _primaryHull?.MaxHealth ?? maxHealth;
 public new bool IsDestroyed => _primaryHull?.IsDestroyed ?? true;
 public override bool IsAlive => _primaryHull != null && !_primaryHull.IsDestroyed;
 
+// Size calculation based on primary hull only (for camera zoom consistency)
+public override Vector2 Size => _primaryHull.PrimaryCollider.bounds.size;
+
 // Hull destruction handling
 public void OnHullSectionDestroyed(HullSection hull)
 {
@@ -656,7 +659,7 @@ private void OnSecondaryHullDestroyed(object sender, HullSectionDestroyedEventAr
 
 ---
 
-**Last Updated**: 2026-01-04
+**Last Updated**: 2026-01-06
 **System Version**: 1.0 (Multi-Hull Hybrid Inheritance)
 **Status**: Implementation Complete
 **Compatibility**: Full Cruiser inheritance + hull extensions

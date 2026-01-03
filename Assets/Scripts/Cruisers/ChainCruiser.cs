@@ -96,6 +96,21 @@ namespace BattleCruisers.Cruisers
 
         public override bool IsAlive => _primaryHull != null && !_primaryHull.IsDestroyed;
 
+        // Override Size for ChainCruiser - use primary hull collider only (for camera zoom consistency)
+        public override Vector2 Size
+        {
+            get
+            {
+                // Use primary hull's collider for camera zoom calculations
+                if (_primaryHull != null && _primaryHull.PrimaryCollider != null)
+                {
+                    return (Vector2)_primaryHull.PrimaryCollider.bounds.size;
+                }
+
+                return Vector2.one; // Fallback size
+            }
+        }
+
         public new void MakeInvincible()
         {
             if (HullSections != null)

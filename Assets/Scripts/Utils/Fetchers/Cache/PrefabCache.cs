@@ -1,3 +1,4 @@
+using System;
 using BattleCruisers.Buildables;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
@@ -127,7 +128,17 @@ namespace BattleCruisers.Utils.Fetchers.Cache
             PrefabContainer<TPrefab> prefabContainer = await PrefabFetcher.GetPrefabAsync<TPrefab>(prefabKey);
             Logging.Log(Tags.PREFAB_CACHE_FACTORY, "After GetPrefabAsync");
 
-            prefabContainer.Prefab.StaticInitialise();
+            try
+            {
+                Logging.Log(Tags.PREFAB_CACHE_FACTORY, $"Initializing prefab: {prefabKey}");
+                prefabContainer.Prefab.StaticInitialise();
+                Logging.Log(Tags.PREFAB_CACHE_FACTORY, $"Successfully initialized prefab: {prefabKey}");
+            }
+            catch (Exception ex)
+            {
+                Logging.Log(Tags.PREFAB_CACHE_FACTORY, $"FAILED to initialize prefab: {prefabKey}. Error: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                throw; // Re-throw to maintain original error behavior
+            }
             if (!keyToPrefab.ContainsKey(prefabKey))
                 keyToPrefab.Add(prefabKey, prefabContainer.Prefab);
         }
