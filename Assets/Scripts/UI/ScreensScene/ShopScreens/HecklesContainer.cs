@@ -9,6 +9,7 @@ using BattleCruisers.Utils;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,7 +50,19 @@ namespace BattleCruisers.UI.ScreensScene
                     // Online purchasing
                     try
                     {
-                        bool result = await DataProvider.PurchaseHeckleV2(currentHeckleData.Index).WaitAsync(TimeSpan.FromSeconds(10));
+                        var purchaseTask = DataProvider.PurchaseHeckleV2(currentHeckleData.Index);
+                        var timeoutTask = Task.Delay(TimeSpan.FromSeconds(10));
+                        var completedTask = await Task.WhenAny(purchaseTask, timeoutTask);
+
+                        bool result = false;
+                        if (completedTask == timeoutTask)
+                        {
+                            Debug.LogError("Purchase operation timed out");
+                        }
+                        else
+                        {
+                            result = await purchaseTask;
+                        }
                         if (result)
                         {
                             //    await DataProvider.SyncCurrencyFromCloud();
@@ -61,7 +74,18 @@ namespace BattleCruisers.UI.ScreensScene
                             ScreensSceneGod.Instance.characterOfShop.GetComponent<Animator>().SetTrigger("buy");
                             DataProvider.GameModel.AddHeckle(currentHeckleData.Index);
                             DataProvider.SaveGame();
-                            await DataProvider.CloudSave().WaitAsync(TimeSpan.FromSeconds(10));
+                            var cloudSaveTask = DataProvider.CloudSave();
+                            var cloudSaveTimeoutTask = Task.Delay(TimeSpan.FromSeconds(10));
+                            var cloudSaveCompletedTask = await Task.WhenAny(cloudSaveTask, cloudSaveTimeoutTask);
+
+                            if (cloudSaveCompletedTask == cloudSaveTimeoutTask)
+                            {
+                                Debug.LogError("Cloud save operation timed out");
+                            }
+                            else
+                            {
+                                await cloudSaveTask;
+                            }
                             ScreensSceneGod.Instance.processingPanel.SetActive(false);
                             if (LocTableCache.HecklesTable.GetString(currentHeckleData.StringKeyBase).Length <= 10)
                             {

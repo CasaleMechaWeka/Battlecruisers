@@ -1,7 +1,8 @@
-using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Unity.Services.CloudSave;
 using UnityEngine;
 
@@ -81,11 +82,16 @@ public class CloudSaveWrapper : ISaveClient
     {
         try
         {
-            await action.WaitAsync(TimeSpan.FromSeconds(10));
-        }
-        catch (TimeoutException e)
-        {
-            Debug.LogError($"Cloud save operation timed out: {e.Message}");
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(10));
+            var completedTask = await Task.WhenAny(action, timeoutTask);
+
+            if (completedTask == timeoutTask)
+            {
+                Debug.LogError("Cloud save operation timed out");
+                return;
+            }
+
+            await action; // Ensure any exceptions are propagated
         }
         catch (CloudSaveValidationException e)
         {
@@ -105,11 +111,16 @@ public class CloudSaveWrapper : ISaveClient
     {
         try
         {
-            return await action.WaitAsync(TimeSpan.FromSeconds(10));
-        }
-        catch (TimeoutException e)
-        {
-            Debug.LogError($"Cloud save operation timed out: {e.Message}");
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(10));
+            var completedTask = await Task.WhenAny(action, timeoutTask);
+
+            if (completedTask == timeoutTask)
+            {
+                Debug.LogError("Cloud save operation timed out");
+                return default;
+            }
+
+            return await action; // Ensure any exceptions are propagated
         }
         catch (CloudSaveValidationException e)
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BattleCruisers.Utils.Localisation;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
