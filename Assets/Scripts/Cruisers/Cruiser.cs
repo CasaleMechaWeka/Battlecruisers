@@ -208,7 +208,7 @@ namespace BattleCruisers.Cruisers
             }
         }
 
-        public override bool IsAlive
+        public new virtual bool IsAlive
         {
             get
             {
