@@ -551,7 +551,8 @@ namespace BattleCruisers.Cruisers
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
+            // Instantiate building as child of slot to ensure UI elements (HealthBar) stay properly hierarchized during initialization
+            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab, slot.Transform.PlatformObject);
             if (ignoreDroneRequirement)
             {
                 building.BuildTimeInS *= building.NumOfDronesRequired;
