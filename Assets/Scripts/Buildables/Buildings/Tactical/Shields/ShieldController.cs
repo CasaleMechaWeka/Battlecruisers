@@ -141,7 +141,10 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
                     if ((colliderCenter - circleCenter).sqrMagnitude <= 25.0f) // 5.0f * 5.0f
                     {
                         ITarget target = c2d.gameObject.GetComponent<ITargetProxy>()?.Target;
-                        target.SetBuildingImmunity(boo);
+                        if (target != null)
+                        {
+                            target.SetBuildingImmunity(boo);
+                        }
                     }
                 }
             }
