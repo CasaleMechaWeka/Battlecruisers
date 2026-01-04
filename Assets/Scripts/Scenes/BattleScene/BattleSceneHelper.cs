@@ -85,10 +85,15 @@ namespace BattleCruisers.Scenes.BattleScene
         {
             if (ApplicationModel.Mode == GameMode.SideQuest)
             {
-                return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
+                var sideQuestHull = StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
+                Debug.Log($"[DEBUG] SideQuest {ApplicationModel.SelectedSideQuestID}: Using hull {sideQuestHull}");
+                return sideQuestHull;
             }
 
-            return StaticData.Levels[ApplicationModel.SelectedLevel - 1].Hull;
+            var levelIndex = ApplicationModel.SelectedLevel - 1;
+            var levelHull = StaticData.Levels[levelIndex].Hull;
+            Debug.Log($"[DEBUG] Level {ApplicationModel.SelectedLevel} (index {levelIndex}): Using hull {levelHull}");
+            return levelHull;
         }
     }
 }

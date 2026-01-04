@@ -89,6 +89,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             // ChainBattle behavior is added via BattleSequencer in BattleSceneGod
             ApplicationModel.Mode = GameMode.Campaign;
             ApplicationModel.SelectedLevel = _level.Num;
+            Debug.Log($"[DEBUG] Level button clicked: Level {_level.Num}, SelectedLevel set to {ApplicationModel.SelectedLevel}");
 
             _screensSceneGod.GoToTrashScreen(_level.Num);
         }
