@@ -302,10 +302,8 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(_fog);
 
             ClickHandlerWrapper clickHandlerWrapper = GetComponent<ClickHandlerWrapper>();
-            if (clickHandlerWrapper != null)
-            {
-                _clickHandler = clickHandlerWrapper.GetClickHandler();
-            }
+            Assert.IsNotNull(clickHandlerWrapper);
+            _clickHandler = clickHandlerWrapper.GetClickHandler();
             Name = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Name");
             Description = LocTableCache.CommonTable.GetString($"Cruisers/{stringKeyBase}Description");
 
