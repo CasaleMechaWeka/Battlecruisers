@@ -58,7 +58,22 @@ namespace BattleCruisers.Cruisers.Slots
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<Slot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
-        public Vector3 BuildingPlacementPoint { get; private set; }
+
+        // Dynamic property that returns current world position of BuildingPlacementPoint
+        // This ensures buildings move with their slots as slots rotate/move with the cruiser
+        private Transform _buildingPlacementPointTransform;
+        public Vector3 BuildingPlacementPoint
+        {
+            get
+            {
+                if (_buildingPlacementPointTransform == null)
+                {
+                    _buildingPlacementPointTransform = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+                }
+                return _buildingPlacementPointTransform.position;
+            }
+        }
+
         public Vector2 Position => transform.position;
 
         private ISettableBroadcastingProperty<IBuilding> _baseBuilding;
@@ -161,8 +176,6 @@ namespace BattleCruisers.Cruisers.Slots
 
             _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _explosion = _explosionController.Initialise();
-            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
-            BuildingPlacementPoint = buildingPlacementPoint.position;
 
             SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _size = slotRenderer.bounds.size;
