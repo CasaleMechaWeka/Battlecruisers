@@ -98,10 +98,9 @@ namespace BattleCruisers.Utils.Fetchers
         }
 
         public static IBuilding CreateBuilding(
-            IBuildableWrapper<IBuilding> buildingWrapperPrefab,
-            Transform parentTransform = null)
+            IBuildableWrapper<IBuilding> buildingWrapperPrefab)
         {
-            return CreateBuildable(buildingWrapperPrefab.UnityObject, parentTransform);
+            return CreateBuildable(buildingWrapperPrefab.UnityObject);
         }
 
         public static IBuildableWrapper<IUnit> GetUnitWrapperPrefab(IPrefabKey unitKey)
@@ -110,25 +109,18 @@ namespace BattleCruisers.Utils.Fetchers
         }
 
         public static IUnit CreateUnit(
-            IBuildableWrapper<IUnit> unitWrapperPrefab,
-            Transform parentTransform = null)
+            IBuildableWrapper<IUnit> unitWrapperPrefab)
         {
-            return CreateBuildable(unitWrapperPrefab.UnityObject, parentTransform);
+            return CreateBuildable(unitWrapperPrefab.UnityObject);
         }
 
         private static TBuildable CreateBuildable<TBuildable>(
-            BuildableWrapper<TBuildable> buildableWrapperPrefab,
-            Transform parentTransform = null)
+            BuildableWrapper<TBuildable> buildableWrapperPrefab)
             where TBuildable : class, IBuildable
         {
             Helper.AssertIsNotNull(buildableWrapperPrefab);
 
-            // Instantiate with parent to ensure UI children (HealthBar) stay properly hierarchized
-            BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(
-                buildableWrapperPrefab,
-                parentTransform,
-                worldPositionStays: false);
-
+            BuildableWrapper<TBuildable> buildableWrapper = Object.Instantiate(buildableWrapperPrefab);
             buildableWrapper.gameObject.SetActive(true);
             buildableWrapper.StaticInitialise();
             buildableWrapper.Buildable.Initialise(BattleSceneGod.Instance.uiManager);

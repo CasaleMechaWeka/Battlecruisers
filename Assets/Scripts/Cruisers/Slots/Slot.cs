@@ -58,35 +58,7 @@ namespace BattleCruisers.Cruisers.Slots
         public ObservableCollection<IBoostProvider> BoostProviders { get; private set; }
         public ReadOnlyCollection<Slot> NeighbouringSlots { get; private set; }
         public ITransform Transform { get; private set; }
-
-        // Dynamic property that returns current world position of BuildingPlacementPoint
-        // This ensures buildings move with their slots as slots rotate/move with the cruiser
-        private Transform _buildingPlacementPointTransform;
-        public Vector3 BuildingPlacementPoint
-        {
-            get
-            {
-                if (_buildingPlacementPointTransform == null)
-                {
-                    _buildingPlacementPointTransform = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
-                }
-                return _buildingPlacementPointTransform.position;
-            }
-        }
-
-        // Property to access the BuildingPlacementPoint transform directly (for local positioning)
-        private Transform BuildingPlacementPointTransform
-        {
-            get
-            {
-                if (_buildingPlacementPointTransform == null)
-                {
-                    _buildingPlacementPointTransform = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
-                }
-                return _buildingPlacementPointTransform;
-            }
-        }
-
+        public Vector3 BuildingPlacementPoint { get; private set; }
         public Vector2 Position => transform.position;
 
         private ISettableBroadcastingProperty<IBuilding> _baseBuilding;
@@ -159,18 +131,23 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     IBuilding building = _baseBuilding.Value;
 
-                    // Building is already instantiated as child of this slot during PrefabFactory.CreateBuilding
-                    // Position it at BuildingPlacementPoint's local offset within the slot
-                    Debug.Log($"[Slot] Setting building {building.Name} on slot {gameObject.name} (index {index})");
+                    // Calculate the building's world position based on slot placement point and puzzle root offset
+                    float verticalChange = building.Position.y - building.PuzzleRootPoint.y;
+                    float horizontalChange = building.Position.x - building.PuzzleRootPoint.x;
 
-                    // Position building at BuildingPlacementPoint's local position
-                    Vector3 placementLocalPos = BuildingPlacementPointTransform.localPosition;
-                    building.Transform.PlatformObject.localPosition = placementLocalPos;
+                    Vector3 targetWorldPosition = BuildingPlacementPoint
+                                                + (Transform.Up * verticalChange)
+                                                + (Transform.Right * horizontalChange);
+
+                    // Parent the building to this slot so it follows slot movement and rotation
+                    // Using worldPositionStays=true keeps the building at the same world position during reparenting
+                    building.Transform.SetParent(transform, worldPositionStays: true);
 
                     // Match the slot's rotation
                     _baseBuilding.Value.Rotation = Transform.Rotation;
 
-                    Debug.Log($"[Slot] Building positioned at local {placementLocalPos}, world position: {building.Position}");
+                    // Set the world position (the local position will be calculated automatically after parenting)
+                    building.Position = targetWorldPosition;
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)
@@ -211,6 +188,9 @@ namespace BattleCruisers.Cruisers.Slots
             }
 
             _explosion = _explosionController.Initialise();
+
+            Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+            BuildingPlacementPoint = buildingPlacementPoint.position;
 
             SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _size = slotRenderer.bounds.size;

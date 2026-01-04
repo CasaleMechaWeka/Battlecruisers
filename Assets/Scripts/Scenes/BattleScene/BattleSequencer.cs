@@ -144,62 +144,47 @@ namespace BattleCruisers.Scenes.BattleScene
                             break;
 
                         case SequencePoint.BuildingAction.BuildingOp.Add:
-                            int prefabID = (int)buildingAction.PrefabKeyName;
-                            if (prefabID < (int)Building_AirFactory)
+                            // Auto-initialize existing buildables already placed in the cruiser hierarchy
+                            // instead of spawning new ones
+                            IBuilding[] existingBuildings = cruiser.GetComponentsInChildren<IBuilding>();
+
+                            if (existingBuildings.Length == 0)
                             {
-                                Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{buildingAction}");
-                                return;
+                                Debug.LogWarning($"[BattleSequencer] No existing buildings found in cruiser {cruiser.name} hierarchy. Place building prefabs as children of cruiser sections.");
+                                break;
                             }
 
-                            if ((prefabID >= (int)Building_AirFactory)
-                             && (prefabID < (int)Unit_Bomber))
+                            // Find the building by type name matching
+                            IBuilding targetBuilding = null;
+                            foreach (IBuilding b in existingBuildings)
                             {
-                                IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingAction.PrefabKeyName));
-                                if (building == null || building.Buildable == null)
+                                if (b.PrefabName.Contains(buildingAction.PrefabKeyName.ToString()))
                                 {
-                                    Debug.LogError($"[BattleSequencer] Failed to get building prefab for {buildingAction.PrefabKeyName}");
-                                    return;
-                                }
-
-                                if (cruiser.SlotAccessor == null)
-                                {
-                                    Debug.LogError($"[BattleSequencer] Cruiser {cruiser.name} SlotAccessor is null! Cruiser may not be fully initialized.");
-                                    return;
-                                }
-
-                                IList<Slot> slots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
-                                if (slots == null || slots.Count == 0)
-                                {
-                                    Debug.LogError($"[BattleSequencer] No free slots of type {building.Buildable.SlotSpecification.SlotType} found on {cruiser.name}");
-                                    return;
-                                }
-
-                                Slot slot = slots[Math.Min(slots.Count - 1, buildingAction.SlotID)];
-                                if (slot == null)
-                                {
-                                    Debug.LogError($"[BattleSequencer] Slot #{buildingAction.SlotID} is already occupied or invalid!");
-                                    return;
-                                }
-
-                                IBuilding constructedBuilding = cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
-
-                                if (constructedBuilding != null)
-                                {
-                                    Debug.Log($"[BattleSequencer] Added {buildingAction.PrefabKeyName} to {sq.Faction} cruiser slot {buildingAction.SlotID}");
-
-                                    // Log building stats
-                                    LogBuildingStats(constructedBuilding, cruiser);
-                                }
-                                else
-                                {
-                                    Debug.LogError($"[BattleSequencer] Failed to construct {buildingAction.PrefabKeyName} in slot {buildingAction.SlotID}");
+                                    targetBuilding = b;
+                                    break;
                                 }
                             }
-                            else
+
+                            if (targetBuilding == null)
                             {
-                                Debug.LogError($"Invalid BuildingAction: {buildingAction}");
-                                return;
+                                Debug.LogWarning($"[BattleSequencer] Could not find building of type {buildingAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
+                                break;
                             }
+
+                            // Initialize the existing building
+                            targetBuilding.Activate(
+                                new BuildingActivationArgs(
+                                    cruiser,
+                                    cruiser.EnemyCruiser,
+                                    cruiser.CruiserSpecificFactories,
+                                    null, // No slot needed for pre-placed buildings
+                                    null));
+
+                            targetBuilding.StartConstruction();
+                            ((Buildable<BuildingActivationArgs>)targetBuilding).FinishConstruction();
+
+                            Debug.Log($"[BattleSequencer] Initialized existing building {targetBuilding.Name} on {cruiser.name}");
+                            LogBuildingStats(targetBuilding, cruiser);
 
                             break;
                     }
@@ -248,33 +233,44 @@ namespace BattleCruisers.Scenes.BattleScene
             if (sq.UnitActions != null)
                 foreach (SequencePoint.UnitAction unitAction in sq.UnitActions)
                 {
-                    int prefabID = (int)unitAction.PrefabKeyName;
-                    if (prefabID < (int)Building_AirFactory)
+                    // Auto-initialize existing units already placed in the cruiser hierarchy
+                    // instead of spawning new ones
+                    IUnit[] existingUnits = cruiser.GetComponentsInChildren<IUnit>();
+
+                    if (existingUnits.Length == 0)
                     {
-                        Debug.LogError($"[BattleSequencer] Can't instantiate cruisers through BattleSequencer.\n{unitAction}");
-                        return;
-                    }
-                    if (prefabID < (int)Unit_Bomber)
-                    {
-                        Debug.LogError($"[BattleSequencer] Invalid UnitAction: {unitAction}");
+                        Debug.LogWarning($"[BattleSequencer] No existing units found in cruiser {cruiser.name} hierarchy. Place unit prefabs as children of cruiser sections.");
                         continue;
                     }
 
-                    Debug.Log($"[BattleSequencer] Spawning {unitAction.Amount} unit(s) of type {unitAction.PrefabKeyName} at position {unitAction.Postion}");
-
-                    if (unitAction.Amount == 1)
-                        SpawnUnit(unitAction.PrefabKeyName, unitAction.Postion, cruiser);
-                    else
+                    // Find the unit by type name matching
+                    IUnit targetUnit = null;
+                    foreach (IUnit u in existingUnits)
                     {
-                        for (int i = 0; i < unitAction.Amount; i++)
+                        if (u.PrefabName.Contains(unitAction.PrefabKeyName.ToString()))
                         {
-                            float x = UnityEngine.Random.Range(0, unitAction.SpawnArea.x);
-                            float y = UnityEngine.Random.Range(0, unitAction.SpawnArea.y);
-
-                            Vector2 pos = new Vector2(x + unitAction.Postion.x, y + unitAction.Postion.y);
-                            SpawnUnit(unitAction.PrefabKeyName, pos, cruiser);
+                            targetUnit = u;
+                            break;
                         }
                     }
+
+                    if (targetUnit == null)
+                    {
+                        Debug.LogWarning($"[BattleSequencer] Could not find unit of type {unitAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
+                        continue;
+                    }
+
+                    // Initialize the existing unit
+                    targetUnit.Activate(
+                        new BuildableActivationArgs(
+                            cruiser,
+                            cruiser.EnemyCruiser,
+                            cruiser.CruiserSpecificFactories));
+
+                    targetUnit.StartConstruction();
+                    ((Buildable<BuildableActivationArgs>)targetUnit).FinishConstruction();
+
+                    Debug.Log($"[BattleSequencer] Initialized existing unit {targetUnit.Name} on {cruiser.name}");
                 }
             if (sq.ScriptCallActions != null)
                 sq.ScriptCallActions.Invoke();
