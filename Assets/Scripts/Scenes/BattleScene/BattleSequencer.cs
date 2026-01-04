@@ -17,6 +17,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using static BattleCruisers.Scenes.BattleScene.BattleSequencer;
 using static BattleCruisers.Utils.PrefabKeyName;
+using BattleCruisers.UI.BattleScene.ProgressBars;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -148,34 +149,49 @@ namespace BattleCruisers.Scenes.BattleScene
 
                         case SequencePoint.BuildingAction.BuildingOp.Add:
                             // Auto-initialize existing buildables already placed in the cruiser hierarchy
-                            // instead of spawning new ones
-                            IBuilding[] existingBuildings = cruiser.GetComponentsInChildren<IBuilding>();
+                            // instead of spawning new ones. We need to get BuildingWrapper to properly
+                            // initialize the health bar and click handler.
+                            BuildingWrapper[] existingWrappers = cruiser.GetComponentsInChildren<BuildingWrapper>(includeInactive: true);
 
-                            if (existingBuildings.Length == 0)
+                            if (existingWrappers.Length == 0)
                             {
-                                Debug.LogWarning($"[BattleSequencer] No existing buildings found in cruiser {cruiser.name} hierarchy. Place building prefabs as children of cruiser sections.");
+                                Debug.LogWarning($"[BattleSequencer] No existing BuildingWrapper found in cruiser {cruiser.name} hierarchy. Place building prefabs as children of cruiser sections.");
                                 break;
                             }
 
-                            // Find the building by type name matching
-                            IBuilding targetBuilding = null;
-                            foreach (IBuilding b in existingBuildings)
+                            // Find the building wrapper by type name matching
+                            BuildingWrapper targetWrapper = null;
+                            foreach (BuildingWrapper wrapper in existingWrappers)
                             {
-                                if (b.PrefabName.Contains(buildingAction.PrefabKeyName.ToString()))
+                                // Check if this wrapper hasn't been initialized yet and matches the prefab name
+                                string wrapperName = wrapper.gameObject.name.Replace("(Clone)", "").Trim();
+                                if (wrapperName.Contains(buildingAction.PrefabKeyName.ToString()))
                                 {
-                                    targetBuilding = b;
-                                    break;
+                                    // Check if the building is already initialized by seeing if it's active
+                                    // Uninitialized buildings are inactive after Initialise() is called
+                                    if (!wrapper.gameObject.activeSelf || wrapper.Buildable == null || !wrapper.Buildable.IsInitialised)
+                                    {
+                                        targetWrapper = wrapper;
+                                        break;
+                                    }
                                 }
                             }
 
-                            if (targetBuilding == null)
+                            if (targetWrapper == null)
                             {
-                                Debug.LogWarning($"[BattleSequencer] Could not find building of type {buildingAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
+                                Debug.LogWarning($"[BattleSequencer] Could not find uninitialized building of type {buildingAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
                                 break;
                             }
 
-                            // Initialize the existing building
-                            targetBuilding.Activate(
+                            // Full initialization chain for pre-placed buildings:
+                            // 1. StaticInitialise - sets up _parent, _healthBar, _clickHandler
+                            targetWrapper.StaticInitialise();
+
+                            // 2. Initialise - hooks up click handlers, initializes health bar
+                            targetWrapper.Buildable.Initialise(BattleSceneGod.Instance.uiManager);
+
+                            // 3. Activate - sets parent cruiser, enables the gameobject
+                            targetWrapper.Buildable.Activate(
                                 new BuildingActivationArgs(
                                     cruiser,
                                     cruiser.EnemyCruiser,
@@ -183,11 +199,12 @@ namespace BattleCruisers.Scenes.BattleScene
                                     null, // No slot needed for pre-placed buildings
                                     null));
 
-                            targetBuilding.StartConstruction();
-                            ((Buildable<BuildingActivationArgs>)targetBuilding).FinishConstruction();
+                            // 4. StartConstruction and FinishConstruction - completes the building
+                            targetWrapper.Buildable.StartConstruction();
+                            ((Buildable<BuildingActivationArgs>)targetWrapper.Buildable).FinishConstruction();
 
-                            Debug.Log($"[BattleSequencer] Initialized existing building {targetBuilding.Name} on {cruiser.name}");
-                            LogBuildingStats(targetBuilding, cruiser);
+                            Debug.Log($"[BattleSequencer] Initialized existing building {targetWrapper.Buildable.Name} on {cruiser.name}");
+                            LogBuildingStats(targetWrapper.Buildable, cruiser);
 
                             break;
                     }
@@ -237,43 +254,58 @@ namespace BattleCruisers.Scenes.BattleScene
                 foreach (SequencePoint.UnitAction unitAction in sq.UnitActions)
                 {
                     // Auto-initialize existing units already placed in the cruiser hierarchy
-                    // instead of spawning new ones
-                    IUnit[] existingUnits = cruiser.GetComponentsInChildren<IUnit>();
+                    // instead of spawning new ones. We need to get UnitWrapper to properly
+                    // initialize the health bar and click handler.
+                    UnitWrapper[] existingUnitWrappers = cruiser.GetComponentsInChildren<UnitWrapper>(includeInactive: true);
 
-                    if (existingUnits.Length == 0)
+                    if (existingUnitWrappers.Length == 0)
                     {
-                        Debug.LogWarning($"[BattleSequencer] No existing units found in cruiser {cruiser.name} hierarchy. Place unit prefabs as children of cruiser sections.");
+                        Debug.LogWarning($"[BattleSequencer] No existing UnitWrapper found in cruiser {cruiser.name} hierarchy. Place unit prefabs as children of cruiser sections.");
                         continue;
                     }
 
-                    // Find the unit by type name matching
-                    IUnit targetUnit = null;
-                    foreach (IUnit u in existingUnits)
+                    // Find the unit wrapper by type name matching
+                    UnitWrapper targetUnitWrapper = null;
+                    foreach (UnitWrapper wrapper in existingUnitWrappers)
                     {
-                        if (u.PrefabName.Contains(unitAction.PrefabKeyName.ToString()))
+                        // Check if this wrapper hasn't been initialized yet and matches the prefab name
+                        string wrapperName = wrapper.gameObject.name.Replace("(Clone)", "").Trim();
+                        if (wrapperName.Contains(unitAction.PrefabKeyName.ToString()))
                         {
-                            targetUnit = u;
-                            break;
+                            // Check if the unit is already initialized
+                            if (!wrapper.gameObject.activeSelf || wrapper.Buildable == null || !wrapper.Buildable.IsInitialised)
+                            {
+                                targetUnitWrapper = wrapper;
+                                break;
+                            }
                         }
                     }
 
-                    if (targetUnit == null)
+                    if (targetUnitWrapper == null)
                     {
-                        Debug.LogWarning($"[BattleSequencer] Could not find unit of type {unitAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
+                        Debug.LogWarning($"[BattleSequencer] Could not find uninitialized unit of type {unitAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
                         continue;
                     }
 
-                    // Initialize the existing unit
-                    targetUnit.Activate(
+                    // Full initialization chain for pre-placed units:
+                    // 1. StaticInitialise - sets up _parent, _healthBar, _clickHandler
+                    targetUnitWrapper.StaticInitialise();
+
+                    // 2. Initialise - hooks up click handlers, initializes health bar
+                    targetUnitWrapper.Buildable.Initialise(BattleSceneGod.Instance.uiManager);
+
+                    // 3. Activate - sets parent cruiser, enables the gameobject
+                    targetUnitWrapper.Buildable.Activate(
                         new BuildableActivationArgs(
                             cruiser,
                             cruiser.EnemyCruiser,
                             cruiser.CruiserSpecificFactories));
 
-                    targetUnit.StartConstruction();
-                    ((Buildable<BuildableActivationArgs>)targetUnit).FinishConstruction();
+                    // 4. StartConstruction and FinishConstruction - completes the unit
+                    targetUnitWrapper.Buildable.StartConstruction();
+                    ((Buildable<BuildableActivationArgs>)targetUnitWrapper.Buildable).FinishConstruction();
 
-                    Debug.Log($"[BattleSequencer] Initialized existing unit {targetUnit.Name} on {cruiser.name}");
+                    Debug.Log($"[BattleSequencer] Initialized existing unit {targetUnitWrapper.Buildable.Name} on {cruiser.name}");
                 }
             if (sq.ScriptCallActions != null)
                 sq.ScriptCallActions.Invoke();
