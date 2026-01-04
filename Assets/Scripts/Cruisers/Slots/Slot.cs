@@ -174,7 +174,7 @@ namespace BattleCruisers.Cruisers.Slots
                     // Set the world position (the local position will be calculated automatically after parenting)
                     building.Position = targetWorldPosition;
 
-                    Debug.Log($"[Slot] After positioning - World: {building.Position}, Local: {building.Transform.UnityTransform.localPosition}");
+                    Debug.Log($"[Slot] After positioning - World: {building.Position}");
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)
@@ -199,7 +199,7 @@ namespace BattleCruisers.Cruisers.Slots
         {
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
-            Debug.Log($"[Slot.Initialise] Initializing slot {gameObject.name} on cruiser {parentCruiser.name}");
+            Debug.Log($"[Slot.Initialise] Initializing slot {gameObject.name} (index {index})");
 
             _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
