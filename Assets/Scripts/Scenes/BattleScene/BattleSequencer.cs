@@ -260,6 +260,13 @@ namespace BattleCruisers.Scenes.BattleScene
                         continue;
                     }
 
+                    // Safety check: Amount must be at least 1
+                    if (unitAction.Amount == 0)
+                    {
+                        Debug.LogWarning($"[BattleSequencer] UnitAction has Amount=0 for {unitAction.PrefabKeyName}. Setting to 1. Check your sequence point configuration.");
+                        unitAction.Amount = 1;
+                    }
+
                     Debug.Log($"[BattleSequencer] Spawning {unitAction.Amount} unit(s) of type {unitAction.PrefabKeyName} at position {unitAction.Postion}");
 
                     if (unitAction.Amount == 1)
