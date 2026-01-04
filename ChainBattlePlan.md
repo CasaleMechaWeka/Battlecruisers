@@ -7,10 +7,11 @@
 **System Overview**: This system enables a single `Cruiser` class to handle 1-N independent, targetable sections. Previously, multi-section cruisers required a specialized `ChainCruiser` subclass. This refactor inverted that architecture so the base `Cruiser` is flexible enough to handle any configuration.
 
 **Key Files to Know**:
-- **Cruiser.cs** (Assets/Scripts/Cruisers/) - Base class, handles both single and multi-section
+- **Cruiser.cs** (Assets/Scripts/Cruisers/) - Base class, handles both single and multi-section, includes DisplayMessage() for battle messaging
 - **CruiserSection.cs** (Assets/Scripts/Cruisers/) - Individual targetable section component
 - **CruiserFactory.cs** (Assets/Scripts/Cruisers/) - Handles automatic section detection and initialization
 - **GlobalTargetFinder.cs** (Assets/Scripts/Targets/TargetFinders/) - Emits sections as targets
+- **BattleSceneMessageDisplay.cs** (Assets/Scripts/Utils/Debugging/) - Singleton message display system for battle scene
 
 **Core Design Pattern**:
 1. **Single-section**: Cruiser root has SpriteRenderer + Collider2D, no CruiserSection children, `_hulls = null`
@@ -29,6 +30,13 @@
 ---
 
 ## 📋 Version History & Changes
+
+### Version 3.2 - Message Display System (January 4, 2026)
+**Files Modified**: BattleSceneMessageDisplay.cs, Cruiser.cs, ChainBattlePlan.md
+- **Added**: Singleton instance to BattleSceneMessageDisplay for automatic discovery
+- **Added**: DisplayMessage() method to Cruiser class for easy message display during battle
+- **Feature**: Automatic battle scene message display without manual variable assignment
+- **What we learned**: Messages can be displayed from any Cruiser during battle by simply calling DisplayMessage(). The system automatically finds the message display singleton. Graceful fallback to Debug.Log if display not available.
 
 ### Version 3.1 - Code Cleanup (January 3, 2026)
 **Commit: 2f5a9b1**
@@ -647,6 +655,75 @@ A: `(int)(section.maxHealth * 0.3f)` - 30% of the section's max health as points
 
 **Q: Can I have sections with different health independently tracked?**
 A: Yes! Each CruiserSection has its own maxHealth and health tracker. The Cruiser's Health property just displays the primary's value for UI purposes.
+
+**Q: How do I display messages from a Cruiser during battle?**
+A: Use the `DisplayMessage()` method. It automatically finds the battle scene message display:
+```csharp
+// From any Cruiser instance
+cruiser.DisplayMessage("Taking damage!");
+cruiser.DisplayMessage("Section destroyed!", BattleSceneMessageDisplay.MessageType.Warning);
+cruiser.DisplayMessage("Critical hit!", BattleSceneMessageDisplay.MessageType.Error);
+```
+**Note**: Messages appear in the admin panel debug display (on-screen in battle). The system automatically finds the `BattleSceneMessageDisplay` singleton - no manual setup needed.
+
+---
+
+## Message Display System
+
+### How It Works
+
+The `DisplayMessage()` method on Cruiser provides a simple interface to the battle scene message display:
+
+```csharp
+public void DisplayMessage(string message,
+    BattleSceneMessageDisplay.MessageType messageType = BattleSceneMessageDisplay.MessageType.Info)
+```
+
+**Features**:
+- ✅ Automatic singleton discovery (no manual assignment)
+- ✅ Color-coded message types (Error=red, Warning=yellow, Success=green, Info=white, etc.)
+- ✅ Queue-based display with auto-fade
+- ✅ Messages persist to console even if display is inactive
+- ✅ Graceful fallback to Debug.Log if no display available
+
+### Message Types
+
+```csharp
+BattleSceneMessageDisplay.MessageType.Info       // [INFO] White
+BattleSceneMessageDisplay.MessageType.Success    // [OK] Green
+BattleSceneMessageDisplay.MessageType.Warning    // [WARN] Yellow
+BattleSceneMessageDisplay.MessageType.Error      // [ERROR] Red
+BattleSceneMessageDisplay.MessageType.Building   // [BUILD] Magenta
+BattleSceneMessageDisplay.MessageType.Boost      // [BOOST] Cyan
+```
+
+### Example Usage in CruiserSection
+
+```csharp
+// When a section takes damage
+private void OnTakingDamage(float damage)
+{
+    ParentCruiser?.DisplayMessage($"{HullId} taking {damage:F0} damage!");
+}
+
+// When a section is destroyed
+private void OnHealthGone(object sender, EventArgs e)
+{
+    ParentCruiser?.DisplayMessage(
+        $"{HullId} destroyed!",
+        BattleSceneMessageDisplay.MessageType.Error);
+
+    ParentCruiser?.OnHullDestroyed(this);
+}
+```
+
+### Implementation Details
+
+- **Location**: `Assets/Scripts/Utils/Debugging/BattleSceneMessageDisplay.cs`
+- **Singleton Access**: `BattleSceneMessageDisplay.Instance`
+- **Message Lifetime**: 8 seconds (configurable in inspector)
+- **Max Visible**: 5 messages (configurable in inspector)
+- **Fallback**: If no display found, message logs to console only
 
 ---
 

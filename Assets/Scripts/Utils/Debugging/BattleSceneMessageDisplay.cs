@@ -7,9 +7,12 @@ namespace BattleCruisers.Utils.Debugging
     /// <summary>
     /// Displays admin/debug messages on screen during battle.
     /// Attach this to a GameObject with a Text component in your admin panel canvas.
+    /// Singleton instance allows access from anywhere: BattleSceneMessageDisplay.Instance
     /// </summary>
     public class BattleSceneMessageDisplay : MonoBehaviour
     {
+        public static BattleSceneMessageDisplay Instance { get; private set; }
+
         [Header("Message Display Settings")]
         [Tooltip("Text component to display messages. Drag from your admin panel canvas.")]
         public Text messageText;
@@ -42,6 +45,18 @@ namespace BattleCruisers.Utils.Debugging
 
         void Start()
         {
+            // Set singleton instance
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else if (Instance != this)
+            {
+                Debug.LogWarning("[BattleSceneMessageDisplay] Multiple instances detected. Destroying duplicate.");
+                Destroy(gameObject);
+                return;
+            }
+
             if (messageText == null)
             {
                 messageText = GetComponent<Text>();
