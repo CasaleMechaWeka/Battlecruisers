@@ -24,7 +24,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
@@ -708,24 +707,6 @@ namespace BattleCruisers.Cruisers
         public bool IsCruiser()
         {
             return isCruiser;
-        }
-
-        /// <summary>
-        /// Display a message in the battle scene message display.
-        /// Automatically uses BattleSceneMessageDisplay singleton to find the message text object.
-        /// </summary>
-        /// <param name="message">The message to display</param>
-        /// <param name="messageType">The type of message (determines color and prefix). Defaults to Info.</param>
-        public void DisplayMessage(string message, BattleSceneMessageDisplay.MessageType messageType = BattleSceneMessageDisplay.MessageType.Info)
-        {
-            if (BattleSceneMessageDisplay.Instance != null)
-            {
-                BattleSceneMessageDisplay.Instance.ShowMessage(message, messageType);
-            }
-            else
-            {
-                Debug.Log($"[{name}] {message}");
-            }
         }
 
     }
