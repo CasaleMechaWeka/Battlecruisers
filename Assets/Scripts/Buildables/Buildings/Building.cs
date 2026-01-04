@@ -238,7 +238,16 @@ namespace BattleCruisers.Buildables.Buildings
         protected override void OnSingleClick()
         {
             Logging.LogMethod(Tags.BUILDING);
-            _uiManager.SelectBuilding(this);
+            Debug.Log($"[Building.OnSingleClick] Building {Name} clicked. UIManager: {(_uiManager != null ? "Valid" : "NULL")}");
+            if (_uiManager != null)
+            {
+                Debug.Log($"[Building.OnSingleClick] Calling SelectBuilding for {Name}");
+                _uiManager.SelectBuilding(this);
+            }
+            else
+            {
+                Debug.LogError($"[Building.OnSingleClick] UIManager is null for building {Name}, cannot select building");
+            }
         }
 
         protected override void OnDoubleClick()
