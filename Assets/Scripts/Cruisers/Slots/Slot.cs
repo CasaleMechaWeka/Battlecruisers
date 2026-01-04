@@ -74,6 +74,19 @@ namespace BattleCruisers.Cruisers.Slots
             }
         }
 
+        // Property to access the BuildingPlacementPoint transform directly (for local positioning)
+        private Transform BuildingPlacementPointTransform
+        {
+            get
+            {
+                if (_buildingPlacementPointTransform == null)
+                {
+                    _buildingPlacementPointTransform = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
+                }
+                return _buildingPlacementPointTransform;
+            }
+        }
+
         public Vector2 Position => transform.position;
 
         private ISettableBroadcastingProperty<IBuilding> _baseBuilding;
@@ -147,16 +160,17 @@ namespace BattleCruisers.Cruisers.Slots
                     IBuilding building = _baseBuilding.Value;
 
                     // Building is already instantiated as child of this slot during PrefabFactory.CreateBuilding
-                    // Just set it to local origin (0, 0, 0) so it positions at the slot's center
+                    // Position it at BuildingPlacementPoint's local offset within the slot
                     Debug.Log($"[Slot] Setting building {building.Name} on slot {gameObject.name} (index {index})");
 
-                    // Reset to local origin since building is already a child of this slot
-                    building.Transform.PlatformObject.localPosition = Vector3.zero;
+                    // Position building at BuildingPlacementPoint's local position
+                    Vector3 placementLocalPos = BuildingPlacementPointTransform.localPosition;
+                    building.Transform.PlatformObject.localPosition = placementLocalPos;
 
                     // Match the slot's rotation
                     _baseBuilding.Value.Rotation = Transform.Rotation;
 
-                    Debug.Log($"[Slot] Building positioned at local (0, 0, 0), world position: {building.Position}");
+                    Debug.Log($"[Slot] Building positioned at local {placementLocalPos}, world position: {building.Position}");
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)
