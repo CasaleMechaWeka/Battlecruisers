@@ -30,6 +30,25 @@
 
 ## 📋 Version History & Changes
 
+### Version 3.4 - Debugging and Diagnostics (January 4, 2026)
+**Commits: 1c422ac, fe10a01, 41697dd, 92e7ade, 82036d4**
+- **Added**: Comprehensive debug logging to building positioning and selection
+- **Fixed**: BuildingPlacementPoint is now dynamic (returns current world position, not fixed)
+- **Fixed**: IsVisible null check prevents NullReferenceException
+- **Fixed**: LandingSceneGod null check prevents scene initialization crash
+- **Simplified**: Removed message display system from BattleSequencer (was untested feature)
+- **What we learned**: SlotWrapper configuration is critical - single parent works best for multi-section. BuildingPlacementPoint must be dynamic to track moving slots. Extensive debug logging helps diagnose positioning offsets.
+
+### Version 3.3 - Building Selection Debugging (January 4, 2026)
+- **Added**: Debug logs for building positioning calculations
+- **Added**: Debug logs for click detection chain (slot vs building)
+- **Added**: Debug logs for UIManager selection calls
+- **Issue**: Buildings appear at wrong world positions and cannot be selected
+
+### Version 3.2 - Message Display (January 4, 2026 - REVERTED)
+- **Added**: Message display system (reverted - was untested and complex)
+- **Lesson**: Focus on core functionality first, avoid experimental features when core is unstable
+
 ### Version 3.1 - Code Cleanup (January 3, 2026)
 **Commit: 2f5a9b1**
 - **Removed**: Dead code `CruiserSection.SlotController` field and assignment
@@ -673,3 +692,111 @@ A: Yes! Each CruiserSection has its own maxHealth and health tracker. The Cruise
 5. **Battle**: Sections targeted independently, primary controls game state
 
 **That's it.** Design a Cruiser prefab with multiple CruiserSection children in the hierarchy, and the system handles everything automatically. Same code path, no specialization.
+
+---
+
+## 🔧 Troubleshooting Guide
+
+### Building Position Offset Issue
+
+**Symptom**: Buildings spawn at wrong world position (e.g., -30, 6 instead of 0, 0 on slot)
+
+**Debug Steps**:
+1. Check console for `[Slot]` debug logs when building is placed
+2. Look for these key messages:
+   - `[Slot] Setting building {name} on slot {name}`
+   - `[Slot] BuildingPlacementPoint: {position}` - Should be on the slot
+   - `[Slot] Target world position calculated: {position}` - Desired position
+   - `[Slot] After positioning - World: {position}, Local: {position}`
+
+3. **Diagnosis**:
+   - If `BuildingPlacementPoint` is wrong: Check if BuildingPlacementPoint child exists and has correct position on slot
+   - If offset calculation is wrong: Verify PuzzleRootPoint on building prefab
+   - If final position is wrong: Check Transform hierarchy and parent-child relationships
+
+**Common Fixes**:
+- Verify BuildingPlacementPoint is positioned at (0, 0) relative to slot
+- Ensure building is properly parented to slot
+- Check that slot is properly positioned on cruiser/section
+
+### Building Selection Not Working
+
+**Symptom**: Buildings can be targeted by weapons but clicking doesn't select them (no red highlight, no info panel)
+
+**Debug Steps**:
+1. Click a building and check console for:
+   - `[Slot.OnPointerClick]` - Indicates which object was clicked
+   - `[Building.OnSingleClick]` - Indicates if building's click handler fired
+
+2. **If only Slot logs appear**:
+   - Building's click detection isn't firing
+   - Check: Is building's ClickHandlerWrapper component present?
+   - Check: Is building's collider properly positioned?
+   - Check: Is building in correct layer for raycasting?
+
+3. **If Building logs appear but no UI update**:
+   - UIManager problem
+   - Check: `[Building.OnSingleClick] UIManager: {Valid/NULL}`
+   - If NULL: Building wasn't properly initialized with UIManager reference
+
+**Common Fixes**:
+- Ensure building has ClickHandlerWrapper component
+- Ensure building collider is in correct position (moves with building)
+- Verify building is activated properly (Activate method called after creation)
+- Check UIManager is assigned during Buildable.Initialise()
+
+### SlotWrapper Configuration for Multi-Section Cruisers
+
+**Best Practice** (Confirmed Working):
+- **Single parent SlotWrapper** on root Cruiser (not per-section)
+- SlotWrapper finds all Slot children via GetComponentsInChildren
+- Works for both single-section and multi-section cruisers
+- Ensures all slots are accessible regardless of section structure
+
+**Why Not Per-Section SlotWrappers**:
+- Creates duplicate slot collections
+- Adds unnecessary complexity
+- Can cause initialization order issues
+- Single parent approach is simpler and more robust
+
+### Battle Initialization Crash
+
+**Symptom**: "Cannot process sequence point: Invalid faction Reds or cruiser is null"
+
+**Debug Steps**:
+1. Check for earlier console errors **before** this message:
+   - Look for `[Slot.Initialise]` failures (missing SlotImage)
+   - Look for null reference exceptions
+   - Look for assertion failures
+
+2. **Likely causes**:
+   - LandingSceneGod.Instance is null (fixed: added null check)
+   - Cruiser initialization failed silently
+   - Slots weren't properly initialized with SlotImage renderer
+
+**Fix Applied**:
+- Added null check for LandingSceneGod.Instance
+- Added null check in Slot.IsVisible property
+- Added comprehensive debug logging throughout initialization
+
+---
+
+## 📝 Debug Log Reference
+
+When troubleshooting, look for these patterns in console:
+
+```
+[Slot.Initialise] Initializing slot {name} on cruiser {cruiser}
+[Slot.Initialise] Found SlotImage renderer on {name}     ← Good
+[Slot.Initialise] Failed to find SlotImage SpriteRenderer ← Problem!
+
+[Slot] Setting building {name} on slot {name}
+[Slot] BuildingPlacementPoint: {position}
+[Slot] Target world position calculated: {position}
+[Slot] After positioning - World: {pos}, Local: {pos}
+
+[Slot.OnPointerClick] Slot {name} clicked. IsVisible: {T/F}, IsFree: {T/F}
+[Building.OnSingleClick] Building {name} clicked. UIManager: {Valid/NULL}
+```
+
+Use these logs to trace the exact point where something goes wrong.
