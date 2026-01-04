@@ -28,10 +28,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public SequencePoint[] sequencePoints;
         [Serializable] public class ScriptCallAction : UnityEvent { }
 
-        [Header("Debug Message Display")]
-        [Tooltip("Optional message display component for on-screen admin messages. Drag from your admin panel canvas.")]
-        public BattleSceneMessageDisplay messageDisplay;
-
 
 #if UNITY_EDITOR
         // Optional: toggle if you sometimes want to assign other targets
@@ -161,54 +157,42 @@ namespace BattleCruisers.Scenes.BattleScene
                                 IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingAction.PrefabKeyName));
                                 if (building == null || building.Buildable == null)
                                 {
-                                    string errorMsg = $"Failed to get building prefab for {buildingAction.PrefabKeyName}";
-                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
-                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    Debug.LogError($"[BattleSequencer] Failed to get building prefab for {buildingAction.PrefabKeyName}");
                                     return;
                                 }
 
                                 if (cruiser.SlotAccessor == null)
                                 {
-                                    string errorMsg = $"Cruiser {cruiser.name} SlotAccessor is null! Cruiser may not be fully initialized.";
-                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
-                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    Debug.LogError($"[BattleSequencer] Cruiser {cruiser.name} SlotAccessor is null! Cruiser may not be fully initialized.");
                                     return;
                                 }
 
                                 IList<Slot> slots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
                                 if (slots == null || slots.Count == 0)
                                 {
-                                    string errorMsg = $"No free slots of type {building.Buildable.SlotSpecification.SlotType} found on {cruiser.name}";
-                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
-                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    Debug.LogError($"[BattleSequencer] No free slots of type {building.Buildable.SlotSpecification.SlotType} found on {cruiser.name}");
                                     return;
                                 }
 
                                 Slot slot = slots[Math.Min(slots.Count - 1, buildingAction.SlotID)];
                                 if (slot == null)
                                 {
-                                    string errorMsg = $"Slot #{buildingAction.SlotID} is already occupied or invalid!";
-                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
-                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    Debug.LogError($"[BattleSequencer] Slot #{buildingAction.SlotID} is already occupied or invalid!");
                                     return;
                                 }
 
                                 IBuilding constructedBuilding = cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
-                                
+
                                 if (constructedBuilding != null)
                                 {
-                                    string successMsg = $"Added {buildingAction.PrefabKeyName} to {sq.Faction} cruiser slot {buildingAction.SlotID}";
-                                    Debug.Log($"[BattleSequencer] {successMsg}");
-                                    ShowMessage(successMsg, BattleSceneMessageDisplay.MessageType.Building);
-                                    
+                                    Debug.Log($"[BattleSequencer] Added {buildingAction.PrefabKeyName} to {sq.Faction} cruiser slot {buildingAction.SlotID}");
+
                                     // Log building stats
                                     LogBuildingStats(constructedBuilding, cruiser);
                                 }
                                 else
                                 {
-                                    string errorMsg = $"Failed to construct {buildingAction.PrefabKeyName} in slot {buildingAction.SlotID}";
-                                    Debug.LogError($"[BattleSequencer] {errorMsg}");
-                                    ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
+                                    Debug.LogError($"[BattleSequencer] Failed to construct {buildingAction.PrefabKeyName} in slot {buildingAction.SlotID}");
                                 }
                             }
                             else
@@ -340,26 +324,11 @@ namespace BattleCruisers.Scenes.BattleScene
                 unit.NumOfDronesRequired = droneNum;
                 unit.BuildTimeInS /= droneNum;
 
-                string successMsg = $"Spawned {prefabKey} at ({position.x:F1}, {position.y:F1}) for {cruiser.name}";
-                Debug.Log($"[BattleSequencer] {successMsg}");
-                ShowMessage(successMsg, BattleSceneMessageDisplay.MessageType.Success);
+                Debug.Log($"[BattleSequencer] Spawned {prefabKey} at ({position.x:F1}, {position.y:F1}) for {cruiser.name}");
             }
             catch (System.Exception ex)
             {
-                string errorMsg = $"Exception spawning {prefabKey} at {position}: {ex.Message}";
-                Debug.LogError($"[BattleSequencer] {errorMsg}\n{ex.StackTrace}");
-                ShowMessage(errorMsg, BattleSceneMessageDisplay.MessageType.Error);
-            }
-        }
-
-        /// <summary>
-        /// Helper method to show messages on screen and in console
-        /// </summary>
-        private void ShowMessage(string message, BattleSceneMessageDisplay.MessageType type = BattleSceneMessageDisplay.MessageType.Info)
-        {
-            if (messageDisplay != null)
-            {
-                messageDisplay.ShowMessage(message, type);
+                Debug.LogError($"[BattleSequencer] Exception spawning {prefabKey} at {position}: {ex.Message}\n{ex.StackTrace}");
             }
         }
 
@@ -375,9 +344,6 @@ namespace BattleCruisers.Scenes.BattleScene
                      $"State: {building.BuildableState}, " +
                      $"Cruiser: {cruiser.name}, " +
                      $"Faction: {cruiser.Faction}");
-            
-            ShowMessage($"Building: {building.Name} | HP: {building.Health:F0}/{building.MaxHealth:F0} | State: {building.BuildableState}", 
-                       BattleSceneMessageDisplay.MessageType.Building);
         }
 
         /// <summary>
