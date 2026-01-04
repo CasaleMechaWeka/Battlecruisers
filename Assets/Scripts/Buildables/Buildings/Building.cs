@@ -95,7 +95,13 @@ namespace BattleCruisers.Buildables.Buildings
 
             _parentSlot = activationArgs.ParentSlot;
             _doubleClickHandler = activationArgs.DoubleClickHandler;
-            _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+
+            // Only add boost providers if we have a parent slot (not pre-placed buildings)
+            if (_parentSlot != null)
+            {
+                _localBoosterBoostableGroup.AddBoostProvidersList(_parentSlot.BoostProviders);
+            }
+
             HealthBar.variantIcon.enabled = false;
             if (ParentCruiser.IsPlayerCruiser && !isAppliedVariant)
             {
