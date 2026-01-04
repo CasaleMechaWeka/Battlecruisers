@@ -152,6 +152,7 @@ namespace BattleCruisers.Cruisers
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; protected set; }
         public Direction Direction { get; protected set; }
+        public ICruiser EnemyCruiser => _enemyCruiser;
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
         public CruiserSpecificFactories CruiserSpecificFactories { get; protected set; }
@@ -552,7 +553,7 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
             // Instantiate building as child of slot to ensure UI elements (HealthBar) stay properly hierarchized during initialization
-            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab, slot.Transform.PlatformObject);
+            IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
             if (ignoreDroneRequirement)
             {
                 building.BuildTimeInS *= building.NumOfDronesRequired;

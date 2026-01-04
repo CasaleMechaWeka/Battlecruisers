@@ -24,6 +24,9 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         [HideInInspector] public Cruiser[] Cruisers;
 
+        [Tooltip("Message display for showing sequencer events. Can be assigned by CheaterButtonsPanelToggler.")]
+        public BattleSceneMessageDisplay messageDisplay;
+
         [Tooltip("Array of sequence points that define the battle progression. Each point contains timed actions like spawning units, adding buildings, or applying boosts. Assigned in BattleScene.")]
         public SequencePoint[] sequencePoints;
         [Serializable] public class ScriptCallAction : UnityEvent { }
@@ -325,6 +328,17 @@ namespace BattleCruisers.Scenes.BattleScene
             catch (System.Exception ex)
             {
                 Debug.LogError($"[BattleSequencer] Exception spawning {prefabKey} at {position}: {ex.Message}\n{ex.StackTrace}");
+            }
+        }
+
+        /// <summary>
+        /// Display a message via the messageDisplay component (if available)
+        /// </summary>
+        private void ShowMessage(string message, BattleSceneMessageDisplay.MessageType messageType)
+        {
+            if (messageDisplay != null)
+            {
+                messageDisplay.ShowMessage(message, messageType);
             }
         }
 
