@@ -1,13 +1,10 @@
-using BattleCruisers.Cruisers;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Commands;
 using BattleCruisers.UI.Common;
-using BattleCruisers.UI.ScreensScene.TrashScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Fetchers.Sprites;
 using System;
 using System.Collections.Generic;
@@ -85,13 +82,19 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             _levelSets = new List<LevelsSetController>(levelSets.Length);
 
+            List<Task> levelSetInitialisations = new List<Task>();
+
+            for (int j = 0; j < levelSets.Length; j++)
+                levelSetInitialisations.Add(levelSets[j].InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, difficultyIndicators, setIndex: j));
+
+            await Task.WhenAll(levelSetInitialisations);
+
             for (int j = 0; j < levelSets.Length; j++)
             {
-                LevelsSetController levelsSet = levelSets[j];
-                await levelsSet.InitialiseAsync(screensSceneGod, this, levels, numOfLevelsUnlocked, soundPlayer, difficultyIndicators, setIndex: j);
-                levelsSet.IsVisible = false;
-                _levelSets.Add(levelsSet);
+                levelSets[j].IsVisible = false;
+                _levelSets.Add(levelSets[j]);
             }
+
         }
 
         public override void OnPresenting(object activationParameter)
@@ -159,92 +162,95 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         /// </summary>
         private async Task AssignCaptainImagesAsync(IList<LevelInfo> levels)
         {
+            List<Image> spriteTargetComponents = new List<Image>();
+            List<Task<Sprite>> spriteLoads = new List<Task<Sprite>>();
+
             // Assign images to level buttons
             foreach (LevelsSetController levelSet in _levelSets)
             {
                 LevelButtonController[] levelButtons = levelSet.GetComponentsInChildren<LevelButtonController>();
-                
+
                 for (int i = 0; i < levelButtons.Length; i++)
                 {
                     LevelButtonController button = levelButtons[i];
                     int levelIndex = levelSet.firstLevelIndex + i;
-                    
-                    if (levelIndex < levels.Count)
+
+                    if(levelIndex >= levels.Count)
                     {
-                        LevelInfo level = levels[levelIndex];
-                        TrashTalkData trashTalkData = StaticData.LevelTrashTalk[level.Num];
-                        
-                        // Find the CaptainImage child GameObject
-                        Transform captainImageTransform = button.transform.Find("CaptainImage");
-                        if (captainImageTransform != null)
-                        {
-                            Image captainImage = captainImageTransform.GetComponent<Image>();
-                            if (captainImage != null)
-                            {
-                                // Load and assign the sprite
-                                Sprite sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
-                                captainImage.sprite = sprite;
-                                
-                                // Also update the LevelButtonController's captainImage field if it exists
-                                if (button.captainImage != null && button.captainImage != captainImage)
-                                {
-                                    button.captainImage.sprite = sprite;
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogWarning($"Level {level.Num}: CaptainImage GameObject found but Image component is missing.");
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"Level {level.Num}: CaptainImage child GameObject not found.");
-                        }
+                        Debug.LogError($"Invalid Level: {levelIndex}");
+                        continue;
+                    }
+
+                    LevelInfo level = levels[levelIndex];
+
+                    Transform captainImageTransform = button.transform.Find("CaptainImage");
+                    if (captainImageTransform == null)
+                    {
+                        Debug.LogWarning($"Level {level.Num}: CaptainImage child GameObject not found.");
+                        continue;
+                    }
+
+                    Image captainImage = captainImageTransform.GetComponent<Image>();
+                    if (captainImage == null)
+                    {
+                        Debug.LogWarning($"Level {level.Num}: CaptainImage GameObject found but Image component is missing.");
+                        continue;
+                    }
+
+                    Task<Sprite> spriteLoad = SpriteFetcher.GetSpriteAsync(StaticData.LevelTrashTalk[level.Num].EnemySpritePath);
+                    spriteTargetComponents.Add(captainImage);
+                    spriteLoads.Add(spriteLoad);
+
+                    if (button.captainImage != null && button.captainImage != captainImage)
+                    {
+                        spriteTargetComponents.Add(button.captainImage);
+                        spriteLoads.Add(spriteLoad);
                     }
                 }
 
                 // Assign images to sidequest buttons
                 SideQuestButtonController[] sideQuestButtons = levelSet.GetComponentsInChildren<SideQuestButtonController>();
-                
+            
                 for (int i = 0; i < sideQuestButtons.Length; i++)
                 {
-                    SideQuestButtonController sideQuestButton = sideQuestButtons[i];
-                    int sideQuestID = sideQuestButton.sideQuestID;
-                    
-                    if (sideQuestID >= 0 && sideQuestID < StaticData.SideQuestTrashTalk.Count)
+                    int sideQuestID = sideQuestButtons[i].sideQuestID;
+                    if (sideQuestID < 0 || sideQuestID >= StaticData.SideQuestTrashTalk.Count)
                     {
-                        TrashTalkData sideQuestTrashTalkData = StaticData.SideQuestTrashTalk[sideQuestID];
-                        
-                        // Find the CompleteSideQuest -> Captain child GameObject
-                        Transform completeSideQuestTransform = sideQuestButton.transform.Find("ButtonImages/CompleteSideQuest");
-                        if (completeSideQuestTransform != null)
-                        {
-                            Transform captainTransform = completeSideQuestTransform.Find("Captain");
-                            if (captainTransform != null)
-                            {
-                                Image captainImage = captainTransform.GetComponent<Image>();
-                                if (captainImage != null)
-                                {
-                                    // Load and assign the sprite
-                                    captainImage.sprite = await SpriteFetcher.GetSpriteAsync(sideQuestTrashTalkData.EnemySpritePath);
-                                }
-                                else
-                                {
-                                    Debug.LogWarning($"SideQuest {sideQuestID}: Captain GameObject found but Image component is missing.");
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogWarning($"SideQuest {sideQuestID}: Captain child GameObject not found under CompleteSideQuest.");
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"SideQuest {sideQuestID}: CompleteSideQuest child GameObject not found.");
-                        }
+                        Debug.LogError($"Invalid SideQuestID: {sideQuestID}");   
+                        continue;
                     }
+
+                    // Find the CompleteSideQuest -> Captain child GameObject
+                    Transform completeSideQuestTransform = sideQuestButtons[i].transform.Find("ButtonImages/CompleteSideQuest");
+                    if(completeSideQuestTransform == null)
+                    {
+                        Debug.LogWarning($"SideQuest {sideQuestID}: CompleteSideQuest child GameObject not found.");
+                        continue;
+                    }
+
+                    Transform captainTransform = completeSideQuestTransform.Find("Captain");
+                    if (captainTransform == null)
+                    {
+                        Debug.LogWarning($"SideQuest {sideQuestID}: Captain child GameObject not found under CompleteSideQuest.");
+                        continue;
+                    }
+
+                    Image captainImage = captainTransform.GetComponent<Image>();
+                    if(captainImage == null)
+                    {
+                        Debug.LogWarning($"SideQuest {sideQuestID}: Captain GameObject found but Image component is missing.");
+                        continue;
+                    }
+
+                    spriteTargetComponents.Add(captainImage);
+                    spriteLoads.Add(SpriteFetcher.GetSpriteAsync(StaticData.SideQuestTrashTalk[sideQuestID].EnemySpritePath));
                 }
             }
+
+            await Task.WhenAll(spriteLoads);
+
+            for(int i = 0; i < spriteTargetComponents.Count; i++)
+                spriteTargetComponents[i].sprite = spriteLoads[i].Result;
         }
     }
 }

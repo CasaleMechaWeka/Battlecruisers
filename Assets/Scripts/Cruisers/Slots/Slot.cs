@@ -1,4 +1,4 @@
-﻿using BattleCruisers.Buildables.Boost;
+using BattleCruisers.Buildables.Boost;
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Cruisers.Slots.Feedback;
@@ -21,7 +21,7 @@ namespace BattleCruisers.Cruisers.Slots
     {
         // Explicitly set integer values, because the Unity inspector binds
         // to the integer values.  So now, if I decide to get rid of a slot
-        // type (yet again), I don't need to adjust every single prefab 
+        // type (yet again), I don't need to adjust every single prefab
         // that has a slot type field.  Thanks Manya!
         Utility = 1,
         Mast = 2,
@@ -68,29 +68,17 @@ namespace BattleCruisers.Cruisers.Slots
         private Transform _buildingPlacementBeacon;
 
         private BuildableClickAndDrag _clickAndDrag;
+
+        /// <summary>
+        /// Only show/hide slot sprite renderer.  Always show boost feedback.
+        /// </summary>
         public bool IsVisible
         {
-            get
-            {
-                if (_renderer == null)
-                {
-                    Debug.LogWarning($"[Slot] IsVisible getter: _renderer is null on {gameObject.name}. Slot may not be fully initialized.");
-                    return false;
-                }
-                return _renderer.gameObject.activeSelf;
-            }
-            set
-            {
-                if (_renderer == null)
-                {
-                    Debug.LogWarning($"[Slot] IsVisible setter: _renderer is null on {gameObject.name}. Slot may not be fully initialized.");
-                    return;
-                }
-                _renderer.gameObject.SetActive(value);
-            }
+            get { return _renderer.gameObject.activeSelf; }
+            set { _renderer.gameObject.SetActive(value); }
         }
 
-        public void controlBuildingPlacementFeedback(bool active)   // let's describe a publicly-accessible function that returns nothing, 
+        public void controlBuildingPlacementFeedback(bool active)   // let's describe a publicly-accessible function that returns nothing,
                                                                     // named contorlBuildingPlacementFeedback
                                                                     // which will be passed a bool (true or false) and active??
         {
@@ -109,7 +97,7 @@ namespace BattleCruisers.Cruisers.Slots
 
         public void controlBuildingPlacementBeacon(bool active)
         {
-            if (_renderer != null && _renderer.gameObject.activeSelf && _buildingPlacementBeacon != null)
+            if (_renderer.gameObject.activeSelf && _buildingPlacementBeacon != null)
             {
                 _buildingPlacementBeacon.gameObject.SetActive(active);
             }
@@ -131,23 +119,14 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     IBuilding building = _baseBuilding.Value;
 
-                    // Calculate the building's world position based on slot placement point and puzzle root offset
+                    _baseBuilding.Value.Rotation = Transform.Rotation;
+
                     float verticalChange = building.Position.y - building.PuzzleRootPoint.y;
                     float horizontalChange = building.Position.x - building.PuzzleRootPoint.x;
 
-                    Vector3 targetWorldPosition = BuildingPlacementPoint
-                                                + (Transform.Up * verticalChange)
-                                                + (Transform.Right * horizontalChange);
-
-                    // Parent the building to this slot so it follows slot movement and rotation
-                    // Using worldPositionStays=true keeps the building at the same world position during reparenting
-                    building.Transform.SetParent(transform, worldPositionStays: true);
-
-                    // Match the slot's rotation
-                    _baseBuilding.Value.Rotation = Transform.Rotation;
-
-                    // Set the world position (the local position will be calculated automatically after parenting)
-                    building.Position = targetWorldPosition;
+                    building.Position = BuildingPlacementPoint
+                                        + (Transform.Up * verticalChange)
+                                        + (Transform.Right * horizontalChange);
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)
@@ -172,30 +151,16 @@ namespace BattleCruisers.Cruisers.Slots
         {
             Helper.AssertIsNotNull(parentCruiser, neighbouringSlots);
 
-            Debug.Log($"[Slot.Initialise] Initializing slot {gameObject.name} (index {index})");
-
             _parentCruiser = parentCruiser;
             NeighbouringSlots = neighbouringSlots;
 
             _renderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
-            if (_renderer == null)
-            {
-                Debug.LogError($"[Slot.Initialise] Failed to find SlotImage SpriteRenderer on {gameObject.name}");
-            }
-            else
-            {
-                Debug.Log($"[Slot.Initialise] Found SlotImage renderer on {gameObject.name}");
-            }
-
             _explosion = _explosionController.Initialise();
-
             Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
             BuildingPlacementPoint = buildingPlacementPoint.position;
 
             SpriteRenderer slotRenderer = transform.FindNamedComponent<SpriteRenderer>("SlotImage");
             _size = slotRenderer.bounds.size;
-
-            Debug.Log($"[Slot.Initialise] Slot {gameObject.name} initialized successfully. Size: {_size}");
 
             BoostProviders = new ObservableCollection<IBoostProvider>();
 
@@ -204,6 +169,7 @@ namespace BattleCruisers.Cruisers.Slots
             _baseBuilding = new SettableBroadcastingProperty<IBuilding>(initialValue: null);
             Building = new BroadcastingProperty<IBuilding>(_baseBuilding);
 
+            // Create boost feedback monitor directly (SlotBoostFeedbackMonitorInitialiser was removed)
             Transform singleBoostEffect = transform.FindNamedComponent<Transform>("BoostFeedback/SingleBoostEffect");
             Transform doubleBoostEffect = transform.FindNamedComponent<Transform>("BoostFeedback/DoubleBoostEffect");
 
@@ -246,20 +212,10 @@ namespace BattleCruisers.Cruisers.Slots
         public void OnPointerClick(PointerEventData eventData)
         {
             Logging.LogMethod(Tags.SLOTS);
-            Debug.Log($"[Slot.OnPointerClick] Slot {gameObject.name} clicked. IsVisible: {IsVisible}, IsFree: {IsFree}, HasBuilding: {_baseBuilding.Value != null}");
 
             if (IsVisible && IsFree)
             {
-                Debug.Log($"[Slot.OnPointerClick] Slot is free, constructing building");
                 _parentCruiser.ConstructSelectedBuilding(this);
-            }
-            else if (!IsVisible)
-            {
-                Debug.Log($"[Slot.OnPointerClick] Slot is not visible");
-            }
-            else if (!IsFree)
-            {
-                Debug.Log($"[Slot.OnPointerClick] Slot is not free, has building: {_baseBuilding.Value?.Name}");
             }
 
             Clicked?.Invoke(this, EventArgs.Empty);

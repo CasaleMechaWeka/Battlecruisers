@@ -45,14 +45,17 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
             LastLevelNum = firstLevelIndex + _numOfLevels;
 
+            List<Task> levelButtonInitialisations = new List<Task>();
+
             for (int i = 0; i < _numOfLevels; ++i)
             {
-                LevelButtonController button = levelButtons[i];
                 LevelInfo level = allLevels[firstLevelIndex + i];
                 TrashTalkData trashTalkData = StaticData.LevelTrashTalk[level.Num];
 
-                await button.Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen);
+                levelButtonInitialisations.Add(levelButtons[i].Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen));
             }
+
+            await Task.WhenAll(levelButtonInitialisations);
 
             // Set up Secret levels
             SecretLevelButtonController[] secretLevelButton = GetComponentsInChildren<SecretLevelButtonController>();
