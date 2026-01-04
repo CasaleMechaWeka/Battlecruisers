@@ -131,23 +131,13 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     IBuilding building = _baseBuilding.Value;
 
-                    // DEBUG: Log building and slot setup
-                    Debug.Log($"[Slot] Setting building {building.Name} on slot {gameObject.name} (index {index})");
-                    Debug.Log($"[Slot] Building initial position: {building.Position}, PuzzleRootPoint: {building.PuzzleRootPoint}");
-
                     // Calculate the building's world position based on slot placement point and puzzle root offset
                     float verticalChange = building.Position.y - building.PuzzleRootPoint.y;
                     float horizontalChange = building.Position.x - building.PuzzleRootPoint.x;
 
-                    Debug.Log($"[Slot] Position offset - Horizontal: {horizontalChange}, Vertical: {verticalChange}");
-                    Debug.Log($"[Slot] BuildingPlacementPoint: {BuildingPlacementPoint}");
-                    Debug.Log($"[Slot] Slot transform position: {transform.position}, rotation: {transform.rotation}");
-
                     Vector3 targetWorldPosition = BuildingPlacementPoint
                                                 + (Transform.Up * verticalChange)
                                                 + (Transform.Right * horizontalChange);
-
-                    Debug.Log($"[Slot] Target world position calculated: {targetWorldPosition}");
 
                     // Parent the building to this slot so it follows slot movement and rotation
                     // Using worldPositionStays=true keeps the building at the same world position during reparenting
@@ -158,8 +148,6 @@ namespace BattleCruisers.Cruisers.Slots
 
                     // Set the world position (the local position will be calculated automatically after parenting)
                     building.Position = targetWorldPosition;
-
-                    Debug.Log($"[Slot] After positioning - World: {building.Position}");
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)
@@ -200,6 +188,7 @@ namespace BattleCruisers.Cruisers.Slots
             }
 
             _explosion = _explosionController.Initialise();
+
             Transform buildingPlacementPoint = transform.FindNamedComponent<Transform>("BuildingPlacementPoint");
             BuildingPlacementPoint = buildingPlacementPoint.position;
 

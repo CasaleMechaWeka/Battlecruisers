@@ -24,7 +24,6 @@ using BattleCruisers.UI.ScreensScene.LoadoutScreen.Comparisons;
 using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
 using BattleCruisers.Utils.Localisation;
@@ -153,6 +152,7 @@ namespace BattleCruisers.Cruisers
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
         public IDroneConsumerProvider DroneConsumerProvider { get; protected set; }
         public Direction Direction { get; protected set; }
+        public ICruiser EnemyCruiser => _enemyCruiser;
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
         public CruiserSpecificFactories CruiserSpecificFactories { get; protected set; }
@@ -552,6 +552,7 @@ namespace BattleCruisers.Cruisers
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
+            // Instantiate building as child of slot to ensure UI elements (HealthBar) stay properly hierarchized during initialization
             IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
             if (ignoreDroneRequirement)
             {
@@ -708,24 +709,6 @@ namespace BattleCruisers.Cruisers
         public bool IsCruiser()
         {
             return isCruiser;
-        }
-
-        /// <summary>
-        /// Display a message in the battle scene message display.
-        /// Automatically uses BattleSceneMessageDisplay singleton to find the message text object.
-        /// </summary>
-        /// <param name="message">The message to display</param>
-        /// <param name="messageType">The type of message (determines color and prefix). Defaults to Info.</param>
-        public void DisplayMessage(string message, BattleSceneMessageDisplay.MessageType messageType = BattleSceneMessageDisplay.MessageType.Info)
-        {
-            if (BattleSceneMessageDisplay.Instance != null)
-            {
-                BattleSceneMessageDisplay.Instance.ShowMessage(message, messageType);
-            }
-            else
-            {
-                Debug.Log($"[{name}] {message}");
-            }
         }
 
     }
