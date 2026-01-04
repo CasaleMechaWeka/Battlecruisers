@@ -523,7 +523,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
             GameOver = false;
-            if (LandingSceneGod.Instance.coinBattleLevelNum > 0)
+            if (LandingSceneGod.Instance != null && LandingSceneGod.Instance.coinBattleLevelNum > 0)
                 LandingSceneGod.Instance.coinBattleLevelNum = -2; //DestructionSceneGod will detect Coin battle mode through this
 
             if (ApplicationModel.Mode == GameMode.SideQuest && StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].HasSequencer)
