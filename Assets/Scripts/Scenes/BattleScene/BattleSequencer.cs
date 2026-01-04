@@ -10,14 +10,13 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data.Models.PrefabKeys;
 using BattleCruisers.Utils;
-using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Fetchers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using static BattleCruisers.Scenes.BattleScene.BattleSequencer;
 using static BattleCruisers.Utils.PrefabKeyName;
-using BattleCruisers.UI.BattleScene.ProgressBars;
+using BattleCruisers.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -25,13 +24,8 @@ namespace BattleCruisers.Scenes.BattleScene
     {
         [HideInInspector] public Cruiser[] Cruisers;
 
-        [Tooltip("Message display for showing sequencer events. Can be assigned by CheaterButtonsPanelToggler.")]
-        public BattleSceneMessageDisplay messageDisplay;
-
-        [Tooltip("Array of sequence points that define the battle progression. Each point contains timed actions like spawning units, adding buildings, or applying boosts. Assigned in BattleScene.")]
-        public SequencePoint[] sequencePoints;
+        public SequencePoint[] sequencePoints;  // -> this is currently assigned in BattleScene!
         [Serializable] public class ScriptCallAction : UnityEvent { }
-
 
 #if UNITY_EDITOR
         // Optional: toggle if you sometimes want to assign other targets
@@ -60,7 +54,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     var target = call.FindPropertyRelative("m_Target");
                     if (target != null && target.objectReferenceValue == null)
                     {
-                        target.objectReferenceValue = this; // <- auto “self”
+                        target.objectReferenceValue = this; // <- auto "self"
                         modified = true;
                     }
                 }
@@ -72,67 +66,15 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public async void StartF()
         {
-            Debug.Log($"[BattleSequencer] StartF() called. Sequence points: {sequencePoints?.Length ?? 0}");
-
-            if (sequencePoints != null && sequencePoints.Length > 0)
-            {
-                Debug.Log($"[BattleSequencer] Processing {sequencePoints.Length} sequence point(s)...");
-                for (int i = 0; i < sequencePoints.Length; i++)
-                {
-                    Debug.Log($"[BattleSequencer] Starting sequence point {i + 1}/{sequencePoints.Length} (Delay: {sequencePoints[i].DelayMS}ms)");
-                    await ProcessSequencePoint(sequencePoints[i]);
-                }
-            }
-            else
-            {
-                Debug.LogWarning("[BattleSequencer] No sequence points to process");
-            }
+            if (sequencePoints != null)
+                foreach (SequencePoint pt in sequencePoints)
+                    await ProcessSequencePoint(pt);
         }
 
-        /// <summary>
-        /// Process a sequence point immediately, skipping the delay. Useful for triggering from animation events.
-        /// </summary>
-        /// <param name="sequencePointIndex">Index of the sequence point in the sequencePoints array (0-based)</param>
-        public void TriggerSequencePoint(int sequencePointIndex)
-        {
-            if (sequencePoints == null || sequencePointIndex < 0 || sequencePointIndex >= sequencePoints.Length)
-            {
-                Debug.LogWarning($"[BattleSequencer] Invalid sequence point index: {sequencePointIndex}. Array length: {sequencePoints?.Length ?? 0}");
-                return;
-            }
-
-            SequencePoint sq = sequencePoints[sequencePointIndex];
-            ProcessSequencePointImmediate(sq);
-        }
-
-        /// <summary>
-        /// Process a sequence point with its configured delay. Called automatically from StartF().
-        /// </summary>
         public async Task ProcessSequencePoint(SequencePoint sq)
         {
             await Task.Delay(sq.DelayMS);
-            ProcessSequencePointImmediate(sq);
-        }
-
-        /// <summary>
-        /// Internal method that executes sequence point actions without delay.
-        /// </summary>
-        private void ProcessSequencePointImmediate(SequencePoint sq)
-        {
-            if (Cruisers == null || Cruisers.Length == 0)
-            {
-                Debug.LogError("[BattleSequencer] Cannot process sequence point: Cruisers array is null or empty");
-                return;
-            }
-
-            if ((int)sq.Faction >= Cruisers.Length || Cruisers[(int)sq.Faction] == null)
-            {
-                Debug.LogError($"[BattleSequencer] Cannot process sequence point: Invalid faction {sq.Faction} or cruiser is null");
-                return;
-            }
-
             Cruiser cruiser = Cruisers[(int)sq.Faction];
-            Debug.Log($"[BattleSequencer] Processing sequence point for {sq.Faction} cruiser. BuildingActions: {sq.BuildingActions?.Count ?? 0}, UnitActions: {sq.UnitActions?.Count ?? 0}, BoostActions: {sq.BoostActions?.Count ?? 0}");
 
             if (sq.BuildingActions != null)
                 foreach (SequencePoint.BuildingAction buildingAction in sq.BuildingActions)
@@ -148,63 +90,31 @@ namespace BattleCruisers.Scenes.BattleScene
                             break;
 
                         case SequencePoint.BuildingAction.BuildingOp.Add:
-                            // Auto-initialize existing buildables already placed in the cruiser hierarchy
-                            // instead of spawning new ones. We need to get BuildingWrapper to properly
-                            // initialize the health bar and click handler.
-                            BuildingWrapper[] existingWrappers = cruiser.GetComponentsInChildren<BuildingWrapper>(includeInactive: true);
-
-                            if (existingWrappers.Length == 0)
+                            int prefabID = (int)buildingAction.PrefabKeyName;
+                            if (prefabID < (int)Building_AirFactory)
                             {
-                                Debug.LogWarning($"[BattleSequencer] No existing BuildingWrapper found in cruiser {cruiser.name} hierarchy. Place building prefabs as children of cruiser sections.");
-                                break;
+                                Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{buildingAction}");
+                                return;
                             }
 
-                            // Find the building wrapper by type name matching
-                            BuildingWrapper targetWrapper = null;
-                            foreach (BuildingWrapper wrapper in existingWrappers)
+                            if ((prefabID >= (int)Building_AirFactory)
+                             && (prefabID < (int)Unit_Bomber))
                             {
-                                // Check if this wrapper hasn't been initialized yet and matches the prefab name
-                                string wrapperName = wrapper.gameObject.name.Replace("(Clone)", "").Trim();
-                                if (wrapperName.Contains(buildingAction.PrefabKeyName.ToString()))
+                                IBuildableWrapper<IBuilding> building = PrefabFactory.GetBuildingWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<BuildingKey>(buildingAction.PrefabKeyName));
+                                IList<Slot> slots = cruiser.SlotAccessor.GetFreeSlots(building.Buildable.SlotSpecification.SlotType);
+                                Slot slot = slots[Math.Min(slots.Count - 1, buildingAction.SlotID)];
+                                if (slot == null)
                                 {
-                                    // Check if the building is already initialized by seeing if it's active
-                                    // Uninitialized buildings are inactive after Initialise() is called
-                                    if (!wrapper.gameObject.activeSelf || wrapper.Buildable == null || !wrapper.Buildable.IsInitialised)
-                                    {
-                                        targetWrapper = wrapper;
-                                        break;
-                                    }
+                                    Debug.LogError($"{slot.type} Slot #{buildingAction.SlotID} is already occupied!");
+                                    return;
                                 }
+                                cruiser.ConstructBuilding(building, slot, buildingAction.IgnoreDroneReq, buildingAction.IgnoreBuildTime);
                             }
-
-                            if (targetWrapper == null)
+                            else
                             {
-                                Debug.LogWarning($"[BattleSequencer] Could not find uninitialized building of type {buildingAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
-                                break;
+                                Debug.LogError($"Invalid BuildingAction: {buildingAction}");
+                                return;
                             }
-
-                            // Full initialization chain for pre-placed buildings:
-                            // 1. StaticInitialise - sets up _parent, _healthBar, _clickHandler
-                            targetWrapper.StaticInitialise();
-
-                            // 2. Initialise - hooks up click handlers, initializes health bar
-                            targetWrapper.Buildable.Initialise(BattleSceneGod.Instance.uiManager);
-
-                            // 3. Activate - sets parent cruiser, enables the gameobject
-                            targetWrapper.Buildable.Activate(
-                                new BuildingActivationArgs(
-                                    cruiser,
-                                    cruiser.EnemyCruiser,
-                                    cruiser.CruiserSpecificFactories,
-                                    null, // No slot needed for pre-placed buildings
-                                    null));
-
-                            // 4. StartConstruction and FinishConstruction - completes the building
-                            targetWrapper.Buildable.StartConstruction();
-                            ((Buildable<BuildingActivationArgs>)targetWrapper.Buildable).FinishConstruction();
-
-                            Debug.Log($"[BattleSequencer] Initialized existing building {targetWrapper.Buildable.Name} on {cruiser.name}");
-                            LogBuildingStats(targetWrapper.Buildable, cruiser);
 
                             break;
                     }
@@ -214,13 +124,7 @@ namespace BattleCruisers.Scenes.BattleScene
                 foreach (SequencePoint.BoostAction boostAction in sq.BoostActions)
                 {
                     if (boostAction.Operation == SequencePoint.BoostAction.BoostOp.Remove)
-                    {
                         cruiser.RemoveBoost(new Cruiser.BoostStats() { boostType = boostAction.BoostType });
-                        string msg = $"Removed {boostAction.BoostType} boost from {sq.Faction} cruiser";
-                        Debug.Log($"[BattleSequencer] {msg}");
-                        ShowMessage(msg, BattleSceneMessageDisplay.MessageType.Boost);
-                        LogCruiserBoosts(cruiser);
-                    }
                     else if(boostAction.Operation == SequencePoint.BoostAction.BoostOp.Replace)
                     {
                         cruiser.RemoveBoost(new Cruiser.BoostStats() { boostType = boostAction.BoostType });
@@ -230,10 +134,6 @@ namespace BattleCruisers.Scenes.BattleScene
                                 boostType = boostAction.BoostType,
                                 boostAmount = boostAction.BoostAmount
                             });
-                        string msg = $"Replaced {boostAction.BoostType} boost on {sq.Faction} cruiser: {boostAction.BoostAmount}x";
-                        Debug.Log($"[BattleSequencer] {msg}");
-                        ShowMessage(msg, BattleSceneMessageDisplay.MessageType.Boost);
-                        LogCruiserBoosts(cruiser);
                     }
                     else if (boostAction.Operation == SequencePoint.BoostAction.BoostOp.Add)
                     {
@@ -243,69 +143,37 @@ namespace BattleCruisers.Scenes.BattleScene
                                 boostType = boostAction.BoostType,
                                 boostAmount = boostAction.BoostAmount
                             });
-                        string msg = $"Added {boostAction.BoostType} boost to {sq.Faction} cruiser: {boostAction.BoostAmount}x";
-                        Debug.Log($"[BattleSequencer] {msg}");
-                        ShowMessage(msg, BattleSceneMessageDisplay.MessageType.Boost);
-                        LogCruiserBoosts(cruiser);
                     }
                 }
 
             if (sq.UnitActions != null)
                 foreach (SequencePoint.UnitAction unitAction in sq.UnitActions)
                 {
-                    // Auto-initialize existing units already placed in the cruiser hierarchy
-                    // instead of spawning new ones. We need to get UnitWrapper to properly
-                    // initialize the health bar and click handler.
-                    UnitWrapper[] existingUnitWrappers = cruiser.GetComponentsInChildren<UnitWrapper>(includeInactive: true);
-
-                    if (existingUnitWrappers.Length == 0)
+                    int prefabID = (int)unitAction.PrefabKeyName;
+                    if (prefabID < (int)Building_AirFactory)
                     {
-                        Debug.LogWarning($"[BattleSequencer] No existing UnitWrapper found in cruiser {cruiser.name} hierarchy. Place unit prefabs as children of cruiser sections.");
+                        Debug.LogError($"Can't instantiate cruisers through BattleSequencer.\n{unitAction}");
+                        return;
+                    }
+                    if (prefabID < (int)Unit_Bomber)
+                    {
+                        Debug.LogError($"Invalid UnitAction: {unitAction}");
                         continue;
                     }
 
-                    // Find the unit wrapper by type name matching
-                    UnitWrapper targetUnitWrapper = null;
-                    foreach (UnitWrapper wrapper in existingUnitWrappers)
+                    if (unitAction.Amount == 1)
+                        SpawnUnit(unitAction.PrefabKeyName, unitAction.Postion, cruiser);
+                    else
                     {
-                        // Check if this wrapper hasn't been initialized yet and matches the prefab name
-                        string wrapperName = wrapper.gameObject.name.Replace("(Clone)", "").Trim();
-                        if (wrapperName.Contains(unitAction.PrefabKeyName.ToString()))
+                        for (int i = 0; i < unitAction.Amount; i++)
                         {
-                            // Check if the unit is already initialized
-                            if (!wrapper.gameObject.activeSelf || wrapper.Buildable == null || !wrapper.Buildable.IsInitialised)
-                            {
-                                targetUnitWrapper = wrapper;
-                                break;
-                            }
+                            float x = UnityEngine.Random.Range(0, unitAction.SpawnArea.x);
+                            float y = UnityEngine.Random.Range(0, unitAction.SpawnArea.y);
+
+                            Vector2 pos = new Vector2(x + unitAction.Postion.x, y + unitAction.Postion.y);
+                            SpawnUnit(unitAction.PrefabKeyName, pos, cruiser);
                         }
                     }
-
-                    if (targetUnitWrapper == null)
-                    {
-                        Debug.LogWarning($"[BattleSequencer] Could not find uninitialized unit of type {unitAction.PrefabKeyName} in cruiser hierarchy. Make sure it's placed as a child object.");
-                        continue;
-                    }
-
-                    // Full initialization chain for pre-placed units:
-                    // 1. StaticInitialise - sets up _parent, _healthBar, _clickHandler
-                    targetUnitWrapper.StaticInitialise();
-
-                    // 2. Initialise - hooks up click handlers, initializes health bar
-                    targetUnitWrapper.Buildable.Initialise(BattleSceneGod.Instance.uiManager);
-
-                    // 3. Activate - sets parent cruiser, enables the gameobject
-                    targetUnitWrapper.Buildable.Activate(
-                        new BuildableActivationArgs(
-                            cruiser,
-                            cruiser.EnemyCruiser,
-                            cruiser.CruiserSpecificFactories));
-
-                    // 4. StartConstruction and FinishConstruction - completes the unit
-                    targetUnitWrapper.Buildable.StartConstruction();
-                    ((Buildable<BuildableActivationArgs>)targetUnitWrapper.Buildable).FinishConstruction();
-
-                    Debug.Log($"[BattleSequencer] Initialized existing unit {targetUnitWrapper.Buildable.Name} on {cruiser.name}");
                 }
             if (sq.ScriptCallActions != null)
                 sq.ScriptCallActions.Invoke();
@@ -313,155 +181,178 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public void SpawnUnit(PrefabKeyName prefabKey, Vector2 position, Cruiser cruiser)
         {
-            try
-            {
-                if (cruiser == null)
-                {
-                    Debug.LogError($"[BattleSequencer] Cannot spawn unit {prefabKey}: cruiser is null");
-                    return;
-                }
-
-                if (cruiser.CruiserSpecificFactories == null)
-                {
-                    Debug.LogError($"[BattleSequencer] Cannot spawn unit {prefabKey}: cruiser.CruiserSpecificFactories is null");
-                    return;
-                }
-
-                IBuildableWrapper<IUnit> unitWrapper = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(prefabKey));
-                if (unitWrapper == null)
-                {
-                    Debug.LogError($"[BattleSequencer] Failed to get unit wrapper for {prefabKey}. Check that the prefab key is correct.");
-                    return;
-                }
-
-                IUnit unit = PrefabFactory.CreateUnit(unitWrapper);
-                if (unit == null)
-                {
-                    Debug.LogError($"[BattleSequencer] Failed to create unit from wrapper for {prefabKey}");
-                    return;
-                }
-
-                unit.Transform.Position = new Vector3(position.x, position.y, 0);
-                BuildableActivationArgs buildableActivationArgs = new BuildableActivationArgs(cruiser,
-                                                                                              cruiser.CruiserSpecificFactories.EnemyCruiser,
-                                                                                              cruiser.CruiserSpecificFactories);
-
-                int droneNum = unit.NumOfDronesRequired;
-                unit.NumOfDronesRequired = 1;
-                unit.BuildTimeInS *= droneNum;
-                unit.Activate(buildableActivationArgs);
-                unit.StartConstruction();
-                ((Buildable<BuildableActivationArgs>)unit).FinishConstruction();
-                unit.NumOfDronesRequired = droneNum;
-                unit.BuildTimeInS /= droneNum;
-
-                Debug.Log($"[BattleSequencer] Spawned {prefabKey} at ({position.x:F1}, {position.y:F1}) for {cruiser.name}");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"[BattleSequencer] Exception spawning {prefabKey} at {position}: {ex.Message}\n{ex.StackTrace}");
-            }
+            IBuildableWrapper<IUnit> unitWrapper = PrefabFactory.GetUnitWrapperPrefab(StaticPrefabKeyHelper.GetPrefabKey<UnitKey>(prefabKey));
+            IUnit unit = PrefabFactory.CreateUnit(unitWrapper);
+            unit.Transform.Position = new Vector3(position.x, position.y, 0);
+            BuildableActivationArgs buildableActivationArgs = new BuildableActivationArgs(cruiser,
+                                                                                          cruiser.CruiserSpecificFactories.EnemyCruiser,
+                                                                                          cruiser.CruiserSpecificFactories);
+            unit.Activate(buildableActivationArgs);
+            int droneNum = unit.NumOfDronesRequired;
+            unit.NumOfDronesRequired = 1;
+            unit.BuildTimeInS *= droneNum;
+            unit.StartConstruction();
+            ((Buildable<BuildableActivationArgs>)unit).FinishConstruction();
+            unit.NumOfDronesRequired = droneNum;
+            unit.BuildTimeInS /= droneNum;
         }
 
+        #region Pre-Placed Buildables Initialization
+
         /// <summary>
-        /// Display a message via the messageDisplay component (if available)
+        /// Initialize all pre-placed BuildingWrappers and UnitWrappers in the cruiser hierarchy.
+        /// Buildings/units stay as children of wherever you placed them (so they animate with their parent).
+        /// Call from ScriptCallActions: InitializePrePlacedBuildables(0) for Blues, (1) for Reds.
         /// </summary>
-        private void ShowMessage(string message, BattleSceneMessageDisplay.MessageType messageType)
+        public void InitializePrePlacedBuildables(int factionIndex)
         {
-            if (messageDisplay != null)
+            if (Cruisers == null || factionIndex >= Cruisers.Length || Cruisers[factionIndex] == null)
             {
-                messageDisplay.ShowMessage(message, messageType);
-            }
-        }
-
-        /// <summary>
-        /// Log detailed building statistics
-        /// </summary>
-        private void LogBuildingStats(IBuilding building, Cruiser cruiser)
-        {
-            if (building == null) return;
-
-            Debug.Log($"[BattleSequencer] Building Stats - Name: {building.Name}, " +
-                     $"Health: {building.Health}/{building.MaxHealth}, " +
-                     $"State: {building.BuildableState}, " +
-                     $"Cruiser: {cruiser.name}, " +
-                     $"Faction: {cruiser.Faction}");
-        }
-
-        /// <summary>
-        /// Log all active boosts on a cruiser
-        /// </summary>
-        private void LogCruiserBoosts(Cruiser cruiser)
-        {
-            if (cruiser == null || cruiser.Boosts == null)
-            {
-                Debug.Log($"[BattleSequencer] {cruiser?.name ?? "Unknown"} has no active boosts");
+                Debug.LogError($"[BattleSequencer] Cannot initialize pre-placed buildables: invalid faction index {factionIndex}");
                 return;
             }
-
-            if (cruiser.Boosts.Count == 0)
-            {
-                Debug.Log($"[BattleSequencer] {cruiser.name} has no active boosts");
-                ShowMessage($"{cruiser.name}: No active boosts", BattleSceneMessageDisplay.MessageType.Boost);
-                return;
-            }
-
-            System.Text.StringBuilder boostList = new System.Text.StringBuilder();
-            boostList.Append($"{cruiser.name} Active Boosts: ");
-            
-            foreach (var boost in cruiser.Boosts)
-            {
-                boostList.Append($"{boost.boostType}={boost.boostAmount}x; ");
-            }
-
-            string boostMsg = boostList.ToString().TrimEnd(' ', ';');
-            Debug.Log($"[BattleSequencer] {boostMsg}");
-            ShowMessage(boostMsg, BattleSceneMessageDisplay.MessageType.Boost);
+            InitializePrePlacedBuildables(Cruisers[factionIndex]);
         }
 
+        /// <summary>
+        /// Initialize all pre-placed BuildingWrappers and UnitWrappers in the cruiser hierarchy.
+        /// </summary>
+        public void InitializePrePlacedBuildables(Cruiser cruiser)
+        {
+            InitializePrePlacedBuildings(cruiser);
+            InitializePrePlacedUnits(cruiser);
+        }
 
+        /// <summary>
+        /// Initialize only pre-placed BuildingWrappers in the cruiser hierarchy.
+        /// Call from ScriptCallActions: InitializePrePlacedBuildings(0) for Blues, (1) for Reds.
+        /// </summary>
+        public void InitializePrePlacedBuildings(int factionIndex)
+        {
+            if (Cruisers == null || factionIndex >= Cruisers.Length || Cruisers[factionIndex] == null)
+            {
+                Debug.LogError($"[BattleSequencer] Cannot initialize pre-placed buildings: invalid faction index {factionIndex}");
+                return;
+            }
+            InitializePrePlacedBuildings(Cruisers[factionIndex]);
+        }
+
+        /// <summary>
+        /// Initialize only pre-placed BuildingWrappers in the cruiser hierarchy.
+        /// </summary>
+        public void InitializePrePlacedBuildings(Cruiser cruiser)
+        {
+            BuildingWrapper[] wrappers = cruiser.GetComponentsInChildren<BuildingWrapper>(includeInactive: true);
+            UIManager uiManager = BattleSceneGod.Instance.uiManager;
+
+            int count = 0;
+            foreach (BuildingWrapper wrapper in wrappers)
+            {
+                // Skip if already initialized
+                if (wrapper.Buildable != null && wrapper.Buildable.IsInitialised)
+                    continue;
+
+                // Full initialization chain:
+                // 1. StaticInitialise - sets up _parent, _healthBar, _clickHandler
+                wrapper.StaticInitialise();
+
+                // 2. Initialise - hooks up click handlers, initializes health bar
+                wrapper.Buildable.Initialise(uiManager);
+
+                // 3. Activate - sets parent cruiser, enables the gameobject
+                wrapper.Buildable.Activate(
+                    new BuildingActivationArgs(
+                        cruiser,
+                        cruiser.EnemyCruiser,
+                        cruiser.CruiserSpecificFactories,
+                        null,  // No slot - building stays where you placed it
+                        null));
+
+                // 4. StartConstruction and FinishConstruction - completes the building instantly
+                wrapper.Buildable.StartConstruction();
+                ((Buildable<BuildingActivationArgs>)wrapper.Buildable).FinishConstruction();
+
+                count++;
+            }
+
+            Debug.Log($"[BattleSequencer] Initialized {count} pre-placed building(s) on {cruiser.name}");
+        }
+
+        /// <summary>
+        /// Initialize only pre-placed UnitWrappers in the cruiser hierarchy.
+        /// Call from ScriptCallActions: InitializePrePlacedUnits(0) for Blues, (1) for Reds.
+        /// </summary>
+        public void InitializePrePlacedUnits(int factionIndex)
+        {
+            if (Cruisers == null || factionIndex >= Cruisers.Length || Cruisers[factionIndex] == null)
+            {
+                Debug.LogError($"[BattleSequencer] Cannot initialize pre-placed units: invalid faction index {factionIndex}");
+                return;
+            }
+            InitializePrePlacedUnits(Cruisers[factionIndex]);
+        }
+
+        /// <summary>
+        /// Initialize only pre-placed UnitWrappers in the cruiser hierarchy.
+        /// </summary>
+        public void InitializePrePlacedUnits(Cruiser cruiser)
+        {
+            UnitWrapper[] wrappers = cruiser.GetComponentsInChildren<UnitWrapper>(includeInactive: true);
+            UIManager uiManager = BattleSceneGod.Instance.uiManager;
+
+            int count = 0;
+            foreach (UnitWrapper wrapper in wrappers)
+            {
+                // Skip if already initialized
+                if (wrapper.Buildable != null && wrapper.Buildable.IsInitialised)
+                    continue;
+
+                // Full initialization chain:
+                wrapper.StaticInitialise();
+                wrapper.Buildable.Initialise(uiManager);
+
+                wrapper.Buildable.Activate(
+                    new BuildableActivationArgs(
+                        cruiser,
+                        cruiser.EnemyCruiser,
+                        cruiser.CruiserSpecificFactories));
+
+                wrapper.Buildable.StartConstruction();
+                ((Buildable<BuildableActivationArgs>)wrapper.Buildable).FinishConstruction();
+
+                count++;
+            }
+
+            Debug.Log($"[BattleSequencer] Initialized {count} pre-placed unit(s) on {cruiser.name}");
+        }
+
+        #endregion
+    }
 
     [Serializable]
     public class SequencePoint
     {
-        [Tooltip("Delay in milliseconds before executing this sequence point's actions after the previous one.")]
         public int DelayMS = 0;
-
-        [Tooltip("Which faction/cruiser this sequence point affects (Blues = Player, Reds = AI).")]
         public Faction Faction;
-
-        [Tooltip("List of building operations to perform (add buildings to slots or destroy existing ones).")]
         public List<BuildingAction> BuildingActions;
-
-        [Tooltip("List of boost operations to perform (add, remove, or replace cruiser-wide boosts).")]
         public List<BoostAction> BoostActions;
-
-        [Tooltip("List of unit spawning operations to perform.")]
         public List<UnitAction> UnitActions;
 
         [Serializable]
         public class BuildingAction
         {
+
             public enum BuildingOp
             {
                 Add = 0,
                 Destroy = 1,
             }
 
-            [Tooltip("Whether to add a new building or destroy an existing one.")]
             public BuildingOp Operation;
-
-            [Tooltip("The prefab key name of the building to add (only used for Add operations).")]
             public PrefabKeyName PrefabKeyName;
-
-            [Tooltip("The slot index where the building should be placed (0-based, only used for Add operations).")]
             public byte SlotID;
-
-            [Tooltip("If true, skips drone requirements for construction (recommended for sequenced battles to avoid assertion errors).")]
-            public bool IgnoreDroneReq = true;
-
-            [Tooltip("If true, builds the building instantly without waiting for construction time (recommended for sequenced battles).")]
-            public bool IgnoreBuildTime = true;
+            public bool IgnoreDroneReq = false;
+            public bool IgnoreBuildTime = false;
 
             public override string ToString()
             {
@@ -485,33 +376,18 @@ namespace BattleCruisers.Scenes.BattleScene
                 Replace = 2,
             }
 
-            [Tooltip("Whether to add, remove, or replace the boost.")]
             public BoostOp Operation;
-
-            [Tooltip("The type of boost to modify (e.g., BuildSpeed, FireRate, Health, etc.).")]
             public BoostType BoostType;
-
-            [Tooltip("The boost multiplier value (1.0 = no boost, 2.0 = double effect, etc.). Only used for Add and Replace operations.")]
             public float BoostAmount = 1;
         }
 
         [Serializable]
         public class UnitAction
         {
-            [Tooltip("The prefab key name of the unit to spawn (e.g., Unit_Bomber, Unit_Fighter).")]
             public PrefabKeyName PrefabKeyName;
-
-            [Tooltip("The base/center position where units will spawn. For single units, this is exact spawn location. For multiple units, this is the bottom-left corner of the spawn area.")]
             public Vector2 Postion;
-
-            [Tooltip("The rectangular area (width,height) around the Position where multiple units can spawn randomly. Only used when Amount > 1. Units spawn randomly within the rectangle starting at Position.")]
             public Vector2 SpawnArea;
-
-            [Tooltip("Number of units to spawn. If 1, spawns exactly at Position. If > 1, spawns randomly within the SpawnArea rectangle.")]
             [Min(1)] public byte Amount = 1;
-
-            [Tooltip("Factory building required for this unit type (e.g., AirFactory for aircraft, NavalFactory for ships). Currently not enforced in sequencer.")]
-            public PrefabKeyName RequiredFactory;
 
             public override string ToString()
             {
@@ -525,7 +401,6 @@ namespace BattleCruisers.Scenes.BattleScene
             }
         }
 
-        [Tooltip("Unity events that will be invoked when this sequence point executes. Use for custom scripting or animation triggers.")]
         public ScriptCallAction ScriptCallActions;
 
         public override string ToString()
@@ -566,8 +441,5 @@ namespace BattleCruisers.Scenes.BattleScene
 
             return s;
         }
-
-
-    }
     }
 }
