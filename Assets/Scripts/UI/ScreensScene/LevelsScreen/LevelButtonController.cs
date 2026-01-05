@@ -49,19 +49,28 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             levelNameText.text = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
             captainImage.sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
             
+            // Disable raycastTarget on decorative images so they don't block button clicks
+            if (hullImage != null)
+                hullImage.raycastTarget = false;
+            if (skyImage != null)
+                skyImage.raycastTarget = false;
+            // Ensure backgroundImage can receive clicks (acts as the click target)
+            if (backgroundImage != null)
+                backgroundImage.raycastTarget = true;
+
             // Set the hull image and sky image for this level
             int levelIndex = level.Num - 1;
             if (levelIndex >= 0 && levelIndex < StaticData.Levels.Count)
             {
                 Level staticLevel = StaticData.Levels[levelIndex];
-                
+
                 // Set the hull image
                 if (hullImage != null)
                 {
                     ICruiser enemyCruiserPrefab = PrefabFactory.GetCruiserPrefab(staticLevel.Hull);
                     hullImage.sprite = enemyCruiserPrefab.Sprite;
                 }
-                
+
                 // Set the sky image
                 if (skyImage != null)
                 {
