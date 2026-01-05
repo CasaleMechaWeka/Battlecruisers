@@ -37,6 +37,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             TrashTalkData trashTalkData,
             IDismissableEmitter parent)
         {
+            Debug.Log($"LevelButton {level.Num}: Initialise START - script enabled={enabled}, gameObject active={gameObject.activeInHierarchy}");
             base.Initialise(soundPlayer, parent: parent);
 
             Helper.AssertIsNotNull(levelNumberText, levelNameText, levelStatsController, captainImage);
@@ -86,13 +87,21 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             levelStatsController.Initialise(level.DifficultyCompleted, difficultyIndicators);
 
             Enabled = numOfLevelsUnlocked >= level.Num;
+            Debug.Log($"LevelButton {level.Num}: Initialise END - Enabled={Enabled}, script enabled={enabled}, backgroundImage={backgroundImage}, raycastTarget={backgroundImage?.raycastTarget}");
         }
 
         protected override void OnClicked()
         {
+            Debug.Log($"LevelButton {_level?.Num}: OnClicked!");
             base.OnClicked();
             ApplicationModel.Mode = GameMode.Campaign;
             _screensSceneGod.GoToTrashScreen(_level.Num);
+        }
+
+        public override void OnPointerDown(UnityEngine.EventSystems.PointerEventData eventData)
+        {
+            Debug.Log($"LevelButton {_level?.Num}: OnPointerDown! enabled={enabled}");
+            base.OnPointerDown(eventData);
         }
 
         protected override void ShowDisabledState()
