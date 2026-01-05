@@ -4,9 +4,11 @@ using BattleCruisers.Data.Static;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Players;
 using UnityEngine;
+using UnityEngine.UI;
 using BattleCruisers.UI.ScreensScene.LevelsScreen;
 using BattleCruisers.Data;
 
+[RequireComponent(typeof(Image))]
 public class SideQuestButtonController : ElementWithClickSound
 {
     private bool isButtonEnabled;
@@ -22,6 +24,16 @@ public class SideQuestButtonController : ElementWithClickSound
     private Transform buttonImages;
 
     private LevelsSetController levelsSetController;
+
+    private void Awake()
+    {
+        // Ensure the Image on this GameObject catches clicks
+        Image clickCatcher = GetComponent<Image>();
+        if (clickCatcher != null)
+        {
+            clickCatcher.raycastTarget = true;
+        }
+    }
 
     public void Initialise(
         ScreensSceneGod screensSceneGod,
