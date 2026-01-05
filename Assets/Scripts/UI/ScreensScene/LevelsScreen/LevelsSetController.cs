@@ -52,7 +52,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                 LevelInfo level = allLevels[firstLevelIndex + i];
                 TrashTalkData trashTalkData = StaticData.LevelTrashTalk[level.Num];
 
-                levelButtonInitialisations.Add(levelButtons[i].Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData, levelsScreen));
+                levelButtonInitialisations.Add(levelButtons[i].Initialise(soundPlayer, level, screensSceneGod, difficultyIndicators, numOfLevelsUnlocked, trashTalkData));
             }
 
             await Task.WhenAll(levelButtonInitialisations);
