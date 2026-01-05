@@ -14,6 +14,7 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
+    [RequireComponent(typeof(Image))]
     public class LevelButtonController : ElementWithClickSound
     {
         private LevelInfo _level;
@@ -31,6 +32,16 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         private const string SKY_SPRITE_ROOT_PATH = "Assets/Resources_moved/Sprites/Skies/";
         private const string SPRITES_FILE_EXTENSION = ".png";
+
+        private void Awake()
+        {
+            // Ensure the Image on this GameObject catches clicks
+            Image clickCatcher = GetComponent<Image>();
+            if (clickCatcher != null)
+            {
+                clickCatcher.raycastTarget = true;
+            }
+        }
 
         public async Task Initialise(
             SingleSoundPlayer soundPlayer,
