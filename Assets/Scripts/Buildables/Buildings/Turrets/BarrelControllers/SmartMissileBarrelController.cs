@@ -12,7 +12,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
     {
         private ProjectileStats _ProjectileStats;
         private SmartMissileSpawner _missileSpawner;
-        private new ITargetFilter _targetFilter;
+        private ITargetFilter _targetFilter;
 
         public override Vector3 ProjectileSpawnerPosition => _missileSpawner.transform.position;
         public override bool CanFireWithoutTarget => true;

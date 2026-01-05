@@ -62,7 +62,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         var prefab = PrefabFactory.GetVariant(
                             StaticPrefabKeys.Variants.GetVariantKey(v.Index));
 
-                        if (prefab == null)
+                        if (prefab == null || prefab.parent == null)
                             return false;
 
                         var parentName = prefab.parent.ToString().ToLowerInvariant();
@@ -190,6 +190,12 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         if (prefab == null)
                         {
                             Debug.LogWarning($"[VariantSorter] Null prefab for variant {variant.Index}");
+                            continue;
+                        }
+
+                        if (prefab.parent == null)
+                        {
+                            Debug.LogWarning($"[VariantSorter] Null parent for variant {variant.Index}");
                             continue;
                         }
 

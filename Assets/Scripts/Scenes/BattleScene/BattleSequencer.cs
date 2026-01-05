@@ -16,7 +16,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using static BattleCruisers.Scenes.BattleScene.BattleSequencer;
 using static BattleCruisers.Utils.PrefabKeyName;
-using BattleCruisers.UI.BattleScene.Manager;
 
 namespace BattleCruisers.Scenes.BattleScene
 {
@@ -54,7 +53,7 @@ namespace BattleCruisers.Scenes.BattleScene
                     var target = call.FindPropertyRelative("m_Target");
                     if (target != null && target.objectReferenceValue == null)
                     {
-                        target.objectReferenceValue = this; // <- auto "self"
+                        target.objectReferenceValue = this; // <- auto “self”
                         modified = true;
                     }
                 }
@@ -187,146 +186,20 @@ namespace BattleCruisers.Scenes.BattleScene
             BuildableActivationArgs buildableActivationArgs = new BuildableActivationArgs(cruiser,
                                                                                           cruiser.CruiserSpecificFactories.EnemyCruiser,
                                                                                           cruiser.CruiserSpecificFactories);
-            unit.Activate(buildableActivationArgs);
+
+            // Apply drone requirement hack BEFORE activation/construction to avoid assertion failure
             int droneNum = unit.NumOfDronesRequired;
             unit.NumOfDronesRequired = 1;
             unit.BuildTimeInS *= droneNum;
+
+            unit.Activate(buildableActivationArgs);
             unit.StartConstruction();
             ((Buildable<BuildableActivationArgs>)unit).FinishConstruction();
+
+            // Restore original values
             unit.NumOfDronesRequired = droneNum;
             unit.BuildTimeInS /= droneNum;
         }
-
-        #region Pre-Placed Buildables Initialization
-
-        /// <summary>
-        /// Initialize all pre-placed BuildingWrappers and UnitWrappers in the cruiser hierarchy.
-        /// Buildings/units stay as children of wherever you placed them (so they animate with their parent).
-        /// Call from ScriptCallActions: InitializePrePlacedBuildables(0) for Blues, (1) for Reds.
-        /// </summary>
-        public void InitializePrePlacedBuildables(int factionIndex)
-        {
-            if (Cruisers == null || factionIndex >= Cruisers.Length || Cruisers[factionIndex] == null)
-            {
-                Debug.LogError($"[BattleSequencer] Cannot initialize pre-placed buildables: invalid faction index {factionIndex}");
-                return;
-            }
-            InitializePrePlacedBuildables(Cruisers[factionIndex]);
-        }
-
-        /// <summary>
-        /// Initialize all pre-placed BuildingWrappers and UnitWrappers in the cruiser hierarchy.
-        /// </summary>
-        public void InitializePrePlacedBuildables(Cruiser cruiser)
-        {
-            InitializePrePlacedBuildings(cruiser);
-            InitializePrePlacedUnits(cruiser);
-        }
-
-        /// <summary>
-        /// Initialize only pre-placed BuildingWrappers in the cruiser hierarchy.
-        /// Call from ScriptCallActions: InitializePrePlacedBuildings(0) for Blues, (1) for Reds.
-        /// </summary>
-        public void InitializePrePlacedBuildings(int factionIndex)
-        {
-            if (Cruisers == null || factionIndex >= Cruisers.Length || Cruisers[factionIndex] == null)
-            {
-                Debug.LogError($"[BattleSequencer] Cannot initialize pre-placed buildings: invalid faction index {factionIndex}");
-                return;
-            }
-            InitializePrePlacedBuildings(Cruisers[factionIndex]);
-        }
-
-        /// <summary>
-        /// Initialize only pre-placed BuildingWrappers in the cruiser hierarchy.
-        /// </summary>
-        public void InitializePrePlacedBuildings(Cruiser cruiser)
-        {
-            BuildingWrapper[] wrappers = cruiser.GetComponentsInChildren<BuildingWrapper>(includeInactive: true);
-            UIManager uiManager = BattleSceneGod.Instance.uiManager;
-
-            int count = 0;
-            foreach (BuildingWrapper wrapper in wrappers)
-            {
-                // Skip if already initialized
-                if (wrapper.Buildable != null && wrapper.Buildable.IsInitialised)
-                    continue;
-
-                // Full initialization chain:
-                // 1. StaticInitialise - sets up _parent, _healthBar, _clickHandler
-                wrapper.StaticInitialise();
-
-                // 2. Initialise - hooks up click handlers, initializes health bar
-                wrapper.Buildable.Initialise(uiManager);
-
-                // 3. Activate - sets parent cruiser, enables the gameobject
-                wrapper.Buildable.Activate(
-                    new BuildingActivationArgs(
-                        cruiser,
-                        cruiser.EnemyCruiser,
-                        cruiser.CruiserSpecificFactories,
-                        null,  // No slot - building stays where you placed it
-                        null));
-
-                // 4. StartConstruction and FinishConstruction - completes the building instantly
-                wrapper.Buildable.StartConstruction();
-                ((Buildable<BuildingActivationArgs>)wrapper.Buildable).FinishConstruction();
-
-                count++;
-            }
-
-            Debug.Log($"[BattleSequencer] Initialized {count} pre-placed building(s) on {cruiser.name}");
-        }
-
-        /// <summary>
-        /// Initialize only pre-placed UnitWrappers in the cruiser hierarchy.
-        /// Call from ScriptCallActions: InitializePrePlacedUnits(0) for Blues, (1) for Reds.
-        /// </summary>
-        public void InitializePrePlacedUnits(int factionIndex)
-        {
-            if (Cruisers == null || factionIndex >= Cruisers.Length || Cruisers[factionIndex] == null)
-            {
-                Debug.LogError($"[BattleSequencer] Cannot initialize pre-placed units: invalid faction index {factionIndex}");
-                return;
-            }
-            InitializePrePlacedUnits(Cruisers[factionIndex]);
-        }
-
-        /// <summary>
-        /// Initialize only pre-placed UnitWrappers in the cruiser hierarchy.
-        /// </summary>
-        public void InitializePrePlacedUnits(Cruiser cruiser)
-        {
-            UnitWrapper[] wrappers = cruiser.GetComponentsInChildren<UnitWrapper>(includeInactive: true);
-            UIManager uiManager = BattleSceneGod.Instance.uiManager;
-
-            int count = 0;
-            foreach (UnitWrapper wrapper in wrappers)
-            {
-                // Skip if already initialized
-                if (wrapper.Buildable != null && wrapper.Buildable.IsInitialised)
-                    continue;
-
-                // Full initialization chain:
-                wrapper.StaticInitialise();
-                wrapper.Buildable.Initialise(uiManager);
-
-                wrapper.Buildable.Activate(
-                    new BuildableActivationArgs(
-                        cruiser,
-                        cruiser.EnemyCruiser,
-                        cruiser.CruiserSpecificFactories));
-
-                wrapper.Buildable.StartConstruction();
-                ((Buildable<BuildableActivationArgs>)wrapper.Buildable).FinishConstruction();
-
-                count++;
-            }
-
-            Debug.Log($"[BattleSequencer] Initialized {count} pre-placed unit(s) on {cruiser.name}");
-        }
-
-        #endregion
     }
 
     [Serializable]
@@ -387,7 +260,7 @@ namespace BattleCruisers.Scenes.BattleScene
             public PrefabKeyName PrefabKeyName;
             public Vector2 Postion;
             public Vector2 SpawnArea;
-            [Min(1)] public byte Amount = 1;
+            public byte Amount = 1;
 
             public override string ToString()
             {

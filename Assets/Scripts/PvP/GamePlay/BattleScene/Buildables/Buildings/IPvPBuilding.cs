@@ -33,6 +33,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         bool IsBoostable { get; }
         int variantIndex { get; set; }
         void ApplyVariantStats(StatVariant statVariant);
-        new void Activate(PvPBuildingActivationArgs pvPBuildingActivationArgs);
+        void Activate(PvPBuildingActivationArgs pvPBuildingActivationArgs);
     }
 }

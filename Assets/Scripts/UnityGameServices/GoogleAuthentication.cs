@@ -26,7 +26,7 @@ namespace BattleCruisers.Utils.Network
         }
 
         //Fetch the Token / Auth code
-        public Task<bool> Authenticate(SignInInteractivity interactivity)
+        public async Task<bool> Authenticate(SignInInteractivity interactivity)
         {
 
             bool state = false;
@@ -40,7 +40,7 @@ namespace BattleCruisers.Utils.Network
                     PlayGamesPlatform.Instance.RequestServerSideAccess(true, (token) =>
                     {
                         Debug.Log("PlayGamesPlatform: RequestServerSideAccess: " + token);
-                        _ = SignInWithGooglePlayGamesAsync(token);
+                        SignInWithGooglePlayGamesAsync(token);
                         state = true;
                     });
 
@@ -52,7 +52,7 @@ namespace BattleCruisers.Utils.Network
                     state = false;
                 }
             });
-            return Task.FromResult(state);
+            return state;
         }
 
         public void LoginGoogle()

@@ -11,20 +11,18 @@ namespace BattleCruisers.Utils
     /// </summary>
     public enum PrefabKeyName
     {
-        None = -1,
-
         // === Hulls ===
-        Hull_Trident = 0,
-        Hull_Raptor = 1,
-        Hull_Rockjaw = 2,
-        Hull_Hammerhead = 3,
-        Hull_Longbow = 4,
-        Hull_Megalodon = 5,
-        Hull_Eagle = 6,
-        Hull_Bullshark = 7,
-        Hull_TasDevil = 8,
-        Hull_Yeti = 9,
-        Hull_Rickshaw = 10,
+        Hull_Trident = 0000,
+        Hull_Raptor = 0001,
+        Hull_Rockjaw = 0002,
+        Hull_Hammerhead = 0003,
+        Hull_Longbow = 0004,
+        Hull_Megalodon = 0005,
+        Hull_Eagle = 0006,
+        Hull_Bullshark = 0007,
+        Hull_TasDevil = 0008,
+        Hull_Yeti = 0009,
+        Hull_Rickshaw = 0010,
         Hull_BlackRig = 0011,
         Hull_Flea = 0012,
         Hull_Shepherd = 0013,

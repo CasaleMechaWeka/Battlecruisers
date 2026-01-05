@@ -37,7 +37,7 @@ namespace BattleCruisers.Utils.BattleScene
                     DataProvider.GameModel.LastBattleResult = sideQuestBattleResult;
                     break;
                 case GameMode.Campaign:
-                    // Completing the tutorial does not count as a real level, so
+                    // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
                     BattleResult battleResult = new BattleResult(ApplicationModel.SelectedLevel, wasVictory);
                     DataProvider.GameModel.LastBattleResult = battleResult;
@@ -95,7 +95,7 @@ namespace BattleCruisers.Utils.BattleScene
                     break;
 
                 case GameMode.Campaign:
-                    // Completing the tutorial does not count as a real level, so
+                    // Completing the tutorial does not count as a real level, so 
                     // only save battle result if this was not the tutorial.
                     BattleResult battleResult = new BattleResult(ApplicationModel.SelectedLevel, wasVictory);
                     DataProvider.GameModel.LastBattleResult = battleResult;

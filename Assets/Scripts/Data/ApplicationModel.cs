@@ -1,6 +1,4 @@
-﻿using BattleCruisers.Data;
-
-namespace BattleCruisers.Data
+﻿namespace BattleCruisers.Data
 {
     public enum GameMode
     {
@@ -10,7 +8,8 @@ namespace BattleCruisers.Data
         PvP_1VS1 = 4,
         CoinBattle = 5,
         SideQuest = 6
-        // ChainBattle removed - it's just Campaign with a sequencer
+
+        //Voyage = 5
     }
 
     public static class ApplicationModel

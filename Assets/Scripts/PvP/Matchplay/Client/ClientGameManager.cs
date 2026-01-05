@@ -31,7 +31,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
         }
 
 
-        Task InitAsync()
+        async Task InitAsync()
         {
             NetworkClient = new MatchplayNetworkClient();
             Matchmaker = new MatchplayMatchmaker();
@@ -48,7 +48,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.Client
             }
             // Debug.Log($"did Auth? {authenticationResult} {User.AuthId}");
             Initialized = true;
-            return Task.CompletedTask;
         }
 
         public void Disconnect()

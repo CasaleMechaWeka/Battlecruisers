@@ -88,7 +88,7 @@ namespace BattleCruisers.Buildables.Units.Aircraft
             _isAtCruisingHeight = false;
         }
 
-        protected override void OnBuildableCompleted()
+        protected override async void OnBuildableCompleted()
         {
             base.OnBuildableCompleted();
 

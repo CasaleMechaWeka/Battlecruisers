@@ -13,7 +13,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     /// </summary>
     public class PvPBroadsidesTurretBarrelController : PvPShellTurretBarrelController
     {
-        private new IAnimation _barrelAnimation;
+        private IAnimation _barrelAnimation;
 
         public float delayInS;
 

@@ -12,6 +12,8 @@ namespace BattleCruisers.Data
         public string SkyMaterialName { get; }
         public IPrefabKey Captains { get; }
         public HeckleConfig HeckleConfig { get; }
+        public bool HasSequencer { get; }
+
 
         public Level(
             int num,
@@ -19,6 +21,7 @@ namespace BattleCruisers.Data
             SoundKeyPair musicKeys,
             string skyMaterialName,
             IPrefabKey captain,
+            bool hasSequencer = false,
             HeckleConfig heckleConfig = null)
         {
             Helper.AssertIsNotNull(hull, musicKeys);
@@ -28,7 +31,20 @@ namespace BattleCruisers.Data
             MusicKeys = musicKeys;
             SkyMaterialName = skyMaterialName;
             Captains = captain;
-            HeckleConfig = heckleConfig ?? new HeckleConfig(); // Default to disabled if not provided
+            HeckleConfig = heckleConfig ?? new HeckleConfig
+            {
+                enableHeckles = true,
+                maxHeckles = 3,
+                minTimeBeforeFirstHeckle = 1f,
+                maxTimeBeforeFirstHeckle = 60f,
+                minTimeBetweenHeckles = 180f,
+                // Event triggers (note: only health threshold is implemented, others are placeholders)
+                heckleOnFirstDamage = false,  // Not implemented yet
+                enableHealthThresholdHeckle = true,
+                heckleOnHealthThreshold = 0.1f,
+                heckleOnPlayerDamaged = false  // Not implemented yet
+            };
+            HasSequencer = hasSequencer;
         }
     }
 }

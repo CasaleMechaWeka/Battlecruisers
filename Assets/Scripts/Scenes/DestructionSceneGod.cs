@@ -139,7 +139,7 @@ namespace BattleCruisers.Scenes
         
         private bool watchedRewardedAd = false;
 
-        void Start()
+        async void Start()
         {
             LandingSceneGod.MusicPlayer.PlayVictoryMusic();
             PrefabFactory.ClearPool();
@@ -1135,11 +1135,11 @@ namespace BattleCruisers.Scenes
             try
             {
                 DataProvider.SaveGame();
-                _ = DataProvider.SyncCoinsToCloud();
-                _ = DataProvider.SyncCreditsToCloud();
+                DataProvider.SyncCoinsToCloud();
+                DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                _ = DataProvider.CloudSave();
+                DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

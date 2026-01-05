@@ -14,7 +14,6 @@ using UnityEngine.UI;
 
 namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 {
-    // Adjusted for ChainBattle logic v1.0
     public class LevelButtonController : ElementWithClickSound
     {
         private LevelInfo _level;
@@ -47,7 +46,6 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             _screensSceneGod = screensSceneGod;
 
             levelNumberText.text = level.Num.ToString();
-
             levelNameText.text = LocTableCache.StoryTable.GetString(trashTalkData.EnemyNameKey);
             captainImage.sprite = await SpriteFetcher.GetSpriteAsync(trashTalkData.EnemySpritePath);
             
@@ -84,13 +82,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         protected override void OnClicked()
         {
             base.OnClicked();
-
-            // All levels (including ChainBattle 32-40) use Campaign mode
-            // ChainBattle behavior is added via BattleSequencer in BattleSceneGod
             ApplicationModel.Mode = GameMode.Campaign;
-            ApplicationModel.SelectedLevel = _level.Num;
-            Debug.Log($"[DEBUG] Level button clicked: Level {_level.Num}, SelectedLevel set to {ApplicationModel.SelectedLevel}");
-
             _screensSceneGod.GoToTrashScreen(_level.Num);
         }
 

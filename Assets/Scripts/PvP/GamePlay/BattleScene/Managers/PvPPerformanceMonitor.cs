@@ -311,7 +311,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
                     count += _enemyCruiser.UnitMonitor.AliveUnits.Count;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // Silently handle - might not be initialized yet
             }

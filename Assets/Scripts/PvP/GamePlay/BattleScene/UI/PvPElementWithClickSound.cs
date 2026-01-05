@@ -44,7 +44,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI
             {
                 if (_soundPlayer == null)
                     Debug.Log("Sound player is null");
-                _ = _soundPlayer.PlaySoundAsync(ClickSound);
+                _soundPlayer.PlaySoundAsync(ClickSound);
             }
 
             _clickAction?.Invoke();

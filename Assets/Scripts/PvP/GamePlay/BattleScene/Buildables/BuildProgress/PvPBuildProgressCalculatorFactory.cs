@@ -25,9 +25,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPCompositeCalculator calculator = CreateCompositeCalculator(BuildSpeedMultipliers.DEFAULT);
             playerABuildSpeed = calculator;
             return calculator;
-#else
-            return new PvPLinearCalculator(BuildSpeedMultipliers.DEFAULT);
 #endif
+            return new PvPLinearCalculator(BuildSpeedMultipliers.DEFAULT);
         }
 
         public IPvPBuildProgressCalculator CreatePlayerBCruiserCalculator()
@@ -36,9 +35,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPCompositeCalculator calculator = CreateCompositeCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
             playerBBuildSpeed = calculator;
             return calculator;
-#else
-            return new PvPLinearCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
 #endif
+            return new PvPLinearCalculator(/*_buildSpeedCalculator.FindAIBuildSpeed(difficulty)*/BuildSpeedMultipliers.DEFAULT);
         }
 
         public IPvPBuildProgressCalculator CreateIncrementalAICruiserCalculator(Difficulty difficulty, int levelNum)
@@ -47,9 +45,8 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             PvPCompositeCalculator calculator = CreateCompositeCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
             aiBuildSpeed = calculator;
             return calculator;
-#else
-            return new PvPLinearCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
 #endif
+            return new PvPLinearCalculator(_buildSpeedCalculator.FindIncrementalAICruiserBuildSpeed(difficulty, levelNum));
         }
 
         private PvPCompositeCalculator CreateCompositeCalculator(float defaultBuildSpeedMultiplier)

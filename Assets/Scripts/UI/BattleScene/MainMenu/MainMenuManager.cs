@@ -54,9 +54,9 @@ namespace BattleCruisers.UI.BattleScene.MainMenu
             _pauseGameManager.ResumeGame();
             _battleCompletionHandler.CompleteBattle(wasVictory: false, retryLevel: true);
             Dismissed?.Invoke(this, EventArgs.Empty);
-#if LOG_ANALYTICS
             string logName = "Battle_Retry_InGame";
-            Debug.Log("Analytics: " + logName);
+#if LOG_ANALYTICS
+    Debug.Log("Analytics: " + logName);
 #endif
         }
 

@@ -6,7 +6,6 @@ using BattleCruisers.Targets.TargetDetectors;
 using BattleCruisers.Utils;
 using System;
 using UnityEngine.Assertions;
-using BattleCruisers.Cruisers;
 
 namespace BattleCruisers.Targets.TargetFinders
 {
@@ -38,29 +37,11 @@ namespace BattleCruisers.Targets.TargetFinders
 
             _enemyCruiser.Destroyed += _enemyCruiser_Destroyed;
             _enemyCruiser.BuildingStarted += _enemyCruiser_BuildingStarted;
-
-            // Subscribe to secondary section destruction for multi-section cruisers
-            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
-            {
-                cruiser.SecondaryHullDestroyed += OnSecondaryHullDestroyed;
-            }
 		}
 
         private void _enemyCruiser_Destroyed(object sender, DestroyedEventArgs e)
         {
             InvokeTargetLostEvent(_enemyCruiser);
-
-            // If this is a multi-section cruiser, also remove its sections as targets
-            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
-            {
-                foreach (var section in cruiser.Hulls)
-                {
-                    if (section != null)
-                    {
-                        InvokeTargetLostEvent(section);
-                    }
-                }
-            }
         }
 
 		private void _enemyCruiser_BuildingStarted(object sender, BuildingStartedEventArgs e)
@@ -96,31 +77,11 @@ namespace BattleCruisers.Targets.TargetFinders
 			}
 		}
 
-        private void OnSecondaryHullDestroyed(object sender, CruiserSectionDestroyedEventArgs e)
-        {
-            if (e.DestroyedSection != null)
-            {
-                InvokeTargetLostEvent(e.DestroyedSection);
-			}
-		}
-
         // Not in constructor because then client code has not had a chance
         // to subribe to our target found event.
         public void EmitCruiserAsGlobalTarget()
         {
             InvokeTargetFoundEvent(_enemyCruiser);
-
-            // If this is a multi-section cruiser, also emit its sections as targets
-            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
-            {
-                foreach (var section in cruiser.Hulls)
-                {
-                    if (section != null && section.PrimaryCollider != null)
-                    {
-                        InvokeTargetFoundEvent(section);
-                    }
-                }
-            }
         }
 
 		private void InvokeTargetFoundEvent(ITarget targetFound)
@@ -144,12 +105,6 @@ namespace BattleCruisers.Targets.TargetFinders
 		{
             _enemyCruiser.Destroyed -= _enemyCruiser_Destroyed;
 			_enemyCruiser.BuildingStarted -= _enemyCruiser_BuildingStarted;
-
-            // Unsubscribe from secondary section destruction for multi-section cruisers
-            if (_enemyCruiser is Cruiser cruiser && cruiser.Hulls != null && cruiser.Hulls.Length > 1)
-            {
-                cruiser.SecondaryHullDestroyed -= OnSecondaryHullDestroyed;
-            }
 		}
 	}
 }

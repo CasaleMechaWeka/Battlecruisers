@@ -156,23 +156,10 @@ namespace BattleCruisers.Data
                     if (version >= 640)
                     {
                         game = output as GameModel;
-                        if (game == null)
+                        if (game == null || !ValidateCurrentSave(game))
                             return EmergencyRecovery();
-                        
-                        // Version 651 migration: Convert levels 32-40 to sidequests 0-8
-                        // This MUST run before ValidateCurrentSave, which rejects saves with >31 completed levels
-                        if (version < 651)
-                        {
-                            MigrateLevels32To40ToSidequests(game);
-                            game.SaveVersion = GetCurrentSaveVersion(); // Update to current version after migration
-                            SaveGame(game); // Persist the migration
-                            Debug.Log($"LoadGame - Migrated save from version {version} to {game.SaveVersion} (levels 32-40 → sidequests)");
-                        }
-                        
-                        if (!ValidateCurrentSave(game))
-                            return EmergencyRecovery();
-                        
-                        Debug.Log($"Loading modern format save version {game.SaveVersion} (compatible with current version)");
+                        // Version is already correct (640, 650, etc.), no migration needed
+                        Debug.Log($"Loading modern format save version {version} (compatible with current version)");
                     }
                     else
                     {
@@ -414,35 +401,12 @@ namespace BattleCruisers.Data
 
             IReadOnlyCollection<CompletedLevel> completedLevels = gameData.GetType().GetProperty("CompletedLevels").GetValue(gameData) as IReadOnlyCollection<CompletedLevel>;
 
-            // Add completed levels 1-31 only (levels 32-40 will be migrated to sidequests)
-            foreach (var cl in completedLevels)
-            {
-                if (cl.LevelNum >= 1 && cl.LevelNum <= StaticData.NUM_OF_LEVELS)
-                {
-                    compatibleGameModel.AddCompletedLevel(cl);
-                }
-            }
+            int completedLevelsCount = Mathf.Min(StaticData.NUM_OF_LEVELS, completedLevels.Count);
 
-            // Migrate levels 32-40 to sidequests 0-8
-            // NOTE: Sidequests 0-8 may already be complete from the existing sidequest logic below
-            // So we need to handle: level complete + sidequest not complete, level complete + sidequest complete
-            var levelsToMigrate = completedLevels.Where(cl => cl.LevelNum >= 32 && cl.LevelNum <= 40).ToList();
-
-            if (levelsToMigrate.Count > 0)
+            // What levels have been completed, and at what difficulty
+            for (int i = 0; i < completedLevelsCount; i++)
             {
-                Debug.Log($"MakeCompatible - Found {levelsToMigrate.Count} old levels (32-40) to migrate to sidequests");
-                
-                // We'll process these AFTER the existing sidequest unlock logic runs below
-                // Store them for later processing
-                foreach (var cl in levelsToMigrate)
-                {
-                    int sideQuestId = cl.LevelNum - 32; // 32→0, 33→1, ..., 40→8
-                    
-                    // Check if already marked complete by the unlock-based logic below
-                    // (This will be checked again after that logic runs)
-                    // For now, just log what we found
-                    Debug.Log($"MakeCompatible - Will migrate level {cl.LevelNum} to sidequest {sideQuestId} (difficulty: {cl.HardestDifficulty})");
-                }
+                compatibleGameModel.AddCompletedLevel(completedLevels.ElementAt(i));
             }
 
             List<int> completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
@@ -468,41 +432,6 @@ namespace BattleCruisers.Data
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(7, Settings.Difficulty.Hard));
             if (_unlockedUnits.Contains(StaticPrefabKeys.Units.Broadsword) && !completedSideQuestIDs.Contains(8))
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(8, Settings.Difficulty.Hard));
-
-            // NOW migrate levels 32-40 to sidequests, handling cases where sidequests may already be complete
-            foreach (var cl in completedLevels.Where(c => c.LevelNum >= 32 && c.LevelNum <= 40))
-            {
-                int sideQuestId = cl.LevelNum - 32;
-                
-                if (!completedSideQuestIDs.Contains(sideQuestId))
-                {
-                    // Sidequest not yet complete - mark it complete from level completion
-                    compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(sideQuestId, cl.HardestDifficulty));
-                    Debug.Log($"MakeCompatible - Migrated level {cl.LevelNum} → sidequest {sideQuestId} (NEW)");
-                }
-                else
-                {
-                    // Sidequest already complete - update difficulty if level had higher difficulty
-                    var sideQuestField = typeof(GameModel).GetField("_completedSideQuests", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var completedSideQuests = sideQuestField.GetValue(compatibleGameModel) as List<CompletedLevel>;
-                    if (completedSideQuests != null)
-                    {
-                        var existingSideQuest = completedSideQuests.FirstOrDefault(sq => sq.LevelNum == sideQuestId);
-                        if (existingSideQuest != null && cl.HardestDifficulty > existingSideQuest.HardestDifficulty)
-                        {
-                            existingSideQuest.HardestDifficulty = cl.HardestDifficulty;
-                            Debug.Log($"MakeCompatible - Level {cl.LevelNum} → sidequest {sideQuestId} (UPDATED difficulty to {cl.HardestDifficulty})");
-                        }
-                        else
-                        {
-                            Debug.Log($"MakeCompatible - Level {cl.LevelNum} → sidequest {sideQuestId} (no update needed, sidequest difficulty is higher or equal)");
-                        }
-                    }
-                }
-            }
-
-            // Refresh the completedSideQuestIDs list after migrations
-            completedSideQuestIDs = compatibleGameModel.CompletedSideQuests.Select(data => data.LevelNum).ToList();
 
             if (compatibleGameModel.CompletedLevels != null && compatibleGameModel.CompletedLevels.Count > 0)
                 compatibleGameModel.HasAttemptedTutorial = true;
@@ -598,79 +527,6 @@ namespace BattleCruisers.Data
             game.SaveVersion = GetCurrentSaveVersion();
             SaveGame(game);
             return game;
-        }
-
-        /// <summary>
-        /// Migrates completed levels 32-40 to sidequests 0-8.
-        /// Called for saves created before version 651 when levels 32-40 were converted to sidequests.
-        /// Mapping: Level 32 → Sidequest 0, Level 33 → Sidequest 1, ..., Level 40 → Sidequest 8
-        /// 
-        /// IMPORTANT: Sidequests 0-8 may already be complete independently (they existed before this migration).
-        /// This method handles all combinations:
-        /// - Level complete, sidequest not complete → Mark sidequest complete
-        /// - Level complete, sidequest complete → Keep higher difficulty
-        /// - Level not complete, sidequest complete → No change needed
-        /// - Neither complete → No change needed
-        /// 
-        /// In ALL cases where a level 32-40 exists, it is removed from CompletedLevels.
-        /// </summary>
-        private void MigrateLevels32To40ToSidequests(GameModel game)
-        {
-            Debug.Log("MigrateLevels32To40ToSidequests - Checking for levels 32-40 to migrate");
-            
-            // Find completed levels in range 32-40
-            var levelsToMigrate = game.CompletedLevels
-                .Where(cl => cl.LevelNum >= 32 && cl.LevelNum <= 40)
-                .ToList();
-            
-            if (levelsToMigrate.Count == 0)
-            {
-                Debug.Log("MigrateLevels32To40ToSidequests - No levels 32-40 found to migrate");
-                return;
-            }
-            
-            Debug.Log($"MigrateLevels32To40ToSidequests - Found {levelsToMigrate.Count} completed levels (32-40) to process");
-            
-            foreach (var completedLevel in levelsToMigrate)
-            {
-                // Map: Level 32 → Sidequest 0, Level 33 → Sidequest 1, etc.
-                int sideQuestId = completedLevel.LevelNum - 32;
-                
-                // Check if sidequest is already complete
-                bool sideQuestAlreadyComplete = game.IsSideQuestCompleted(sideQuestId);
-                
-                if (!sideQuestAlreadyComplete)
-                {
-                    // Scenario B: Level complete, sidequest not complete → Mark sidequest complete
-                    game.AddCompletedSideQuest(new CompletedLevel(sideQuestId, completedLevel.HardestDifficulty));
-                    Debug.Log($"MigrateLevels32To40ToSidequests - Level {completedLevel.LevelNum} → Sidequest {sideQuestId} (NEW, difficulty: {completedLevel.HardestDifficulty})");
-                }
-                else
-                {
-                    // Scenario D: Both complete → Keep higher difficulty
-                    var sideQuestField = typeof(GameModel).GetField("_completedSideQuests", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var completedSideQuests = sideQuestField.GetValue(game) as List<CompletedLevel>;
-                    if (completedSideQuests != null)
-                    {
-                        var existingSideQuest = completedSideQuests.FirstOrDefault(sq => sq.LevelNum == sideQuestId);
-                        if (existingSideQuest != null && completedLevel.HardestDifficulty > existingSideQuest.HardestDifficulty)
-                        {
-                            existingSideQuest.HardestDifficulty = completedLevel.HardestDifficulty;
-                            Debug.Log($"MigrateLevels32To40ToSidequests - Level {completedLevel.LevelNum} → Sidequest {sideQuestId} (UPDATED difficulty to {completedLevel.HardestDifficulty})");
-                        }
-                        else
-                        {
-                            Debug.Log($"MigrateLevels32To40ToSidequests - Level {completedLevel.LevelNum} → Sidequest {sideQuestId} (no update needed, sidequest difficulty is higher or equal)");
-                        }
-                    }
-                }
-                
-                // ALWAYS remove the level from CompletedLevels (makes room for new levels 32-40)
-                game.RemoveCompletedLevel(completedLevel.LevelNum);
-                Debug.Log($"MigrateLevels32To40ToSidequests - Removed level {completedLevel.LevelNum} from CompletedLevels");
-            }
-            
-            Debug.Log($"MigrateLevels32To40ToSidequests - Migration complete. Campaign levels: {game.NumOfLevelsCompleted}, Sidequests: {game.NumOfSideQuestsCompleted}");
         }
 
         private GameModel BuildMinimalDefaults()

@@ -18,7 +18,7 @@ namespace BattleCruisers.Scenes.Test.Tutorial
         private const int EXPECTED_NUM_OF_BUTTONS = 4;
         private const int EXPECTED_NUM_OF_IN_GAME_OBJECTS = 4;
 
-        public new Camera camera;
+        public Camera camera;
         public bool highlightGameObjects = true;
 
         void Start()

@@ -19,7 +19,7 @@ namespace BattleCruisers.UI.BattleScene.GameSpeed
         public Image selectedFeedback;
         protected override MaskableGraphic Graphic => selectedFeedback;
 
-        public new bool IsSelected
+        public bool IsSelected
         {
             set
             {

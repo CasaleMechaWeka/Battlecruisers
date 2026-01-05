@@ -31,7 +31,6 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
                         soundPlayer,
                         levelNum);
             }
-            await Task.CompletedTask;
         }
     }
 }

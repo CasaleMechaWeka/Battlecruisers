@@ -11,7 +11,6 @@ namespace BattleCruisers.Targets.Factories
         public TargetTrackerFactory TrackerFactory { get; }
         public TargetDetectorFactory DetectorFactory { get; }
         public TargetProviderFactory ProviderFactory { get; }
-        public IRankedTargetTracker UserChosenTargetTracker { get; }
 
         public CruiserTargetFactoriesProvider(
             CruiserSpecificFactories cruiserSpecificFactories,
@@ -21,7 +20,6 @@ namespace BattleCruisers.Targets.Factories
         {
             Helper.AssertIsNotNull(cruiserSpecificFactories, parentCruiser, enemyCruiser, userChosenTargetTracker);
 
-            UserChosenTargetTracker = userChosenTargetTracker;
             ProcessorFactory = new TargetProcessorFactory(enemyCruiser, userChosenTargetTracker);
             TrackerFactory = new TargetTrackerFactory(userChosenTargetTracker);
             DetectorFactory = new TargetDetectorFactory(enemyCruiser.UnitTargets, parentCruiser.UnitTargets, FactoryProvider.UpdaterProvider);

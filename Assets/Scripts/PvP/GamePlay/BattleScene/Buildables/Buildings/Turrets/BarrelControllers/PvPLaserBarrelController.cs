@@ -74,7 +74,6 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
             Assert.IsNotNull(laserCooldownEffectInitialiser);
             _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_laserEmitter);
-            await Task.CompletedTask;
         }
 
         public override void Fire(float angleInDegrees)
