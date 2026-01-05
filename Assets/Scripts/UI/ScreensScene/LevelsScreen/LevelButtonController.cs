@@ -88,14 +88,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         protected override void ShowDisabledState()
         {
-            // When disabled, deactivate the entire button (captain image visibility handled separately)
-            gameObject.SetActive(false);
+            // Hide visual components but keep GameObject active so it can still receive events if re-enabled
+            SetComponentsEnabled(false);
         }
 
         protected override void ShowEnabledState()
         {
-            // Activate the button when enabled
-            gameObject.SetActive(true);
+            SetComponentsEnabled(true);
 
             captainImage.color = Color.black;
             levelNumberText.color = Color.white;
@@ -105,8 +104,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         protected override void ShowClickedState()
         {
-            // Ensure button is active when clicked
-            gameObject.SetActive(true);
+            SetComponentsEnabled(true);
 
             captainImage.color = Color.red;
             levelNumberText.color = Color.red;
@@ -118,6 +116,19 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
         {
             ShowEnabledState();
             captainImage.color = Color.white;
+        }
+
+        private void SetComponentsEnabled(bool isEnabled)
+        {
+            levelNumberText.enabled = isEnabled;
+            levelNameText.enabled = isEnabled;
+            levelStatsController.enabled = isEnabled;
+            if (backgroundImage != null)
+                backgroundImage.enabled = isEnabled;
+            if (hullImage != null)
+                hullImage.enabled = isEnabled;
+            if (skyImage != null)
+                skyImage.enabled = isEnabled;
         }
     }
 }
