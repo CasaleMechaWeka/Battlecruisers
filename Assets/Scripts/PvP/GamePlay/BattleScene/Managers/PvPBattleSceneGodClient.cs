@@ -396,6 +396,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
             captainController = GetComponent<PvPCaptainExoHUDController>();
 
             SetMatchmakingProcessing(false);
+            await Task.CompletedTask;
         }
         private async void InitialiseAsync()
         {

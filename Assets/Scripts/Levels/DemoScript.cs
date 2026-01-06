@@ -1,6 +1,8 @@
 using BattleCruisers.Scenes.BattleScene;
 using UnityEngine;
 
+
+
 public class DemoScript : MonoBehaviour
 {
     public static BattleSceneGod BattleSceneGod;
@@ -8,6 +10,11 @@ public class DemoScript : MonoBehaviour
     void Start()
     {
         BattleSceneGod = GetComponentInParent<BattleSceneGod>();
+    }
+
+    void Init(BattleSceneGod battleSceneGod)
+    {
+        BattleSceneGod = battleSceneGod;
     }
 
     public static void ApplyDamageToEnemy(float amount)

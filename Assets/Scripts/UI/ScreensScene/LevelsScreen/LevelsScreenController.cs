@@ -158,7 +158,7 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
 
         /// <summary>
         /// Programmatically assigns captain images and hull images to all level and sidequest buttons.
-        /// This fixes image references after the NPC naming convention change.
+        /// This fixes image references after the NPC naming convention change. 
         /// </summary>
         private async Task AssignCaptainImagesAsync(IList<LevelInfo> levels)
         {

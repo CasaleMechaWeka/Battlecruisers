@@ -1,5 +1,6 @@
 ﻿using BattleCruisers.Utils.Timers;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
+using BattleCruisers.Scenes.BattleScene;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,6 +21,7 @@ namespace BattleCruisers.Utils.Debugging
 #if !ENABLE_CHEATS
             Destroy(cheaterButtonsPanel);
             Destroy(gameObject);
+            return;
 #endif
 
             _debouncer = new Debouncer(TimeBC.Instance.RealTimeSinceGameStartProvider, debounceTimeInS);
@@ -36,7 +38,9 @@ namespace BattleCruisers.Utils.Debugging
 
         private void ToggleCheatersUI()
         {
-            cheaterButtonsPanel.SetActive(!cheaterButtonsPanel.activeSelf);
+            bool isActive = !cheaterButtonsPanel.activeSelf;
+            cheaterButtonsPanel.SetActive(isActive);
         }
+
     }
 }

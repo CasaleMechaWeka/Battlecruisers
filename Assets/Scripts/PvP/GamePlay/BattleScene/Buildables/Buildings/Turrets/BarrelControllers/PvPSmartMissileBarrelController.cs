@@ -12,7 +12,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
     {
         private ProjectileStats _ProjectileStats;
         private PvPSmartMissileSpawner _missileSpawner;
-        private ITargetFilter _targetFilter;
+        private new ITargetFilter _targetFilter;
 
         public override Vector3 ProjectileSpawnerPosition => _missileSpawner.transform.position;
         public override bool CanFireWithoutTarget => true;

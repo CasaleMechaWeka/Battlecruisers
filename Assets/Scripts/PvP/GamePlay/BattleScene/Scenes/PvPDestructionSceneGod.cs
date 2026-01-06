@@ -869,11 +869,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Scenes
             try
             {
                 DataProvider.SaveGame();
-                DataProvider.SyncCoinsToCloud();
-                DataProvider.SyncCreditsToCloud();
+                _ = DataProvider.SyncCoinsToCloud();
+                _ = DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                DataProvider.CloudSave();
+                _ = DataProvider.CloudSave();
             }
             catch (Exception ex)
             {

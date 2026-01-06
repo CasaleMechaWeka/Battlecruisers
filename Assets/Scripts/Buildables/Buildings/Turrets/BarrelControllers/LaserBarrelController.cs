@@ -74,6 +74,7 @@ namespace BattleCruisers.Buildables.Buildings.Turrets.BarrelControllers
             ILaserCooldownEffectInitialiser laserCooldownEffectInitialiser = GetComponent<ILaserCooldownEffectInitialiser>();
             Assert.IsNotNull(laserCooldownEffectInitialiser);
             _laserCooldownEffect = laserCooldownEffectInitialiser.CreateLaserCooldownEffect(_laserEmitter);
+            await Task.CompletedTask;
         }
 
         public override void Fire(float angleInDegrees)

@@ -174,6 +174,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             PvPBuildableActivationArgs activationArgs = new PvPBuildableActivationArgs(ParentCruiser, EnemyCruiser, _cruiserSpecificFactories, VariantIndex);
             UnitUnderConstruction = _unitPool.GetItem(activationArgs);
+
+            if (UnitUnderConstruction == null)
+            {
+                Logging.Warn(Tags.FACTORY, $"Failed to get unit from pool - reached creation limit");
+                return;
+            }
+
             Assert.IsNotNull(UnitUnderConstruction);
             UnitUnderConstruction.DroneConsumerProvider = this;
 

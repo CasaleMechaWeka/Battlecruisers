@@ -17,7 +17,7 @@ namespace BattleCruisers.Scenes.Test.Cruisers
     {
         private CameraSwitcher _cameraSwitcher;
 
-        public Camera camera;
+        public new Camera camera;
 
         public Cruiser Cruiser { get; private set; }
 

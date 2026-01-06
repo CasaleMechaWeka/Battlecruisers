@@ -107,7 +107,7 @@ namespace BattleCruisers.Utils.Localisation
         }
 
         // Start is called before the first frame update
-        async void Start()
+        void Start()
         {
             try
             {
@@ -174,7 +174,7 @@ namespace BattleCruisers.Utils.Localisation
             }
         }
 
-        private async void UpdateString()
+        private void UpdateString()
         {
             try
             {
@@ -200,7 +200,6 @@ namespace BattleCruisers.Utils.Localisation
 
                     // First try the original key that we know works
                     string bestFitScaleAdjustment = LocTableCache.FontsTable.GetString("BestFitScaleAdjustment");
-                    bool usingLegacyKey = true;
                     // Debug.Log($"[{gameObject.name}] Retrieved original scale adjustment 'BestFitScaleAdjustment': '{bestFitScaleAdjustment}'");
 
                     // Check if the original key returns an error or is empty
@@ -209,7 +208,6 @@ namespace BattleCruisers.Utils.Localisation
                         bestFitScaleAdjustment.Contains("is Not localised"))
                     {
                         // Only try the new specific keys if the original key doesn't work
-                        usingLegacyKey = false;
                         string scaleAdjKey = isHeading ? "HeadingScaleAdjustment" : "RegularScaleAdjustment";
                         bestFitScaleAdjustment = LocTableCache.FontsTable.GetString(scaleAdjKey);
                         // Debug.Log($"[{gameObject.name}] Falling back to specific scale adjustment '{scaleAdjKey}': '{bestFitScaleAdjustment}'");
@@ -332,7 +330,6 @@ namespace BattleCruisers.Utils.Localisation
 
                     // First try the original key that we know works
                     string bestFitScaleAdjustment = LocTableCache.FontsTable.GetString("BestFitScaleAdjustment");
-                    bool usingLegacyKey = true;
                     // Debug.Log($"[{gameObject.name}] Retrieved original TMP scale adjustment 'BestFitScaleAdjustment': '{bestFitScaleAdjustment}'");
 
                     // Check if the original key returns an error or is empty
@@ -341,7 +338,6 @@ namespace BattleCruisers.Utils.Localisation
                         bestFitScaleAdjustment.Contains("is Not localised"))
                     {
                         // Only try the new specific keys if the original key doesn't work
-                        usingLegacyKey = false;
                         string scaleAdjKey = isHeading ? "HeadingScaleAdjustment" : "RegularScaleAdjustment";
                         bestFitScaleAdjustment = LocTableCache.FontsTable.GetString(scaleAdjKey);
                         Debug.Log($"[{gameObject.name}] Falling back to specific TMP scale adjustment '{scaleAdjKey}': '{bestFitScaleAdjustment}'");

@@ -32,7 +32,7 @@ namespace BattleCruisers.Utils.BattleScene.Pools
 
         public TPoolable GetItem(TArgs activationArgs)
         {
-            if (_items.Count < MaxLimit)
+            if (_createCount < MaxLimit)
             {
                 TPoolable item = _items.Count != 0 ? _items.Pop() : CreateItem();
                 Logging.Verbose(Tags.POOLS, $"{item}");

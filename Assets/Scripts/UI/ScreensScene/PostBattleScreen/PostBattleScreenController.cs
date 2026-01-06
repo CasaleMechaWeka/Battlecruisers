@@ -406,8 +406,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private bool CanNextCommandExecute()
         {
             // If this was the final campaign level, NEXT should not be displayed.
-            // All subsequent levels are bonuses that users can find on their own:
-            if (BattleResult.LevelNum == StaticData.NUM_OF_STANDARD_LEVELS)
+            // Chain Battle levels (32+) are bonuses that users can find on their own:
+            if (BattleResult.LevelNum == StaticData.NUM_OF_CAMPAIGN_LEVELS)
                 return false;
             // The rest of the time we do the normal thing:
             else
@@ -422,10 +422,8 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         private bool CanClockedGameCommandExecute()
         {
             return
-                //BattleResult.WasVictory
-                //&& BattleResult.LevelNum == StaticData.NUM_OF_LEVELS
-                /*||*/ BattleResult.WasVictory
-                && BattleResult.LevelNum == StaticData.NUM_OF_STANDARD_LEVELS;
+                BattleResult.WasVictory
+                && BattleResult.LevelNum == StaticData.NUM_OF_CAMPAIGN_LEVELS;
         }
 
         public void GoToHomeScreen()

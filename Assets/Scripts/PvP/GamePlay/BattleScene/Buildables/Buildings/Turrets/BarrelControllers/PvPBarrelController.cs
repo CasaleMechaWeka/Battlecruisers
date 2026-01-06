@@ -204,6 +204,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             Assert.IsNotNull(args);
             _parent = args.Parent;
             _barrelAnimation = GetBarrelFiringAnimation(args);
+            await Task.CompletedTask;
         }
 
         protected virtual IBarrelFirer CreateFirer(PvPBarrelControllerArgs args)

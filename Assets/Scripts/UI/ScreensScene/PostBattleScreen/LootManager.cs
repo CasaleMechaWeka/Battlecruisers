@@ -62,6 +62,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             return containsNewLoot || !completedSideQuestIDs.Contains(sideQuestID);
         }
 
+        public bool ShouldShowChainBattleLoot(int chainBattleLevelNumber)
+        {
+            Loot unlockedLoot = StaticData.GetLevelLoot(chainBattleLevelNumber);
+            bool containsNewLoot = false;
+            if (unlockedLoot.Items.Count != 0)
+                for (int i = 0; i < unlockedLoot.Items.Count; i++)
+                    if (!unlockedLoot.Items[i].IsUnlocked(DataProvider.GameModel))
+                        containsNewLoot = true;
+
+            // ChainBattles should show loot if it contains new items or if this is the first completion
+            // Since ChainBattles might be replayable, we check if this specific ChainBattle level has been completed
+            return containsNewLoot || !DataProvider.GameModel.CompletedLevels.Any(cl => cl.LevelNum == chainBattleLevelNumber);
+        }
+
         public static Loot UnlockLevelLoot(int levelCompleted)
         {
             Debug.Log($"UnlockLevelLoot called for level: {levelCompleted}");
@@ -80,6 +94,20 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
         {
             Debug.Log($"UnlockSideQuestLoot called for sideQuestID: {sideQuestID}");
             Loot unlockedLoot = StaticData.GetSideQuestLoot(sideQuestID);
+
+            if (unlockedLoot.Items.Count != 0)
+            {
+                UnlockLootItems(unlockedLoot);
+                DataProvider.SaveGame();
+            }
+
+            return unlockedLoot;
+        }
+
+        public static Loot UnlockChainBattleLoot(int chainBattleLevelNumber)
+        {
+            Debug.Log($"UnlockChainBattleLoot called for ChainBattle level: {chainBattleLevelNumber}");
+            Loot unlockedLoot = StaticData.GetLevelLoot(chainBattleLevelNumber);
 
             if (unlockedLoot.Items.Count != 0)
             {

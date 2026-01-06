@@ -18,6 +18,7 @@ using BattleCruisers.UI.Cameras;
 using BattleCruisers.UI.Cameras.Helpers;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.Music;
+using BattleCruisers.Utils.Localisation;
 using BattleCruisers.UI.Sound;
 using BattleCruisers.UI.Sound.Wind;
 using BattleCruisers.Utils;
@@ -26,6 +27,7 @@ using BattleCruisers.Utils.BattleScene.Lifetime;
 using BattleCruisers.Utils.Debugging;
 using BattleCruisers.Utils.Factories;
 using BattleCruisers.Utils.Fetchers;
+using BattleCruisers.Utils.Fetchers.Cache;
 using BattleCruisers.Utils.PlatformAbstractions;
 using BattleCruisers.Utils.PlatformAbstractions.Audio;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
@@ -44,6 +46,7 @@ using BattleCruisers.Cruisers.Construction;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 
+// Adjusted for ChainBattle logic v1.0
 // === Tag keys :D ===
 // FELIX    => Code todo
 // TEMP     => Temporary for testing
@@ -61,6 +64,7 @@ namespace BattleCruisers.Scenes.BattleScene
         // Hold references to avoid garbage collectio
         private TutorialHelper _tutorialProvider;
         private UserTargetTracker _userTargetTracker;
+        private IBattleSceneHelper _battleSceneHelper;
         private BuildableButtonColourController _buildableButtonColourController;
         private CruiserDeathManager _cruiserDeathManager;
         private LifetimeManager _lifetimeManager;
@@ -68,7 +72,9 @@ namespace BattleCruisers.Scenes.BattleScene
         private PausableAudioListener _pausableAudioListener;
         private BattleSequencer battleSequencer;
 
+        [Tooltip("Debug field: Override the selected level.")]
         public int defaultLevel;
+        [Tooltip("Debug field: Override the selected side quest ID for testing side quest battles.")]
         public int defaultSideQuest;
         public bool isTutorial = false;
 
@@ -81,6 +87,7 @@ namespace BattleCruisers.Scenes.BattleScene
         public GameObject enemyCharacterImages;
         public Cruiser playerCruiser;
         public Cruiser aiCruiser;
+
         private NavigationPermitters navigationPermitters;
         private BattleSceneGodComponents components;
         private CameraComponents cameraComponents;
@@ -124,13 +131,12 @@ namespace BattleCruisers.Scenes.BattleScene
             components.Initialise();
             components.UpdaterProvider.SwitchableUpdater.Enabled = false;
 
-            // TEMP  Force tutorial or default level
+            // TEMP  Force  tutorial
             if (isTutorial)
             {
                 ApplicationModel.Mode = GameMode.Tutorial;
                 ApplicationModel.SelectedLevel = 1;
             }
-
 
             if (ApplicationModel.Mode == GameMode.Tutorial)
             {
@@ -146,6 +152,9 @@ namespace BattleCruisers.Scenes.BattleScene
             navigationPermitters = new NavigationPermitters();
 
             IBattleSceneHelper helper = CreateHelper(components.Deferrer, navigationPermitters);
+            _battleSceneHelper = helper;
+
+
             IUserChosenTargetManager playerCruiserUserChosenTargetManager = new UserChosenTargetManager();
             IUserChosenTargetManager aiCruiserUserChosenTargetManager = new DummyUserChosenTargetManager();
             ITime time = TimeBC.Instance;
@@ -154,11 +163,21 @@ namespace BattleCruisers.Scenes.BattleScene
 
             // Create cruisers
             Logging.Log(Tags.BATTLE_SCENE, "Cruiser setup");
+
+            // Ensure PrefabCache is initialized before creating pools
+            if (!PrefabCache.IsInitialized)
+            {
+                Debug.LogWarning("PrefabCache not initialized yet, initializing now...");
+                await PrefabCache.CreatePrefabCacheAsync();
+            }
+
             FactoryProvider.Initialise(components, DataProvider.SettingsManager);
             PrefabFactory.CreatePools();
             CruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
+
+            // Create AI cruiser (same for all campaign levels including ChainBattle)
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
             enemyCruiserSprite = aiCruiser.Sprite;
@@ -192,6 +211,16 @@ namespace BattleCruisers.Scenes.BattleScene
                     aiCruiserUserChosenTargetManager,
                     userChosenTargetHelper);
 
+            // Check if AI cruiser has embedded BattleSequencer (new ChainBattle approach)
+            // MUST be after cruiser initialization so SlotAccessor is ready
+            BattleSequencer embeddedSequencer = aiCruiser.GetComponent<BattleSequencer>();
+            if (embeddedSequencer != null)
+            {
+                embeddedSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+                embeddedSequencer.StartF();
+                battleSequencer = embeddedSequencer;
+                Debug.Log($"[ChainBattle] Using embedded BattleSequencer from cruiser prefab for level {ApplicationModel.SelectedLevel}");
+            }
 
             // UI
             Logging.Log(Tags.BATTLE_SCENE, "UI setup");
@@ -494,7 +523,7 @@ namespace BattleCruisers.Scenes.BattleScene
             }
 
             GameOver = false;
-            if (LandingSceneGod.Instance.coinBattleLevelNum > 0)
+            if (LandingSceneGod.Instance != null && LandingSceneGod.Instance.coinBattleLevelNum > 0)
                 LandingSceneGod.Instance.coinBattleLevelNum = -2; //DestructionSceneGod will detect Coin battle mode through this
 
             if (ApplicationModel.Mode == GameMode.SideQuest && StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].HasSequencer)
@@ -512,20 +541,45 @@ namespace BattleCruisers.Scenes.BattleScene
                     battleSequencer.StartF();
                 }
             }
-
-            if(ApplicationModel.Mode == GameMode.Campaign && StaticData.Levels[ApplicationModel.SelectedLevel].HasSequencer)
-            {
-                string path = SEQUENCER_PATH + "SequencerLV" + ApplicationModel.SelectedSideQuestID.ToString("000") + ".prefab";
-                AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(path);
-                await handle.Task;
-                
-                if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
-                    Debug.LogError("Failed to retrieve prefab for path: " + path);
-                else
+            else
+                if (ApplicationModel.Mode == GameMode.Campaign && StaticData.Levels[ApplicationModel.SelectedLevel].HasSequencer)
                 {
-                    battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
-                    battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
-                    battleSequencer.StartF();
+                    string path = SEQUENCER_PATH + "SequencerLV" + ApplicationModel.SelectedSideQuestID.ToString("000") + ".prefab";
+                    AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(path);
+                    await handle.Task;
+
+                    if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+                        Debug.LogError("Failed to retrieve prefab for path: " + path);
+                    else
+                    {
+                        battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
+                        battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+                        battleSequencer.StartF();
+                    }
+                }
+
+            // Load ChainBattle sequencer if this is a ChainBattle level (fallback for old prefab-based approach)
+            // Only load if no embedded sequencer was found on the cruiser
+            if (battleSequencer == null && ApplicationModel.Mode == GameMode.Campaign && StaticData.IsChainBattleLevel(ApplicationModel.SelectedLevel))
+            {
+                string sequencerPath = StaticData.GetChainBattleSequencerPath(ApplicationModel.SelectedLevel);
+                if (!string.IsNullOrEmpty(sequencerPath))
+                {
+                    string fullPath = SEQUENCER_PATH + sequencerPath + ".prefab";
+                    AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(fullPath);
+                    await handle.Task;
+
+                    if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
+                    {
+                        battleSequencer = Instantiate(handle.Result, transform).GetComponent<BattleSequencer>();
+                        battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
+                        battleSequencer.StartF();
+                        Debug.Log($"[ChainBattle] Loaded sequencer prefab for level {ApplicationModel.SelectedLevel} (fallback method)");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[ChainBattle] No sequencer found at {fullPath}, running as normal level");
+                    }
                 }
             }
             /*
@@ -572,6 +626,7 @@ namespace BattleCruisers.Scenes.BattleScene
 
                 case GameMode.SideQuest:
                     return new SideQuestHelper(deferrer);
+
 
                 default:
                     throw new InvalidOperationException($"Unknow enum value: {ApplicationModel.Mode}");
@@ -655,5 +710,6 @@ namespace BattleCruisers.Scenes.BattleScene
                 Debug.Log(ex);
             }
         }
+
     }
 }

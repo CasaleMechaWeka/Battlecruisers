@@ -91,6 +91,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             SetConnectionPayload(GetPlayerId(), m_PlayerName);
             var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetConnectionData(m_Ipaddress, m_Port);
+            await Task.CompletedTask;
         }
 
         public override async Task SetupHostConnectionAsync()
@@ -98,6 +99,7 @@ namespace BattleCruisers.Network.Multiplay.ConnectionManagement
             SetConnectionPayload(GetPlayerId(), m_PlayerName); // Need to set connection payload for host as well, as host is a client too
             var utp = (UnityTransport)m_ConnectionManager.NetworkManager.NetworkConfig.NetworkTransport;
             utp.SetConnectionData(m_Ipaddress, m_Port);
+            await Task.CompletedTask;
         }
     }
 

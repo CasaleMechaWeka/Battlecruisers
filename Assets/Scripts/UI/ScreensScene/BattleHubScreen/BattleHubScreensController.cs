@@ -310,7 +310,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             {
                 _currentScreen.OnDismissing();
                 _currentScreen.gameObject.SetActive(false);
-                _soundPlayer.PlaySoundAsync(SoundKeys.UI.ScreenChange);
+                _ = _soundPlayer.PlaySoundAsync(SoundKeys.UI.ScreenChange);
             }
 
             _currentScreen = destinationScreen;

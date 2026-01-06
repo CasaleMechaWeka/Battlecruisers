@@ -10,6 +10,7 @@ using BattleCruisers.Targets.TargetTrackers.UserChosen;
 using BattleCruisers.UI.BattleScene;
 using BattleCruisers.UI.BattleScene.BuildMenus;
 using BattleCruisers.UI.BattleScene.Buttons.Filters;
+using BattleCruisers.UI.BattleScene.Buttons.Toggles;
 using BattleCruisers.UI.BattleScene.Manager;
 using BattleCruisers.UI.Common.BuildableDetails;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
@@ -54,7 +55,6 @@ namespace BattleCruisers.Scenes.BattleScene
         public abstract IBuildProgressCalculator CreatePlayerCruiserBuildProgressCalculator();
         public abstract IBuildProgressCalculator CreateAICruiserBuildProgressCalculator();
 
-
         public virtual Level GetLevel()
         {
             return StaticData.Levels[ApplicationModel.SelectedLevel - 1];
@@ -65,46 +65,35 @@ namespace BattleCruisers.Scenes.BattleScene
             return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID];
         }
 
-        public virtual async Task<string> GetEnemyNameAsync(int levelNum)
+        public virtual Task<string> GetEnemyNameAsync(int levelNum)
         {
             TrashTalkData levelTrashTalkData;
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[BattleSceneHelper] Getting enemy name for level {levelNum}, Mode: {ApplicationModel.Mode}");
-#endif
-
             if (ApplicationModel.Mode == GameMode.SideQuest)
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log($"[BattleSceneHelper] Getting side quest trash talk for level {levelNum}");
-#endif
                 levelTrashTalkData = StaticData.SideQuestTrashTalk[levelNum];
             }
             else
             {
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log($"[BattleSceneHelper] Getting campaign trash talk for level {levelNum}");
-#endif
                 levelTrashTalkData = StaticData.LevelTrashTalk[levelNum];
             }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            Debug.Log($"[BattleSceneHelper] Full trash talk data for {(ApplicationModel.Mode == GameMode.SideQuest ? "side quest" : "level")} {levelNum}:\n" +
-                     $"  Enemy Name:         {LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey)}\n" +
-                     $"  Player Text:        {LocTableCache.StoryTable.GetString(levelTrashTalkData.PlayerTextKey)}\n" +
-                     $"  Enemy Text:         {LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyTextKey)}\n" +
-                     $"  Player Talks First: {levelTrashTalkData.PlayerTalksFirst}\n");
-#endif
-
-            return LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey);
+            return Task.FromResult(LocTableCache.StoryTable.GetString(levelTrashTalkData.EnemyNameKey));
         }
 
         public virtual IPrefabKey GetAiCruiserKey()
         {
             if (ApplicationModel.Mode == GameMode.SideQuest)
-                return StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
-            else
-                return StaticData.Levels[ApplicationModel.SelectedLevel - 1].Hull;
+            {
+                var sideQuestHull = StaticData.SideQuests[ApplicationModel.SelectedSideQuestID].Hull;
+                Debug.Log($"[DEBUG] SideQuest {ApplicationModel.SelectedSideQuestID}: Using hull {sideQuestHull}");
+                return sideQuestHull;
+            }
+
+            var levelIndex = ApplicationModel.SelectedLevel - 1;
+            var levelHull = StaticData.Levels[levelIndex].Hull;
+            Debug.Log($"[DEBUG] Level {ApplicationModel.SelectedLevel} (index {levelIndex}): Using hull {levelHull}");
+            return levelHull;
         }
     }
 }

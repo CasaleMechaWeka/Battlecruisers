@@ -126,11 +126,11 @@ namespace BattleCruisers.UI.Loading
             try
             {
                 DataProvider.SaveGame();
-                DataProvider.SyncCoinsToCloud();
-                DataProvider.SyncCreditsToCloud();
+                _ = DataProvider.SyncCoinsToCloud();
+                _ = DataProvider.SyncCreditsToCloud();
 
                 // Save changes:
-                DataProvider.CloudSave();
+                _ = DataProvider.CloudSave();
             }
             catch (Exception ex)
             {
@@ -151,21 +151,25 @@ namespace BattleCruisers.UI.Loading
             idHighlight.SetActive(false);
         }
 
-        private async void DisplayUserID()
+        private void DisplayUserID()
         {
 #if !UNITY_EDITOR
-            await System.Threading.Tasks.Task.Delay(10000);
+            System.Threading.Tasks.Task.Delay(10000).ContinueWith(_ =>
+            {
 #endif
-            if (idButton != null)
-                if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null)
-                {
-                    idButton.gameObject.SetActive(true);
-                    idText.text = "ID: " + AuthenticationService.Instance.PlayerId;
-                }
-                else
-                {
-                    idButton.gameObject.SetActive(false);
-                }
+                if (idButton != null)
+                    if (UnityServices.State != ServicesInitializationState.Uninitialized && AuthenticationService.Instance.PlayerId != null)
+                    {
+                        idButton.gameObject.SetActive(true);
+                        idText.text = "ID: " + AuthenticationService.Instance.PlayerId;
+                    }
+                    else
+                    {
+                        idButton.gameObject.SetActive(false);
+                    }
+#if !UNITY_EDITOR
+            }, System.Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext());
+#endif
         }
         private MusicPlayer CreateMusicPlayer()
         {

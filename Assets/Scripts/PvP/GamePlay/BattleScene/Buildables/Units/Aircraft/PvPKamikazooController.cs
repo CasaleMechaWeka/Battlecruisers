@@ -105,7 +105,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             _isAtCruisingHeight = false;
         }
 
-        protected override async void OnBuildableCompleted()
+        protected override void OnBuildableCompleted()
         {
 
             if (IsServer)

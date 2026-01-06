@@ -12,7 +12,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private const float NOT_SELECTED_SIZE_MULTIPLIER = 0.9f;
 
-        public bool IsSelected
+        public new bool IsSelected
         {
             set
             {

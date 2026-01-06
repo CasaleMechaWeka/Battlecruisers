@@ -1,6 +1,7 @@
 using BattleCruisers.Buildables.Buildings;
 using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Data.Settings;
 using BattleCruisers.Data.Static;
 using BattleCruisers.UI.ScreensScene.ShopScreen;
 using BattleCruisers.Utils;
@@ -448,6 +449,15 @@ namespace BattleCruisers.Data.Models
 
                 if (completedLevel.HardestDifficulty > currentLevel.HardestDifficulty)
                     currentLevel.HardestDifficulty = completedLevel.HardestDifficulty;
+            }
+        }
+
+        public void RemoveCompletedLevel(int levelNum)
+        {
+            var levelToRemove = _completedLevels.FirstOrDefault(cl => cl.LevelNum == levelNum);
+            if (levelToRemove != null)
+            {
+                _completedLevels.Remove(levelToRemove);
             }
         }
 

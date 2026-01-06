@@ -9,6 +9,8 @@ namespace BattleCruisers.Data.Models.PrefabKeys
         [SerializeField]
         private string _prefabName;
 
+        private Utils.PrefabKeyName _name;
+
         private const string PREFABS_BASE_PATH = "Prefabs/BattleScene/";
         protected const char PATH_SEPARATOR = '/';
 
@@ -35,7 +37,6 @@ namespace BattleCruisers.Data.Models.PrefabKeys
                 return _prefabName;
             }
         }
-
 
         protected PrefabKey(string prefabName)
         {

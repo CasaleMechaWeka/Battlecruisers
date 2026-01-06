@@ -15,7 +15,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         public GameObject leaderboardPanelPrefab;
         public Transform leaderboardPanelParent;
         public GameObject noData;
-        public async void Initialise(ScreensSceneGod screensSceneGod)
+        public new async void Initialise(ScreensSceneGod screensSceneGod)
         {
             base.Initialise(screensSceneGod);
             noData.SetActive(false);

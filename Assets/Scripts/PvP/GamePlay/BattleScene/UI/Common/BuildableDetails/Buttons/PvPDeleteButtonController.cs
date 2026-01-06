@@ -72,7 +72,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.UI.Com
             SetCanvasGroupProperties(false, false);
             activeImage.sprite = activeStateImages[0];
             activeImage.gameObject.SetActive(true);
-            _soundPlayer.PlaySoundAsync(ClickSound);
+            _ = _soundPlayer.PlaySoundAsync(ClickSound);
             if (Buildable.BuildableState == PvPBuildableState.NotStarted)
             {
                 Buildable.Destroy();

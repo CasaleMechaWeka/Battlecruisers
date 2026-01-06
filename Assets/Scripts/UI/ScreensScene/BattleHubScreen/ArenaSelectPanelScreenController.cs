@@ -182,7 +182,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             isTransitioning = false;
         }
 
-        private async void StartBattle()
+        private void StartBattle()
         {
             if (!isClickedBattleButton)
             {

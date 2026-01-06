@@ -73,7 +73,7 @@ namespace BattleCruisers.Utils.Debugging
             AddCustomLog($"OS: {SystemInfo.operatingSystem}");
             AddCustomLog($"RAM: {SystemInfo.systemMemorySize} MB");
             AddCustomLog($"GPU: {SystemInfo.graphicsDeviceName}");
-            AddCustomLog($"Screen: {Screen.width}x{Screen.height} @ {Screen.currentResolution.refreshRate}Hz");
+            AddCustomLog($"Screen: {Screen.width}x{Screen.height} @ {Screen.currentResolution.refreshRateRatio.value}Hz");
             AddCustomLog($"Network: {Application.internetReachability}");
             AddCustomLog($"Build Time: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
             

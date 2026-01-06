@@ -12,6 +12,7 @@ using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data.Static;
 using BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Data;
 using BattleCruisers.Network.Multiplay.Matchplay.Shared;
+using BattleCruisers.UI.Sound;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,11 +23,14 @@ using UnityEngine;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.BattleScene.Clouds.Stats;
 using BattleCruisers.UI.ScreensScene.TrashScreen;
+using BattleCruisers.Data;
 
 namespace BattleCruisers.Data.Static
 {
+    // Adjusted for ChainBattle logic v1.1
     public static class StaticData
     {
+        // Version: 1.1
         private static ReadOnlyDictionary<BuildingKey, int> _buildingToUnlockedLevel
         = new ReadOnlyDictionary<BuildingKey, int>(new Dictionary<BuildingKey, int>()
         {
@@ -200,11 +204,32 @@ namespace BattleCruisers.Data.Static
         });
 
         private const int MIN_AVAILABILITY_LEVEL_NUM = 2;
-        public const int NUM_OF_LEVELS = 31;
+        public const int NUM_OF_LEVELS = 40;
         public const int NUM_OF_PvPLEVELS = 9;
-        public const int NUM_OF_STANDARD_LEVELS = 31;
+        public const int NUM_OF_STANDARD_LEVELS = 40;
+        public const int NUM_OF_CAMPAIGN_LEVELS = 40;  // End of main campaign + ChainBattle levels (32-40)
         public const int NUM_OF_LEVELS_IN_DEMO = 7;
         public const int NUM_OF_SIDEQUESTS = 31;
+
+        /// <summary>
+        /// ChainBattle levels are 32-40. They use normal Level data but load a BattleSequencer prefab.
+        /// </summary>
+        public static bool IsChainBattleLevel(int levelNum)
+        {
+            return levelNum >= 32 && levelNum <= 40;
+        }
+
+        /// <summary>
+        /// Gets the BattleSequencer prefab path for a ChainBattle level.
+        /// Returns null if not a ChainBattle level.
+        /// </summary>
+        public static string GetChainBattleSequencerPath(int levelNum)
+        {
+            if (!IsChainBattleLevel(levelNum))
+                return null;
+
+            return $"ChainBattles/ChainBattle_{levelNum:D3}";
+        }
 
         /// <summary>
         /// Maps captain IDs to their display names (without spaces or special characters) for sprite filenames.
@@ -277,62 +302,62 @@ namespace BattleCruisers.Data.Static
         public static ReadOnlyCollection<Level> Levels { get; } = new ReadOnlyCollection<Level>(new List<Level>()
         {
             // Set 1:  Raptor
-            new Level(1, Hulls.Raptor, BackgroundMusic.Bobby, SkyMaterials.Morning, Exos.GetCaptainExoKey(1)),
-            new Level(2, Hulls.Hammerhead, BackgroundMusic.Juggernaut, SkyMaterials.Purple, Exos.GetCaptainExoKey(2)),
-            new Level(3, Hulls.Raptor, BackgroundMusic.Experimental, SkyMaterials.Dusk, Exos.GetCaptainExoKey(3)),
+            new Level(1, Hulls.Raptor, BackgroundMusic.Bobby, SkyMaterials.Morning, Exos.GetCaptainExoKey(1), GetDefaultHeckleConfig()),
+            new Level(2, Hulls.Hammerhead, BackgroundMusic.Juggernaut, SkyMaterials.Purple, Exos.GetCaptainExoKey(2), GetDefaultHeckleConfig()),
+            new Level(3, Hulls.Raptor, BackgroundMusic.Experimental, SkyMaterials.Dusk, Exos.GetCaptainExoKey(3), GetDefaultHeckleConfig()),
             
             // Set 2:  Bullshark
-            new Level(4, Hulls.Rockjaw, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(4)),
-            new Level(5, Hulls.Bullshark, BackgroundMusic.Confusion, SkyMaterials.Midday, Exos.GetCaptainExoKey(5)),
-            new Level(6, Hulls.Raptor, BackgroundMusic.Sleeper, SkyMaterials.Midnight, Exos.GetCaptainExoKey(6)),
-            new Level(7, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(7)),
+            new Level(4, Hulls.Rockjaw, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(4), GetDefaultHeckleConfig()),
+            new Level(5, Hulls.Bullshark, BackgroundMusic.Confusion, SkyMaterials.Midday, Exos.GetCaptainExoKey(5), GetDefaultHeckleConfig()),
+            new Level(6, Hulls.Raptor, BackgroundMusic.Sleeper, SkyMaterials.Midnight, Exos.GetCaptainExoKey(6), GetDefaultHeckleConfig()),
+            new Level(7, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(7), GetDefaultHeckleConfig()),
 
             // Set 3:  Rockjaw
-            new Level(8, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(8)),
-            new Level(9, Hulls.Eagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning, Exos.GetCaptainExoKey(9)),
-            new Level(10, Hulls.Rockjaw, BackgroundMusic.Againagain, SkyMaterials.Purple, Exos.GetCaptainExoKey(10)),
+            new Level(8, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(8), GetDefaultHeckleConfig()),
+            new Level(9, Hulls.Eagle, BackgroundMusic.Juggernaut, SkyMaterials.Morning, Exos.GetCaptainExoKey(9), GetDefaultHeckleConfig()),
+            new Level(10, Hulls.Rockjaw, BackgroundMusic.Againagain, SkyMaterials.Purple, Exos.GetCaptainExoKey(10), GetDefaultHeckleConfig()),
 
             // Set 4:  Eagle
-            new Level(11, Hulls.Longbow, BackgroundMusic.Sleeper, SkyMaterials.Midnight, Exos.GetCaptainExoKey(11)),
-            new Level(12, Hulls.Bullshark, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(12)),
-            new Level(13, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Dusk, Exos.GetCaptainExoKey(13)),
-            new Level(14, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(14)),
-            new Level(15, Hulls.ManOfWarBoss, BackgroundMusic.Juggernaut, SkyMaterials.Midnight, Exos.GetCaptainExoKey(15)),
+            new Level(11, Hulls.Longbow, BackgroundMusic.Sleeper, SkyMaterials.Midnight, Exos.GetCaptainExoKey(11), GetDefaultHeckleConfig()),
+            new Level(12, Hulls.Bullshark, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(12), GetDefaultHeckleConfig()),
+            new Level(13, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Dusk, Exos.GetCaptainExoKey(13), GetDefaultHeckleConfig()),
+            new Level(14, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(14), GetDefaultHeckleConfig()),
+            new Level(15, Hulls.ManOfWarBoss, BackgroundMusic.Juggernaut, SkyMaterials.Midnight, Exos.GetCaptainExoKey(15), GetDefaultHeckleConfig()),
 
             // Set 5:  Hammerhead
-            new Level(16, Hulls.Longbow, BackgroundMusic.Experimental, SkyMaterials.Morning, Exos.GetCaptainExoKey(16)),
-            new Level(17, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(17)),
-            new Level(18, Hulls.Rickshaw, BackgroundMusic.Juggernaut, SkyMaterials.Dusk, Exos.GetCaptainExoKey(18)),
+            new Level(16, Hulls.Longbow, BackgroundMusic.Experimental, SkyMaterials.Morning, Exos.GetCaptainExoKey(16), GetDefaultHeckleConfig()),
+            new Level(17, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(17), GetDefaultHeckleConfig()),
+            new Level(18, Hulls.Rickshaw, BackgroundMusic.Juggernaut, SkyMaterials.Dusk, Exos.GetCaptainExoKey(18), GetDefaultHeckleConfig()),
 
             // Set 6:  Longbow
-            new Level(19, Hulls.Eagle, BackgroundMusic.Sleeper, SkyMaterials.Purple, Exos.GetCaptainExoKey(19)),
-            new Level(20, Hulls.Rockjaw, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(20)),
-            new Level(21, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(21)),
-            new Level(22, Hulls.Longbow, BackgroundMusic.Confusion, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(22)),
+            new Level(19, Hulls.Eagle, BackgroundMusic.Sleeper, SkyMaterials.Purple, Exos.GetCaptainExoKey(19), GetDefaultHeckleConfig()),
+            new Level(20, Hulls.Rockjaw, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(20), GetDefaultHeckleConfig()),
+            new Level(21, Hulls.Hammerhead, BackgroundMusic.Nothing, SkyMaterials.Cold, Exos.GetCaptainExoKey(21), GetDefaultHeckleConfig()),
+            new Level(22, Hulls.Longbow, BackgroundMusic.Confusion, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(22), GetDefaultHeckleConfig()),
 
             // Set 7:  Megalodon
-            new Level(23, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Dusk, Exos.GetCaptainExoKey(23)),
-            new Level(24, Hulls.Longbow, BackgroundMusic.Juggernaut, SkyMaterials.Midnight, Exos.GetCaptainExoKey(24)),
-            new Level(25, Hulls.Raptor, BackgroundMusic.Nothing, SkyMaterials.Morning, Exos.GetCaptainExoKey(25)),
-            new Level(26, Hulls.Megalodon, BackgroundMusic.Confusion, SkyMaterials.Midday, Exos.GetCaptainExoKey(26)),
+            new Level(23, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Dusk, Exos.GetCaptainExoKey(23), GetDefaultHeckleConfig()),
+            new Level(24, Hulls.Longbow, BackgroundMusic.Juggernaut, SkyMaterials.Midnight, Exos.GetCaptainExoKey(24), GetDefaultHeckleConfig()),
+            new Level(25, Hulls.Raptor, BackgroundMusic.Nothing, SkyMaterials.Morning, Exos.GetCaptainExoKey(25), GetDefaultHeckleConfig()),
+            new Level(26, Hulls.Megalodon, BackgroundMusic.Confusion, SkyMaterials.Midday, Exos.GetCaptainExoKey(26), GetDefaultHeckleConfig()),
             
                 // Set 8:  Huntress Prime
-            new Level(27, Hulls.TasDevil, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(27)),
-            new Level(28, Hulls.BlackRig, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(28)),
-            new Level(29, Hulls.Rickshaw, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(29)),
-            new Level(30, Hulls.Yeti, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(30)),
-            new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31)), //HUNTRESS PRIME
+            new Level(27, Hulls.TasDevil, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(27), GetDefaultHeckleConfig()),
+            new Level(28, Hulls.BlackRig, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(28), GetDefaultHeckleConfig()),
+            new Level(29, Hulls.Rickshaw, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(29), GetDefaultHeckleConfig()),
+            new Level(30, Hulls.Yeti, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(30), GetDefaultHeckleConfig()),
+            new Level(31, Hulls.HuntressBoss, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(31), GetDefaultHeckleConfig()), //HUNTRESS PRIME - END OF MAIN CAMPAIGN
 
-                // Set 9:  Secret Levels
-            new Level(32, Hulls.Trident, BackgroundMusic.Experimental, SkyMaterials.Purple, Exos.GetCaptainExoKey(32), true),
-            new Level(33, Hulls.Raptor, BackgroundMusic.Juggernaut, SkyMaterials.Cold, Exos.GetCaptainExoKey(33)),
-            new Level(34, Hulls.Bullshark, BackgroundMusic.Againagain, SkyMaterials.Dusk, Exos.GetCaptainExoKey(34)),
-            new Level(35, Hulls.Rockjaw, BackgroundMusic.Confusion, SkyMaterials.Midnight, Exos.GetCaptainExoKey(35)),
-            new Level(36, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(36)),
-            new Level(37, Hulls.Hammerhead, BackgroundMusic.Sleeper, SkyMaterials.Midday, Exos.GetCaptainExoKey(37)),
-            new Level(38, Hulls.Longbow, BackgroundMusic.Nothing, SkyMaterials.Morning, Exos.GetCaptainExoKey(38)),
-            new Level(39, Hulls.Megalodon, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(39)),
-            new Level(40, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(40)) //TODO: Change to new boss broadsword
+            // Set 9: ChainBattle Levels (32-40)
+            new Level(32, Hulls.LV032Raptor, BackgroundMusic.Fortress, SkyMaterials.Purple, Exos.GetCaptainExoKey(1), GetDefaultHeckleConfig()),  // Fei ChainBattle - uses embedded BattleSequencer
+            new Level(33, Hulls.Bullshark, BackgroundMusic.Bobby, SkyMaterials.Midnight, Exos.GetCaptainExoKey(3), GetDefaultHeckleConfig()),
+            new Level(34, Hulls.Rockjaw, BackgroundMusic.Juggernaut, SkyMaterials.Morning, Exos.GetCaptainExoKey(4), GetDefaultHeckleConfig()),
+            new Level(35, Hulls.Eagle, BackgroundMusic.Confusion, SkyMaterials.Dusk, Exos.GetCaptainExoKey(5), GetDefaultHeckleConfig()),
+            new Level(36, Hulls.Hammerhead, BackgroundMusic.Experimental, SkyMaterials.Cold, Exos.GetCaptainExoKey(6), GetDefaultHeckleConfig()),
+            new Level(37, Hulls.Longbow, BackgroundMusic.Sleeper, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(7), GetDefaultHeckleConfig()),
+            new Level(38, Hulls.Megalodon, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(8), GetDefaultHeckleConfig()),
+            new Level(39, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Purple, Exos.GetCaptainExoKey(9), GetDefaultHeckleConfig()),
+            new Level(40, Hulls.Yeti, BackgroundMusic.Fortress, SkyMaterials.Midnight, Exos.GetCaptainExoKey(10), GetDefaultHeckleConfig())
         });
 
         public static ReadOnlyCollection<BackgroundImageStats> LevelBackgrounds = new ReadOnlyCollection<BackgroundImageStats>(new List<BackgroundImageStats>()
@@ -368,15 +393,15 @@ namespace BattleCruisers.Data.Static
             new BackgroundImageStats(50,  new Vector2(0,  240),  300,  450,  "Antarctica",       new Color(0.631675f,   0.7289388f, 0.8018868f),              false, 10),
             new BackgroundImageStats(150, new Vector2(0,  330),  550,  690,  "CapeTown",         new Color(0.2392157f,  0.1843137f, 0.3215686f),              false, 10),
             new BackgroundImageStats(140, new Vector2(0,  -110), 140,  300,  "TableMountain",    new Color(0.1501869f,  0.1964908f, 0.2358491f),              false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  180),  380,  500,  "BGENZ",            new Color(0.745283f,   0.5127987f, 0.3831879f),              true,  10),
 
-            new BackgroundImageStats(160, new Vector2(0,  550),  660,  790,  "Wreckyards",       new Color(0.01960784f, 0.01176471f, 0.01176471f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Oz",               new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
+            // Backgrounds for levels 32-40 (ChainBattle levels)
+            new BackgroundImageStats(160, new Vector2(0,  500),  655,  740,  "Wreckyards",       new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Oz",               new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "FightClub",        new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  420),  640,  730,  "UACBattleNight",   new Color(0.1501869f,  0.1964908f,  0.2358491f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "NuclearDome",      new Color(0.745283f,   0.5127987f,  0.3831879f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.01960784f, 0.01176471f, 0.01176471f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
+            new BackgroundImageStats(140, new Vector2(0,  420),  640,  730,  "UACBattleNight",   new Color(0.1501869f,   0.1964908f,  0.2358491f),             false, 10),
+            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "NuclearDome",      new Color(0.745283f,    0.5127987f,  0.3831879f),             false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  420),  660,  730,  "MercenaryOne",     new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
         });
@@ -397,22 +422,6 @@ namespace BattleCruisers.Data.Static
             new BackgroundImageStats(160, new Vector2(0,  460),  595,  730,  "BlockCity",        new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  460),  595,  730,  "RicketyCity",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
             new BackgroundImageStats(140, new Vector2(0,  380),  540,  650,  "UACHQ",            new Color(0.1254902f,  0.0627451f,  0.0627451f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  456),  655,  740,  null,               new Color(1f,          1f,          1f),                     false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  445),  636,  730,  "FPIslandDistant",  new Color(0.4716981f,  0.3597144f,  0.2647739f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  445),  595,  730,  "FPIsland",         new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
-            new BackgroundImageStats(110, new Vector2(0,  224),  372,  444,  "FortressPrime",    new Color(0.3490196f,  0.3764706f,  0.3960784f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  500),  650,  730,  "FPIslandOnly",     new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Oz",               new Color(0.7843137f,  0.7019608f,  0.6470588f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "FightClub",        new Color(0.09019608f, 0.04705882f, 0.1333333f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "UACBattleNight",   new Color(0.135502f,   0.1489414f,  0.1981132f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  460),  600,  700,  "NuclearDome",      new Color(0.05762725f, 0.06384827f, 0.06603771f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.09019608f, 0.04705882f, 0.1333333f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,  0.5803922f,  0.4862745f),             false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.1960784f,  0.2313726f,  0.345098f),              false, 10),
         });
 
         public static ReadOnlyCollection<TrashTalkData> LevelTrashTalk = new ReadOnlyCollection<TrashTalkData>(new List<TrashTalkData>()
@@ -448,17 +457,18 @@ namespace BattleCruisers.Data.Static
             new TrashTalkData(28, 28, false, "level"),
             new TrashTalkData(29, 29, true,  "level"),
             new TrashTalkData(30, 30, false, "level"),
-            new TrashTalkData(31, 31, false, "level"),
+            new TrashTalkData(31, 31, false, "level"), // END OF MAIN CAMPAIGN
 
-            new TrashTalkData(0,  32, false, "sideQuest"),
-            new TrashTalkData(1,  33, false, "sideQuest"),
-            new TrashTalkData(2,  34, false, "sideQuest"),
-            new TrashTalkData(3,  35, true,  "sideQuest"),
-            new TrashTalkData(4,  36, false, "sideQuest"),
-            new TrashTalkData(5,  37, true,  "sideQuest"),
-            new TrashTalkData(6,  38, false, "sideQuest"),
-            new TrashTalkData(7,  39, false, "sideQuest"),
-            new TrashTalkData(8,  40, false, "sideQuest"),
+            // ChainBattle levels 32-40
+            new TrashTalkData(32, 1,  false, "level"),  // Fei
+            new TrashTalkData(33, 3,  false, "level"),
+            new TrashTalkData(34, 4,  true,  "level"),
+            new TrashTalkData(35, 5,  false, "level"),
+            new TrashTalkData(36, 6,  true,  "level"),
+            new TrashTalkData(37, 7,  false, "level"),
+            new TrashTalkData(38, 8,  false, "level"),
+            new TrashTalkData(39, 9,  true,  "level"),
+            new TrashTalkData(40, 10, false, "level")
         });
 
         public static ReadOnlyCollection<TrashTalkData> SideQuestTrashTalk = new ReadOnlyCollection<TrashTalkData>(new List<TrashTalkData>()
