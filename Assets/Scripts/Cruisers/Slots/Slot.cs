@@ -131,23 +131,14 @@ namespace BattleCruisers.Cruisers.Slots
                 {
                     IBuilding building = _baseBuilding.Value;
 
-                    // Calculate the building's world position based on slot placement point and puzzle root offset
+                    _baseBuilding.Value.Rotation = Transform.Rotation;
+
                     float verticalChange = building.Position.y - building.PuzzleRootPoint.y;
                     float horizontalChange = building.Position.x - building.PuzzleRootPoint.x;
 
-                    Vector3 targetWorldPosition = BuildingPlacementPoint
-                                                + (Transform.Up * verticalChange)
-                                                + (Transform.Right * horizontalChange);
-
-                    // Parent the building to this slot so it follows slot movement and rotation
-                    // Using worldPositionStays=true keeps the building at the same world position during reparenting
-                    building.Transform.SetParent(transform, worldPositionStays: true);
-
-                    // Match the slot's rotation
-                    _baseBuilding.Value.Rotation = Transform.Rotation;
-
-                    // Set the world position (the local position will be calculated automatically after parenting)
-                    building.Position = targetWorldPosition;
+                    building.Position = BuildingPlacementPoint
+                                        + (Transform.Up * verticalChange)
+                                        + (Transform.Right * horizontalChange);
 
                     if (building.HealthBar.Offset.x == 0
                         || !Transform.IsMirroredAcrossYAxis)
