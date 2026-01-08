@@ -60,6 +60,13 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
 
         private void OnShieldDamaged()
         {
+            // Keep building health in sync with shield health; guard against bad prefab/config state.
+            if (maxHealth <= 0 || _shieldController.maxHealth <= 0)
+            {
+                Debug.LogWarning($"[GrapheneBarrier] Invalid max health. building.maxHealth={maxHealth}, shield.maxHealth={_shieldController.maxHealth}");
+                return;
+            }
+
             float newHealth = maxHealth / _shieldController.maxHealth * _shieldController.Health;
 
             TakeDamage(Health - newHealth, EnemyCruiser, true);
@@ -68,6 +75,11 @@ namespace BattleCruisers.Buildables.Buildings.Tactical.Shields
         private void OnHealthChanged(object sender, EventArgs e)
         {
             Debug.Log("OnHealthChanged");
+            if (maxHealth <= 0 || _shieldController.maxHealth <= 0)
+            {
+                Debug.LogWarning($"[GrapheneBarrier] Invalid max health. building.maxHealth={maxHealth}, shield.maxHealth={_shieldController.maxHealth}");
+                return;
+            }
             _shieldController.SetShieldHealth(_shieldController.maxHealth / maxHealth * Health);
         }
     }

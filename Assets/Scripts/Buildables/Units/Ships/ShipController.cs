@@ -68,7 +68,8 @@ namespace BattleCruisers.Buildables.Units.Ships
         {
             base.StaticInitialise(parent, healthBar);
 
-            turrets = gameObject.GetComponentsInChildren<IBarrelWrapper>();
+            // Include inactive so we don't miss turrets that are disabled in the prefab and enabled later.
+            turrets = gameObject.GetComponentsInChildren<IBarrelWrapper>(includeInactive: true);
 
             foreach (IBarrelWrapper turret in turrets)
             {

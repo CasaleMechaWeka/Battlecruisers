@@ -36,6 +36,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             ITarget target = GetTarget(collider);
+            if (target == null) return;
             _targetColliderHandler.OnTargetColliderEntered(target);
         }
 
@@ -46,13 +47,14 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Target
             Logging.Verbose(Tags.TARGET_DETECTOR, $"gameObject: {collider.gameObject}  id: {gameObject.GetInstanceID()}  collider id: {collider.GetInstanceID()}");
 
             ITarget target = GetTarget(collider);
+            if (target == null) return;
             _targetColliderHandler.OnTargetColliderExited(target);
         }
 
         private ITarget GetTarget(Collider2D collider)
         {
             ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
-            Assert.IsNotNull(target, "Should only collide with game objects that have a ITargetProxy component.");
+            // Colliders may include VFX, environment, etc. Ignore anything that isn't a target.
             return target;
         }
 

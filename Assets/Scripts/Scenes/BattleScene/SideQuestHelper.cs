@@ -61,7 +61,12 @@ namespace BattleCruisers.Scenes.BattleScene
 
         public override IManagedDisposable CreateAI(Cruiser aiCruiser, Cruiser playerCruiser, int currentLevelNum)
         {
-            LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser);
+            bool hasSequencer =
+                currentLevelNum >= 0
+                && currentLevelNum < StaticData.SideQuests.Count
+                && StaticData.SideQuests[currentLevelNum].HasSequencer;
+
+            LevelInfo levelInfo = new LevelInfo(aiCruiser, playerCruiser, currentLevelNum, hasSequencer);
             IStrategyFactory strategyFactory = CreateStrategyFactory(currentLevelNum);
             AIManager aiManager = new AIManager(_deferrer, playerCruiser, strategyFactory);
             return aiManager.CreateAI(levelInfo);

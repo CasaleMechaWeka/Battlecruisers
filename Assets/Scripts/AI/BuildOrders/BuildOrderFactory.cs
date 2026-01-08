@@ -107,7 +107,10 @@ namespace BattleCruisers.AI.BuildOrders
                 {
                     if (offensiveBuildingKeys.Count > 0)
                     {
-                        strategy.BaseStrategy[i] = CreateDynamicBuildOrder(BuildingCategory.Offence, 1)[0];
+                        // Fill null entries using the offensive build order derived from OffensiveRequests.
+                        // This is the intended mechanism for "custom strategies" to control the AI's
+                        // offensive composition (AirFactory/NavalFactory/Ultras/Offence buildings).
+                        strategy.BaseStrategy[i] = offensiveBuildingKeys[0];
                         offensiveBuildingKeys.RemoveAt(0);
                     }
                 }

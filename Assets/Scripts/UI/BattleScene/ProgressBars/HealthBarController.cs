@@ -42,7 +42,9 @@ namespace BattleCruisers.UI.BattleScene.ProgressBars
             Logging.Verbose(Tags.PROGRESS_BARS, damagable.ToString());
 
             Assert.IsNotNull(damagable);
-            Assert.IsTrue(damagable.Health > 0);
+            // Damagables (notably shields) can legitimately initialise at 0 health and then recharge.
+            // MaxHealth must be > 0 though, otherwise the progress bar cannot function correctly.
+            Assert.IsTrue(damagable.MaxHealth > 0);
 
             _damagable = damagable;
             _maxHealth = _damagable.MaxHealth;

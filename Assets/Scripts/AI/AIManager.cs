@@ -10,11 +10,13 @@ using BattleCruisers.Cruisers;
 using BattleCruisers.Cruisers.Slots;
 using BattleCruisers.Data;
 using BattleCruisers.Data.Models.PrefabKeys;
+using BattleCruisers.Buildables.Units;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Data.Static.Strategies.Helper;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.PlatformAbstractions.Time;
 using BattleCruisers.Utils.Threading;
+using System.Linq;
 
 namespace BattleCruisers.AI
 {
@@ -52,7 +54,18 @@ namespace BattleCruisers.AI
         {
             // Manage AI unit factories (needs to be before the AI strategy is created,
             // otherwise miss started construction event for first building :) )
-            _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
+            if (levelInfo.IsSequencerBattle)
+            {
+                _factoryManagerFactory.CreateNavalFactoryManager(
+                    levelInfo.AICruiser,
+                    bypassUnlocks: true,
+                    chooserMode: FactoryManagerFactory.NavalUnitChooserMode.RandomAffordable,
+                    overrideShipKeysInCycleOrder: GetSequencerShipCycle());
+            }
+            else
+            {
+                _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
+            }
             _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
             ITaskFactory taskFactory = new TaskFactory(levelInfo.AICruiser, _deferrer);
@@ -117,6 +130,39 @@ namespace BattleCruisers.AI
             DroneConsumerFocusManager focusManager = CreateDroneFocusManager(aiCruiser);
 
             return new ArtificialIntelligence(taskConsumer, taskProducers, focusManager);
+        }
+
+        private static IList<UnitKey> GetSequencerShipCycle()
+        {
+            // Manual “escalating assortment” starting with Frigate.
+            // Includes the extra ships requested for LV033.
+            var preferred = new List<UnitKey>
+            {
+                StaticPrefabKeys.Units.Frigate,
+                StaticPrefabKeys.Units.GunBoat,
+                StaticPrefabKeys.Units.Destroyer,
+                StaticPrefabKeys.Units.FlakTurtle,
+                StaticPrefabKeys.Units.RocketTurtle,
+                StaticPrefabKeys.Units.GlassCannoneer,
+                StaticPrefabKeys.Units.SiegeDestroyer,
+                StaticPrefabKeys.Units.TeslaTurtle,
+                StaticPrefabKeys.Units.ArchonBattleship,
+                StaticPrefabKeys.Units.AttackRIB,
+                // Optional/legacy
+                StaticPrefabKeys.Units.AttackBoat,
+            };
+
+            var allNaval = StaticData.UnitKeys.Where(k => k.UnitCategory == UnitCategory.Naval).ToList();
+
+            // Keep only valid naval keys (safety if keys change).
+            preferred = preferred.Where(k => allNaval.Contains(k)).ToList();
+
+            // Append remaining naval units not explicitly listed.
+            foreach (var k in allNaval)
+                if (!preferred.Contains(k))
+                    preferred.Add(k);
+
+            return preferred;
         }
 
         private DroneConsumerFocusManager CreateDroneFocusManager(ICruiserController aiCruiser)

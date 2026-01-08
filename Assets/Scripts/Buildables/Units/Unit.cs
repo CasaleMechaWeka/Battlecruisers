@@ -96,6 +96,10 @@ namespace BattleCruisers.Buildables.Units
             // Disable gravity
             rigidBody.bodyType = RigidbodyType2D.Kinematic;
             rigidBody.gravityScale = 0;
+            
+            // Pool safety: ensure no stale motion carries over between activations.
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.angularVelocity = 0f;
 
             HealthBar.variantIcon.enabled = false;
             if (ParentCruiser.IsPlayerCruiser && !isAppliedVariant)

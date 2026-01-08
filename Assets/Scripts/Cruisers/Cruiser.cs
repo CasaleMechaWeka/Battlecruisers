@@ -40,23 +40,19 @@ namespace BattleCruisers.Cruisers
     {
         protected UIManager _uiManager;
         protected ICruiser _enemyCruiser;
-        protected SpriteRenderer _renderer;
+        private SpriteRenderer _renderer;
         protected Collider2D _collider;
-        protected ICruiserHelper _helper;
+        private ICruiserHelper _helper;
         public SlotWrapperController SlotWrapperController;
-        protected ClickHandler _clickHandler;
-        protected IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
-        protected IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
-        protected AudioClipWrapper _selectedSound;
+        private ClickHandler _clickHandler;
+        private IDoubleClickHandler<IBuilding> _buildingDoubleClickHandler;
+        private IDoubleClickHandler<ICruiser> _cruiserDoubleClickHandler;
+        private AudioClipWrapper _selectedSound;
         // Keep reference to avoid garbage collection
 #pragma warning disable CS0414  // Variable is assigned but never used
-        protected IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
+        private IManagedDisposable _fogOfWarManager, _unitReadySignal, _droneFeedbackSound;
 #pragma warning restore CS0414  // Variable is assigned but never used
-        protected SettingsManager settingsManager;
-
-        // CruiserSection array: supports 1-N sections (1 for single-section, N for multi-section)
-        protected CruiserSection[] _hulls;
-        public CruiserSection[] Hulls => _hulls;  // Public accessor for external code
+        private SettingsManager settingsManager;
 
         public string stringKeyBase;
         public int numOfDrones = 4;
@@ -77,37 +73,11 @@ namespace BattleCruisers.Cruisers
 
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
-        public override Color Color {
-            set {
-                // Apply color to all sections if they exist
-                if (_hulls != null)
-                {
-                    foreach (var section in _hulls)
-                    {
-                        if (section != null)
-                        {
-                            section.Color = value;
-                        }
-                    }
-                }
-                // Also apply to root renderer if it exists (for single-section legacy)
-                if (_renderer != null)
-                {
-                    _renderer.color = value;
-                }
-            }
-        }
+        public override Color Color { set { _renderer.color = value; } }
         public override Vector2 Size
         {
             get
             {
-                // If we have sections, use primary section's size
-                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
-                {
-                    return _hulls[0].Size;
-                }
-
-                // Fallback to single-section logic
                 if (!useAdditionalColliders || additionalColliders == null || additionalColliders.Length == 0)
                 {
                     return _collider.bounds.size;
@@ -127,122 +97,49 @@ namespace BattleCruisers.Cruisers
         }
         public override Vector2 DroneAreaPosition => new Vector2(Position.x, Position.y - Size.y / 4);
 
-        protected Vector2 _droneAreaSize;
+        private Vector2 _droneAreaSize;
         public override Vector2 DroneAreaSize => _droneAreaSize;
 
 
         // IComparableItem
-        public string Description { get; protected set; }
-        public string Name { get; protected set; }
-        public Sprite Sprite
-        {
-            get
-            {
-                // Return primary hull sprite if available
-                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null && _hulls[0].SpriteRenderer != null)
-                {
-                    return _hulls[0].SpriteRenderer.sprite;
-                }
-                // Fallback to root renderer
-                return _renderer?.sprite;
-            }
-        }
+        public string Description { get; private set; }
+        public string Name { get; private set; }
+        public Sprite Sprite => _renderer.sprite;
 
         // ICruiser
         public IBuildableWrapper<IBuilding> SelectedBuildingPrefab { get; set; }
-        public IDroneConsumerProvider DroneConsumerProvider { get; protected set; }
-        public Direction Direction { get; protected set; }
-        public ICruiser EnemyCruiser => _enemyCruiser;
+        public IDroneConsumerProvider DroneConsumerProvider { get; private set; }
+        public Direction Direction { get; private set; }
         public float YAdjustmentInM => yAdjustmentInM;
         public Vector2 TrashTalkScreenPosition => trashTalkScreenPosition;
-        public CruiserSpecificFactories CruiserSpecificFactories { get; protected set; }
-        protected FogOfWar _fog;
+        public CruiserSpecificFactories CruiserSpecificFactories { get; private set; }
+        private FogOfWar _fog;
         public IGameObject Fog => _fog;
-        public IRepairManager RepairManager { get; protected set; }
+        public IRepairManager RepairManager { get; private set; }
         public int NumOfDrones => numOfDrones;
-        public IBuildProgressCalculator BuildProgressCalculator { get; protected set; }
+        public IBuildProgressCalculator BuildProgressCalculator { get; private set; }
         public bool IsPlayerCruiser => Position.x < 0;
         public CruiserDeathExplosion deathPrefab;
         public CruiserDeathExplosion DeathPrefab => deathPrefab;
 
 
         // ICruiserController
-        // Override health properties to route through primary section if available
-        public new virtual float Health
-        {
-            get
-            {
-                // If we have sections, return primary section's health
-                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
-                {
-                    return _hulls[0].Health;
-                }
-                // Fallback to base class health
-                return base.Health;
-            }
-        }
-
-        public new virtual float MaxHealth
-        {
-            get
-            {
-                // If we have sections, return primary section's max health
-                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
-                {
-                    return _hulls[0].MaxHealth;
-                }
-                // Fallback to base class maxHealth
-                return maxHealth;
-            }
-        }
-
-        public new virtual bool IsDestroyed
-        {
-            get
-            {
-                // If we have sections, return primary section's destroyed state
-                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
-                {
-                    return _hulls[0].IsDestroyed;
-                }
-                // Fallback to base class logic
-                return base.IsDestroyed;
-            }
-        }
-
-        public new virtual bool IsAlive
-        {
-            get
-            {
-                // If we have sections, return primary section's alive state
-                if (_hulls != null && _hulls.Length > 0 && _hulls[0] != null)
-                {
-                    return !_hulls[0].IsDestroyed;
-                }
-                // Fallback to base class logic
-                return !IsDestroyed;
-            }
-        }
-        public SlotAccessor SlotAccessor { get; protected set; }
-        public SlotHighlighter SlotHighlighter { get; protected set; }
-        public ISlotNumProvider SlotNumProvider { get; protected set; }
-        public DroneManager DroneManager { get; protected set; }
-        public IDroneFocuser DroneFocuser { get; protected set; }
-        public ICruiserBuildingMonitor BuildingMonitor { get; protected set; }
-        public ICruiserUnitMonitor UnitMonitor { get; protected set; }
-        public IPopulationLimitMonitor PopulationLimitMonitor { get; protected set; }
-        public IUnitTargets UnitTargets { get; protected set; }
-        public TargetTracker BlockedShipsTracker { get; protected set; }
+        public bool IsAlive => !IsDestroyed;
+        public SlotAccessor SlotAccessor { get; private set; }
+        public SlotHighlighter SlotHighlighter { get; private set; }
+        public ISlotNumProvider SlotNumProvider { get; private set; }
+        public DroneManager DroneManager { get; private set; }
+        public IDroneFocuser DroneFocuser { get; private set; }
+        public ICruiserBuildingMonitor BuildingMonitor { get; private set; }
+        public ICruiserUnitMonitor UnitMonitor { get; private set; }
+        public IPopulationLimitMonitor PopulationLimitMonitor { get; private set; }
+        public IUnitTargets UnitTargets { get; private set; }
+        public TargetTracker BlockedShipsTracker { get; private set; }
 
         public event EventHandler<BuildingStartedEventArgs> BuildingStarted;
         public event EventHandler<BuildingCompletedEventArgs> BuildingCompleted;
         public event EventHandler<BuildingDestroyedEventArgs> BuildingDestroyed;
         public event EventHandler Clicked;
-
-        // Multi-section events (for secondary section destruction scoring)
-        public event EventHandler<CruiserSectionTargetedEventArgs> CruiserSectionTargeted;
-        public event EventHandler<CruiserSectionDestroyedEventArgs> SecondaryHullDestroyed;
-
         public bool isCruiser = true;
         public bool isUsingBodykit = false;
 
@@ -260,17 +157,13 @@ namespace BattleCruisers.Cruisers
         {
             base.StaticInitialise();
 
-            // DeathPrefab is optional and unused - legacy field kept for backwards compatibility
-            // Each CruiserSection spawns its own death effect when destroyed
+            Assert.IsNotNull(deathPrefab, $"Death prefab for Cruiser {name} is null");
 
-            // Renderer is optional - single-section cruisers have it on this object,
-            // multi-section cruisers have it on CruiserSection children
             _renderer = GetComponent<SpriteRenderer>();
+            Assert.IsNotNull(_renderer);
 
-            // Collider is optional - single-section cruisers have it on root,
-            // multi-section cruisers have colliders on CruiserSection children
             _collider = GetComponent<Collider2D>();
-            // No assertion: let it be null if not present. Size property handles both cases.
+            Assert.IsNotNull(_collider);
 
             // Validate additional colliders if enabled
             if (useAdditionalColliders)
@@ -459,63 +352,7 @@ namespace BattleCruisers.Cruisers
                 }
         }
 
-        // ============== CruiserSection Event Callbacks ==============
-        // Called by CruiserSection when clicked - can be overridden for multi-section behavior
-        public virtual void OnHullClicked(CruiserSection section)
-        {
-            // Default: forward to standard click behavior
-            _clickHandler_SingleClick(null, EventArgs.Empty);
-        }
-
-        // Called by CruiserSection when double-clicked
-        public virtual void OnHullDoubleClicked(CruiserSection section)
-        {
-            // Default: forward to standard double-click behavior
-            _clickHandler_DoubleClick(null, EventArgs.Empty);
-        }
-
-        // Called by CruiserSection when triple-clicked
-        public virtual void OnHullTripleClicked(CruiserSection section)
-        {
-            // Default: forward to standard double-click behavior (targeting)
-            _clickHandler_DoubleClick(null, EventArgs.Empty);
-        }
-
-        // Called by CruiserSection when destroyed
-        public virtual void OnHullDestroyed(CruiserSection section)
-        {
-            // Default: if primary section is destroyed, cruiser is destroyed
-            if (section.IsPrimary)
-            {
-                Destroy();
-            }
-            else if (_hulls != null && _hulls.Length > 1)
-            {
-                // Secondary section destruction in multi-section cruiser: award points
-                SecondaryHullDestroyed?.Invoke(this, new CruiserSectionDestroyedEventArgs(section));
-
-                // Add partial destruction score for enemy cruisers
-                if (Faction == Faction.Reds)
-                {
-                    BattleSceneGod.AddDeadBuildable(TargetType.Buildings, (int)(section.maxHealth * 0.3f));
-                }
-            }
-        }
-
-        // Setup the section array - called during initialization
-        public virtual void SetupHulls(CruiserSection[] sections)
-        {
-            _hulls = sections;
-            if (_hulls != null && _hulls.Length > 0)
-            {
-                // Set cruiser's max health from primary section
-                maxHealth = _hulls[0].maxHealth;
-            }
-        }
-
-        // ============== End CruiserSection Event Callbacks ==============
-
-        protected virtual void _clickHandler_SingleClick(object sender, EventArgs e)
+        private void _clickHandler_SingleClick(object sender, EventArgs e)
         {
             Logging.LogMethod(Tags.CRUISER);
 
@@ -526,14 +363,9 @@ namespace BattleCruisers.Cruisers
             Clicked?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void _clickHandler_DoubleClick(object sender, EventArgs e)
+        private void _clickHandler_DoubleClick(object sender, EventArgs e)
         {
             _cruiserDoubleClickHandler.OnDoubleClick(this);
-        }
-
-        protected void OnClicked()
-        {
-            Clicked?.Invoke(this, EventArgs.Empty);
         }
 
         public IBuilding ConstructBuilding(IBuildableWrapper<IBuilding> buildingPrefab, Slot slot,
@@ -552,7 +384,6 @@ namespace BattleCruisers.Cruisers
         {
             Assert.IsNotNull(SelectedBuildingPrefab);
             Assert.AreEqual(SelectedBuildingPrefab.Buildable.SlotSpecification.SlotType, slot.Type);
-            // Instantiate building as child of slot to ensure UI elements (HealthBar) stay properly hierarchized during initialization
             IBuilding building = PrefabFactory.CreateBuilding(SelectedBuildingPrefab);
             if (ignoreDroneRequirement)
             {
@@ -636,42 +467,18 @@ namespace BattleCruisers.Cruisers
                 SlotHighlighter.HighlightAvailableSlotsCurrent();
             }*/
 
-            if (IsPlayerCruiser && _enemyCruiser != null && _enemyCruiser.IsAlive)
+            if (IsPlayerCruiser && _enemyCruiser.IsAlive)
                 BattleSceneGod.AddPlayedTime(TargetType.PlayedTime, _time.DeltaTime);
         }
 
         public void MakeInvincible()
         {
-            // Apply to all sections if they exist
-            if (_hulls != null)
-            {
-                foreach (var section in _hulls)
-                {
-                    section?.MakeInvincible();
-                }
-            }
-            // Also apply to base health tracker
-            if (_healthTracker != null)
-            {
-                _healthTracker.State = HealthTrackerState.Immutable;
-            }
+            _healthTracker.State = HealthTrackerState.Immutable;
         }
 
         public void MakeDamagable()
         {
-            // Apply to all sections if they exist
-            if (_hulls != null)
-            {
-                foreach (var section in _hulls)
-                {
-                    section?.MakeDamageable();
-                }
-            }
-            // Also apply to base health tracker
-            if (_healthTracker != null)
-            {
-                _healthTracker.State = HealthTrackerState.Mutable;
-            }
+            _healthTracker.State = HealthTrackerState.Mutable;
         }
 
         public virtual void AdjustStatsByDifficulty(Difficulty AIDifficulty)

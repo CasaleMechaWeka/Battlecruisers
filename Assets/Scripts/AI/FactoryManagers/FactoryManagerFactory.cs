@@ -10,6 +10,7 @@ using BattleCruisers.Utils;
 using UnityEngine.Assertions;
 using BattleCruisers.Data.Models;
 using BattleCruisers.Cruisers;
+using System.Collections.ObjectModel;
 
 namespace BattleCruisers.AI.FactoryManagers
 {
@@ -33,17 +34,53 @@ namespace BattleCruisers.AI.FactoryManagers
             _threatMonitorFactory = threatMonitorFactory;
         }
 
-        public IManagedDisposable CreateNavalFactoryManager(ICruiserController aiCruiser)
+        public enum NavalUnitChooserMode
         {
-            IList<UnitKey> availableShipKeys = _gameModel.GetUnlockedUnits(UnitCategory.Naval);
+            MostExpensiveAffordable = 0,
+            CycleEscalating = 1,
+            RandomAffordable = 2
+        }
+
+        public IManagedDisposable CreateNavalFactoryManager(
+            ICruiserController aiCruiser,
+            bool bypassUnlocks = false,
+            NavalUnitChooserMode chooserMode = NavalUnitChooserMode.MostExpensiveAffordable,
+            IList<UnitKey> overrideShipKeysInCycleOrder = null)
+        {
+            IList<UnitKey> availableShipKeys;
+            if (overrideShipKeysInCycleOrder != null)
+            {
+                availableShipKeys = overrideShipKeysInCycleOrder;
+            }
+            else if (bypassUnlocks)
+            {
+                // Use all unit keys in the game (used for sequencer/chainbattle enemies).
+                availableShipKeys = StaticData.UnitKeys.Where(k => k.UnitCategory == UnitCategory.Naval).ToList();
+            }
+            else
+            {
+                availableShipKeys = _gameModel.GetUnlockedUnits(UnitCategory.Naval);
+            }
+
             IList<IBuildableWrapper<IUnit>> availableShips =
                 availableShipKeys
                     .Select(key => PrefabFactory.GetUnitWrapperPrefab(key))
                     .ToList();
-            UnitChooser unitChooser
-                = new MostExpensiveUnitChooser(
-                    availableShips,
-                    aiCruiser.DroneManager);
+
+            UnitChooser unitChooser;
+            switch (chooserMode)
+            {
+                case NavalUnitChooserMode.CycleEscalating:
+                    unitChooser = new CyclingAffordableUnitChooser(availableShips, aiCruiser.DroneManager);
+                    break;
+                case NavalUnitChooserMode.RandomAffordable:
+                    unitChooser = new RandomAffordableUnitChooser(availableShips, aiCruiser.DroneManager);
+                    break;
+                case NavalUnitChooserMode.MostExpensiveAffordable:
+                default:
+                    unitChooser = new MostExpensiveUnitChooser(availableShips, aiCruiser.DroneManager);
+                    break;
+            }
 
             return new FactoryManager(UnitCategory.Naval, aiCruiser, unitChooser);
         }

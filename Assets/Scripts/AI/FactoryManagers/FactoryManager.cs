@@ -68,6 +68,8 @@ namespace BattleCruisers.AI.FactoryManagers
             IFactory factory = sender.Parse<IFactory>();
             Assert.IsTrue(_factories.Contains(factory));
 
+            // Allow choosers to rotate to a different unit after each completion.
+            _unitChooser.OnUnitBuilt();
             factory.StartBuildingUnit(_unitChooser.ChosenUnit);
         }
 

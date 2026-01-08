@@ -46,6 +46,16 @@ namespace BattleCruisers.Network.Multiplay.UnityServices.Lobbies
         }
         public async Task<Lobby> JoinLobbyByCode(string requesterUasId, string lobbyCode, Dictionary<string, PlayerDataObject> localUserData)
         {
+            // Lobby codes are commonly displayed as uppercase and may be pasted with whitespace/newlines.
+            // Sanitize here so all call sites behave consistently.
+            var originalLobbyCode = lobbyCode;
+            lobbyCode = lobbyCode?.Trim().Replace(" ", "").ToUpperInvariant();
+            if (string.IsNullOrEmpty(lobbyCode))
+            {
+                Debug.LogError($"PVP: JoinLobbyByCode called with empty/invalid code. Original='{originalLobbyCode}'");
+                return null;
+            }
+
             JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions { Player = new Player(id: requesterUasId, data: localUserData) };
             try
             {

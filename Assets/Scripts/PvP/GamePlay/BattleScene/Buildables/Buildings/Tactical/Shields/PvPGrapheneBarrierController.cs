@@ -72,6 +72,13 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
 
         private void OnShieldDamaged()
         {
+            // Keep building health in sync with shield health; guard against bad prefab/config state.
+            if (maxHealth <= 0 || _shieldController.maxHealth <= 0)
+            {
+                Debug.LogWarning($"[PvPGrapheneBarrier] Invalid max health. building.maxHealth={maxHealth}, shield.maxHealth={_shieldController.maxHealth}");
+                return;
+            }
+
             float newHealth = maxHealth / _shieldController.maxHealth * _shieldController.Health;
 
             TakeDamage(Health - newHealth, _shieldController.LastDamagedSource ?? EnemyCruiser);
@@ -80,6 +87,11 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
         private void OnHealthChanged(object sender, EventArgs e)
         {
             Debug.Log("OnHealthChanged");
+            if (maxHealth <= 0 || _shieldController.maxHealth <= 0)
+            {
+                Debug.LogWarning($"[PvPGrapheneBarrier] Invalid max health. building.maxHealth={maxHealth}, shield.maxHealth={_shieldController.maxHealth}");
+                return;
+            }
             _shieldController.SetShieldHealth(_shieldController.maxHealth / maxHealth * Health);
         }
 

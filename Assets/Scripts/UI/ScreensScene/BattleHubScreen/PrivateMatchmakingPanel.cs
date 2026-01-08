@@ -189,6 +189,8 @@ public class PrivateMatchmakingPanel : MonoBehaviour
     async System.Threading.Tasks.Task OnLobbyCodeInputAsync(string code)
     {
         if (string.IsNullOrWhiteSpace(code)) return;
+        // Normalize lobby codes to avoid case/whitespace issues (common when pasting from clipboard).
+        code = code.Trim().Replace(" ", "").ToUpperInvariant();
 
         if (isJoining)
         {

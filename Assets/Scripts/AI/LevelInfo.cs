@@ -13,15 +13,21 @@ namespace BattleCruisers.AI
     {
         public Cruiser AICruiser { get; }
         public Cruiser PlayerCruiser { get; }
+        public int LevelNum { get; }
+        public bool IsSequencerBattle { get; }
 
         public LevelInfo(
             Cruiser aiCruiser,
-            Cruiser playerCruiser)
+            Cruiser playerCruiser,
+            int levelNum,
+            bool isSequencerBattle)
         {
             Helper.AssertIsNotNull(aiCruiser, playerCruiser);
 
             AICruiser = aiCruiser;
             PlayerCruiser = playerCruiser;
+            LevelNum = levelNum;
+            IsSequencerBattle = isSequencerBattle;
         }
 
         public bool CanConstructBuilding(BuildingKey buildingKey)

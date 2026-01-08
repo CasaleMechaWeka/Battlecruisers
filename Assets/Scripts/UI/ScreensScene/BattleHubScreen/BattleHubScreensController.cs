@@ -130,14 +130,9 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         private void OpenBattleHub()
         {
             playerInfoPanelController.gameObject.SetActive(true);
-
-            if (ApplicationModel.Mode != GameMode.PvP_1VS1)
-            {
-                if (ScreensSceneGod.Instance.cameraOfCaptains != null)
-                    ScreensSceneGod.Instance.cameraOfCaptains.SetActive(false);
-                if (ScreensSceneGod.Instance.cameraOfCharacter != null)
-                    ScreensSceneGod.Instance.cameraOfCharacter.SetActive(false);
-            }
+            // Ensure the exo preview camera is restored when returning from Arenas/PvP flows.
+            // (ApplicationModel.Mode is not guaranteed to be PvP_1VS1 while browsing Arenas UI.)
+            _screensSceneGod.RestoreSingleCaptainPreview();
 
             GoToScreen(battlePanel);
             UnselectAll();
@@ -207,7 +202,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                 Assert.IsNotNull(_lastBattleResult);
                 playerInfoPanelController.gameObject.SetActive(false);
                 ApplicationModel.Mode = GameMode.Campaign;
-                int nextLevelToPlay = DataProvider.GameModel.NumOfLevelsCompleted < 31 ? DataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
+                int nextLevelToPlay = DataProvider.GameModel.NumOfLevelsCompleted < 40 ? DataProvider.GameModel.NumOfLevelsCompleted + 1 : 1;
                 _screensSceneGod.GoToTrashScreen(nextLevelToPlay);
             }
         }

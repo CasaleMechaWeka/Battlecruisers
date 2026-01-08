@@ -25,5 +25,14 @@ namespace BattleCruisers.AI.FactoryManagers
         }
 
         public abstract void DisposeManagedState();
+
+        /// <summary>
+        /// Optional hook for choosers that want to rotate the chosen unit after a unit finishes building.
+        /// Default behaviour is no-op to preserve existing chooser logic.
+        /// </summary>
+        public virtual void OnUnitBuilt()
+        {
+            // no-op
+        }
     }
 }

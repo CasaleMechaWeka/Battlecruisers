@@ -41,7 +41,7 @@ namespace BattleCruisers.UI.Loading
             };
 
             if (!SystemInfoBC.Instance.IsHandheld)
-                advancedHints.Add("Hints/Hotkeys");
+                advancedHints.Add(LocTableCache.CommonTable.GetString("Hints/Hotkeys"));
 
             string targetButtonBase = LocTableCache.CommonTable.GetString("Hints/TargetButton");
             string targetButtonText = LocTableCache.CommonTable.GetString("UI/Informator/TargetButton");

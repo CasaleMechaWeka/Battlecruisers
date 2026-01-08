@@ -491,6 +491,27 @@ namespace BattleCruisers.Scenes
             cameraOfCharacter.SetActive(true);
             cameraOfCaptains.SetActive(false);
         }
+
+        /// <summary>
+        /// Restores the "single captain" preview state used on Home/Hub.
+        /// This is especially important after visiting PvP/Arenas flows that may disable cameras.
+        /// </summary>
+        public void RestoreSingleCaptainPreview()
+        {
+            // If the preview captain has been destroyed or never created, recreate it.
+            if (charlie == null || characterOfCharlie == null)
+            {
+                ShowCharlieOnMainMenu();
+            }
+            else
+            {
+                characterOfCharlie.SetActive(true);
+                if (cameraOfCharacter != null)
+                    cameraOfCharacter.SetActive(true);
+                if (cameraOfCaptains != null)
+                    cameraOfCaptains.SetActive(false);
+            }
+        }
         private async Task GoToPostBattleScreenAsync()
         {
             Assert.IsFalse(postBattleScreen.IsInitialised, "Should only ever navigate (and hence initialise) once");
@@ -542,9 +563,7 @@ namespace BattleCruisers.Scenes
             homeScreen.gameObject.SetActive(false);
             characterOfBlackmarket.SetActive(false);
             characterOfShop.SetActive(false);
-            characterOfCharlie.SetActive(true);
-            cameraOfCharacter.SetActive(true);
-            cameraOfCaptains.SetActive(false);
+            RestoreSingleCaptainPreview();
             homeScreenArt.SetActive(true);
             environmentArt.SetActive(true);
             _musicPlayer?.PlayScreensSceneMusic();

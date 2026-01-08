@@ -72,10 +72,10 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                 StaticBuildOrders.Balanced,
 
 
-                //Set 9: Levels 32-40 - All use LV032 custom strategy
+                //Set 9: Levels 32-40 - ChainBattle levels with custom strategies
                 StaticBuildOrders.LV032,  // Level 32
-                StaticBuildOrders.LV032,  // Level 33
-                StaticBuildOrders.LV032,  // Level 34
+                StaticBuildOrders.LV033,  // Level 33 - Naval defense focus
+                StaticBuildOrders.Boom,   // Level 34
                 StaticBuildOrders.LV032,  // Level 35
                 StaticBuildOrders.LV032,  // Level 36
                 StaticBuildOrders.LV032,  // Level 37
@@ -519,25 +519,34 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
+
+                // Level 33 - Naval escalation:
+                // - Ships are produced by the NavalFactory via the sequencer/chainbattle naval unit cycle (starts at Frigate).
+                // - OffensiveRequests here control what extra BUILDINGS fill null slots (Ultras/Offence), not individual ships.
                 new OffensiveRequest[]
                 {
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    // Keep one naval request for hulls that have spare bow slots (not relevant for Salvage, but harmless)
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+
+                    // Manual escalating mix for all remaining "null" slots in LV033
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                 },
                 new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },

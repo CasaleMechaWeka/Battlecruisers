@@ -159,9 +159,11 @@ namespace BattleCruisers.Data
                         if (game == null)
                             return EmergencyRecovery();
                         
-                        // Version 651 migration: Convert levels 32-40 to sidequests 0-8
-                        // This MUST run before ValidateCurrentSave, which rejects saves with >31 completed levels
-                        if (version < 651)
+                        // Version 650 migration: Convert OLD levels 32-40 to sidequests 0-8
+                        // Old levels 32-40 are now sidequests 0-8. New levels 32-40 are different content.
+                        // For saves < 650, strip out old level 32-40 completions so players start fresh.
+                        // NOTE: 650 = version 6.5.0 when levels 32-40 were restored as campaign levels.
+                        if (version < 650)
                         {
                             MigrateLevels32To40ToSidequests(game);
                             game.SaveVersion = GetCurrentSaveVersion(); // Update to current version after migration

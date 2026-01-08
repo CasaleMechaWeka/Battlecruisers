@@ -42,7 +42,9 @@ namespace BattleCruisers.UI.ScreensScene.PostBattleScreen
             }
 
             nextButton.Initialise(soundPlayer, nextCommand);
-            if (DataProvider.GameModel.SelectedLevel >= 32 || ApplicationModel.Mode == GameMode.SideQuest)
+            // Only hide NEXT when it genuinely cannot execute (e.g., final level),
+            // or when playing sidequests (handled via a different flow).
+            if (!nextCommand.CanExecute || ApplicationModel.Mode == GameMode.SideQuest)
             {
                 Destroy(nextButton.gameObject);
             }

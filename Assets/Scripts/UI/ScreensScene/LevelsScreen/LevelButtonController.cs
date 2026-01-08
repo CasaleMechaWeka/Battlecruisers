@@ -64,12 +64,13 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
                     hullImage.sprite = enemyCruiserPrefab.Sprite;
                 }
                 
-                // Set the sky image
-                if (skyImage != null)
-                {
-                    string skyPath = SKY_SPRITE_ROOT_PATH + staticLevel.SkyMaterialName + SPRITES_FILE_EXTENSION;
-                    skyImage.sprite = await SpriteFetcher.GetSpriteAsync(skyPath);
-                }
+            // Set the sky image
+            if (skyImage != null)
+            {
+                string skyPath = SKY_SPRITE_ROOT_PATH + staticLevel.SkyMaterialName + SPRITES_FILE_EXTENSION;
+                skyImage.sprite = await SpriteFetcher.GetSpriteAsync(skyPath);
+                skyImage.enabled = false; // Disabled by default
+            }
             }
             else
             {
@@ -105,27 +106,30 @@ namespace BattleCruisers.UI.ScreensScene.LevelsScreen
             // Activate the button when enabled
             gameObject.SetActive(true);
 
-            captainImage.color = Color.black;
             levelNumberText.color = Color.white;
             levelNameText.color = Color.white;
             levelStatsController.SetColour(Color.white);
+            skyImage.enabled = false;
+
         }
 
         protected override void ShowClickedState()
         {
             // Ensure button is active when clicked
             gameObject.SetActive(true);
-
-            captainImage.color = Color.red;
             levelNumberText.color = Color.red;
             levelNameText.color = Color.red;
             levelStatsController.SetColour(Color.red);
+            skyImage.enabled = true; 
         }
 
         protected override void ShowHoverState()
         {
             ShowEnabledState();
-            captainImage.color = Color.white;
+            levelNumberText.color = Color.red;
+            levelNameText.color = Color.red;
+            levelStatsController.SetColour(Color.red);
+            skyImage.enabled = true; 
         }
     }
 }

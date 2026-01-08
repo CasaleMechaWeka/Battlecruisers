@@ -139,9 +139,6 @@ namespace BattleCruisers.Cruisers.Slots
                                                 + (Transform.Up * verticalChange)
                                                 + (Transform.Right * horizontalChange);
 
-                    // Parent the building to this slot so it follows slot movement and rotation
-                    // Using worldPositionStays=true keeps the building at the same world position during reparenting
-                    building.Transform.SetParent(transform, worldPositionStays: true);
 
                     // Match the slot's rotation
                     _baseBuilding.Value.Rotation = Transform.Rotation;

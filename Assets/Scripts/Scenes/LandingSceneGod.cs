@@ -142,7 +142,8 @@ namespace BattleCruisers.Scenes
             try
             {
                 var options = new InitializationOptions();
-                options.SetEnvironmentName("production");
+                const string ugsEnvironmentName = "production";
+                options.SetEnvironmentName(ugsEnvironmentName);
                 //options.SetEnvironmentName("dev");
                 string profile = GetProfile();
                 if (profile.Length > 0)
@@ -162,6 +163,8 @@ namespace BattleCruisers.Scenes
                 {
                     await UnityServices.InitializeAsync(options);
                 }
+
+                Debug.Log($"[UGS] Initialized. env='{ugsEnvironmentName}', profile='{profile}', cloudProjectId='{Application.cloudProjectId}', appId='{Application.identifier}', platform='{Application.platform}'");
 #if UNITY_EDITOR
                 if (ParrelSync.ClonesManager.IsClone())
                 {

@@ -299,6 +299,7 @@ namespace BattleCruisers.Network.Multiplay.Scenes
         }
         public async Task<Lobby> JoinLobbyByCode(string code)
         {
+            code = code?.Trim().Replace(" ", "").ToUpperInvariant();
             LocalLobby.AddUser(LocalUser);
             (bool Success, Lobby Lobby) lobbyJoinAttemp = await LobbyServiceFacade.TryJoinLobbyAsync("", code);
 
