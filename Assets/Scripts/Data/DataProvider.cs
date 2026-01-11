@@ -217,8 +217,29 @@ namespace BattleCruisers.Data
 
         public static async Task RefreshEconomyConfiguration()
         {
-            await EconomyService.Instance.Configuration.SyncConfigurationAsync();
+            try
+            {
+                // Add timeout to prevent hanging on network issues
+                var timeoutTask = Task.Delay(10000); // 10 second timeout
+                var syncTask = EconomyService.Instance.Configuration.SyncConfigurationAsync();
+
+                var completedTask = await Task.WhenAny(syncTask, timeoutTask);
+                if (completedTask == timeoutTask)
+                {
+                    Debug.LogWarning("[DataProvider] Economy configuration sync timed out, proceeding with cached/default values");
+                    return;
+                }
+
+                // Sync completed successfully
+                await syncTask;
             m_VirtualPurchaseDefinitions = EconomyService.Instance.Configuration.GetVirtualPurchases();
+                Debug.Log("[DataProvider] Economy configuration synced successfully");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[DataProvider] Failed to sync economy configuration: {ex.Message}. Proceeding with cached/default values.");
+                // Continue with whatever was already loaded, game should still be playable
+            }
         }
 
         public static void ApplyRemoteConfig()

@@ -62,24 +62,43 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         public static bool isCost = false;
         public const float DIFFICULTY_DESTRUCTION_SCORE_MULTIPLIER = 2;
 
-        private void Awake()
+        public static void ResetMatchState()
         {
-            isDisconnected = 0;
-            _playerALevelTimeInSeconds = 1;
+            // Server stats
+            _levelTimeInSeconds = 0f;
+            _aircraftVal = 0;
+            _shipsVal = 0;
+            _cruiserVal = 0;
+            _buildingsVal = 0;
+            _totalDestroyed = new long[4];
+            EnemyCruiserType = default;
+
+            // Player A stats
+            _playerALevelTimeInSeconds = 1f;
             _playerAAircraftVal = 0;
             _playerAShipsVal = 0;
-            //    _playerACruiserVal = 3500;
             _playerABuildingsVal = 0;
             _playerATotoalDestroyed = new long[4];
-            //    _playerACruiserName = "";
+            PlayerACruiserType = default;
 
-            _playerBLevelTimeInSeconds = 1;
+            // Player B stats
+            _playerBLevelTimeInSeconds = 1f;
             _playerBAircraftVal = 0;
             _playerBShipsVal = 0;
-            //    _playerBCruiserVal = 3500;
             _playerBBuildingsVal = 0;
             _playerBTotoalDestroyed = new long[4];
-            //    _playerBCruiserName = "";
+            PlayerBCruiserType = default;
+
+            // Match flags
+            OpponentQuit = false;
+            isDisconnected = 0;
+            isCost = false;
+        }
+
+        private void Awake()
+        {
+            // Ensure static state doesn't leak between matches within the same app session.
+            ResetMatchState();
         }
 
         public static void AddAllBuildablesOfLeftPlayer(TargetType type, float val)
@@ -126,6 +145,7 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
 
         public override void OnNetworkSpawn()
         {
+            ResetMatchState();
             if (IsServer)
                 BattleCompleted.Value = Tunnel_BattleCompletedState.None;
             IsRegisteredBuildablesLeftPlayer = false;

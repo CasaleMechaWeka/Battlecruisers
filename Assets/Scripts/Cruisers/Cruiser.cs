@@ -42,6 +42,7 @@ namespace BattleCruisers.Cruisers
         protected ICruiser _enemyCruiser;
         private SpriteRenderer _renderer;
         protected Collider2D _collider;
+        private IReadOnlyList<SpriteRenderer> _compositeRenderersCache;
         private ICruiserHelper _helper;
         public SlotWrapperController SlotWrapperController;
         private ClickHandler _clickHandler;
@@ -68,30 +69,80 @@ namespace BattleCruisers.Cruisers
         [Tooltip("Enable to use additional PolygonCollider2D components as part of this cruiser's hitbox. Useful for animated cruisers with backup enemies that appear.")]
         public bool useAdditionalColliders = false;
 
+        [Tooltip("When enabled, the primary (root) Collider2D will be ignored for bounds/size calculations. This is useful when the root collider is absent or is just a tiny/invisible placeholder and the real hitbox lives on child objects.")]
+        public bool ignorePrimaryCollider = false;
+
         [Tooltip("Additional PolygonCollider2D components that should be treated as part of this cruiser's hitbox. These can be on child GameObjects.")]
         public PolygonCollider2D[] additionalColliders;
 
+        [Header("Additional Renderers")]
+        [Tooltip("Enable to treat additional SpriteRenderers as part of this cruiser's visuals for selection/highlight colouring.")]
+        public bool useAdditionalRenderers = false;
+
+        [Tooltip("When enabled, the primary (root) SpriteRenderer will be ignored for selection/highlight colouring, and ONLY the additional renderers will be coloured. This lets you keep a 'UI sprite' on the root while making the in-battle visuals live elsewhere.")]
+        public bool ignorePrimaryRenderer = false;
+
+        [Tooltip("Additional SpriteRenderers that should be treated as this cruiser's in-battle visuals for selection/highlight colouring. Assign explicitly to avoid accidentally colouring slot sprites or other UI/FX renderers.")]
+        public SpriteRenderer[] additionalRenderers;
+
         // ITarget
         public override TargetType TargetType => TargetType.Cruiser;
-        public override Color Color { set { _renderer.color = value; } }
+        public override Color Color
+        {
+            set
+            {
+                foreach (SpriteRenderer renderer in GetCompositeRenderers())
+                {
+                    renderer.color = value;
+                }
+            }
+        }
         public override Vector2 Size
         {
             get
             {
                 if (!useAdditionalColliders || additionalColliders == null || additionalColliders.Length == 0)
                 {
-                    return _collider.bounds.size;
+                    // Legacy/default behaviour: use primary collider only.
+                    // If ignorePrimaryCollider is enabled, we fall through to the combined-bounds logic.
+                    if (!ignorePrimaryCollider && _collider != null)
+                        return _collider.bounds.size;
                 }
 
-                // Combine bounds from main collider and all additional colliders
-                Bounds combinedBounds = _collider.bounds;
-                foreach (var extraCollider in additionalColliders)
+                // Combine bounds from (optional) primary collider and all additional colliders.
+                bool hasAnyBounds = false;
+                Bounds combinedBounds = default;
+
+                if (!ignorePrimaryCollider && _collider != null)
                 {
-                    if (extraCollider != null)
+                    combinedBounds = _collider.bounds;
+                    hasAnyBounds = true;
+                }
+
+                if (useAdditionalColliders && additionalColliders != null)
+                {
+                    foreach (var extraCollider in additionalColliders)
                     {
-                        combinedBounds.Encapsulate(extraCollider.bounds);
+                        if (extraCollider == null)
+                            continue;
+                        if (!hasAnyBounds)
+                        {
+                            combinedBounds = extraCollider.bounds;
+                            hasAnyBounds = true;
+                        }
+                        else
+                        {
+                            combinedBounds.Encapsulate(extraCollider.bounds);
+                        }
                     }
                 }
+
+                if (!hasAnyBounds)
+                {
+                    Debug.LogWarning($"[Cruiser] {name}: No colliders available to calculate Size. Returning Vector2.zero.");
+                    return Vector2.zero;
+                }
+
                 return combinedBounds.size;
             }
         }
@@ -163,7 +214,10 @@ namespace BattleCruisers.Cruisers
             Assert.IsNotNull(_renderer);
 
             _collider = GetComponent<Collider2D>();
-            Assert.IsNotNull(_collider);
+            if (!ignorePrimaryCollider)
+            {
+                Assert.IsNotNull(_collider);
+            }
 
             // Validate additional colliders if enabled
             if (useAdditionalColliders)
@@ -183,6 +237,28 @@ namespace BattleCruisers.Cruisers
                     if (nullCount > 0)
                     {
                         Debug.LogWarning($"[Cruiser] {name}: {nullCount} null collider(s) found in additionalColliders array. They will be ignored.");
+                    }
+                }
+            }
+
+            // Validate additional renderers if enabled
+            if (useAdditionalRenderers)
+            {
+                if (additionalRenderers == null || additionalRenderers.Length == 0)
+                {
+                    Debug.LogWarning($"[Cruiser] {name}: useAdditionalRenderers is enabled but additionalRenderers array is empty or null. Additional renderers will be ignored.");
+                }
+                else
+                {
+                    int nullCount = 0;
+                    foreach (var sr in additionalRenderers)
+                    {
+                        if (sr == null)
+                            nullCount++;
+                    }
+                    if (nullCount > 0)
+                    {
+                        Debug.LogWarning($"[Cruiser] {name}: {nullCount} null renderer(s) found in additionalRenderers array. They will be ignored.");
                     }
                 }
             }
@@ -280,7 +356,7 @@ namespace BattleCruisers.Cruisers
                     Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
                     if (bodykit.cruiserType == hullType)
                     {
-                        GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                        _renderer.sprite = bodykit.BodykitImage;
                         // should update Name and Description for Bodykit
                         Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].NameStringKeyBase);
                         Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
@@ -314,7 +390,7 @@ namespace BattleCruisers.Cruisers
                         Bodykit bodykit = PrefabFactory.GetBodykit(StaticPrefabKeys.BodyKits.GetBodykitKey(id_bodykit));
                         if (bodykit.cruiserType == hullType)
                         {
-                            GetComponent<SpriteRenderer>().sprite = bodykit.BodykitImage;
+                            _renderer.sprite = bodykit.BodykitImage;
                             Name = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].NameStringKeyBase);
                             Description = LocTableCache.CommonTable.GetString(StaticData.Bodykits[id_bodykit].DescriptionKeyBase);
                             isUsingBodykit = true;
@@ -516,6 +592,38 @@ namespace BattleCruisers.Cruisers
         public bool IsCruiser()
         {
             return isCruiser;
+        }
+
+        private IReadOnlyList<SpriteRenderer> GetCompositeRenderers()
+        {
+            if (!useAdditionalRenderers)
+            {
+                if (_renderer == null)
+                    return Array.Empty<SpriteRenderer>();
+                return new[] { _renderer };
+            }
+
+            if (_compositeRenderersCache != null)
+                return _compositeRenderersCache;
+
+            HashSet<SpriteRenderer> unique = new HashSet<SpriteRenderer>();
+
+            if (!ignorePrimaryRenderer && _renderer != null)
+                unique.Add(_renderer);
+
+            if (additionalRenderers != null)
+            {
+                foreach (var sr in additionalRenderers)
+                {
+                    if (sr != null)
+                        unique.Add(sr);
+                }
+            }
+
+            SpriteRenderer[] result = new SpriteRenderer[unique.Count];
+            unique.CopyTo(result);
+            _compositeRenderersCache = result;
+            return _compositeRenderersCache;
         }
 
     }

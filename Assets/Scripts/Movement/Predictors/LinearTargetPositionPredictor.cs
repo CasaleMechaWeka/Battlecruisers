@@ -28,9 +28,16 @@ namespace BattleCruisers.Movement.Predictors
             float b = 2 * Vector2.Dot(targetVelocity, r);
             float c = Vector2.Dot(r, r);
 
+            float discriminant = b * b - 4 * a * c;
+            if (discriminant < 0)
+            {
+                // No real solution; caller should fall back to aiming at current position.
+                return null;
+            }
 
-            float t1 = (-b + Mathf.Sqrt(b * b - 4 * a * c)) / (2 * a);
-            float t2 = (-b - Mathf.Sqrt(b * b - 4 * a * c)) / (2 * a);
+            float sqrtDiscriminant = Mathf.Sqrt(discriminant);
+            float t1 = (-b + sqrtDiscriminant) / (2 * a);
+            float t2 = (-b - sqrtDiscriminant) / (2 * a);
 
             float t = 0f;
 

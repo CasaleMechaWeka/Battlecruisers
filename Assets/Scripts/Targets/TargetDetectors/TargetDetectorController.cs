@@ -52,7 +52,8 @@ namespace BattleCruisers.Targets.TargetDetectors
         private ITarget GetTarget(Collider2D collider)
         {
             ITarget target = collider.gameObject.GetComponent<ITargetProxy>()?.Target;
-            // Colliders may include VFX, environment, etc. Ignore anything that isn't a target.
+            // Some trigger volumes can overlap non-target colliders (VFX, environment triggers, etc.).
+            // Those should be ignored rather than hard-crashing the game.
             return target;
         }
 

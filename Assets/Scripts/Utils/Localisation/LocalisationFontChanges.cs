@@ -7,6 +7,7 @@ using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using TMPro;
 using Utils.Localisation;
+using BattleCruisers.Utils.Localisation;
 
 namespace BattleCruisers.Utils.Localisation
 {
@@ -37,6 +38,45 @@ namespace BattleCruisers.Utils.Localisation
         private Vector3 _originalPosition;
         public bool allowScaleAdjustment = true;
         public bool allowPositionAdjustment = true;
+
+        public void RefreshFontChanges()
+        {
+            try
+            {
+                UpdateString();
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"font localisation failed - RefreshFontChanges: {e.Message}");
+            }
+        }
+
+        private static bool IsNotLocalisedString(string value)
+        {
+            return string.IsNullOrEmpty(value) ||
+                   value.Contains("Not localised") ||
+                   value.Contains("is Not localised");
+        }
+
+        private static string GetFontsTableString(string key)
+        {
+            // 1) Dev override file (non-technical tuning)
+            if (FontTuningOverrides.TryGetString(key, out string overrideValue))
+                return overrideValue;
+
+            // 2) Normal localization table
+            string value = LocTableCache.FontsTable.GetString(key);
+
+            // 3) Defensive: some keys accidentally have trailing spaces in shared data.
+            if (IsNotLocalisedString(value) && !key.EndsWith(" ", StringComparison.Ordinal))
+            {
+                string spaced = LocTableCache.FontsTable.GetString(key + " ");
+                if (!IsNotLocalisedString(spaced))
+                    return spaced;
+            }
+
+            return value;
+        }
         public struct RTLSettings
         {
             public bool IsRtl { get; set; }
@@ -199,7 +239,7 @@ namespace BattleCruisers.Utils.Localisation
                     }
 
                     // First try the original key that we know works
-                    string bestFitScaleAdjustment = LocTableCache.FontsTable.GetString("BestFitScaleAdjustment");
+                    string bestFitScaleAdjustment = GetFontsTableString("BestFitScaleAdjustment");
                     // Debug.Log($"[{gameObject.name}] Retrieved original scale adjustment 'BestFitScaleAdjustment': '{bestFitScaleAdjustment}'");
 
                     // Check if the original key returns an error or is empty
@@ -209,7 +249,7 @@ namespace BattleCruisers.Utils.Localisation
                     {
                         // Only try the new specific keys if the original key doesn't work
                         string scaleAdjKey = isHeading ? "HeadingScaleAdjustment" : "RegularScaleAdjustment";
-                        bestFitScaleAdjustment = LocTableCache.FontsTable.GetString(scaleAdjKey);
+                        bestFitScaleAdjustment = GetFontsTableString(scaleAdjKey);
                         // Debug.Log($"[{gameObject.name}] Falling back to specific scale adjustment '{scaleAdjKey}': '{bestFitScaleAdjustment}'");
                     }
 
@@ -245,7 +285,7 @@ namespace BattleCruisers.Utils.Localisation
                     if (allowPositionAdjustment)
                     {
                         string yAdjustKey = isHeading ? "HeadingAdjustY" : "RegularAdjustY";
-                        yAdjustment = LocTableCache.FontsTable.GetString(yAdjustKey);
+                        yAdjustment = GetFontsTableString(yAdjustKey);
                         // Debug.Log($"[{gameObject.name}] Retrieved Y adjustment '{yAdjustKey}': '{yAdjustment}'");
 
                         // Check if the value is actually an error message
@@ -275,7 +315,7 @@ namespace BattleCruisers.Utils.Localisation
                     }
 
                     // Apply bold if needed
-                    string boldNewFontBool = LocTableCache.FontsTable.GetString("Bold");
+                    string boldNewFontBool = GetFontsTableString("Bold");
                     Boolean.TryParse(boldNewFontBool, out _boldNewFont);
                     if (_boldNewFont)
                     {
@@ -329,7 +369,7 @@ namespace BattleCruisers.Utils.Localisation
                     }
 
                     // First try the original key that we know works
-                    string bestFitScaleAdjustment = LocTableCache.FontsTable.GetString("BestFitScaleAdjustment");
+                    string bestFitScaleAdjustment = GetFontsTableString("BestFitScaleAdjustment");
                     // Debug.Log($"[{gameObject.name}] Retrieved original TMP scale adjustment 'BestFitScaleAdjustment': '{bestFitScaleAdjustment}'");
 
                     // Check if the original key returns an error or is empty
@@ -339,7 +379,7 @@ namespace BattleCruisers.Utils.Localisation
                     {
                         // Only try the new specific keys if the original key doesn't work
                         string scaleAdjKey = isHeading ? "HeadingScaleAdjustment" : "RegularScaleAdjustment";
-                        bestFitScaleAdjustment = LocTableCache.FontsTable.GetString(scaleAdjKey);
+                        bestFitScaleAdjustment = GetFontsTableString(scaleAdjKey);
                         Debug.Log($"[{gameObject.name}] Falling back to specific TMP scale adjustment '{scaleAdjKey}': '{bestFitScaleAdjustment}'");
                     }
 
@@ -375,7 +415,7 @@ namespace BattleCruisers.Utils.Localisation
                     if (allowPositionAdjustment)
                     {
                         string yAdjustKey = isHeading ? "HeadingAdjustY" : "RegularAdjustY";
-                        yAdjustment = LocTableCache.FontsTable.GetString(yAdjustKey);
+                        yAdjustment = GetFontsTableString(yAdjustKey);
                         // Debug.Log($"[{gameObject.name}] Retrieved TMP Y adjustment '{yAdjustKey}': '{yAdjustment}'");
 
                         // Check if the value is actually an error message
@@ -405,7 +445,7 @@ namespace BattleCruisers.Utils.Localisation
                     }
 
                     // Apply bold if needed
-                    string boldNewFontBool = LocTableCache.FontsTable.GetString("Bold");
+                    string boldNewFontBool = GetFontsTableString("Bold");
                     Boolean.TryParse(boldNewFontBool, out _boldNewFont);
 
                     // Apply scale adjustment

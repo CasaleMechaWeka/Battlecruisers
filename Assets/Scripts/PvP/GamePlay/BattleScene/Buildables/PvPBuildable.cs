@@ -737,6 +737,12 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene.Builda
             }
             _healthBar.OffsetChanged -= OnHealthbarOffsetChanged;
 
+            // Prevent pooled-object leaks: BoostableGroup.CleanUp() does not remove external subscribers.
+            if (_healthBoostableGroup != null)
+            {
+                _healthBoostableGroup.BoostChanged -= HealthBoostChanged;
+            }
+
             _localBoosterBoostableGroup.CleanUp();
             _buildRateBoostableGroup.CleanUp();
             _healthBoostableGroup.CleanUp();

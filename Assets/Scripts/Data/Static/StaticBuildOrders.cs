@@ -204,5 +204,44 @@ namespace BattleCruisers.Data.Static
             null, null, null, null, null, null, null, null, null, null,  // Slots 91-100
         });
 
+        /// <summary>
+        /// LV036 Strategy: Air pressure + economy scaling (TekGnosis chainbattle level).
+        /// - Air units are produced by AirFactory (not placed in slots).
+        /// - For sequencer/chainbattle enemies, aircraft selection is random affordable and bypasses unlocks (see AIManager/FactoryManagerFactory).
+        /// - Any timed "increasing waves" should be driven by SequencerLV036.prefab.
+        /// </summary>
+        public static ReadOnlyCollection<BuildingKey> LV036 = new ReadOnlyCollection<BuildingKey>(new List<BuildingKey>()
+        {
+            // Early economy + survivability
+            StaticPrefabKeys.Buildings.DroneStation,
+            StaticPrefabKeys.Buildings.DroneStation,
+            StaticPrefabKeys.Buildings.ShieldGenerator,
+            StaticPrefabKeys.Buildings.DroneStation4,
+
+            // Start aircraft production ASAP
+            StaticPrefabKeys.Buildings.AirFactory,
+
+            // Scale economy + pressure
+            StaticPrefabKeys.Buildings.LocalBooster,
+            StaticPrefabKeys.Buildings.DroneStation8,
+            StaticPrefabKeys.Buildings.ShieldGenerator,
+            StaticPrefabKeys.Buildings.StealthGenerator,
+
+            // Basic defenses (slot-type dependent; any extras are simply skipped if no compatible slot remains)
+            StaticPrefabKeys.Buildings.AntiAirTurret,
+            StaticPrefabKeys.Buildings.AntiShipTurret,
+
+            // Null slots for offensive fill
+            null, null, null, null, null, null, null, null, null, null,  // Slots 11-20
+            null, null, null, null, null, null, null, null, null, null,  // Slots 21-30
+            null, null, null, null, null, null, null, null, null, null,  // Slots 31-40
+            null, null, null, null, null, null, null, null, null, null,  // Slots 41-50
+            null, null, null, null, null, null, null, null, null, null,  // Slots 51-60
+            null, null, null, null, null, null, null, null, null, null,  // Slots 61-70
+            null, null, null, null, null, null, null, null, null, null,  // Slots 71-80
+            null, null, null, null, null, null, null, null, null, null,  // Slots 81-90
+            null, null, null, null, null, null, null, null, null, null,  // Slots 91-100
+        });
+
     }
 }

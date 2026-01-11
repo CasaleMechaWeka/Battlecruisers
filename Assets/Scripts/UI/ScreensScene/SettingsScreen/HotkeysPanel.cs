@@ -318,7 +318,7 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
 
         private bool FindIsDirty()
         {
-            return
+            bool isDirty =
                 // Navigation
                 playerCruiserRow.Value.Key.Value != _hotkeysModel.PlayerCruiser
                 || overviewRow.Value.Key.Value != _hotkeysModel.Overview
@@ -334,49 +334,55 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
                 || defensivesRow.Value.Key.Value != _hotkeysModel.Defensives
                 || offensivesRow.Value.Key.Value != _hotkeysModel.Offensives
                 || tacticalsRow.Value.Key.Value != _hotkeysModel.Tacticals
-                || ultrasRow.Value.Key.Value != _hotkeysModel.Ultras
-                // Factories
+                || ultrasRow.Value.Key.Value != _hotkeysModel.Ultras;
+
+            // Buildable slot hotkeys are intended to represent the 5 visible "build buttons" (Q/W/E/R/T)
+            // regardless of which category is currently active in the HUD.
+            // Therefore, the settings screen exposes ONLY Slot1-Slot5, and we keep all per-buildable
+            // hotkeys in sync with these five keys.
+            isDirty = isDirty
+                // Slot1
                 || Slot1.Value.Key.Value != _hotkeysModel.DroneStation
-                || Slot2.Value.Key.Value != _hotkeysModel.AirFactory
-                || Slot3.Value.Key.Value != _hotkeysModel.NavalFactory
-                || Slot4.Value.Key.Value != _hotkeysModel.DroneStation4
-                || Slot5.Value.Key.Value != _hotkeysModel.DroneStation8
-                // Defensives
                 || Slot1.Value.Key.Value != _hotkeysModel.ShipTurret
-                || Slot2.Value.Key.Value != _hotkeysModel.AirTurret
-                || Slot3.Value.Key.Value != _hotkeysModel.Mortar
-                || Slot4.Value.Key.Value != _hotkeysModel.SamSite
-                || Slot5.Value.Key.Value != _hotkeysModel.TeslaCoil
-                // Offensives
                 || Slot1.Value.Key.Value != _hotkeysModel.Artillery
-                || Slot2.Value.Key.Value != _hotkeysModel.Railgun
-                || Slot3.Value.Key.Value != _hotkeysModel.RocketLauncher
-                || Slot4.Value.Key.Value != _hotkeysModel.MLRS
-                || Slot5.Value.Key.Value != _hotkeysModel.GatlingMortar
-                // Tacticals
                 || Slot1.Value.Key.Value != _hotkeysModel.Shield
-                || Slot2.Value.Key.Value != _hotkeysModel.Booster
-                || Slot3.Value.Key.Value != _hotkeysModel.StealthGenerator
-                || Slot4.Value.Key.Value != _hotkeysModel.SpySatellite
-                || Slot5.Value.Key.Value != _hotkeysModel.ControlTower
-                // Ultras
                 || Slot1.Value.Key.Value != _hotkeysModel.Deathstar
-                || Slot2.Value.Key.Value != _hotkeysModel.NukeLauncher
-                || Slot3.Value.Key.Value != _hotkeysModel.Ultralisk
-                || Slot4.Value.Key.Value != _hotkeysModel.KamikazeSignal
-                || Slot5.Value.Key.Value != _hotkeysModel.Broadsides
-                // Aircraft
                 || Slot1.Value.Key.Value != _hotkeysModel.Bomber
-                || Slot2.Value.Key.Value != _hotkeysModel.Gunship
-                || Slot3.Value.Key.Value != _hotkeysModel.Fighter
-                || Slot4.Value.Key.Value != _hotkeysModel.SteamCopter
-                || Slot5.Value.Key.Value != _hotkeysModel.Broadsword
-                // Ships
                 || Slot1.Value.Key.Value != _hotkeysModel.AttackBoat
+                // Slot2
+                || Slot2.Value.Key.Value != _hotkeysModel.AirFactory
+                || Slot2.Value.Key.Value != _hotkeysModel.AirTurret
+                || Slot2.Value.Key.Value != _hotkeysModel.Railgun
+                || Slot2.Value.Key.Value != _hotkeysModel.Booster
+                || Slot2.Value.Key.Value != _hotkeysModel.NukeLauncher
+                || Slot2.Value.Key.Value != _hotkeysModel.Gunship
                 || Slot2.Value.Key.Value != _hotkeysModel.Frigate
+                // Slot3
+                || Slot3.Value.Key.Value != _hotkeysModel.NavalFactory
+                || Slot3.Value.Key.Value != _hotkeysModel.Mortar
+                || Slot3.Value.Key.Value != _hotkeysModel.RocketLauncher
+                || Slot3.Value.Key.Value != _hotkeysModel.StealthGenerator
+                || Slot3.Value.Key.Value != _hotkeysModel.Ultralisk
+                || Slot3.Value.Key.Value != _hotkeysModel.Fighter
                 || Slot3.Value.Key.Value != _hotkeysModel.Destroyer
+                // Slot4
+                || Slot4.Value.Key.Value != _hotkeysModel.DroneStation4
+                || Slot4.Value.Key.Value != _hotkeysModel.SamSite
+                || Slot4.Value.Key.Value != _hotkeysModel.MLRS
+                || Slot4.Value.Key.Value != _hotkeysModel.SpySatellite
+                || Slot4.Value.Key.Value != _hotkeysModel.KamikazeSignal
+                || Slot4.Value.Key.Value != _hotkeysModel.SteamCopter
                 || Slot4.Value.Key.Value != _hotkeysModel.Archon
+                // Slot5
+                || Slot5.Value.Key.Value != _hotkeysModel.DroneStation8
+                || Slot5.Value.Key.Value != _hotkeysModel.TeslaCoil
+                || Slot5.Value.Key.Value != _hotkeysModel.GatlingMortar
+                || Slot5.Value.Key.Value != _hotkeysModel.ControlTower
+                || Slot5.Value.Key.Value != _hotkeysModel.Broadsides
+                || Slot5.Value.Key.Value != _hotkeysModel.Broadsword
                 || Slot5.Value.Key.Value != _hotkeysModel.AttackRIB;
+
+            return isDirty;
         }
 
         public void UpdateHokeysModel()
@@ -393,7 +399,6 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.FastForward = fastForwardRow.Value.Key.Value;
             _hotkeysModel.ToggleSpeed = toggleSpeedRow.Value.Key.Value;
 
-
             // Building categories
             _hotkeysModel.Factories = factoriesRow.Value.Key.Value;
             _hotkeysModel.Defensives = defensivesRow.Value.Key.Value;
@@ -401,55 +406,68 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             _hotkeysModel.Tacticals = tacticalsRow.Value.Key.Value;
             _hotkeysModel.Ultras = ultrasRow.Value.Key.Value;
 
-            // Factories
-            _hotkeysModel.DroneStation = Slot1.Value.Key.Value;
-            _hotkeysModel.AirFactory = Slot2.Value.Key.Value;
-            _hotkeysModel.NavalFactory = Slot3.Value.Key.Value;
-            _hotkeysModel.DroneStation4 = Slot4.Value.Key.Value;
-            _hotkeysModel.DroneStation8 = Slot5.Value.Key.Value;
-
-            // Defensives
-            _hotkeysModel.ShipTurret = Slot1.Value.Key.Value;
-            _hotkeysModel.AirTurret = Slot2.Value.Key.Value;
-            _hotkeysModel.Mortar = Slot3.Value.Key.Value;
-            _hotkeysModel.SamSite = Slot4.Value.Key.Value;
-            _hotkeysModel.TeslaCoil = Slot5.Value.Key.Value;
-
-            // Offensives
-            _hotkeysModel.Artillery = Slot1.Value.Key.Value;
-            _hotkeysModel.Railgun = Slot2.Value.Key.Value;
-            _hotkeysModel.RocketLauncher = Slot3.Value.Key.Value;
-            _hotkeysModel.MLRS = Slot4.Value.Key.Value;
-            _hotkeysModel.GatlingMortar = Slot5.Value.Key.Value;
-            // Tacticals
-            _hotkeysModel.Shield = Slot1.Value.Key.Value;
-            _hotkeysModel.Booster = Slot2.Value.Key.Value;
-            _hotkeysModel.StealthGenerator = Slot3.Value.Key.Value;
-            _hotkeysModel.SpySatellite = Slot4.Value.Key.Value;
-            _hotkeysModel.ControlTower = Slot5.Value.Key.Value;
-
-            // Ultras
-            _hotkeysModel.Deathstar = Slot1.Value.Key.Value;
-            _hotkeysModel.NukeLauncher = Slot2.Value.Key.Value;
-            _hotkeysModel.Ultralisk = Slot3.Value.Key.Value;
-            _hotkeysModel.KamikazeSignal = Slot4.Value.Key.Value;
-            _hotkeysModel.Broadsides = Slot5.Value.Key.Value;
-
-            // Aircraft
-            _hotkeysModel.Bomber = Slot1.Value.Key.Value;
-            _hotkeysModel.Gunship = Slot2.Value.Key.Value;
-            _hotkeysModel.Fighter = Slot3.Value.Key.Value;
-            _hotkeysModel.SteamCopter = Slot4.Value.Key.Value;
-            _hotkeysModel.Broadsword = Slot5.Value.Key.Value;
-
-            // Ships
-            _hotkeysModel.AttackBoat = Slot1.Value.Key.Value;
-            _hotkeysModel.Frigate = Slot2.Value.Key.Value;
-            _hotkeysModel.Destroyer = Slot3.Value.Key.Value;
-            _hotkeysModel.Archon = Slot4.Value.Key.Value;
-            _hotkeysModel.AttackRIB = Slot5.Value.Key.Value;
+            // Slot1-Slot5 represent the 5 visible build buttons (Q/W/E/R/T) irrespective of category.
+            // Keep all per-buildable hotkeys in sync with these five slot hotkeys.
+            ApplySlotHotkeysToAllBuildables(
+                Slot1.Value.Key.Value,
+                Slot2.Value.Key.Value,
+                Slot3.Value.Key.Value,
+                Slot4.Value.Key.Value,
+                Slot5.Value.Key.Value);
 
             _isDirty.Value = FindIsDirty();
+        }
+
+        private void ApplySlotHotkeysToAllBuildables(KeyCode slot1, KeyCode slot2, KeyCode slot3, KeyCode slot4, KeyCode slot5)
+        {
+            // Factories
+            _hotkeysModel.DroneStation = slot1;
+            _hotkeysModel.AirFactory = slot2;
+            _hotkeysModel.NavalFactory = slot3;
+            _hotkeysModel.DroneStation4 = slot4;
+            _hotkeysModel.DroneStation8 = slot5;
+
+            // Defensives
+            _hotkeysModel.ShipTurret = slot1;
+            _hotkeysModel.AirTurret = slot2;
+            _hotkeysModel.Mortar = slot3;
+            _hotkeysModel.SamSite = slot4;
+            _hotkeysModel.TeslaCoil = slot5;
+
+            // Offensives
+            _hotkeysModel.Artillery = slot1;
+            _hotkeysModel.Railgun = slot2;
+            _hotkeysModel.RocketLauncher = slot3;
+            _hotkeysModel.MLRS = slot4;
+            _hotkeysModel.GatlingMortar = slot5;
+
+            // Tacticals
+            _hotkeysModel.Shield = slot1;
+            _hotkeysModel.Booster = slot2;
+            _hotkeysModel.StealthGenerator = slot3;
+            _hotkeysModel.SpySatellite = slot4;
+            _hotkeysModel.ControlTower = slot5;
+
+            // Ultras
+            _hotkeysModel.Deathstar = slot1;
+            _hotkeysModel.NukeLauncher = slot2;
+            _hotkeysModel.Ultralisk = slot3;
+            _hotkeysModel.KamikazeSignal = slot4;
+            _hotkeysModel.Broadsides = slot5;
+
+            // Aircraft
+            _hotkeysModel.Bomber = slot1;
+            _hotkeysModel.Gunship = slot2;
+            _hotkeysModel.Fighter = slot3;
+            _hotkeysModel.SteamCopter = slot4;
+            _hotkeysModel.Broadsword = slot5;
+
+            // Ships
+            _hotkeysModel.AttackBoat = slot1;
+            _hotkeysModel.Frigate = slot2;
+            _hotkeysModel.Destroyer = slot3;
+            _hotkeysModel.Archon = slot4;
+            _hotkeysModel.AttackRIB = slot5;
         }
 
         public override void Hide()
@@ -488,55 +506,12 @@ namespace BattleCruisers.UI.ScreensScene.SettingsScreen
             tacticalsRow.ResetToDefaults(hotkeysModel.Tacticals);
             ultrasRow.ResetToDefaults(hotkeysModel.Ultras);
 
-            // Factories
+            // Slots represent the 5 visible build buttons, so initialise them from the canonical factory mapping.
             Slot1.ResetToDefaults(hotkeysModel.DroneStation);
             Slot2.ResetToDefaults(hotkeysModel.AirFactory);
             Slot3.ResetToDefaults(hotkeysModel.NavalFactory);
             Slot4.ResetToDefaults(hotkeysModel.DroneStation4);
             Slot5.ResetToDefaults(hotkeysModel.DroneStation8);
-
-            // Defensives
-            /*
-            shipTurretRow.ResetToDefaults(hotkeysModel.ShipTurret);
-            airTurretRow.ResetToDefaults(hotkeysModel.AirFactory);
-            mortarRow.ResetToDefaults(hotkeysModel.Mortar);
-            samSiteRow.ResetToDefaults(hotkeysModel.SamSite);
-            teslaCoilRow.ResetToDefaults(hotkeysModel.TeslaCoil);
-
-            // Offensives
-            artilleryRow.ResetToDefaults(hotkeysModel.Artillery);
-            railgunRow.ResetToDefaults(hotkeysModel.Railgun);
-            rocketLauncherRow.ResetToDefaults(hotkeysModel.RocketLauncher);
-            MLRSRow.ResetToDefaults(hotkeysModel.MLRS);
-            gatlingMortarRow.ResetToDefaults(hotkeysModel.GatlingMortar);
-
-            // Tacticals
-            shieldRow.ResetToDefaults(hotkeysModel.Shield);
-            boosterRow.ResetToDefaults(hotkeysModel.Booster);
-            stealthGeneratorRow.ResetToDefaults(hotkeysModel.StealthGenerator);
-            spySatelliteRow.ResetToDefaults(hotkeysModel.SpySatellite);
-            controlTowerRow.ResetToDefaults(hotkeysModel.ControlTower);
-
-            // Ultras
-            deathstarRow.ResetToDefaults(hotkeysModel.Deathstar);
-            nukeLauncherRow.ResetToDefaults(hotkeysModel.NukeLauncher);
-            ultraliskRow.ResetToDefaults(hotkeysModel.Ultralisk);
-            kamikazeSignalRow.ResetToDefaults(hotkeysModel.KamikazeSignal);
-            broadsidesRow.ResetToDefaults(hotkeysModel.Broadsides);
-
-            // Aircraft
-            bomberRow.ResetToDefaults(hotkeysModel.Bomber);
-            gunshipRow.ResetToDefaults(hotkeysModel.Gunship);
-            fighterRow.ResetToDefaults(hotkeysModel.Fighter);
-            steamCopterRow.ResetToDefaults(hotkeysModel.SteamCopter);
-            broadswordRow.ResetToDefaults(hotkeysModel.Broadsword);
-
-            // Ships
-            attackBoatRow.ResetToDefaults(hotkeysModel.AttackBoat);
-            frigateRow.ResetToDefaults(hotkeysModel.Frigate);
-            destroyerRow.ResetToDefaults(hotkeysModel.Destroyer);
-            archonRow.ResetToDefaults(hotkeysModel.Archon);
-            attackRIBRow.ResetToDefaults(hotkeysModel.AttackRIB);*/
         }
     }
 }

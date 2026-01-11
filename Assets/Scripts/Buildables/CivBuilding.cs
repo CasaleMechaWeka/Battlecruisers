@@ -15,8 +15,10 @@ namespace BattleCruisers.Buildables
     /// 1. Add this script to the CivBuilding GameObject
     /// 2. Add the CivBuilding GameObject to the cruiser's "Persistent Objects" array in the inspector
     /// 3. When the cruiser is destroyed, the CivBuilding will remain in the scene
+    /// 
+    /// COLLIDER: Requires a PolygonCollider2D on this object or a child object.
+    /// For optimal CPU performance, use 1 path with 4-10 points (simple convex shape).
     /// </summary>
-    [RequireComponent(typeof(Collider2D))]
     public class CivBuilding : MonoBehaviour, ITargetProxy
     {
         [Tooltip("Health points for this civilian building")]
@@ -34,11 +36,20 @@ namespace BattleCruisers.Buildables
 
         private void Awake()
         {
-            _collider = GetComponent<Collider2D>();
+            // Find collider on this object or in children
+            _collider = GetComponentInChildren<Collider2D>();
+            
             if (_collider != null)
             {
                 _collider.isTrigger = true;
+                ValidateCollider();
             }
+#if UNITY_EDITOR
+            else
+            {
+                Debug.LogWarning($"[CivBuilding] {name}: No Collider2D found on this object or children. Add a PolygonCollider2D with 4-10 points for optimal performance.", this);
+            }
+#endif
 
             _currentHealth = maxHealth;
 
@@ -53,6 +64,51 @@ namespace BattleCruisers.Buildables
             {
                 buildingGameObject.SetActive(true);
             }
+        }
+
+        /// <summary>
+        /// Validates that the collider is optimized for CPU performance.
+        /// Ideal: PolygonCollider2D with 1 path containing 4-10 points.
+        /// </summary>
+        private void ValidateCollider()
+        {
+#if UNITY_EDITOR
+            if (_collider is PolygonCollider2D polyCollider)
+            {
+                int pathCount = polyCollider.pathCount;
+                int totalPoints = 0;
+                for (int i = 0; i < pathCount; i++)
+                {
+                    totalPoints += polyCollider.GetPath(i).Length;
+                }
+
+                // Optimal: 1 path with 4-10 points
+                if (pathCount == 1 && totalPoints >= 4 && totalPoints <= 10)
+                {
+                    return; // Perfect
+                }
+                
+                // Acceptable: multiple paths but total 4-10 points
+                if (totalPoints >= 4 && totalPoints <= 10)
+                {
+                    return; // Acceptable
+                }
+
+                if (totalPoints > 10)
+                {
+                    Debug.LogWarning($"[CivBuilding] {name}: PolygonCollider2D has {totalPoints} points (target: 4-10). Consider simplifying for better CPU performance.", this);
+                }
+            }
+            else if (_collider is BoxCollider2D)
+            {
+                // BoxCollider2D is fine - very efficient
+                return;
+            }
+            else
+            {
+                Debug.LogWarning($"[CivBuilding] {name}: Using {_collider.GetType().Name}. PolygonCollider2D with 4-10 points or BoxCollider2D recommended for optimal CPU performance.", this);
+            }
+#endif
         }
 
         // ITargetProxy implementation

@@ -38,7 +38,8 @@ namespace BattleCruisers.AI.FactoryManagers
         {
             MostExpensiveAffordable = 0,
             CycleEscalating = 1,
-            RandomAffordable = 2
+            RandomAffordable = 2,
+            ThreatAwareRandom = 3
         }
 
         public IManagedDisposable CreateNavalFactoryManager(
@@ -76,6 +77,18 @@ namespace BattleCruisers.AI.FactoryManagers
                 case NavalUnitChooserMode.RandomAffordable:
                     unitChooser = new RandomAffordableUnitChooser(availableShips, aiCruiser.DroneManager);
                     break;
+                case NavalUnitChooserMode.ThreatAwareRandom:
+                    {
+                        // Use threat monitors to gate AA ships like FlakTurtle unless air threat is present.
+                        var airMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateAirThreatMonitor());
+                        var navalMonitor = _threatMonitorFactory.CreateDelayedThreatMonitor(_threatMonitorFactory.CreateNavalThreatMonitor());
+                        unitChooser = new ThreatAwareRandomNavalChooser(
+                            availableShips,
+                            aiCruiser.DroneManager,
+                            airMonitor,
+                            navalMonitor);
+                    }
+                    break;
                 case NavalUnitChooserMode.MostExpensiveAffordable:
                 default:
                     unitChooser = new MostExpensiveUnitChooser(availableShips, aiCruiser.DroneManager);
@@ -87,6 +100,33 @@ namespace BattleCruisers.AI.FactoryManagers
 
         public IManagedDisposable CreateAirfactoryManager(ICruiserController aiCruiser)
         {
+            return CreateAirfactoryManager(aiCruiser, bypassUnlocks: false, useRandomAffordable: false);
+        }
+
+        public IManagedDisposable CreateAirfactoryManager(
+            ICruiserController aiCruiser,
+            bool bypassUnlocks = false,
+            bool useRandomAffordable = false)
+        {
+            Helper.AssertIsNotNull(aiCruiser);
+
+            if (bypassUnlocks || useRandomAffordable)
+            {
+                // Sequencer/ChainBattle enemies: pick randomly from ALL aircraft in the game (ignores player unlocks).
+                IList<UnitKey> availableAircraftKeys =
+                    StaticData.UnitKeys
+                        .Where(k => k.UnitCategory == UnitCategory.Aircraft)
+                        .ToList();
+
+                IList<IBuildableWrapper<IUnit>> availableAircraft =
+                    availableAircraftKeys
+                        .Select(key => PrefabFactory.GetUnitWrapperPrefab(key))
+                        .ToList();
+
+                UnitChooser unitChooser = new RandomAffordableUnitChooser(availableAircraft, aiCruiser.DroneManager);
+                return new FactoryManager(UnitCategory.Aircraft, aiCruiser, unitChooser);
+            }
+
             Assert.IsTrue(_gameModel.IsUnitUnlocked(DEFAULT_PLANE_KEY), "Default plane should always be available.");
             IBuildableWrapper<IUnit> defaultPlane = PrefabFactory.GetUnitWrapperPrefab(DEFAULT_PLANE_KEY);
             IBuildableWrapper<IUnit> lategamePlane;

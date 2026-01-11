@@ -68,7 +68,8 @@ namespace BattleCruisers.Data.Static
             { Buildings.IonCannon, 38 },
             { Buildings.Cannon, 95 },
             { Buildings.BlastVLS, 95 },
-            { Buildings.FirecrackerVLS, 95 },
+            // Campaign drop: Win Level 36 => unlocks at Level 37.
+            { Buildings.FirecrackerVLS, 37 },
 
             // Ultras
             { Buildings.DeathstarLauncher, 7 },
@@ -125,7 +126,8 @@ namespace BattleCruisers.Data.Static
             { Hulls.BlackRig, 37 },
             { Hulls.Yeti, 40 },
             { Hulls.BasicRig, 95 },
-            { Hulls.Cricket, 95 },
+            // Campaign drop: Win Level 35 => unlocks at Level 36.
+            { Hulls.Cricket, 36 },
             // New PvE-only hulls unlock over later missions
             { Hulls.FortNova, 95 },
             { Hulls.Zumwalt, 95 },
@@ -327,10 +329,11 @@ namespace BattleCruisers.Data.Static
 
             // Set 9: ChainBattle Levels (32-40)
             new Level(32, Hulls.LV032Raptor, BackgroundMusic.Juggernaut, SkyMaterials.Sunrise, Exos.GetCaptainExoKey(1), GetDefaultHeckleConfig(), true),  
-            new Level(33, Hulls.Salvage, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(24), GetDefaultHeckleConfig(), true),
-            new Level(34, Hulls.EndlessWall, BackgroundMusic.Fortress, SkyMaterials.Midday, Exos.GetCaptainExoKey(45), GetDefaultHeckleConfig(), true),
-            new Level(35, Hulls.Eagle, BackgroundMusic.Bobby, SkyMaterials.Dusk, Exos.GetCaptainExoKey(5), GetDefaultHeckleConfig()),
-            new Level(36, Hulls.Hammerhead, BackgroundMusic.Experimental, SkyMaterials.Cold, Exos.GetCaptainExoKey(6), GetDefaultHeckleConfig()),
+            new Level(33, Hulls.EndlessWall, BackgroundMusic.Fortress, SkyMaterials.Midday, Exos.GetCaptainExoKey(43), GetDefaultHeckleConfig(), true),
+            new Level(34, Hulls.Salvage, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(24), GetDefaultHeckleConfig(), true),
+            new Level(35, Hulls.LV035Cricket, BackgroundMusic.Bobby, SkyMaterials.Dusk, Exos.GetCaptainExoKey(5), GetDefaultHeckleConfig()),
+            // Level 36 - ChainBattle sequencer level (SequencerLV036): President TronAI_Dump (exo 35) in TekGnosis at night, with Even Newer Zealand backdrop.
+            new Level(36, Hulls.TekGnosis, BackgroundMusic.Experimental, SkyMaterials.Midnight, Exos.GetCaptainExoKey(35), GetDefaultHeckleConfig(), true),
             new Level(37, Hulls.Longbow, BackgroundMusic.Sleeper, SkyMaterials.Purple, Exos.GetCaptainExoKey(7), GetDefaultHeckleConfig()),
             new Level(38, Hulls.Megalodon, BackgroundMusic.Nothing, SkyMaterials.Midday, Exos.GetCaptainExoKey(8), GetDefaultHeckleConfig()),
             new Level(39, Hulls.TasDevil, BackgroundMusic.Againagain, SkyMaterials.Midnight, Exos.GetCaptainExoKey(9), GetDefaultHeckleConfig()),
@@ -372,11 +375,12 @@ namespace BattleCruisers.Data.Static
             new BackgroundImageStats(140, new Vector2(0,  -110), 140,  300,  "TableMountain",    new Color(0.1501869f,  0.1964908f, 0.2358491f),              false, 10),
 
             // Backgrounds for levels 32-40 (ChainBattle levels)
-            new BackgroundImageStats(160, new Vector2(0,  500),  655,  740,  "RicketyCity",      new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
-            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "SeaWall",          new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  500),  655,  740,  null,             new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
+            new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "SeaWall",        new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "SeaWall",          new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
             new BackgroundImageStats(140, new Vector2(0,  420),  640,  730,  "UACBattleNight",   new Color(0.1501869f,   0.1964908f,  0.2358491f),             false, 10),
-            new BackgroundImageStats(140, new Vector2(0,  500),  660,  730,  "NuclearDome",      new Color(0.745283f,    0.5127987f,  0.3831879f),             false, 10),
+            // Level 36 (index 4 of 32-40): Even Newer Zealand at night.
+            new BackgroundImageStats(140, new Vector2(0,  450),  580,  740,  "EvenNewerZealand", new Color(0.1882353f,   0.2784314f,  0.4078431f),             true,  10),
             new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "UACArena",         new Color(0.01960784f,  0.01176471f, 0.01176471f),            false, 10),
             new BackgroundImageStats(160, new Vector2(0,  -290), -100, 0,    "Rio2",             new Color(0.7647059f,   0.5803922f,  0.4862745f),             false, 10),
             new BackgroundImageStats(160, new Vector2(0,  500),  660,  730,  "UACUltimate",      new Color(0.0627451f,  0.09411765f, 0.1254902f),             false, 10),
@@ -441,7 +445,8 @@ namespace BattleCruisers.Data.Static
             new TrashTalkData(33, 24,  false, "level"),  // HuntressV4 (matches Exos.GetCaptainExoKey(24))
             new TrashTalkData(34, 4,  true,  "level"),
             new TrashTalkData(35, 5,  false, "level"),
-            new TrashTalkData(36, 6,  true,  "level"),
+            // Level 36: President TronAI_Dump (exo 35)
+            new TrashTalkData(36, 35, false, "level"),
             new TrashTalkData(37, 7,  false, "level"),
             new TrashTalkData(38, 8,  false, "level"),
             new TrashTalkData(39, 9,  true,  "level"),

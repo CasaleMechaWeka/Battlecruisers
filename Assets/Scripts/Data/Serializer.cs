@@ -49,6 +49,73 @@ namespace BattleCruisers.Data
             _binaryFormatter = new BinaryFormatter();
         }
 
+        private static bool TryGetPropertyValue<T>(object obj, string propertyName, out T value)
+        {
+            value = default;
+            if (obj == null || string.IsNullOrEmpty(propertyName))
+            {
+                return false;
+            }
+
+            try
+            {
+                PropertyInfo prop = obj.GetType().GetProperty(propertyName);
+                if (prop == null)
+                {
+                    return false;
+                }
+
+                object raw = prop.GetValue(obj);
+                if (raw == null)
+                {
+                    return false;
+                }
+
+                if (raw is T typed)
+                {
+                    value = typed;
+                    return true;
+                }
+
+                // Handle simple conversions for legacy saves (e.g. int -> long)
+                value = (T)Convert.ChangeType(raw, typeof(T));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static T GetPropertyValueOrDefault<T>(object obj, string propertyName, T defaultValue)
+        {
+            return TryGetPropertyValue<T>(obj, propertyName, out T value) ? value : defaultValue;
+        }
+
+        private static IReadOnlyCollection<T> GetPropertyCollectionOrEmpty<T>(object obj, string propertyName)
+        {
+            if (obj == null || string.IsNullOrEmpty(propertyName))
+            {
+                return Array.Empty<T>();
+            }
+
+            try
+            {
+                PropertyInfo prop = obj.GetType().GetProperty(propertyName);
+                if (prop == null)
+                {
+                    return Array.Empty<T>();
+                }
+
+                object raw = prop.GetValue(obj);
+                return raw as IReadOnlyCollection<T> ?? Array.Empty<T>();
+            }
+            catch
+            {
+                return Array.Empty<T>();
+            }
+        }
+
         public bool DoesPreferredSaveGameExist()
         {
             return File.Exists(preferredGameModelFilePath);
@@ -217,13 +284,13 @@ namespace BattleCruisers.Data
             Debug.Log("MakeCompatible - Migrating legacy save to current format");
 
             // perhaps be more conservative for these other fields too?
-            var tut = gameData.GetType().GetProperty("HasAttemptedTutorial").GetValue(gameData);
-            var lds = gameData.GetType().GetProperty("LifetimeDestructionScore").GetValue(gameData);
-            var bds = gameData.GetType().GetProperty("BestDestructionScore").GetValue(gameData);
-            var plo = gameData.GetType().GetProperty("PlayerLoadout").GetValue(gameData);
-            var lbr = gameData.GetType().GetProperty("LastBattleResult").GetValue(gameData);
-            var pre = gameData.GetType().GetProperty("PremiumEdition").GetValue(gameData);
-            var sav = gameData.GetType().GetProperty("SaveVersion");
+            bool _hasAttemptedTutorial = GetPropertyValueOrDefault(gameData, "HasAttemptedTutorial", defaultValue: false);
+            long _lifetimeDestructionScore = GetPropertyValueOrDefault(gameData, "LifetimeDestructionScore", defaultValue: 0L);
+            long _bestDestructionScore = GetPropertyValueOrDefault(gameData, "BestDestructionScore", defaultValue: 0L);
+            Loadout _loadout = GetPropertyValueOrDefault<Loadout>(gameData, "PlayerLoadout", defaultValue: null);
+            BattleResult _lastBattleResult = GetPropertyValueOrDefault(gameData, "LastBattleResult", defaultValue: default(BattleResult));
+            bool _premiumState = GetPropertyValueOrDefault(gameData, "PremiumEdition", defaultValue: false);
+            var sav = gameData?.GetType().GetProperty("SaveVersion");
             
             // Get the original save version for logging
             int originalSaveVersion = 0;
@@ -238,26 +305,31 @@ namespace BattleCruisers.Data
             Debug.Log($"Migrating save from version {originalSaveVersion} to current version {currentVersion}");
 
             List<HullKey> _unlockedHulls = new List<HullKey>();
-            foreach (var hull in gameData.GetType().GetProperty("UnlockedHulls").GetValue(gameData) as IReadOnlyCollection<HullKey>)
+            foreach (var hull in GetPropertyCollectionOrEmpty<HullKey>(gameData, "UnlockedHulls"))
                 _unlockedHulls.Add(hull);
 
             List<BuildingKey> _unlockedBuildings = new List<BuildingKey>();
-            foreach (var building in gameData.GetType().GetProperty("UnlockedBuildings").GetValue(gameData) as IReadOnlyCollection<BuildingKey>)
+            foreach (var building in GetPropertyCollectionOrEmpty<BuildingKey>(gameData, "UnlockedBuildings"))
                 _unlockedBuildings.Add(building);
 
             List<UnitKey> _unlockedUnits = new List<UnitKey>();
-            foreach (var unit in gameData.GetType().GetProperty("UnlockedUnits").GetValue(gameData) as IReadOnlyCollection<UnitKey>)
+            foreach (var unit in GetPropertyCollectionOrEmpty<UnitKey>(gameData, "UnlockedUnits"))
                 _unlockedUnits.Add(unit);
 
-            // compiler doesn't like them being cast when they're assigned, so they're cast here
-            bool _hasAttemptedTutorial = (bool)tut;
-            long _lifetimeDestructionScore = (long)lds;
-            long _bestDestructionScore = (long)bds;
-            Loadout _loadout = (Loadout)plo;
-            _loadout.ValidateSelectedBuildables();
-
-            BattleResult _lastBattleResult = (BattleResult)lbr;
-            bool _premiumState = (bool)pre;
+            if (_loadout == null)
+            {
+                // Create a minimal fallback loadout from unlocked items (or defaults).
+                HullKey fallbackHull = _unlockedHulls.FirstOrDefault() ?? StaticPrefabKeys.Hulls.Bullshark;
+                List<BuildingKey> fallbackBuildings = _unlockedBuildings.Take(5).ToList();
+                List<UnitKey> fallbackUnits = _unlockedUnits.Take(5).ToList();
+                _loadout = new Loadout(fallbackHull, fallbackBuildings, fallbackUnits);
+            }
+            else
+            {
+                // Legacy loadouts may have invalid selections/dictionaries; don't let migration crash.
+                try { _loadout.ValidateSelectedBuildables(); }
+                catch (Exception ex) { Debug.LogWarning($"MakeCompatible: ValidateSelectedBuildables failed; continuing without trimming. ex={ex}"); }
+            }
 
             bool _hasSyncdShop = false;
 
@@ -334,7 +406,10 @@ namespace BattleCruisers.Data
                         foreach (int j in purchasableItems)
                             purchasableOperations[i](j);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"MakeCompatible: Failed to migrate Purchased{purchasableCategories[i]}: {ex}");
+                }
 
             string[] purchasableCategoriesLegacy = new string[]
             {
@@ -358,30 +433,31 @@ namespace BattleCruisers.Data
                                 purchasableOperations[i](index);
                         }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning($"MakeCompatible: Failed to migrate legacy purchasables '{purchasableCategoriesLegacy[i]}': {ex}");
+                }
 
-            if (gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData) != null)
-                compatibleGameModel.BattleWinScore = (float)gameData.GetType().GetProperty("BattleWinScore").GetValue(gameData);
+            if (TryGetPropertyValue<float>(gameData, "BattleWinScore", out float battleWinScore))
+                compatibleGameModel.BattleWinScore = battleWinScore;
 
-            if (gameData.GetType().GetProperty("Coins").GetValue(gameData) != null)
-                compatibleGameModel.Coins = (long)gameData.GetType().GetProperty("Coins").GetValue(gameData);
+            if (TryGetPropertyValue<long>(gameData, "Coins", out long coins))
+                compatibleGameModel.Coins = coins;
 
-            if (gameData.GetType().GetProperty("Credits").GetValue(gameData) != null)
-                compatibleGameModel.Credits = (long)gameData.GetType().GetProperty("Credits").GetValue(gameData);
+            if (TryGetPropertyValue<long>(gameData, "Credits", out long credits))
+                compatibleGameModel.Credits = credits;
 
-            if (gameData.GetType().GetProperty("CoinsChange").GetValue(gameData) != null)
-                compatibleGameModel.CoinsChange = (int)gameData.GetType().GetProperty("CoinsChange").GetValue(gameData);
+            if (TryGetPropertyValue<int>(gameData, "CoinsChange", out int coinsChange))
+                compatibleGameModel.CoinsChange = coinsChange;
 
-            if (gameData.GetType().GetProperty("CreditsChange").GetValue(gameData) != null)
-                compatibleGameModel.CreditsChange = (int)gameData.GetType().GetProperty("CreditsChange").GetValue(gameData);
+            if (TryGetPropertyValue<int>(gameData, "CreditsChange", out int creditsChange))
+                compatibleGameModel.CreditsChange = creditsChange;
 
-            if (gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData) != null)
-            {
-                compatibleGameModel.TimesLostOnLastLevel = (int)gameData.GetType().GetProperty("TimesLostOnLastLevel").GetValue(gameData);
-            }
+            if (TryGetPropertyValue<int>(gameData, "TimesLostOnLastLevel", out int timesLostOnLastLevel))
+                compatibleGameModel.TimesLostOnLastLevel = timesLostOnLastLevel;
 
-            if (gameData.GetType().GetProperty("Bounty").GetValue(gameData) != null)
-                compatibleGameModel.Bounty = (int)gameData.GetType().GetProperty("Bounty").GetValue(gameData);
+            if (TryGetPropertyValue<int>(gameData, "Bounty", out int bounty))
+                compatibleGameModel.Bounty = bounty;
 
             // Extract SelectedBodykit if it exists
             var bodykitField = _loadout.GetType().GetField("_selectedBodykit", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -404,7 +480,7 @@ namespace BattleCruisers.Data
             }
 
             // Player Name
-            string _playerName = gameData.GetType().GetProperty("PlayerName").GetValue(gameData) as string;
+            string _playerName = GetPropertyValueOrDefault<string>(gameData, "PlayerName", defaultValue: null);
             if (_playerName == null || _playerName == "")
             {
                 compatibleGameModel.PlayerName = "Charlie";
@@ -414,10 +490,11 @@ namespace BattleCruisers.Data
                 compatibleGameModel.PlayerName = _playerName;
             }
 
-            IReadOnlyCollection<CompletedLevel> completedLevels = gameData.GetType().GetProperty("CompletedLevels").GetValue(gameData) as IReadOnlyCollection<CompletedLevel>;
+            IReadOnlyCollection<CompletedLevel> completedLevels =
+                GetPropertyValueOrDefault<IReadOnlyCollection<CompletedLevel>>(gameData, "CompletedLevels", defaultValue: null);
 
             // Add completed levels 1-31 only (levels 32-40 will be migrated to sidequests)
-            foreach (var cl in completedLevels)
+            foreach (var cl in completedLevels ?? Array.Empty<CompletedLevel>())
             {
                 if (cl.LevelNum >= 1 && cl.LevelNum <= StaticData.NUM_OF_LEVELS)
                 {
@@ -428,7 +505,9 @@ namespace BattleCruisers.Data
             // Migrate levels 32-40 to sidequests 0-8
             // NOTE: Sidequests 0-8 may already be complete from the existing sidequest logic below
             // So we need to handle: level complete + sidequest not complete, level complete + sidequest complete
-            var levelsToMigrate = completedLevels.Where(cl => cl.LevelNum >= 32 && cl.LevelNum <= 40).ToList();
+            var levelsToMigrate = (completedLevels ?? Array.Empty<CompletedLevel>())
+                .Where(cl => cl.LevelNum >= 32 && cl.LevelNum <= 40)
+                .ToList();
 
             if (levelsToMigrate.Count > 0)
             {
@@ -472,7 +551,7 @@ namespace BattleCruisers.Data
                 compatibleGameModel.AddCompletedSideQuest(new CompletedLevel(8, Settings.Difficulty.Hard));
 
             // NOW migrate levels 32-40 to sidequests, handling cases where sidequests may already be complete
-            foreach (var cl in completedLevels.Where(c => c.LevelNum >= 32 && c.LevelNum <= 40))
+            foreach (var cl in (completedLevels ?? Array.Empty<CompletedLevel>()).Where(c => c.LevelNum >= 32 && c.LevelNum <= 40))
             {
                 int sideQuestId = cl.LevelNum - 32;
                 
@@ -486,7 +565,7 @@ namespace BattleCruisers.Data
                 {
                     // Sidequest already complete - update difficulty if level had higher difficulty
                     var sideQuestField = typeof(GameModel).GetField("_completedSideQuests", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var completedSideQuests = sideQuestField.GetValue(compatibleGameModel) as List<CompletedLevel>;
+                    var completedSideQuests = sideQuestField?.GetValue(compatibleGameModel) as List<CompletedLevel>;
                     if (completedSideQuests != null)
                     {
                         var existingSideQuest = completedSideQuests.FirstOrDefault(sq => sq.LevelNum == sideQuestId);
@@ -651,7 +730,7 @@ namespace BattleCruisers.Data
                 {
                     // Scenario D: Both complete → Keep higher difficulty
                     var sideQuestField = typeof(GameModel).GetField("_completedSideQuests", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var completedSideQuests = sideQuestField.GetValue(game) as List<CompletedLevel>;
+                    var completedSideQuests = sideQuestField?.GetValue(game) as List<CompletedLevel>;
                     if (completedSideQuests != null)
                     {
                         var existingSideQuest = completedSideQuests.FirstOrDefault(sq => sq.LevelNum == sideQuestId);

@@ -151,7 +151,7 @@ namespace BattleCruisers.UI.ScreensScene
             }
             buyButton.gameObject.SetActive(false);
 
-            byte ii = 0;
+            int ii = 0;
 
             foreach (IAPData iapData in StaticData.IAPs)
             {

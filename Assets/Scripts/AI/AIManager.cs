@@ -59,14 +59,18 @@ namespace BattleCruisers.AI
                 _factoryManagerFactory.CreateNavalFactoryManager(
                     levelInfo.AICruiser,
                     bypassUnlocks: true,
-                    chooserMode: FactoryManagerFactory.NavalUnitChooserMode.RandomAffordable,
+                    chooserMode: FactoryManagerFactory.NavalUnitChooserMode.ThreatAwareRandom,
                     overrideShipKeysInCycleOrder: GetSequencerShipCycle());
+                _factoryManagerFactory.CreateAirfactoryManager(
+                    levelInfo.AICruiser,
+                    bypassUnlocks: true,
+                    useRandomAffordable: true);
             }
             else
             {
                 _factoryManagerFactory.CreateNavalFactoryManager(levelInfo.AICruiser);
+                _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
             }
-            _factoryManagerFactory.CreateAirfactoryManager(levelInfo.AICruiser);
 
             ITaskFactory taskFactory = new TaskFactory(levelInfo.AICruiser, _deferrer);
 

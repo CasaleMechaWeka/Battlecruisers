@@ -79,6 +79,9 @@ namespace BattleCruisers.Network.Multiplay.Matchplay.MultiplayBattleScene
         static PvPBattleSceneGodServer s_pvpBattleSceneGodServer;
         void Awake()
         {
+            // Reset static per-match flags as early as possible to avoid leaking state between matches.
+            GameOver = false;
+
             _ = PvPPrefabCache.CreatePvPPrefabCacheAsync();
             components = GetComponent<PvPBattleSceneGodComponents>();
             Assert.IsNotNull(components);

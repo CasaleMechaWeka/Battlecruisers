@@ -204,7 +204,19 @@ namespace BattleCruisers.Ads
                 if (RemoteConfigService.Instance.appConfig.config.Count == 0)
                 {
                     Debug.Log("[AdConfig] Fetching remote config data...");
-                    await RemoteConfigService.Instance.FetchConfigsAsync(new BattleCruisers.Data.UserAttributes(), new BattleCruisers.Data.AppAttributes());
+
+                    // Add timeout to prevent hanging on network issues
+                    var timeoutTask = Task.Delay(8000); // 8 second timeout for ad config
+                    var fetchTask = RemoteConfigService.Instance.FetchConfigsAsync(new BattleCruisers.Data.UserAttributes(), new BattleCruisers.Data.AppAttributes());
+
+                    var completedTask = await Task.WhenAny(fetchTask, timeoutTask);
+                    if (completedTask == timeoutTask)
+                    {
+                        throw new TimeoutException("Remote config fetch timed out");
+                    }
+
+                    await fetchTask;
+                    Debug.Log("[AdConfig] Remote config fetched successfully");
                 }
 
                 // Get AD_CONFIG as JSON (single key, like GAME_CONFIG pattern)

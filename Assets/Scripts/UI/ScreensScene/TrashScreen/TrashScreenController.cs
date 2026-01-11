@@ -3,6 +3,7 @@ using BattleCruisers.Data;
 using BattleCruisers.Data.Static;
 using BattleCruisers.Scenes;
 using BattleCruisers.UI.Music;
+using BattleCruisers.UI.ScreensScene.ProfileScreen;
 using BattleCruisers.UI.Sound.Players;
 using BattleCruisers.Utils;
 using BattleCruisers.Utils.Fetchers;
@@ -142,6 +143,24 @@ namespace BattleCruisers.UI.ScreensScene.TrashScreen
         private void SetupEnemyCharacter(TrashTalkData trashTalkData)
         {
             //enemyCharacter.sprite = trashTalkData.EnemySprite;
+            
+            // Clean up any existing captain models from other screens (e.g., profile screen)
+            // that may have been left in the container due to screen transitions
+            if (enemyModel != null)
+            {
+                Destroy(enemyModel);
+                enemyModel = null;
+            }
+            
+            // Also clean up any orphaned CaptainExo objects in the container
+            foreach (Transform child in containerCaptains)
+            {
+                if (child.GetComponent<CaptainExo>() != null)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+            
             enemyPrefab = PrefabFactory.GetCaptainExo(trashTalkData.EnemyExoPrefabKey).gameObject;
             containerCaptains.transform.parent.gameObject.SetActive(true);
             enemyModel = Instantiate(enemyPrefab, containerCaptains.position, Quaternion.identity, containerCaptains);

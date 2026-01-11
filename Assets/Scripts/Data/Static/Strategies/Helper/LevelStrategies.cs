@@ -74,10 +74,10 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
 
                 //Set 9: Levels 32-40 - ChainBattle levels with custom strategies
                 StaticBuildOrders.LV032,  // Level 32
-                StaticBuildOrders.LV033,  // Level 33 - Naval defense focus
-                StaticBuildOrders.Boom,   // Level 34
+                StaticBuildOrders.Boom,   // Level 33 (now EndlessWall)
+                StaticBuildOrders.LV033,  // Level 34 (Salvage-specific custom strategy)
                 StaticBuildOrders.LV032,  // Level 35
-                StaticBuildOrders.LV032,  // Level 36
+                StaticBuildOrders.LV036,  // Level 36 (TekGnosis air-pressure finale)
                 StaticBuildOrders.LV032,  // Level 37
                 StaticBuildOrders.LV032,  // Level 38
                 StaticBuildOrders.LV032,  // Level 39
@@ -562,16 +562,18 @@ namespace BattleCruisers.Data.Static.Strategies.Helper
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High)
                 },
 
-                 new OffensiveRequest[]
+                // Level 36 - Air pressure focus (factories produce aircraft; offensive requests fill extra building slots)
+                new OffensiveRequest[]
                 {
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Air, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High),
+                    new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.Low),
                     new OffensiveRequest(OffensiveType.Ultras, OffensiveFocus.High),
-                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.High),
-                    new OffensiveRequest(OffensiveType.Air, OffensiveFocus.High)
+                    // keep some naval/building variety for extra slots
+                    new OffensiveRequest(OffensiveType.Naval, OffensiveFocus.Low),
+                    new OffensiveRequest(OffensiveType.Buildings, OffensiveFocus.High),
                 },
                 new OffensiveRequest[]
                 {

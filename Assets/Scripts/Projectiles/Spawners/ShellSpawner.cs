@@ -24,7 +24,8 @@ namespace BattleCruisers.Projectiles.Spawners
 
         public ProjectileController SpawnShell(float angleInDegrees, bool isSourceMirrored)
         {
-            Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.MaxVelocityInMPerS);
+            // Shells should spawn at initial velocity (ballistic weapons accelerate over time; using max breaks trajectories).
+            Vector2 shellVelocity = FindProjectileVelocity(angleInDegrees, isSourceMirrored, _projectileStats.InitialVelocityInMPerS);
             ProjectileActivationArgs activationArgs
                 = new ProjectileActivationArgs(
                     transform.position,

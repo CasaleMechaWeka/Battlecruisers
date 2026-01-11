@@ -110,6 +110,9 @@ namespace BattleCruisers.Scenes.BattleScene
         private void Awake()
         {
             Instance = this;
+            // Static state must be reset when a new battle scene instance is created.
+            // Without this, a previous battle that set GameOver=true can leak into the next battle in the same domain.
+            GameOver = false;
         }
         private async void Start()
         {
@@ -158,6 +161,14 @@ namespace BattleCruisers.Scenes.BattleScene
             CruiserFactory cruiserFactory = new CruiserFactory(helper, uiManager);
 
             playerCruiser = cruiserFactory.CreatePlayerCruiser();
+            // Level 36 (ChainBattle): start with player cruiser visually facing "backwards" to sell the chase.
+            // This is a pure visual rotation; gameplay-facing is still driven by Cruiser.Direction.
+            if (ApplicationModel.Mode != GameMode.SideQuest && ApplicationModel.SelectedLevel == 36)
+            {
+                Quaternion rotation = playerCruiser.Rotation;
+                rotation.eulerAngles = new Vector3(0, 180, 0);
+                playerCruiser.Rotation = rotation;
+            }
             IPrefabKey aiCruiserKey = helper.GetAiCruiserKey();
             aiCruiser = cruiserFactory.CreateAICruiser(aiCruiserKey);
             enemyCruiserSprite = aiCruiser.Sprite;
@@ -524,7 +535,9 @@ namespace BattleCruisers.Scenes.BattleScene
                     await handle.Task;
 
                     if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+                    {
                         Debug.LogError($"[Sequencer] FAILED load SideQuest sequencer. key='{path}', status={handle.Status}, exception={handle.OperationException}");
+                    }
                     else
                     {
                         Debug.Log($"[Sequencer] Loaded SideQuest sequencer OK. key='{path}', prefab='{handle.Result.name}'");
@@ -532,6 +545,9 @@ namespace BattleCruisers.Scenes.BattleScene
                         battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
                         battleSequencer.StartF();
                     }
+
+                    // Prevent Addressables handle leaks (loaded asset handles must be released).
+                    Addressables.Release(handle);
                 }
             }
             else if (ApplicationModel.Mode == GameMode.Campaign)
@@ -561,7 +577,9 @@ namespace BattleCruisers.Scenes.BattleScene
                     await handle.Task;
 
                     if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+                    {
                         Debug.LogError($"[Sequencer] FAILED load Campaign sequencer. levelNum={levelNum}, key='{path}', status={handle.Status}, exception={handle.OperationException}");
+                    }
                     else
                     {
                         Debug.Log($"[Sequencer] Loaded Campaign sequencer OK. levelNum={levelNum}, key='{path}', prefab='{handle.Result.name}'");
@@ -569,6 +587,9 @@ namespace BattleCruisers.Scenes.BattleScene
                         battleSequencer.Cruisers = new Cruiser[] { playerCruiser, aiCruiser };
                         battleSequencer.StartF();
                     }
+
+                    // Prevent Addressables handle leaks (loaded asset handles must be released).
+                    Addressables.Release(handle);
                 }
             }
             /*

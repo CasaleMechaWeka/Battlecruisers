@@ -51,7 +51,12 @@ namespace BattleCruisers.Projectiles.Spawners.Beams
                 RaycastHit2D result = results[i];
                 Assert.IsNotNull(result.collider);
 
-                ITarget target = result.collider.gameObject.GetComponent<ITargetProxy>()?.Target;
+                // IMPORTANT: many prefabs place colliders on child objects while ITargetProxy lives on the root.
+                // Using GetComponentInParent prevents beams silently failing after prefab hierarchy changes.
+                ITargetProxy proxy
+                    = result.collider.gameObject.GetComponent<ITargetProxy>()
+                      ?? result.collider.gameObject.GetComponentInParent<ITargetProxy>();
+                ITarget target = proxy?.Target;
 
                 if (target != null 
                     && !target.IsDestroyed

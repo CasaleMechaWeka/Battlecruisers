@@ -123,7 +123,8 @@ namespace BattleCruisers.Data.Static
             public static HullKey Longbow { get; } = new HullKey("Longbow");
             public static HullKey Megalodon { get; } = new HullKey("Megalodon");
             public static HullKey Raptor { get; } = new HullKey("Raptor");
-            public static HullKey LV032Raptor { get; } = new HullKey("LV032Raptor");  // ChainBattle 32 variant - not available to players
+            public static HullKey LV032Raptor { get; } = new HullKey("LV032Raptor");  // ChainBattle 32 variant
+            public static HullKey LV035Cricket { get; } = new HullKey("LV035Cricket");  // ChainBattle 35 variant
             public static HullKey Rockjaw { get; } = new HullKey("Rockjaw");
             public static HullKey Trident { get; } = new HullKey("Trident");
             public static HullKey ManOfWarBoss { get; } = new HullKey("ManOfWarBoss");
@@ -193,7 +194,8 @@ namespace BattleCruisers.Data.Static
                 { EndlessWall,  HullType.EndlessWall },
                 { AlphaSpace,   HullType.AlphaSpace },
                 { Arkdeso,      HullType.Arkdeso },               
-                { LV032Raptor,  HullType.Raptor }  // ChainBattle variant - uses Raptor hull type
+                { LV032Raptor,  HullType.Raptor },   // ChainBattle variant - uses Raptor hull type
+                { LV035Cricket, HullType.Cricket }   // ChainBattle variant - uses Cricket hull type
             };
 
             public static HullType GetHullType(HullKey hullKey)
@@ -204,7 +206,7 @@ namespace BattleCruisers.Data.Static
             // order matters!!! it has to match the order of HullType
             public static ReadOnlyCollection<IPrefabKey> AllKeys = new ReadOnlyCollection<IPrefabKey>(new List<IPrefabKey>()
             {
-                Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, LV032Raptor,
+                Bullshark, Eagle, Hammerhead, Longbow, Megalodon, Raptor, LV032Raptor, LV035Cricket,
                 Rockjaw, Trident, ManOfWarBoss, HuntressBoss, TasDevil, Yeti,
                 Rickshaw, BlackRig, Flea, Shepherd, Microlodon, Pistol,
                 Goatherd, Megalith, FortressPrime, BasicRig, Cricket,

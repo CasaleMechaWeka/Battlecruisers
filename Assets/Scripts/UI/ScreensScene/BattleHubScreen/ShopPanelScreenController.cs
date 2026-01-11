@@ -281,13 +281,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
         {
             int completedVariants = 0;
             int variantsPerFrame = 15;
-            byte ii = 0;
             while (completedVariants < variantList.Count)
             {
                 for (int i = completedVariants; i < Mathf.Min(completedVariants + variantsPerFrame, variantList.Count); i++)
                 {
                     GameObject variantItem = Instantiate(variantItemPrefab, variantsItemContainer) as GameObject;
-                    VariantPrefab variant = variants[ii]; // Use the variant list index ii
+                    // variants list is built in Initialise() to match variantList (same ordering/length).
+                    // Use i (not a byte counter) to avoid overflow and to keep indexing consistent.
+                    VariantPrefab variant = variants[i];
                     Sprite parentSprite = variant.IsUnit() ? variant.GetUnit().Sprite : variant.GetBuilding().Sprite;
 
                     int variantPrice = StaticData.Variants[variant.variantIndex].VariantCredits;
@@ -305,7 +306,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                         DataProvider.GameModel.PurchasedVariants.Contains(variant.variantIndex)
                     );
 
-                    if (ii == 0)
+                    if (i == 0)
                     {
                         variantItem.GetComponent<VariantItemController>()._clickedFeedback.SetActive(true);
                         variantItem.GetComponent<VariantItemController>()._clickedFeedbackVariantImage.color = new Color(
@@ -350,9 +351,8 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
                             variantsContainer.ownFeedback.SetActive(false);
                         }
                     }
-                    ii++;
                 }
-                completedVariants += Mathf.Min(variantsPerFrame, variantList.Count);
+                completedVariants += Mathf.Min(variantsPerFrame, variantList.Count - completedVariants);
                 yield return null;
             }
         }
@@ -445,7 +445,7 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
 #if UNITY_EDITOR
             heckleBaseList = GenerateFullList(StaticData.Heckles.Count);
 #endif
-            byte ii = 0;
+            int ii = 0;
             foreach (int index in heckleBaseList)
             {
                 GameObject heckleItem = Instantiate(heckleItemPrefab, heckleItemContainer) as GameObject;
@@ -515,9 +515,14 @@ namespace BattleCruisers.UI.ScreensScene.BattleHubScreen
             /*            exoBaseList = GeneratePseudoRandomList(14, DataProvider.GameModel.Captains.Count - 1, 1, 1);
                         exoBaseList.Insert(0, 0);*/
 
-            byte ii = 0;
+            int ii = 0;
             foreach (int index in exoBaseList)
             {
+                if (ii >= captains.Count)
+                {
+                    Debug.LogWarning($"[Shop] Captains list shorter than exoBaseList. ii={ii}, captains.Count={captains.Count}. Stopping.");
+                    break;
+                }
                 GameObject captainItem = Instantiate(captainItemPrefab, captainItemContainer) as GameObject;
                 CaptainExo captainExoPrefab = captains[ii];/*await _prefabFactory.GetCaptainExo(StaticPrefabKeys.CaptainExos.GetCaptainExoKey(index));*/
                 CaptainExo captainExo = Instantiate(captainExoPrefab, captainCamContainer);

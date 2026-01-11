@@ -67,17 +67,44 @@ namespace BattleCruisers.Scenes
 
                 UnityEngine.EventSystems.EventSystem[] eventSystemsAfter = UnityEngine.Object.FindObjectsOfType<UnityEngine.EventSystems.EventSystem>();
                 Debug.Log($"PVP: SceneNavigator - Found {eventSystemsAfter.Length} EventSystems after LoadSceneMode.Single");
+                if (eventSystemsAfter.Length > 1)
+                {
+                    // Multiple EventSystems cause UI input conflicts. Keep one (prefer the active scene's) and destroy the rest.
+                    Scene activeScene = SceneManager.GetActiveScene();
+                    EventSystem keep =
+                        Array.Find(eventSystemsAfter, es => es != null && es.gameObject.scene == activeScene)
+                        ?? eventSystemsAfter[0];
+
+                    Debug.LogWarning($"PVP: SceneNavigator - Multiple EventSystems detected. Keeping '{keep?.gameObject.name}' and destroying {eventSystemsAfter.Length - 1} duplicates.");
+                    for (int i = 0; i < eventSystemsAfter.Length; i++)
+                    {
+                        EventSystem es = eventSystemsAfter[i];
+                        if (es == null || es == keep)
+                        {
+                            continue;
+                        }
+                        UnityEngine.Object.Destroy(es.gameObject);
+                    }
+                }
             }
 
             await LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             Logging.Log(Tags.SCENE_NAVIGATION, "Wait for my custom setup for:  " + sceneName);
 
+            const int waitIntervalInMs = 100;
+            const int maxWaitTimeInMs = 30000;
+            int elapsedInMs = 0;
             while (_lastSceneLoaded != sceneName)
             {
-                const int waitIntervalInMs = 100;
                 Logging.Verbose(Tags.SCENE_NAVIGATION, $"Loading {sceneName}  waiting another: {waitIntervalInMs}s");
                 await Task.Delay(waitIntervalInMs);
+                elapsedInMs += waitIntervalInMs;
+                if (elapsedInMs >= maxWaitTimeInMs)
+                {
+                    Debug.LogError($"PVP: SceneNavigator - Timeout waiting for SceneLoaded('{sceneName}'). ElapsedMs={elapsedInMs}. Aborting wait to avoid infinite hang.");
+                    return;
+                }
             }
             Logging.Log(Tags.SCENE_NAVIGATION, "Finished loading:  " + sceneName);
 
